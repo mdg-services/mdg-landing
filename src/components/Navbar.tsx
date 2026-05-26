@@ -13,13 +13,21 @@ export default function Navbar() {
   return (
     <header className="sticky top-0 z-50 border-b border-navy/5 bg-white/80 backdrop-blur">
       <div className="container-x flex h-16 items-center justify-between">
-        <a href="#top" className="flex items-center gap-2">
-          <span className="grid h-9 w-9 place-items-center rounded-xl bg-navy text-white font-display font-bold">
-            M
-          </span>
-          <span className="font-display text-lg font-extrabold text-navy">
-            MDG <span className="text-coral">Services</span>
-          </span>
+        <a
+          href="#top"
+          className="flex items-center gap-2 text-navy"
+          aria-label="MDG Services"
+        >
+          <img
+            src="/logo.svg"
+            alt="MDG Services"
+            className="hidden h-9 w-auto sm:block"
+          />
+          <img
+            src="/logo-mark.svg"
+            alt="MDG Services"
+            className="h-9 w-9 sm:hidden"
+          />
         </a>
         <nav className="hidden gap-7 md:flex">
           {links.map((l) => (

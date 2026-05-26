@@ -3,13 +3,13 @@ export default function Footer() {
     <footer className="border-t border-navy/10 bg-navy text-white">
       <div className="container-x grid gap-10 py-14 md:grid-cols-12">
         <div className="md:col-span-5">
-          <div className="flex items-center gap-2">
-            <span className="grid h-9 w-9 place-items-center rounded-xl bg-coral font-display font-bold">
-              M
-            </span>
-            <span className="font-display text-lg font-extrabold">
-              MDG Services
-            </span>
+          <div className="flex items-center text-white">
+            <img
+              src="/logo.svg"
+              alt="MDG Services"
+              className="h-12 w-auto invert brightness-0 contrast-200"
+              style={{ filter: "invert(1) brightness(2)" }}
+            />
           </div>
           <p className="mt-4 max-w-sm text-sm text-white/65">
             Dealer's कवच — your trusted partner for petrol pump excellence
