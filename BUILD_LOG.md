@@ -12,6 +12,9 @@
       dev boot ✓, no console errors
 - [x] Phase 3 — Visual pass: every section screenshotted on desktop (1280) and
       mobile (375); FAQ accordion + contact callback form interaction verified
-- [~] Phase 4 — Anti-slop / devex review (independent reviewer pass in progress)
-- [ ] Phase 5 — Commit in logical chunks (local only)
-- [ ] Phase 5 — Handoff report + MANUAL_STEPS
+- [x] Phase 4 — Anti-slop / devex review pass: fixed reduced-motion gating on
+      the Hero's infinite Framer loops, bumped low-contrast note text
+      (navy-200→navy-100), added `inert` to the closed mobile menu, dropped dead
+      `.bg-grid` CSS, added `text-balance` to wrapping headlines
+- [x] Phase 5 — Committed in logical chunks (local only, branch `rebuild/landing-v2`)
+- [x] Phase 5 — Handoff report + MANUAL_STEPS written
