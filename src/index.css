@@ -181,11 +181,7 @@
   }
   .num-deva { font-family: theme(fontFamily.deva); }
 
-  /* Faint engineering grid backdrop */
-  .bg-grid {
-    background-image: theme(backgroundImage.grid-navy);
-    background-size: 38px 38px;
-  }
+  /* Faint engineering grid backdrop (dark surfaces) */
   .bg-grid-dark {
     background-image:
       linear-gradient(rgba(255,255,255,.05) 1px, transparent 1px),

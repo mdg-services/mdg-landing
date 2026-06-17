@@ -1,193 +1,82 @@
-import { useEffect, useRef, useState } from "react";
-
-type Service = {
-  num: string;
-  numDeva: string;
-  title: string;
-  body: string;
-  covers: string[];
-  weekly: string;
-};
-
-const services: Service[] = [
-  {
-    num: "01",
-    numDeva: "०१",
-    title: "OMC portals, all of them",
-    body: "SDMS, MDG, Dhruva, AAC, QRC. We file, update and follow up on every entry so your dealership stays in good standing.",
-    covers: ["Subsidy filings", "DAR & DSR", "Monthly wages", "Declarations"],
-    weekly: "~ 60 entries per outlet, per week",
-  },
-  {
-    num: "02",
-    numDeva: "०२",
-    title: "Inspections, ready in advance",
-    body: "Records, logs and samples are kept inspection-ready year-round. When the team shows up, nothing is missing.",
-    covers: ["Density checks", "Stock variation", "Sample logs", "Mobile lab"],
-    weekly: "Pre-inspection folder, every Friday",
-  },
-  {
-    num: "03",
-    numDeva: "०३",
-    title: "Document and deadline reminders",
-    body: "We track every licence, renewal and filing window. You get a clear reminder before anything expires.",
-    covers: ["Licences", "Weights & measures", "Explosives", "Fire NOC"],
-    weekly: "Tracking 22 deadline windows on average",
-  },
-  {
-    num: "04",
-    numDeva: "०४",
-    title: "Automation that actually runs",
-    body: "When automation breaks at 9pm on a Sunday, somebody picks up. We diagnose, coordinate vendors and keep you compliant.",
-    covers: ["Fault diagnosis", "Vendor coordination", "Compliant config"],
-    weekly: "Average response: under 30 minutes",
-  },
-  {
-    num: "05",
-    numDeva: "०५",
-    title: "XTRA rewards and campaigns",
-    body: "OMC reward targets, enrolment drives and promotional activity, executed and reported without you lifting a finger.",
-    covers: ["Customer enrolment", "Campaign reporting", "Target chasing"],
-    weekly: "Monthly campaign report on the 2nd",
-  },
-  {
-    num: "06",
-    numDeva: "०६",
-    title: "Payments, stock and accounts",
-    body: "Reconciliation of UPI, card and wallet receipts, stock-on-hand watch, DOD oversight, and the small accounting follow-ups.",
-    covers: ["Reconciliation", "Stock alerts", "DOD facility", "Statements"],
-    weekly: "Daily reconciliation by 11am",
-  },
-];
+import { motion } from "motion/react";
+import Icon from "./Icon";
+import { Reveal, Stagger } from "../lib/motion";
+import { itemUp } from "../lib/anim";
+import { SERVICES } from "../data/content";
 
 export default function Services() {
-  const [active, setActive] = useState<string>(services[0].num);
-  const rowsRef = useRef<Array<HTMLLIElement | null>>([]);
-
-  useEffect(() => {
-    if (typeof IntersectionObserver === "undefined") return;
-    const obs = new IntersectionObserver(
-      (entries) => {
-        let bestNum: string | null = null;
-        let bestRatio = -1;
-        entries.forEach((e) => {
-          if (e.isIntersecting && e.intersectionRatio > bestRatio) {
-            bestNum = (e.target as HTMLElement).dataset.num ?? null;
-            bestRatio = e.intersectionRatio;
-          }
-        });
-        if (bestNum) setActive(bestNum);
-      },
-      { rootMargin: "-30% 0px -50% 0px", threshold: [0, 0.25, 0.5, 0.75, 1] }
-    );
-    rowsRef.current.forEach((el) => el && obs.observe(el));
-    return () => obs.disconnect();
-  }, []);
-
   return (
-    <section id="services" className="bg-paper">
-      <div className="wrap-full py-24 md:py-36">
-        <header className="grid items-end gap-8 md:grid-cols-12">
-          <div className="md:col-span-8" data-reveal>
-            <p className="eyebrow">The work</p>
-            <h2
-              className="mt-5 text-display text-ink"
-              style={{ fontSize: "clamp(36px, 5.6vw, 76px)" }}
-            >
-              Six jobs that <span className="text-seal">stop being yours</span>{" "}
-              the day we start.
-            </h2>
+    <section id="services" className="relative bg-paper-warm">
+      <div className="wrap-full py-24 md:py-32">
+        <div className="grid items-end gap-8 md:grid-cols-12">
+          <div className="md:col-span-8">
+            <Reveal>
+              <p className="eyebrow">Program service covers</p>
+            </Reveal>
+            <Reveal delay={0.06}>
+              <h2 className="mt-6 text-balance text-display text-ink" style={{ fontSize: "clamp(33px, 5vw, 64px)" }}>
+                Nine jobs that stop being yours{" "}
+                <span className="text-navy-700">the day we start.</span>
+              </h2>
+            </Reveal>
           </div>
-          <div className="md:col-span-4" data-reveal style={{ ["--reveal-delay" as any]: "100ms" }}>
-            <p className="max-w-prose2 text-[17px] leading-[1.55] text-ink-soft md:text-[18px]">
-              Each job below is sold on its own. Pick what fits your pump,
-              skip what does not.
+          <Reveal delay={0.12} className="md:col-span-4">
+            <p className="max-w-prose2 text-[16px] leading-[1.6] text-ink-soft md:text-[17px]">
+              Each cover is sold on its own — pick what your pump needs, skip
+              what it doesn't.
             </p>
-            <p className="mt-5 mono text-[11px] uppercase tracking-[0.22em] text-ink-muted">
-              <span className="deva text-[16px] normal-case tracking-normal text-seal">सेवाएँ</span>
+            <p className="mt-4 font-mono text-[11px] uppercase tracking-[0.2em] text-ink-muted">
+              <span className="deva text-[15px] normal-case tracking-normal text-navy-700">सेवाएँ</span>
               <span className="ml-2">Services</span>
             </p>
-          </div>
-        </header>
+          </Reveal>
+        </div>
 
-        <div className="mt-20 grid gap-12 md:mt-24 md:grid-cols-12 md:gap-14">
-          {/* Sticky rail / index on desktop */}
-          <aside className="hidden md:col-span-3 md:block">
-            <div className="sticky top-28">
-              <p className="eyebrow">Index</p>
-              <ol className="mt-5 space-y-2.5">
-                {services.map((s) => (
-                  <li key={s.num}>
-                    <a
-                      href={`#svc-${s.num}`}
-                      className={
-                        "block text-[14px] leading-[1.35] transition-colors duration-200 " +
-                        (active === s.num ? "text-seal" : "text-ink-muted hover:text-ink")
-                      }
-                      style={{ transitionTimingFunction: "var(--ease-out-quart)" }}
-                    >
-                      <span className="num-serif tabular-nums mr-3 text-ink-faint">{s.num}</span>
-                      {s.title.split(",")[0]}
-                    </a>
+        <Stagger gap={0.06} className="mt-14 grid gap-4 sm:grid-cols-2 md:mt-16 lg:grid-cols-3">
+          {SERVICES.map((s) => (
+            <motion.article
+              key={s.id}
+              variants={itemUp}
+              whileHover={{ y: -6 }}
+              transition={{ type: "spring", stiffness: 300, damping: 24 }}
+              className="group relative flex flex-col overflow-hidden rounded-2xl border border-ink-hairline bg-white p-6 shadow-card"
+            >
+              {/* top accent that grows on hover */}
+              <span
+                aria-hidden
+                className="absolute inset-x-0 top-0 h-[3px] origin-left scale-x-0 bg-gradient-to-r from-navy-600 to-gold-400 transition-transform duration-300 ease-out group-hover:scale-x-100"
+              />
+
+              <div className="flex items-start justify-between">
+                <span className="grid h-12 w-12 place-items-center rounded-xl bg-navy-50 text-navy-700 transition-colors duration-300 group-hover:bg-navy-700 group-hover:text-gold-400">
+                  <Icon name={s.icon} size={24} />
+                </span>
+                <span className="num-deva text-[34px] leading-none text-navy-100">{s.noDeva}</span>
+              </div>
+
+              <h3 className="mt-5 font-display text-[20px] font-semibold leading-tight text-ink">
+                {s.title}
+              </h3>
+              <p className="mt-2.5 text-[14.5px] leading-[1.55] text-ink-soft">{s.blurb}</p>
+
+              <ul className="mt-4 flex flex-wrap gap-1.5">
+                {s.covers.map((c) => (
+                  <li
+                    key={c}
+                    className="rounded-full border border-ink-hairline bg-paper-warm px-2.5 py-1 text-[11.5px] font-medium text-ink-muted"
+                  >
+                    {c}
                   </li>
                 ))}
-              </ol>
-            </div>
-          </aside>
+              </ul>
 
-          {/* Long reading list */}
-          <ol className="md:col-span-9">
-            {services.map((s, i) => (
-              <li
-                key={s.num}
-                ref={(el) => { rowsRef.current[i] = el; }}
-                id={`svc-${s.num}`}
-                data-num={s.num}
-                data-active={active === s.num}
-                data-reveal
-                style={{ ["--reveal-delay" as any]: `${i * 50}ms` }}
-                className="svc-row group grid grid-cols-12 items-baseline gap-y-5 gap-x-6 border-t border-ink-hairline py-12 md:gap-x-10 md:py-16"
-              >
-                <div className="col-span-3 md:col-span-2">
-                  <div className="num-serif tabular-nums text-ink-soft" style={{ fontSize: "clamp(28px, 3.4vw, 48px)", lineHeight: 0.96 }}>
-                    {s.num}
-                  </div>
-                  <div className="mt-3 mono text-[10px] uppercase tracking-[0.22em] text-ink-faint">
-                    {s.numDeva} <span className="text-ink-faint">·</span> No.
-                  </div>
-                </div>
-
-                <div className="col-span-9 md:col-span-6">
-                  <h3
-                    className="text-display text-ink"
-                    style={{ fontSize: "clamp(22px, 2.6vw, 36px)", lineHeight: 1.1 }}
-                  >
-                    {s.title}
-                  </h3>
-                  <p className="mt-5 max-w-[58ch] text-[16px] leading-[1.6] text-ink-soft md:text-[17px]">
-                    {s.body}
-                  </p>
-                  <p className="mt-5 mono text-[12px] uppercase tracking-[0.2em] text-seal">
-                    {s.weekly}
-                  </p>
-                </div>
-
-                <div className="col-span-12 md:col-span-4">
-                  <p className="eyebrow">Includes</p>
-                  <ul className="mt-3 grid grid-cols-2 gap-x-5 gap-y-1.5 text-[14px] text-ink-muted md:grid-cols-1">
-                    {s.covers.map((c) => (
-                      <li key={c} className="flex items-start gap-2.5">
-                        <span className="mt-[9px] inline-block h-px w-3 shrink-0 bg-seal" />
-                        <span>{c}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </li>
-            ))}
-            <div className="border-t border-ink-hairline" />
-          </ol>
-        </div>
+              <div className="mt-5 flex items-center gap-2 border-t border-ink-hairline pt-4">
+                <span className="h-1.5 w-1.5 rotate-45 bg-gold-400" />
+                <span className="font-mono text-[11px] uppercase tracking-[0.12em] text-navy-700">{s.metric}</span>
+              </div>
+            </motion.article>
+          ))}
+        </Stagger>
       </div>
     </section>
   );

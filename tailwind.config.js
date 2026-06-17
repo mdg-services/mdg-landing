@@ -68,10 +68,6 @@ export default {
         glow: "0 0 0 1px rgba(245,165,36,.35), 0 18px 50px -16px rgba(245,165,36,.45)",
         navy: "0 24px 60px -24px rgba(44,46,128,.55)",
       },
-      backgroundImage: {
-        "grid-navy":
-          "linear-gradient(rgba(44,46,128,.05) 1px, transparent 1px), linear-gradient(90deg, rgba(44,46,128,.05) 1px, transparent 1px)",
-      },
     },
   },
   plugins: [],

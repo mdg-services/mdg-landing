@@ -1,44 +1,44 @@
+import { LogoMark } from "./Brand";
+import Icon from "./Icon";
+import { BRAND } from "../data/content";
+
 const explore = [
-  { href: "#services", label: "The work" },
-  { href: "#how", label: "Process" },
+  { href: "#services", label: "Services" },
+  { href: "#why", label: "Why us" },
+  { href: "#process", label: "Process" },
   { href: "#membership", label: "Membership" },
   { href: "#contact", label: "Get in touch" },
 ];
 
 export default function Footer() {
   return (
-    <footer className="border-t border-ink-hairline bg-paper">
-      <div className="wrap-full pt-20 pb-12 md:pt-24">
-        <div className="grid items-start gap-12 md:grid-cols-12 md:gap-14">
+    <footer className="relative overflow-hidden bg-navy-950 text-white">
+      <div aria-hidden className="absolute inset-0 bg-grid-dark opacity-30" />
+      <div className="wrap-full relative pt-20 pb-12 md:pt-24">
+        <div className="grid items-start gap-12 md:grid-cols-12">
           <div className="md:col-span-5">
             <div className="flex items-center gap-3">
-              <span
-                aria-hidden
-                className="grid h-10 w-10 place-items-center bg-ink text-paper"
-                style={{ borderRadius: 2 }}
-              >
-                <span className="font-serif text-[16px] font-semibold leading-none">M</span>
+              <span className="grid h-11 w-11 place-items-center rounded-xl bg-white/10 text-white">
+                <LogoMark size={26} />
               </span>
-              <span className="text-[16px] font-semibold tracking-tight text-ink">
-                MDG Services
-              </span>
+              <span className="font-display text-[17px] font-bold tracking-tight text-white">MDG Services</span>
             </div>
-
-            <p
-              className="mt-8 text-display text-ink"
-              style={{ fontSize: "clamp(24px, 2.6vw, 34px)", lineHeight: 1.15 }}
-            >
-              Dealer's <span className="deva text-seal">कवच</span>.<br />
-              Compliance, paperwork and on-call support for petrol pump dealers across India.
+            <p className="mt-7 font-display text-[24px] font-medium leading-[1.2] text-white md:text-[30px]">
+              Dealer's <span className="deva text-gold-400">कवच</span>.
+              <br />
+              <span className="text-navy-100">{BRAND.promise}.</span>
+            </p>
+            <p className="mt-6 max-w-prose2 text-[14px] leading-[1.6] text-navy-200">
+              {BRAND.tagline} — your satisfaction fuels our energy.
             </p>
           </div>
 
-          <div className="md:col-span-3">
-            <div className="eyebrow">Explore</div>
+          <div className="md:col-span-3 md:col-start-7">
+            <p className="eyebrow-light">Explore</p>
             <ul className="mt-6 space-y-3 text-[15px]">
               {explore.map((l) => (
                 <li key={l.href}>
-                  <a href={l.href} className="link-quiet text-ink">
+                  <a href={l.href} className="link-quiet text-navy-100 hover:text-white">
                     {l.label}
                   </a>
                 </li>
@@ -46,36 +46,33 @@ export default function Footer() {
             </ul>
           </div>
 
-          <div className="md:col-span-4">
-            <div className="eyebrow">Reach us</div>
-            <ul className="mt-6 space-y-3 text-[15px]">
+          <div className="md:col-span-3">
+            <p className="eyebrow-light">Reach us</p>
+            <ul className="mt-6 space-y-3.5 text-[15px]">
               <li>
-                <a href="tel:18003456512" className="link-quiet num-serif tabular-nums text-ink">
+                <a href={BRAND.phoneHref} className="inline-flex items-center gap-2 num font-semibold text-white">
+                  <Icon name="phone" size={15} className="text-gold-400" />
                   1800&#8209;345&#8209;6512
                 </a>
-                <span className="ml-3 mono text-[12px] uppercase tracking-[0.2em] text-ink-muted">
-                  9 – 9, daily
-                </span>
+                <div className="mt-1 font-mono text-[11px] uppercase tracking-[0.18em] text-navy-300">{BRAND.hours}</div>
               </li>
               <li>
-                <a href="https://www.mdgservices.in" target="_blank" rel="noreferrer" className="link-quiet text-ink">
-                  mdgservices.in
+                <a href={`https://www.${BRAND.site}`} target="_blank" rel="noreferrer" className="link-quiet text-navy-100 hover:text-white">
+                  {BRAND.site}
                 </a>
               </li>
               <li>
-                <a href="mailto:hello@mdgservices.in" className="link-quiet text-ink">
-                  hello@mdgservices.in
+                <a href={`mailto:${BRAND.email}`} className="link-quiet text-navy-100 hover:text-white">
+                  {BRAND.email}
                 </a>
               </li>
             </ul>
           </div>
         </div>
 
-        <div className="mt-20 flex flex-col items-start justify-between gap-3 border-t border-ink-hairline pt-6 text-[13px] text-ink-muted sm:flex-row sm:items-center">
+        <div className="mt-16 flex flex-col items-start justify-between gap-3 border-t border-white/10 pt-6 text-[13px] text-navy-300 sm:flex-row sm:items-center">
           <p>© {new Date().getFullYear()} MDG Services. All rights reserved.</p>
-          <p className="mono text-[11px] uppercase tracking-[0.22em]">
-            Made for India's fuel station dealers
-          </p>
+          <p className="font-mono text-[11px] uppercase tracking-[0.2em]">Made for India's fuel station dealers</p>
         </div>
       </div>
     </footer>
