@@ -1,28 +1,33 @@
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
-import Marquee from "./components/Marquee";
-import About from "./components/About";
+import Numbers from "./components/Numbers";
 import Services from "./components/Services";
-import MoreServices from "./components/MoreServices";
-import WhyUs from "./components/WhyUs";
-import Mission from "./components/Mission";
+import Week from "./components/Week";
+import HowItWorks from "./components/HowItWorks";
 import Membership from "./components/Membership";
+import FAQ from "./components/FAQ";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
+import { useReveal } from "./hooks/useReveal";
+import { useScrollProgress } from "./hooks/useScrollProgress";
 
 export default function App() {
+  useReveal();
+  useScrollProgress();
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-paper text-ink">
+      <div className="scroll-progress" aria-hidden>
+        <span />
+      </div>
       <Navbar />
       <main>
         <Hero />
-        <Marquee />
-        <About />
+        <Numbers />
         <Services />
-        <MoreServices />
-        <WhyUs />
-        <Mission />
+        <Week />
+        <HowItWorks />
         <Membership />
+        <FAQ />
         <Contact />
       </main>
       <Footer />

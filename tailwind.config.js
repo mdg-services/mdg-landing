@@ -4,32 +4,37 @@ export default {
   theme: {
     extend: {
       colors: {
-        navy: {
-          DEFAULT: "#2C2E80",
-          50: "#EEF0FB",
-          100: "#D9DCF4",
-          200: "#B0B5E8",
-          300: "#7A82D2",
-          500: "#3A3F9A",
-          700: "#22246B",
-          900: "#16184A",
+        paper: {
+          DEFAULT: "oklch(98% 0.008 80 / <alpha-value>)",
+          warm: "oklch(96% 0.014 75 / <alpha-value>)",
+          sunk: "oklch(93% 0.018 70 / <alpha-value>)",
         },
-        coral: {
-          DEFAULT: "#E94B4B",
-          600: "#D33A3A",
+        ink: {
+          DEFAULT: "oklch(20% 0.015 60 / <alpha-value>)",
+          soft: "oklch(36% 0.014 60 / <alpha-value>)",
+          muted: "oklch(52% 0.012 60 / <alpha-value>)",
+          faint: "oklch(70% 0.010 60 / <alpha-value>)",
+          hairline: "oklch(88% 0.008 60 / <alpha-value>)",
         },
-        cream: "#FFF8EE",
+        seal: {
+          DEFAULT: "oklch(45% 0.155 28 / <alpha-value>)",
+          deep: "oklch(36% 0.145 28 / <alpha-value>)",
+          tint: "oklch(94% 0.025 28 / <alpha-value>)",
+        },
       },
       fontFamily: {
         sans: ["Inter", "system-ui", "ui-sans-serif", "sans-serif"],
-        display: ['"Plus Jakarta Sans"', "Inter", "system-ui", "sans-serif"],
+        serif: ['"Fraunces"', "Georgia", "serif"],
+        deva: ['"Tiro Devanagari Hindi"', '"Fraunces"', "serif"],
+        mono: ['"JetBrains Mono"', "ui-monospace", "SFMono-Regular", "monospace"],
       },
-      boxShadow: {
-        soft: "0 10px 30px -12px rgba(34, 36, 107, 0.25)",
+      letterSpacing: {
+        tightest: "-0.035em",
+        kerned: "-0.045em",
       },
-      backgroundImage: {
-        "hero-grid":
-          "radial-gradient(circle at 20% 10%, rgba(255,255,255,0.06) 0, transparent 35%), radial-gradient(circle at 90% 30%, rgba(233,75,75,0.18) 0, transparent 40%)",
+      maxWidth: {
+        prose2: "62ch",
+        readable: "72ch",
       },
     },
   },

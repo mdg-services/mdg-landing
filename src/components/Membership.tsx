@@ -1,81 +1,94 @@
+const promises = [
+  { t: "Bespoke", d: "You pick the services. We do not bundle. Your fee depends on what your pump actually needs." },
+  { t: "Locked", d: "Pricing is written down before we begin. No surprise fees, no escalations during the year." },
+  { t: "Limited", d: "We only take as many dealers as we can serve well. Membership is closed during overload." },
+  { t: "Lifted", d: "Onboarding within seven days. Old paperwork audited. You see a difference in the first cycle." },
+];
+
 export default function Membership() {
   return (
-    <section
-      id="membership"
-      className="container-x py-20 md:py-24"
-    >
-      <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-navy via-navy-700 to-navy-900 px-8 py-16 text-white md:px-16">
-        <div className="absolute -right-20 -top-20 h-72 w-72 rounded-full bg-coral/30 blur-3xl" />
-        <div className="absolute -left-24 -bottom-24 h-72 w-72 rounded-full bg-white/10 blur-3xl" />
-        <div className="relative grid gap-10 md:grid-cols-12 md:items-center">
-          <div className="md:col-span-7">
-            <div className="chip !bg-white/10 !text-white !border-white/20">
-              Memberships Open
-            </div>
-            <h2 className="mt-4 text-3xl font-extrabold md:text-4xl">
-              Registrations are open — for a limited number of dealers.
+    <section id="membership" className="relative overflow-hidden bg-ink text-paper">
+      <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 h-px bg-paper/15" />
+      <div aria-hidden className="pointer-events-none absolute inset-x-0 bottom-0 h-px bg-paper/15" />
+
+      <div className="wrap-full relative py-24 md:py-36">
+        <div className="grid items-end gap-8 md:grid-cols-12">
+          <div className="md:col-span-8" data-reveal>
+            <p className="eyebrow-on-seal">Membership <span className="mx-2">·</span> <span className="deva normal-case text-[14px] tracking-normal text-seal">सदस्यता</span></p>
+            <h2
+              className="mt-6 text-mega text-paper"
+              style={{ fontSize: "clamp(40px, 7vw, 112px)" }}
+            >
+              Pay only for what
+              <br />
+              <span className="text-seal">your pump needs.</span>
             </h2>
-            <p className="mt-4 max-w-xl text-white/75">
-              The subscription is fully customisable: pick the modules you
-              need, leave the rest. Pricing varies with the services you
-              choose, so you only pay for what genuinely moves the needle for
-              your pump.
+          </div>
+
+          <div className="md:col-span-4" data-reveal style={{ ["--reveal-delay" as any]: "120ms" }}>
+            <p className="max-w-prose2 text-[17px] leading-[1.55] text-paper/80 md:text-[19px]">
+              No tiers. No bundles. Your monthly fee depends on the
+              services you choose, and is locked in writing before we
+              begin.
             </p>
-            <ul className="mt-6 space-y-2 text-sm text-white/80">
-              {[
-                "Customised service mix — built around your dealership",
-                "Transparent pricing, no surprise add-ons",
-                "Onboarding support and document audit included",
-              ].map((b) => (
-                <li key={b} className="flex items-start gap-2">
-                  <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-coral" />
-                  {b}
-                </li>
-              ))}
-            </ul>
-            <div className="mt-8 flex flex-wrap gap-3">
-              <a href="#contact" className="btn-primary">
+
+            <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:items-center">
+              <a href="#contact" className="btn-on-seal">
                 Reserve your slot
+                <ArrowRight />
               </a>
               <a
                 href="tel:18003456512"
-                className="btn-secondary !bg-white/10 !text-white !border-white/20 hover:!bg-white hover:!text-navy"
+                className="btn-on-seal-ghost"
               >
-                Call 1800-345-6512
+                Call to discuss
               </a>
             </div>
           </div>
-          <div className="md:col-span-5">
-            <div className="rounded-2xl bg-white/[0.06] p-6 ring-1 ring-white/10 backdrop-blur">
-              <div className="text-xs uppercase tracking-[0.3em] text-white/60">
-                Important
-              </div>
-              <p className="mt-3 text-white/85">
-                The subscription has an option to customise the services,
-                resulting in varying prices. Registrations are open for{" "}
-                <span className="font-semibold text-white">
-                  selected members only
-                </span>{" "}
-                — hurry up.
+        </div>
+
+        <ol className="mt-16 grid gap-0 md:mt-24 md:grid-cols-4 md:gap-0">
+          {promises.map((p, i) => (
+            <li
+              key={p.t}
+              data-reveal
+              style={{ ["--reveal-delay" as any]: `${i * 90}ms` }}
+              className={
+                "relative border-t border-paper/20 py-8 md:py-10 " +
+                (i !== 0 ? "md:border-l md:border-l-paper/20 md:pl-8" : "md:pl-0") +
+                " md:pr-8"
+              }
+            >
+              <span className="num-serif tabular-nums text-paper/40 text-[28px] leading-none">
+                {String(i + 1).padStart(2, "0")}
+              </span>
+              <h3 className="mt-5 text-display text-paper" style={{ fontSize: "clamp(22px, 2.4vw, 30px)", lineHeight: 1.05 }}>
+                {p.t}
+              </h3>
+              <p className="mt-3 text-[15px] leading-[1.55] text-paper/75">
+                {p.d}
               </p>
-              <div className="mt-6 grid grid-cols-2 gap-3">
-                <div className="rounded-xl bg-white/[0.06] p-3">
-                  <div className="text-[10px] uppercase tracking-widest text-white/60">
-                    Onboarding
-                  </div>
-                  <div className="text-sm font-bold">Within 7 days</div>
-                </div>
-                <div className="rounded-xl bg-white/[0.06] p-3">
-                  <div className="text-[10px] uppercase tracking-widest text-white/60">
-                    Support
-                  </div>
-                  <div className="text-sm font-bold">24 / 7</div>
-                </div>
-              </div>
-            </div>
-          </div>
+            </li>
+          ))}
+        </ol>
+
+        <div
+          className="mt-16 flex items-center gap-4 text-[11px] uppercase tracking-[0.22em] text-paper/70"
+          data-reveal
+          style={{ ["--reveal-delay" as any]: "420ms" }}
+        >
+          <span className="h-px w-10 bg-paper/40" />
+          <span className="mono">Only a handful of slots left this quarter</span>
         </div>
       </div>
     </section>
+  );
+}
+
+function ArrowRight() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden>
+      <path d="M5 12h14m0 0-6-6m6 6-6 6" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
   );
 }
