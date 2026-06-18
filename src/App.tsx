@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+import { Routes, Route, useLocation } from "react-router-dom";
 import { motion, useScroll, useSpring } from "motion/react";
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
@@ -13,8 +15,9 @@ import Membership from "./components/Membership";
 import Contact from "./components/Contact";
 import FAQ from "./components/FAQ";
 import Footer from "./components/Footer";
+import Register from "./components/Register";
 
-export default function App() {
+function Landing() {
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, { stiffness: 140, damping: 30, mass: 0.3 });
 
@@ -38,5 +41,25 @@ export default function App() {
       </main>
       <Footer />
     </div>
+  );
+}
+
+function ScrollToTop() {
+  const { pathname } = useLocation();
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+  return null;
+}
+
+export default function App() {
+  return (
+    <>
+      <ScrollToTop />
+      <Routes>
+        <Route path="/" element={<Landing />} />
+        <Route path="/register" element={<Register />} />
+      </Routes>
+    </>
   );
 }

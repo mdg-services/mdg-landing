@@ -45,6 +45,19 @@ truth for content + theme is the dealer brochure (Canva, "Dealer's कवच").
   services" + 7 Mission values + 4 Why-us pillars. Keep the brochure's toll-free
   (1800-345-6512) and mdgservices.in contact details.
 
+## Dealer enrolment page (`/register`)
+- **D11.** Added `react-router-dom` and a second route, `/register`, holding the
+  Terms & Conditions (verbatim from the dealer agreement) followed by the
+  enrolment form. Kept it a client-side route (SPA) with a `vercel.json` rewrite
+  so deep links resolve. The landing's "Reserve your slot" CTA and a footer link
+  point to it.
+- **D12.** T&C text is stored verbatim in `data/content.ts` (`TERMS`); the only
+  edit is de-duplicating an obvious "It is It is" typo and normalising
+  "MAJEOUR"→"MAJEURE". Legal wording is otherwise untouched.
+- **D13.** The enrolment form validates client-side (required fields + a required
+  "agree" checkbox gating submit) and shows a success state, but like the contact
+  form it does **not** post anywhere yet — see `MANUAL_STEPS.md`.
+
 ## Skills / tooling
 - **D10.** `ui-ux-pro-max` and `taste-skill` are already installed locally as
   Claude skills, so they are referenced directly rather than cloned into the repo

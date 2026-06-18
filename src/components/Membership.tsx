@@ -1,4 +1,5 @@
 import { motion } from "motion/react";
+import { Link } from "react-router-dom";
 import Icon from "./Icon";
 import { Reveal, Stagger } from "../lib/motion";
 import { itemUp } from "../lib/anim";
@@ -47,9 +48,9 @@ export default function Membership() {
               choose, locked in writing before we begin.
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
-              <a href="#contact" className="btn-gold">
+              <Link to="/register" className="btn-gold">
                 Reserve your slot <Icon name="arrow" size={16} />
-              </a>
+              </Link>
               <a href="tel:18003456512" className="btn-on-dark-ghost">
                 Call to discuss
               </a>

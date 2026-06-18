@@ -1,13 +1,14 @@
+import { Link } from "react-router-dom";
 import { LogoMark } from "./Brand";
 import Icon from "./Icon";
 import { BRAND } from "../data/content";
 
 const explore = [
-  { href: "#services", label: "Services" },
-  { href: "#why", label: "Why us" },
-  { href: "#process", label: "Process" },
-  { href: "#membership", label: "Membership" },
-  { href: "#contact", label: "Get in touch" },
+  { href: "/#services", label: "Services" },
+  { href: "/#why", label: "Why us" },
+  { href: "/#process", label: "Process" },
+  { href: "/#membership", label: "Membership" },
+  { href: "/#contact", label: "Get in touch" },
 ];
 
 export default function Footer() {
@@ -43,6 +44,11 @@ export default function Footer() {
                   </a>
                 </li>
               ))}
+              <li>
+                <Link to="/register" className="link-quiet text-navy-100 hover:text-white">
+                  Register
+                </Link>
+              </li>
             </ul>
           </div>
 

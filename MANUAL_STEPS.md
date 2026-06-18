@@ -8,11 +8,14 @@ few things I can't (or shouldn't) do without you:
    over verbatim. Confirm they're live before this goes public. (The email is an
    assumed address — replace if MDG uses a different one.)
 
-2. **Wire the callback form to a real backend.** The "Leave my number" form
-   currently shows a success state client-side only — it does **not** send the
-   lead anywhere. Point it at a real endpoint (Formspree / a serverless function
-   / the MDG backend) before launch. See `src/components/Contact.tsx`
-   (`handleSubmit`). Until then it's a demo, not a working lead capture.
+2. **Wire the two forms to a real backend.** Both the "Leave my number" callback
+   form (`src/components/Contact.tsx`) and the **dealer enrolment form** at
+   `/register` (`src/components/Register.tsx`) currently show a success state
+   client-side only — they do **not** send anything anywhere. Point them at a
+   real endpoint (Formspree / a serverless function / the MDG backend) before
+   launch. Until then they're demos, not working lead/enrolment capture. The
+   enrolment form also references **Annexure – I** (services + rates) from the
+   agreement — supply that content if it should appear on the page.
 
 3. **Push to the remote.** Work is committed locally on branch
    `rebuild/landing-v2`. Review it, then merge to `main` and push when you're
