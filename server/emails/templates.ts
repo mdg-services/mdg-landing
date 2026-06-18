@@ -7,8 +7,8 @@ import {
   dataTable,
   button,
   escapeHtml,
-} from "./layout";
-import type { EnrollmentData } from "../validation";
+} from "./layout.js";
+import type { EnrollmentData } from "../validation.js";
 
 const B = MAIL_BRAND;
 

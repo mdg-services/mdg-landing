@@ -1,5 +1,5 @@
 import { writeFileSync, mkdirSync } from "node:fs";
-import { welcomeEmail, enrollmentNotificationEmail } from "../server/emails/templates";
+import { welcomeEmail, enrollmentNotificationEmail } from "../server/emails/templates.js";
 
 const data = {
   name: "Ramesh Kumar",

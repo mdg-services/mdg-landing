@@ -1,7 +1,7 @@
-import { enrollmentSchema } from "./validation";
-import { sendTemplate } from "./mailer";
-import { enrollmentNotificationEmail, welcomeEmail } from "./emails/templates";
-import { env } from "./env";
+import { enrollmentSchema } from "./validation.js";
+import { sendTemplate } from "./mailer.js";
+import { enrollmentNotificationEmail, welcomeEmail } from "./emails/templates.js";
+import { env } from "./env.js";
 
 export type EnrollResult =
   | { ok: true }

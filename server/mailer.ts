@@ -1,6 +1,6 @@
 import nodemailer, { type Transporter } from "nodemailer";
-import { env, hasMailCredentials } from "./env";
-import type { EmailContent } from "./emails/layout";
+import { env, hasMailCredentials } from "./env.js";
+import type { EmailContent } from "./emails/layout.js";
 
 export type MailMessage = {
   to: string | string[];

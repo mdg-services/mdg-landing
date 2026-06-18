@@ -1,5 +1,5 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
-import { processEnrollment } from "../server/enroll";
+import { processEnrollment } from "../server/enroll.js";
 
 /**
  * POST /api/enroll — dealer enrolment.
