@@ -66,10 +66,12 @@ details to the MDG inbox and a welcome note to the dealer.
 - **Adding another email:** write a `(data) => EmailContent` function in
   `server/emails/templates.ts`, then `sendTemplate(myEmail(data), to)`. The
   transport and branded layout are shared.
-- **Config:** set `GMAIL_USER` + `GMAIL_APP_PASSWORD` (Google App Password) and
-  optionally `ENROLLMENT_NOTIFY_TO` / `MAIL_FROM_NAME`. See `.env.example`.
-  Without credentials the dev server logs emails instead of sending; production
-  requires them. Swapping Gmail for Resend/SES touches only `server/mailer.ts`.
+- **Transport:** Nodemailer over plain SMTP (provider-agnostic), set up for
+  Hostinger, sending from `noreply@mdgservices.in`. Config via env —
+  `SMTP_HOST/PORT/SECURE/USER/PASS`, `MAIL_FROM`, `ENROLLMENT_NOTIFY_TO`. See
+  `.env.example`. Without credentials the dev server logs emails instead of
+  sending; production requires them. Switching providers touches only the env +
+  `server/mailer.ts`.
 
 ## Theme
 

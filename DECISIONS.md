@@ -72,11 +72,14 @@ truth for content + theme is the dealer brochure (Canva, "Dealer's कवच").
   - `server/enroll.ts` — `processEnrollment()`: validate → fan out notification +
     welcome concurrently. Called by both `api/enroll.ts` (prod) and a Vite dev
     middleware (`vite.config.ts`), so local `npm run dev` exercises the real path.
-- **D16.** Transport = **Nodemailer + Gmail SMTP** (App Password), because the
-  destination is a Gmail inbox and it needs zero domain setup. Swapping to
-  Resend/SES later touches only `server/mailer.ts`; templates/validation/logic
-  are unchanged. Without creds, the dev mailer logs instead of sending (testable
-  locally); in prod, missing creds are a hard error.
+- **D16.** Transport = **Nodemailer over plain SMTP** (provider-agnostic),
+  configured for **Hostinger** by default and sending from the domain mailbox
+  `noreply@mdgservices.in` (good SPF/DKIM deliverability, no third-party email
+  API). All transport config is env-driven (`SMTP_HOST/PORT/SECURE/USER/PASS`,
+  `MAIL_FROM`), so switching providers (Gmail/Resend/SES) only changes env +
+  `server/mailer.ts`; templates/validation/logic are unchanged. Without creds the
+  dev mailer logs instead of sending (testable locally); in prod, missing creds
+  are a hard error.
 - **D17.** No secrets in the repo — creds come from env (`.env.example`,
   `.gitignore` blocks `.env*`). Backend is type-checked via
   `tsconfig.server.json` (`npm run typecheck:api`) and linted as Node, separate

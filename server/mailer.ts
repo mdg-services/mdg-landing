@@ -19,8 +19,10 @@ let transporter: Transporter | null = null;
 function getTransporter(): Transporter {
   if (!transporter) {
     transporter = nodemailer.createTransport({
-      service: "gmail",
-      auth: { user: env.gmailUser, pass: env.gmailAppPassword },
+      host: env.smtpHost,
+      port: env.smtpPort,
+      secure: env.smtpSecure,
+      auth: { user: env.smtpUser, pass: env.smtpPass },
     });
   }
   return transporter;
@@ -28,13 +30,11 @@ function getTransporter(): Transporter {
 
 /** Low-level send. Most callers should use {@link sendTemplate}. */
 export async function sendMail(message: MailMessage): Promise<void> {
-  const from = `"${env.fromName}" <${env.gmailUser}>`;
+  const from = `"${env.fromName}" <${env.fromAddress || env.smtpUser}>`;
 
   if (!hasMailCredentials()) {
     if (env.isProd) {
-      throw new Error(
-        "Mail credentials missing — set GMAIL_USER and GMAIL_APP_PASSWORD."
-      );
+      throw new Error("Mail credentials missing — set SMTP_USER and SMTP_PASS.");
     }
     // Local dev without secrets: log instead of sending so the flow is testable.
     const to = Array.isArray(message.to) ? message.to.join(", ") : message.to;
