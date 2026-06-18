@@ -8,14 +8,44 @@ import { Reveal, Stagger } from "../lib/motion";
 import { itemUp, EASE } from "../lib/anim";
 import { BRAND, TERMS, SITE_TYPES } from "../data/content";
 
+type Status = "idle" | "submitting" | "success" | "error";
+
 export default function Register() {
-  const [sent, setSent] = useState(false);
+  const [status, setStatus] = useState<Status>("idle");
+  const [errorMsg, setErrorMsg] = useState("");
   const [siteType, setSiteType] = useState("");
 
-  function handleSubmit(e: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    setSent(true);
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    const fd = new FormData(e.currentTarget);
+    const payload = {
+      name: String(fd.get("name") ?? "").trim(),
+      mobile: String(fd.get("mobile") ?? "").trim(),
+      email: String(fd.get("email") ?? "").trim(),
+      siteType,
+      pumpName: String(fd.get("pumpName") ?? "").trim(),
+      sapCode: String(fd.get("sapCode") ?? "").trim(),
+      agree: fd.get("agree") === "on",
+    };
+
+    setStatus("submitting");
+    setErrorMsg("");
+    try {
+      const res = await fetch("/api/enroll", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+      const data = (await res.json().catch(() => ({}))) as { ok?: boolean; error?: string };
+      if (!res.ok || !data.ok) {
+        throw new Error(data.error || "Something went wrong. Please try again.");
+      }
+      setStatus("success");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    } catch (err) {
+      setStatus("error");
+      setErrorMsg(err instanceof Error ? err.message : "Something went wrong. Please try again.");
+    }
   }
 
   return (
@@ -132,7 +162,7 @@ export default function Register() {
             transition={{ duration: 0.6, ease: EASE, delay: 0.1 }}
             className="mt-10"
           >
-            {sent ? (
+            {status === "success" ? (
               <SuccessCard />
             ) : (
               <form onSubmit={handleSubmit} aria-label="Dealer enrolment" className="card p-6 sm:p-8">
@@ -202,10 +232,34 @@ export default function Register() {
                   </span>
                 </label>
 
+                {status === "error" && (
+                  <div role="alert" className="mt-6 flex items-start gap-3 rounded-xl border border-gold-300 bg-gold-50 p-4">
+                    <span className="mt-0.5 grid h-6 w-6 shrink-0 place-items-center rounded-full bg-gold-400 text-navy-950">
+                      <Icon name="siren" size={14} />
+                    </span>
+                    <p className="text-[14px] leading-[1.5] text-ink-soft">
+                      {errorMsg}{" "}
+                      <a href={BRAND.phoneHref} className="link-quiet font-semibold text-navy-700">
+                        Or call {BRAND.phone}
+                      </a>
+                      .
+                    </p>
+                  </div>
+                )}
                 <div className="mt-8 flex flex-wrap items-center justify-between gap-4">
                   <p className="text-[13px] text-ink-muted">We will never share your details.</p>
-                  <button type="submit" className="btn-primary">
-                    Submit <Icon name="arrow" size={16} />
+                  <button
+                    type="submit"
+                    disabled={status === "submitting"}
+                    className={"btn-primary" + (status === "submitting" ? " pointer-events-none opacity-70" : "")}
+                  >
+                    {status === "submitting" ? (
+                      "Submitting…"
+                    ) : (
+                      <>
+                        Submit <Icon name="arrow" size={16} />
+                      </>
+                    )}
                   </button>
                 </div>
               </form>

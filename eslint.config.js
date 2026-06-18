@@ -19,4 +19,14 @@ export default defineConfig([
       globals: globals.browser,
     },
   },
+  // Backend (serverless + dev server) — Node, not browser/React.
+  {
+    files: ['api/**/*.ts', 'server/**/*.ts', 'scripts/**/*.ts', 'vite.config.ts'],
+    languageOptions: {
+      globals: globals.node,
+    },
+    rules: {
+      'react-refresh/only-export-components': 'off',
+    },
+  },
 ])

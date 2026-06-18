@@ -55,8 +55,33 @@ truth for content + theme is the dealer brochure (Canva, "Dealer's कवच").
   edit is de-duplicating an obvious "It is It is" typo and normalising
   "MAJEOUR"→"MAJEURE". Legal wording is otherwise untouched.
 - **D13.** The enrolment form validates client-side (required fields + a required
-  "agree" checkbox gating submit) and shows a success state, but like the contact
-  form it does **not** post anywhere yet — see `MANUAL_STEPS.md`.
+  "agree" checkbox gating submit), then posts to the email backend below.
+
+## Email backend (enrolment)
+- **D14.** Backend = **Vercel Serverless Functions** co-located with the site
+  (`api/enroll.ts`), not a separate service. The landing already deploys on
+  Vercel, so this auto-scales, needs no extra infra/CORS, and ships together.
+- **D15.** Layered for reuse — the HTTP layer is a thin adapter over a
+  transport-agnostic core:
+  - `server/validation.ts` — Zod schema, single source of truth for the payload.
+  - `server/emails/layout.ts` — one branded HTML shell + helpers (`wrapEmail`,
+    `dataTable`, `button`…); every email renders through it.
+  - `server/emails/templates.ts` — pure `data → EmailContent` functions. **Adding
+    a new email = add one function here** and `sendTemplate(it, to)`.
+  - `server/mailer.ts` — singleton Nodemailer transport + `sendTemplate()`.
+  - `server/enroll.ts` — `processEnrollment()`: validate → fan out notification +
+    welcome concurrently. Called by both `api/enroll.ts` (prod) and a Vite dev
+    middleware (`vite.config.ts`), so local `npm run dev` exercises the real path.
+- **D16.** Transport = **Nodemailer + Gmail SMTP** (App Password), because the
+  destination is a Gmail inbox and it needs zero domain setup. Swapping to
+  Resend/SES later touches only `server/mailer.ts`; templates/validation/logic
+  are unchanged. Without creds, the dev mailer logs instead of sending (testable
+  locally); in prod, missing creds are a hard error.
+- **D17.** No secrets in the repo — creds come from env (`.env.example`,
+  `.gitignore` blocks `.env*`). Backend is type-checked via
+  `tsconfig.server.json` (`npm run typecheck:api`) and linted as Node, separate
+  from the browser/React config. `npm run email:preview` renders templates to
+  `.email-preview/` for visual QA.
 
 ## Skills / tooling
 - **D10.** `ui-ux-pro-max` and `taste-skill` are already installed locally as

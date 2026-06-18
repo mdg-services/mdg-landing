@@ -12,6 +12,14 @@ dist
 dist-ssr
 *.local
 
+# Env / secrets
+.env
+.env.*
+!.env.example
+
+# Local email previews (scripts/render-emails.ts)
+.email-preview
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

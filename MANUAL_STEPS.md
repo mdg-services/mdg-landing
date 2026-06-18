@@ -3,28 +3,34 @@
 The landing rebuild is complete, builds clean, and runs locally. These are the
 few things I can't (or shouldn't) do without you:
 
-1. **Verify the contact details are real.** The brochure's toll-free number
-   `1800-345-6512`, `mdgservices.in`, and `hello@mdgservices.in` are carried
-   over verbatim. Confirm they're live before this goes public. (The email is an
-   assumed address — replace if MDG uses a different one.)
+1. **Set the email credentials (required for the enrolment emails to send).**
+   The `/register` form now posts to a real serverless function (`api/enroll.ts`)
+   that emails the details to **mdgservicesterms@gmail.com** and a welcome note
+   to the dealer. It needs a Gmail **App Password** to send:
+   - On the Gmail account, turn on 2-Step Verification, then create an App
+     Password at https://myaccount.google.com/apppasswords.
+   - In **Vercel → Project → Settings → Environment Variables**, add:
+     `GMAIL_USER` (the sending account, e.g. `mdgservicesterms@gmail.com`),
+     `GMAIL_APP_PASSWORD` (the 16-char app password), and optionally
+     `ENROLLMENT_NOTIFY_TO` / `MAIL_FROM_NAME`. See `.env.example`.
+   - Without these, production returns an error on submit; locally the dev server
+     just logs the emails so the flow stays testable. (Gmail SMTP is fine for
+     low volume; if enrolments scale up, switch the transport in
+     `server/mailer.ts` to a sender like Resend/SES — the templates don't change.)
 
-2. **Wire the two forms to a real backend.** Both the "Leave my number" callback
-   form (`src/components/Contact.tsx`) and the **dealer enrolment form** at
-   `/register` (`src/components/Register.tsx`) currently show a success state
-   client-side only — they do **not** send anything anywhere. Point them at a
-   real endpoint (Formspree / a serverless function / the MDG backend) before
-   launch. Until then they're demos, not working lead/enrolment capture. The
-   enrolment form also references **Annexure – I** (services + rates) from the
-   agreement — supply that content if it should appear on the page.
+2. **Verify the contact details are real.** The brochure's toll-free number
+   `1800-345-6512`, `mdgservices.in`, and `hello@mdgservices.in` are carried over
+   verbatim. Confirm they're live before launch. (`hello@` is an assumed address.)
 
-3. **Push to the remote.** Work is committed locally on branch
-   `rebuild/landing-v2`. Review it, then merge to `main` and push when you're
-   ready. (Per your standing instruction I did not push.)
+3. **Wire the callback form too (optional).** The "Leave my number" form in
+   `src/components/Contact.tsx` still only shows a success state — it doesn't send
+   anything. It can reuse the same backend: add a template in
+   `server/emails/templates.ts` and a tiny `api/callback.ts` mirroring
+   `api/enroll.ts`. (The enrolment form is fully wired; this is the one leftover.)
 
-4. **Optional — real photography.** The design is fully self-contained (SVG +
-   CSS, no stock images), which keeps it fast and on-brand. If you later want
-   real outlet/team photos (as in the brochure), see `ASSETS.md` for where they'd
-   slot in and generation/sourcing prompts.
+4. **Annexure – I.** The Terms reference *Annexure – I* (services + rates). Send
+   me that content if it should appear on the `/register` page.
 
-5. **Optional — analytics.** No analytics/tag manager is wired in. Add GA4 /
-   Plausible / your choice to `index.html` if you want traffic data.
+5. **Optional — photography & analytics.** The design is self-contained (SVG/CSS,
+   no stock images — see `ASSETS.md`). No analytics/tag manager is wired in; add
+   GA4 / Plausible to `index.html` if you want traffic data.
