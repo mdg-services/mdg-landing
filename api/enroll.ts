@@ -16,10 +16,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       submittedAt: new Date().toISOString(),
     });
 
-    if (!result.ok) {
-      return res.status(result.status).json(result);
-    }
-    return res.status(200).json({ ok: true });
+    // `status` is present on both branches, so no narrowing is required.
+    return res.status(result.status).json(result.ok ? { ok: true } : result);
   } catch (err) {
     console.error("[api/enroll] failed:", err);
     return res.status(502).json({

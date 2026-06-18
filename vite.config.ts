@@ -32,7 +32,7 @@ function devEnrollApi(): Plugin {
             const result = await processEnrollment(payload, {
               submittedAt: new Date().toISOString(),
             });
-            return send(result.ok ? 200 : result.status, result);
+            return send(result.status, result);
           } catch (err) {
             server.config.logger.error(
               "[dev /api/enroll] " + (err instanceof Error ? err.message : String(err))

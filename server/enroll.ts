@@ -4,7 +4,7 @@ import { enrollmentNotificationEmail, welcomeEmail } from "./emails/templates.js
 import { env } from "./env.js";
 
 export type EnrollResult =
-  | { ok: true }
+  | { ok: true; status: 200 }
   | { ok: false; status: number; error: string; issues?: Record<string, string[] | undefined> };
 
 /**
@@ -46,5 +46,5 @@ export async function processEnrollment(
   }
 
   await Promise.all(jobs);
-  return { ok: true };
+  return { ok: true, status: 200 };
 }
