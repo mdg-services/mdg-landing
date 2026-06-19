@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { LogoMark } from "./Brand";
+import { LogoFullWhite } from "./Brand";
 import Icon from "./Icon";
 import { BRAND } from "../data/content";
 
@@ -18,12 +18,7 @@ export default function Footer() {
       <div className="wrap-full relative pt-20 pb-12 md:pt-24">
         <div className="grid items-start gap-12 md:grid-cols-12">
           <div className="md:col-span-5">
-            <div className="flex items-center gap-3">
-              <span className="grid h-11 w-11 place-items-center rounded-xl bg-white/10 text-white">
-                <LogoMark size={26} />
-              </span>
-              <span className="font-display text-[17px] font-bold tracking-tight text-white">MDG Services</span>
-            </div>
+            <LogoFullWhite className="h-10 w-auto" />
             <p className="mt-7 font-display text-[24px] font-medium leading-[1.2] text-white md:text-[30px]">
               Dealer's <span className="deva text-gold-400">कवच</span>.
               <br />

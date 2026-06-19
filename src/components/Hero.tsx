@@ -215,7 +215,7 @@ function ShieldDiagram() {
               transition={{ duration: 1.4, ease: EASE, delay: 0.9 }}
             />
           </svg>
-          <LogoMark size={66} className="relative text-white" />
+          <LogoMark white className="relative h-16 w-16 object-contain" />
           <span className="absolute -bottom-3 left-1/2 -translate-x-1/2 rounded-full bg-gold-400 px-3 py-1 deva text-[13px] font-medium text-navy-950 shadow-glow">
             कवच
           </span>

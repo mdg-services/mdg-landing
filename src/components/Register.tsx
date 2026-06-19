@@ -1,7 +1,7 @@
 import { useEffect, useState, type FormEvent, type ReactNode } from "react";
 import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "motion/react";
-import { LogoChip } from "./Brand";
+import { LogoFull } from "./Brand";
 import Icon from "./Icon";
 import Footer from "./Footer";
 import { Reveal } from "../lib/motion";
@@ -55,13 +55,11 @@ export default function Register() {
       {/* slim header */}
       <header className="sticky top-0 z-40 border-b border-ink-hairline bg-paper/85 backdrop-blur">
         <div className="wrap-wide flex h-16 items-center justify-between md:h-[72px]">
-          <Link to="/" className="flex items-center gap-2.5" aria-label="MDG Services home">
-            <LogoChip size={36} />
-            <span className="hidden flex-col leading-none sm:flex">
-              <span className="font-display text-[14px] font-bold tracking-tight text-ink">MDG Services</span>
-              <span className="mt-1 font-mono text-[10px] uppercase tracking-[0.2em] text-ink-muted">
-                Dealer's <span className="deva normal-case tracking-normal text-navy-700">कवच</span>
-              </span>
+          <Link to="/" className="flex items-center gap-3" aria-label="MDG Services home">
+            <LogoFull className="h-8 w-auto sm:h-9" />
+            <span aria-hidden className="hidden h-6 w-px bg-ink-hairline sm:block" />
+            <span className="hidden font-mono text-[10px] uppercase tracking-[0.2em] text-ink-muted sm:block">
+              Dealer's <span className="deva normal-case tracking-normal text-navy-700">कवच</span>
             </span>
           </Link>
           <div className="flex items-center gap-3 sm:gap-5">

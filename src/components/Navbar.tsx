@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { motion } from "motion/react";
-import { LogoChip } from "./Brand";
+import { LogoFull } from "./Brand";
 import Icon from "./Icon";
 import { BRAND } from "../data/content";
 
@@ -45,12 +45,10 @@ export default function Navbar() {
     >
       <div className="wrap-full flex h-16 items-center justify-between md:h-20">
         <a href="#top" className="flex items-center gap-3" aria-label="MDG Services home">
-          <LogoChip size={40} />
-          <span className="hidden flex-col leading-none sm:flex">
-            <span className="font-display text-[15px] font-bold tracking-tight text-ink">MDG Services</span>
-            <span className="mt-1 font-mono text-[10px] uppercase tracking-[0.2em] text-ink-muted">
-              Dealer's <span className="deva normal-case tracking-normal text-navy-700">कवच</span>
-            </span>
+          <LogoFull className="h-8 w-auto sm:h-9" />
+          <span aria-hidden className="hidden h-6 w-px bg-ink-hairline sm:block" />
+          <span className="hidden font-mono text-[10px] uppercase tracking-[0.2em] text-ink-muted sm:block">
+            Dealer's <span className="deva normal-case tracking-normal text-navy-700">कवच</span>
           </span>
         </a>
 
