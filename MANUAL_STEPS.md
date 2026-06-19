@@ -26,11 +26,10 @@ few things I can't (or shouldn't) do without you:
    `1800-345-6512`, `mdgservices.in`, and `hello@mdgservices.in` are carried over
    verbatim. Confirm they're live before launch. (`hello@` is an assumed address.)
 
-3. **Wire the callback form too (optional).** The "Leave my number" form in
-   `src/components/Contact.tsx` still only shows a success state — it doesn't send
-   anything. It can reuse the same backend: add a template in
-   `server/emails/templates.ts` and a tiny `api/callback.ts` mirroring
-   `api/enroll.ts`. (The enrolment form is fully wired; this is the one leftover.)
+3. **Both forms are now wired.** The homepage "Leave my number" form posts to
+   `POST /api/callback` and emails the name + number to `ENROLLMENT_NOTIFY_TO`
+   (same inbox as enrolments). It uses the same SMTP credentials — nothing extra
+   to configure beyond step 1.
 
 4. **Annexure – I.** The Terms reference *Annexure – I* (services + rates). Send
    me that content if it should appear on the `/register` page.

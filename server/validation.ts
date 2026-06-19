@@ -31,3 +31,16 @@ export const enrollmentSchema = z.object({
 });
 
 export type EnrollmentData = z.infer<typeof enrollmentSchema>;
+
+/** The homepage "Leave my number" callback request. */
+export const callbackSchema = z.object({
+  name: z.string().trim().min(1, "Name is required").max(120),
+  phone: z
+    .string()
+    .trim()
+    .regex(/^[0-9+\s-]{10,15}$/, "Enter a valid phone number"),
+  outlet: optionalText(160),
+  message: optionalText(1000),
+});
+
+export type CallbackData = z.infer<typeof callbackSchema>;

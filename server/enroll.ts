@@ -2,10 +2,9 @@ import { enrollmentSchema } from "./validation.js";
 import { sendTemplate } from "./mailer.js";
 import { enrollmentNotificationEmail, welcomeEmail } from "./emails/templates.js";
 import { env } from "./env.js";
+import type { ProcessResult } from "./result.js";
 
-export type EnrollResult =
-  | { ok: true; status: 200 }
-  | { ok: false; status: number; error: string; issues?: Record<string, string[] | undefined> };
+export type EnrollResult = ProcessResult;
 
 /**
  * Validate an enrolment payload and fan out the emails.

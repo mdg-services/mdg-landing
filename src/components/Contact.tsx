@@ -3,13 +3,40 @@ import Icon from "./Icon";
 import { Reveal } from "../lib/motion";
 import { BRAND } from "../data/content";
 
+type Status = "idle" | "submitting" | "success" | "error";
+
 export default function Contact() {
   const [showForm, setShowForm] = useState(false);
-  const [sent, setSent] = useState(false);
+  const [status, setStatus] = useState<Status>("idle");
+  const [errorMsg, setErrorMsg] = useState("");
 
-  function handleSubmit(e: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    setSent(true);
+    const fd = new FormData(e.currentTarget);
+    const payload = {
+      name: String(fd.get("name") ?? "").trim(),
+      phone: String(fd.get("phone") ?? "").trim(),
+      outlet: String(fd.get("outlet") ?? "").trim(),
+      message: String(fd.get("message") ?? "").trim(),
+    };
+
+    setStatus("submitting");
+    setErrorMsg("");
+    try {
+      const res = await fetch("/api/callback", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+      const data = (await res.json().catch(() => ({}))) as { ok?: boolean; error?: string };
+      if (!res.ok || !data.ok) {
+        throw new Error(data.error || "Something went wrong. Please try again.");
+      }
+      setStatus("success");
+    } catch (err) {
+      setStatus("error");
+      setErrorMsg(err instanceof Error ? err.message : "Something went wrong. Please try again.");
+    }
   }
 
   return (
@@ -86,10 +113,10 @@ export default function Contact() {
           <div className="md:col-span-7">
             <div className="disclose" data-open={showForm} aria-hidden={!showForm}>
               <div>
-                {!sent ? (
+                {status !== "success" ? (
                   <form onSubmit={handleSubmit} aria-label="Request a callback">
                     <div className="grid gap-5 sm:grid-cols-2">
-                      <Field label="Your name" name="name" placeholder="Ramesh Kumar" />
+                      <Field label="Your name" name="name" placeholder="Ramesh Kumar" required />
                       <Field label="Pump / outlet" name="outlet" placeholder="Sai Petroleums, Aligarh" />
                       <Field
                         label="Phone"
@@ -102,10 +129,34 @@ export default function Contact() {
                         className="sm:col-span-2"
                       />
                     </div>
-                    <div className="mt-7 flex flex-wrap items-center justify-between gap-4">
-                      <p className="text-[13px] text-ink-muted">We will never share your number.</p>
-                      <button type="submit" className="btn-primary">
-                        Request callback <Icon name="arrow" size={16} />
+                    {status === "error" && (
+                      <div role="alert" className="mt-5 flex items-start gap-3 rounded-xl border border-gold-300 bg-gold-50 p-4">
+                        <span className="mt-0.5 grid h-6 w-6 shrink-0 place-items-center rounded-full bg-gold-400 text-navy-950">
+                          <Icon name="siren" size={14} />
+                        </span>
+                        <p className="text-[14px] leading-[1.5] text-ink-soft">
+                          {errorMsg}{" "}
+                          <a href={BRAND.phoneHref} className="link-quiet font-semibold text-navy-700">
+                            Or call {BRAND.phone}
+                          </a>
+                          .
+                        </p>
+                      </div>
+                    )}
+                    <div className="mt-7 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+                      <p className="order-2 text-[13px] text-ink-muted sm:order-1">We will never share your number.</p>
+                      <button
+                        type="submit"
+                        disabled={status === "submitting"}
+                        className={"btn-primary order-1 w-full sm:order-2 sm:w-auto" + (status === "submitting" ? " pointer-events-none opacity-70" : "")}
+                      >
+                        {status === "submitting" ? (
+                          "Sending…"
+                        ) : (
+                          <>
+                            Request callback <Icon name="arrow" size={16} />
+                          </>
+                        )}
                       </button>
                     </div>
                   </form>
