@@ -110,37 +110,59 @@ const bm = trim(mark);
 
 write(resizeW(variant(full, bf, [0, 0, 0]), 640), "public/logo-full.png");
 write(resizeW(variant(full, bf, [255, 255, 255]), 640), "public/logo-full-white.png");
-write(resizeW(variant(mark, bm, [0, 0, 0]), 384), "public/logo-mark.png");
-const markWhite = variant(mark, bm, [255, 255, 255]);
-write(resizeW(markWhite, 384), "public/logo-mark-white.png");
+const markBlack = variant(mark, bm, [0, 0, 0]);
+write(resizeW(markBlack, 384), "public/logo-mark.png");
+write(resizeW(variant(mark, bm, [255, 255, 255]), 384), "public/logo-mark-white.png");
 
-// Favicon: navy square with the white mark centered.
-const NAVY = [0x2c, 0x2e, 0x80];
-const S = 256;
-const fav = new PNG({ width: S, height: S });
-for (let i = 0; i < S * S; i++) {
-  fav.data[i * 4] = NAVY[0];
-  fav.data[i * 4 + 1] = NAVY[1];
-  fav.data[i * 4 + 2] = NAVY[2];
-  fav.data[i * 4 + 3] = 255;
-}
-const m = resizeW(markWhite, Math.round(S * 0.74));
-const ox = Math.round((S - m.width) / 2);
-const oy = Math.round((S - m.height) / 2);
-for (let y = 0; y < m.height; y++) {
-  for (let x = 0; x < m.width; x++) {
-    const si = (y * m.width + x) * 4;
-    const a = m.data[si + 3] / 255;
-    if (a <= 0) continue;
-    const X = ox + x, Y = oy + y;
-    if (X < 0 || Y < 0 || X >= S || Y >= S) continue;
-    const di = (Y * S + X) * 4;
-    for (let c = 0; c < 3; c++) {
-      fav.data[di + c] = Math.round(m.data[si + c] * a + fav.data[di + c] * (1 - a));
+/**
+ * Favicon = the black mark on a white square.
+ * `radius` rounds the corners (transparent outside); radius 0 = full opaque
+ * square (used for apple-touch, which iOS masks itself).
+ */
+function makeIcon(size, radius) {
+  const half = size / 2;
+  const png = new PNG({ width: size, height: size });
+  for (let y = 0; y < size; y++) {
+    for (let x = 0; x < size; x++) {
+      let cov = 1;
+      if (radius > 0) {
+        const px = x + 0.5 - half;
+        const py = y + 0.5 - half;
+        const qx = Math.abs(px) - (half - radius);
+        const qy = Math.abs(py) - (half - radius);
+        const dx = Math.max(qx, 0);
+        const dy = Math.max(qy, 0);
+        const sdf = Math.sqrt(dx * dx + dy * dy) + Math.min(Math.max(qx, qy), 0) - radius;
+        cov = Math.max(0, Math.min(1, 0.5 - sdf));
+      }
+      const di = (y * size + x) * 4;
+      png.data[di] = 255;
+      png.data[di + 1] = 255;
+      png.data[di + 2] = 255;
+      png.data[di + 3] = Math.round(cov * 255);
     }
   }
+  const m = resizeW(markBlack, Math.round(size * 0.72));
+  const ox = Math.round((size - m.width) / 2);
+  const oy = Math.round((size - m.height) / 2);
+  for (let y = 0; y < m.height; y++) {
+    for (let x = 0; x < m.width; x++) {
+      const si = (y * m.width + x) * 4;
+      const a = m.data[si + 3] / 255;
+      if (a <= 0) continue;
+      const X = ox + x, Y = oy + y;
+      if (X < 0 || Y < 0 || X >= size || Y >= size) continue;
+      const di = (Y * size + X) * 4;
+      for (let c = 0; c < 3; c++) {
+        png.data[di + c] = Math.round(m.data[si + c] * a + png.data[di + c] * (1 - a));
+      }
+      png.data[di + 3] = Math.max(png.data[di + 3], m.data[si + 3]);
+    }
+  }
+  return png;
 }
-write(fav, "public/favicon.png");
-write(resizeW(fav, 180), "public/apple-touch-icon.png");
+
+write(makeIcon(256, Math.round(256 * 0.2)), "public/favicon.png");
+write(makeIcon(180, 0), "public/apple-touch-icon.png");
 
 console.log("Logos generated into public/ (full + mark, black + white, favicon).");
