@@ -5,7 +5,8 @@ The rebuilt landing page is the MVP. Future, phased work:
 ## Phase 1 — Make it convert
 - Real lead-capture backend for the callback form (see `MANUAL_STEPS.md` #2),
   with spam protection and a thank-you email.
-- WhatsApp / click-to-chat entry point (high-intent in this audience).
+- "Get the app" / app-store entry point and a click-to-call CTA (high-intent in
+  this audience). Support lives in the app, not a third-party chat channel.
 - Analytics + basic conversion events (call clicks, form submits, CTA clicks).
 
 ## Phase 2 — Trust & proof
