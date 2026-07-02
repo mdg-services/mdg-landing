@@ -72,7 +72,12 @@ export default function Footer() {
         </div>
 
         <div className="mt-16 flex flex-col items-start justify-between gap-3 border-t border-white/10 pt-6 text-[13px] text-navy-300 sm:flex-row sm:items-center">
-          <p>© {new Date().getFullYear()} MDG Services. All rights reserved.</p>
+          <div className="space-y-1">
+            <p>© {new Date().getFullYear()} {BRAND.legalName}. All rights reserved.</p>
+            <p className="text-[12px] text-navy-400">
+              MDG Services is a brand of {BRAND.legalName} · CIN: {BRAND.cin}
+            </p>
+          </div>
           <p className="font-mono text-[11px] uppercase tracking-[0.2em]">Made for India's fuel station dealers</p>
         </div>
       </div>

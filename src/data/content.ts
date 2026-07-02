@@ -7,6 +7,8 @@ import type { IconName } from "../components/Icon";
 
 export const BRAND = {
   name: "MDG Services",
+  legalName: "VRUOOM PRIVATE LIMITED",
+  cin: "U29194HR2021PTC098450",
   program: "Dealer's कवच",
   programLatin: "Dealer's Kavach",
   phone: "1800-345-6512",
