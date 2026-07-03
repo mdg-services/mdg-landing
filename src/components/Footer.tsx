@@ -27,6 +27,11 @@ export default function Footer() {
             <p className="mt-6 max-w-prose2 text-[14px] leading-[1.6] text-navy-200">
               {BRAND.tagline} — your satisfaction fuels our energy.
             </p>
+            <p className="mt-6 max-w-prose2 text-[14px] leading-[1.6] text-navy-200">
+              MDG Services is a brand operated by{" "}
+              <span className="font-semibold text-white">{BRAND.legalName}</span>
+              , a company registered in India (CIN {BRAND.cin}).
+            </p>
           </div>
 
           <div className="md:col-span-3 md:col-start-7">
