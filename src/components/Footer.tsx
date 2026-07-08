@@ -82,6 +82,11 @@ export default function Footer() {
             <p className="text-[12px] text-navy-400">
               MDG Services is a brand of {BRAND.legalName} · CIN: {BRAND.cin}
             </p>
+            <p>
+              <a href="/privacy" className="link-quiet text-navy-200 hover:text-white">
+                Privacy Policy
+              </a>
+            </p>
           </div>
           <p className="font-mono text-[11px] uppercase tracking-[0.2em]">Made for India's fuel station dealers</p>
         </div>
