@@ -63,7 +63,7 @@ export default function Navbar() {
         <div className="flex items-center gap-3">
           <a href={BRAND.phoneHref} className="hidden items-center gap-2 num text-[14px] font-semibold text-ink lg:inline-flex">
             <Icon name="phone" size={15} className="text-navy-700" />
-            1800&#8209;345&#8209;6512
+            1800&#8209;891&#8209;3496
           </a>
           <a href="#contact" className="hidden md:inline-flex btn-primary !min-h-[44px] !px-5 !text-[13px]">
             Talk to us

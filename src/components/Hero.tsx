@@ -92,7 +92,7 @@ export default function Hero() {
             <a href={BRAND.phoneHref} className="font-mono text-[14px] tracking-[0.02em] text-navy-100">
               <span className="text-navy-300">or call</span>{" "}
               <span className="font-semibold text-white underline decoration-white/30 underline-offset-4">
-                1800&#8209;345&#8209;6512
+                1800&#8209;891&#8209;3496
               </span>
             </a>
           </motion.div>

@@ -43,7 +43,7 @@ truth for content + theme is the dealer brochure (Canva, "Dealer's कवच").
   complaint).
 - **D9.** Faithfully represent all 9 brochure service categories + the 4 "More
   services" + 7 Mission values + 4 Why-us pillars. Keep the brochure's toll-free
-  (1800-345-6512) and mdgservices.in contact details.
+  (1800-891-3496) and mdgservices.in contact details.
 
 ## Dealer enrolment page (`/register`)
 - **D11.** Added `react-router-dom` and a second route, `/register`, holding the

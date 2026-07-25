@@ -84,8 +84,8 @@ export default function Contact() {
               style={{ fontSize: "clamp(46px, 10vw, 150px)", lineHeight: 0.94, letterSpacing: "-0.04em" }}
             >
               <span className="text-gold-400">1800</span>
-              <span className="mx-1.5 text-white/30">·</span>345
-              <span className="mx-1.5 text-white/30">·</span>6512
+              <span className="mx-1.5 text-white/30">·</span>891
+              <span className="mx-1.5 text-white/30">·</span>3496
             </div>
             <div className="relative mt-6 inline-flex items-center gap-2 font-mono text-[12px] uppercase tracking-[0.18em] text-gold-300">
               Tap to call <Icon name="arrow" size={16} className="transition-transform duration-300 group-hover:translate-x-1" />

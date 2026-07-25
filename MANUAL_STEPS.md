@@ -23,7 +23,7 @@ few things I can't (or shouldn't) do without you:
      templates and logic don't.
 
 2. **Verify the contact details are real.** The brochure's toll-free number
-   `1800-345-6512`, `mdgservices.in`, and `hello@mdgservices.in` are carried over
+   `1800-891-3496`, `mdgservices.in`, and `hello@mdgservices.in` are carried over
    verbatim. Confirm they're live before launch. (`hello@` is an assumed address.)
 
 3. **Both forms are now wired.** The homepage "Leave my number" form posts to

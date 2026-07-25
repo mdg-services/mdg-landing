@@ -68,7 +68,7 @@ export default function Register() {
             </Link>
             <a href={BRAND.phoneHref} className="inline-flex items-center gap-2 num text-[13.5px] font-semibold text-ink sm:text-[14px]">
               <Icon name="phone" size={15} className="text-navy-700" />
-              1800&#8209;345&#8209;6512
+              1800&#8209;891&#8209;3496
             </a>
           </div>
         </div>

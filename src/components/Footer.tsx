@@ -58,7 +58,7 @@ export default function Footer() {
               <li>
                 <a href={BRAND.phoneHref} className="inline-flex items-center gap-2 num font-semibold text-white">
                   <Icon name="phone" size={15} className="text-gold-400" />
-                  1800&#8209;345&#8209;6512
+                  1800&#8209;891&#8209;3496
                 </a>
                 <div className="mt-1 font-mono text-[11px] uppercase tracking-[0.18em] text-navy-300">{BRAND.hours}</div>
               </li>

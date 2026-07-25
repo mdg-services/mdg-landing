@@ -51,7 +51,7 @@ export default function Membership() {
               <Link to="/register" className="btn-gold">
                 Reserve your slot <Icon name="arrow" size={16} />
               </Link>
-              <a href="tel:18003456512" className="btn-on-dark-ghost">
+              <a href="tel:18008913496" className="btn-on-dark-ghost">
                 Call to discuss
               </a>
             </div>
