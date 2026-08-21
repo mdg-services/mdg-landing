@@ -1,13 +1,13 @@
 import { motion, useReducedMotion } from "motion/react";
 import { LogoMark } from "./Brand";
 import Icon from "./Icon";
-import { BRAND } from "../data/content";
+import { BRAND, ORBIT } from "../data/content";
+import { useT } from "../i18n";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
-/* Portals that flow into the shield. */
-const ORBIT = ["SDMS", "Dhruva", "QRC", "AAC", "MDT", "DSR", "DAR", "Fire NOC"];
-
+/* Portals that flow into the shield. They are other people's systems, so
+   the names sit in content.ts and never change with the language. */
 type Node = { label: string; x: number; y: number };
 const NODES: Node[] = ORBIT.map((label, i) => {
   const a = (i / ORBIT.length) * Math.PI * 2 - Math.PI / 2;
@@ -15,6 +15,8 @@ const NODES: Node[] = ORBIT.map((label, i) => {
 });
 
 export default function Hero() {
+  const t = useT();
+
   return (
     <section id="top" className="relative overflow-hidden bg-navy-950 text-white">
       {/* backdrop */}
@@ -41,12 +43,12 @@ export default function Hero() {
           >
             <span className="inline-block h-1.5 w-1.5 rotate-45 bg-gold-400" />
             Dealer's <span className="deva normal-case tracking-normal text-gold-300">कवच</span>
-            <span className="text-white/30">·</span> The app for petrol pump dealers
+            <span className="text-white/30">·</span> {t.hero.eyebrow}
           </motion.div>
 
           <h1 className="mt-7 text-mega" style={{ fontSize: "clamp(44px, 7.2vw, 96px)" }}>
-            {["Paperwork,", "handled."].map((line, i) => (
-              <span key={line} className="block overflow-hidden">
+            {[t.hero.headline.line1, t.hero.headline.line2].map((line, i) => (
+              <span key={i} className="block overflow-hidden">
                 <motion.span
                   className={"block " + (i === 1 ? "text-gold-400" : "text-white")}
                   initial={{ y: "110%" }}
@@ -64,7 +66,7 @@ export default function Hero() {
                 animate={{ y: 0 }}
                 transition={{ duration: 0.9, ease: EASE, delay: 0.34 }}
               >
-                You run the pump.
+                {t.hero.headline.line3}
               </motion.span>
             </span>
           </h1>
@@ -75,9 +77,9 @@ export default function Hero() {
             transition={{ duration: 0.7, ease: EASE, delay: 0.55 }}
             className="mt-8 max-w-xl text-[17px] leading-[1.6] text-navy-100 md:text-[19px]"
           >
-            SDMS, Dhruva, AAC, QRC, inspections, document deadlines. One app
-            keeps <span className="text-white">every OMC portal headache</span> on
-            track, so your dealership is never caught short.
+            {t.hero.subLead}{" "}
+            <span className="text-white">{t.hero.subEmphasis}</span>{" "}
+            {t.hero.subTail}
           </motion.p>
 
           <motion.div
@@ -87,10 +89,10 @@ export default function Hero() {
             className="mt-9 flex flex-col items-start gap-4 sm:flex-row sm:items-center"
           >
             <a href="#contact" className="btn-gold w-full sm:w-auto">
-              Talk to us <Icon name="arrow" size={16} />
+              {t.hero.ctaPrimary} <Icon name="arrow" size={16} />
             </a>
             <a href={BRAND.phoneHref} className="font-mono text-[14px] tracking-[0.02em] text-navy-100">
-              <span className="text-navy-300">or call</span>{" "}
+              <span className="text-navy-300">{t.hero.callLabel}</span>{" "}
               <span className="font-semibold text-white underline decoration-white/30 underline-offset-4">
                 1800&#8209;891&#8209;3496
               </span>
@@ -104,14 +106,10 @@ export default function Hero() {
             transition={{ duration: 0.6, delay: 0.85 }}
             className="mt-12 flex flex-wrap items-center gap-x-7 gap-y-3 border-t border-white/10 pt-6"
           >
-            {[
-              ["1,400+", "pumps"],
-              ["14", "states"],
-              ["9", "portals"],
-            ].map(([n, l]) => (
-              <span key={l} className="flex items-baseline gap-2">
-                <span className="num text-[22px] font-semibold text-white">{n}</span>
-                <span className="font-mono text-[11px] uppercase tracking-[0.18em] text-navy-200">{l}</span>
+            {t.hero.chips.map((c) => (
+              <span key={c.label} className="flex items-baseline gap-2">
+                <span className="num text-[22px] font-semibold text-white">{c.value}</span>
+                <span className="font-mono text-[11px] uppercase tracking-[0.18em] text-navy-200">{c.label}</span>
               </span>
             ))}
           </motion.div>

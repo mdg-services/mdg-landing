@@ -1,25 +1,26 @@
 import { useState } from "react";
 import SectionHeader from "./SectionHeader";
+import { useT } from "../i18n";
 import { Reveal } from "../lib/motion";
-import { FAQS } from "../data/content";
 
 export default function FAQ() {
+  const t = useT();
   const [open, setOpen] = useState<number | null>(0);
   return (
-    <section aria-label="Common questions" className="bg-paper-warm">
+    <section aria-label={t.faq.sectionAria} className="bg-paper-warm">
       <div className="wrap-full py-24 md:py-32">
         <SectionHeader
-          eyebrow="Plain answers"
+          eyebrow={t.faq.eyebrow}
           title={
             <>
-              A few questions, <span className="text-navy-700">plainly answered.</span>
+              {t.faq.headingLead} <span className="text-navy-700">{t.faq.headingAccent}</span>
             </>
           }
-          intro="Didn't find yours? Call the number above or write to us. We answer in plain Hindi or English, no template."
+          intro={t.faq.intro}
         />
 
         <div className="mt-14 md:mt-16">
-          {FAQS.map((f, i) => {
+          {t.faq.items.map((f, i) => {
             const isOpen = open === i;
             return (
               <Reveal key={f.q} delay={i * 0.04}>

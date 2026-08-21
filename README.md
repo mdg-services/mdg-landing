@@ -31,7 +31,11 @@ npm run email:preview  # render email templates to ./.email-preview/*.html
 
 ```
 src/
-  data/content.ts        # ALL copy + data (single source of truth, brochure-derived)
+  data/content.ts        # data only: ids, icons, hrefs, portal names, counter figures
+  i18n/
+    lang.tsx             # <LangProvider>, useT(), useLang(), the preference rules
+    parity.ts            # dev-only check that both dictionaries line up
+    en/*.ts hi/*.ts      # ALL copy, one file per section, brochure-derived
   lib/
     motion.tsx           # <Reveal> / <Stagger> motion wrappers
     anim.ts              # easing, viewport + variant constants
@@ -112,9 +116,46 @@ that way: a marketing page is the wrong place to publish operational detail.
 horizontal overflow, broken images, em-dashes, or console errors.
 `npm run og` regenerates the social card.
 
+## Two languages
+
+The page reads in English or Hindi, and which one a dealer gets is decided in
+this order:
+
+1. what they last chose here, if they ever chose;
+2. otherwise whatever their phone or browser is set to.
+
+A dealer who never touches the switch keeps following their phone on every
+visit. The moment they touch it, that choice is theirs and the phone stops
+deciding. `?lang=hi` counts as touching it, so a Hindi link forwarded into a
+dealer WhatsApp group opens in Hindi and stays that way; the parameter is then
+stripped off the URL. The choice is kept in `localStorage` under `mdg.lang`,
+and a browser that refuses storage falls back to the phone's language rather
+than breaking.
+
+- Devanagari is not Latin with different glyphs. The Hindi block at the bottom
+  of `src/index.css` undoes the three things this page does to Latin type that
+  break it: display line-heights (0.94 on `.text-mega`) clip the vowel marks
+  that hang above the shirorekha, tracking pulls apart the bar that joins the
+  letters of a word, and a headline measure set in `ch` is too narrow for a
+  language that runs about 15% longer. It is written flat rather than nested,
+  because these dealers are on old Android WebViews.
+- Noto Sans Devanagari sits *behind* Inter, Space Grotesk and Space Mono in
+  every font stack. Each of its `@font-face` rules carries a `unicode-range`,
+  so a reader on the English page never reaches it and never downloads it.
+  Tiro Devanagari Hindi stays the face for the कवच brand marks only.
+- The Terms & Conditions are translated so a Hindi reader can understand what
+  they are agreeing to, but a translation of a contract is not the contract.
+  The Hindi modal says so and offers the original English clauses.
+- `/privacy` is a static English page and is not translated.
+
 ## Editing content
 
-All copy and data live in `src/data/content.ts` — services, extras, values,
-pillars, stats, steps, FAQ, contact details. Change it there; components render
-from it. See `DECISIONS.md` for why things are the way they are, and
-`MANUAL_STEPS.md` / `ROADMAP.md` for what's left.
+Data lives in `src/data/content.ts` — service ids, icons, link targets, portal
+names, and the figures behind the counters. Every string a dealer reads lives
+in `src/i18n/en/<section>.ts`, with its Hindi twin in `src/i18n/hi/`. Add the
+English string first: the Hindi module is typed against the English one, so the
+build fails until it is translated too. A list that quietly lost an entry is
+not a type error, which is what `src/i18n/parity.ts` catches in development.
+
+See `DECISIONS.md` for why things are the way they are, and `MANUAL_STEPS.md` /
+`ROADMAP.md` for what's left.

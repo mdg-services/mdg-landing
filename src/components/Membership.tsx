@@ -3,15 +3,12 @@ import { Link } from "react-router-dom";
 import Icon from "./Icon";
 import { Reveal, Stagger } from "../lib/motion";
 import { itemUp } from "../lib/anim";
-
-const PROMISES = [
-  { t: "Modular", d: "You switch on the modules your pump needs. Your subscription covers what it actually uses." },
-  { t: "Locked", d: "Pricing is written down before we begin. No surprise fees, no mid-year escalation." },
-  { t: "Checked", d: "Every outlet is set up and checked properly before the next one starts." },
-  { t: "Lifted", d: "Onboarding within seven days. A difference in the first cycle." },
-];
+import { BRAND } from "../data/content";
+import { useT } from "../i18n";
 
 export default function Membership() {
+  const t = useT();
+
   return (
     <section id="membership" className="relative overflow-hidden bg-gradient-to-br from-navy-700 via-navy-800 to-navy-950 text-white">
       <div aria-hidden className="absolute inset-0 bg-grid-dark opacity-30" />
@@ -30,40 +27,39 @@ export default function Membership() {
                   <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-gold-400 opacity-75" />
                   <span className="relative inline-flex h-2 w-2 rounded-full bg-gold-400" />
                 </span>
-                Subscriptions open · new dealers welcome
+                {t.membership.badge}
               </span>
             </Reveal>
             <Reveal delay={0.06}>
               <h2 className="mt-7 text-mega text-white" style={{ fontSize: "clamp(38px, 6.4vw, 92px)" }}>
-                Pay only for what
+                {t.membership.headingLead}
                 <br />
-                <span className="text-gold-400">your pump needs.</span>
+                <span className="text-gold-400">{t.membership.headingAccent}</span>
               </h2>
             </Reveal>
           </div>
 
           <Reveal delay={0.12} className="md:col-span-5">
             <p className="max-w-prose2 text-[17px] leading-[1.6] text-navy-100 md:text-[19px]">
-              One monthly subscription, sized to the modules you switch on,
-              priced in writing before you begin.
+              {t.membership.intro}
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
               <Link to="/register" className="btn-gold">
-                Get started <Icon name="arrow" size={16} />
+                {t.membership.ctaPrimary} <Icon name="arrow" size={16} />
               </Link>
-              <a href="tel:18008913496" className="btn-on-dark-ghost">
-                Call to discuss
+              <a href={BRAND.phoneHref} className="btn-on-dark-ghost">
+                {t.membership.ctaSecondary}
               </a>
             </div>
           </Reveal>
         </div>
 
         <Stagger gap={0.09} className="mt-16 grid gap-px overflow-hidden rounded-2xl border border-white/12 bg-white/10 md:mt-20 md:grid-cols-4">
-          {PROMISES.map((p, i) => (
-            <motion.div key={p.t} variants={itemUp} className="bg-navy-900/60 p-7 backdrop-blur">
+          {t.membership.promises.map((p, i) => (
+            <motion.div key={p.title} variants={itemUp} className="bg-navy-900/60 p-7 backdrop-blur">
               <span className="num text-[26px] font-semibold text-gold-400/60">{String(i + 1).padStart(2, "0")}</span>
-              <h3 className="mt-4 font-display text-[22px] font-semibold text-white">{p.t}</h3>
-              <p className="mt-2.5 text-[14px] leading-[1.55] text-navy-100">{p.d}</p>
+              <h3 className="mt-4 font-display text-[22px] font-semibold text-white">{p.title}</h3>
+              <p className="mt-2.5 text-[14px] leading-[1.55] text-navy-100">{p.body}</p>
             </motion.div>
           ))}
         </Stagger>

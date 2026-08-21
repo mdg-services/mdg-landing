@@ -49,10 +49,14 @@ export default {
         },
       },
       fontFamily: {
-        sans: ["Inter", "system-ui", "ui-sans-serif", "sans-serif"],
-        display: ['"Space Grotesk"', "Inter", "system-ui", "sans-serif"],
-        deva: ['"Tiro Devanagari Hindi"', '"Space Grotesk"', "serif"],
-        mono: ['"Space Mono"', "ui-monospace", "SFMono-Regular", "monospace"],
+        // Devanagari always sits BEHIND the Latin faces. Each @font-face
+        // carries a unicode-range, so an English reader never reaches the
+        // Hindi font and never downloads it.
+        sans: ["Inter", '"Noto Sans Devanagari"', "system-ui", "ui-sans-serif", "sans-serif"],
+        display: ['"Space Grotesk"', "Inter", '"Noto Sans Devanagari"', "system-ui", "sans-serif"],
+        // The brand's own Devanagari face, for the कवच marks only.
+        deva: ['"Tiro Devanagari Hindi"', '"Noto Sans Devanagari"', '"Space Grotesk"', "serif"],
+        mono: ['"Space Mono"', '"Noto Sans Devanagari"', "ui-monospace", "SFMono-Regular", "monospace"],
       },
       letterSpacing: {
         tightest: "-0.04em",

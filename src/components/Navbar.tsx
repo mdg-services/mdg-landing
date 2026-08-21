@@ -2,16 +2,12 @@ import { useEffect, useState } from "react";
 import { motion } from "motion/react";
 import { LogoFull } from "./Brand";
 import Icon from "./Icon";
-import { BRAND } from "../data/content";
-
-const links = [
-  { href: "#services", label: "The app" },
-  { href: "#why", label: "Why us" },
-  { href: "#process", label: "How it works" },
-  { href: "#membership", label: "Pricing" },
-];
+import LanguageToggle from "./LanguageToggle";
+import { BRAND, NAV } from "../data/content";
+import { useT } from "../i18n";
 
 export default function Navbar() {
+  const t = useT();
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
@@ -44,7 +40,7 @@ export default function Navbar() {
       }}
     >
       <div className="wrap-full flex h-16 items-center justify-between md:h-20">
-        <a href="#top" className="flex items-center gap-3" aria-label="MDG Services home">
+        <a href="#top" className="flex items-center gap-3" aria-label={t.ui.homeAria}>
           <LogoFull className="h-8 w-auto sm:h-9" />
           <span aria-hidden className="hidden h-6 w-px bg-ink-hairline sm:block" />
           <span className="hidden font-mono text-[10px] uppercase tracking-[0.2em] text-ink-muted sm:block">
@@ -52,25 +48,28 @@ export default function Navbar() {
           </span>
         </a>
 
-        <nav className="hidden items-center gap-9 md:flex" aria-label="Primary">
-          {links.map((l) => (
+        <nav className="hidden items-center gap-9 md:flex" aria-label={t.ui.primaryNavAria}>
+          {NAV.map((l) => (
             <a key={l.href} href={l.href} className="link-quiet text-[14px] font-medium text-ink-soft hover:text-ink">
-              {l.label}
+              {t.nav.items[l.id]}
             </a>
           ))}
         </nav>
 
         <div className="flex items-center gap-3">
+          {/* Outside the burger on purpose: a Hindi reader has to be able to
+              find the switch without first opening an English menu. */}
+          <LanguageToggle />
           <a href={BRAND.phoneHref} className="hidden items-center gap-2 num text-[14px] font-semibold text-ink lg:inline-flex">
             <Icon name="phone" size={15} className="text-navy-700" />
             1800&#8209;891&#8209;3496
           </a>
           <a href="#contact" className="hidden md:inline-flex btn-primary !min-h-[44px] !px-5 !text-[13px]">
-            Talk to us
+            {t.ui.talkToUs}
           </a>
           <button
             type="button"
-            aria-label={open ? "Close menu" : "Open menu"}
+            aria-label={open ? t.ui.closeMenu : t.ui.openMenu}
             aria-expanded={open}
             aria-controls="mobile-menu"
             className="grid h-11 w-11 place-items-center rounded-lg border border-ink/15 bg-white md:hidden"
@@ -96,22 +95,23 @@ export default function Navbar() {
       >
         <div>
           <div className="wrap-full flex flex-col py-4">
-            {links.map((l) => (
+            {NAV.map((l) => (
               <a
                 key={l.href}
                 href={l.href}
                 onClick={() => setOpen(false)}
                 className="border-b border-ink-hairline py-4 text-[16px] font-medium text-ink"
               >
-                {l.label}
+                {t.nav.items[l.id]}
               </a>
             ))}
             <a href={BRAND.phoneHref} className="mt-5 inline-flex items-center gap-2 num text-[16px] font-semibold text-ink">
               <Icon name="phone" size={16} className="text-navy-700" /> {BRAND.phone}
             </a>
             <a href="#contact" onClick={() => setOpen(false)} className="btn-primary mt-4 self-stretch">
-              Talk to us
+              {t.ui.talkToUs}
             </a>
+            <LanguageToggle className="mt-5 self-start" />
           </div>
         </div>
       </div>

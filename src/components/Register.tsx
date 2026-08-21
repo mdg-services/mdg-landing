@@ -6,13 +6,15 @@ import Icon from "./Icon";
 import Footer from "./Footer";
 import { Reveal } from "../lib/motion";
 import { EASE } from "../lib/anim";
-import { BRAND, TERMS, SITE_TYPES } from "../data/content";
+import { BRAND, SITE_TYPES } from "../data/content";
+import { useT } from "../i18n";
+import { en } from "../i18n/en";
 
 type Status = "idle" | "submitting" | "success" | "error";
 
 export default function Register() {
+  const t = useT();
   const [status, setStatus] = useState<Status>("idle");
-  const [errorMsg, setErrorMsg] = useState("");
   const [siteType, setSiteType] = useState("");
   const [agreed, setAgreed] = useState(false);
   const [termsOpen, setTermsOpen] = useState(false);
@@ -31,7 +33,6 @@ export default function Register() {
     };
 
     setStatus("submitting");
-    setErrorMsg("");
     try {
       const res = await fetch("/api/enroll", {
         method: "POST",
@@ -40,13 +41,16 @@ export default function Register() {
       });
       const data = (await res.json().catch(() => ({}))) as { ok?: boolean; error?: string };
       if (!res.ok || !data.ok) {
-        throw new Error(data.error || "Something went wrong. Please try again.");
+        throw new Error(data.error || `Enrolment failed (${res.status})`);
       }
       setStatus("success");
       window.scrollTo({ top: 0, behavior: "smooth" });
     } catch (err) {
+      // The API answers in English and its messages are generic, so the page
+      // shows its own message in the language on screen. The real one is kept
+      // for the console.
+      console.error("[enroll]", err);
       setStatus("error");
-      setErrorMsg(err instanceof Error ? err.message : "Something went wrong. Please try again.");
     }
   }
 
@@ -55,7 +59,7 @@ export default function Register() {
       {/* slim header */}
       <header className="sticky top-0 z-40 border-b border-ink-hairline bg-paper/85 backdrop-blur">
         <div className="wrap-wide flex h-16 items-center justify-between md:h-[72px]">
-          <Link to="/" className="flex items-center gap-3" aria-label="MDG Services home">
+          <Link to="/" className="flex items-center gap-3" aria-label={t.ui.homeAria}>
             <LogoFull className="h-8 w-auto sm:h-9" />
             <span aria-hidden className="hidden h-6 w-px bg-ink-hairline sm:block" />
             <span className="hidden font-mono text-[10px] uppercase tracking-[0.2em] text-ink-muted sm:block">
@@ -64,7 +68,7 @@ export default function Register() {
           </Link>
           <div className="flex items-center gap-3 sm:gap-5">
             <Link to="/" className="link-quiet hidden text-[14px] font-medium text-ink-soft hover:text-ink sm:inline">
-              ← Back to home
+              ← {t.register.backToHome}
             </Link>
             <a href={BRAND.phoneHref} className="inline-flex items-center gap-2 num text-[13.5px] font-semibold text-ink sm:text-[14px]">
               <Icon name="phone" size={15} className="text-navy-700" />
@@ -84,32 +88,38 @@ export default function Register() {
         />
         <div className="wrap-wide relative py-12 sm:py-16 md:py-20">
           <Reveal>
+            {/* The Devanagari gloss is only printed where it says something the
+                eyebrow does not already say, and the dot goes with it. */}
             <p className="eyebrow-light">
-              Dealer enrolment <span className="text-white/30">·</span>{" "}
-              <span className="deva normal-case text-gold-300">नामांकन</span>
+              {t.register.eyebrow}
+              {t.register.eyebrowDeva && (
+                <>
+                  {" "}
+                  <span className="text-white/30">·</span>{" "}
+                  <span className="deva normal-case text-gold-300">{t.register.eyebrowDeva}</span>
+                </>
+              )}
             </p>
           </Reveal>
           <Reveal delay={0.06}>
             <h1 className="mt-5 text-mega text-white" style={{ fontSize: "clamp(34px, 6vw, 72px)" }}>
-              Register your dealership.
+              {t.register.heading}
             </h1>
           </Reveal>
           <Reveal delay={0.12}>
             <p className="mt-5 max-w-2xl text-[16px] leading-[1.6] text-navy-100 sm:text-[18px]">
-              A few details and you're in. Pick the site that fits your pump. We
-              confirm the services and lock your pricing in writing before we
-              begin.
+              {t.register.intro}
             </p>
           </Reveal>
         </div>
       </section>
 
       {/* form */}
-      <section id="enrol" aria-label="Enrolment form" className="bg-paper-warm">
+      <section id="enrol" aria-label={t.register.sectionAria} className="bg-paper-warm">
         <div className="wrap-narrow py-12 sm:py-16 md:py-20">
           <Reveal>
             <p className="text-[15px] text-ink-soft">
-              Fields marked <span className="text-gold-600">*</span> are required.
+              {t.register.requiredLead} <span className="text-gold-600">*</span> {t.register.requiredTail}
             </p>
           </Reveal>
 
@@ -122,24 +132,29 @@ export default function Register() {
             {status === "success" ? (
               <SuccessCard />
             ) : (
-              <form onSubmit={handleSubmit} aria-label="Dealer enrolment" className="card p-5 sm:p-8">
+              <form onSubmit={handleSubmit} aria-label={t.register.formAria} className="card p-5 sm:p-8">
                 <div className="grid gap-5 sm:grid-cols-2">
-                  <Field label="Your Name" name="name" placeholder="Ramesh Kumar" required />
                   <Field
-                    label="Your Mobile"
+                    label={t.register.fields.name.label}
+                    name="name"
+                    placeholder={t.register.fields.name.placeholder}
+                    required
+                  />
+                  <Field
+                    label={t.register.fields.mobile.label}
                     name="mobile"
                     type="tel"
                     inputMode="tel"
                     pattern="[0-9+\s\-]{10,15}"
-                    placeholder="Your mobile number"
+                    placeholder={t.register.fields.mobile.placeholder}
                     required
                   />
                   <Field
-                    label="Your Email"
+                    label={t.register.fields.email.label}
                     name="email"
                     type="email"
                     inputMode="email"
-                    placeholder="Enter your email"
+                    placeholder={t.register.fields.email.placeholder}
                     className="sm:col-span-2"
                   />
                 </div>
@@ -147,15 +162,15 @@ export default function Register() {
                 {/* Site type */}
                 <fieldset className="mt-5">
                   <legend className="font-mono text-[11px] font-medium uppercase tracking-[0.18em] text-ink-muted">
-                    Site type <span className="text-gold-600">*</span>
+                    {t.register.siteTypeLegend} <span className="text-gold-600">*</span>
                   </legend>
                   <div className="mt-3 grid gap-3 sm:grid-cols-2">
-                    {SITE_TYPES.map((t) => (
+                    {SITE_TYPES.map((value) => (
                       <label
-                        key={t}
+                        key={value}
                         className={
                           "flex cursor-pointer items-center gap-3 rounded-xl border px-4 py-3.5 transition-colors duration-200 " +
-                          (siteType === t
+                          (siteType === value
                             ? "border-navy-700 bg-navy-50"
                             : "border-ink-hairline bg-white hover:border-navy-300")
                         }
@@ -163,21 +178,30 @@ export default function Register() {
                         <input
                           type="radio"
                           name="siteType"
-                          value={t}
+                          value={value}
                           required
-                          checked={siteType === t}
-                          onChange={() => setSiteType(t)}
+                          checked={siteType === value}
+                          onChange={() => setSiteType(value)}
                           className="h-4 w-4 accent-navy-700"
                         />
-                        <span className="text-[15px] font-medium text-ink">{t}</span>
+                        <span className="text-[15px] font-medium text-ink">{t.register.siteTypes[value]}</span>
                       </label>
                     ))}
                   </div>
                 </fieldset>
 
                 <div className="mt-5 grid gap-5 sm:grid-cols-2">
-                  <Field label="Pump Name" name="pumpName" placeholder="Your pump's name" />
-                  <Field label="SAP Code" name="sapCode" placeholder="Your SAP code" required />
+                  <Field
+                    label={t.register.fields.pumpName.label}
+                    name="pumpName"
+                    placeholder={t.register.fields.pumpName.placeholder}
+                  />
+                  <Field
+                    label={t.register.fields.sapCode.label}
+                    name="sapCode"
+                    placeholder={t.register.fields.sapCode.placeholder}
+                    required
+                  />
                 </div>
 
                 {/* Agreement — clicking the link opens the T&C modal (not toggling the box) */}
@@ -188,19 +212,19 @@ export default function Register() {
                     checked={agreed}
                     onChange={(e) => setAgreed(e.target.checked)}
                     required
-                    aria-label="I agree to the Terms and Conditions"
+                    aria-label={t.register.agreeAria}
                     className="mt-0.5 h-5 w-5 shrink-0 accent-navy-700"
                   />
                   <span className="text-[14.5px] leading-[1.55] text-ink-soft">
-                    I have read and agree to the{" "}
+                    {t.register.agreeLead}{" "}
                     <button
                       type="button"
                       onClick={() => setTermsOpen(true)}
                       className="font-semibold text-navy-700 underline decoration-navy-300 underline-offset-2 transition-colors hover:decoration-navy-700"
                     >
-                      Terms &amp; Conditions
+                      {t.register.termsLink}
                     </button>
-                    . <span className="text-gold-600">*</span>
+                    {t.register.agreeTail} <span className="text-gold-600">*</span>
                   </span>
                 </div>
 
@@ -210,18 +234,18 @@ export default function Register() {
                       <Icon name="siren" size={14} />
                     </span>
                     <p className="text-[14px] leading-[1.5] text-ink-soft">
-                      {errorMsg}{" "}
+                      {t.register.errorGeneric}{" "}
                       <a href={BRAND.phoneHref} className="link-quiet font-semibold text-navy-700">
-                        Or call {BRAND.phone}
+                        {t.register.errorCallLink.replace("{phone}", BRAND.phone)}
                       </a>
-                      .
+                      {t.register.errorEnd}
                     </p>
                   </div>
                 )}
 
                 <div className="mt-7 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                   <p className="order-2 text-[13px] text-ink-muted sm:order-1">
-                    We will never share your details.
+                    {t.register.privacy}
                   </p>
                   <button
                     type="submit"
@@ -232,10 +256,10 @@ export default function Register() {
                     }
                   >
                     {status === "submitting" ? (
-                      "Submitting…"
+                      t.register.submitting
                     ) : (
                       <>
-                        Submit <Icon name="arrow" size={16} />
+                        {t.register.submit} <Icon name="arrow" size={16} />
                       </>
                     )}
                   </button>
@@ -262,6 +286,15 @@ function TermsModal({
   onClose: () => void;
   onAgree: () => void;
 }) {
+  const t = useT();
+  /* A translation of a contract is not the contract. Where the page is not
+     already in the language the agreement was signed in, the modal says so
+     and offers the original clauses; `bindingNotice` is empty on the page
+     that is already binding, and then there is nothing to offer. */
+  const courtesy = t.register.bindingNotice !== "";
+  const [original, setOriginal] = useState(false);
+  const clauses = courtesy && original ? en.register.terms : t.register.terms;
+
   useEffect(() => {
     if (!open) return;
     const onKey = (e: KeyboardEvent) => {
@@ -302,15 +335,15 @@ function TermsModal({
             {/* header */}
             <div className="flex items-start justify-between gap-4 border-b border-ink-hairline px-5 py-4 sm:px-7 sm:py-5">
               <div>
-                <p className="eyebrow">The agreement</p>
+                <p className="eyebrow">{t.register.termsEyebrow}</p>
                 <h2 id="terms-title" className="mt-2 font-display text-[22px] font-semibold leading-tight text-ink sm:text-[26px]">
-                  Terms &amp; Conditions
+                  {t.register.termsTitle}
                 </h2>
               </div>
               <button
                 type="button"
                 onClick={onClose}
-                aria-label="Close"
+                aria-label={t.register.close}
                 className="grid h-10 w-10 shrink-0 place-items-center rounded-full border border-ink-hairline text-ink-soft transition-colors hover:border-navy-300 hover:text-ink"
               >
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden>
@@ -321,8 +354,21 @@ function TermsModal({
 
             {/* scrollable clauses */}
             <div className="flex-1 overflow-y-auto overscroll-contain px-5 py-5 sm:px-7 sm:py-6">
-              <ol className="space-y-0">
-                {TERMS.map((clause, i) => (
+              {courtesy && (
+                <div className="mb-5 flex flex-col gap-3 rounded-xl border border-ink-hairline bg-paper-warm p-4 sm:flex-row sm:items-center sm:justify-between">
+                  <p className="text-[13.5px] leading-[1.6] text-ink-muted">{t.register.bindingNotice}</p>
+                  <button
+                    type="button"
+                    onClick={() => setOriginal((v) => !v)}
+                    aria-pressed={original}
+                    className="shrink-0 self-start font-semibold text-navy-700 underline decoration-navy-300 underline-offset-4 transition-colors hover:decoration-navy-700 sm:self-auto"
+                  >
+                    {original ? t.register.showHindi : t.register.showEnglish}
+                  </button>
+                </div>
+              )}
+              <ol className="space-y-0" lang={courtesy && original ? "en" : undefined}>
+                {clauses.map((clause, i) => (
                   <li
                     key={i}
                     className="grid grid-cols-[auto_1fr] gap-x-4 border-t border-ink-hairline py-4 first:border-t-0 first:pt-0 sm:gap-x-5"
@@ -333,19 +379,23 @@ function TermsModal({
                 ))}
               </ol>
               <p className="mt-6 rounded-xl bg-paper-warm p-4 text-[13.5px] leading-[1.6] text-ink-muted">
-                Services and rates are set out in <strong className="font-semibold text-ink">Annexure&nbsp;I</strong>;
-                anything outside it is negotiated between both parties. Questions before you sign?{" "}
-                <a href={BRAND.phoneHref} className="font-semibold text-navy-700">Call {BRAND.phone}</a>.
+                {t.register.annexureLead}{" "}
+                <strong className="font-semibold text-ink">Annexure&nbsp;I</strong>
+                {t.register.annexureTail}{" "}
+                <a href={BRAND.phoneHref} className="font-semibold text-navy-700">
+                  {t.register.annexureCallLink.replace("{phone}", BRAND.phone)}
+                </a>
+                {t.register.annexureEnd}
               </p>
             </div>
 
             {/* footer actions */}
             <div className="flex flex-col-reverse gap-3 border-t border-ink-hairline px-5 py-4 sm:flex-row sm:items-center sm:justify-end sm:px-7 sm:py-5">
               <button type="button" onClick={onClose} className="btn-ghost w-full sm:w-auto">
-                Close
+                {t.register.close}
               </button>
               <button type="button" onClick={onAgree} className="btn-primary w-full sm:w-auto">
-                I agree &amp; continue <Icon name="check" size={16} strokeWidth={2.2} />
+                {t.register.agreeContinue} <Icon name="check" size={16} strokeWidth={2.2} />
               </button>
             </div>
           </motion.div>
@@ -356,27 +406,29 @@ function TermsModal({
 }
 
 function SuccessCard() {
+  const t = useT();
   return (
     <div role="status" aria-live="polite" className="rounded-2xl border border-ok/30 bg-ok-tint p-6 sm:p-9">
       <div className="flex items-center gap-2.5 text-ok">
         <span className="grid h-8 w-8 place-items-center rounded-full bg-ok text-white">
           <Icon name="check" size={17} strokeWidth={2.4} />
         </span>
-        <span className="font-mono text-[11px] font-bold uppercase tracking-[0.22em]">Enrolment received</span>
+        <span className="font-mono text-[11px] font-bold uppercase tracking-[0.22em]">{t.register.success.badge}</span>
       </div>
       <p className="mt-5 font-display text-[23px] font-semibold leading-tight text-ink sm:text-[26px]">
-        Thank you. Your details are with us.
+        {t.register.success.heading}
       </p>
       <p className="mt-3 max-w-prose2 text-[15.5px] leading-[1.6] text-ink-soft sm:text-[16px]">
-        A team member will call to confirm your services and pricing, usually
-        within the hour ({BRAND.hours.toLowerCase()}). Can't wait?{" "}
+        {/* The opening hours sit inside the sentence, not on the end of it, so
+            each language can place them where it reads best. */}
+        {t.register.success.bodyLead.replace("{hours}", t.register.hours)}{" "}
         <a href={BRAND.phoneHref} className="link-quiet font-semibold text-navy-700">
-          Call us directly
+          {t.register.success.callLink}
         </a>
-        .
+        {t.register.success.bodyEnd}
       </p>
       <Link to="/" className="btn-ghost mt-7 w-full sm:w-auto">
-        Back to home
+        {t.register.backToHome}
       </Link>
     </div>
   );

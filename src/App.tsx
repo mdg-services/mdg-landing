@@ -17,6 +17,7 @@ import Contact from "./components/Contact";
 import FAQ from "./components/FAQ";
 import Footer from "./components/Footer";
 import Register from "./components/Register";
+import AssistWidget from "./components/assist/AssistWidget";
 
 function Landing() {
   const { scrollYProgress } = useScroll();
@@ -62,6 +63,10 @@ export default function App() {
         <Route path="/" element={<Landing />} />
         <Route path="/register" element={<Register />} />
       </Routes>
+      {/* Outside the routes on purpose: the assistant is on every page, and
+          its launcher must sit above the navbar (z-50) and the scroll
+          progress bar (z-60). */}
+      <AssistWidget />
     </>
   );
 }

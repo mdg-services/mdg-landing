@@ -1,12 +1,15 @@
 import { motion } from "motion/react";
 import Icon from "./Icon";
+import { useT } from "../i18n";
 import { Reveal, Stagger } from "../lib/motion";
 import { itemUp } from "../lib/anim";
-import { VALUES, FOUR_E, BRAND } from "../data/content";
+import { BRAND } from "../data/content";
 
 export default function Mission() {
+  const t = useT();
+
   return (
-    <section aria-label="Mission and values" className="relative overflow-hidden bg-navy-950 text-white">
+    <section aria-label={t.mission.sectionAria} className="relative overflow-hidden bg-navy-950 text-white">
       <div aria-hidden className="absolute inset-0 bg-grid-dark opacity-40" />
       <div
         aria-hidden
@@ -16,29 +19,30 @@ export default function Mission() {
 
       <div className="wrap-full relative py-24 md:py-32">
         <div className="grid gap-14 md:grid-cols-12 md:gap-10">
-          {/* left — mission */}
+          {/* left: mission */}
           <div className="md:col-span-5">
             <Reveal>
-              <p className="eyebrow-light">Our mission &amp; values</p>
+              <p className="eyebrow-light">{t.mission.eyebrow}</p>
             </Reveal>
             <Reveal delay={0.06}>
               <h2 className="mt-6 text-display text-white" style={{ fontSize: "clamp(30px, 4.4vw, 56px)" }}>
-                Maximize profit. Minimize loss.{" "}
-                <span className="text-gold-400">Never a missed deadline.</span>
+                {t.mission.headingLead}{" "}
+                <span className="text-gold-400">{t.mission.headingAccent}</span>
               </h2>
             </Reveal>
             <Reveal delay={0.12}>
               <p className="mt-7 max-w-prose2 text-[16px] leading-[1.65] text-navy-100">
-                MDG Services has built software for India’s fuel retail since{" "}
-                {BRAND.since}. Dealer’s कवच exists to give petrol pump owners one
-                place to see every obligation they owe and clear it on time.
-                Built on trust, transparency and mutual success.
+                {/* The founding year is data, so the sentence is stored in two
+                    halves and the split point can move with the language. */}
+                {t.mission.bodyBeforeYear}{" "}
+                {BRAND.since}
+                {t.mission.bodyAfterYear}
               </p>
             </Reveal>
 
             {/* 4 E's */}
             <Stagger gap={0.08} delay={0.2} className="mt-9 flex flex-wrap gap-2.5">
-              {FOUR_E.map((e) => (
+              {t.mission.fourE.map((e) => (
                 <motion.span
                   key={e}
                   variants={itemUp}
@@ -50,7 +54,7 @@ export default function Mission() {
             </Stagger>
           </div>
 
-          {/* right — the seven values as a node spine */}
+          {/* right: the seven values as a node spine */}
           <div className="md:col-span-6 md:col-start-7">
             <Stagger gap={0.07} className="relative">
               {/* connecting line */}
@@ -63,7 +67,7 @@ export default function Mission() {
                 transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
                 style={{ transformOrigin: "top", height: "calc(100% - 1rem)" }}
               />
-              {VALUES.map((v) => (
+              {t.mission.values.map((v) => (
                 <motion.div key={v} variants={itemUp} className="relative flex items-center gap-5 py-3.5">
                   <span className="relative z-10 grid h-6 w-6 shrink-0 place-items-center rounded-full border border-gold-400/50 bg-navy-900">
                     <span className="h-2 w-2 rotate-45 bg-gold-400" />
@@ -80,7 +84,7 @@ export default function Mission() {
           <div className="mt-16 flex items-start gap-5 border-t border-white/10 pt-8 md:mt-20">
             <Icon name="spark" size={28} className="mt-1 shrink-0 text-gold-400" />
             <p className="font-display text-[20px] font-medium italic leading-snug text-white md:text-[26px]">
-              “One place to see every obligation, and clear it on time.”
+              {t.mission.quote}
             </p>
           </div>
         </Reveal>

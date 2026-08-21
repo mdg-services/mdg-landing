@@ -1,0 +1,198 @@
+/* ─────────────────────────────────────────────────────────────
+   The assistant widget.
+
+   Every visible string in `src/components/assist/**` comes from
+   here. The widget answers a dealer who is standing on a
+   forecourt with one hand on a phone, so the sentences are short,
+   the buttons say what happens next, and every dead end offers
+   the toll-free number instead of an apology.
+
+   `{phone}`, `{n}`, `{mobile}` and `{time}` are filled in where
+   they are used, so each language can put them where the
+   sentence wants them.
+   ───────────────────────────────────────────────────────────── */
+
+export const assist = {
+  /** The floating button. The only assistant string a visitor sees
+      before they tap it, so it says what it does. */
+  launcher: {
+    label: "Ask us",
+    aria: "Ask MDG a question",
+    close: "Close the assistant",
+  },
+
+  panel: {
+    title: "Ask MDG",
+    subtitle: "Type it, speak it, or talk to us live.",
+    close: "Close",
+    langAria: "Answer language",
+    loading: "Opening",
+    /** Shown above the first message, so nobody has to guess what to ask. */
+    greeting:
+      "Ask me anything about the marketing guidelines, or about what MDG Services does. I answer in Hindi or English.",
+    /** The three ways in, spelled out under the greeting. */
+    hint: "Type below, hold the mic to speak, or tap Call to talk.",
+  },
+
+  chat: {
+    /** Above a spoken question, so a misheard word is obvious straight away. */
+    heard: "What we heard",
+    heardNote: "Not what you said? Type it below instead.",
+    play: "Play the answer",
+    stop: "Stop",
+    thinking: "Thinking",
+    /** The live region while nothing is happening. */
+    ready: "Ready",
+  },
+
+  composer: {
+    placeholder: "Type your question",
+    aria: "Your question",
+    sendAria: "Send the question",
+    /** Only appears once they are near the limit. */
+    charsLeft: "{n} left",
+    tooLong: "Please keep it under 600 characters.",
+  },
+
+  voice: {
+    hold: "Hold to speak",
+    holdAria: "Hold this button and speak your question",
+    preparing: "Getting the microphone ready",
+    recording: "Recording. Let go to send.",
+    secondsLeft: "{n}s left",
+    stopAria: "Stop and send",
+    tooShort: "That was too short. Hold the button while you speak.",
+  },
+
+  /* ── Microphone permission. Never a file picker, never the camera. ── */
+  mic: {
+    deniedTitle: "The browser blocked the microphone",
+    deniedBody:
+      "Your browser did not let this page use the microphone. Allow it in the browser's site settings and try again, or just type your question here.",
+    missingTitle: "No microphone found",
+    missingBody:
+      "This device does not seem to have a microphone. Type your question here, or call us.",
+    unsupportedTitle: "This browser cannot record",
+    unsupportedBody:
+      "This browser will not let a web page record sound. Type your question here, or call us.",
+    busyTitle: "The microphone is in use",
+    busyBody:
+      "Another app seems to be holding the microphone. Close it and try again, or type your question here.",
+    typeInstead: "Type instead",
+    callInstead: "Call {phone}",
+  },
+
+  /* ── The live call ── */
+  call: {
+    start: "Call",
+    startAria: "Start a live voice call",
+    /** The consent gate. Nobody is connected before they tap through this. */
+    consentTitle: "Before we connect you",
+    consentFallbackNotice:
+      "This call is recorded so our team can follow it up afterwards. By continuing, you agree to that.",
+    consentContinue: "I understand, connect me",
+    consentCancel: "Not now",
+
+    connecting: "Connecting",
+    listening: "Listening",
+    thinking: "Thinking",
+    speaking: "Speaking",
+    ended: "The call has ended",
+
+    talk: "Hold to talk",
+    talkAria: "Hold this button and talk",
+    release: "Let go when you have finished",
+    /** Shown only in the last three minutes. */
+    remaining: "{time} left",
+    end: "End call",
+    endAria: "End the call",
+
+    /** Handshake refusals, each one distinct. */
+    refusedUnauthorized:
+      "This conversation has timed out. Close the window and open it again to start a fresh one.",
+    refusedBlocked:
+      "We could not connect that call. Leave your number and a person will ring you back.",
+    refusedCapacity: "All our lines are busy right now.",
+    refusedCapacityBody:
+      "Only a few calls can run at the same time. Leave your number and a person will ring you back.",
+    refusedDisabled:
+      "Live calls are switched off at the moment. Type your question here, or leave your number for a callback.",
+    refusedGeneric:
+      "We could not connect the call. Type your question here, or call us on {phone}.",
+    lost: "The connection dropped. Trying to get back.",
+    /** After the retries have run out. Shown on the "call ended" card. */
+    lostForGood: "We could not get the connection back, so the call has ended.",
+
+    endedTitle: "Call ended",
+    /** Plain words for every reason the server can give. */
+    reasons: {
+      visitorLeft: "You ended the call.",
+      inactivity: "The call ended because there was no sound for a while.",
+      maxDuration: "We reached the time limit for one call.",
+      maxTurns: "We covered a lot in that call.",
+      speechBudget: "We reached the limit for one call.",
+      abuse: "The call was ended.",
+      blocked: "The call was ended.",
+      error: "Something went wrong and the call stopped.",
+      capacity: "The line was needed elsewhere.",
+      shutdown: "Our system is restarting.",
+    },
+  },
+
+  /* ── Lead capture and escalation ── */
+  lead: {
+    open: "Ask for a callback",
+    openAria: "Leave your number for a callback",
+    title: "Shall we call you back?",
+    intro: "Leave your number and a team member calls back within the hour, 9am to 9pm.",
+    name: "Your name",
+    namePlaceholder: "Ramesh Kumar",
+    place: "Your place",
+    placePlaceholder: "Aligarh",
+    mobile: "Mobile number",
+    mobilePlaceholder: "9XXXXXXXXX",
+    mobileHint: "10 digits, starting with 6, 7, 8 or 9.",
+    mobileInvalid: "Please enter a 10 digit mobile number starting with 6, 7, 8 or 9.",
+    nameRequired: "Please write your name.",
+    submit: "Send",
+    sending: "Sending",
+    cancel: "Not now",
+    privacy: "We will never share your number.",
+
+    /** The number is read back before anything is promised. */
+    confirmTitle: "Is this number right?",
+    confirmBody: "We will call you on {mobile}.",
+    confirmYes: "Yes, call me on that",
+    confirmEdit: "Change the number",
+
+    savedTitle: "Got it",
+    savedBody: "Thank you. A team member will call you shortly.",
+    savedBodyLead: "Thank you. That is saved.",
+    failed: "We could not send that. Please try again, or call us on {phone}.",
+  },
+
+  /* ── When the assistant cannot help, a person still can ── */
+  fallback: {
+    title: "Let us get a person on it",
+    callLead: "Call us free on",
+    hours: "9am to 9pm, every day",
+    callAria: "Call MDG Services free on {phone}",
+  },
+
+  errors: {
+    rateLimited: "One moment. That was a little quick for us. Please try again in a few seconds.",
+    turnLimit: "We have covered a lot here. Shall we have someone call you?",
+    disabled:
+      "The assistant is resting right now. Call us on {phone}, or leave your number and we will call you.",
+    blocked:
+      "We could not answer that here. Call us on {phone}, or leave your number and we will call you back.",
+    callCapacity: "All our lines are busy right now.",
+    tooLarge: "That recording was too long to send. Please keep it under a minute.",
+    /** The old conversation was closed and a fresh one could not be opened either. */
+    conversationEnded:
+      "That conversation has ended. Ask again and we will start a fresh one, or call us on {phone}.",
+    network:
+      "We could not reach our system. Check your connection and try again, or call us on {phone}.",
+    generic: "Something went wrong. Please try again, or call us on {phone}.",
+  },
+};

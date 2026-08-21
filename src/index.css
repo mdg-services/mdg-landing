@@ -191,6 +191,13 @@
       linear-gradient(90deg, rgba(255,255,255,.05) 1px, transparent 1px);
     background-size: 38px 38px;
   }
+  /* The strip a modern phone reserves for its home bar. Used as a spacer
+     inside the assistant panel rather than on the padded element itself, so
+     it adds to the padding instead of fighting it. */
+  .safe-bottom {
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+
   /* Radial fade mask for grids */
   .mask-radial {
     -webkit-mask-image: radial-gradient(ellipse 70% 70% at 50% 40%, #000 40%, transparent 100%);
@@ -216,6 +223,16 @@
 .spin-slow { animation: spin-slow 48s linear infinite; }
 .spin-rev  { animation: spin-rev 60s linear infinite; }
 
+/* ───────────────────── Assistant widget ─────────────────────
+   One looping animation, on the dot that says a microphone is
+   live. The panel passes `useReducedMotion()` down and simply
+   does not set it when the reader has asked for less motion;
+   the block below is the second line of defence. */
+@keyframes assist-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%      { opacity: 0.4; transform: scale(0.78); }
+}
+
 /* ───────────────────── Reduced motion ───────────────────── */
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
@@ -227,4 +244,109 @@
     animation-iteration-count: 1 !important;
     transition-duration: 0.001ms !important;
   }
+}
+
+/* ─────────────────────── Hindi ───────────────────────
+   Devanagari is not Latin with different glyphs, and the three
+   places this page tightens Latin type are the three places that
+   break it:
+
+   - Vowel marks hang above the shirorekha, the bar along the top
+     of the line. A display line-height of 0.94 clips them.
+   - The letters of a word are joined by that bar. Tracking pulls
+     the joins apart, so every tracked run relaxes.
+   - A Hindi sentence runs longer than its English original, so a
+     headline measure set in `ch` has to give.
+
+   Written flat rather than nested: these dealers are on old
+   Android WebViews, and CSS nesting is not a safe assumption
+   there. All of it is scoped to the Hindi page, so the English
+   page renders exactly as it did before.
+
+   `!important` throughout, because the tightening it undoes
+   arrives as a utility class or an inline style, and both
+   outrank a plain rule.
+   ───────────────────────────────────────────────────── */
+html[data-lang="hi"] body {
+  line-height: 1.7;
+}
+
+html[data-lang="hi"] h1,
+html[data-lang="hi"] h2,
+html[data-lang="hi"] h3,
+html[data-lang="hi"] h4 {
+  letter-spacing: normal !important;
+  line-height: 1.28;
+}
+
+html[data-lang="hi"] .text-mega {
+  line-height: 1.18;
+  letter-spacing: normal !important;
+}
+
+html[data-lang="hi"] .text-display {
+  line-height: 1.24;
+  letter-spacing: normal !important;
+}
+
+/* Headline measures are set in `ch`, which is a Latin width. */
+html[data-lang="hi"] h1,
+html[data-lang="hi"] h2 {
+  max-width: none !important;
+}
+
+/* Tracked uppercase labels are a Latin device; in Devanagari the
+   tracking pulls apart the bar that joins a word together. */
+html[data-lang="hi"] .eyebrow,
+html[data-lang="hi"] .eyebrow-light,
+html[data-lang="hi"] .mono,
+html[data-lang="hi"] .font-mono {
+  letter-spacing: 0.03em !important;
+}
+
+html[data-lang="hi"] .btn {
+  line-height: 1.4;
+}
+
+/* The कवच marks and the figures are names and numbers, not
+   sentences: they keep their own face and their own spacing. */
+html[data-lang="hi"] .deva,
+html[data-lang="hi"] .num,
+html[data-lang="hi"] .num-deva {
+  letter-spacing: normal !important;
+}
+
+/* ── The assistant panel's own language ──────────────────────
+   The rules above are scoped to html[data-lang="hi"], which is
+   the language of the PAGE. The panel has its own toggle: a
+   dealer skims the English page and then asks in Hindi. So the
+   same three corrections are repeated here, scoped to the panel
+   instead, and applied whichever language the page is in.
+   ───────────────────────────────────────────────────────────── */
+.assist-hi h2,
+.assist-hi h3 {
+  letter-spacing: normal !important;
+  line-height: 1.3;
+}
+
+.assist-hi .font-mono,
+.assist-hi .mono {
+  letter-spacing: 0.04em !important;
+}
+
+/* Vowel marks hang above the line, so the compact leading the
+   panel uses for Latin has to relax. */
+.assist-hi p,
+.assist-hi button,
+.assist-hi span,
+.assist-hi label,
+.assist-hi textarea,
+.assist-hi input {
+  line-height: 1.6;
+}
+
+/* Digits and the timer are numbers, not sentences. */
+.assist-hi .num {
+  letter-spacing: normal !important;
+  line-height: 1.4;
 }

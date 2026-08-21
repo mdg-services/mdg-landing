@@ -1,41 +1,38 @@
 import { motion } from "motion/react";
 import Icon from "./Icon";
+import { useT } from "../i18n";
 import { Reveal } from "../lib/motion";
 import { VIEWPORT, EASE } from "../lib/anim";
 
-const CHAOS = [
-  { t: "SDMS subsidy entry overdue", rot: -5, x: "0%", y: "2%" },
-  { t: "Density log missing for audit", rot: 4, x: "14%", y: "26%" },
-  { t: "Fire NOC expires in 3 days", rot: -3, x: "2%", y: "52%" },
-  { t: "Automation down. Vendor?", rot: 6, x: "20%", y: "74%" },
-];
-
-const HANDLED = [
-  "SDMS filed before the 11am cut-off",
-  "Logs kept inspection-ready year-round",
-  "Fire NOC renewed 9 days early",
-  "Automation back online in 22 minutes",
+/* Where each worry card lands and how far it is knocked off square. The
+   words are per-language; the scatter is not, so it stays here and is
+   matched to `t.problem.chaos` by position. */
+const CHAOS_LAYOUT = [
+  { rot: -5, x: "0%", y: "2%" },
+  { rot: 4, x: "14%", y: "26%" },
+  { rot: -3, x: "2%", y: "52%" },
+  { rot: 6, x: "20%", y: "74%" },
 ];
 
 export default function Problem() {
+  const t = useT();
+
   return (
-    <section aria-label="The problem we solve" className="relative overflow-hidden bg-white">
+    <section aria-label={t.problem.sectionAria} className="relative overflow-hidden bg-white">
       <div className="wrap-full py-24 md:py-32">
         <div className="max-w-3xl">
           <Reveal>
-            <p className="eyebrow">The problem</p>
+            <p className="eyebrow">{t.problem.eyebrow}</p>
           </Reveal>
           <Reveal delay={0.06}>
             <h2 className="mt-6 text-balance text-display text-ink" style={{ fontSize: "clamp(33px, 5vw, 64px)" }}>
-              Nine portals. Dozens of deadlines.{" "}
-              <span className="text-navy-700">One of you.</span>
+              {t.problem.headingLead}{" "}
+              <span className="text-navy-700">{t.problem.headingAccent}</span>
             </h2>
           </Reveal>
           <Reveal delay={0.12}>
             <p className="mt-6 max-w-prose2 text-[17px] leading-[1.6] text-ink-soft">
-              Most dealers lose hours every week to compliance no one trained
-              them for, and a single missed window can mean a notice. The कवच
-              absorbs the entire load.
+              {t.problem.intro}
             </p>
           </Reveal>
         </div>
@@ -45,31 +42,34 @@ export default function Problem() {
           <Reveal className="h-full">
             <div className="relative h-full overflow-hidden rounded-2xl border border-ink-hairline bg-paper-warm p-6 md:p-8">
               <div className="flex items-center justify-between">
-                <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-ink-muted">On your own</span>
+                <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-ink-muted">{t.problem.aloneLabel}</span>
                 <span className="rounded-full bg-gold-100 px-2.5 py-1 font-mono text-[10px] font-bold uppercase tracking-wider text-gold-700">
-                  ≈ 11 hrs / week
+                  {t.problem.aloneBadge}
                 </span>
               </div>
 
               <div className="relative mt-5 h-[280px]">
-                {CHAOS.map((c, i) => (
-                  <motion.div
-                    key={c.t}
-                    className="absolute w-[78%] rounded-xl border border-ink-hairline bg-white p-3.5 shadow-card"
-                    style={{ left: c.x, top: c.y, rotate: `${c.rot}deg` }}
-                    initial={{ opacity: 0, y: 16 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={VIEWPORT}
-                    transition={{ duration: 0.5, ease: EASE, delay: 0.1 + i * 0.1 }}
-                  >
-                    <div className="flex items-center gap-2.5">
-                      <span className="grid h-7 w-7 shrink-0 place-items-center rounded-lg bg-gold-50 text-gold-600">
-                        <Icon name="siren" size={15} />
-                      </span>
-                      <span className="text-[13.5px] font-medium leading-tight text-ink">{c.t}</span>
-                    </div>
-                  </motion.div>
-                ))}
+                {t.problem.chaos.map((text, i) => {
+                  const c = CHAOS_LAYOUT[i];
+                  return (
+                    <motion.div
+                      key={text}
+                      className="absolute w-[78%] rounded-xl border border-ink-hairline bg-white p-3.5 shadow-card"
+                      style={{ left: c.x, top: c.y, rotate: `${c.rot}deg` }}
+                      initial={{ opacity: 0, y: 16 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={VIEWPORT}
+                      transition={{ duration: 0.5, ease: EASE, delay: 0.1 + i * 0.1 }}
+                    >
+                      <div className="flex items-center gap-2.5">
+                        <span className="grid h-7 w-7 shrink-0 place-items-center rounded-lg bg-gold-50 text-gold-600">
+                          <Icon name="siren" size={15} />
+                        </span>
+                        <span className="text-[13.5px] font-medium leading-tight text-ink">{text}</span>
+                      </div>
+                    </motion.div>
+                  );
+                })}
               </div>
             </div>
           </Reveal>
@@ -98,16 +98,20 @@ export default function Problem() {
               <div aria-hidden className="absolute inset-0 bg-grid-dark opacity-40" />
               <div className="relative">
                 <div className="flex items-center justify-between">
+                  {/* The brand mark keeps its own gold span, so the label is
+                      written around it: English before, Hindi after. */}
                   <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-navy-200">
-                    With Dealer's <span className="deva normal-case text-gold-300">कवच</span>
+                    {t.problem.withLabelBefore}
+                    <span className="deva normal-case text-gold-300">कवच</span>
+                    {t.problem.withLabelAfter}
                   </span>
                   <span className="rounded-full bg-ok px-2.5 py-1 font-mono text-[10px] font-bold uppercase tracking-wider text-white">
-                    0 missed
+                    {t.problem.withBadge}
                   </span>
                 </div>
 
                 <ul className="mt-6 space-y-3.5">
-                  {HANDLED.map((h, i) => (
+                  {t.problem.handled.map((h, i) => (
                     <motion.li
                       key={h}
                       className="flex items-start gap-3 rounded-xl border border-white/10 bg-white/5 p-3.5"

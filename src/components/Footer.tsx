@@ -2,16 +2,21 @@ import { Link } from "react-router-dom";
 import { LogoFullWhite } from "./Brand";
 import Icon from "./Icon";
 import { BRAND } from "../data/content";
+import { useT } from "../i18n";
 
+/* The targets never change with the language; the labels are looked up by id. */
 const explore = [
-  { href: "/#services", label: "Services" },
-  { href: "/#why", label: "Why us" },
-  { href: "/#process", label: "Process" },
-  { href: "/#membership", label: "Pricing" },
-  { href: "/#contact", label: "Get in touch" },
-];
+  { id: "services", href: "/#services" },
+  { id: "why", href: "/#why" },
+  { id: "process", href: "/#process" },
+  { id: "membership", href: "/#membership" },
+  { id: "contact", href: "/#contact" },
+] as const;
 
 export default function Footer() {
+  const t = useT();
+  const year = new Date().getFullYear();
+
   return (
     <footer className="relative overflow-hidden bg-navy-950 text-white">
       <div aria-hidden className="absolute inset-0 bg-grid-dark opacity-30" />
@@ -22,45 +27,45 @@ export default function Footer() {
             <p className="mt-7 font-display text-[24px] font-medium leading-[1.2] text-white md:text-[30px]">
               Dealer's <span className="deva text-gold-400">कवच</span>.
               <br />
-              <span className="text-navy-100">{BRAND.promise}.</span>
+              <span className="text-navy-100">{t.footer.promise}</span>
             </p>
             <p className="mt-6 max-w-prose2 text-[14px] leading-[1.6] text-navy-200">
-              {BRAND.tagline}. Your satisfaction fuels our energy.
+              {t.footer.satisfaction.replace("{tagline}", BRAND.tagline)}
             </p>
             <p className="mt-6 max-w-prose2 text-[14px] leading-[1.6] text-navy-200">
-              MDG Services is a brand operated by{" "}
+              {t.footer.legalBeforeName}
               <span className="font-semibold text-white">{BRAND.legalName}</span>
-              , a company registered in India (CIN {BRAND.cin}).
+              {t.footer.legalAfterName.replace("{cin}", BRAND.cin)}
             </p>
           </div>
 
           <div className="md:col-span-3 md:col-start-7">
-            <p className="eyebrow-light">Explore</p>
+            <p className="eyebrow-light">{t.footer.exploreHeading}</p>
             <ul className="mt-6 space-y-3 text-[15px]">
               {explore.map((l) => (
                 <li key={l.href}>
                   <a href={l.href} className="link-quiet text-navy-100 hover:text-white">
-                    {l.label}
+                    {t.footer.explore[l.id]}
                   </a>
                 </li>
               ))}
               <li>
                 <Link to="/register" className="link-quiet text-navy-100 hover:text-white">
-                  Register
+                  {t.footer.register}
                 </Link>
               </li>
             </ul>
           </div>
 
           <div className="md:col-span-3">
-            <p className="eyebrow-light">Reach us</p>
+            <p className="eyebrow-light">{t.footer.reachHeading}</p>
             <ul className="mt-6 space-y-3.5 text-[15px]">
               <li>
                 <a href={BRAND.phoneHref} className="inline-flex items-center gap-2 num font-semibold text-white">
                   <Icon name="phone" size={15} className="text-gold-400" />
                   1800&#8209;891&#8209;3496
                 </a>
-                <div className="mt-1 font-mono text-[11px] uppercase tracking-[0.18em] text-navy-300">{BRAND.hours}</div>
+                <div className="mt-1 font-mono text-[11px] uppercase tracking-[0.18em] text-navy-300">{t.footer.hours}</div>
               </li>
               <li>
                 <a href={`https://www.${BRAND.site}`} target="_blank" rel="noreferrer" className="link-quiet text-navy-100 hover:text-white">
@@ -78,17 +83,17 @@ export default function Footer() {
 
         <div className="mt-16 flex flex-col items-start justify-between gap-3 border-t border-white/10 pt-6 text-[13px] text-navy-300 sm:flex-row sm:items-center">
           <div className="space-y-1">
-            <p>© {new Date().getFullYear()} {BRAND.legalName}. All rights reserved.</p>
+            <p>{t.footer.copyright.replace("{year}", String(year)).replace("{name}", BRAND.legalName)}</p>
             <p className="text-[12px] text-navy-400">
-              MDG Services is a brand of {BRAND.legalName} · CIN: {BRAND.cin}
+              {t.footer.brandLine.replace("{name}", BRAND.legalName).replace("{cin}", BRAND.cin)}
             </p>
             <p>
               <a href="/privacy" className="link-quiet text-navy-200 hover:text-white">
-                Privacy Policy
+                {t.footer.privacy}
               </a>
             </p>
           </div>
-          <p className="font-mono text-[11px] uppercase tracking-[0.2em]">Made for India's fuel station dealers</p>
+          <p className="font-mono text-[11px] uppercase tracking-[0.2em]">{t.footer.madeFor}</p>
         </div>
       </div>
     </footer>
