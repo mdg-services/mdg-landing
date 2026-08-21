@@ -235,7 +235,7 @@ export const FAQS = [
   },
   {
     q: "What happens when something breaks at night?",
-    a: "Our on-call line stays open 9am to 9pm, seven days a week. Out-of-hours issues are acknowledged within the hour; major incidents get a same-night callback.",
+    a: "Our line stays open 9am to 9pm, seven days a week, including Sunday. Outside those hours it waits for the desk and is picked up first thing the next morning.",
   },
   {
     q: "How is pricing decided?",
