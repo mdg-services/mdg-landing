@@ -6,7 +6,7 @@ const CARDS = [
     bg: "#101133", fg: "#FFFFFF", dim: "#C5C7ED", accent: "#F5A524", line: "#2C2E80",
     mark: "MDG Services",
     h: `Your pump's paperwork,<br><span style="color:#F5A524">done before you wake up.</span>`,
-    sub: `Dealer's <span class="deva">कवच</span>. Every morning it signs into the portal, reads your meters and dips, and files the day.`,
+    sub: `Dealer's <span class="deva">कवच</span>. Every filing, renewal, inspection and daily report your pump owes, tracked in one app.`,
     stats: [["536 / 557", "figures matched your own book"], ["45", "compliance items on the clock"], ["2", "languages, everywhere"]],
     foot: "mdgservices.in  ·  1800-891-3496",
   },

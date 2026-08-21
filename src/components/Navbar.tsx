@@ -5,10 +5,10 @@ import Icon from "./Icon";
 import { BRAND } from "../data/content";
 
 const links = [
-  { href: "#services", label: "Services" },
+  { href: "#services", label: "The app" },
   { href: "#why", label: "Why us" },
-  { href: "#process", label: "Process" },
-  { href: "#membership", label: "Membership" },
+  { href: "#process", label: "How it works" },
+  { href: "#membership", label: "Pricing" },
 ];
 
 export default function Navbar() {

@@ -5,10 +5,10 @@ import { Reveal, Stagger } from "../lib/motion";
 import { itemUp } from "../lib/anim";
 
 const PROMISES = [
-  { t: "Bespoke", d: "You pick the services. We don't bundle. Your fee depends on what your pump actually needs." },
+  { t: "Modular", d: "You switch on the modules your pump needs. Your subscription covers what it actually uses." },
   { t: "Locked", d: "Pricing is written down before we begin. No surprise fees, no mid-year escalation." },
-  { t: "Limited", d: "We take only as many dealers as we can serve well. Registration closes during overload." },
-  { t: "Lifted", d: "Onboarding within seven days. Old paperwork audited. A difference in the first cycle." },
+  { t: "Checked", d: "Every outlet is set up and checked properly before the next one starts." },
+  { t: "Lifted", d: "Onboarding within seven days. A difference in the first cycle." },
 ];
 
 export default function Membership() {
@@ -30,7 +30,7 @@ export default function Membership() {
                   <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-gold-400 opacity-75" />
                   <span className="relative inline-flex h-2 w-2 rounded-full bg-gold-400" />
                 </span>
-                Memberships open · selected dealers
+                Subscriptions open · new dealers welcome
               </span>
             </Reveal>
             <Reveal delay={0.06}>
@@ -44,12 +44,12 @@ export default function Membership() {
 
           <Reveal delay={0.12} className="md:col-span-5">
             <p className="max-w-prose2 text-[17px] leading-[1.6] text-navy-100 md:text-[19px]">
-              No tiers. No bundles. Your monthly fee depends on the services you
-              choose, locked in writing before we begin.
+              One monthly subscription, sized to the modules you switch on,
+              priced in writing before you begin.
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
               <Link to="/register" className="btn-gold">
-                Reserve your slot <Icon name="arrow" size={16} />
+                Get started <Icon name="arrow" size={16} />
               </Link>
               <a href="tel:18008913496" className="btn-on-dark-ghost">
                 Call to discuss

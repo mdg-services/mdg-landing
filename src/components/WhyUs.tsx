@@ -17,7 +17,7 @@ export default function WhyUs() {
               <span className="text-navy-700">the keys to the paperwork.</span>
             </>
           }
-          intro="No tiers, no bundles, no run-around. Just the four things every dealer actually wants from a compliance partner."
+          intro="One product, one subscription, no run-around. Just the four things every dealer actually wants from a compliance app."
         />
 
         <Stagger gap={0.08} className="mt-14 grid gap-4 sm:grid-cols-2 md:mt-16 lg:grid-cols-4">

@@ -7,7 +7,7 @@ const explore = [
   { href: "/#services", label: "Services" },
   { href: "/#why", label: "Why us" },
   { href: "/#process", label: "Process" },
-  { href: "/#membership", label: "Membership" },
+  { href: "/#membership", label: "Pricing" },
   { href: "/#contact", label: "Get in touch" },
 ];
 

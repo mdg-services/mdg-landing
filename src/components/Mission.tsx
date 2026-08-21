@@ -29,11 +29,10 @@ export default function Mission() {
             </Reveal>
             <Reveal delay={0.12}>
               <p className="mt-7 max-w-prose2 text-[16px] leading-[1.65] text-navy-100">
-                MDG Services is a trailblazer in fuel station management,
-                pioneering industry standards since {BRAND.since}. We exist to
-                empower petrol pump owners with tailored solutions that maximize
-                efficiency and profitability. Partnerships built on trust,
-                transparency and mutual success.
+                MDG Services has built software for India’s fuel retail since{" "}
+                {BRAND.since}. Dealer’s कवच exists to give petrol pump owners one
+                place to see every obligation they owe and clear it on time.
+                Built on trust, transparency and mutual success.
               </p>
             </Reveal>
 
@@ -81,7 +80,7 @@ export default function Mission() {
           <div className="mt-16 flex items-start gap-5 border-t border-white/10 pt-8 md:mt-20">
             <Icon name="spark" size={28} className="mt-1 shrink-0 text-gold-400" />
             <p className="font-display text-[20px] font-medium italic leading-snug text-white md:text-[26px]">
-              “Your Trusted Partner in Petrol Pump Excellence.”
+              “One place to see every obligation, and clear it on time.”
             </p>
           </div>
         </Reveal>

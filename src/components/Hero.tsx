@@ -41,7 +41,7 @@ export default function Hero() {
           >
             <span className="inline-block h-1.5 w-1.5 rotate-45 bg-gold-400" />
             Dealer's <span className="deva normal-case tracking-normal text-gold-300">कवच</span>
-            <span className="text-white/30">·</span> Est. {BRAND.since}
+            <span className="text-white/30">·</span> The app for petrol pump dealers
           </motion.div>
 
           <h1 className="mt-7 text-mega" style={{ fontSize: "clamp(44px, 7.2vw, 96px)" }}>
@@ -75,9 +75,9 @@ export default function Hero() {
             transition={{ duration: 0.7, ease: EASE, delay: 0.55 }}
             className="mt-8 max-w-xl text-[17px] leading-[1.6] text-navy-100 md:text-[19px]"
           >
-            SDMS, Dhruva, AAC, QRC, inspections, document deadlines. One team
-            absorbs <span className="text-white">every OMC portal headache</span>, so your
-            dealership is never caught short.
+            SDMS, Dhruva, AAC, QRC, inspections, document deadlines. One app
+            keeps <span className="text-white">every OMC portal headache</span> on
+            track, so your dealership is never caught short.
           </motion.p>
 
           <motion.div

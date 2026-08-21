@@ -18,7 +18,7 @@ export const BRAND = {
   hours: "9am to 9pm, every day",
   since: 2021,
   tagline: "Fueling Success",
-  promise: "Your Trusted Partner for Petrol Pump Businesses in India",
+  promise: "Compliance software for India’s petrol pump dealers",
 };
 
 export type Stat = {
@@ -78,7 +78,7 @@ export const SERVICES: Service[] = [
     title: "SDMS Compliance",
     blurb: "Every SDMS entry filed, updated and followed up so your dealership stays in good standing.",
     covers: ["Subsidy", "Work permit", "Safety & Swachhta", "Monthly wages", "Declaration", "DAR automation"],
-    metric: "~60 entries / outlet / week",
+    metric: "Nothing left unfiled",
   },
   {
     id: "mdg",
@@ -88,7 +88,7 @@ export const SERVICES: Service[] = [
     title: "MDG Compliance",
     blurb: "Stock and density watched daily; variation caught before it becomes a notice.",
     covers: ["Stock variation monitoring", "DSR", "Density check", "Toilet upkeep", "Sample inspection"],
-    metric: "Daily variance review",
+    metric: "Variation caught early",
   },
   {
     id: "inspection",
@@ -98,7 +98,7 @@ export const SERVICES: Service[] = [
     title: "Inspection Compliance",
     blurb: "Records, logs and samples kept inspection-ready year-round. Nothing missing when the team arrives.",
     covers: ["Dhruva", "MDT", "QRC", "AAC", "Mobile lab", "DO team"],
-    metric: "Pre-inspection folder, every Friday",
+    metric: "Inspection-ready, always",
   },
   {
     id: "reminder",
@@ -116,9 +116,9 @@ export const SERVICES: Service[] = [
     noDeva: "०५",
     icon: "cpu",
     title: "Automation Support",
-    blurb: "When automation breaks at 9pm on a Sunday, somebody picks up. Diagnosed, vendor-coordinated, compliant.",
+    blurb: "When automation goes down on a Sunday night, it is flagged straight away and tracked until it is back up.",
     covers: ["Fault diagnosis", "Vendor coordination", "Rule-abiding config", "Uptime watch"],
-    metric: "Response under 30 minutes",
+    metric: "Downtime flagged, not discovered",
   },
   {
     id: "webportal",
@@ -128,7 +128,7 @@ export const SERVICES: Service[] = [
     title: "Web Portal Support",
     blurb: "Complaints raised and chased on the right portal, whether nozzle, tank or pipeline. Drills and fillups logged.",
     covers: ["Complaint registering", "Nozzle / tank / pipeline", "Mock drill", "ATR fillups"],
-    metric: "Same-day complaint raising",
+    metric: "Tracked from raised to resolved",
   },
   {
     id: "xtra",
@@ -136,9 +136,9 @@ export const SERVICES: Service[] = [
     noDeva: "०७",
     icon: "gift",
     title: "XTRA Campaign Support",
-    blurb: "XTRA Rewards enrolment and OMC promotional drives executed and reported, without you lifting a finger.",
+    blurb: "XTRA Rewards enrolment and OMC promotional drives, with enrolment and campaign progress visible in one place.",
     covers: ["Customer enrolment", "Promotional activity", "Target chasing", "Campaign reporting"],
-    metric: "Enrolment and reporting, handled",
+    metric: "Enrolment and progress in one place",
   },
   {
     id: "dod",
@@ -148,7 +148,7 @@ export const SERVICES: Service[] = [
     title: "D.O.D & Stock Punctuality",
     blurb: "DOD facility managed, stock-on-hand watched, and the reminders that keep deliveries on time.",
     covers: ["DOD facility management", "Stock monitoring", "Delivery reminders", "Reconciliation"],
-    metric: "Daily reconciliation by 11am",
+    metric: "Yesterday reconciled by morning",
   },
   {
     id: "preparepro",
@@ -158,7 +158,7 @@ export const SERVICES: Service[] = [
     title: "Prepare Pro Manager",
     blurb: "Industry expertise built into your team: leadership, management and the calls that run a pump well.",
     covers: ["Industry expertise", "Leadership development", "Team management", "Decision-making"],
-    metric: "Hands-on coaching",
+    metric: "Built into the team",
   },
 ];
 
@@ -210,13 +210,13 @@ export const STEPS: Step[] = [
   },
   {
     no: "02", noDeva: "०२", when: "Day 2 to 3", icon: "doc",
-    title: "We pick what you need",
-    body: "We propose the exact set of services that fit your dealership. You decide what's in. Pricing is locked in writing.",
+    title: "You pick what you need",
+    body: "Switch on the modules that fit your dealership. You decide what's in. Pricing is locked in writing.",
   },
   {
     no: "03", noDeva: "०३", when: "Day 4 to 7", icon: "shield",
-    title: "We take over the same week",
-    body: "Onboarding within seven days. Old paperwork audited, portals cleaned up, the team takes over.",
+    title: "Live the same week",
+    body: "Onboarding within seven days. Your outlet is live in the app and running the same week.",
   },
 ];
 
@@ -226,8 +226,8 @@ export const FAQS = [
     a: "All three majors, IndianOil, BPCL and HPCL, plus cooperative-grade outlets. Single-pump dealerships and multi-outlet operators are both welcome.",
   },
   {
-    q: "Do I have to switch from my current paperwork team?",
-    a: "No. Most dealers start by handing us one or two problem areas first, then expand once the cycle settles. We run alongside your existing setup during onboarding.",
+    q: "Do I have to change everything at once?",
+    a: "No. Most dealers switch on one or two modules first, then add more once the cycle settles. It runs alongside your existing setup during onboarding.",
   },
   {
     q: "How fast can you start?",
@@ -239,7 +239,7 @@ export const FAQS = [
   },
   {
     q: "How is pricing decided?",
-    a: "Pricing depends on the services you pick, the size of the outlet and the volume of paperwork. It is locked in writing before we start and does not rise mid-contract.",
+    a: "Your subscription depends on the modules you switch on and the size of the outlet. It is locked in writing before you start and does not rise mid-contract.",
   },
   {
     q: "Do you sign an NDA?",

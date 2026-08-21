@@ -11,19 +11,18 @@ export default function Services() {
         <div className="grid items-end gap-8 md:grid-cols-12">
           <div className="md:col-span-8">
             <Reveal>
-              <p className="eyebrow">Program service covers</p>
+              <p className="eyebrow">Inside the app</p>
             </Reveal>
             <Reveal delay={0.06}>
               <h2 className="mt-6 text-balance text-display text-ink" style={{ fontSize: "clamp(33px, 5vw, 64px)" }}>
-                Nine jobs that stop being yours{" "}
-                <span className="text-navy-700">the day we start.</span>
+                Nine jobs the app keeps{" "}
+                <span className="text-navy-700">on track for you.</span>
               </h2>
             </Reveal>
           </div>
           <Reveal delay={0.12} className="md:col-span-4">
             <p className="max-w-prose2 text-[16px] leading-[1.6] text-ink-soft md:text-[17px]">
-              Each cover is sold on its own. Pick what your pump needs, skip
-              what it doesn't.
+              Switch on what your pump needs, leave the rest off.
             </p>
             <p className="mt-4 font-mono text-[11px] uppercase tracking-[0.2em] text-ink-muted">
               <span className="deva text-[15px] normal-case tracking-normal text-navy-700">सेवाएँ</span>
