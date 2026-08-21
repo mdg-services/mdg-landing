@@ -17,7 +17,7 @@ export default function Process() {
               <span className="text-navy-700">under two weeks.</span>
             </>
           }
-          intro="Three steps, no jargon. You stay in control of what's in and what's out — and the price is locked in writing before we begin."
+          intro="Three steps, no jargon. You stay in control of what's in and what's out, and the price is locked in writing before we begin."
         />
 
         <div className="relative mt-16 md:mt-20">

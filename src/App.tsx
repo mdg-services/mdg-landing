@@ -6,6 +6,7 @@ import Hero from "./components/Hero";
 import Marquee from "./components/Marquee";
 import Numbers from "./components/Numbers";
 import Problem from "./components/Problem";
+import Training from "./components/Training";
 import Services from "./components/Services";
 import MoreServices from "./components/MoreServices";
 import WhyUs from "./components/WhyUs";
@@ -35,6 +36,7 @@ function Landing() {
         <WhyUs />
         <Mission />
         <Process />
+        <Training />
         <Membership />
         <Contact />
         <FAQ />

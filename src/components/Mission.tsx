@@ -32,7 +32,7 @@ export default function Mission() {
                 MDG Services is a trailblazer in fuel station management,
                 pioneering industry standards since {BRAND.since}. We exist to
                 empower petrol pump owners with tailored solutions that maximize
-                efficiency and profitability — partnerships built on trust,
+                efficiency and profitability. Partnerships built on trust,
                 transparency and mutual success.
               </p>
             </Reveal>

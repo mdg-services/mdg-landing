@@ -80,6 +80,38 @@ Deep indigo/navy (`#2C2E80`, the brand mark colour) + a gold/amber energy accent
 "handled" states. Type: Space Grotesk (display) / Inter (body) / Space Mono
 (labels) / Tiro Devanagari Hindi (कवच). Respects `prefers-reduced-motion`.
 
+## The August 2026 pass
+
+A correctness and hygiene pass over the existing page. No new sections survived
+the review; what changed is what the page claims.
+
+- **The animated bars under the stat figures were fake.** `BARS = [0.94, 0.68,
+  0.82, 0.6]` was a hard-coded constant rendered as if it were data, on a page
+  arguing that our numbers are checkable. Gone.
+- **The four headline stats were illustrative** and were flagged as such in
+  `ROADMAP.md`. They are replaced with figures that can be produced on demand.
+- **"24/7 support" contradicted "9am to 9pm"** elsewhere on the same page. The
+  hours are 9am to 9pm.
+- **"Avg. targets hit: 112%"** could not be sourced and is gone.
+- **Every em-dash in visible copy** was rewritten into a full stop, a comma or
+  a colon.
+- **Devanagari was being clipped.** The display line-height of 1.02 crops the
+  marks that sit above the shirorekha, so `पंप खुलने से पहले।` rendered as
+  `पप खुलन स पहल।`. `.deva` now carries its own line-height.
+- Added the Hindi training-library section, cache and security headers, a
+  canonical URL and a real `og:image`.
+
+### What this page deliberately does not say
+
+The page sells the outcome, never the method. It does not describe how work
+reaches us, how reports are produced, or what any internal tool looks like, and
+it carries no screenshots of anything a customer does not already see. Keep it
+that way: a marketing page is the wrong place to publish operational detail.
+
+`npm run review` renders the page at desktop and mobile widths and fails on
+horizontal overflow, broken images, em-dashes, or console errors.
+`npm run og` regenerates the social card.
+
 ## Editing content
 
 All copy and data live in `src/data/content.ts` — services, extras, values,

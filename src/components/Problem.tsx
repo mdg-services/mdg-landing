@@ -7,7 +7,7 @@ const CHAOS = [
   { t: "SDMS subsidy entry overdue", rot: -5, x: "0%", y: "2%" },
   { t: "Density log missing for audit", rot: 4, x: "14%", y: "26%" },
   { t: "Fire NOC expires in 3 days", rot: -3, x: "2%", y: "52%" },
-  { t: "Automation down — vendor?", rot: 6, x: "20%", y: "74%" },
+  { t: "Automation down. Vendor?", rot: 6, x: "20%", y: "74%" },
 ];
 
 const HANDLED = [
@@ -34,7 +34,7 @@ export default function Problem() {
           <Reveal delay={0.12}>
             <p className="mt-6 max-w-prose2 text-[17px] leading-[1.6] text-ink-soft">
               Most dealers lose hours every week to compliance no one trained
-              them for — and a single missed window can mean a notice. The कवच
+              them for, and a single missed window can mean a notice. The कवच
               absorbs the entire load.
             </p>
           </Reveal>

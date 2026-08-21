@@ -73,7 +73,10 @@
     @apply inline-block h-1.5 w-1.5 shrink-0 rotate-45 bg-gold-400;
   }
 
-  .deva { font-family: theme(fontFamily.deva); font-weight: 400; }
+  /* Devanagari marks sit above the shirorekha, so a display line-height
+     (1.02) crops them. Never let a .deva run inherit one. */
+  .deva {
+    line-height: 1.45; font-family: theme(fontFamily.deva); font-weight: 400; }
   .mono { font-family: theme(fontFamily.mono); }
 
   /* ── Buttons ────────────────────────────────────────── */

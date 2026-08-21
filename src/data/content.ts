@@ -15,7 +15,7 @@ export const BRAND = {
   phoneHref: "tel:18008913496",
   site: "mdgservices.in",
   email: "hello@mdgservices.in",
-  hours: "9am – 9pm, every day",
+  hours: "9am to 9pm, every day",
   since: 2021,
   tagline: "Fueling Success",
   promise: "Your Trusted Partner for Petrol Pump Businesses in India",
@@ -32,10 +32,29 @@ export type Stat = {
 };
 
 export const STATS: Stat[] = [
-  { value: 1400, suffix: "+", label: "Dealers served", hi: "डीलर", note: "Across IOC, BPCL, HPCL & cooperatives" },
-  { value: 14, label: "States covered", hi: "राज्य", note: "Hindi-belt, South & North-East" },
-  { value: 9, label: "OMC portals managed", note: "SDMS, MDG, Dhruva, AAC, QRC + more" },
-  { value: 4.6, decimals: 1, suffix: "h", label: "Avg. callback time", note: "On-call, seven days a week" },
+  {
+    value: 536,
+    label: "Figures matched the dealer's own book",
+    hi: "आँकड़े",
+    note: "Of 557 we checked against dealers' own records. We show you any that differ.",
+  },
+  {
+    value: 45,
+    label: "Compliance items on the clock",
+    hi: "काम",
+    note: "Per outlet, across 9 different repeat cycles, from daily to once in two years",
+  },
+  {
+    value: 9,
+    label: "Repeat cycles tracked",
+    note: "From a daily check to a licence that comes round once in two years",
+  },
+  {
+    value: 2,
+    label: "Languages, everywhere",
+    hi: "भाषाएँ",
+    note: "Every screen, every report and every training video, in Hindi and English",
+  },
 ];
 
 /* The 9 "Program Service covers" — the spine of the brochure. */
@@ -97,7 +116,7 @@ export const SERVICES: Service[] = [
     noDeva: "०५",
     icon: "cpu",
     title: "Automation Support",
-    blurb: "When automation breaks at 9pm on a Sunday, somebody picks up — diagnosed, vendor-coordinated, compliant.",
+    blurb: "When automation breaks at 9pm on a Sunday, somebody picks up. Diagnosed, vendor-coordinated, compliant.",
     covers: ["Fault diagnosis", "Vendor coordination", "Rule-abiding config", "Uptime watch"],
     metric: "Response under 30 minutes",
   },
@@ -107,7 +126,7 @@ export const SERVICES: Service[] = [
     noDeva: "०६",
     icon: "globe",
     title: "Web Portal Support",
-    blurb: "Complaints raised and chased on the right portal — nozzle, tank, pipeline — drills and fillups logged.",
+    blurb: "Complaints raised and chased on the right portal, whether nozzle, tank or pipeline. Drills and fillups logged.",
     covers: ["Complaint registering", "Nozzle / tank / pipeline", "Mock drill", "ATR fillups"],
     metric: "Same-day complaint raising",
   },
@@ -119,7 +138,7 @@ export const SERVICES: Service[] = [
     title: "XTRA Campaign Support",
     blurb: "XTRA Rewards enrolment and OMC promotional drives executed and reported, without you lifting a finger.",
     covers: ["Customer enrolment", "Promotional activity", "Target chasing", "Campaign reporting"],
-    metric: "Avg. targets hit: 112%",
+    metric: "Enrolment and reporting, handled",
   },
   {
     id: "dod",
@@ -137,7 +156,7 @@ export const SERVICES: Service[] = [
     noDeva: "०९",
     icon: "grad",
     title: "Prepare Pro Manager",
-    blurb: "Industry expertise built into your team — leadership, management and the calls that run a pump well.",
+    blurb: "Industry expertise built into your team: leadership, management and the calls that run a pump well.",
     covers: ["Industry expertise", "Leadership development", "Team management", "Decision-making"],
     metric: "Hands-on coaching",
   },
@@ -156,9 +175,9 @@ export const EXTRAS: Extra[] = [
 export type Pillar = { icon: IconName; title: string; body: string };
 export const PILLARS: Pillar[] = [
   { icon: "bell", title: "Never miss a deadline", body: "Every renewal and filing window tracked and cleared on time." },
-  { icon: "gauge", title: "Continuous monitoring", body: "Stock, density and portals watched daily — not once a quarter." },
-  { icon: "shield", title: "All OMC portal headaches", body: "SDMS, Dhruva, AAC, QRC and the rest — absorbed entirely." },
-  { icon: "phone", title: "24/7 support", body: "A real person on call, in Hindi or English, when it matters." },
+  { icon: "gauge", title: "Continuous monitoring", body: "Stock, density and portals watched daily, not once a quarter." },
+  { icon: "shield", title: "All OMC portal headaches", body: "SDMS, Dhruva, AAC, QRC and the rest, absorbed entirely." },
+  { icon: "phone", title: "A person, not a menu", body: "9am to 9pm, every day, in Hindi or English. The same team every time." },
 ];
 
 /* "Our Mission & Values" — the seven-point list */
@@ -187,15 +206,15 @@ export const STEPS: Step[] = [
   {
     no: "01", noDeva: "०१", when: "Day 1", icon: "phone",
     title: "One call, plain talk",
-    body: "Tell us about your pump on a phone call — in Hindi or English. No forms, no jargon.",
+    body: "Tell us about your pump on a phone call, in Hindi or English. No forms, no jargon.",
   },
   {
-    no: "02", noDeva: "०२", when: "Day 2 – 3", icon: "doc",
+    no: "02", noDeva: "०२", when: "Day 2 to 3", icon: "doc",
     title: "We pick what you need",
     body: "We propose the exact set of services that fit your dealership. You decide what's in. Pricing is locked in writing.",
   },
   {
-    no: "03", noDeva: "०३", when: "Day 4 – 7", icon: "shield",
+    no: "03", noDeva: "०३", when: "Day 4 to 7", icon: "shield",
     title: "We take over the same week",
     body: "Onboarding within seven days. Old paperwork audited, portals cleaned up, the team takes over.",
   },
@@ -204,7 +223,7 @@ export const STEPS: Step[] = [
 export const FAQS = [
   {
     q: "Which OMC dealerships do you work with?",
-    a: "All three majors — IndianOil, BPCL and HPCL — plus cooperative-grade outlets. Single-pump dealerships and multi-outlet operators are both welcome.",
+    a: "All three majors, IndianOil, BPCL and HPCL, plus cooperative-grade outlets. Single-pump dealerships and multi-outlet operators are both welcome.",
   },
   {
     q: "Do I have to switch from my current paperwork team?",
@@ -224,7 +243,7 @@ export const FAQS = [
   },
   {
     q: "Do you sign an NDA?",
-    a: "Yes — before we look at any of your documents. We can also work under your dealership's own confidentiality framework if you have one.",
+    a: "Yes, before we look at any of your documents. We can also work under your dealership's own confidentiality framework if you have one.",
   },
 ];
 
@@ -243,3 +262,17 @@ export const TERMS: string[] = [
 ];
 
 export const SITE_TYPES = ["Type A", "Type B"] as const;
+
+/* Learning it, in Hindi. */
+export const TRAINING = {
+  eyebrow: "Learn it in Hindi",
+  heading: "Ten videos, twenty-five minutes, and you know the whole thing",
+  body: "Every screen in the app is explained in Hindi, on video, with the words on screen as well. Built for a phone on a weak connection: the smallest version of the whole library is 12 MB.",
+  facts: [
+    { k: "10", v: "videos" },
+    { k: "25 min", v: "in total" },
+    { k: "112", v: "chapters you can jump to" },
+    { k: "12 MB", v: "for the whole library on 2G" },
+  ],
+  href: "https://guide.mdgservices.in",
+} as const;

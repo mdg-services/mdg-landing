@@ -21,7 +21,7 @@ export default function MoreServices() {
             </Reveal>
             <Reveal delay={0.06}>
               <h2 className="mt-6 text-display text-white" style={{ fontSize: "clamp(30px, 4.4vw, 54px)" }}>
-                Beyond the nine, we also cover —
+                Beyond the nine, we also cover:
               </h2>
             </Reveal>
           </div>

@@ -15,7 +15,7 @@ export default function FAQ() {
               A few questions, <span className="text-navy-700">plainly answered.</span>
             </>
           }
-          intro="Didn't find yours? Call the number above or write to us — we answer in plain Hindi or English, no template."
+          intro="Didn't find yours? Call the number above or write to us. We answer in plain Hindi or English, no template."
         />
 
         <div className="mt-14 md:mt-16">

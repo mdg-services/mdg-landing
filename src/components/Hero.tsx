@@ -75,7 +75,7 @@ export default function Hero() {
             transition={{ duration: 0.7, ease: EASE, delay: 0.55 }}
             className="mt-8 max-w-xl text-[17px] leading-[1.6] text-navy-100 md:text-[19px]"
           >
-            SDMS, Dhruva, AAC, QRC, inspections, document deadlines — one team
+            SDMS, Dhruva, AAC, QRC, inspections, document deadlines. One team
             absorbs <span className="text-white">every OMC portal headache</span>, so your
             dealership is never caught short.
           </motion.p>

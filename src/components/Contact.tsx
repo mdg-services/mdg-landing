@@ -169,7 +169,7 @@ export default function Contact() {
                       <span className="font-mono text-[11px] font-bold uppercase tracking-[0.22em]">Received</span>
                     </div>
                     <p className="mt-4 font-display text-[22px] font-semibold leading-tight text-ink">
-                      Thank you — we'll be in touch shortly.
+                      Thank you. We'll be in touch shortly.
                     </p>
                     <p className="mt-2 text-[15px] leading-[1.6] text-ink-soft">
                       A team member usually calls within the hour. Can't wait?{" "}

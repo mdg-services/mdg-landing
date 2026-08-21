@@ -96,7 +96,7 @@ export default function Register() {
           </Reveal>
           <Reveal delay={0.12}>
             <p className="mt-5 max-w-2xl text-[16px] leading-[1.6] text-navy-100 sm:text-[18px]">
-              A few details and you're in. Pick the site that fits your pump — we
+              A few details and you're in. Pick the site that fits your pump. We
               confirm the services and lock your pricing in writing before we
               begin.
             </p>
@@ -333,7 +333,7 @@ function TermsModal({
                 ))}
               </ol>
               <p className="mt-6 rounded-xl bg-paper-warm p-4 text-[13.5px] leading-[1.6] text-ink-muted">
-                Services and rates are set out in <strong className="font-semibold text-ink">Annexure&nbsp;– I</strong>;
+                Services and rates are set out in <strong className="font-semibold text-ink">Annexure&nbsp;I</strong>;
                 anything outside it is negotiated between both parties. Questions before you sign?{" "}
                 <a href={BRAND.phoneHref} className="font-semibold text-navy-700">Call {BRAND.phone}</a>.
               </p>
@@ -365,7 +365,7 @@ function SuccessCard() {
         <span className="font-mono text-[11px] font-bold uppercase tracking-[0.22em]">Enrolment received</span>
       </div>
       <p className="mt-5 font-display text-[23px] font-semibold leading-tight text-ink sm:text-[26px]">
-        Thank you — your details are with us.
+        Thank you. Your details are with us.
       </p>
       <p className="mt-3 max-w-prose2 text-[15.5px] leading-[1.6] text-ink-soft sm:text-[16px]">
         A team member will call to confirm your services and pricing, usually

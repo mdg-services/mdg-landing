@@ -6,7 +6,7 @@ import { itemUp } from "../lib/anim";
 
 const PROMISES = [
   { t: "Bespoke", d: "You pick the services. We don't bundle. Your fee depends on what your pump actually needs." },
-  { t: "Locked", d: "Pricing is written down before we begin — no surprise fees, no mid-year escalation." },
+  { t: "Locked", d: "Pricing is written down before we begin. No surprise fees, no mid-year escalation." },
   { t: "Limited", d: "We take only as many dealers as we can serve well. Registration closes during overload." },
   { t: "Lifted", d: "Onboarding within seven days. Old paperwork audited. A difference in the first cycle." },
 ];

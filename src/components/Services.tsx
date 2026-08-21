@@ -22,7 +22,7 @@ export default function Services() {
           </div>
           <Reveal delay={0.12} className="md:col-span-4">
             <p className="max-w-prose2 text-[16px] leading-[1.6] text-ink-soft md:text-[17px]">
-              Each cover is sold on its own — pick what your pump needs, skip
+              Each cover is sold on its own. Pick what your pump needs, skip
               what it doesn't.
             </p>
             <p className="mt-4 font-mono text-[11px] uppercase tracking-[0.2em] text-ink-muted">
