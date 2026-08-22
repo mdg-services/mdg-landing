@@ -26,7 +26,6 @@ export interface LeadValues {
 
 export default function LeadForm({
   d,
-  phone,
   escalate,
   focusField,
   initial,
@@ -34,7 +33,6 @@ export default function LeadForm({
   onCancel,
 }: {
   d: AssistDict;
-  phone: string;
   /** True when this is a request for a person to call, not just a detail. */
   escalate: boolean;
   focusField?: AssistLeadField;
@@ -75,7 +73,7 @@ export default function LeadForm({
     try {
       await onSubmit({ ...values, mobile });
     } catch {
-      setError(d.lead.failed.replace("{phone}", phone));
+      setError(d.lead.failed);
       setConfirming(false);
     } finally {
       setSending(false);

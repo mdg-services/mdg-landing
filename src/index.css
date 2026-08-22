@@ -233,6 +233,37 @@
   50%      { opacity: 0.4; transform: scale(0.78); }
 }
 
+/* The launcher's gold halo. It swells out of the button three
+   times and then rests: enough to be noticed once, not enough
+   to become a blinking thing beside somebody's reading. The
+   widget also checks the media query itself and never renders
+   the halo when less motion has been asked for, so this runs
+   only for a reader who is happy to see it. */
+@keyframes assist-halo {
+  0%   { opacity: 0.55; transform: scale(1); }
+  70%  { opacity: 0;    transform: scale(1.75); }
+  100% { opacity: 0;    transform: scale(1.75); }
+}
+.assist-halo {
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  border: 2px solid theme(colors.gold.400);
+  pointer-events: none;
+  animation: assist-halo 2.4s var(--ease-out-expo) 3;
+}
+
+/* The panel's arrival. On a desktop it opens by itself, so it
+   rises into place rather than appearing, which reads as an
+   offer instead of an interruption. */
+@keyframes assist-enter {
+  from { opacity: 0; transform: translateY(14px) scale(0.985); }
+  to   { opacity: 1; transform: none; }
+}
+.assist-enter {
+  animation: assist-enter 320ms var(--ease-out-expo) both;
+}
+
 /* ───────────────────── Reduced motion ───────────────────── */
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }

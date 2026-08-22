@@ -1,4 +1,4 @@
-import { Suspense, lazy, useState } from "react";
+import { Suspense, lazy, useCallback, useEffect, useState } from "react";
 import { useT } from "../../i18n";
 
 /**
@@ -13,13 +13,78 @@ import { useT } from "../../i18n";
  * downloads, fetched in that order only as far as the visitor actually goes:
  * opening the panel does not fetch the call, and loading the page does not
  * fetch the panel.
+ *
+ * ── Why it opens itself, and only on a big screen ──────────────────────────
+ *
+ * The whole point of this assistant is that a dealer asks it instead of
+ * ringing the office, and nobody asks a button they did not notice. So on a
+ * desktop, where the panel is a card in the corner and the page carries on
+ * behind it, it opens on its own a moment after the page has settled.
+ *
+ * On a phone it does not, and that is a deliberate choice rather than a
+ * shortcut. The mobile panel is the whole screen: it covers the pitch, it
+ * locks the page behind it so nothing scrolls, and it takes the keyboard.
+ * Opening that on arrival would make "close this" the first thing a visitor
+ * has to do, and it would pull the panel chunk and the config request down
+ * over 2G before the hero has even painted. Instead the phone gets a louder
+ * launcher: the same round button with one line of invitation beside it.
+ *
+ * Either way, closing it means closing it. The dismissal is remembered for
+ * the tab, so moving between the landing page and the enrolment form does not
+ * re-open what somebody has already waved away.
  */
 
 const AssistPanel = lazy(() => import("./AssistPanel"));
 
+/** Remembered per tab. Not per browser: a new visit is a new conversation. */
+const DISMISS_KEY = "mdg-assist-dismissed";
+/** Let the hero paint and the first scroll happen before the panel arrives. */
+const AUTO_OPEN_MS = 1_400;
+/** Tailwind's `sm`. Below this the panel is a full sheet, not a card. */
+const CARD_WIDTH_PX = 640;
+
 export default function AssistWidget() {
   const t = useT();
   const [open, setOpen] = useState(false);
+  /**
+   * True only while the panel is showing because it opened itself. It decides
+   * whether the panel grabs the keyboard and claims to be modal, because a
+   * dialog nobody asked for must do neither.
+   */
+  const [uninvited, setUninvited] = useState(false);
+  const [dismissed, setDismissed] = useState(() => wasDismissed());
+
+  useEffect(() => {
+    // Read straight from storage rather than from state, so this effect has
+    // nothing to depend on and runs exactly once, on arrival.
+    if (wasDismissed() || window.innerWidth < CARD_WIDTH_PX) return;
+    const id = window.setTimeout(() => {
+      setOpen(true);
+      setUninvited(true);
+    }, AUTO_OPEN_MS);
+    return () => window.clearTimeout(id);
+  }, []);
+
+  const close = useCallback(() => {
+    setOpen(false);
+    setUninvited(false);
+    setDismissed(true);
+    remember();
+  }, []);
+
+  const toggle = useCallback(() => {
+    if (open) {
+      close();
+      return;
+    }
+    setOpen(true);
+    setUninvited(false);
+  }, [open, close]);
+
+  // The invitation is for the phone, where nothing opens by itself. It is
+  // part of the button rather than a bubble beside it, so there is one tap
+  // target and it does one thing.
+  const inviting = !open && !dismissed;
 
   return (
     <>
@@ -28,28 +93,43 @@ export default function AssistWidget() {
         aria-label={open ? t.assist.launcher.close : t.assist.launcher.aria}
         aria-expanded={open}
         aria-haspopup="dialog"
-        onClick={() => setOpen((v) => !v)}
-        className="fixed bottom-5 right-5 z-[70] inline-flex items-center gap-2 rounded-full bg-navy-700 px-4 py-3 text-[14px] font-semibold text-white shadow-lift transition-colors duration-200 hover:bg-navy-800 sm:bottom-6 sm:right-6"
+        onClick={toggle}
+        className="group fixed bottom-5 right-5 z-[70] inline-flex items-center gap-2 rounded-full transition-transform duration-150 active:scale-95 sm:bottom-6 sm:right-6"
       >
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden>
-          {open ? (
-            <path
-              d="M6 6l12 12M6 18L18 6"
-              stroke="currentColor"
-              strokeWidth="1.8"
-              strokeLinecap="round"
-            />
-          ) : (
-            <path
-              d="M21 12a8 8 0 0 1-8 8H8l-4 3 1-4.6A8 8 0 1 1 21 12z"
-              stroke="currentColor"
-              strokeWidth="1.6"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          )}
-        </svg>
-        {t.assist.launcher.label}
+        {inviting && (
+          <span className="max-w-[62vw] truncate rounded-full border border-ink-hairline bg-white px-3.5 py-2 text-[13px] font-semibold leading-none text-ink shadow-card sm:hidden">
+            {t.assist.launcher.invite}
+          </span>
+        )}
+        <span className="relative grid h-14 w-14 place-items-center rounded-full bg-navy-700 text-white shadow-lift ring-2 ring-inset ring-gold-400/70 transition-colors duration-200 group-hover:bg-navy-800">
+          {/* A gold ring that swells out of the button, three times, then
+              rests. Three is enough to catch an eye and few enough not to
+              become a blinking thing in the corner of somebody's reading. */}
+          {inviting && !stillMotion() && <span aria-hidden className="assist-halo" />}
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden>
+            {open ? (
+              <path
+                d="M6 6l12 12M6 18L18 6"
+                stroke="currentColor"
+                strokeWidth="1.8"
+                strokeLinecap="round"
+              />
+            ) : (
+              <>
+                <path
+                  d="M21 12a8 8 0 0 1-8 8H8l-4 3 1-4.6A8 8 0 1 1 21 12z"
+                  stroke="currentColor"
+                  strokeWidth="1.6"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+                {/* The gold speck is the brand's accent, and it is the reason
+                    this reads as ours rather than as a stock chat bubble. */}
+                <circle cx="16.5" cy="7.5" r="2.4" fill="#F5A524" />
+              </>
+            )}
+          </svg>
+        </span>
       </button>
 
       {open && (
@@ -57,15 +137,37 @@ export default function AssistWidget() {
           fallback={
             <p
               role="status"
-              className="fixed bottom-20 right-5 z-[70] rounded-full border border-ink-hairline bg-white px-4 py-2 text-[13px] text-ink-muted shadow-card sm:bottom-24 sm:right-6"
+              className="fixed bottom-24 right-5 z-[70] rounded-full border border-ink-hairline bg-white px-4 py-2 text-[13px] text-ink-muted shadow-card sm:right-6"
             >
               {t.assist.panel.loading}
             </p>
           }
         >
-          <AssistPanel onClose={() => setOpen(false)} />
+          <AssistPanel onClose={close} takeFocus={!uninvited} />
         </Suspense>
       )}
     </>
   );
+}
+
+/** Storage can throw outright in a locked-down browser, so every read is a try. */
+function wasDismissed(): boolean {
+  try {
+    return window.sessionStorage.getItem(DISMISS_KEY) === "1";
+  } catch {
+    return false;
+  }
+}
+
+function remember() {
+  try {
+    window.sessionStorage.setItem(DISMISS_KEY, "1");
+  } catch {
+    /* a private window that will not store: it simply asks again next page */
+  }
+}
+
+/** True when the reader has asked their system for less movement. */
+function stillMotion(): boolean {
+  return window.matchMedia?.("(prefers-reduced-motion: reduce)").matches ?? false;
 }

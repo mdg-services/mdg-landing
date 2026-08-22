@@ -539,7 +539,14 @@ export function useAssistCall({
 
     const sock = io(`${assistSocketOrigin()}/assist-call`, {
       auth: { token },
-      transports: ["websocket"],
+      // Websocket first, long-polling behind it. Asking for websocket ALONE is
+      // what took live calls off the air after launch: nginx in front of the
+      // API was not passing the Upgrade and Connection headers, so the socket
+      // could never leave HTTP, and with nothing to fall back to every call
+      // died at the handshake instead of quietly running slower. The proxy is
+      // fixed, but a corporate proxy or a hotel wifi that eats the upgrade is
+      // not something we control, and a slow call beats no call.
+      transports: ["websocket", "polling"],
       reconnectionAttempts: 3,
       timeout: 15_000,
     });

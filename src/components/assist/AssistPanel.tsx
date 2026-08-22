@@ -5,6 +5,7 @@ import CallControls from "./CallControls";
 import LeadForm, { type LeadValues } from "./LeadForm";
 import { assistDict, callPhaseLabel, type AssistDict } from "./dict";
 import { useVoiceNote } from "./useVoiceNote";
+import VoiceNote from "./VoiceNote";
 import { useAssistCall } from "./useAssistCall";
 import { micSupported, type MicFailure } from "./mic";
 import {
@@ -45,6 +46,8 @@ type Msg = {
   /** Visitor messages we transcribed rather than read. */
   transcribed?: boolean;
   audioUrl?: string;
+  /** Length of the spoken reply, as the server measured it. Shown before playback starts. */
+  audioMs?: number;
 };
 
 const CHAR_LIMIT = 600;
@@ -54,7 +57,19 @@ const DEFAULT_VOICE_MS = 45_000;
 
 let nextId = 1;
 
-export default function AssistPanel({ onClose }: { onClose: () => void }) {
+export default function AssistPanel({
+  onClose,
+  takeFocus,
+}: {
+  onClose: () => void;
+  /**
+   * False when the panel opened itself rather than being asked for. An
+   * uninvited dialog must not take the keyboard away from whatever somebody
+   * was reading, and must not tell a screen reader the rest of the page has
+   * gone away, so both of those hang off this.
+   */
+  takeFocus: boolean;
+}) {
   const site = useLang();
   const reduced = useReducedMotion() ?? false;
 
@@ -68,19 +83,23 @@ export default function AssistPanel({ onClose }: { onClose: () => void }) {
   const [error, setError] = useState<string | null>(null);
   /** Set once a failure means the assistant itself cannot serve this visitor. */
   const [apiDown, setApiDown] = useState(false);
+  /**
+   * Set once nothing here can help any more: the API is unreachable, it
+   * refused outright, or every live line is taken. This is the ONLY thing
+   * that puts the toll-free number on screen, and even then it sits under the
+   * callback offer. The assistant exists to take calls off that number.
+   */
+  const [stuck, setStuck] = useState(false);
   /** A guard answered instead of the knowledge base, so a person is offered. */
   const [offerCallback, setOfferCallback] = useState(false);
   const [micNotice, setMicNotice] = useState<MicFailure | null>(null);
   const [consentOpen, setConsentOpen] = useState(false);
   const [lead, setLead] = useState<{ escalate: boolean; focus?: AssistLeadField } | null>(null);
   const [leadDone, setLeadDone] = useState<"lead" | "callback" | null>(null);
-  const [playingId, setPlayingId] = useState<number | null>(null);
 
   const panelRef = useRef<HTMLDivElement>(null);
   const listRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
-  const playerRef = useRef<HTMLAudioElement | null>(null);
-  const playingRef = useRef<number | null>(null);
 
   const push = useCallback((msg: Omit<Msg, "id">) => {
     setMessages((prev) => [...prev, { ...msg, id: nextId++ }]);
@@ -94,7 +113,7 @@ export default function AssistPanel({ onClose }: { onClose: () => void }) {
     lang,
     lostText: d.call.lostForGood,
     onHeard: (h) => push({ role: "visitor", text: h.text, transcribed: true }),
-    onReply: (r) => push({ role: "assistant", text: r.text, audioUrl: r.audioUrl }),
+    onReply: (r) => push({ role: "assistant", text: r.text, audioUrl: r.audioUrl, audioMs: r.audioMs }),
     onLeadAsk: (ask) => {
       push({ role: "assistant", text: ask.text });
       setLeadDone(null);
@@ -109,6 +128,7 @@ export default function AssistPanel({ onClose }: { onClose: () => void }) {
         setLeadDone(null);
         setLead({ escalate: true });
       }
+      if (refusal.kind === "capacity") setStuck(true);
     },
   });
 
@@ -136,7 +156,10 @@ export default function AssistPanel({ onClose }: { onClose: () => void }) {
   useEffect(() => {
     const el = panelRef.current;
     const opener = document.activeElement as HTMLElement | null;
-    el?.focus();
+    // A panel that opened itself leaves the keyboard where it was. Stealing
+    // focus from somebody who is reading, or mid-way through the enrolment
+    // form, would be the rudest possible greeting.
+    if (takeFocus) el?.focus();
 
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
@@ -164,9 +187,9 @@ export default function AssistPanel({ onClose }: { onClose: () => void }) {
     document.addEventListener("keydown", onKey);
     return () => {
       document.removeEventListener("keydown", onKey);
-      opener?.focus?.();
+      if (takeFocus) opener?.focus?.();
     };
-  }, [onClose]);
+  }, [onClose, takeFocus]);
 
   /* ── On a phone the panel is the screen, so the page behind it holds still ── */
 
@@ -213,6 +236,7 @@ export default function AssistPanel({ onClose }: { onClose: () => void }) {
           setError(d.errors.callCapacity);
           setLeadDone(null);
           setLead({ escalate: true });
+          setStuck(true);
           return;
         case "PAYLOAD_TOO_LARGE":
           setError(d.errors.tooLarge);
@@ -222,33 +246,37 @@ export default function AssistPanel({ onClose }: { onClose: () => void }) {
           // is the second refusal. The assistant itself is up — it answered
           // with a sentence — so this must NOT set `apiDown`, which is what
           // used to turn one closed conversation into a dead panel.
-          setError(withPhone(d.errors.conversationEnded));
+          setError(d.errors.conversationEnded);
           return;
         case "ASSIST_DISABLED":
-          setError(withPhone(d.errors.disabled));
+          setError(d.errors.disabled);
           setApiDown(true);
+          setStuck(true);
           return;
         case "ASSIST_BLOCKED":
           // Nothing is said about a block. They simply get the callback form.
-          setError(withPhone(d.errors.blocked));
+          setError(d.errors.blocked);
           setApiDown(true);
+          setStuck(true);
           return;
         case "NETWORK":
-          setError(withPhone(d.errors.network));
+          setError(d.errors.network);
           setApiDown(true);
+          setStuck(true);
           return;
         default:
-          setError(withPhone(d.errors.generic));
+          setError(d.errors.generic);
           setApiDown(true);
+          setStuck(true);
       }
     },
-    [d, withPhone],
+    [d],
   );
 
   const applyResult = useCallback(
     (res: AssistTurnResult) => {
       if (res.heard) push({ role: "visitor", text: res.heard, transcribed: true });
-      push({ role: "assistant", text: res.text, audioUrl: res.audioUrl });
+      push({ role: "assistant", text: res.text, audioUrl: res.audioUrl, audioMs: res.audioMs });
       if (res.asksFor) {
         setLeadDone(null);
         setLead({ escalate: false, focus: res.asksFor });
@@ -306,55 +334,6 @@ export default function AssistPanel({ onClose }: { onClose: () => void }) {
     onTooShort: () => setError(d.voice.tooShort),
     onFailure: (failure) => setMicNotice(failure),
   });
-
-  /* ── Playing an answer back ───────────────────────────────────────────── */
-
-  const togglePlay = useCallback((msg: Msg) => {
-    if (!msg.audioUrl) return;
-    let el = playerRef.current;
-    if (!el) {
-      el = new Audio();
-      playerRef.current = el;
-      const clear = () => {
-        playingRef.current = null;
-        setPlayingId(null);
-      };
-      el.addEventListener("ended", clear);
-      el.addEventListener("error", clear);
-    }
-    if (playingRef.current === msg.id) {
-      try {
-        el.pause();
-      } catch {
-        /* nothing playing */
-      }
-      playingRef.current = null;
-      setPlayingId(null);
-      return;
-    }
-    el.src = msg.audioUrl;
-    playingRef.current = msg.id;
-    setPlayingId(msg.id);
-    void el.play().catch(() => {
-      playingRef.current = null;
-      setPlayingId(null);
-    });
-  }, []);
-
-  useEffect(
-    () => () => {
-      const el = playerRef.current;
-      playerRef.current = null;
-      if (el) {
-        try {
-          el.pause();
-        } catch {
-          /* nothing playing */
-        }
-      }
-    },
-    [],
-  );
 
   /* ── Lead capture and escalation ──────────────────────────────────────── */
 
@@ -491,12 +470,14 @@ export default function AssistPanel({ onClose }: { onClose: () => void }) {
       <div
         ref={panelRef}
         role="dialog"
-        aria-modal="true"
+        // Modal only when the visitor opened it. A panel that appeared by
+        // itself must not hide the page from a screen reader.
+        aria-modal={takeFocus}
         aria-labelledby="assist-title"
         tabIndex={-1}
         lang={lang}
         className={
-          "fixed inset-0 z-[70] flex flex-col bg-white outline-none sm:inset-auto sm:bottom-24 sm:right-6 sm:h-[38rem] sm:max-h-[calc(100vh_-_9rem)] sm:w-[23.5rem] sm:rounded-2xl sm:border sm:border-ink-hairline sm:shadow-lift" +
+          "assist-enter fixed inset-0 z-[70] flex flex-col bg-white outline-none sm:inset-auto sm:bottom-24 sm:right-6 sm:h-[38rem] sm:max-h-[calc(100vh_-_9rem)] sm:w-[23.5rem] sm:rounded-2xl sm:border sm:border-ink-hairline sm:shadow-lift" +
           // The page's Devanagari rules key off html[data-lang]. The panel has
           // its own language toggle, so it carries its own scope class.
           (lang === "hi" ? " assist-hi" : "")
@@ -588,16 +569,7 @@ export default function AssistPanel({ onClose }: { onClose: () => void }) {
                   <p className="rounded-2xl rounded-bl-md border border-ink-hairline bg-white px-3.5 py-2.5 text-[14.5px] leading-[1.65] text-ink">
                     {m.text}
                   </p>
-                  {m.audioUrl && (
-                    <button
-                      type="button"
-                      onClick={() => togglePlay(m)}
-                      className="mt-1.5 inline-flex items-center gap-1.5 rounded-full border border-ink-hairline px-3 py-1 text-[12px] font-semibold text-navy-700"
-                    >
-                      <Icon name={playingId === m.id ? "check" : "spark"} size={13} />
-                      {playingId === m.id ? d.chat.stop : d.chat.play}
-                    </button>
-                  )}
+                  {m.audioUrl && <VoiceNote src={m.audioUrl} d={d} knownMs={m.audioMs} />}
                 </div>
               ),
             )}
@@ -641,12 +613,16 @@ export default function AssistPanel({ onClose }: { onClose: () => void }) {
                 >
                   {d.mic.typeInstead}
                 </button>
-                <a
-                  href={BRAND.phoneHref}
+                <button
+                  type="button"
+                  onClick={() => {
+                    setMicNotice(null);
+                    openCallbackForm();
+                  }}
                   className="rounded-full border border-ink/15 bg-white px-4 py-2 text-[13px] font-semibold text-ink"
                 >
-                  {withPhone(d.mic.callInstead)}
-                </a>
+                  {d.lead.open}
+                </button>
               </div>
             </div>
           )}
@@ -663,6 +639,10 @@ export default function AssistPanel({ onClose }: { onClose: () => void }) {
                 </p>
               )}
               <p className="mt-1 text-[13.5px] leading-[1.6] text-ink-soft">{refusalText}</p>
+              {/* Every line taken is one of the three states where a phone
+                  number is still worth printing. The form above it is the
+                  first offer; this is the second. */}
+              {call.refusal?.kind === "capacity" && <TollFree d={d} withPhone={withPhone} />}
             </div>
           )}
 
@@ -690,7 +670,22 @@ export default function AssistPanel({ onClose }: { onClose: () => void }) {
           {error && (
             <div role="alert" className="mt-3 rounded-2xl border border-gold-300 bg-gold-50 p-3.5">
               <p className="text-[13.5px] leading-[1.6] text-ink-soft">{error}</p>
-              {apiDown && <TollFree d={d} withPhone={withPhone} />}
+              {stuck && (
+                <>
+                  {/* The way out comes first. The form is already open for a
+                      busy line, so the button appears only when it is not. */}
+                  {!lead && (
+                    <button
+                      type="button"
+                      onClick={openCallbackForm}
+                      className="mt-2.5 rounded-full bg-navy-700 px-4 py-2 text-[13px] font-semibold text-white"
+                    >
+                      {d.lead.open}
+                    </button>
+                  )}
+                  <TollFree d={d} withPhone={withPhone} />
+                </>
+              )}
             </div>
           )}
 
@@ -698,14 +693,17 @@ export default function AssistPanel({ onClose }: { onClose: () => void }) {
           {offerCallback && !lead && !leadDone && (
             <div className="mt-3 rounded-2xl border border-ink-hairline bg-paper-warm p-3.5">
               <p className="font-display text-[15px] font-semibold text-ink">{d.fallback.title}</p>
-              <TollFree d={d} withPhone={withPhone} />
+              <p className="mt-1 text-[13.5px] leading-[1.6] text-ink-soft">{d.fallback.body}</p>
               <button
                 type="button"
                 onClick={openCallbackForm}
-                className="mt-2.5 text-[13px] font-semibold text-navy-700 underline decoration-navy-300 underline-offset-4"
+                className="mt-2.5 rounded-full bg-navy-700 px-4 py-2 text-[13px] font-semibold text-white"
               >
                 {d.lead.open}
               </button>
+              {/* The assistant could not answer this one, so the number is
+                  allowed. It comes after the callback, never before it. */}
+              <TollFree d={d} withPhone={withPhone} />
             </div>
           )}
 
@@ -714,7 +712,6 @@ export default function AssistPanel({ onClose }: { onClose: () => void }) {
             <div className="mt-3">
               <LeadForm
                 d={d}
-                phone={BRAND.phone}
                 escalate={lead.escalate}
                 focusField={lead.focus}
                 onSubmit={handleLeadSubmit}
@@ -882,7 +879,7 @@ export default function AssistPanel({ onClose }: { onClose: () => void }) {
                   aria-label={d.call.startAria}
                   className="inline-flex items-center gap-1.5 text-[12.5px] font-semibold text-navy-700"
                 >
-                  <Icon name="phone" size={13} /> {d.call.start}
+                  <WaveGlyph /> {d.call.start}
                 </button>
               )}
               {linesBusy && (
@@ -948,6 +945,28 @@ function reasonText(d: AssistDict, reason: string): string {
     shutdown: d.call.reasons.shutdown,
   };
   return map[reason] ?? d.call.reasons.error;
+}
+
+/**
+ * The live call, drawn as sound rather than as a handset.
+ *
+ * The shared set carries a telephone, and a telephone next to this control
+ * read as "ring our landline" — which is the exact call this whole feature
+ * exists to save. It is not a second microphone either: the microphone
+ * beside it records a note, and these two are not the same thing.
+ */
+function WaveGlyph() {
+  return (
+    <svg width="14" height="14" viewBox="0 0 24 24" aria-hidden>
+      <g fill="currentColor">
+        <rect x="3" y="10" width="2" height="4" rx="1" />
+        <rect x="7.5" y="7" width="2" height="10" rx="1" />
+        <rect x="12" y="4" width="2" height="16" rx="1" />
+        <rect x="16.5" y="8" width="2" height="8" rx="1" />
+        <rect x="21" y="10.5" width="2" height="3" rx="1" />
+      </g>
+    </svg>
+  );
 }
 
 /** The one glyph the shared icon set does not carry. */

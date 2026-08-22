@@ -3,9 +3,16 @@
 
    Every visible string in `src/components/assist/**` comes from
    here. The widget answers a dealer who is standing on a
-   forecourt with one hand on a phone, so the sentences are short,
-   the buttons say what happens next, and every dead end offers
-   the toll-free number instead of an apology.
+   forecourt with one hand on a phone, so the sentences are short
+   and the buttons say what happens next.
+
+   One rule runs through all of it: this assistant exists so that
+   fewer people have to ring the office, so it never offers the
+   toll-free number while it is answering. A dead end offers a
+   callback, which still keeps the call off the inbound line. The
+   number appears only where nothing else can work: the assistant
+   is unreachable, it could not answer at all, or every live line
+   is taken. Even there it comes second, under the callback.
 
    `{phone}`, `{n}`, `{mobile}` and `{time}` are filled in where
    they are used, so each language can put them where the
@@ -16,9 +23,10 @@ export const assist = {
   /** The floating button. The only assistant string a visitor sees
       before they tap it, so it says what it does. */
   launcher: {
-    label: "Ask us",
     aria: "Ask MDG a question",
     close: "Close the assistant",
+    /** Beside the button on a phone, where the panel does not open itself. */
+    invite: "Ask us anything",
   },
 
   panel: {
@@ -31,15 +39,19 @@ export const assist = {
     greeting:
       "Ask me anything about the marketing guidelines, or about what MDG Services does. I answer in Hindi or English.",
     /** The three ways in, spelled out under the greeting. */
-    hint: "Type below, hold the mic to speak, or tap Call to talk.",
+    hint: "Type below, hold the mic to speak, or tap Talk live for a live conversation.",
   },
 
   chat: {
     /** Above a spoken question, so a misheard word is obvious straight away. */
     heard: "What we heard",
     heardNote: "Not what you said? Type it below instead.",
-    play: "Play the answer",
-    stop: "Stop",
+    /* ── The spoken answer, played as a voice note ── */
+    voicePlay: "Play the spoken answer",
+    voicePause: "Pause",
+    voiceSeek: "Move through the spoken answer",
+    /** The player takes itself away rather than sitting there dead. */
+    voiceFailed: "The spoken answer would not play. The words above say the same thing.",
     thinking: "Thinking",
     /** The live region while nothing is happening. */
     ready: "Ready",
@@ -70,22 +82,22 @@ export const assist = {
     deniedBody:
       "Your browser did not let this page use the microphone. Allow it in the browser's site settings and try again, or just type your question here.",
     missingTitle: "No microphone found",
-    missingBody:
-      "This device does not seem to have a microphone. Type your question here, or call us.",
+    missingBody: "This device does not seem to have a microphone. Type your question here instead.",
     unsupportedTitle: "This browser cannot record",
     unsupportedBody:
-      "This browser will not let a web page record sound. Type your question here, or call us.",
+      "This browser will not let a web page record sound. Type your question here instead.",
     busyTitle: "The microphone is in use",
     busyBody:
       "Another app seems to be holding the microphone. Close it and try again, or type your question here.",
     typeInstead: "Type instead",
-    callInstead: "Call {phone}",
   },
 
   /* ── The live call ── */
   call: {
-    start: "Call",
-    startAria: "Start a live voice call",
+    /** This is the browser call, not our phone number. It has been mistaken
+        for the latter, hence the wording and the waveform glyph. */
+    start: "Talk live",
+    startAria: "Talk to the assistant out loud",
     /** The consent gate. Nobody is connected before they tap through this. */
     consentTitle: "Before we connect you",
     consentFallbackNotice:
@@ -118,7 +130,7 @@ export const assist = {
     refusedDisabled:
       "Live calls are switched off at the moment. Type your question here, or leave your number for a callback.",
     refusedGeneric:
-      "We could not connect the call. Type your question here, or call us on {phone}.",
+      "We could not connect the call. Type your question here, or leave your number and a person will ring you back.",
     lost: "The connection dropped. Trying to get back.",
     /** After the retries have run out. Shown on the "call ended" card. */
     lostForGood: "We could not get the connection back, so the call has ended.",
@@ -168,13 +180,15 @@ export const assist = {
     savedTitle: "Got it",
     savedBody: "Thank you. A team member will call you shortly.",
     savedBodyLead: "Thank you. That is saved.",
-    failed: "We could not send that. Please try again, or call us on {phone}.",
+    failed: "We could not send that. Please try again in a moment.",
   },
 
   /* ── When the assistant cannot help, a person still can ── */
   fallback: {
     title: "Let us get a person on it",
-    callLead: "Call us free on",
+    body: "Leave your number and somebody rings you back, usually within the hour.",
+    /** Under the callback offer, never above it, and never on a good answer. */
+    callLead: "Or call us free on",
     hours: "9am to 9pm, every day",
     callAria: "Call MDG Services free on {phone}",
   },
@@ -183,16 +197,15 @@ export const assist = {
     rateLimited: "One moment. That was a little quick for us. Please try again in a few seconds.",
     turnLimit: "We have covered a lot here. Shall we have someone call you?",
     disabled:
-      "The assistant is resting right now. Call us on {phone}, or leave your number and we will call you.",
-    blocked:
-      "We could not answer that here. Call us on {phone}, or leave your number and we will call you back.",
+      "The assistant is resting right now. Leave your number and we will call you back.",
+    blocked: "We could not answer that here. Leave your number and we will call you back.",
     callCapacity: "All our lines are busy right now.",
     tooLarge: "That recording was too long to send. Please keep it under a minute.",
     /** The old conversation was closed and a fresh one could not be opened either. */
-    conversationEnded:
-      "That conversation has ended. Ask again and we will start a fresh one, or call us on {phone}.",
+    conversationEnded: "That conversation has ended. Ask again and we will start a fresh one.",
     network:
-      "We could not reach our system. Check your connection and try again, or call us on {phone}.",
-    generic: "Something went wrong. Please try again, or call us on {phone}.",
+      "We could not reach our system. Check your connection and try again, or leave your number and we will call you back.",
+    generic:
+      "Something went wrong. Please try again, or leave your number and we will call you back.",
   },
 };
