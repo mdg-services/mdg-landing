@@ -253,15 +253,104 @@
   animation: assist-halo 2.4s var(--ease-out-expo) 3;
 }
 
-/* The panel's arrival. On a desktop it opens by itself, so it
-   rises into place rather than appearing, which reads as an
-   offer instead of an interruption. */
-@keyframes assist-enter {
-  from { opacity: 0; transform: translateY(14px) scale(0.985); }
+/* The panel's arrival.
+   It used to fade up fourteen pixels, which is the animation a
+   thing does when nobody decided it should do anything. On a
+   desktop the panel now comes OUT OF the launcher: it starts
+   small in that corner and expands to its full size, while the
+   launcher squashes underneath it. Two elements, one movement,
+   so the card plainly came from the button that was there.
+   On a phone the panel is the whole screen, and a whole screen
+   scaling up from a third of its size reads as a glitch, so
+   that one rises instead. */
+@keyframes assist-sheet {
+  from { opacity: 0; transform: translate3d(0, 22px, 0); }
+  to   { opacity: 1; transform: none; }
+}
+@keyframes assist-pop {
+  from { opacity: 0; transform: translate3d(20px, 24px, 0) scale(0.62); }
+  55%  { opacity: 1; }
   to   { opacity: 1; transform: none; }
 }
 .assist-enter {
-  animation: assist-enter 320ms var(--ease-out-expo) both;
+  animation: assist-sheet 300ms var(--ease-out-expo) both;
+}
+@media (min-width: 640px) {
+  .assist-enter {
+    transform-origin: 100% 100%;
+    animation: assist-pop 380ms var(--ease-out-expo) both;
+  }
+}
+
+/* The launcher giving the panel its shape. */
+@keyframes assist-launch {
+  0%   { transform: scale(1); }
+  40%  { transform: scale(0.82); }
+  100% { transform: scale(1); }
+}
+.assist-launch {
+  animation: assist-launch 380ms var(--ease-out-expo) both;
+}
+
+/* ── The live call ───────────────────────────────────────────
+   One shape carries the whole state of a call: quiet navy while
+   the line is open, gold while the visitor is being heard,
+   green while the answer plays. A colour and a rhythm say it
+   faster than a word can, which matters on a forecourt where
+   the screen is being glanced at rather than read. */
+.assist-orb {
+  --orb: theme(colors.navy.300);
+  position: relative;
+  display: grid;
+  place-items: center;
+  height: 5.5rem;
+  width: 5.5rem;
+}
+.assist-orb-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  border: 2px solid var(--orb);
+  opacity: 0.35;
+}
+.assist-orb-core {
+  height: 2.75rem;
+  width: 2.75rem;
+  border-radius: 9999px;
+  background: var(--orb);
+  transition: background var(--d-hover) var(--ease-out-quart);
+}
+.assist-orb-listening { --orb: theme(colors.navy.300); }
+.assist-orb-hearing   { --orb: theme(colors.gold.400); }
+.assist-orb-thinking  { --orb: theme(colors.navy.200); }
+.assist-orb-speaking  { --orb: theme(colors.ok.DEFAULT); }
+.assist-orb-muted     { --orb: theme(colors.navy.600); }
+
+@keyframes assist-orb-swell {
+  0%   { opacity: 0.45; transform: scale(0.7); }
+  70%  { opacity: 0;    transform: scale(1); }
+  100% { opacity: 0;    transform: scale(1); }
+}
+.assist-orb-listening .assist-orb-ring,
+.assist-orb-speaking .assist-orb-ring {
+  animation: assist-orb-swell 2.2s var(--ease-out-expo) infinite;
+}
+.assist-orb-hearing .assist-orb-ring {
+  animation: assist-orb-swell 1.1s var(--ease-out-expo) infinite;
+}
+.assist-orb-thinking .assist-orb-core {
+  animation: assist-pulse 1.2s ease-in-out infinite;
+}
+
+/* The one red on this site. A hang-up button that is not red is
+   a hang-up button people have to hunt for, and the recording
+   dot is the mark every camera and every recorder has trained
+   people to read. Neither is a brand colour and neither appears
+   anywhere except on a live call. */
+.assist-rec-dot { background: #E5484D; }
+.assist-end     { background: #C8353A; }
+@media (hover: hover) and (pointer: fine) {
+  .assist-end:hover { background: #AF2B30; }
 }
 
 /* ───────────────────── Reduced motion ───────────────────── */

@@ -39,7 +39,7 @@ export const assist = {
     greeting:
       "Ask me anything about the marketing guidelines, or about what MDG Services does. I answer in Hindi or English.",
     /** The three ways in, spelled out under the greeting. */
-    hint: "Type below, hold the mic to speak, or tap Talk live for a live conversation.",
+    hint: "Type below, hold the mic for a voice note, or tap Talk live and simply speak.",
   },
 
   chat: {
@@ -59,6 +59,8 @@ export const assist = {
 
   composer: {
     placeholder: "Type your question",
+    /** Types itself into the empty box, so nobody has to guess what to ask. */
+    typedHint: "What is mdgservices?",
     aria: "Your question",
     sendAria: "Send the question",
     /** Only appears once they are near the limit. */
@@ -98,19 +100,31 @@ export const assist = {
         for the latter, hence the wording and the waveform glyph. */
     start: "Talk live",
     startAria: "Talk to the assistant out loud",
-    /** The consent gate. Nobody is connected before they tap through this. */
-    consentTitle: "Before we connect you",
-    consentFallbackNotice:
-      "This call is recorded so our team can follow it up afterwards. By continuing, you agree to that.",
-    consentContinue: "I understand, connect me",
-    consentCancel: "Not now",
+    /** The chip that sits on the call for the whole of it. The assistant also
+        says the recording notice out loud the moment the call connects, so
+        there is nothing to tap through and nothing hidden. */
+    recording: "Recording",
 
-    connecting: "Connecting",
-    listening: "Listening",
-    thinking: "Thinking",
+    connecting: "Connecting\u2026",
+    listening: "Listening\u2026",
+    thinking: "Thinking\u2026",
     speaking: "Speaking",
     ended: "The call has ended",
 
+    /** Under the status, while the line is quiet and waiting. */
+    justTalk: "Just talk. There is no button to hold.",
+    elapsedAria: "Time on this call",
+
+    mute: "Mute",
+    unmute: "Unmute",
+    muteAria: "Turn the microphone off",
+    unmuteAria: "Turn the microphone back on",
+    muted: "Microphone off",
+
+    /** Hands free is the call. Holding a button is the way out of a noisy
+        forecourt, offered quietly and never in the way. */
+    trouble: "Trouble hearing you? Hold to talk",
+    handsFree: "Back to hands free",
     talk: "Hold to talk",
     talkAria: "Hold this button and talk",
     release: "Let go when you have finished",

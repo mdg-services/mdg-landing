@@ -20,7 +20,7 @@ export const assist: typeof EN = {
     loading: "खुल रहा है",
     greeting:
       "मार्केटिंग गाइडलाइन्स से जुड़ा कोई भी सवाल पूछिए, या यह पूछिए कि MDG Services करता क्या है। जवाब हिंदी या अंग्रेज़ी, जिसमें चाहिए।",
-    hint: "नीचे लिखिए, बोलने के लिए माइक दबाए रखिए, या सीधी बातचीत के लिए Talk live दबाइए।",
+    hint: "नीचे लिखिए, वॉइस नोट के लिए माइक दबाए रखिए, या Talk live दबाकर सीधे बोलिए।",
   },
 
   chat: {
@@ -36,6 +36,7 @@ export const assist: typeof EN = {
 
   composer: {
     placeholder: "अपना सवाल लिखिए",
+    typedHint: "mdgservices क्या है?",
     aria: "आपका सवाल",
     sendAria: "सवाल भेजिए",
     charsLeft: "{n} बचे",
@@ -69,18 +70,25 @@ export const assist: typeof EN = {
   call: {
     start: "Talk live",
     startAria: "असिस्टेंट से बोलकर बात कीजिए",
-    consentTitle: "जोड़ने से पहले एक बात",
-    consentFallbackNotice:
-      "यह कॉल रिकॉर्ड होती है ताकि हमारी टीम बाद में इसे आगे बढ़ा सके। आगे बढ़ने का मतलब है कि आप इससे सहमत हैं।",
-    consentContinue: "समझ गया, जोड़ दीजिए",
-    consentCancel: "अभी नहीं",
+    recording: "रिकॉर्डिंग",
 
-    connecting: "जोड़ रहे हैं",
-    listening: "सुन रहे हैं",
-    thinking: "सोच रहे हैं",
+    connecting: "जोड़ रहे हैं\u2026",
+    listening: "सुन रहे हैं\u2026",
+    thinking: "सोच रहे हैं\u2026",
     speaking: "बोल रहे हैं",
     ended: "कॉल पूरी हो गई",
 
+    justTalk: "बस बोलिए। कोई बटन दबाए रखने की ज़रूरत नहीं।",
+    elapsedAria: "इस कॉल का समय",
+
+    mute: "माइक बंद",
+    unmute: "माइक चालू",
+    muteAria: "माइक बंद कीजिए",
+    unmuteAria: "माइक दोबारा चालू कीजिए",
+    muted: "माइक बंद है",
+
+    trouble: "आवाज़ नहीं पहुँच रही? दबाकर बोलिए",
+    handsFree: "वापस हैंड्स फ़्री कीजिए",
     talk: "बात करने के लिए दबाए रखिए",
     talkAria: "यह बटन दबाए रखिए और बोलिए",
     release: "बात पूरी हो जाए तो छोड़ दीजिए",

@@ -26,19 +26,38 @@ import type {
  * discover the visitor's browser will not give us a microphone would take a
  * line away from somebody who could have used it.
  *
- * Push-to-talk is the control. On a forecourt with a tanker running, a
- * button you hold is the only thing that is unambiguous. The silence detector
- * is a convenience on top: it ends an utterance after about 1.2 seconds of
- * quiet so the answer starts sooner, and it is never the only way to finish.
+ * ── Why the microphone simply stays open ──────────────────────────────────
+ *
+ * This used to be push-to-talk, and push-to-talk is a walkie-talkie. The whole
+ * reason a dealer taps Call rather than typing is that they want to talk to
+ * somebody, and nobody holds a button down to talk to a person. So the
+ * microphone stays open for the length of the call and the loudness meter
+ * decides where one sentence ends: about 900ms of quiet after they have
+ * actually said something. "Quiet" is measured, not assumed — the first second
+ * of every call takes the noise floor of that forecourt, so a pump with a
+ * tanker running is not mistaken for a person talking.
+ *
+ * Holding a button is still there, one tap away, because a busy forecourt can
+ * defeat any meter. It is the fallback, not the road.
+ *
+ * ── Why an open microphone does not mean an open wire ─────────────────────
+ *
+ * The recorder runs while we are listening, but its slices are held on this
+ * side until the meter is sure a person is talking. That matters for two
+ * reasons. Bytes that reach the server are transcribed and paid for, so a door
+ * slamming must never buy a transcription. And the server keeps every slice it
+ * is sent until `audio:end` arrives, with no way to say "forget that" — so an
+ * utterance we abandon after sending part of it would put its bytes in front
+ * of the next real sentence and corrupt it.
+ *
+ * Holding the slices also buys the start of the word back. The meter cannot
+ * know somebody is talking until they have been talking for a moment, so the
+ * recorder is already running before that moment arrives and the held slices
+ * carry the first syllable with them. It is rolled over every couple of
+ * seconds while nothing is said, so the silence it is holding never grows.
  */
 
-export type CallPhase =
-  | "idle"
-  | "connecting"
-  | "listening"
-  | "thinking"
-  | "speaking"
-  | "ended";
+export type CallPhase = "idle" | "connecting" | "listening" | "thinking" | "speaking" | "ended";
 
 /** Why a call could not start. Each one gets its own sentence in the panel. */
 export type CallRefusalKind =
@@ -70,14 +89,59 @@ interface Options {
   onRefused: (refusal: CallRefusal) => void;
 }
 
-/** How long a stretch of quiet ends an utterance. */
-const SILENCE_MS = 1_200;
+/** How long a stretch of quiet ends a sentence. A pause for breath is shorter. */
+const SILENCE_MS = 900;
+/** The first second of a call measures the forecourt, not the visitor. */
+const CALIBRATE_MS = 1_000;
+/** Loudness has to last this long before it counts as somebody starting to talk. */
+const ONSET_MS = 120;
 /** Loudness has to last this long before it counts as talking over the reply. */
-const BARGE_SUSTAIN_MS = 400;
+const BARGE_SUSTAIN_MS = 350;
 /** Do not let the reply be cut off in its first moment by a door slamming. */
-const BARGE_GRACE_MS = 1_000;
+const BARGE_GRACE_MS = 900;
+/** How much unspoken-into silence the open recorder is allowed to hold. */
+const PREROLL_MS = 2_000;
+/**
+ * How long we will wait for a reply's audio to start before deciding it never
+ * will. Without this, one file that neither plays nor errors would leave the
+ * microphone shut for the rest of the call.
+ */
+const AWAIT_AUDIO_MS = 8_000;
 /** Recorder timeslice. Small enough to stream, large enough not to thrash 2G. */
 const CHUNK_MS = 250;
+/** How often the loudness is read. Fine enough to catch the start of a word. */
+const METER_MS = 50;
+/** How long a dead audio context is given before the button goes up instead. */
+const SUSPENDED_MS = 2_500;
+
+/**
+ * One recording, from the moment the recorder starts to the moment its bytes
+ * are either sent or thrown away. Held in a ref rather than in state: it is
+ * driven by a 50ms interval and by recorder events, and nothing about it
+ * belongs in a render.
+ */
+interface Utterance {
+  rec: MediaRecorder;
+  /** When the recorder started, which is where the blob starts. */
+  startedAt: number;
+  /** When it stopped, so the declared length matches the bytes. */
+  endedAt: number;
+  /** Slices held back until we are sure this is a person and not a forecourt. */
+  pending: ArrayBuffer[];
+  /** True once we are sure. From here every slice goes straight out. */
+  live: boolean;
+  /** True once this recording is abandoned. Nothing of it is ever sent. */
+  dropped: boolean;
+  /** True once the end marker is on the queue, so it is never queued twice. */
+  flushed: boolean;
+  /**
+   * One chain for every slice. `Blob.arrayBuffer()` is a promise, and two of
+   * them racing would put a later slice of speech on the wire before an
+   * earlier one. A chain costs nothing and makes the order the order they
+   * were recorded in.
+   */
+  queue: Promise<void>;
+}
 
 export function useAssistCall({
   lang,
@@ -89,32 +153,47 @@ export function useAssistCall({
 }: Options) {
   const [phase, setPhase] = useState<CallPhase>("idle");
   const [remainingMs, setRemainingMs] = useState<number | null>(null);
+  const [elapsedMs, setElapsedMs] = useState(0);
   const [notice, setNotice] = useState<AssistCallNotice | null>(null);
   const [ended, setEnded] = useState<AssistCallEnded | null>(null);
   const [refusal, setRefusal] = useState<CallRefusal | null>(null);
   const [talking, setTalking] = useState(false);
+  const [muted, setMutedState] = useState(false);
+  const [holdMode, setHoldModeState] = useState(false);
   const [lost, setLost] = useState(false);
 
   const socketRef = useRef<Socket | null>(null);
   const streamRef = useRef<MediaStream | null>(null);
-  const recorderRef = useRef<MediaRecorder | null>(null);
+  const utteranceRef = useRef<Utterance | null>(null);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const audioCtxRef = useRef<AudioContext | null>(null);
   const analyserRef = useRef<AnalyserNode | null>(null);
   const meterRef = useRef(0);
   const deadlineRef = useRef<number | null>(null);
+  const startedAtRef = useRef(0);
   const tickRef = useRef(0);
 
   const talkingRef = useRef(false);
-  const utteranceStartRef = useRef(0);
-  const utteranceEndedRef = useRef(true);
-  /** How long the utterance ran, handed to `onstop` to put on the wire. */
-  const pendingEndMsRef = useRef(0);
-  const heardSpeechRef = useRef(false);
+  const mutedRef = useRef(false);
+  const holdModeRef = useRef(false);
+  /** True while a finger is actually on the fallback button. */
+  const heldRef = useRef(false);
   const lastLoudRef = useRef(0);
+  const loudSinceRef = useRef(0);
   const floorRef = useRef(0.01);
   const playbackStartRef = useRef(0);
-  const loudSinceRef = useRef(0);
+  /**
+   * True between the server saying it is composing an answer and that answer
+   * actually coming out of the speaker.
+   *
+   * This is the one window where the microphone must be shut without the phase
+   * saying so. The server marks the call "speaking" the moment it starts
+   * writing the reply, one to three seconds before there is a sound, and it
+   * drops every byte sent while it is busy — telling the visitor out loud that
+   * we were busy, which is a rude answer to a question they asked politely.
+   */
+  const awaitingAudioRef = useRef(false);
+  const awaitingSinceRef = useRef(0);
   const phaseRef = useRef<CallPhase>("idle");
 
   /**
@@ -176,6 +255,180 @@ export function useAssistCall({
     }
   }, []);
 
+  /* ── One utterance ────────────────────────────────────────────────────── */
+
+  /** Everything held back goes out, in the order it was recorded. */
+  const emitPending = useCallback((u: Utterance) => {
+    const sock = socketRef.current;
+    for (const buf of u.pending) sock?.emit("audio:chunk", buf);
+    u.pending.length = 0;
+  }, []);
+
+  /**
+   * This is a person talking. Open the wire.
+   *
+   * The held slices are flushed through the same chain the live ones use, so
+   * the first syllable — recorded before the meter could know — arrives first.
+   */
+  const goLive = useCallback(
+    (u: Utterance) => {
+      if (u.live || u.dropped) return;
+      u.live = true;
+      lastLoudRef.current = Date.now();
+      talkingRef.current = true;
+      setTalking(true);
+      u.queue = u.queue
+        .then(() => {
+          if (!u.dropped) emitPending(u);
+        })
+        .catch(() => undefined);
+    },
+    [emitPending],
+  );
+
+  /**
+   * Put the end marker on the wire.
+   *
+   * It is NOT emitted straight away. `MediaRecorder.stop()` delivers one last
+   * `dataavailable` after it returns, so emitting the marker outside the chain
+   * would put it ahead of the final slice of speech and the server would
+   * transcribe a sentence with its last word missing.
+   */
+  const flush = useCallback(
+    (u: Utterance) => {
+      if (u.dropped || !u.live || u.flushed) return;
+      u.flushed = true;
+      u.queue = u.queue
+        .then(() => {
+          emitPending(u);
+          const ms = Math.max(1, (u.endedAt || Date.now()) - u.startedAt);
+          socketRef.current?.emit("audio:end", { ms });
+        })
+        .catch(() => undefined);
+    },
+    [emitPending],
+  );
+
+  /** Throw a recording away without the server ever hearing of it. */
+  const dropUtterance = useCallback(() => {
+    const u = utteranceRef.current;
+    if (!u) return;
+    utteranceRef.current = null;
+    u.dropped = true;
+    u.pending.length = 0;
+    talkingRef.current = false;
+    setTalking(false);
+    try {
+      if (u.rec.state !== "inactive") u.rec.stop();
+    } catch {
+      /* already stopped */
+    }
+  }, []);
+
+  /** Open a recorder on the live stream. `live` skips the "is this a person" wait. */
+  const arm = useCallback(
+    (live: boolean) => {
+      const stream = streamRef.current;
+      if (!stream || utteranceRef.current || mutedRef.current) return;
+
+      // A fresh recorder per utterance, so every recording that reaches S3 is a
+      // complete file rather than a slice of a stream that needs a header from
+      // somewhere else. There is no ffmpeg on the server to repair one.
+      const mimeType = pickMimeType();
+      let rec: MediaRecorder;
+      try {
+        rec = new window.MediaRecorder(stream, mimeType ? { mimeType } : undefined);
+      } catch {
+        // The meter would ask again in fifty milliseconds, and again after
+        // that. A recorder this browser will not build is not going to build
+        // on the twentieth try, so the visitor gets the button instead.
+        holdModeRef.current = true;
+        setHoldModeState(true);
+        return;
+      }
+
+      const u: Utterance = {
+        rec,
+        startedAt: Date.now(),
+        endedAt: 0,
+        pending: [],
+        live: false,
+        dropped: false,
+        flushed: false,
+        queue: Promise.resolve(),
+      };
+
+      rec.ondataavailable = (e: BlobEvent) => {
+        if (!e.data || e.data.size === 0) return;
+        const slice = e.data;
+        u.queue = u.queue
+          .then(() => slice.arrayBuffer())
+          .then((buf) => {
+            if (u.dropped) return;
+            if (!u.live) {
+              u.pending.push(buf);
+              return;
+            }
+            emitPending(u);
+            socketRef.current?.emit("audio:chunk", buf);
+          })
+          .catch(() => undefined);
+      };
+      rec.onstop = () => flush(u);
+
+      utteranceRef.current = u;
+      try {
+        rec.start(CHUNK_MS);
+      } catch {
+        utteranceRef.current = null;
+        holdModeRef.current = true;
+        setHoldModeState(true);
+        return;
+      }
+      if (live) goLive(u);
+    },
+    [emitPending, flush, goLive],
+  );
+
+  /**
+   * The sentence is finished. Send it, and say we are thinking.
+   *
+   * The phase is moved here rather than waited for: the server takes a moment
+   * to answer, and until it does, this side must not open the microphone again
+   * — anything sent into that window is dropped by the server and the visitor
+   * is told out loud that we were busy. Saying "Thinking" the instant we send
+   * is also simply what is true.
+   */
+  const endUtterance = useCallback(() => {
+    const u = utteranceRef.current;
+    if (!u) return;
+    utteranceRef.current = null;
+    talkingRef.current = false;
+    setTalking(false);
+    u.endedAt = Date.now();
+
+    if (!u.live) {
+      u.dropped = true;
+      u.pending.length = 0;
+    }
+    let stopped = false;
+    try {
+      if (u.rec.state !== "inactive") {
+        u.rec.stop(); // `onstop` flushes once the last slice is out
+        stopped = true;
+      }
+    } catch {
+      /* fall through and close it by hand */
+    }
+    if (!stopped) flush(u);
+    if (u.live) setPhaseBoth("thinking");
+  }, [flush, setPhaseBoth]);
+
+  const barge = useCallback(() => {
+    stopPlayback();
+    socketRef.current?.emit("call:barge", {});
+  }, [stopPlayback]);
+
   /* ── Teardown ─────────────────────────────────────────────────────────── */
 
   const teardown = useCallback(() => {
@@ -189,15 +442,7 @@ export function useAssistCall({
     if (meterRef.current) window.clearInterval(meterRef.current);
     meterRef.current = 0;
 
-    const rec = recorderRef.current;
-    recorderRef.current = null;
-    if (rec && rec.state !== "inactive") {
-      try {
-        rec.stop();
-      } catch {
-        /* already stopped */
-      }
-    }
+    dropUtterance();
 
     stopPlayback();
     audioRef.current = null;
@@ -235,9 +480,11 @@ export function useAssistCall({
     }
 
     everConnectedRef.current = false;
-    talkingRef.current = false;
-    setTalking(false);
-  }, [stopPlayback]);
+    heldRef.current = false;
+    awaitingAudioRef.current = false;
+    mutedRef.current = false;
+    setMutedState(false);
+  }, [dropUtterance, stopPlayback]);
 
   /**
    * Drop the session token.
@@ -252,99 +499,41 @@ export function useAssistCall({
     forgetSession();
   }, []);
 
-  /* ── One utterance ────────────────────────────────────────────────────── */
-
   /**
-   * Finish the utterance.
+   * The meter's audio context.
    *
-   * `audio:end` is NOT emitted here. `MediaRecorder.stop()` delivers one last
-   * `dataavailable` after it returns, so emitting the end marker from this
-   * function would put it on the wire ahead of the final slice of speech and
-   * the server would transcribe a sentence with its last word missing. The
-   * marker is emitted from `onstop`, at the back of the same queue the chunks
-   * go through, which is the only way the order is guaranteed.
+   * Opened from inside the tap that asked for the call, which is why this is
+   * separate from the meter that uses it. iOS starts any AudioContext built
+   * outside a gesture in the suspended state, and a suspended context reads a
+   * flat line whatever the forecourt is doing — so a context built later, on
+   * the socket's connect event, would give us a hands-free call that hears
+   * nothing at all and never says why.
    */
-  const endUtterance = useCallback(() => {
-    if (utteranceEndedRef.current) return;
-    utteranceEndedRef.current = true;
-    talkingRef.current = false;
-    setTalking(false);
-
-    pendingEndMsRef.current = Date.now() - utteranceStartRef.current;
-    const rec = recorderRef.current;
-    recorderRef.current = null;
-    if (rec && rec.state !== "inactive") {
-      try {
-        rec.stop(); // `onstop` emits audio:end once the last chunk is out
-        return;
-      } catch {
-        /* fall through and close the utterance by hand */
+  const openAudioContext = useCallback((): AudioContext | null => {
+    if (audioCtxRef.current) return audioCtxRef.current;
+    try {
+      const Ctor =
+        window.AudioContext ??
+        (window as unknown as { webkitAudioContext?: typeof AudioContext }).webkitAudioContext;
+      // No meter means no hands free at all, so the panel puts the button up
+      // and leaves it up. A call nobody can talk on is the only worse outcome.
+      if (!Ctor) {
+        holdModeRef.current = true;
+        setHoldModeState(true);
+        return null;
       }
-    }
-    socketRef.current?.emit("audio:end", { ms: pendingEndMsRef.current });
-  }, []);
-
-  const startUtterance = useCallback(() => {
-    const stream = streamRef.current;
-    const sock = socketRef.current;
-    if (!stream || !sock || !utteranceEndedRef.current) return;
-
-    // A fresh recorder per utterance, so every recording that reaches S3 is a
-    // complete file rather than a slice of a stream that needs a header from
-    // somewhere else. There is no ffmpeg on the server to repair one.
-    const mimeType = pickMimeType();
-    let rec: MediaRecorder;
-    try {
-      rec = new window.MediaRecorder(stream, mimeType ? { mimeType } : undefined);
+      const ctx = new Ctor();
+      audioCtxRef.current = ctx;
+      void ctx.resume?.().catch(() => undefined);
+      return ctx;
     } catch {
-      return;
-    }
-    // Every slice goes through one chain. `Blob.arrayBuffer()` is a promise,
-    // and two of them racing would put a later slice of speech on the wire
-    // before an earlier one. A chain costs nothing and makes the order the
-    // order they were recorded in.
-    let queue = Promise.resolve();
-    rec.ondataavailable = (e: BlobEvent) => {
-      if (!e.data || e.data.size === 0) return;
-      const slice = e.data;
-      queue = queue
-        .then(() => slice.arrayBuffer())
-        .then((buf) => {
-          socketRef.current?.emit("audio:chunk", buf);
-        })
-        .catch(() => undefined);
-    };
-    rec.onstop = () => {
-      queue = queue
-        .then(() => {
-          socketRef.current?.emit("audio:end", { ms: pendingEndMsRef.current });
-        })
-        .catch(() => undefined);
-    };
-
-    recorderRef.current = rec;
-    utteranceEndedRef.current = false;
-    utteranceStartRef.current = Date.now();
-    heardSpeechRef.current = false;
-    lastLoudRef.current = Date.now();
-    talkingRef.current = true;
-    setTalking(true);
-    try {
-      rec.start(CHUNK_MS);
-    } catch {
-      recorderRef.current = null;
-      utteranceEndedRef.current = true;
-      talkingRef.current = false;
-      setTalking(false);
+      holdModeRef.current = true;
+      setHoldModeState(true);
+      return null;
     }
   }, []);
 
-  const barge = useCallback(() => {
-    stopPlayback();
-    socketRef.current?.emit("call:barge", {});
-  }, [stopPlayback]);
-
-  /* ── The loudness meter: silence detection and barge-in ───────────────── */
+  /* ── The loudness meter: it decides everything ────────────────────────── */
 
   const startMeter = useCallback(() => {
     // A reconnect brings back the socket, not the microphone: `connect` fires
@@ -355,21 +544,20 @@ export function useAssistCall({
     if (meterRef.current) return;
     const stream = streamRef.current;
     if (!stream) return;
-    let ctx: AudioContext;
+    const ctx = openAudioContext();
+    if (!ctx) return;
+    void ctx.resume?.().catch(() => undefined);
+    let analyser: AnalyserNode;
     try {
-      const Ctor =
-        window.AudioContext ??
-        (window as unknown as { webkitAudioContext?: typeof AudioContext }).webkitAudioContext;
-      if (!Ctor) return; // no meter, no silence detection; push-to-talk still works
-      ctx = new Ctor();
+      const source = ctx.createMediaStreamSource(stream);
+      analyser = ctx.createAnalyser();
+      analyser.fftSize = 512;
+      source.connect(analyser);
     } catch {
+      holdModeRef.current = true;
+      setHoldModeState(true);
       return;
     }
-    audioCtxRef.current = ctx;
-    const source = ctx.createMediaStreamSource(stream);
-    const analyser = ctx.createAnalyser();
-    analyser.fftSize = 512;
-    source.connect(analyser);
     analyserRef.current = analyser;
 
     const buf = new Uint8Array(analyser.fftSize);
@@ -389,57 +577,111 @@ export function useAssistCall({
       const rms = Math.sqrt(sum / buf.length);
       const now = Date.now();
 
-      // The first moments of the call measure the forecourt, so "quiet" means
+      // A context the browser never started hears a flat line however loud the
+      // room is. Rather than let the visitor talk into nothing, the button
+      // goes up and stays up.
+      if (ctx.state !== "running") {
+        if (now - startedAt > SUSPENDED_MS && !holdModeRef.current) {
+          holdModeRef.current = true;
+          setHoldModeState(true);
+        }
+        return;
+      }
+
+      // The first second of the call measures the forecourt, so "quiet" means
       // quiet for this pump, not quiet for a recording studio.
-      if (now - startedAt < 800) {
+      if (now - startedAt < CALIBRATE_MS) {
         floorSum += rms;
         floorCount += 1;
         floorRef.current = Math.max(0.008, floorSum / Math.max(1, floorCount));
         return;
       }
 
-      const speaking = rms > Math.max(floorRef.current * 3, 0.02);
+      const loud = rms > Math.max(floorRef.current * 2.5, 0.015);
+      const p = phaseRef.current;
+      const u = utteranceRef.current;
 
-      if (talkingRef.current) {
-        if (speaking) {
-          heardSpeechRef.current = true;
-          lastLoudRef.current = now;
-        } else if (heardSpeechRef.current && now - lastLoudRef.current > SILENCE_MS) {
-          endUtterance();
+      // A muted microphone hears nothing, decides nothing and sends nothing.
+      if (mutedRef.current) return;
+
+      // Being heard right now. Quiet is the only thing that ends a sentence,
+      // unless a finger is holding the fallback button, in which case letting
+      // go is.
+      if (u?.live) {
+        if (loud) lastLoudRef.current = now;
+        else if (!heldRef.current && now - lastLoudRef.current > SILENCE_MS) endUtterance();
+        return;
+      }
+
+      // A reply that never made a sound must not shut the microphone for good.
+      if (awaitingAudioRef.current && now - awaitingSinceRef.current > AWAIT_AUDIO_MS) {
+        awaitingAudioRef.current = false;
+      }
+
+      const player = audioRef.current;
+      const playing = player !== null && !player.paused && !player.ended;
+
+      // Our own voice is coming out of the speaker. Nothing is recorded into
+      // that except somebody plainly talking over it, and echo cancellation is
+      // not trusted to tell the difference on a phone held at arm's length.
+      if (playing) {
+        if (u) dropUtterance();
+        if (holdModeRef.current || now - playbackStartRef.current < BARGE_GRACE_MS || !loud) {
+          loudSinceRef.current = 0;
+          return;
+        }
+        if (!loudSinceRef.current) loudSinceRef.current = now;
+        if (now - loudSinceRef.current > BARGE_SUSTAIN_MS) {
+          loudSinceRef.current = 0;
+          barge();
+          arm(true); // they are plainly talking; no need to ask the meter again
         }
         return;
       }
 
-      // Not talking. If the assistant is speaking and the visitor starts up,
-      // cut the reply and start recording what they are saying.
-      //
-      // "Speaking" is set the moment the server starts synthesising, which is
-      // one to three seconds before a sound comes out and while the server is
-      // still busy with the turn. Barging into that gap kills the voice of
-      // the answer the visitor is waiting for and the words they say are
-      // dropped, so the reply has to actually be playing first.
-      const player = audioRef.current;
-      const playing = player !== null && !player.paused && !player.ended;
-      if (
-        playing &&
-        phaseRef.current === "speaking" &&
-        now - playbackStartRef.current > BARGE_GRACE_MS
-      ) {
-        if (speaking) {
-          if (!loudSinceRef.current) loudSinceRef.current = now;
-          if (now - loudSinceRef.current > BARGE_SUSTAIN_MS) {
-            loudSinceRef.current = 0;
-            barge();
-            startUtterance();
-          }
-        } else {
-          loudSinceRef.current = 0;
-        }
-      } else {
+      /**
+       * The microphone is open whenever the server can take audio.
+       *
+       * "Speaking" counts, because the server leaves a call in that phase after
+       * the answer has finished — the next thing that moves it is the visitor
+       * talking. Waiting for a phase that only their own voice can bring about
+       * would be a call that answers once and then goes deaf.
+       */
+      const canHear = !awaitingAudioRef.current && (p === "listening" || p === "speaking");
+      if (!canHear) {
+        // Connecting, thinking, or an answer being written: the server is not
+        // reading the microphone and every byte sent would be thrown away.
+        if (u) dropUtterance();
         loudSinceRef.current = 0;
+        return;
       }
-    }, 100);
-  }, [barge, endUtterance, startUtterance]);
+
+      if (heldRef.current) return; // the button is driving this one
+      if (holdModeRef.current) {
+        if (u) dropUtterance();
+        return;
+      }
+      if (!u) {
+        arm(false); // start holding slices, in case the next sound is a word
+        return;
+      }
+      if (loud) {
+        if (!loudSinceRef.current) loudSinceRef.current = now;
+        if (now - loudSinceRef.current >= ONSET_MS) {
+          loudSinceRef.current = 0;
+          goLive(u);
+        }
+        return;
+      }
+      loudSinceRef.current = 0;
+      // Still nothing said. Roll the recorder so the silence it is holding
+      // never grows into something we would have to pay to transcribe.
+      if (now - u.startedAt > PREROLL_MS) {
+        dropUtterance();
+        arm(false);
+      }
+    }, METER_MS);
+  }, [arm, barge, dropUtterance, endUtterance, goLive, openAudioContext]);
 
   /* ── Hanging up ───────────────────────────────────────────────────────── */
 
@@ -466,11 +708,15 @@ export function useAssistCall({
   const reset = useCallback(() => {
     teardown();
     deadlineRef.current = null;
+    startedAtRef.current = 0;
     setRemainingMs(null);
+    setElapsedMs(0);
     setNotice(null);
     setEnded(null);
     setRefusal(null);
     setLost(false);
+    setHoldModeState(false);
+    holdModeRef.current = false;
     setPhaseBoth("idle");
   }, [teardown, setPhaseBoth]);
 
@@ -482,6 +728,8 @@ export function useAssistCall({
     setEnded(null);
     setNotice(null);
     setLost(false);
+    setElapsedMs(0);
+    startedAtRef.current = Date.now();
     setPhaseBoth("connecting");
 
     // Anything a previous attempt is still awaiting belongs to nobody now.
@@ -490,12 +738,16 @@ export function useAssistCall({
     const run = ++runRef.current;
     everConnectedRef.current = false;
 
+    // Still inside the tap that asked for this. See `openAudioContext`.
+    openAudioContext();
+
     // The microphone first: a refused microphone must not cost a call slot.
     let stream: MediaStream;
     try {
       stream = await openMic();
     } catch (err) {
       if (runRef.current !== run) return;
+      teardown(); // closes the audio context opened a moment ago
       setPhaseBoth("idle");
       refuse({ kind: "mic", micFailure: err instanceof MicError ? err.failure : "unknown" });
       return;
@@ -620,9 +872,14 @@ export function useAssistCall({
         setPhaseBoth("ended");
         return;
       }
-      // The barge-in grace is NOT stamped here. "Speaking" arrives when the
-      // server starts synthesising, not when a sound comes out; the clock
-      // that matters starts in `turn:reply`, where playback really begins.
+      // "Speaking" arrives when the server starts WRITING the answer, not
+      // when a sound comes out. Everything sent between here and the first
+      // note of it is dropped by the server, so the microphone shuts until
+      // the reply is actually playing.
+      if (state?.phase === "speaking" && !awaitingAudioRef.current) {
+        awaitingAudioRef.current = true;
+        awaitingSinceRef.current = Date.now();
+      }
       if (state?.phase) setPhaseBoth(state.phase);
     });
 
@@ -630,16 +887,37 @@ export function useAssistCall({
 
     sock.on("turn:reply", (reply: AssistTurnResult) => {
       cbRef.current.onReply(reply);
-      if (!reply?.audioUrl) return;
+      // No sound to wait for: an answer that failed to be spoken must not
+      // leave the microphone shut waiting for it.
+      if (!reply?.audioUrl) {
+        awaitingAudioRef.current = false;
+        return;
+      }
       let el = audioRef.current;
       if (!el) {
         el = new Audio();
         el.preload = "auto";
         audioRef.current = el;
       }
-      el.src = reply.audioUrl;
+      // The wait ends when a sound actually comes out, not when the file is
+      // handed over: a signed URL on 2G can take a second to open, and the
+      // visitor talking into that second must be heard, not barged over.
+      const done = () => {
+        awaitingAudioRef.current = false;
+      };
+      el.onplaying = () => {
+        awaitingAudioRef.current = false;
+        // The barge grace starts HERE. Anywhere earlier and the first word of
+        // the answer is cut off by whatever the forecourt was doing.
+        playbackStartRef.current = Date.now();
+      };
+      el.onended = done;
+      el.onerror = done;
+      awaitingAudioRef.current = true;
+      awaitingSinceRef.current = Date.now();
       playbackStartRef.current = Date.now();
-      void el.play().catch(() => undefined); // a blocked autoplay still leaves the text
+      el.src = reply.audioUrl;
+      void el.play().catch(done); // a blocked autoplay still leaves the text
     });
 
     sock.on("call:notice", (n: AssistCallNotice) => setNotice(n));
@@ -654,38 +932,79 @@ export function useAssistCall({
       setRemainingMs(null);
       setPhaseBoth("ended");
     });
-  }, [lang, startMeter, teardown, dropSession, setPhaseBoth, refuse]);
+  }, [lang, openAudioContext, startMeter, teardown, dropSession, setPhaseBoth, refuse]);
 
   /* ── The clock ────────────────────────────────────────────────────────── */
 
   useEffect(() => {
     if (phase === "idle" || phase === "ended") return;
-    tickRef.current = window.setInterval(() => {
-      if (deadlineRef.current === null) return;
-      setRemainingMs(Math.max(0, deadlineRef.current - Date.now()));
-    }, 1_000);
+    const tick = () => {
+      if (startedAtRef.current) setElapsedMs(Date.now() - startedAtRef.current);
+      if (deadlineRef.current !== null) {
+        setRemainingMs(Math.max(0, deadlineRef.current - Date.now()));
+      }
+    };
+    tick();
+    tickRef.current = window.setInterval(tick, 1_000);
     return () => {
       if (tickRef.current) window.clearInterval(tickRef.current);
       tickRef.current = 0;
     };
   }, [phase]);
 
-  /* ── Push to talk ─────────────────────────────────────────────────────── */
+  /* ── Mute ─────────────────────────────────────────────────────────────── */
+
+  /**
+   * Mute is the microphone going quiet, not the call pausing.
+   *
+   * The track itself is disabled as well as the recorder being dropped,
+   * because a visitor who mutes has decided the room should not be heard, and
+   * a half-recorded sentence sent on the way out would be answered out loud —
+   * which is the opposite of what they just asked for.
+   */
+  const toggleMute = useCallback(() => {
+    const next = !mutedRef.current;
+    mutedRef.current = next;
+    setMutedState(next);
+    const stream = streamRef.current;
+    if (stream) for (const track of stream.getAudioTracks()) track.enabled = !next;
+    if (next) {
+      heldRef.current = false;
+      dropUtterance();
+    }
+  }, [dropUtterance]);
+
+  /* ── Hold to talk: the fallback, for a forecourt no meter can read ────── */
+
+  const setHoldMode = useCallback(
+    (on: boolean) => {
+      holdModeRef.current = on;
+      setHoldModeState(on);
+      if (on) {
+        heldRef.current = false;
+        if (!talkingRef.current) dropUtterance();
+      }
+    },
+    [dropUtterance],
+  );
 
   const talkPress = useCallback(() => {
     const p = phaseRef.current;
-    // "Thinking" is a turn already in flight. The server drops every byte
-    // sent into that window and says nothing about it, so offering a
-    // microphone here would take a question and quietly lose it. The button
-    // is disabled for the same reason; this is the guard behind it.
-    if (p === "idle" || p === "ended" || p === "thinking") return;
+    // "Thinking" is a turn already in flight. The server drops every byte sent
+    // into that window and says nothing about it, so offering a microphone
+    // here would take a question and quietly lose it.
+    if (p === "idle" || p === "ended" || p === "thinking" || mutedRef.current) return;
     if (p === "speaking") barge();
-    startUtterance();
-  }, [barge, startUtterance]);
+    heldRef.current = true;
+    const u = utteranceRef.current;
+    if (u) goLive(u);
+    else arm(true);
+  }, [arm, barge, goLive]);
 
   const talkRelease = useCallback(() => {
-    if (!talkingRef.current) return; // the silence detector already sent it
-    endUtterance();
+    if (!heldRef.current) return;
+    heldRef.current = false;
+    if (talkingRef.current) endUtterance();
   }, [endUtterance]);
 
   /* ── Never leave a microphone on ──────────────────────────────────────── */
@@ -717,14 +1036,19 @@ export function useAssistCall({
     phase,
     active,
     remainingMs,
+    elapsedMs,
     notice,
     ended,
     refusal,
     talking,
+    muted,
+    holdMode,
     lost,
     connect,
     hangUp,
     reset,
+    toggleMute,
+    setHoldMode,
     talkPress,
     talkRelease,
   };

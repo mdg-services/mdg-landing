@@ -38,8 +38,11 @@ const AssistPanel = lazy(() => import("./AssistPanel"));
 
 /** Remembered per tab. Not per browser: a new visit is a new conversation. */
 const DISMISS_KEY = "mdg-assist-dismissed";
-/** Let the hero paint and the first scroll happen before the panel arrives. */
-const AUTO_OPEN_MS = 1_400;
+/**
+ * Long enough for the hero to paint, short enough that the panel is part of
+ * arriving rather than an interruption a second later.
+ */
+const AUTO_OPEN_MS = 1_000;
 /** Tailwind's `sm`. Below this the panel is a full sheet, not a card. */
 const CARD_WIDTH_PX = 640;
 
@@ -101,7 +104,16 @@ export default function AssistWidget() {
             {t.assist.launcher.invite}
           </span>
         )}
-        <span className="relative grid h-14 w-14 place-items-center rounded-full bg-navy-700 text-white shadow-lift ring-2 ring-inset ring-gold-400/70 transition-colors duration-200 group-hover:bg-navy-800">
+        {/* The launcher gives the panel its shape: it squashes as the card
+            comes out of this corner, so the two read as one movement rather
+            than as a button and a card that happen to be next to each other. */}
+        <span
+          key={open ? "open" : "shut"}
+          className={
+            "relative grid h-14 w-14 place-items-center rounded-full bg-navy-700 text-white shadow-lift ring-2 ring-inset ring-gold-400/70 transition-colors duration-200 group-hover:bg-navy-800" +
+            (open ? " assist-launch" : "")
+          }
+        >
           {/* A gold ring that swells out of the button, three times, then
               rests. Three is enough to catch an eye and few enough not to
               become a blinking thing in the corner of somebody's reading. */}
