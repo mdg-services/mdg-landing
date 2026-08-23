@@ -1,7 +1,8 @@
 import { useState, type FormEvent } from "react";
 import Icon from "./Icon";
+import CallUs from "./CallUs";
+import { requestAssistCall } from "../lib/assistCall";
 import { Reveal } from "../lib/motion";
-import { BRAND } from "../data/content";
 import { useT } from "../i18n";
 
 type Status = "idle" | "submitting" | "success" | "error";
@@ -67,9 +68,15 @@ export default function Contact() {
 
         {/* phone hero */}
         <Reveal delay={0.1}>
-          <a
-            href={BRAND.phoneHref}
-            className="group mt-14 block rounded-3xl border border-ink-hairline bg-navy-950 p-8 text-white transition-shadow duration-300 hover:shadow-navy md:mt-16 md:p-12"
+          {/* This card used to be the toll-free number, set enormous. The call
+              now happens in the tab, so the thing set enormous is the act of
+              calling rather than ten digits somebody has to copy into a
+              handset. Same card, same weight on the page. */}
+          <button
+            type="button"
+            onClick={requestAssistCall}
+            aria-label={t.ui.callUsAria}
+            className="group mt-14 block w-full rounded-3xl border border-ink-hairline bg-navy-950 p-8 text-left text-white transition-shadow duration-300 hover:shadow-navy md:mt-16 md:p-12"
           >
             <div aria-hidden className="pointer-events-none relative">
               <div className="absolute inset-0 -m-8 bg-grid-dark opacity-30 md:-m-12" />
@@ -81,18 +88,26 @@ export default function Contact() {
               </span>
               <span className="font-mono text-[12px] uppercase tracking-[0.2em] text-navy-200">{t.contact.hours}</span>
             </div>
-            <div
-              className="num relative mt-6 font-semibold text-white"
-              style={{ fontSize: "clamp(46px, 10vw, 150px)", lineHeight: 0.94, letterSpacing: "-0.04em" }}
-            >
-              <span className="text-gold-400">1800</span>
-              <span className="mx-1.5 text-white/30">·</span>891
-              <span className="mx-1.5 text-white/30">·</span>3496
+            <div className="relative mt-6 flex flex-wrap items-center gap-5 md:gap-7">
+              <span
+                aria-hidden
+                className="grid shrink-0 place-items-center rounded-full bg-gold-400 text-navy-950 transition-transform duration-300 group-hover:scale-105"
+                style={{ width: "clamp(64px, 12vw, 104px)", height: "clamp(64px, 12vw, 104px)" }}
+              >
+                <Icon name="phone" size={40} />
+              </span>
+              <span
+                className="min-w-0 font-semibold text-white"
+                style={{ fontSize: "clamp(30px, 6vw, 72px)", lineHeight: 1.02, letterSpacing: "-0.03em" }}
+              >
+                {t.contact.callHeading}
+              </span>
             </div>
             <div className="relative mt-6 inline-flex items-center gap-2 font-mono text-[12px] uppercase tracking-[0.18em] text-gold-300">
-              {t.contact.tapToCall} <Icon name="arrow" size={16} className="transition-transform duration-300 group-hover:translate-x-1" />
+              {t.contact.tapToCall}{" "}
+              <Icon name="arrow" size={16} className="transition-transform duration-300 group-hover:translate-x-1" />
             </div>
-          </a>
+          </button>
         </Reveal>
 
         {/* callback form */}
@@ -149,9 +164,10 @@ export default function Contact() {
                         </span>
                         <p className="text-[14px] leading-[1.5] text-ink-soft">
                           {t.contact.errorGeneric}{" "}
-                          <a href={BRAND.phoneHref} className="link-quiet font-semibold text-navy-700">
-                            {t.contact.errorCallLink.replace("{phone}", BRAND.phone)}
-                          </a>
+                          <CallUs
+                            label={t.contact.errorCallLink}
+                            className="link-quiet font-semibold text-navy-700 align-baseline"
+                          />
                           {t.contact.errorEnd}
                         </p>
                       </div>
@@ -186,9 +202,10 @@ export default function Contact() {
                     </p>
                     <p className="mt-2 text-[15px] leading-[1.6] text-ink-soft">
                       {t.contact.success.bodyLead}{" "}
-                      <a href={BRAND.phoneHref} className="link-quiet font-semibold text-navy-700">
-                        {t.contact.success.callLink}
-                      </a>
+                      <CallUs
+                        label={t.contact.success.callLink}
+                        className="link-quiet font-semibold text-navy-700 align-baseline"
+                      />
                       {t.contact.success.bodyEnd}
                     </p>
                   </div>

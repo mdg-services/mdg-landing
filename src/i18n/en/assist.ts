@@ -14,7 +14,7 @@
    is unreachable, it could not answer at all, or every live line
    is taken. Even there it comes second, under the callback.
 
-   `{phone}`, `{n}`, `{mobile}` and `{time}` are filled in where
+   `{n}`, `{mobile}` and `{time}` are filled in where
    they are used, so each language can put them where the
    sentence wants them.
    ───────────────────────────────────────────────────────────── */
@@ -205,9 +205,10 @@ export const assist = {
     title: "Let us get a person on it",
     body: "Leave your number and somebody rings you back, usually within the hour.",
     /** Under the callback offer, never above it, and never on a good answer. */
-    callLead: "Or call us free on",
+    callLead: "Or talk to somebody",
+    callAction: "Call us now",
     hours: "9am to 9pm, every day",
-    callAria: "Call MDG Services free on {phone}",
+    callAria: "Call MDG Services from this page, free",
   },
 
   errors: {

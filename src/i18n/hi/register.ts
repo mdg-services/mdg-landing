@@ -53,7 +53,7 @@ export const register: typeof EN = {
   agreeAria: "मैं नियम व शर्तें मानता हूँ",
 
   errorGeneric: "कुछ गड़बड़ हो गई। कृपया दोबारा कोशिश कीजिए।",
-  errorCallLink: "या {phone} पर कॉल कीजिए",
+  errorCallLink: "या अभी कॉल कीजिए",
   errorEnd: "।",
 
   privacy: "आपकी जानकारी हम किसी के साथ साझा नहीं करेंगे।",
@@ -81,7 +81,7 @@ export const register: typeof EN = {
   annexureLead: "कौन सी सेवाएँ और उनके कितने पैसे, यह सब",
   annexureTail:
     " में लिखा है। उससे बाहर का कोई भी काम दोनों पक्ष आपस में बात करके तय करते हैं। साइन करने से पहले कोई सवाल है?",
-  annexureCallLink: "{phone} पर कॉल कीजिए",
+  annexureCallLink: "कॉल कीजिए",
   annexureEnd: "।",
 
   /* A translation of a contract is not the contract. These three carry the

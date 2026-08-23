@@ -1,9 +1,9 @@
 import { motion } from "motion/react";
 import { Link } from "react-router-dom";
 import Icon from "./Icon";
+import CallUs from "./CallUs";
 import { Reveal, Stagger } from "../lib/motion";
 import { itemUp } from "../lib/anim";
-import { BRAND } from "../data/content";
 import { useT } from "../i18n";
 
 export default function Membership() {
@@ -47,9 +47,11 @@ export default function Membership() {
               <Link to="/register" className="btn-gold">
                 {t.membership.ctaPrimary} <Icon name="arrow" size={16} />
               </Link>
-              <a href={BRAND.phoneHref} className="btn-on-dark-ghost">
-                {t.membership.ctaSecondary}
-              </a>
+              <CallUs
+                variant="button"
+                label={t.membership.ctaSecondary}
+                className="btn-on-dark-ghost"
+              />
             </div>
           </Reveal>
         </div>

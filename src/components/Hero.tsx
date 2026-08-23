@@ -1,7 +1,8 @@
 import { motion, useReducedMotion } from "motion/react";
 import { LogoMark } from "./Brand";
 import Icon from "./Icon";
-import { BRAND, ORBIT } from "../data/content";
+import CallUs from "./CallUs";
+import { ORBIT } from "../data/content";
 import { useT } from "../i18n";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
@@ -91,12 +92,10 @@ export default function Hero() {
             <a href="#contact" className="btn-gold w-full sm:w-auto">
               {t.hero.ctaPrimary} <Icon name="arrow" size={16} />
             </a>
-            <a href={BRAND.phoneHref} className="font-mono text-[14px] tracking-[0.02em] text-navy-100">
-              <span className="text-navy-300">{t.hero.callLabel}</span>{" "}
-              <span className="font-semibold text-white underline decoration-white/30 underline-offset-4">
-                1800&#8209;891&#8209;3496
-              </span>
-            </a>
+            <span className="inline-flex items-center gap-2 text-[14px] text-navy-100">
+              <span className="text-navy-300">{t.hero.callLabel}</span>
+              <CallUs className="font-semibold text-white underline decoration-white/30 underline-offset-4 [&_svg]:text-gold-400" />
+            </span>
           </motion.div>
 
           {/* stat chips */}

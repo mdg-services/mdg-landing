@@ -62,10 +62,8 @@ export const register = {
   /** The enrolment API answers in English and its messages are generic, so a
       failed submit shows this instead of whatever the server said. */
   errorGeneric: "Something went wrong. Please try again.",
-  /** The failure note ends on a link to the number. `{phone}` is filled in
-      from content.ts, and the closing punctuation is its own key so Hindi can
-      end the sentence with a danda. */
-  errorCallLink: "Or call {phone}",
+  /** The failure note ends on a link that starts a call. */
+  errorCallLink: "Or call us now",
   errorEnd: ".",
 
   privacy: "We will never share your details.",
@@ -105,7 +103,7 @@ export const register = {
   annexureLead: "Services and rates are set out in",
   annexureTail:
     "; anything outside it is negotiated between both parties. Questions before you sign?",
-  annexureCallLink: "Call {phone}",
+  annexureCallLink: "Call us",
   annexureEnd: ".",
 
   /**

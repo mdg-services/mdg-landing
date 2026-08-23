@@ -3,10 +3,11 @@ import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "motion/react";
 import { LogoFull } from "./Brand";
 import Icon from "./Icon";
+import CallUs from "./CallUs";
 import Footer from "./Footer";
 import { Reveal } from "../lib/motion";
 import { EASE } from "../lib/anim";
-import { BRAND, SITE_TYPES } from "../data/content";
+import { SITE_TYPES } from "../data/content";
 import { useT } from "../i18n";
 import { en } from "../i18n/en";
 
@@ -70,10 +71,7 @@ export default function Register() {
             <Link to="/" className="link-quiet hidden text-[14px] font-medium text-ink-soft hover:text-ink sm:inline">
               ← {t.register.backToHome}
             </Link>
-            <a href={BRAND.phoneHref} className="inline-flex items-center gap-2 num text-[13.5px] font-semibold text-ink sm:text-[14px]">
-              <Icon name="phone" size={15} className="text-navy-700" />
-              1800&#8209;891&#8209;3496
-            </a>
+            <CallUs className="text-[13.5px] font-semibold text-ink sm:text-[14px] [&_svg]:text-navy-700" />
           </div>
         </div>
       </header>
@@ -235,9 +233,10 @@ export default function Register() {
                     </span>
                     <p className="text-[14px] leading-[1.5] text-ink-soft">
                       {t.register.errorGeneric}{" "}
-                      <a href={BRAND.phoneHref} className="link-quiet font-semibold text-navy-700">
-                        {t.register.errorCallLink.replace("{phone}", BRAND.phone)}
-                      </a>
+                      <CallUs
+                        label={t.register.errorCallLink}
+                        className="link-quiet font-semibold text-navy-700 align-baseline"
+                      />
                       {t.register.errorEnd}
                     </p>
                   </div>
@@ -382,9 +381,10 @@ function TermsModal({
                 {t.register.annexureLead}{" "}
                 <strong className="font-semibold text-ink">Annexure&nbsp;I</strong>
                 {t.register.annexureTail}{" "}
-                <a href={BRAND.phoneHref} className="font-semibold text-navy-700">
-                  {t.register.annexureCallLink.replace("{phone}", BRAND.phone)}
-                </a>
+                <CallUs
+                  label={t.register.annexureCallLink}
+                  className="font-semibold text-navy-700 align-baseline"
+                />
                 {t.register.annexureEnd}
               </p>
             </div>
@@ -422,9 +422,10 @@ function SuccessCard() {
         {/* The opening hours sit inside the sentence, not on the end of it, so
             each language can place them where it reads best. */}
         {t.register.success.bodyLead.replace("{hours}", t.register.hours)}{" "}
-        <a href={BRAND.phoneHref} className="link-quiet font-semibold text-navy-700">
-          {t.register.success.callLink}
-        </a>
+        <CallUs
+          label={t.register.success.callLink}
+          className="link-quiet font-semibold text-navy-700 align-baseline"
+        />
         {t.register.success.bodyEnd}
       </p>
       <Link to="/" className="btn-ghost mt-7 w-full sm:w-auto">

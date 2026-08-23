@@ -1,6 +1,7 @@
 import { Suspense, lazy, useCallback, useEffect, useState } from "react";
 import { useT } from "../../i18n";
 import { ASSIST_BOT_SRC } from "./assets";
+import { onAssistCallRequested } from "../../lib/assistCall";
 
 /**
  * The launcher, and nothing else.
@@ -57,6 +58,26 @@ export default function AssistWidget() {
    */
   const [uninvited, setUninvited] = useState(false);
   const [dismissed, setDismissed] = useState(() => wasDismissed());
+  /**
+   * Set when something on the page asked for a call — the icon in the navbar,
+   * the hero, the footer. The panel reads it once, on mount, and dials.
+   */
+  const [autoCall, setAutoCall] = useState(false);
+
+  /* ── "Call us", from anywhere on the page ─────────────────────────────── */
+
+  useEffect(
+    () =>
+      onAssistCallRequested(() => {
+        // A request to call is a request to be heard, so this overrides a
+        // panel somebody closed earlier — unlike the automatic open, which
+        // stays dismissed.
+        setAutoCall(true);
+        setOpen(true);
+        setUninvited(false);
+      }),
+    [],
+  );
 
   useEffect(() => {
     // Read straight from storage rather than from state, so this effect has
@@ -72,6 +93,7 @@ export default function AssistWidget() {
   const close = useCallback(() => {
     setOpen(false);
     setUninvited(false);
+    setAutoCall(false);
     setDismissed(true);
     remember();
   }, []);
@@ -83,6 +105,7 @@ export default function AssistWidget() {
     }
     setOpen(true);
     setUninvited(false);
+    setAutoCall(false);
   }, [open, close]);
 
   // The invitation is for the phone, where nothing opens by itself. It is
@@ -164,7 +187,7 @@ export default function AssistWidget() {
             </p>
           }
         >
-          <AssistPanel onClose={close} takeFocus={!uninvited} />
+          <AssistPanel onClose={close} takeFocus={!uninvited} autoCall={autoCall} />
         </Suspense>
       )}
     </>

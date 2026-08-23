@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { LogoFullWhite } from "./Brand";
-import Icon from "./Icon";
+import CallUs from "./CallUs";
 import { BRAND } from "../data/content";
 import { useT } from "../i18n";
 
@@ -61,10 +61,7 @@ export default function Footer() {
             <p className="eyebrow-light">{t.footer.reachHeading}</p>
             <ul className="mt-6 space-y-3.5 text-[15px]">
               <li>
-                <a href={BRAND.phoneHref} className="inline-flex items-center gap-2 num font-semibold text-white">
-                  <Icon name="phone" size={15} className="text-gold-400" />
-                  1800&#8209;891&#8209;3496
-                </a>
+                <CallUs className="font-semibold text-white [&_svg]:text-gold-400" />
                 <div className="mt-1 font-mono text-[11px] uppercase tracking-[0.18em] text-navy-300">{t.footer.hours}</div>
               </li>
               <li>

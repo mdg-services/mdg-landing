@@ -8,7 +8,7 @@ const CARDS = [
     h: `Your pump's paperwork,<br><span style="color:#F5A524">done before you wake up.</span>`,
     sub: `Dealer's <span class="deva">कवच</span>. Every filing, renewal, inspection and daily report your pump owes, tracked in one app.`,
     stats: [["536 / 557", "figures matched your own book"], ["45", "compliance items on the clock"], ["2", "languages, everywhere"]],
-    foot: "mdgservices.in  ·  1800-891-3496",
+    foot: "mdgservices.in",
   },
 ];
 const b = await chromium.launch({ executablePath: "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" });

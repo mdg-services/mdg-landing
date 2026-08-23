@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { motion } from "motion/react";
 import { LogoFull } from "./Brand";
-import Icon from "./Icon";
+import CallUs from "./CallUs";
 import LanguageToggle from "./LanguageToggle";
-import { BRAND, NAV } from "../data/content";
+import { NAV } from "../data/content";
 import { useT } from "../i18n";
 
 export default function Navbar() {
@@ -60,10 +60,9 @@ export default function Navbar() {
           {/* Outside the burger on purpose: a Hindi reader has to be able to
               find the switch without first opening an English menu. */}
           <LanguageToggle />
-          <a href={BRAND.phoneHref} className="hidden items-center gap-2 num text-[14px] font-semibold text-ink lg:inline-flex">
-            <Icon name="phone" size={15} className="text-navy-700" />
-            1800&#8209;891&#8209;3496
-          </a>
+          <CallUs
+            className="hidden text-[14px] font-semibold text-ink hover:text-navy-700 lg:inline-flex [&_svg]:text-navy-700"
+          />
           <a href="#contact" className="hidden md:inline-flex btn-primary !min-h-[44px] !px-5 !text-[13px]">
             {t.ui.talkToUs}
           </a>
@@ -105,9 +104,9 @@ export default function Navbar() {
                 {t.nav.items[l.id]}
               </a>
             ))}
-            <a href={BRAND.phoneHref} className="mt-5 inline-flex items-center gap-2 num text-[16px] font-semibold text-ink">
-              <Icon name="phone" size={16} className="text-navy-700" /> {BRAND.phone}
-            </a>
+            <CallUs
+              className="mt-5 text-[16px] font-semibold text-ink [&_svg]:text-navy-700"
+            />
             <a href="#contact" onClick={() => setOpen(false)} className="btn-primary mt-4 self-stretch">
               {t.ui.talkToUs}
             </a>

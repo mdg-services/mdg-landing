@@ -9,7 +9,7 @@ export const contact: typeof EN = {
 
   /* The card stays bilingual in both languages: the number is printed as
      "Toll free" everywhere a dealer already sees it. */
-  tollFree: "Toll free",
+  tollFree: "Free call",
   tollFreeDeva: "नि:शुल्क",
   hours: "सुबह 9 से रात 9, हर दिन",
   hoursLower: "सुबह 9 से रात 9, हर दिन",
@@ -31,7 +31,8 @@ export const contact: typeof EN = {
   submitting: "भेजा जा रहा है…",
 
   errorGeneric: "कुछ गड़बड़ हो गई। कृपया दोबारा कोशिश कीजिए।",
-  errorCallLink: "या {phone} पर कॉल कीजिए",
+  errorCallLink: "या अभी कॉल कीजिए",
+  callHeading: "अभी बात कीजिए",
   errorEnd: "।",
 
   success: {

@@ -18,8 +18,10 @@ export const BRAND = {
   cin: "U29194HR2021PTC098450",
   program: "Dealer's कवच",
   programLatin: "Dealer's Kavach",
-  phone: "1800-891-3496",
-  phoneHref: "tel:18008913496",
+  /* There is deliberately no phone number here. The site offers the call
+     itself — see `components/CallUs.tsx` — and a number left in this object
+     is a number that creeps back onto the page. If one is ever needed again,
+     it belongs behind that component, not beside it. */
   site: "mdgservices.in",
   email: "hello@mdgservices.in",
   since: 2021,

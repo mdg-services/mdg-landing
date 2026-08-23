@@ -12,6 +12,7 @@ import { useLiveTranscript } from "./useLiveTranscript";
 import { playPop } from "./pop";
 import { micSupported, type MicFailure } from "./mic";
 import { ASSIST_BOT_SRC } from "./assets";
+import { requestAssistCall } from "../../lib/assistCall";
 import {
   AssistError,
   endSession,
@@ -21,7 +22,6 @@ import {
   sendVoice,
   submitLead,
 } from "../../lib/assistApi";
-import { BRAND } from "../../data/content";
 import { LANG_LABEL, useLang } from "../../i18n";
 import type {
   AssistLang,
@@ -67,8 +67,16 @@ let nextId = 1;
 export default function AssistPanel({
   onClose,
   takeFocus,
+  autoCall = false,
 }: {
   onClose: () => void;
+  /**
+   * The panel was opened by a "call us" control on the page rather than by
+   * the launcher, so it should start dialling by itself. The site offers the
+   * call in place of a phone number, and somebody who tapped a handset does
+   * not want to arrive at a chat box and hunt for a second button.
+   */
+  autoCall?: boolean;
   /**
    * False when the panel opened itself rather than being asked for. An
    * uninvited dialog must not take the keyboard away from whatever somebody
@@ -119,7 +127,6 @@ export default function AssistPanel({
     setMessages((prev) => [...prev, { ...msg, id: nextId++ }]);
   }, []);
 
-  const withPhone = useCallback((s: string) => s.replace("{phone}", BRAND.phone), []);
 
   /* ── The live call ────────────────────────────────────────────────────── */
 
@@ -476,7 +483,29 @@ export default function AssistPanel({
 
   const canRecord = micSupported();
   const callOffered = canRecord && config?.callEnabled !== false;
-  const linesBusy = config !== null && config.callEnabled && config.callSlotsFree <= 0;
+  const linesBusyNow = config !== null && config.callEnabled && config.callSlotsFree <= 0;
+
+  /**
+   * Dial for a visitor who asked for a call from the page.
+   *
+   * It waits for `config`, because until that lands we do not know whether
+   * calls are on at all, and it runs once — `dialledRef` rather than a
+   * dependency list, so a re-render mid-connection cannot dial twice. If the
+   * lines are full or calls are off, nothing is dialled and the panel simply
+   * shows what it always shows: the busy line and the callback offer.
+   */
+  const dialledRef = useRef(false);
+  useEffect(() => {
+    if (!autoCall || dialledRef.current) return;
+    if (config === null) return;
+    dialledRef.current = true;
+    if (!callOffered || linesBusyNow) return;
+    // Nothing to clear first: this runs on the panel's first render, where the
+    // error and the caption are still the empty values they started as.
+    void call.connect();
+  }, [autoCall, config, callOffered, linesBusyNow, call]);
+
+  const linesBusy = linesBusyNow;
 
   const refusalText = useMemo(() => {
     if (!call.refusal) return null;
@@ -492,9 +521,9 @@ export default function AssistPanel({
       case "mic":
         return null; // the microphone card says more, and says it better
       default:
-        return withPhone(d.call.refusedGeneric);
+        return d.call.refusedGeneric;
     }
-  }, [call.refusal, d, withPhone]);
+  }, [call.refusal, d]);
 
   /* ── The one line that says what is happening ─────────────────────────── */
 
@@ -738,10 +767,9 @@ export default function AssistPanel({
                     </p>
                   )}
                   <p className="mt-1 text-[13.5px] leading-[1.6] text-ink-soft">{refusalText}</p>
-                  {/* Every line taken is one of the three states where a phone
-                      number is still worth printing. The form above it is the
-                      first offer; this is the second. */}
-                  {call.refusal?.kind === "capacity" && <TollFree d={d} withPhone={withPhone} />}
+                  {/* Nothing else to offer here. Every line being taken is
+                      precisely the case the call cannot help with, and the
+                      callback form above is already the answer. */}
                 </div>
               )}
 
@@ -782,7 +810,6 @@ export default function AssistPanel({
                           {d.lead.open}
                         </button>
                       )}
-                      <TollFree d={d} withPhone={withPhone} />
                     </>
                   )}
                 </div>
@@ -800,9 +827,10 @@ export default function AssistPanel({
                   >
                     {d.lead.open}
                   </button>
-                  {/* The assistant could not answer this one, so the number is
-                      allowed. It comes after the callback, never before it. */}
-                  <TollFree d={d} withPhone={withPhone} />
+                  {/* The assistant is up and simply did not know this one, so
+                      a call reaches somebody who does. It comes after the
+                      callback offer, never before it. */}
+                  <CallNow d={d} />
                 </div>
               )}
 
@@ -989,21 +1017,29 @@ export default function AssistPanel({
   );
 }
 
-/** The number that works when nothing else does. */
-function TollFree({ d, withPhone }: { d: AssistDict; withPhone: (s: string) => string }) {
+/**
+ * Talk to somebody, when the assistant has run out of answers.
+ *
+ * This used to print a toll-free number. It is only ever shown where a call
+ * can actually be made: the assistant is up, it simply did not know. Where
+ * the lines are full, or where the API cannot be reached at all, there is no
+ * call to offer and the callback form stands on its own.
+ */
+function CallNow({ d }: { d: AssistDict }) {
   return (
     <div className="mt-3">
       <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-ink-muted">
         {d.fallback.callLead}
       </p>
-      <a
-        href={BRAND.phoneHref}
-        aria-label={withPhone(d.fallback.callAria)}
-        className="num mt-0.5 block text-[22px] font-semibold text-navy-700"
+      <button
+        type="button"
+        onClick={requestAssistCall}
+        aria-label={d.fallback.callAria}
+        className="mt-1 inline-flex items-center gap-2 rounded-full bg-navy-700 px-4 py-2 text-[13px] font-semibold text-white"
       >
-        {BRAND.phone}
-      </a>
-      <p className="mt-0.5 text-[12.5px] text-ink-muted">{d.fallback.hours}</p>
+        <Icon name="phone" size={15} /> {d.fallback.callAction}
+      </button>
+      <p className="mt-1.5 text-[12.5px] text-ink-muted">{d.fallback.hours}</p>
     </div>
   );
 }

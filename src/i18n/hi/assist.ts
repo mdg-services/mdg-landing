@@ -160,9 +160,10 @@ export const assist: typeof EN = {
   fallback: {
     title: "इसे किसी इंसान तक पहुँचा देते हैं",
     body: "अपना नंबर छोड़ दीजिए, अक्सर एक घंटे के भीतर कोई कॉल कर लेता है।",
-    callLead: "या मुफ़्त कॉल कीजिए",
+    callLead: "या किसी से बात कीजिए",
+    callAction: "अभी कॉल कीजिए",
     hours: "सुबह 9 से रात 9, हर दिन",
-    callAria: "MDG Services को {phone} पर मुफ़्त कॉल कीजिए",
+    callAria: "इसी पेज से MDG Services को मुफ़्त कॉल कीजिए",
   },
 
   errors: {

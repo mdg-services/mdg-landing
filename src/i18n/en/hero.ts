@@ -24,7 +24,7 @@ export const hero = {
 
   ctaPrimary: "Talk to us",
   /** Sits just before the phone number, which is the same in either language. */
-  callLabel: "or call",
+  callLabel: "or",
 
   /* The three figures on the hairline under the buttons. The figure is part
      of the chip, so a language may render its own digits if it wants to. */

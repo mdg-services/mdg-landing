@@ -8,7 +8,7 @@ export const contact = {
     "A real person picks up, speaks with you in your language, and tells you honestly whether we can help.",
 
   /* ── the toll-free card ── */
-  tollFree: "Toll free",
+  tollFree: "Free call",
   /** The Devanagari gloss printed beside "Toll free" on the card. The card
       is bilingual whichever language the page is in. */
   tollFreeDeva: "नि:शुल्क",
@@ -45,10 +45,10 @@ export const contact = {
       failed send shows this instead of whatever the server said. */
   errorGeneric: "Something went wrong. Please try again.",
   /** The failure note ends on a link to the number, so it is stored as the
-      three pieces around that link. `{phone}` is filled in from
-      content.ts, and the closing punctuation is its own key so Hindi can
-      end the sentence with a danda. */
-  errorCallLink: "Or call {phone}",
+      three pieces around that link. */
+  errorCallLink: "Or call us now",
+  /** The dark card that used to be the toll-free number, set enormous. */
+  callHeading: "Talk to us now",
   errorEnd: ".",
 
   /* ── after a successful send ── */

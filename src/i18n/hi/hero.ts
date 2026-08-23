@@ -23,7 +23,7 @@ export const hero: typeof EN = {
   subTail: "समय पर निपटाता है, ताकि आपकी डीलरशिप कभी न अटके।",
 
   ctaPrimary: "बात कीजिए",
-  callLabel: "या कॉल कीजिए",
+  callLabel: "या",
 
   /* Latin digits on purpose: this is exactly how a dealer sees every figure
      on the portals and on his own meters. Only the labels change. */
