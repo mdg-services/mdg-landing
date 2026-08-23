@@ -39,7 +39,7 @@ export const assist = {
     greeting:
       "Ask me anything about the marketing guidelines, or about what MDG Services does. I answer in Hindi or English.",
     /** The three ways in, spelled out under the greeting. */
-    hint: "Type below, hold the mic for a voice note, or tap Talk live and simply speak.",
+    hint: "Type below, tap the mic and speak, or tap Talk live for a real conversation.",
   },
 
   chat: {
@@ -69,8 +69,8 @@ export const assist = {
   },
 
   voice: {
-    hold: "Tap to speak",
-    holdAria: "Tap to speak your question",
+    tap: "Tap to speak",
+    tapAria: "Tap to speak your question",
     preparing: "Getting the microphone ready",
     recording: "Listening. Tap again to send.",
     /** Sits in the composer while the microphone is open. */

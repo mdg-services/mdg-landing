@@ -847,7 +847,7 @@ export default function AssistPanel({
                 {canRecord && (
                   <button
                     type="button"
-                    aria-label={voice.state === "recording" ? d.voice.stopAria : d.voice.holdAria}
+                    aria-label={voice.state === "recording" ? d.voice.stopAria : d.voice.tapAria}
                     aria-pressed={voice.state === "recording"}
                     disabled={busy}
                     onClick={() => voice.toggle()}
@@ -938,7 +938,7 @@ export default function AssistPanel({
                     </span>
                   </span>
                 ) : (
-                  canRecord && <span className="text-[12px] text-ink-muted">{d.voice.hold}</span>
+                  canRecord && <span className="text-[12px] text-ink-muted">{d.voice.tap}</span>
                 )}
 
                 {callOffered && !linesBusy && (
