@@ -29,6 +29,7 @@ import type {
   AssistErrorCode,
   AssistLeadResult,
   AssistLang,
+  AssistLiveTranscriptToken,
   AssistPublicConfig,
   AssistSessionCreated,
   AssistTurnResult,
@@ -292,6 +293,21 @@ export function sendVoice(blob: Blob, ms: number, lang: AssistLang): Promise<Ass
       body: blob,
     }),
     { lang, timeoutMs: TIMEOUT_MS.voice, retryOnRateLimit: false },
+  );
+}
+
+/**
+ * A key for one live transcription.
+ *
+ * Deliberately short-timeout and never retried: this is a caption, and a
+ * visitor who has already tapped the microphone must not wait on it. The
+ * caller treats every failure as "no live text this time" and records anyway.
+ */
+export function liveTranscriptToken(lang: AssistLang): Promise<AssistLiveTranscriptToken> {
+  return authed<AssistLiveTranscriptToken>(
+    "/assist/voice/live-token",
+    (token) => ({ method: "POST", headers: { Authorization: `Bearer ${token}` } }),
+    { lang, timeoutMs: 6_000, retryOnRateLimit: false },
   );
 }
 

@@ -48,6 +48,19 @@
     border-radius: 4px;
   }
   a, button { -webkit-tap-highlight-color: transparent; }
+
+  /* A button is a control, not prose. Pressing and holding one — which the
+     mic button asks people to do — otherwise starts the browser's own
+     text-selection gesture, and the page fills up with blue highlight and an
+     iOS "Copy / Look Up" bubble on top of the thing being pressed.
+
+     `user-select` stops the highlight, `-webkit-touch-callout` stops the iOS
+     bubble. Both are needed: neither implies the other. */
+  button, [role="button"] {
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-touch-callout: none;
+  }
 }
 
 @layer components {

@@ -8,6 +8,7 @@ import { useVoiceNote } from "./useVoiceNote";
 import VoiceNote from "./VoiceNote";
 import { useAssistCall } from "./useAssistCall";
 import { useTypedPlaceholder } from "./useTypedPlaceholder";
+import { useLiveTranscript } from "./useLiveTranscript";
 import { playPop } from "./pop";
 import { micSupported, type MicFailure } from "./mic";
 import { ASSIST_BOT_SRC } from "./assets";
@@ -352,11 +353,38 @@ export default function AssistPanel({
     [lang, applyResult, handleFailure],
   );
 
+  /**
+   * The visitor's words on screen while they speak. Decoration only: it never
+   * becomes the question, and every failure inside it is silent. See
+   * `useLiveTranscript`.
+   */
+  const live = useLiveTranscript({ enabled: config?.liveTranscript ?? false, lang });
+
   const voice = useVoiceNote({
     maxMs: config?.maxVoiceNoteMs ?? DEFAULT_VOICE_MS,
-    onDone: (blob, ms) => void sendNote(blob, ms),
-    onTooShort: () => setError(d.voice.tooShort),
-    onFailure: (failure) => setMicNotice(failure),
+    // The recorder's own stream, so the caption reads the same microphone
+    // rather than opening a second one.
+    // Never awaited, and its failures are its own: a caption that cannot
+    // start must not disturb a recording that already has.
+    onStart: (stream) => {
+      live.begin(stream).catch(() => undefined);
+    },
+    onDone: (blob, ms) => {
+      live.reset();
+      void sendNote(blob, ms);
+    },
+    onTooShort: () => {
+      live.reset();
+      setError(d.voice.tooShort);
+    },
+    onSilent: () => {
+      live.reset();
+      setError(d.voice.silent);
+    },
+    onFailure: (failure) => {
+      live.reset();
+      setMicNotice(failure);
+    },
   });
 
   /* ── Lead capture and escalation ──────────────────────────────────────── */
@@ -482,6 +510,8 @@ export default function AssistPanel({
         : d.chat.ready;
 
   const statusIsIdle = !busy && voice.state === "idle";
+  /** The microphone is open, so the composer belongs to the caption. */
+  const listening = voice.state === "recording";
   const charsLeft = CHAR_LIMIT - input.length;
 
   // The typed hint stops for good the moment the box is theirs, and never
@@ -820,39 +850,44 @@ export default function AssistPanel({
                     aria-label={voice.state === "recording" ? d.voice.stopAria : d.voice.holdAria}
                     aria-pressed={voice.state === "recording"}
                     disabled={busy}
-                    onPointerDown={(e) => {
-                      e.preventDefault();
-                      void voice.press();
-                    }}
-                    onPointerUp={() => voice.release()}
-                    onClick={() => {
-                      // A press whose release never arrived, because a
-                      // permission prompt swallowed it, would otherwise leave
-                      // this stuck down. A second tap always stops and sends.
-                      if (voice.state === "recording") voice.stop();
-                    }}
+                    onClick={() => voice.toggle()}
+                    /* Android Chrome ignores `-webkit-touch-callout`, so the
+                       long-press menu is only stopped at the event. A slow tap
+                       still reads as a long press there. */
+                    onContextMenu={(e) => e.preventDefault()}
                     className={
-                      "grid h-11 w-11 shrink-0 place-items-center rounded-full border transition-colors duration-200 " +
+                      "grid h-11 w-11 shrink-0 touch-manipulation select-none place-items-center rounded-full border transition-colors duration-200 " +
                       (voice.state === "recording"
                         ? "border-gold-400 bg-gold-400 text-navy-950"
                         : "border-ink-hairline bg-white text-navy-700")
                     }
-                    style={{ touchAction: "none" }}
                   >
                     <MicGlyph />
                   </button>
                 )}
 
+                {/* While the microphone is open this box stops being a place
+                    to type and becomes the place the words appear. It is read
+                    only for those few seconds: a half-typed sentence and a
+                    half-spoken one competing for one box helps nobody. */}
                 <textarea
                   ref={inputRef}
-                  value={input}
+                  value={listening ? live.text : input}
                   rows={1}
                   maxLength={CHAR_LIMIT}
                   disabled={busy}
+                  readOnly={listening}
+                  aria-live={listening ? "polite" : undefined}
                   /* The label is what a screen reader announces, so the moving
                      placeholder never reaches one. */
                   aria-label={d.composer.aria}
-                  placeholder={composerTouched ? d.composer.placeholder : typedHint}
+                  placeholder={
+                    listening
+                      ? d.voice.listening
+                      : composerTouched
+                        ? d.composer.placeholder
+                        : typedHint
+                  }
                   onFocus={() => setComposerTouched(true)}
                   onChange={(e) => {
                     setComposerTouched(true);
@@ -864,7 +899,12 @@ export default function AssistPanel({
                       void submitText();
                     }
                   }}
-                  className="max-h-24 min-w-0 flex-1 resize-none rounded-2xl border border-ink-hairline bg-paper-warm px-3.5 py-2.5 text-[16px] leading-[1.5] text-ink outline-none transition-colors duration-200 placeholder:text-ink-faint focus:border-navy-500 focus:bg-white"
+                  className={
+                    "max-h-24 min-w-0 flex-1 resize-none rounded-2xl border px-3.5 py-2.5 text-[16px] leading-[1.5] outline-none transition-colors duration-200 placeholder:text-ink-faint focus:border-navy-500 focus:bg-white " +
+                    (listening
+                      ? "border-gold-400 bg-gold-50 text-ink-soft"
+                      : "border-ink-hairline bg-paper-warm text-ink")
+                  }
                 />
 
                 <button

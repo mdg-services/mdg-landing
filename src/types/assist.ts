@@ -44,6 +44,29 @@ export interface AssistPublicConfig {
   maxCallMs: number;
   /** The line the visitor must be shown before a call starts, in both languages. */
   recordingNotice: Record<AssistLang, string>;
+  /**
+   * True when the widget may ask for a live-transcript key, so a visitor sees
+   * their words appear as they speak. A nicety on top of the voice note, never
+   * a replacement: when this is false the recording is still made and still
+   * answered exactly as before.
+   */
+  liveTranscript: boolean;
+}
+
+/**
+ * A short-lived key for one live transcription. `POST /assist/voice/live-token`.
+ *
+ * The vendor's API key never reaches the browser. A WebSocket cannot carry a
+ * header, so the server mints this instead: single-use, minutes long, and
+ * worth one transcription to whoever holds it.
+ */
+export interface AssistLiveTranscriptToken {
+  token: string;
+  /** WebSocket URL, already carrying the model and the audio format. */
+  url: string;
+  expiresInSec: number;
+  /** What the socket expects, so the browser knows what to resample to. */
+  sampleRate: number;
 }
 
 /** What creating a session gives the widget back. `POST /assist/session`. */

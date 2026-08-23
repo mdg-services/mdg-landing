@@ -69,13 +69,16 @@ export const assist = {
   },
 
   voice: {
-    hold: "Hold to speak",
-    holdAria: "Hold this button and speak your question",
+    hold: "Tap to speak",
+    holdAria: "Tap to speak your question",
     preparing: "Getting the microphone ready",
-    recording: "Recording. Let go to send.",
+    recording: "Listening. Tap again to send.",
+    /** Sits in the composer while the microphone is open. */
+    listening: "Listening…",
     secondsLeft: "{n}s left",
     stopAria: "Stop and send",
-    tooShort: "That was too short. Hold the button while you speak.",
+    tooShort: "That was too short. Tap the microphone and speak.",
+    silent: "We could not hear anything. Check the microphone and try again.",
   },
 
   /* ── Microphone permission. Never a file picker, never the camera. ── */
