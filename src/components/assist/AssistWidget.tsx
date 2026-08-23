@@ -1,5 +1,6 @@
 import { Suspense, lazy, useCallback, useEffect, useState } from "react";
 import { useT } from "../../i18n";
+import { ASSIST_BOT_SRC } from "./assets";
 
 /**
  * The launcher, and nothing else.
@@ -110,37 +111,45 @@ export default function AssistWidget() {
         <span
           key={open ? "open" : "shut"}
           className={
-            "relative grid h-14 w-14 place-items-center rounded-full bg-navy-700 text-white shadow-lift ring-2 ring-inset ring-gold-400/70 transition-colors duration-200 group-hover:bg-navy-800" +
-            (open ? " assist-launch" : "")
+            "relative grid h-14 w-14 place-items-center rounded-full shadow-lift ring-2 ring-inset ring-gold-400/70 transition-colors duration-200 " +
+            // Shut, the button is the assistant's face on a white disc. Open,
+            // it goes back to being a navy close button, so the X is never
+            // asked to carry a face's worth of detail at 22px.
+            (open
+              ? "bg-navy-700 text-white group-hover:bg-navy-800 assist-launch"
+              : "bg-white group-hover:bg-navy-50")
           }
         >
           {/* A gold ring that swells out of the button, three times, then
               rests. Three is enough to catch an eye and few enough not to
               become a blinking thing in the corner of somebody's reading. */}
           {inviting && !stillMotion() && <span aria-hidden className="assist-halo" />}
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden>
-            {open ? (
+          {open ? (
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden>
               <path
                 d="M6 6l12 12M6 18L18 6"
                 stroke="currentColor"
                 strokeWidth="1.8"
                 strokeLinecap="round"
               />
-            ) : (
-              <>
-                <path
-                  d="M21 12a8 8 0 0 1-8 8H8l-4 3 1-4.6A8 8 0 1 1 21 12z"
-                  stroke="currentColor"
-                  strokeWidth="1.6"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-                {/* The gold speck is the brand's accent, and it is the reason
-                    this reads as ours rather than as a stock chat bubble. */}
-                <circle cx="16.5" cy="7.5" r="2.4" fill="#F5A524" />
-              </>
-            )}
-          </svg>
+            </svg>
+          ) : (
+            /* Eager, not lazy: this is the one image on the page that has to
+               be there the moment the corner is looked at. */
+            <img
+              src={ASSIST_BOT_SRC}
+              alt=""
+              aria-hidden
+              width={44}
+              height={44}
+              decoding="async"
+              /* 44 inside a 52px well (the ring eats 2px a side). Any larger
+                 and the bubble's own blue ring kisses the gold one and the
+                 button reads as two rings rather than as a face. */
+              className="h-11 w-11 select-none"
+              draggable={false}
+            />
+          )}
         </span>
       </button>
 

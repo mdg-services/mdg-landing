@@ -10,6 +10,7 @@ import { useAssistCall } from "./useAssistCall";
 import { useTypedPlaceholder } from "./useTypedPlaceholder";
 import { playPop } from "./pop";
 import { micSupported, type MicFailure } from "./mic";
+import { ASSIST_BOT_SRC } from "./assets";
 import {
   AssistError,
   endSession,
@@ -510,7 +511,19 @@ export default function AssistPanel({
       >
         {/* ── Header ── */}
         <div className="flex items-start justify-between gap-3 border-b border-ink-hairline px-4 py-3">
-          <div className="min-w-0">
+          {/* The same face as the launcher, so opening the panel reads as the
+              button growing into a card rather than as a second thing. */}
+          <img
+            src={ASSIST_BOT_SRC}
+            alt=""
+            aria-hidden
+            width={36}
+            height={36}
+            decoding="async"
+            className="mt-0.5 h-9 w-9 shrink-0 select-none"
+            draggable={false}
+          />
+          <div className="min-w-0 flex-1">
             <h2
               id="assist-title"
               className="font-display text-[17px] font-semibold leading-tight text-ink"
