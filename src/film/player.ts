@@ -361,9 +361,21 @@ interface NetInfo {
     v.play().catch(() => {});
   };
   snd?.addEventListener("click", () => soundOn(true));
+  /* the start-up probe for sound flips `muted` itself; that is not the viewer */
+  let probing = false;
   v.addEventListener("volumechange", () => {
+    if (probing) return;
     if (!v.muted && v.volume > 0) soundOn(false);
     else if (snd && firstFrame) snd.hidden = false;
+  });
+
+  /* While muted, a tap anywhere on the picture turns the sound on, not only the
+     button: people tap the film itself. The bottom 64 px stay the browser's own
+     control bar, and buttons over the picture handle their own taps. */
+  $("stage")?.addEventListener("click", (e) => {
+    if (!v.muted || unmutedAt !== undefined || e.target !== v) return;
+    if (e.clientY > v.getBoundingClientRect().bottom - 64) return;
+    soundOn(true);
   });
 
   /* ── speed ───────────────────────────────────────────────────────────── */
@@ -417,7 +429,14 @@ interface NetInfo {
 
   /* ── playback ────────────────────────────────────────────────────────── */
   const deep = Number((location.hash.match(/t=(\d+(?:\.\d+)?)/) || [])[1]) || 0;
-  const tryPlay = () => {
+  /* Sound first: a browser lets a page play with sound when the visitor has
+     played media on this site before (desktop Chrome's engagement score, an
+     installed app). Most first visits from a WhatsApp link are refused, and then
+     the film starts muted, which every browser allows. A tap is the only other
+     way to sound; a tap on the link in WhatsApp does not count. */
+  const mutedStart = () => {
+    v.muted = true;
+    probing = false;
     const p = v.play();
     if (!p || !p.then) return outcome("muted");
     p.then(
@@ -429,6 +448,26 @@ interface NetInfo {
           if (big) big.hidden = false;
         } else outcome("muted");
       },
+    );
+  };
+  const tryPlay = () => {
+    probing = true;
+    v.muted = false;
+    let p: Promise<void> | undefined;
+    try {
+      p = v.play();
+    } catch {
+      return mutedStart();
+    }
+    if (!p || !p.then) return mutedStart();
+    p.then(
+      () => {
+        // it played with sound: count it as sound on from the first second
+        probing = false;
+        outcome("muted");
+        soundOn(false);
+      },
+      (e: { name?: string }) => (e && e.name === "NotAllowedError" ? mutedStart() : ((probing = false), outcome("muted"))),
     );
   };
   big?.addEventListener("click", () => {

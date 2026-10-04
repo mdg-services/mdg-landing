@@ -199,7 +199,7 @@ ${foot}</main>
     : "";
   return `${head}
 <div class="stage" id="stage">
-<video id="v" playsinline muted autoplay preload="auto" controls crossorigin="anonymous" poster="${poster}"><track kind="captions" srclang="hi" label="हिन्दी" default src="${f.base}/${f.captions}"></video>
+<video id="v" playsinline preload="auto" controls crossorigin="anonymous" poster="${poster}"><track kind="captions" srclang="hi" label="हिन्दी" default src="${f.base}/${f.captions}"></video>
 <button type="button" class="snd" id="snd" hidden>${ICON.sound}आवाज़ चालू करें</button>
 <button type="button" class="big" id="big" hidden><span>${ICON.play}</span>फ़िल्म चलाएँ</button>
 <div class="end" id="end" hidden><p>${esc(f.title)}</p>${endCta}<button type="button" class="btn" id="replay">${ICON.replay}फिर से देखें</button><a class="btn wa" data-wa href="https://wa.me/" target="_blank" rel="noopener">${ICON.wa}WhatsApp पर भेजें</a></div>
