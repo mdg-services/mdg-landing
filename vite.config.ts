@@ -1,5 +1,6 @@
 import { defineConfig, type Plugin, type ViteDevServer } from "vite";
 import react from "@vitejs/plugin-react";
+import { buildFilmPages, pageSizes } from "./scripts/film-pages.ts";
 
 /**
  * Dev-only: serve the POST /api/* endpoints during `vite dev` by calling the
@@ -56,8 +57,48 @@ function devApi(): Plugin {
   };
 }
 
+/**
+ * The film watch pages (/film, /film/short) are standalone static HTML, not
+ * part of the SPA: generated from src/film/* into dist/film/ on build, and
+ * served from memory by the dev server.
+ */
+function filmPages(): Plugin {
+  const root = import.meta.dirname;
+  return {
+    name: "film-pages",
+    async generateBundle() {
+      const files = await buildFilmPages({ root });
+      for (const f of files) this.emitFile({ type: "asset", fileName: f.fileName, source: f.source });
+      this.info(`film pages: ${pageSizes(files)}`);
+    },
+    // `vite preview` mirrors vercel.json's /film and /film/short rewrites
+    configurePreviewServer(server) {
+      server.middlewares.use((req, _res, next) => {
+        const [p, q] = (req.url || "").split("?");
+        if (p === "/film" || p === "/film/short") req.url = `${p}/index.html${q ? `?${q}` : ""}`;
+        next();
+      });
+    },
+    configureServer(server: ViteDevServer) {
+      server.middlewares.use(async (req, res, next) => {
+        const url = (req.url || "").split(/[?#]/)[0].replace(/\/$/, "");
+        if (url !== "/film" && url !== "/film/short" && !/^\/film\/hls-[\d.]+\.js$/.test(url)) return next();
+        try {
+          const files = await buildFilmPages({ root });
+          const hit = files.find((f) => "/" + f.fileName === url || "/" + f.fileName === `${url}/index.html`);
+          if (!hit) return next();
+          res.setHeader("Content-Type", hit.fileName.endsWith(".js") ? "text/javascript" : "text/html; charset=utf-8");
+          res.end(hit.source);
+        } catch (err) {
+          next(err);
+        }
+      });
+    },
+  };
+}
+
 export default defineConfig({
-  plugins: [react(), devApi()],
+  plugins: [react(), devApi(), filmPages()],
   server: { port: 5180, strictPort: true },
   preview: { port: 5180, strictPort: true },
 });

@@ -12,5 +12,5 @@
     "resolveJsonModule": true,
     "isolatedModules": true
   },
-  "include": ["server/**/*.ts", "api/**/*.ts"]
+  "include": ["server/**/*.ts", "api/**/*.ts", "middleware.ts"]
 }

@@ -1,0 +1,85 @@
+{
+  "kavach": {
+    "film": "kavach",
+    "title": "डीलर कवच — पूरी फ़िल्म",
+    "version": "v-e0cddd2b72",
+    "duration": 1589.708,
+    "base": "https://mdg-films.s3.ap-south-1.amazonaws.com/kavach/v-e0cddd2b72",
+    "hls": "master.m3u8",
+    "mp4": "film-540.mp4",
+    "poster": "poster.jpg",
+    "captions": "captions.hi.vtt",
+    "chapters": [
+      {
+        "t": 0,
+        "title": "शुरुआत"
+      },
+      {
+        "t": 18.34,
+        "title": "डीलर की असली चुनौतियाँ"
+      },
+      {
+        "t": 380.37,
+        "title": "आपकी परछाई"
+      },
+      {
+        "t": 441.04,
+        "title": "रोज़ की निगरानी"
+      },
+      {
+        "t": 627.57,
+        "title": "रिकॉर्ड का मिलान"
+      },
+      {
+        "t": 741.95,
+        "title": "पंप असेसमेंट पॉइंट सिस्टम"
+      },
+      {
+        "t": 958.3,
+        "title": "चौबीसों घंटे साथ"
+      },
+      {
+        "t": 1153.66,
+        "title": "फ़ीस"
+      },
+      {
+        "t": 1189.94,
+        "title": "प्रीमियम सेवाएँ"
+      },
+      {
+        "t": 1457.35,
+        "title": "आपका डेटा, आपका"
+      },
+      {
+        "t": 1510.25,
+        "title": "जुड़िए"
+      }
+    ],
+    "ladder": [
+      1920,
+      1280,
+      960,
+      640,
+      426
+    ]
+  },
+  "kavach-short": {
+    "film": "kavach-short",
+    "title": "डीलर कवच — 40 सेकंड में",
+    "version": "v-1fce4101e9",
+    "duration": 38.625,
+    "base": "https://mdg-films.s3.ap-south-1.amazonaws.com/kavach-short/v-1fce4101e9",
+    "hls": "master.m3u8",
+    "mp4": "film-540.mp4",
+    "poster": "poster.jpg",
+    "captions": "captions.hi.vtt",
+    "chapters": [],
+    "ladder": [
+      1920,
+      1280,
+      960,
+      640,
+      426
+    ]
+  }
+}

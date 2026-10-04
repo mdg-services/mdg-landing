@@ -12,9 +12,12 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "review": "node scripts/review.mjs",
-    "og": "node scripts/og.mjs"
+    "og": "node scripts/og.mjs",
+    "og:film": "node scripts/og-film.mjs"
   },
   "dependencies": {
+    "@vercel/functions": "^3.9.11",
+    "hls.js": "^1.7.3",
     "motion": "^12.40.0",
     "nodemailer": "^9.0.1",
     "react": "^19.2.6",
