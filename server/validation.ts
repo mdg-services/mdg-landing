@@ -28,6 +28,8 @@ export const enrollmentSchema = z.object({
   pumpName: optionalText(160),
   sapCode: z.string().trim().min(1, "SAP code is required").max(60),
   agree: z.literal(true, { message: "You must accept the Terms & Conditions" }),
+  /** Where the form was filled in. The website never sends it; the app does. */
+  source: z.enum(["website", "app"]).default("website"),
 });
 
 export type EnrollmentData = z.infer<typeof enrollmentSchema>;

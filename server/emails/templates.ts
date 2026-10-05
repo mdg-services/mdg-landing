@@ -27,6 +27,7 @@ export function enrollmentNotificationEmail(
     timeStyle: "short",
     timeZone: "Asia/Kolkata",
   });
+  const fromApp = data.source === "app";
 
   const rows: Array<[string, string]> = [
     ["Name", escapeHtml(data.name)],
@@ -44,17 +45,20 @@ export function enrollmentNotificationEmail(
     ["Pump name", data.pumpName ? escapeHtml(data.pumpName) : "—"],
     ["SAP code", escapeHtml(data.sapCode)],
     ["Agreed to T&C", "Yes"],
+    ["Came from", fromApp ? "Dealer Kavach app" : "Website"],
     ["Submitted", escapeHtml(when) + " IST"],
   ];
 
   const body = `
     ${heading("New dealer enrolment")}
-    ${paragraph(`A dealer just submitted the enrolment form on the website. Details below — reply to this email to reach ${escapeHtml(data.name)} directly.`)}
+    ${paragraph(`A dealer just submitted the enrolment form ${fromApp ? "in the Dealer Kavach app" : "on the website"}. Details below — reply to this email to reach ${escapeHtml(data.name)} directly.`)}
     ${dataTable(rows)}
   `;
 
   return {
-    subject: `New dealer enrolment — ${data.name}${data.pumpName ? ` (${data.pumpName})` : ""}`,
+    // The app's tag sits after "enrolment", so a filter on the old subject
+    // still catches both.
+    subject: `New dealer enrolment${fromApp ? " (app)" : ""} — ${data.name}${data.pumpName ? ` (${data.pumpName})` : ""}`,
     html: wrapEmail({ preheader: `${data.name} · ${data.siteType} · SAP ${data.sapCode}`, bodyHtml: body }),
     text: [
       "New dealer enrolment",
@@ -66,6 +70,7 @@ export function enrollmentNotificationEmail(
       `Pump name:  ${data.pumpName ?? "—"}`,
       `SAP code:   ${data.sapCode}`,
       `Agreed:     Yes`,
+      `Came from:  ${fromApp ? "Dealer Kavach app" : "Website"}`,
       `Submitted:  ${when} IST`,
     ].join("\n"),
   };

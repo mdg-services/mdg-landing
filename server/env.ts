@@ -19,6 +19,19 @@ export const env = {
   fromName: process.env.MAIL_FROM_NAME ?? "MDG Services",
   /** Where internal enrolment notifications are sent. */
   notifyTo: process.env.ENROLLMENT_NOTIFY_TO ?? "mdgservicesterms@gmail.com",
+  /**
+   * Other sites allowed to post the enrolment form here. The Dealer Kavach app
+   * is the client web app inside a WebView, so its sign-up screen is a page on
+   * another origin. Comma-separated; the website itself is same-origin and
+   * needs no entry. The local entries are the client's two dev ports.
+   */
+  enrollAllowedOrigins: (
+    process.env.ENROLL_ALLOWED_ORIGINS ??
+    "https://mdg-client-rho.vercel.app,https://client.mdgservices.in,http://localhost:5173,http://localhost:5174"
+  )
+    .split(",")
+    .map((o) => o.trim())
+    .filter(Boolean),
   /** True on a real deployment — used to decide whether missing creds are fatal. */
   isProd:
     process.env.NODE_ENV === "production" ||

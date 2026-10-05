@@ -9,6 +9,7 @@ const data = {
   pumpName: "Sai Petroleums, Aligarh",
   sapCode: "41001234",
   agree: true as const,
+  source: "app" as const,
 };
 
 const outDir = ".email-preview";
