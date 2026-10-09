@@ -84,6 +84,9 @@ export default function AssistWidget() {
     // nothing to depend on and runs exactly once, on arrival.
     if (wasDismissed() || window.innerWidth < CARD_WIDTH_PX) return;
     const id = window.setTimeout(() => {
+      // never behind the "call us" sheet (open on arrival from a film page's
+      // "talk to us"): it would sit under the sheet and take its Escape
+      if (document.body.dataset.callSheet === "open") return;
       setOpen(true);
       setUninvited(true);
     }, AUTO_OPEN_MS);

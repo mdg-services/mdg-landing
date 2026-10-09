@@ -39,20 +39,84 @@ export default function CallSheet() {
   /** Came from a film page asking to talk: the handset says so until it is used. */
   const [arrived, setArrived] = useState(hasCallParam);
   const firstRef = useRef<HTMLAnchorElement | null>(null);
+  const dialogRef = useRef<HTMLDivElement | null>(null);
+  /** The floating handset, unmounted while the sheet is open: focus comes back to it. */
+  const floatRef = useRef<HTMLButtonElement | null>(null);
 
   useEffect(() => onCallChoiceRequested(() => setOpen(true)), []);
   useEffect(dropCallParam, []);
 
   const close = useCallback(() => setOpen(false), []);
 
+  /* ── While open: the keyboard stays inside, the page holds still, and the
+     assistant's card does not open itself behind it ─────────────────────── */
   useEffect(() => {
     if (!open) return;
+    const opener = document.activeElement as HTMLElement | null;
+    const body = document.body;
+    const overflow = body.style.overflow;
+    body.style.overflow = "hidden";
+    body.dataset.callSheet = "open";
     firstRef.current?.focus({ preventScroll: true });
+    // Capture phase on document: the sheet is the top dialog, so its Escape and
+    // Tab must not reach the assistant panel's own handler (also on document).
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") close();
+      if (e.key === "Escape") {
+        e.stopPropagation();
+        close();
+        return;
+      }
+      const el = dialogRef.current;
+      if (e.key !== "Tab" || !el) return;
+      e.stopPropagation();
+      const focusable = el.querySelectorAll<HTMLElement>("a[href],button:not([disabled])");
+      if (focusable.length === 0) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      const active = document.activeElement;
+      if (e.shiftKey && (active === first || !el.contains(active))) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && (active === last || !el.contains(active))) {
+        e.preventDefault();
+        first.focus();
+      }
     };
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
+    document.addEventListener("keydown", onKey, true);
+    return () => {
+      document.removeEventListener("keydown", onKey, true);
+      body.style.overflow = overflow;
+      delete body.dataset.callSheet;
+      // Back to whatever opened it; the floating handset is re-created on
+      // close, so an opener that was the old handset (or nothing, on a
+      // ?call=1 arrival) falls back to the new one.
+      // Synchronous on purpose: the assistant panel, when "talk here" opens it
+      // in this same commit, takes the focused element as its own opener.
+      // eslint-disable-next-line react-hooks/exhaustive-deps -- the NEW handset is wanted, not the one at open
+      const back = opener && opener !== document.body && opener.isConnected ? opener : floatRef.current;
+      back?.focus({ preventScroll: true });
+    };
+  }, [open, close]);
+
+  /* ── Android's Back closes the sheet instead of leaving the site ───────── */
+  useEffect(() => {
+    if (!open) return;
+    let popped = false;
+    try {
+      window.history.pushState({ ...(window.history.state || {}), callSheet: true }, "");
+    } catch {
+      return;
+    }
+    const onPop = () => {
+      popped = true;
+      close();
+    };
+    window.addEventListener("popstate", onPop);
+    return () => {
+      window.removeEventListener("popstate", onPop);
+      // closed some other way: take back the entry the sheet added
+      if (!popped && window.history.state?.callSheet) window.history.back();
+    };
   }, [open, close]);
 
   const talkHere = () => {
@@ -65,6 +129,7 @@ export default function CallSheet() {
     <>
       {!open && (
         <button
+          ref={floatRef}
           type="button"
           onClick={() => {
             setArrived(false);
@@ -95,6 +160,7 @@ export default function CallSheet() {
           >
             <div className="absolute inset-0 bg-navy-950/60" onClick={close} aria-hidden />
             <motion.div
+              ref={dialogRef}
               role="dialog"
               aria-modal="true"
               aria-labelledby="call-sheet-title"

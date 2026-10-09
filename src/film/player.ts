@@ -422,15 +422,20 @@ interface NetInfo {
   const vv = v as HTMLVideoElement & { webkitEnterFullscreen?: () => void };
   const isFs = () => !!(document.fullscreenElement || doc.webkitFullscreenElement);
   const fsChange = () => cls("fs", isFs());
+  /** Out of full screen if in it; resolves either way. */
+  const leaveFs = (): Promise<void> => {
+    if (!isFs()) return Promise.resolve();
+    if (document.exitFullscreen) return document.exitFullscreen().catch(() => {});
+    if (doc.webkitExitFullscreen) doc.webkitExitFullscreen();
+    return Promise.resolve();
+  };
   document.addEventListener("fullscreenchange", fsChange);
   document.addEventListener("webkitfullscreenchange", fsChange);
   if (fsBtn) {
     if (!st.requestFullscreen && !st.webkitRequestFullscreen && !vv.webkitEnterFullscreen) fsBtn.hidden = true;
     fsBtn.addEventListener("click", () => {
-      if (isFs()) {
-        if (document.exitFullscreen) document.exitFullscreen().catch(() => {});
-        else if (doc.webkitExitFullscreen) doc.webkitExitFullscreen();
-      } else if (st.requestFullscreen) st.requestFullscreen({ navigationUI: "hide" }).catch(() => {});
+      if (isFs()) leaveFs();
+      else if (st.requestFullscreen) st.requestFullscreen({ navigationUI: "hide" }).catch(() => {});
       else if (st.webkitRequestFullscreen) st.webkitRequestFullscreen();
       else if (vv.webkitEnterFullscreen) vv.webkitEnterFullscreen();
       showUi();
@@ -473,6 +478,8 @@ interface NetInfo {
   document.addEventListener("keydown", (e) => {
     if (e.ctrlKey || e.metaKey || e.altKey) return;
     const t = e.target as HTMLElement;
+    // typing a name or a number into the call-back form is not a command
+    if (t && t.closest && t.closest("input:not(#seek),textarea,select,[contenteditable]")) return;
     const inCtl = !!(t && t.closest && t.closest("button,a,input"));
     const k = e.key;
     if ((k === " " || k === "k") && !inCtl) {
@@ -591,6 +598,8 @@ interface NetInfo {
     ended = true;
     if (end) end.hidden = false;
     over();
+    // the end card's next steps lead below the picture, which full screen hides
+    leaveFs();
     forget();
     flushEnd();
   });
@@ -698,7 +707,17 @@ interface NetInfo {
     v.play().catch(() => {});
   });
   fullLinks.forEach((a) => a.addEventListener("click", () => cta("full")));
-  document.querySelectorAll("a[data-reg]").forEach((a) => a.addEventListener("click", () => cta("register")));
+  document.querySelectorAll<HTMLAnchorElement>("a[data-reg]").forEach((a) =>
+    a.addEventListener("click", (e) => {
+      cta("register");
+      // "join" on the end card drops to the ways in below the picture: leave
+      // full screen first, or the jump happens behind it and the tap looks dead
+      if (a.getAttribute("href") === "#next" && isFs()) {
+        e.preventDefault();
+        leaveFs().then(() => $("next")?.scrollIntoView({ behavior: "smooth", block: "start" }));
+      }
+    }),
+  );
   $("retry")?.addEventListener("click", () => location.reload());
   document.querySelectorAll("a[data-wa]").forEach((a) =>
     a.addEventListener("click", () => {
