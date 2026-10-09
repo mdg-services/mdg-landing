@@ -35,6 +35,9 @@ interface PageConfig {
   url: string;
   /** "short" pages link to the full film at the end; "full" pages to /register */
   kind: "full" | "short";
+  /** the page's language, and what the player says at run time in it */
+  lang: "hi" | "en";
+  s: { play: string; pause: string; wait: string; offline: string; slow: string; cbBad: string; cbSending: string; cbDone: string; cbFail: string; cbFilm: string };
 }
 
 interface NetInfo {
@@ -48,6 +51,9 @@ interface NetInfo {
   const cfgEl = $("cfg");
   if (!cfgEl) return;
   const C = JSON.parse(cfgEl.textContent || "{}") as PageConfig;
+  // the head script is already sending this visitor to their language's page:
+  // no player, and no view counted for a page they never saw
+  if ((window as unknown as { __mdgLeaving?: number }).__mdgLeaving) return;
   const v = $<HTMLVideoElement>("v");
   if (!v) return;
   const stage = $("stage") || document.body;
@@ -82,6 +88,41 @@ interface NetInfo {
   document.querySelectorAll<HTMLAnchorElement>("a[data-wa]").forEach((a) => {
     a.href = `https://wa.me/?text=${encodeURIComponent(`${C.title}\n${shareUrl}`)}`;
   });
+  /* ── language: the switch keeps the share code, and the choice is the
+     whole site's (the same key the React site reads; middleware.ts reads the
+     cookie it sets via ?lang=) ─────────────────────────────────────────── */
+  const keepLang = (l: string) => {
+    try {
+      localStorage.setItem("mdg.lang", l);
+    } catch {
+      /* storage blocked: the cookie still carries it */
+    }
+  };
+  // always the page's own address (/film, /film/short): only there does the
+  // server pick the language, so a switch from any other spelling still works
+  const home = new URL(C.url).pathname;
+  document.querySelectorAll<HTMLAnchorElement>("a[data-lang]").forEach((a) => {
+    const l = a.dataset.lang || "hi";
+    a.href = `${home}?${[`lang=${l}`, tag ? `r=${tag}` : "", from ? `from=${from}` : ""].filter(Boolean).join("&")}${location.hash}`;
+    a.addEventListener("click", () => {
+      if (l === C.lang) return;
+      switching = true;
+      keepRef();
+      keepLang(l);
+    });
+  });
+  if (q.has("lang")) {
+    // remembered only when the page really is in the language asked for: a
+    // stray ?lang=EN, or a file reached without the server's pick, changes nothing
+    if (q.get("lang") === C.lang) keepLang(C.lang);
+    try {
+      const u = new URL(location.href);
+      u.searchParams.delete("lang");
+      history.replaceState(history.state, "", u.pathname + u.search + u.hash);
+    } catch {
+      /* the parameter simply stays */
+    }
+  }
   const fullLinks = document.querySelectorAll<HTMLAnchorElement>("a[data-full]");
   fullLinks.forEach((a) => (a.href = withTag("/film", "from=short")));
 
@@ -110,8 +151,25 @@ interface NetInfo {
   } catch {
     vid = vid && UUID.test(vid) ? vid : uuid();
   }
-  const sid = uuid();
+  /* One id per viewing. A language switch reloads the page, so the page being
+     left hands its id and beacon count to the other language's page (via
+     sessionStorage, on the way out) and the viewing carries on as one view. */
+  /** The visitor came here from a film page (a language switch or redirect). */
+  const fromFilmPage = (r: string) => r.indexOf(`${location.host}/film`) >= 0;
+  const VIEW_KEY = "mdg_view";
+  let sid = uuid();
   let seq = 0;
+  try {
+    const kept = JSON.parse(sessionStorage.getItem(VIEW_KEY) || "null") as { sid?: string; seq?: number; film?: string } | null;
+    sessionStorage.removeItem(VIEW_KEY);
+    if (kept && kept.film === C.film && kept.sid && UUID.test(kept.sid) && typeof kept.seq === "number" &&
+      fromFilmPage(document.referrer)) {
+      sid = kept.sid;
+      seq = kept.seq;
+    }
+  } catch {
+    /* storage blocked: a fresh view */
+  }
 
   /* ── measurement state ───────────────────────────────────────────────── */
   let started = false; // the 'start' beacon has gone
@@ -131,6 +189,8 @@ interface NetInfo {
   let ended = false;
   let ctas: Cta[] = [];
   let lastKind = "";
+  // set when the visitor taps the other language: the page is about to reload
+  let switching = false;
   // What the browser said to muted autoplay, once it has said it. The 'start'
   // beacon does not wait for that answer: a viewer on 2G can give up before
   // play() settles, and that open must still count.
@@ -210,7 +270,12 @@ interface NetInfo {
     start();
     send("beat", collect());
   };
+  /** Something was actually watched here: at least a second of the film. */
+  const watched = () => pending.length > 0 || !!(cur && cur[1] - cur[0] >= 1);
   const flushEnd = () => {
+    // a language switch reloads the page: one left before anything was watched
+    // or reported is a pass-through, not a view (the other language's page opens its own)
+    if (switching && !started && !watched()) return;
     start();
     // nothing new since the last 'end' (e.g. hidden, shown, hidden again): stay quiet
     if (lastKind === "end" && !fresh()) return;
@@ -245,9 +310,29 @@ interface NetInfo {
       return undefined;
     }
   };
-  const refHost = () => {
+  /* Where the visitor came from. A language switch, or the one-time redirect to
+     the saved language, reloads this page from itself; the outside referrer was
+     kept for the tab in sessionStorage, so the view is not credited to the film
+     page. A visit from anywhere else on the site still reads as the site. */
+  const REF_KEY = "mdg_ref";
+  const keepRef = () => {
     try {
-      return document.referrer ? new URL(document.referrer).host || undefined : undefined;
+      const r = document.referrer;
+      if (r && !fromFilmPage(r)) sessionStorage.setItem(REF_KEY, r);
+    } catch {
+      /* storage blocked: the switch costs the referrer */
+    }
+  };
+  const refHost = () => {
+    let r = document.referrer;
+    try {
+      const kept = sessionStorage.getItem(REF_KEY);
+      if (kept && fromFilmPage(r)) r = kept;
+    } catch {
+      /* storage blocked */
+    }
+    try {
+      return r ? new URL(r).host || undefined : undefined;
     } catch {
       return undefined;
     }
@@ -255,7 +340,7 @@ interface NetInfo {
 
   /** The page-open beacon. Sent once: when play() answers, after 3 s, or on leaving, whichever is first. */
   const start = () => {
-    if (started) return;
+    if (started || (switching && !watched())) return;
     started = true;
     autoplaySent = autoplay || "muted";
     const d = device();
@@ -344,7 +429,7 @@ interface NetInfo {
   };
   const markPlay = () => {
     cls("paused", v.paused);
-    pp?.setAttribute("aria-label", v.paused ? "चलाएँ" : "रोकें");
+    pp?.setAttribute("aria-label", v.paused ? C.s.play : C.s.pause);
     if (v.paused && firstFrame) showUi(true);
     else if (shown()) showUi();
   };
@@ -535,7 +620,7 @@ interface NetInfo {
     else v.play().catch(() => {});
   });
   window.setTimeout(() => {
-    if (!firstFrame && loadMsg) loadMsg.textContent = "इंटरनेट धीमा है, बस थोड़ी देर और…";
+    if (!firstFrame && loadMsg) loadMsg.textContent = C.s.slow;
   }, 9000);
 
   /* ── watched ranges ──────────────────────────────────────────────────── */
@@ -588,7 +673,7 @@ interface NetInfo {
     if (firstFrame) {
       clearTimeout(waitT);
       waitT = setTimeout(() => {
-        if (waitMsg) waitMsg.textContent = navigator.onLine === false ? "इंटरनेट बंद है, जुड़ते ही चलेगी" : "रुकिए…";
+        if (waitMsg) waitMsg.textContent = navigator.onLine === false ? C.s.offline : C.s.wait;
         if (waitBox) waitBox.hidden = false;
         cls("stall", true);
       }, 700);
@@ -603,7 +688,15 @@ interface NetInfo {
     forget();
     flushEnd();
   });
-  addEventListener("pagehide", flushEnd);
+  addEventListener("pagehide", () => {
+    flushEnd();
+    if (!switching) return;
+    try {
+      sessionStorage.setItem(VIEW_KEY, JSON.stringify({ sid, seq, film: C.film }));
+    } catch {
+      /* storage blocked: the other page opens a view of its own */
+    }
+  });
   document.addEventListener("visibilitychange", () => {
     if (document.visibilityState === "hidden") flushEnd();
   });
@@ -707,17 +800,7 @@ interface NetInfo {
     v.play().catch(() => {});
   });
   fullLinks.forEach((a) => a.addEventListener("click", () => cta("full")));
-  document.querySelectorAll<HTMLAnchorElement>("a[data-reg]").forEach((a) =>
-    a.addEventListener("click", (e) => {
-      cta("register");
-      // "join" on the end card drops to the ways in below the picture: leave
-      // full screen first, or the jump happens behind it and the tap looks dead
-      if (a.getAttribute("href") === "#next" && isFs()) {
-        e.preventDefault();
-        leaveFs().then(() => $("next")?.scrollIntoView({ behavior: "smooth", block: "start" }));
-      }
-    }),
-  );
+  document.querySelectorAll("a[data-reg]").forEach((a) => a.addEventListener("click", () => cta("register")));
   $("retry")?.addEventListener("click", () => location.reload());
   document.querySelectorAll("a[data-wa]").forEach((a) =>
     a.addEventListener("click", () => {
@@ -743,12 +826,12 @@ interface NetInfo {
       // spaces and dashes are how people type numbers; the inbox wants digits
       const phone = val("phone").replace(/[\s-]/g, "");
       if (!name || !/^\+?\d{10,13}$/.test(phone)) {
-        say("अपना नाम और 10 अंकों का मोबाइल नंबर भरें।", false);
+        say(C.s.cbBad, false);
         return;
       }
       const btn = cb.querySelector("button");
       if (btn) btn.disabled = true;
-      say("भेज रहे हैं…", true);
+      say(C.s.cbSending, true);
       fetch("/api/callback", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -758,7 +841,7 @@ interface NetInfo {
           name,
           phone,
           outlet: val("outlet"),
-          message: `फ़िल्म: ${C.title}`,
+          message: `${C.s.cbFilm}: ${C.title}`,
           source: "film",
           ref: tag,
           website: val("website"),
@@ -768,14 +851,14 @@ interface NetInfo {
         .then((r) => {
           if (!r.ok) throw new Error(String(r.status));
           cb.classList.add("done");
-          say("धन्यवाद! हमारी टीम जल्द ही आपको कॉल करेगी।", true);
+          say(C.s.cbDone, true);
           // counted with the other ways of joining: the film's tally knows six kinds of tap
           cta("register");
           beat();
         })
         .catch(() => {
           if (btn) btn.disabled = false;
-          say("भेज नहीं पाए। इंटरनेट देखकर फिर कोशिश करें।", false);
+          say(C.s.cbFail, false);
         });
     });
   }

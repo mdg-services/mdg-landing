@@ -46,13 +46,23 @@ function isLang(v: unknown): v is Lang {
   return typeof v === "string" && (LANGS as readonly string[]).includes(v);
 }
 
-/** An explicit choice made on a previous visit. */
+/**
+ * An explicit choice made on a previous visit. The film pages keep the same
+ * choice in the mdg_lang cookie (their server reads it), so a choice made
+ * there counts here too when this storage has nothing.
+ */
 function stored(): Lang | null {
   try {
     const v = localStorage.getItem(STORE_KEY);
-    return isLang(v) ? v : null;
+    if (isLang(v)) return v;
   } catch {
-    return null; // private mode, storage disabled: fall through to the device
+    /* private mode, storage disabled: try the cookie */
+  }
+  try {
+    const m = /(?:^|;\s*)mdg_lang=(hi|en)(?:;|$)/.exec(document.cookie);
+    return m && isLang(m[1]) ? m[1] : null;
+  } catch {
+    return null; // fall through to the device
   }
 }
 
@@ -61,6 +71,13 @@ function persist(lang: Lang) {
     localStorage.setItem(STORE_KEY, lang);
   } catch {
     /* nothing to do; the choice just will not survive the visit */
+  }
+  // The film pages are plain HTML picked on the server (middleware.ts), which
+  // cannot read localStorage: the same choice also goes in a cookie.
+  try {
+    document.cookie = `mdg_lang=${lang}; Path=/; Max-Age=31536000; SameSite=Lax; Secure`;
+  } catch {
+    /* cookies blocked: the film pages fall back to the stored choice */
   }
 }
 
@@ -76,7 +93,8 @@ function clearQuery() {
   const url = new URL(window.location.href);
   if (!url.searchParams.has("lang")) return;
   url.searchParams.delete("lang");
-  window.history.replaceState({}, "", url.pathname + url.search + url.hash);
+  // keep the entry's state: the call sheet marks its own history entry there
+  window.history.replaceState(window.history.state, "", url.pathname + url.search + url.hash);
 }
 
 /**

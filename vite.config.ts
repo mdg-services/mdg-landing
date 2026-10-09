@@ -1,6 +1,7 @@
 import { defineConfig, type Plugin, type ViteDevServer } from "vite";
 import react from "@vitejs/plugin-react";
 import { buildFilmPages, pageSizes } from "./scripts/film-pages.ts";
+import { filmFile, filmLang, langCookie } from "./middleware.ts";
 
 /**
  * Dev-only: serve the POST /api/* endpoints during `vite dev` by calling the
@@ -71,11 +72,17 @@ function filmPages(): Plugin {
       for (const f of files) this.emitFile({ type: "asset", fileName: f.fileName, source: f.source });
       this.info(`film pages: ${pageSizes(files)}`);
     },
-    // `vite preview` mirrors vercel.json's /film and /film/short rewrites
+    // `vite preview` mirrors middleware.ts and vercel.json for /film and /film/short:
+    // the language pick (and its cookie), then the rewrite to the built file
     configurePreviewServer(server) {
-      server.middlewares.use((req, _res, next) => {
+      server.middlewares.use((req, res, next) => {
         const [p, q] = (req.url || "").split("?");
-        if (p === "/film" || p === "/film/short") req.url = `${p}/index.html${q ? `?${q}` : ""}`;
+        const route = p.replace(/\/$/, "");
+        if (route === "/film" || route === "/film/short") {
+          const { lang, asked } = filmLang(new URL(req.url || "/", "http://localhost"), req.headers.cookie || null);
+          if (asked) res.setHeader("set-cookie", langCookie(lang));
+          req.url = `${filmFile(route, lang)}${q ? `?${q}` : ""}`;
+        }
         next();
       });
     },
@@ -85,7 +92,9 @@ function filmPages(): Plugin {
         if (url !== "/film" && url !== "/film/short" && !/^\/film\/hls-[\d.]+\.js$/.test(url)) return next();
         try {
           const files = await buildFilmPages({ root });
-          const hit = files.find((f) => "/" + f.fileName === url || "/" + f.fileName === `${url}/index.html`);
+          const { lang } = filmLang(new URL(req.url || "/", "http://localhost"), req.headers.cookie || null);
+          const want = url.endsWith(".js") ? url : filmFile(url, lang);
+          const hit = files.find((f) => "/" + f.fileName === want);
           if (!hit) return next();
           res.setHeader("Content-Type", hit.fileName.endsWith(".js") ? "text/javascript" : "text/html; charset=utf-8");
           res.end(hit.source);
