@@ -1,26 +1,105 @@
-/* Inlined into /film and /film/short. Device fonts only: Devanagari comes from the phone. */
-:root{--bg:#101133;--panel:#1a1c4a;--line:#2f3280;--fg:#fff;--dim:#c5c7ed;--acc:#f5a524;--ink:#101133;
+/* Inlined into /film and /film/short. Device fonts only: Devanagari comes from the phone.
+   The scene: a dealer opens a WhatsApp link on his phone, at the pump or at home at night.
+   The picture is the brightest thing on the screen; everything around it is deep navy. */
+:root{--bg:#101133;--panel:#1a1c4a;--line:#2f3280;--fg:#f7f7ff;--dim:#c5c7ed;--acc:#f5a524;--ink:#101133;
+  --night:#07081c;--wa:#1fa855;--veil:rgba(7,8,28,.82);
   --sys:system-ui,-apple-system,"Segoe UI",Roboto,"Noto Sans Devanagari","Nirmala UI",sans-serif;
-  /* --hd is the header's real height: on a phone the description wraps to two lines (74.5 px measured) */
-  --hd:76px;--stage:min(100vw,calc((100vh - var(--hd))*9/16));--fold:calc(100vh - var(--hd))}
+  --out:cubic-bezier(.25,1,.5,1);
+  /* --hd is the header's height: one line on a phone */
+  --hd:52px;--stage:min(100vw,calc((100vh - var(--hd))*9/16));--fold:calc(100vh - var(--hd))}
 @supports (height:100svh){:root{--stage:min(100vw,calc((100svh - var(--hd))*9/16));--fold:calc(100svh - var(--hd))}}
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%;color-scheme:dark}
-body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.5 var(--sys);-webkit-font-smoothing:antialiased}
+body{margin:0;background:var(--bg);color:var(--fg);font:17px/1.5 var(--sys);-webkit-font-smoothing:antialiased}
 a{color:inherit}
 button{font:inherit;color:inherit;cursor:pointer;-webkit-tap-highlight-color:transparent}
-header{display:flex;align-items:center;gap:10px;padding:8px 16px;min-height:64px;max-width:1100px;margin:0 auto}
+svg{display:block}
+[hidden]{display:none!important}
+header{display:flex;align-items:center;gap:10px;padding:0 16px;height:var(--hd);max-width:1100px;margin:0 auto}
 header a{display:flex;flex:0 0 auto}
 header div{min-width:0}
-header img{width:36px;height:36px}
+header img{width:32px;height:32px}
 h1{margin:0;font-size:17px;line-height:1.3;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-header p{margin:0;font-size:13.5px;line-height:1.35;color:var(--dim);display:-webkit-box;-webkit-box-orient:vertical;
-  -webkit-line-clamp:2;overflow:hidden}
+/* on a phone the title says it; the line is for desktop and for link previews */
+header p{display:none;margin:0;font-size:14px;line-height:1.35;color:var(--dim)}
 main{max-width:1100px;margin:0 auto}
-/* never taller than the screen below the header: captions and the seek bar stay above the fold, the picture letterboxes */
-.stage{position:relative;width:100%;aspect-ratio:9/16;max-height:var(--fold);background:#000;margin:0 auto;overflow:hidden}
-video{display:block;width:100%;height:100%;object-fit:contain;background:#000}
-video::cue{font:600 clamp(19px,5.4vw,28px)/1.4 var(--sys);color:#fff;background:rgba(0,0,0,.74)}
+
+/* ── the picture ── never taller than the screen below the header */
+.stage{position:relative;width:100%;aspect-ratio:9/16;max-height:var(--fold);background:var(--night);margin:0 auto;
+  overflow:hidden;-webkit-user-select:none;user-select:none;touch-action:manipulation}
+.stage.fs{max-height:none;height:100%;aspect-ratio:auto;border-radius:0!important}
+video{display:block;width:100%;height:100%;object-fit:contain;background:var(--night)}
+video::cue{font:600 clamp(19px,5.4vw,28px)/1.4 var(--sys);color:var(--fg);background:rgba(7,8,28,.78)}
+
+/* loading: the poster stays in view, and the wait says why */
+.load{position:absolute;left:0;right:0;bottom:0;display:flex;flex-direction:column;align-items:center;gap:12px;
+  padding:72px 20px 28px;background:linear-gradient(transparent,var(--veil));text-align:center;pointer-events:none}
+.load b{font-size:17px;font-weight:700;text-shadow:0 1px 8px rgba(0,0,0,.6)}
+.load i{position:relative;display:block;width:128px;height:4px;border-radius:2px;background:rgba(247,247,255,.22);overflow:hidden}
+.load i::after{content:"";position:absolute;top:0;bottom:0;left:0;width:40%;border-radius:2px;background:var(--acc);
+  animation:sweep 1.5s cubic-bezier(.65,0,.35,1) infinite}
+@keyframes sweep{from{transform:translateX(-100%)}to{transform:translateX(330%)}}
+
+/* the controls: hidden while the film plays, a tap brings them for 3 s */
+.ui{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;opacity:0;visibility:hidden;
+  background:linear-gradient(to top,var(--veil) 0,rgba(7,8,28,.4) 30%,rgba(7,8,28,.22) 55%,rgba(7,8,28,.3));
+  transition:opacity .2s var(--out),visibility 0s .2s}
+.stage.on .ui{opacity:1;visibility:visible;transition:opacity .2s var(--out)}
+.mid{position:absolute;left:0;right:0;top:50%;transform:translateY(-50%);display:flex;align-items:center;
+  justify-content:center;gap:clamp(28px,10vw,56px)}
+.stage.stall .mid{visibility:hidden}
+.pp,.sk{display:grid;place-items:center;border:0;border-radius:50%;background:rgba(16,17,51,.62)}
+.pp{width:76px;height:76px}
+.pp svg{width:34px;height:34px}
+.pp svg+svg{margin-left:4px}
+.stage.paused .pp{background:var(--acc);color:var(--ink)}
+.stage.paused .pp svg:first-child,.stage:not(.paused) .pp svg+svg{display:none}
+.sk{position:relative;width:58px;height:58px}
+.sk svg{width:34px;height:34px}
+.sk span{position:absolute;left:0;right:0;top:52.5%;transform:translateY(-50%);font-size:11px;font-weight:800;
+  line-height:1;text-align:center}
+.low{padding:0 12px 6px}
+.now{margin:0 4px;font-size:15px;font-weight:600;color:var(--dim);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.now:empty{display:none}
+.row{display:flex;align-items:center;gap:4px;min-height:44px;padding-left:4px}
+.time{font-size:15px;font-weight:600;font-variant-numeric:tabular-nums}
+.hd{margin-left:8px;padding:2px 6px;border:1.5px solid currentColor;border-radius:5px;font-size:11px;font-weight:800;
+  line-height:1.2;letter-spacing:.04em}
+.ic{display:grid;place-items:center;width:46px;height:46px;border:0;border-radius:50%;background:transparent}
+.ic svg{width:26px;height:26px}
+#mute{margin-left:auto}
+#mute svg+svg,.stage.mut #mute svg:first-child,#fs svg+svg,.stage.fs #fs svg:first-child{display:none}
+.stage.mut #mute svg+svg,.stage.fs #fs svg+svg{display:block}
+.seek{position:relative;height:40px}
+.seek input{position:absolute;inset:0;width:100%;height:100%;margin:0;-webkit-appearance:none;appearance:none;
+  background:transparent;cursor:pointer;--p:0%;--b:0%}
+.seek input::-webkit-slider-runnable-track{height:5px;border-radius:3px;background:linear-gradient(to right,var(--acc) var(--p),
+  rgba(247,247,255,.5) var(--p),rgba(247,247,255,.5) var(--b),rgba(247,247,255,.22) var(--b))}
+.seek input::-moz-range-track{height:5px;border-radius:3px;background:linear-gradient(to right,var(--acc) var(--p),
+  rgba(247,247,255,.5) var(--p),rgba(247,247,255,.5) var(--b),rgba(247,247,255,.22) var(--b))}
+.seek input::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;margin-top:-7.5px;border:0;
+  border-radius:50%;background:var(--acc);box-shadow:0 1px 6px rgba(0,0,0,.5)}
+.seek input::-moz-range-thumb{width:20px;height:20px;border:0;border-radius:50%;background:var(--acc)}
+/* chapter starts: small gaps in the bar */
+.ticks{position:absolute;left:0;right:0;top:50%;height:5px;margin-top:-2.5px;pointer-events:none;z-index:1}
+.ticks i{position:absolute;top:0;width:3px;height:5px;margin-left:-1.5px;background:var(--night)}
+/* while the controls are away, a thin line still shows how far the film has run */
+.mini{position:absolute;left:0;right:0;bottom:0;height:3px;background:rgba(247,247,255,.2);display:none;pointer-events:none}
+.mini::after{content:"";position:absolute;inset:0;background:var(--acc);transform-origin:left;transform:scaleX(var(--q,0))}
+.stage.live .mini{display:block}
+.stage.on .mini,.stage.over .mini,.stage.over .ui{display:none}
+.nudge{position:absolute;top:34%;left:7%;padding:10px 16px;border-radius:999px;background:rgba(16,17,51,.78);
+  font-size:15px;font-weight:700;opacity:0;pointer-events:none}
+.nudge.r{left:auto;right:7%}
+.nudge.go{animation:nudge .75s var(--out)}
+@keyframes nudge{0%{opacity:0}15%,65%{opacity:1}to{opacity:0}}
+.wait{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;
+  gap:12px;pointer-events:none;text-align:center}
+.wait i{width:46px;height:46px;border-radius:50%;border:4px solid rgba(247,247,255,.25);border-top-color:var(--acc);
+  animation:spin .9s linear infinite}
+.wait b{font-size:16px;text-shadow:0 1px 8px rgba(0,0,0,.7);white-space:nowrap}
+@keyframes spin{to{transform:rotate(1turn)}}
+
 /* top centre, not the middle: the middle is the dealer's face in most shots, and the
    films keep their own on-screen words below the top ~10% and their cards' detail low */
 .snd{position:absolute;left:50%;top:max(10px,2.2%);transform:translateX(-50%);display:flex;align-items:center;gap:10px;
@@ -29,46 +108,73 @@ video::cue{font:600 clamp(19px,5.4vw,28px)/1.4 var(--sys);color:#fff;background:
 .snd svg{width:24px;height:24px}
 @keyframes pulse{0%,100%{box-shadow:0 10px 30px rgba(0,0,0,.45),0 0 0 0 rgba(245,165,36,.55)}
   50%{box-shadow:0 10px 30px rgba(0,0,0,.45),0 0 0 14px rgba(245,165,36,0)}}
-@media (prefers-reduced-motion:reduce){.snd{animation:none}}
+/* back where he left off: low, where the thumb is */
+.resume{position:absolute;left:16px;right:16px;bottom:24%;display:flex;align-items:center;gap:12px;padding:13px 16px;
+  border:1px solid var(--line);border-radius:14px;background:rgba(16,17,51,.94);text-align:left;font-size:16px;
+  font-weight:600;line-height:1.35;box-shadow:0 10px 30px rgba(0,0,0,.45)}
+.resume svg{flex:none;width:22px;height:22px;color:var(--acc)}
+.resume b{font-variant-numeric:tabular-nums}
 .big{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;
   border:0;background:rgba(16,17,51,.35);font-size:19px;font-weight:700;text-shadow:0 2px 10px rgba(0,0,0,.8)}
-.big span{display:flex;align-items:center;justify-content:center;width:92px;height:92px;border-radius:50%;
-  background:var(--acc);color:var(--ink);box-shadow:0 10px 30px rgba(0,0,0,.45)}
+.big span{display:grid;place-items:center;width:92px;height:92px;border-radius:50%;background:var(--acc);color:var(--ink);
+  box-shadow:0 10px 30px rgba(0,0,0,.45)}
 .big svg{width:38px;height:38px;margin-left:6px}
-.end{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;
-  padding:24px;background:rgba(16,17,51,.9);text-align:center}
-.end p{margin:0 0 6px;font-size:18px;font-weight:700}
-.btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;max-width:320px;min-height:52px;
+.err,.end{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;
+  padding:28px 24px;background:var(--bg);text-align:center}
+.err b{font-size:22px}
+.err p{margin:0 0 6px;color:var(--dim)}
+.end .k{margin:0;color:var(--acc);font-size:16px;font-weight:700}
+.end>b{max-width:15em;font-size:23px;line-height:1.35;margin-bottom:6px}
+.end img{width:56px;height:56px}
+.peek{list-style:none;margin:2px 0 10px;padding:0;display:flex;flex-direction:column;gap:12px;font-size:20px;
+  font-weight:700;line-height:1.3;text-align:left}
+.peek li{display:flex;align-items:center;gap:12px}
+.peek li::before{content:"";flex:none;width:9px;height:9px;border-radius:2px;background:var(--acc);transform:rotate(45deg)}
+.two{display:flex;gap:10px;width:100%;max-width:340px}
+.two .btn{flex:1;font-size:16px;padding:12px 10px}
+
+/* ── buttons ── */
+.btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;max-width:340px;min-height:52px;
   padding:12px 20px;border-radius:14px;border:1px solid var(--line);background:var(--panel);font-size:17px;
-  font-weight:700;text-decoration:none}
+  font-weight:700;line-height:1.3;text-decoration:none}
 .btn.pri{background:var(--acc);border-color:var(--acc);color:var(--ink);font-size:18px}
-.btn.wa{background:#1fa855;border-color:#1fa855;color:#fff}
+.btn.wa{background:var(--wa);border-color:var(--wa);color:#fff}
 .btn svg{width:20px;height:20px;flex:0 0 auto}
-[hidden]{display:none!important}
-.bar{display:flex;flex-wrap:wrap;align-items:center;gap:8px;padding:12px 16px}
-.chip{min-height:40px;min-width:48px;padding:0 14px;border-radius:999px;border:1px solid var(--line);background:transparent;
-  font-size:15px;font-weight:600;font-variant-numeric:tabular-nums}
-.chip[aria-pressed=true]{background:var(--acc);border-color:var(--acc);color:var(--ink)}
-.bar .wa{margin-left:auto;display:flex;align-items:center;justify-content:center;min-height:40px;min-width:48px;padding:0 12px;border-radius:999px;
-  background:#1fa855;color:#fff;text-decoration:none;font-size:15px;font-weight:600}
-.bar .wa svg{width:22px;height:22px}
-.ch{padding:4px 16px 32px}
-.ch h2{margin:4px 0 8px;font-size:15px;color:var(--dim);font-weight:600}
+
+/* ── under the picture: the next step, then the settings ── */
+.act{display:flex;gap:10px;padding:14px 16px 4px}
+.act .btn{width:auto;max-width:none}
+.act .pri{flex:1}
+.act .wa{flex:none;padding:12px 18px}
+.dock{display:flex;flex-direction:column;gap:10px;padding:12px 16px 8px}
+.set{display:flex;align-items:center;gap:12px}
+.set>span{flex:0 0 74px;font-size:15px;font-weight:600;color:var(--dim)}
+.seg{display:flex;flex:1;gap:2px;padding:3px;border:1px solid var(--line);border-radius:13px}
+.seg button{flex:1;min-height:42px;padding:0 6px;border:0;border-radius:10px;background:transparent;color:var(--dim);
+  font-size:15px;font-weight:700;font-variant-numeric:tabular-nums;white-space:nowrap}
+.seg button[aria-pressed=true]{background:var(--acc);color:var(--ink)}
+.ch{padding:14px 16px 28px}
+.ch h2{margin:0 0 6px;font-size:15px;color:var(--dim);font-weight:600}
 .ch ol{list-style:none;margin:0;padding:0}
-.ch button{display:flex;gap:14px;align-items:baseline;width:100%;padding:11px 12px;border:0;border-left:3px solid transparent;
-  border-radius:0 10px 10px 0;background:transparent;text-align:left;font-size:16px}
-.ch button span{color:var(--dim);font-size:14px;font-variant-numeric:tabular-nums;min-width:44px}
-.ch button[aria-current]{background:var(--panel);border-left-color:var(--acc)}
+.ch button{display:flex;gap:14px;align-items:baseline;width:100%;min-height:48px;padding:12px;border:0;border-radius:10px;
+  background:transparent;text-align:left;font-size:17px;line-height:1.35}
+.ch button span{flex:none;min-width:44px;color:var(--dim);font-size:14px;font-variant-numeric:tabular-nums}
+.ch button[aria-current]{background:var(--panel);font-weight:700}
+.ch button[aria-current] span{color:var(--acc)}
 .soon{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:28px;height:100%;
   text-align:center;background:radial-gradient(120% 70% at 50% 30%,#2c2e80 0%,var(--bg) 70%)}
 .soon img{width:72px;height:72px;opacity:.95}
 .soon b{font-size:30px;line-height:1.25}
 .soon p{margin:0 0 10px;color:var(--dim);max-width:30ch}
-footer{padding:0 16px 28px;color:var(--dim);font-size:13px}
+footer{padding:4px 16px 28px;color:var(--dim);font-size:14px}
 footer a{color:var(--dim)}
+@media (hover:hover){.seg button:hover,.ch button:hover{background:rgba(47,50,128,.55)}.ic:hover{background:rgba(247,247,255,.12)}}
+@media (prefers-reduced-motion:reduce){.snd{animation:none}.load i::after{animation:none;width:100%;opacity:.6}
+  .wait i{animation-duration:2.4s}.ui,.stage.on .ui{transition:none}}
 @media (min-width:600px){:root{--hd:64px}
+  header p{display:block}
   .stage{width:var(--stage);border-radius:14px}
-  .bar,.ch,footer{width:var(--stage);margin:0 auto;padding-left:0;padding-right:0}}
-@media (min-width:980px){main{display:grid;grid-template-columns:var(--stage) 340px;gap:8px 28px;justify-content:center;
+  .act,.dock,.ch,footer{width:var(--stage);margin:0 auto;padding-left:0;padding-right:0}}
+@media (min-width:980px){main{display:grid;grid-template-columns:var(--stage) 360px;gap:8px 28px;justify-content:center;
   align-items:start;padding-bottom:24px}
-  .stage{grid-row:1/4}.bar,.ch,footer{width:auto;grid-column:2}.ch{padding-top:0}}
+  .stage{grid-row:1/6}.act,.dock,.ch,footer{width:auto;margin:0;grid-column:2}.act{padding-top:0}}

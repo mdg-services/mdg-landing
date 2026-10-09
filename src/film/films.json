@@ -6,8 +6,13 @@
     "duration": 1589.708,
     "base": "https://mdg-films.s3.ap-south-1.amazonaws.com/kavach/v-e0cddd2b72",
     "hls": "master.m3u8",
+    "playlists": {
+      "hd": "hd.m3u8",
+      "sd": "sd.m3u8",
+      "lite": "lite.m3u8"
+    },
     "mp4": "film-540.mp4",
-    "poster": "poster.jpg",
+    "poster": "poster-720.jpg",
     "captions": "captions.hi.vtt",
     "chapters": [
       {
@@ -70,8 +75,13 @@
     "duration": 38.625,
     "base": "https://mdg-films.s3.ap-south-1.amazonaws.com/kavach-short/v-1fce4101e9",
     "hls": "master.m3u8",
+    "playlists": {
+      "hd": "hd.m3u8",
+      "sd": "sd.m3u8",
+      "lite": "lite.m3u8"
+    },
     "mp4": "film-540.mp4",
-    "poster": "poster.jpg",
+    "poster": "poster-720.jpg",
     "captions": "captions.hi.vtt",
     "chapters": [],
     "ladder": [

@@ -28,6 +28,8 @@ interface FilmJson {
   duration?: number;
   base?: string;
   hls?: string;
+  /** master playlists for the browser's own player, by network: 720p / 540p / 360p first */
+  playlists?: { hd: string; sd: string; lite: string };
   mp4?: string;
   poster?: string;
   captions?: string;
@@ -64,7 +66,12 @@ const PAGES: Record<FilmId, { path: string; kind: "full" | "short"; desc: (fullM
 const ICON = {
   sound:
     '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3A4.5 4.5 0 0 0 14 8v8a4.5 4.5 0 0 0 2.5-4zM14 3.2v2.1a7 7 0 0 1 0 13.4v2.1a9 9 0 0 0 0-17.6z"/></svg>',
+  muted:
+    '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 9v6h4l5 5V4L7 9H3zm11.3.7 1.4-1.4 2.3 2.3 2.3-2.3 1.4 1.4-2.3 2.3 2.3 2.3-1.4 1.4-2.3-2.3-2.3 2.3-1.4-1.4 2.3-2.3z"/></svg>',
   play: '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 4.5v15l12.5-7.5z"/></svg>',
+  pause: '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.5 4.5h4v15h-4zm7 0h4v15h-4z"/></svg>',
+  fs: '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4 9V4h5v2H6v3zm11-5h5v5h-2V6h-3zM4 15h2v3h3v2H4zm14 0h2v5h-5v-2h3z"/></svg>',
+  unfs: '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 4h2v5H4V7h3zm8 0h2v3h3v2h-5zM4 15h5v5H7v-3H4zm11 0h5v2h-3v3h-2z"/></svg>',
   replay:
     '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 5V1L7 6l5 5V7a6 6 0 1 1-6 6H4a8 8 0 1 0 8-8z"/></svg>',
   wa: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5a9.5 9.5 0 0 0-8.2 14.3L2.5 21.5l4.8-1.3A9.5 9.5 0 1 0 12 2.5z" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M8.7 7.4c.3-.5.6-.5.9-.5h.6c.2 0 .5 0 .7.5l.9 2.1c.1.2.1.4 0 .6l-.6.8c-.2.2-.2.4 0 .7.6 1 1.4 1.8 2.4 2.4.3.2.5.1.7 0l.8-.9c.2-.2.4-.2.6-.1l2 1c.3.1.4.3.4.5 0 .6-.2 1.3-.7 1.7-.6.5-1.5.8-2.5.5-1.3-.4-3-1.2-4.4-2.7-1.5-1.5-2.3-3-2.6-4.2-.2-.9 0-1.8.4-2.4z" fill="currentColor"/></svg>',
@@ -72,6 +79,13 @@ const ICON = {
 
 const esc = (s: string) =>
   s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+/** a 10-second skip: the replay arrow, mirrored for forward, with the number inside */
+const skip = (id: string, dir: -1 | 1) =>
+  `<button type="button" class="sk" id="${id}" aria-label="10 सेकंड ${dir < 0 ? "पीछे" : "आगे"}"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"${dir > 0 ? ' style="transform:scaleX(-1)"' : ""}><path d="M12 5V1L7 6l5 5V7a6 6 0 1 1-6 6H4a8 8 0 1 0 8-8z"/></svg><span>10</span></button>`;
+const seg = (label: string, id: string, items: Array<[string, string, string]>, hidden = false) =>
+  `<div class="set" id="${id}"${hidden ? " hidden" : ""}><span>${label}</span><div class="seg" role="group" aria-label="${label}">${items
+    .map(([attr, val, text]) => `<button type="button" ${attr}="${val}" aria-pressed="false">${text}</button>`)
+    .join("")}</div></div>`;
 const mmss = (t: number) => {
   const s = Math.floor(t);
   return `${Math.floor(s / 60)}:${String(s % 60).padStart(2, "0")}`;
@@ -119,10 +133,16 @@ export async function buildFilmPages(opts: { root: string; beaconUrl?: string })
     const f = films[id];
     const p = PAGES[id];
     const live = !!(f && f.version && f.base && f.duration);
-    const html = page({ f, p, live, css, js, beacon, hlsSrc: `/${hls.fileName}`, fullMin });
+    const html = page({ f, p, live, css, js, beacon, hlsSrc: `/${hls.fileName}`, fullMin, peek: peek(films.kavach) });
     files.push({ fileName: `${p.path.slice(1)}/index.html`, source: html });
   }
   return files;
+}
+
+/** What the short's end screen promises is in the full film: four of its own chapter names. */
+function peek(full: FilmJson): string[] {
+  const ch = full.chapters || [];
+  return [1, 2, 3, 7].map((i) => ch[i] && ch[i].title).filter((t): t is string => !!t);
 }
 
 /** gzipped byte size of each generated page, for the build log. */
@@ -142,6 +162,7 @@ function page(a: {
   beacon: string;
   hlsSrc: string;
   fullMin: number;
+  peek: string[];
 }): string {
   const { f, p, live, css, js } = a;
   const url = SITE + p.path;
@@ -170,7 +191,7 @@ function page(a: {
 <meta name="twitter:image" content="${SITE}${p.og}">
 ${live ? `<link rel="preconnect" href="${MEDIA_ORIGIN}" crossorigin>\n<link rel="preload" as="image" href="${poster}" crossorigin="anonymous" fetchpriority="high">\n` : ""}<style>${css}</style>
 </head><body>
-<header><a href="/" aria-label="MDG Services"><img src="/film/mark.png" width="36" height="36" alt=""></a><div><h1>${esc(f.title)}</h1><p>${esc(desc)}</p></div></header>
+<header><a href="/" aria-label="MDG Services"><img src="/film/mark.png" width="32" height="32" alt=""></a><div><h1>${esc(f.title)}</h1><p>${esc(desc)}</p></div></header>
 <main>`;
   const foot = `<footer><a href="/">mdgservices.in</a> · <a href="/privacy">गोपनीयता</a></footer>`;
 
@@ -185,13 +206,19 @@ ${foot}</main>
   }
 
   const cfg = {
-    film: f.film, title: f.title, duration: f.duration, base: f.base, hls: f.hls, mp4: f.mp4,
+    film: f.film, title: f.title, duration: f.duration, base: f.base, hls: f.hls, playlists: f.playlists, mp4: f.mp4,
     captions: f.captions, chapters: f.chapters || [], beacon: a.beacon, hlsJs: a.hlsSrc, url, kind: p.kind,
   };
-  const endCta =
+  const wa = (cls: string, text: string) =>
+    `<a class="${cls}" data-wa href="https://wa.me/" target="_blank" rel="noopener">${ICON.wa}${text}</a>`;
+  const fullBtn = (cls: string) =>
+    `<a class="${cls}" data-full href="/film?from=short">${ICON.play}पूरी फ़िल्म देखें · ${a.fullMin} मिनट</a>`;
+  const regBtn = (cls: string) => `<a class="${cls}" data-reg href="/register">डीलर कवच से जुड़ें</a>`;
+  // the short ends on what the full film holds; the full film on the next step
+  const endBody =
     p.kind === "short"
-      ? `<a class="btn pri" id="full" href="/film?from=short">पूरी फ़िल्म देखें (${a.fullMin} मिनट) →</a>`
-      : `<a class="btn pri" id="reg" href="/register">डीलर कवच से जुड़ें</a>`;
+      ? `<p class="k">पूरी फ़िल्म में</p><ul class="peek">${a.peek.map((t) => `<li>${esc(t)}</li>`).join("")}</ul>${fullBtn("btn pri")}`
+      : `<img src="/film/mark.png" width="56" height="56" alt=""><p class="k">देखने के लिए धन्यवाद</p><b>अपने पंप के लिए डीलर कवच शुरू करें</b>${regBtn("btn pri")}`;
   const chapters = (f.chapters || []).length
     ? `<section class="ch"><h2>अध्याय</h2><ol>${(f.chapters || [])
         .map((c) => `<li><button type="button" data-t="${c.t}"><span>${mmss(c.t)}</span>${esc(c.title)}</button></li>`)
@@ -200,11 +227,23 @@ ${foot}</main>
   return `${head}
 <div class="stage" id="stage">
 <video id="v" playsinline preload="auto" controls crossorigin="anonymous" poster="${poster}"><track kind="captions" srclang="hi" label="हिन्दी" default src="${f.base}/${f.captions}"></video>
-<button type="button" class="snd" id="snd" hidden>${ICON.sound}आवाज़ चालू करें</button>
-<button type="button" class="big" id="big" hidden><span>${ICON.play}</span>फ़िल्म चलाएँ</button>
-<div class="end" id="end" hidden><p>${esc(f.title)}</p>${endCta}<button type="button" class="btn" id="replay">${ICON.replay}फिर से देखें</button><a class="btn wa" data-wa href="https://wa.me/" target="_blank" rel="noopener">${ICON.wa}WhatsApp पर भेजें</a></div>
+<div class="load" id="load" hidden><b id="loadmsg">फ़िल्म साफ़ तस्वीर में आ रही है</b><i></i></div>
+<div class="ui" id="ui">
+<div class="mid">${skip("back", -1)}<button type="button" class="pp" id="pp" aria-label="रोकें">${ICON.pause}${ICON.play}</button>${skip("fwd", 1)}</div>
+<div class="low"><p class="now" id="chap"></p><div class="row"><span class="time" id="time">0:00 / ${mmss(f.duration || 0)}</span><span class="hd" id="hd" hidden>HD</span><button type="button" class="ic" id="mute" aria-label="आवाज़">${ICON.sound}${ICON.muted}</button><button type="button" class="ic" id="fs" aria-label="पूरी स्क्रीन">${ICON.fs}${ICON.unfs}</button></div>
+<div class="seek"><div class="ticks" id="ticks"></div><input type="range" id="seek" min="0" max="${f.duration}" step="0.1" value="0" aria-label="फ़िल्म में आगे या पीछे जाएँ"></div></div>
 </div>
-<div class="bar" aria-label="रफ़्तार"><button type="button" class="chip" data-rate="1">1x</button><button type="button" class="chip" data-rate="1.2">1.2x</button><button type="button" class="chip" data-rate="1.5">1.5x</button><button type="button" class="chip" id="cc" aria-pressed="true" aria-label="कैप्शन">CC</button><a class="wa" data-wa href="https://wa.me/" target="_blank" rel="noopener" aria-label="WhatsApp पर भेजें">${ICON.wa}</a></div>
+<div class="mini"></div>
+<div class="nudge" id="nl">10 सेकंड पीछे</div><div class="nudge r" id="nr">10 सेकंड आगे</div>
+<div class="wait" id="wait" hidden><i></i><b id="waitmsg">रुकिए…</b></div>
+<button type="button" class="snd" id="snd" hidden>${ICON.sound}आवाज़ चालू करें</button>
+<button type="button" class="resume" id="resume" hidden>${ICON.play}<span>पिछली बार <b></b> तक देखी थी, वहीं से चलाएँ</span></button>
+<button type="button" class="big" id="big" hidden><span>${ICON.play}</span>फ़िल्म चलाएँ</button>
+<div class="err" id="err" hidden><b>फ़िल्म नहीं चल पाई</b><p>इंटरनेट देखकर फिर कोशिश करें।</p><button type="button" class="btn pri" id="retry">${ICON.replay}फिर कोशिश करें</button></div>
+<div class="end" id="end" hidden>${endBody}<div class="two"><button type="button" class="btn" id="replay">${ICON.replay}फिर से देखें</button>${wa("btn wa", "भेजें")}</div></div>
+</div>
+<div class="act">${p.kind === "short" ? fullBtn("btn pri") : regBtn("btn pri")}${wa("btn wa", "भेजें")}</div>
+<div class="dock">${seg("रफ़्तार", "speed", [["data-rate", "1", "1x"], ["data-rate", "1.2", "1.2x"], ["data-rate", "1.5", "1.5x"]])}${seg("सबटाइटल", "subs", [["data-cc", "1", "चालू"], ["data-cc", "0", "बंद"]])}${seg("तस्वीर", "qual", [["data-q", "auto", "अपने-आप"], ["data-q", "hd", "HD"], ["data-q", "lite", "कम डेटा"]], true)}</div>
 ${chapters}
 ${foot}</main>
 <script type="application/json" id="cfg">${JSON.stringify(cfg).replace(/</g, "\\u003c")}</script>

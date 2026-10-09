@@ -1,7 +1,8 @@
 /**
  * The film watch page's whole runtime: playback that starts at once (muted,
- * with Hindi captions carrying the words), the sound-on tap, speed chips,
- * chapters, the end screen, and the view measurement.
+ * with Hindi captions carrying the words) and in a sharp picture, the sound-on
+ * tap, the page's own touch controls, speed / subtitles / picture settings,
+ * chapters, resume, the end screen, and the view measurement.
  *
  * Inlined into /film and /film/short by scripts/film-pages.ts. It is not part
  * of the React app and must stay small: the page budget is 15 kB gzipped for
@@ -23,6 +24,8 @@ interface PageConfig {
   duration: number;
   base: string;
   hls: string;
+  /** for the browser's own player: the same ladder, 720p / 540p / 360p listed first */
+  playlists?: { hd: string; sd: string; lite: string };
   mp4: string;
   captions: string;
   chapters: Array<{ t: number; title: string }>;
@@ -47,10 +50,17 @@ interface NetInfo {
   const C = JSON.parse(cfgEl.textContent || "{}") as PageConfig;
   const v = $<HTMLVideoElement>("v");
   if (!v) return;
+  const stage = $("stage") || document.body;
   const snd = $<HTMLButtonElement>("snd");
   const big = $<HTMLButtonElement>("big");
   const end = $("end");
-  const cc = $<HTMLButtonElement>("cc");
+  const load = $("load");
+  const errBox = $("err");
+  const cls = (c: string, on: boolean) => stage.classList.toggle(c, on);
+  // the page's own controls replace the browser's; without this script the browser's stay
+  v.controls = false;
+  cls("js", true);
+  if (load) load.hidden = false;
   const q = new URLSearchParams(location.search);
   const pick = (k: string, re: RegExp) => {
     const x = q.get(k);
@@ -72,8 +82,8 @@ interface NetInfo {
   document.querySelectorAll<HTMLAnchorElement>("a[data-wa]").forEach((a) => {
     a.href = `https://wa.me/?text=${encodeURIComponent(`${C.title}\n${shareUrl}`)}`;
   });
-  const fullLink = $<HTMLAnchorElement>("full");
-  if (fullLink) fullLink.href = withTag("/film", "from=short");
+  const fullLinks = document.querySelectorAll<HTMLAnchorElement>("a[data-full]");
+  fullLinks.forEach((a) => (a.href = withTag("/film", "from=short")));
 
   /* ── ids ─────────────────────────────────────────────────────────────── */
   const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/;
@@ -272,6 +282,255 @@ interface NetInfo {
   };
   setTimeout(start, 3000);
 
+  /* ── the page's own controls ─────────────────────────────────────────── */
+  const pp = $<HTMLButtonElement>("pp");
+  const seek = $<HTMLInputElement>("seek");
+  const timeEl = $("time");
+  const chapEl = $("chap");
+  const hdEl = $("hd");
+  const muteBtn = $<HTMLButtonElement>("mute");
+  const fsBtn = $<HTMLButtonElement>("fs");
+  const waitBox = $("wait");
+  const waitMsg = $("waitmsg");
+  const loadMsg = $("loadmsg");
+  const resume = $<HTMLButtonElement>("resume");
+  const dur = () => (isFinite(v.duration) && v.duration > 0 ? v.duration : C.duration);
+  const clock = (t: number) => {
+    const s = Math.max(0, Math.floor(t));
+    return `${Math.floor(s / 60)}:${String(s % 60).padStart(2, "0")}`;
+  };
+  let dragging = false;
+  let waitT = 0;
+  let hideT = 0;
+  const paint = () => {
+    const d = dur();
+    const t = dragging && seek ? Number(seek.value) : v.currentTime || 0;
+    let b = t;
+    for (let i = 0; i < v.buffered.length; i++) if (v.buffered.start(i) <= t + 0.5 && v.buffered.end(i) > b) b = v.buffered.end(i);
+    const pc = (x: number) => `${d ? Math.min(100, (x / d) * 100) : 0}%`;
+    if (seek) {
+      if (!dragging) seek.value = String(t);
+      seek.style.setProperty("--p", pc(t));
+      seek.style.setProperty("--b", pc(b));
+    }
+    stage.style.setProperty("--q", String(d ? Math.min(1, t / d) : 0));
+    if (timeEl) timeEl.textContent = `${clock(t)} / ${clock(d)}`;
+  };
+  const shown = () => stage.classList.contains("on");
+  const hideUi = () => {
+    if (v.paused || dragging) return;
+    cls("on", false);
+    lift(-4);
+  };
+  /** Bring the controls up; they go again after 3 s of playing, never while paused. */
+  const showUi = (stay?: boolean) => {
+    cls("on", true);
+    lift(-5);
+    window.clearTimeout(hideT);
+    if (!stay) hideT = window.setTimeout(hideUi, 3000);
+  };
+  /** An overlay that owns the picture (end, error, tap-to-play) hides the controls. */
+  const over = () => cls("over", !!((end && !end.hidden) || (errBox && !errBox.hidden) || (big && !big.hidden)));
+  const unwait = () => {
+    window.clearTimeout(waitT);
+    if (waitBox) waitBox.hidden = true;
+    cls("stall", false);
+  };
+  const fail = () => {
+    if (errBox) errBox.hidden = false;
+    if (load) load.hidden = true;
+    unwait();
+    over();
+  };
+  const markPlay = () => {
+    cls("paused", v.paused);
+    pp?.setAttribute("aria-label", v.paused ? "चलाएँ" : "रोकें");
+    if (v.paused && firstFrame) showUi(true);
+    else if (shown()) showUi();
+  };
+  const toggle = () => {
+    if (v.paused || v.ended) v.play().catch(() => {});
+    else v.pause();
+  };
+  const nudges = [$("nl"), $("nr")];
+  const jump = (dt: number) => {
+    v.currentTime = Math.max(0, Math.min(dur() - 0.3, (v.currentTime || 0) + dt));
+    const el = nudges[dt < 0 ? 0 : 1];
+    if (el) {
+      el.classList.remove("go");
+      void el.offsetWidth; // restart the animation on a second skip
+      el.classList.add("go");
+    }
+    paint();
+  };
+
+  v.addEventListener("play", markPlay);
+  v.addEventListener("pause", markPlay);
+  v.addEventListener("pause", unwait);
+  v.addEventListener("canplay", unwait);
+  v.addEventListener("progress", paint);
+  v.addEventListener("seeked", paint);
+  v.addEventListener("timeupdate", () => {
+    paint();
+    if (!v.seeking && v.readyState > 2 && waitBox && !waitBox.hidden) unwait();
+  });
+  v.addEventListener("durationchange", () => {
+    if (seek && isFinite(v.duration)) seek.max = String(v.duration);
+  });
+  // "HD" beside the clock once the picture is 720p or better
+  v.addEventListener("resize", () => {
+    if (hdEl) hdEl.hidden = v.videoHeight < 1280;
+  });
+  pp?.addEventListener("click", toggle);
+  $("back")?.addEventListener("click", () => (jump(-10), showUi()));
+  $("fwd")?.addEventListener("click", () => (jump(10), showUi()));
+  muteBtn?.addEventListener("click", () => {
+    if (v.muted || !v.volume) soundOn(unmutedAt === undefined);
+    else v.muted = true;
+    showUi();
+  });
+  if (seek) {
+    const commit = () => {
+      if (!dragging) return;
+      dragging = false;
+      v.currentTime = Number(seek.value);
+      showUi();
+    };
+    seek.addEventListener("input", () => {
+      dragging = true;
+      showUi(true);
+      paint();
+    });
+    seek.addEventListener("change", commit);
+    seek.addEventListener("pointerup", commit);
+    seek.addEventListener("touchend", commit);
+  }
+  const ticks = $("ticks");
+  if (ticks && C.duration)
+    C.chapters.forEach((c) => {
+      if (c.t <= 0) return;
+      const i = document.createElement("i");
+      i.style.left = `${(c.t / C.duration) * 100}%`;
+      ticks.appendChild(i);
+    });
+
+  /* full screen: the page's own frame where the browser allows it (Android,
+     desktop), else the iPhone's own player */
+  type FsDoc = Document & { webkitFullscreenElement?: Element | null; webkitExitFullscreen?: () => void };
+  const doc = document as FsDoc;
+  const st = stage as HTMLElement & { webkitRequestFullscreen?: () => void };
+  const vv = v as HTMLVideoElement & { webkitEnterFullscreen?: () => void };
+  const isFs = () => !!(document.fullscreenElement || doc.webkitFullscreenElement);
+  const fsChange = () => cls("fs", isFs());
+  document.addEventListener("fullscreenchange", fsChange);
+  document.addEventListener("webkitfullscreenchange", fsChange);
+  if (fsBtn) {
+    if (!st.requestFullscreen && !st.webkitRequestFullscreen && !vv.webkitEnterFullscreen) fsBtn.hidden = true;
+    fsBtn.addEventListener("click", () => {
+      if (isFs()) {
+        if (document.exitFullscreen) document.exitFullscreen().catch(() => {});
+        else if (doc.webkitExitFullscreen) doc.webkitExitFullscreen();
+      } else if (st.requestFullscreen) st.requestFullscreen({ navigationUI: "hide" }).catch(() => {});
+      else if (st.webkitRequestFullscreen) st.webkitRequestFullscreen();
+      else if (vv.webkitEnterFullscreen) vv.webkitEnterFullscreen();
+      showUi();
+    });
+  }
+
+  /* A tap on the picture: while the film has never had sound, it turns the
+     sound on (people tap the film itself, not only the button). After that it
+     shows or hides the controls, and two quick taps on the left or right third
+     skip 10 s back or forward. Buttons and the bar handle their own taps. */
+  let lastTap = 0;
+  let lastSide = 0;
+  let tapT = 0;
+  stage.addEventListener("click", (e) => {
+    const t = e.target as HTMLElement;
+    if (stage.classList.contains("over") || (t && t.closest && t.closest("button,a,input"))) return;
+    if (v.muted && unmutedAt === undefined && !probing) {
+      soundOn(true);
+      if (firstFrame) showUi();
+      return;
+    }
+    if (!firstFrame) return;
+    const r = stage.getBoundingClientRect();
+    const x = (e.clientX - r.left) / r.width;
+    const side = x < 0.35 ? -1 : x > 0.65 ? 1 : 0;
+    const at = now();
+    window.clearTimeout(tapT);
+    if (side && side === lastSide && at - lastTap < 320) {
+      lastTap = at;
+      jump(side * 10);
+      return;
+    }
+    lastTap = at;
+    lastSide = side;
+    const act = () => (shown() ? hideUi() : showUi());
+    // a side tap waits a moment in case it is the first of two
+    if (side) tapT = window.setTimeout(act, 250);
+    else act();
+  });
+  document.addEventListener("keydown", (e) => {
+    if (e.ctrlKey || e.metaKey || e.altKey) return;
+    const t = e.target as HTMLElement;
+    const inCtl = !!(t && t.closest && t.closest("button,a,input"));
+    const k = e.key;
+    if ((k === " " || k === "k") && !inCtl) {
+      e.preventDefault();
+      toggle();
+      showUi();
+    } else if ((k === "ArrowLeft" || k === "ArrowRight") && t !== seek) {
+      e.preventDefault();
+      jump(k === "ArrowLeft" ? -10 : 10);
+      showUi();
+    } else if (k === "m") muteBtn?.click();
+    else if (k === "f") fsBtn?.click();
+  });
+
+  /* ── where he left off (the full film only: 26 minutes is watched in pieces) ── */
+  const posKey = `mdg_pos_${C.film}`;
+  let saved = 0;
+  let lastSave = 0;
+  try {
+    if (C.kind === "full") saved = Number(localStorage.getItem(posKey)) || 0;
+  } catch {
+    /* storage blocked: no resume */
+  }
+  const forget = () => {
+    try {
+      localStorage.removeItem(posKey);
+    } catch {
+      /* storage blocked */
+    }
+  };
+  v.addEventListener("timeupdate", () => {
+    if (C.kind !== "full" || !firstFrame) return;
+    const t = v.currentTime;
+    if (Math.abs(t - lastSave) < 5) return;
+    lastSave = t;
+    try {
+      if (t > 20 && t < dur() - 30) localStorage.setItem(posKey, String(Math.floor(t)));
+    } catch {
+      /* storage blocked */
+    }
+  });
+  const offerResume = () => {
+    if (!resume || saved < 30 || saved > dur() - 30 || deep) return;
+    const b = resume.querySelector("b");
+    if (b) b.textContent = clock(saved);
+    resume.hidden = false;
+    window.setTimeout(() => (resume.hidden = true), 12000);
+  };
+  resume?.addEventListener("click", () => {
+    resume.hidden = true;
+    v.currentTime = saved;
+    if (v.muted && unmutedAt === undefined) soundOn(false);
+    else v.play().catch(() => {});
+  });
+  window.setTimeout(() => {
+    if (!firstFrame && loadMsg) loadMsg.textContent = "इंटरनेट धीमा है, बस थोड़ी देर और…";
+  }, 9000);
+
   /* ── watched ranges ──────────────────────────────────────────────────── */
   v.addEventListener("timeupdate", () => {
     markChapter();
@@ -295,6 +554,9 @@ interface NetInfo {
     startupMs = Math.max(0, Math.round(now() - clock0));
     // the view was already opened while the film was loading: report the wait now
     if (started) beat();
+    if (load) load.hidden = true;
+    cls("live", true);
+    offerResume();
   };
   v.addEventListener("playing", () => {
     if (stallAt !== null) {
@@ -306,17 +568,30 @@ interface NetInfo {
     if (!cur && !v.seeking) cur = [v.currentTime, v.currentTime];
     if (big) big.hidden = true;
     if (end) end.hidden = true;
+    over();
+    unwait();
   });
   v.addEventListener("waiting", () => {
     // a stall after the first frame; waiting caused by a seek is not a rebuffer
     if (firstFrame && !v.seeking && stallAt === null) {
       rebuffers++;
       stallAt = now();
+      onStall();
+    }
+    if (firstFrame) {
+      clearTimeout(waitT);
+      waitT = setTimeout(() => {
+        if (waitMsg) waitMsg.textContent = navigator.onLine === false ? "इंटरनेट बंद है, जुड़ते ही चलेगी" : "रुकिए…";
+        if (waitBox) waitBox.hidden = false;
+        cls("stall", true);
+      }, 700);
     }
   });
   v.addEventListener("ended", () => {
     ended = true;
     if (end) end.hidden = false;
+    over();
+    forget();
     flushEnd();
   });
   addEventListener("pagehide", flushEnd);
@@ -326,24 +601,28 @@ interface NetInfo {
 
   /* ── captions ────────────────────────────────────────────────────────── */
   const track = v.textTracks[0];
+  const ccBtns = document.querySelectorAll<HTMLButtonElement>("[data-cc]");
   const captions = (on: boolean) => {
     if (track) track.mode = on ? "showing" : "hidden";
-    cc?.setAttribute("aria-pressed", String(on));
+    ccBtns.forEach((b) => b.setAttribute("aria-pressed", String((b.dataset.cc === "1") === on)));
   };
-  // lift every cue above the native control bar
+  // keep every cue clear of the film's own words low in the frame, and a line
+  // higher while the controls are up
   const trackEl = v.querySelector("track");
-  const lift = () => {
+  let cueLine = -4;
+  const lift = (n?: number) => {
+    if (n !== undefined) cueLine = n;
     const cues = track && track.cues;
     if (!cues) return;
     for (let i = 0; i < cues.length; i++) {
       const c = cues[i] as VTTCue;
-      if ("line" in c) c.line = -4;
+      if ("line" in c) c.line = cueLine;
     }
   };
-  trackEl?.addEventListener("load", lift);
+  trackEl?.addEventListener("load", () => lift());
   lift();
   captions(true);
-  cc?.addEventListener("click", () => captions(track ? track.mode !== "showing" : false));
+  ccBtns.forEach((b) => b.addEventListener("click", () => captions(b.dataset.cc === "1")));
 
   /* ── sound ───────────────────────────────────────────────────────────── */
   const soundOn = (fromTap: boolean) => {
@@ -364,18 +643,12 @@ interface NetInfo {
   /* the start-up probe for sound flips `muted` itself; that is not the viewer */
   let probing = false;
   v.addEventListener("volumechange", () => {
+    cls("mut", v.muted || !v.volume);
     if (probing) return;
     if (!v.muted && v.volume > 0) soundOn(false);
-    else if (snd && firstFrame) snd.hidden = false;
-  });
-
-  /* While muted, a tap anywhere on the picture turns the sound on, not only the
-     button: people tap the film itself. The bottom 64 px stay the browser's own
-     control bar, and buttons over the picture handle their own taps. */
-  $("stage")?.addEventListener("click", (e) => {
-    if (!v.muted || unmutedAt !== undefined || e.target !== v) return;
-    if (e.clientY > v.getBoundingClientRect().bottom - 64) return;
-    soundOn(true);
+    // the gold "sound on" pill is for a film that has never had sound; a viewer
+    // who muted it himself only sees the speaker icon change
+    else if (snd && firstFrame && unmutedAt === undefined) snd.hidden = false;
   });
 
   /* ── speed ───────────────────────────────────────────────────────────── */
@@ -401,11 +674,15 @@ interface NetInfo {
     if (chOn >= 0) chBtns[chOn].removeAttribute("aria-current");
     if (i >= 0) chBtns[i].setAttribute("aria-current", "true");
     chOn = i;
+    const ch = C.chapters[i];
+    // the name only: the film's own cards number its acts differently
+    if (chapEl) chapEl.textContent = ch && i > 0 ? ch.title : "";
   };
   chBtns.forEach((b) =>
     b.addEventListener("click", () => {
       v.currentTime = Number(b.dataset.t) || 0;
-      v.play().catch(() => {});
+      if (v.muted && unmutedAt === undefined) soundOn(false);
+      else v.play().catch(() => {});
       cta("chapter");
       window.scrollTo({ top: 0, behavior: "smooth" });
     }),
@@ -415,11 +692,14 @@ interface NetInfo {
   $("replay")?.addEventListener("click", () => {
     cta("replay");
     ended = false;
+    if (end) end.hidden = true;
+    over();
     v.currentTime = 0;
     v.play().catch(() => {});
   });
-  fullLink?.addEventListener("click", () => cta("full"));
-  $("reg")?.addEventListener("click", () => cta("register"));
+  fullLinks.forEach((a) => a.addEventListener("click", () => cta("full")));
+  document.querySelectorAll("a[data-reg]").forEach((a) => a.addEventListener("click", () => cta("register")));
+  $("retry")?.addEventListener("click", () => location.reload());
   document.querySelectorAll("a[data-wa]").forEach((a) =>
     a.addEventListener("click", () => {
       cta("share");
@@ -446,6 +726,8 @@ interface NetInfo {
           outcome("blocked");
           if (snd) snd.hidden = true;
           if (big) big.hidden = false;
+          if (load) load.hidden = true;
+          over();
         } else outcome("muted");
       },
     );
@@ -473,6 +755,8 @@ interface NetInfo {
   big?.addEventListener("click", () => {
     // a tap lets the browser play with sound, so start the film properly
     big.hidden = true;
+    over();
+    if (load && !firstFrame) load.hidden = false;
     clock0 = now();
     unmutedAt = r2(v.currentTime || 0);
     captions(false);
@@ -481,6 +765,47 @@ interface NetInfo {
     v.play().catch(() => {});
   });
   if (snd) snd.hidden = false;
+  v.addEventListener("error", () =>
+    // hls.js recovers most media errors by itself: only a lasting one is shown
+    window.setTimeout(() => {
+      if (v.error && v.paused) fail();
+    }, 2000),
+  );
+
+  /* ── picture quality: sharp from the first frame ─────────────────────────
+     The film starts on the 720p rung wherever the network can carry it (it
+     used to start on 540p and sharpen after the first 4 s segment, which read
+     as "it plays blurry"). A slower link starts on 540p or 360p. Once playing,
+     the automatic choice is held one rung below the start and only lets go of
+     that after the film has actually stalled. Chrome's "3g" also means a slow
+     round trip on a fast link (common on Indian mobile data), so the measured
+     speed decides wherever the browser reports one. */
+  const lite = !!net.saveData || /(^|-)2g$/.test(net.effectiveType || "");
+  const dl = typeof net.downlink === "number" && net.downlink > 0 ? net.downlink : 0;
+  const tier = lite ? 640 : dl ? (dl >= 2 ? 1280 : dl >= 1 ? 960 : 640) : net.effectiveType === "3g" ? 960 : 1280;
+  let onStall = () => {};
+  const qBtns = document.querySelectorAll<HTMLButtonElement>("[data-q]");
+  let qPref = "auto";
+  try {
+    qPref = localStorage.getItem("mdg_q") || "auto";
+  } catch {
+    /* storage blocked */
+  }
+  let applyQ: (q: string) => void = () => {};
+  const markQ = () => qBtns.forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.q === qPref)));
+  qBtns.forEach((b) =>
+    b.addEventListener("click", () => {
+      qPref = b.dataset.q || "auto";
+      try {
+        localStorage.setItem("mdg_q", qPref);
+      } catch {
+        /* storage blocked */
+      }
+      markQ();
+      applyQ(qPref);
+    }),
+  );
+  markQ();
 
   const seekDeep = () => {
     if (deep && deep < C.duration) v.currentTime = deep;
@@ -488,20 +813,24 @@ interface NetInfo {
   const nativeHls = !!v.canPlayType("application/vnd.apple.mpegurl");
   const mse = !!(window.MediaSource || (window as unknown as { ManagedMediaSource?: unknown }).ManagedMediaSource);
   const phone = matchMedia("(pointer: coarse)").matches;
-  const slow = !!net.saveData || /(^|-)2g$/.test(net.effectiveType || "");
-  // Android Chrome says it plays HLS itself, but its own player climbs to the
-  // 1080p rung (about twice the data of 720p) and cannot be held below it. So a
-  // phone with MediaSource goes through hls.js, which can. iPhones have no
-  // MediaSource and keep Safari's player. On a slow link (Chrome reports up to
-  // ~700 kbps as "3g") or data saver the browser's own player is kept: it
-  // already picks a small rung there, and the one-time hls.js download (about
-  // 120 kB) would push the first frame back by seconds (9 s -> 15 s measured at
-  // 250 kbps).
-  const viaHlsJs = mse && (!nativeHls || (phone && !slow && net.effectiveType !== "3g" && !!window.MediaSource));
+  const apple = /Apple/.test(navigator.vendor || "");
+  const P = C.playlists;
+  /** Safari starts on the first rung listed: give it the list for this network. */
+  const nativeSrc = () =>
+    media(nativeHls ? (P ? (tier === 640 ? P.lite : tier === 960 ? P.sd : P.hd) : C.hls) : C.mp4);
+  // Chrome (desktop and Android) says it plays HLS itself, but its own player
+  // opens on the smallest rung whatever the list says (240p measured) and on
+  // Android climbs to 1080p, about twice the data of 720p. So every browser
+  // with MediaSource goes through hls.js, which starts where it is told and can
+  // be held below 1080p. Safari keeps its own player, which honours the list.
+  // Data saver and 2G keep the browser's player too: there the one-time hls.js
+  // download (about 120 kB) would push the first frame back by seconds
+  // (9 s -> 15 s measured at 250 kbps).
+  const viaHlsJs = mse && !lite && !(nativeHls && apple);
   /** The browser's own player: native HLS where it has it, else the 540p mp4. */
   const plain = () => {
     v.addEventListener("loadedmetadata", seekDeep, { once: true });
-    v.src = media(nativeHls ? C.hls : C.mp4);
+    v.src = nativeSrc();
     tryPlay();
   };
   if (!viaHlsJs) plain();
@@ -511,15 +840,35 @@ interface NetInfo {
     s.onload = () => {
       const Hls = (window as unknown as { Hls?: typeof HlsType }).Hls;
       if (!Hls || !Hls.isSupported()) return plain();
-      const hls = new Hls({ capLevelToPlayerSize: true, autoStartLoad: false });
+      // until it has measured the link itself, hls.js assumes what the browser said
+      const est = dl ? dl * 1e6 : tier === 1280 ? 3e6 : 1e6;
+      const hls = new Hls({ capLevelToPlayerSize: true, autoStartLoad: false, abrEwmaDefaultEstimate: est });
       hls.on(Hls.Events.MANIFEST_PARSED, () => {
         // phones never fetch the 1080p rung: the dealer's data matters more
         if (phone) {
           for (let i = hls.levels.length - 1; i >= 0; i--) if (hls.levels[i].height > 1280) hls.removeLevel(i);
         }
-        const want = slow ? 426 : net.effectiveType === "3g" ? 640 : 960;
-        const at = hls.levels.findIndex((l) => l.height === want);
-        if (at >= 0) hls.startLevel = at;
+        const at = (h: number) => hls.levels.findIndex((l) => l.height === h);
+        const floor = (h: number) => {
+          const l = hls.levels[at(h)];
+          hls.config.minAutoBitrate = l ? l.maxBitrate : 0;
+        };
+        const want = qPref === "lite" ? 640 : qPref === "hd" ? 1280 : tier;
+        if (at(want) >= 0) hls.startLevel = at(want);
+        if (qPref !== "auto" && at(want) >= 0) hls.loadLevel = at(want);
+        // held one rung below the start (360p at the least) until a real stall,
+        // and each stall lowers that one step more
+        let low = tier === 1280 ? 960 : 640;
+        floor(low);
+        onStall = () => {
+          low = low > 640 ? 640 : 0;
+          floor(low);
+        };
+        applyQ = (q) => {
+          hls.nextLevel = q === "hd" ? at(1280) : q === "lite" ? at(640) : -1;
+        };
+        const qRow = $("qual");
+        if (qRow) qRow.hidden = false;
         hls.startLoad(deep && deep < C.duration ? deep : -1);
       });
       hls.on(Hls.Events.ERROR, (_e, d) => {
@@ -528,7 +877,7 @@ interface NetInfo {
         else if (d.type === Hls.ErrorTypes.MEDIA_ERROR) hls.recoverMediaError();
         else {
           hls.destroy();
-          v.src = media(nativeHls ? C.hls : C.mp4);
+          v.src = nativeSrc();
           v.play().catch(() => {});
         }
       });
