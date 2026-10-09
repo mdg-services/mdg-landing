@@ -54,3 +54,20 @@ export const callbackSchema = z.object({
 });
 
 export type CallbackData = z.infer<typeof callbackSchema>;
+
+/**
+ * What every call-back form sends beside the request itself, so a person can
+ * be told from a script. Neither field reaches the email.
+ */
+export const callbackGuardSchema = z.object({
+  /**
+   * A box no person sees. Anything in it came from a program that fills every
+   * box it finds. The assistant's fallback has no such box and leaves it out.
+   */
+  website: z.unknown().optional(),
+  /**
+   * Milliseconds from the page opening to the form being sent, timed on the
+   * visitor's own device, so a phone whose clock is wrong is timed correctly.
+   */
+  elapsed: z.number().nonnegative(),
+});

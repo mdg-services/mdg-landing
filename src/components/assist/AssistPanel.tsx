@@ -410,6 +410,9 @@ export default function AssistPanel({
         phone: values.mobile,
         outlet: values.place,
         message: "Callback requested from the assistant.",
+        // How long the page has been open; the server drops anything sent
+        // faster than a person could. This form has no hidden box to send.
+        elapsed: Math.round(performance.now()),
       }),
     });
     const body = (await res.json().catch(() => ({}))) as { ok?: boolean };

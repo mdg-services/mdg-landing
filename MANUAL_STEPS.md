@@ -37,3 +37,21 @@ few things I can't (or shouldn't) do without you:
 5. **Optional — photography & analytics.** The design is self-contained (SVG/CSS,
    no stock images — see `ASSETS.md`). No analytics/tag manager is wired in; add
    GA4 / Plausible to `index.html` if you want traffic data.
+
+6. **Add the firewall limit on the call-back form (Vercel dashboard).** The
+   call-back endpoint (`/api/callback`) emails the team inbox once per request.
+   The code already drops what a script fills in, refuses posts from other
+   sites, ignores the same number sent twice in 10 minutes, and turns one
+   address away after 5 sends in 10 minutes. That last count lives in each
+   server copy's memory, and Vercel runs several copies that share nothing, so
+   it slows a flood rather than capping it. The exact cap is a firewall rule:
+   - **Vercel → mdg-landing → Firewall → Configure → + New Rule.**
+   - Name: `callback per IP`. If: **Request Path** equals `/api/callback`
+     **and** **Method** equals `POST`. Then: **Rate Limit**.
+   - **Fixed Window**, Time Window **600 s** (10 minutes, the most Hobby and
+     Pro allow), Request Limit **5**, key **IP**, action **Default (429)**.
+   - **Save Rule → Review Changes → Publish.** Hobby allows one rate-limit rule
+     per project; this should be it.
+   - The firewall counts every post, refused ones included, and counts each
+     region separately. A visitor it turns away sees the form's "could not
+     send" message with the toll-free number beside it.

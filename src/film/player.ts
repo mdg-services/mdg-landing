@@ -752,7 +752,18 @@ interface NetInfo {
       fetch("/api/callback", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, phone, outlet: val("outlet"), message: `फ़िल्म: ${C.title}`, source: "film", ref: tag }),
+        // the hidden box and the time since the page opened: the server
+        // quietly drops what a script filled in
+        body: JSON.stringify({
+          name,
+          phone,
+          outlet: val("outlet"),
+          message: `फ़िल्म: ${C.title}`,
+          source: "film",
+          ref: tag,
+          website: val("website"),
+          elapsed: Math.round(now()),
+        }),
       })
         .then((r) => {
           if (!r.ok) throw new Error(String(r.status));

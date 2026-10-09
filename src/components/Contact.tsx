@@ -21,6 +21,10 @@ export default function Contact() {
       phone: String(fd.get("phone") ?? "").trim(),
       outlet: String(fd.get("outlet") ?? "").trim(),
       message: String(fd.get("message") ?? "").trim(),
+      // The hidden box, and how long the page has been open: the server
+      // quietly drops a request a script filled in.
+      website: String(fd.get("website") ?? ""),
+      elapsed: Math.round(performance.now()),
     };
 
     setStatus("submitting");
@@ -160,6 +164,12 @@ export default function Contact() {
                         required
                         className="sm:col-span-2"
                       />
+                    </div>
+                    {/* A box no person sees or can reach. Programs that fill in
+                        every box they find fill this one too. Not displayed,
+                        so the browser's autofill leaves it empty as well. */}
+                    <div hidden>
+                      <input name="website" tabIndex={-1} autoComplete="off" />
                     </div>
                     {status === "error" && (
                       <div role="alert" className="mt-5 flex items-start gap-3 rounded-xl border border-gold-300 bg-gold-50 p-4">
