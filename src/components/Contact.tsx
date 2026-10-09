@@ -1,7 +1,8 @@
 import { useState, type FormEvent } from "react";
 import Icon from "./Icon";
 import CallUs from "./CallUs";
-import { requestAssistCall } from "../lib/assistCall";
+import { requestCallChoice } from "../lib/assistCall";
+import { TOLL_FREE } from "../lib/tollFree";
 import { Reveal } from "../lib/motion";
 import { useT } from "../i18n";
 
@@ -68,13 +69,13 @@ export default function Contact() {
 
         {/* phone hero */}
         <Reveal delay={0.1}>
-          {/* This card used to be the toll-free number, set enormous. The call
-              now happens in the tab, so the thing set enormous is the act of
-              calling rather than ten digits somebody has to copy into a
-              handset. Same card, same weight on the page. */}
+          {/* This card used to be the toll-free number, set enormous. The act
+              of calling is what is set enormous now; the tap opens the call
+              choice — the toll-free line or the assistant in the tab — and
+              the number sits under the heading for anyone dialling by hand. */}
           <button
             type="button"
-            onClick={requestAssistCall}
+            onClick={requestCallChoice}
             aria-label={t.ui.callUsAria}
             className="group mt-14 block w-full rounded-3xl border border-ink-hairline bg-navy-950 p-8 text-left text-white transition-shadow duration-300 hover:shadow-navy md:mt-16 md:p-12"
           >
@@ -102,6 +103,9 @@ export default function Contact() {
               >
                 {t.contact.callHeading}
               </span>
+            </div>
+            <div className="relative mt-4 whitespace-nowrap text-[22px] font-semibold tracking-tight text-gold-300 md:text-[28px]">
+              {TOLL_FREE.display}
             </div>
             <div className="relative mt-6 inline-flex items-center gap-2 font-mono text-[12px] uppercase tracking-[0.18em] text-gold-300">
               {t.contact.tapToCall}{" "}

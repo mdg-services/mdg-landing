@@ -43,6 +43,14 @@ export const callbackSchema = z.object({
     .regex(/^[0-9+\s-]{10,15}$/, "Enter a valid phone number"),
   outlet: optionalText(160),
   message: optionalText(1000),
+  /** Where the form was filled in. The homepage never sends it; the film pages do. */
+  source: z.enum(["website", "film"]).default("website"),
+  /** The film page's share code (`?r=`): which message or link brought this dealer. */
+  ref: z
+    .string()
+    .regex(/^[A-Za-z0-9_-]{1,32}$/)
+    .optional()
+    .catch(undefined),
 });
 
 export type CallbackData = z.infer<typeof callbackSchema>;

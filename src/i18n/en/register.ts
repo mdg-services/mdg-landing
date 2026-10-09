@@ -24,6 +24,10 @@ export const register = {
   intro:
     "A few details and you're in. Pick the site that fits your pump. We confirm the services and lock your pricing in writing before we begin.",
 
+  /** Under the intro: the app's sign-in screen opens this same form. */
+  appLead: "Prefer the app? Download Dealer Kavach from Google Play and register from inside the app.",
+  appLink: "Get it on Google Play",
+
   /* ── the form ── */
   sectionAria: "Enrolment form",
   formAria: "Dealer enrolment",

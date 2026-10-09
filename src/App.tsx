@@ -18,6 +18,7 @@ import FAQ from "./components/FAQ";
 import Footer from "./components/Footer";
 import Register from "./components/Register";
 import AssistWidget from "./components/assist/AssistWidget";
+import CallSheet from "./components/CallSheet";
 
 function Landing() {
   const { scrollYProgress } = useScroll();
@@ -67,6 +68,8 @@ export default function App() {
           its launcher must sit above the navbar (z-50) and the scroll
           progress bar (z-60). */}
       <AssistWidget />
+      {/* The floating handset and the call choice behind every "Call us". */}
+      <CallSheet />
     </>
   );
 }

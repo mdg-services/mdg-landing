@@ -7,7 +7,7 @@ import CallUs from "./CallUs";
 import Footer from "./Footer";
 import { Reveal } from "../lib/motion";
 import { EASE } from "../lib/anim";
-import { SITE_TYPES } from "../data/content";
+import { BRAND, SITE_TYPES } from "../data/content";
 import { useT } from "../i18n";
 import { en } from "../i18n/en";
 
@@ -107,6 +107,20 @@ export default function Register() {
           <Reveal delay={0.12}>
             <p className="mt-5 max-w-2xl text-[16px] leading-[1.6] text-navy-100 sm:text-[18px]">
               {t.register.intro}
+            </p>
+          </Reveal>
+          <Reveal delay={0.16}>
+            <p className="mt-6 max-w-2xl text-[15px] leading-[1.6] text-navy-200 sm:text-[16px]">
+              {t.register.appLead}{" "}
+              <a
+                href={BRAND.playStore}
+                target="_blank"
+                rel="noopener"
+                aria-label={t.ui.getAppAria}
+                className="whitespace-nowrap font-semibold text-gold-300 underline decoration-gold-300/40 underline-offset-4 hover:decoration-gold-300"
+              >
+                {t.register.appLink} →
+              </a>
             </p>
           </Reveal>
         </div>

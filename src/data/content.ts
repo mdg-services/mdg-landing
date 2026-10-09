@@ -24,6 +24,8 @@ export const BRAND = {
      it belongs behind that component, not beside it. */
   site: "mdgservices.in",
   email: "hello@mdgservices.in",
+  /** The Dealer Kavach app. Its sign-in screen opens the same enrolment form as /register. */
+  playStore: "https://play.google.com/store/apps/details?id=in.mdgservices.dealerkavach",
   since: 2021,
   /** A brand line, not a sentence: it stays in English in both languages. */
   tagline: "Fueling Success",

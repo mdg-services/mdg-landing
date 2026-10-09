@@ -31,3 +31,21 @@ export function onAssistCallRequested(handler: () => void): () => void {
   window.addEventListener(ASSIST_CALL_EVENT, handler);
   return () => window.removeEventListener(ASSIST_CALL_EVENT, handler);
 }
+
+/**
+ * "Call us" asks first, and offers two calls: the toll-free line, which reaches
+ * the team on the visitor's own phone, and the assistant's call in the tab.
+ * Same event pattern as above, for the same reason: the sheet is tiny but the
+ * buttons that open it are all over the page.
+ */
+export const CALL_CHOICE_EVENT = "mdg:call-choice";
+
+export function requestCallChoice(): void {
+  if (typeof window === "undefined") return;
+  window.dispatchEvent(new CustomEvent(CALL_CHOICE_EVENT));
+}
+
+export function onCallChoiceRequested(handler: () => void): () => void {
+  window.addEventListener(CALL_CHOICE_EVENT, handler);
+  return () => window.removeEventListener(CALL_CHOICE_EVENT, handler);
+}

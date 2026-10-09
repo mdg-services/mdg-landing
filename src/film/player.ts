@@ -707,6 +707,49 @@ interface NetInfo {
     }),
   );
 
+  /* ── "we call you": straight to the team's inbox, with the share code ───── */
+  const cb = $<HTMLFormElement>("cb");
+  const cbMsg = $("cbmsg");
+  if (cb) {
+    const say = (t: string, ok: boolean) => {
+      if (!cbMsg) return;
+      cbMsg.textContent = t;
+      cbMsg.className = ok ? "msg ok" : "msg";
+    };
+    cb.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const f = new FormData(cb);
+      const val = (k: string) => String(f.get(k) || "").trim();
+      const name = val("name");
+      // spaces and dashes are how people type numbers; the inbox wants digits
+      const phone = val("phone").replace(/[\s-]/g, "");
+      if (!name || !/^\+?\d{10,13}$/.test(phone)) {
+        say("अपना नाम और 10 अंकों का मोबाइल नंबर भरें।", false);
+        return;
+      }
+      const btn = cb.querySelector("button");
+      if (btn) btn.disabled = true;
+      say("भेज रहे हैं…", true);
+      fetch("/api/callback", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, phone, outlet: val("outlet"), message: `फ़िल्म: ${C.title}`, source: "film", ref: tag }),
+      })
+        .then((r) => {
+          if (!r.ok) throw new Error(String(r.status));
+          cb.classList.add("done");
+          say("धन्यवाद! हमारी टीम जल्द ही आपको कॉल करेगी।", true);
+          // counted with the other ways of joining: the film's tally knows six kinds of tap
+          cta("register");
+          beat();
+        })
+        .catch(() => {
+          if (btn) btn.disabled = false;
+          say("भेज नहीं पाए। इंटरनेट देखकर फिर कोशिश करें।", false);
+        });
+    });
+  }
+
   /* ── playback ────────────────────────────────────────────────────────── */
   const deep = Number((location.hash.match(/t=(\d+(?:\.\d+)?)/) || [])[1]) || 0;
   /* Sound first: a browser lets a page play with sound when the visitor has

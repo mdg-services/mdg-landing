@@ -120,6 +120,7 @@ export function callbackNotificationEmail(
     timeStyle: "short",
     timeZone: "Asia/Kolkata",
   });
+  const fromFilm = data.source === "film";
 
   const rows: Array<[string, string]> = [
     ["Name", escapeHtml(data.name)],
@@ -129,17 +130,23 @@ export function callbackNotificationEmail(
     ],
     ["Pump / outlet", data.outlet ? escapeHtml(data.outlet) : "—"],
     ["Message", data.message ? escapeHtml(data.message) : "—"],
+    ["Came from", fromFilm ? "Film page" : "Website"],
+    ...(data.ref ? ([["Link code", escapeHtml(data.ref)]] as Array<[string, string]>) : []),
     ["Submitted", escapeHtml(when) + " IST"],
   ];
 
   const body = `
     ${heading("New callback request")}
-    ${paragraph(`Someone asked for a callback from the website. Call them back at the number below — they're expecting it within the hour.`)}
+    ${paragraph(
+      fromFilm
+        ? `Someone watched the Dealer Kavach film and asked for a call. Call them back at the number below — they're expecting it within the hour.`
+        : `Someone asked for a callback from the website. Call them back at the number below — they're expecting it within the hour.`
+    )}
     ${dataTable(rows)}
   `;
 
   return {
-    subject: `Callback request — ${data.name}`,
+    subject: `Callback request${fromFilm ? " (film)" : ""} — ${data.name}`,
     html: wrapEmail({ preheader: `${data.name} · ${data.phone}`, bodyHtml: body }),
     text: [
       "New callback request",
@@ -148,6 +155,8 @@ export function callbackNotificationEmail(
       `Phone:     ${data.phone}`,
       `Outlet:    ${data.outlet ?? "—"}`,
       `Message:   ${data.message ?? "—"}`,
+      `Came from: ${fromFilm ? "Film page" : "Website"}`,
+      ...(data.ref ? [`Link code: ${data.ref}`] : []),
       `Submitted: ${when} IST`,
     ].join("\n"),
   };

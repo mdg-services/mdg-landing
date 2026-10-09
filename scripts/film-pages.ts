@@ -44,6 +44,10 @@ export interface FilmPageFile {
 const SITE = "https://mdgservices.in";
 const MEDIA_ORIGIN = "https://mdg-films.s3.ap-south-1.amazonaws.com";
 const DEFAULT_BEACON = "https://api.mdgservices.in/api/v1/films/beacon";
+/** The Dealer Kavach app; its sign-in screen opens the same enrolment form as /register. */
+const PLAY_URL = "https://play.google.com/store/apps/details?id=in.mdgservices.dealerkavach";
+/** Same number as src/lib/tollFree.ts; this script is not part of the app, so it is not imported. */
+const TOLL_FREE_TEL = "tel:18008913496";
 
 /* What each page says about its film. Outcomes only. */
 const PAGES: Record<FilmId, { path: string; kind: "full" | "short"; desc: (fullMin: number) => string; og: string; soon: string }> = {
@@ -75,6 +79,11 @@ const ICON = {
   replay:
     '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 5V1L7 6l5 5V7a6 6 0 1 1-6 6H4a8 8 0 1 0 8-8z"/></svg>',
   wa: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5a9.5 9.5 0 0 0-8.2 14.3L2.5 21.5l4.8-1.3A9.5 9.5 0 1 0 12 2.5z" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M8.7 7.4c.3-.5.6-.5.9-.5h.6c.2 0 .5 0 .7.5l.9 2.1c.1.2.1.4 0 .6l-.6.8c-.2.2-.2.4 0 .7.6 1 1.4 1.8 2.4 2.4.3.2.5.1.7 0l.8-.9c.2-.2.4-.2.6-.1l2 1c.3.1.4.3.4.5 0 .6-.2 1.3-.7 1.7-.6.5-1.5.8-2.5.5-1.3-.4-3-1.2-4.4-2.7-1.5-1.5-2.3-3-2.6-4.2-.2-.9 0-1.8.4-2.4z" fill="currentColor"/></svg>',
+  phone:
+    '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.6 10.8a15.2 15.2 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25c1.1.37 2.3.57 3.6.57a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1z"/></svg>',
+  app: '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 2h10a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2zm0 3v14h10V5zm4 2h2v5h2l-3 3-3-3h2z"/></svg>',
+  form: '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 2h9l5 5v13a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2zm8 1.5V8h4.5zM7 12v2h10v-2zm0 4v2h7v-2z"/></svg>',
+  talk: '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4 3h16a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H9l-5 4v-4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2zm4 6.5a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zm4 0a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zm4 0a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3z"/></svg>',
 };
 
 const esc = (s: string) =>
@@ -213,7 +222,19 @@ ${foot}</main>
     `<a class="${cls}" data-wa href="https://wa.me/" target="_blank" rel="noopener">${ICON.wa}${text}</a>`;
   const fullBtn = (cls: string) =>
     `<a class="${cls}" data-full href="/film?from=short">${ICON.play}पूरी फ़िल्म देखें · ${a.fullMin} मिनट</a>`;
-  const regBtn = (cls: string) => `<a class="${cls}" data-reg href="/register">डीलर कवच से जुड़ें</a>`;
+  // "join" no longer leaves the page: it drops to the ways of joining below the picture
+  const regBtn = (cls: string) => `<a class="${cls}" data-reg href="#next">डीलर कवच से जुड़ें</a>`;
+  const way = (href: string, icon: string, title: string, sub: string, ext = false) =>
+    `<a class="way" data-reg href="${href}"${ext ? ' target="_blank" rel="noopener"' : ""}>${icon}<div><b>${title}</b><span>${sub}</span></div></a>`;
+  // The ways in, most-asked first. The callback goes to the team's inbox with the
+  // share code, so a dealer who came from a personal WhatsApp link is known by it.
+  const next = `<section class="next" id="next"><h2>आगे क्या करें?</h2>
+<form class="cb" id="cb" novalidate><b>हम आपको कॉल करें</b><p>नाम और मोबाइल नंबर छोड़िए — हमारी टीम आपको कॉल करेगी।</p>
+<input name="name" autocomplete="name" placeholder="आपका नाम" aria-label="आपका नाम" maxlength="120" required>
+<input name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="मोबाइल नंबर" aria-label="मोबाइल नंबर" maxlength="16" required>
+<input name="outlet" placeholder="पंप का नाम (ज़रूरी नहीं)" aria-label="पंप का नाम" maxlength="160">
+<button type="submit" class="btn pri">${ICON.phone}मुझे कॉल करें</button><p class="msg" id="cbmsg" role="status" aria-live="polite"></p></form>
+<div class="ways">${way(TOLL_FREE_TEL, ICON.phone, "टोल-फ़्री नंबर पर कॉल करें", "1800-891-3496 · सुबह 9 से रात 9, हर दिन")}${way(PLAY_URL, ICON.app, "ऐप डाउनलोड करें", "Google Play से डीलर कवच ऐप लें, उसी में रजिस्टर करें", true)}${way("/register?lang=hi", ICON.form, "वेबसाइट पर रजिस्टर करें", "दो मिनट का फ़ॉर्म")}${way("/?call=1&amp;lang=hi", ICON.talk, "वेबसाइट पर बात करें", "हमारे सहायक से बोलकर पूछें — फ़ोन की ज़रूरत नहीं")}</div></section>`;
   // the short ends on what the full film holds; the full film on the next step
   const endBody =
     p.kind === "short"
@@ -244,6 +265,7 @@ ${foot}</main>
 </div>
 <div class="act">${p.kind === "short" ? fullBtn("btn pri") : regBtn("btn pri")}${wa("btn wa", "भेजें")}</div>
 <div class="dock">${seg("रफ़्तार", "speed", [["data-rate", "1", "1x"], ["data-rate", "1.2", "1.2x"], ["data-rate", "1.5", "1.5x"]])}${seg("सबटाइटल", "subs", [["data-cc", "1", "चालू"], ["data-cc", "0", "बंद"]])}${seg("तस्वीर", "qual", [["data-q", "auto", "अपने-आप"], ["data-q", "hd", "HD"], ["data-q", "lite", "कम डेटा"]], true)}</div>
+${next}
 ${chapters}
 ${foot}</main>
 <script type="application/json" id="cfg">${JSON.stringify(cfg).replace(/</g, "\\u003c")}</script>

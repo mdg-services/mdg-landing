@@ -65,6 +65,17 @@ export default function Footer() {
                 <div className="mt-1 font-mono text-[11px] uppercase tracking-[0.18em] text-navy-300">{t.footer.hours}</div>
               </li>
               <li>
+                <a
+                  href={BRAND.playStore}
+                  target="_blank"
+                  rel="noopener"
+                  aria-label={t.ui.getAppAria}
+                  className="link-quiet text-navy-100 hover:text-white"
+                >
+                  {t.ui.getApp} · Google Play
+                </a>
+              </li>
+              <li>
                 <a href={`https://www.${BRAND.site}`} target="_blank" rel="noreferrer" className="link-quiet text-navy-100 hover:text-white">
                   {BRAND.site}
                 </a>

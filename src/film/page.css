@@ -153,6 +153,30 @@ video::cue{font:600 clamp(19px,5.4vw,28px)/1.4 var(--sys);color:var(--fg);backgr
 .seg button{flex:1;min-height:42px;padding:0 6px;border:0;border-radius:10px;background:transparent;color:var(--dim);
   font-size:15px;font-weight:700;font-variant-numeric:tabular-nums;white-space:nowrap}
 .seg button[aria-pressed=true]{background:var(--acc);color:var(--ink)}
+/* ── the next step: we call him, he talks to us now, the app, or the form ── */
+.next{padding:18px 16px 6px;scroll-margin-top:12px}
+.next h2{margin:0 0 12px;font-size:21px;font-weight:800}
+.cb{display:flex;flex-direction:column;gap:10px;padding:16px;border:1px solid var(--line);border-radius:16px;background:var(--panel)}
+.cb>b{font-size:19px}
+.cb>p{margin:0;color:var(--dim);font-size:15px;line-height:1.45}
+.cb input{width:100%;min-height:52px;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:var(--bg);
+  color:var(--fg);font:inherit;font-size:17px}
+.cb input::placeholder{color:#9799c9}
+.cb input:focus{outline:2px solid var(--acc);outline-offset:1px}
+.cb .btn{max-width:none}
+.cb .btn:disabled{opacity:.6}
+.cb .msg{margin:0;font-size:16px;font-weight:700;color:#ffb4a8}
+.cb .msg:empty{display:none}
+.cb .msg.ok{color:#8ee6b0}
+.cb.done input,.cb.done button{display:none}
+.ways{display:flex;flex-direction:column;gap:10px;margin-top:12px}
+.way{display:flex;align-items:center;gap:14px;min-height:68px;padding:12px 14px 12px 16px;border:1px solid var(--line);
+  border-radius:16px;text-decoration:none}
+.way>svg{flex:none;width:26px;height:26px;color:var(--acc)}
+.way div{flex:1;min-width:0}
+.way b{display:block;font-size:17px}
+.way span{display:block;margin-top:2px;color:var(--dim);font-size:14px;line-height:1.35}
+.way::after{content:"›";flex:none;font-size:28px;line-height:1;color:var(--dim)}
 .ch{padding:14px 16px 28px}
 .ch h2{margin:0 0 6px;font-size:15px;color:var(--dim);font-weight:600}
 .ch ol{list-style:none;margin:0;padding:0}
@@ -168,13 +192,13 @@ video::cue{font:600 clamp(19px,5.4vw,28px)/1.4 var(--sys);color:var(--fg);backgr
 .soon p{margin:0 0 10px;color:var(--dim);max-width:30ch}
 footer{padding:4px 16px 28px;color:var(--dim);font-size:14px}
 footer a{color:var(--dim)}
-@media (hover:hover){.seg button:hover,.ch button:hover{background:rgba(47,50,128,.55)}.ic:hover{background:rgba(247,247,255,.12)}}
+@media (hover:hover){.seg button:hover,.ch button:hover,.way:hover{background:rgba(47,50,128,.55)}.ic:hover{background:rgba(247,247,255,.12)}}
 @media (prefers-reduced-motion:reduce){.snd{animation:none}.load i::after{animation:none;width:100%;opacity:.6}
   .wait i{animation-duration:2.4s}.ui,.stage.on .ui{transition:none}}
 @media (min-width:600px){:root{--hd:64px}
   header p{display:block}
   .stage{width:var(--stage);border-radius:14px}
-  .act,.dock,.ch,footer{width:var(--stage);margin:0 auto;padding-left:0;padding-right:0}}
+  .act,.dock,.next,.ch,footer{width:var(--stage);margin:0 auto;padding-left:0;padding-right:0}}
 @media (min-width:980px){main{display:grid;grid-template-columns:var(--stage) 360px;gap:8px 28px;justify-content:center;
   align-items:start;padding-bottom:24px}
-  .stage{grid-row:1/6}.act,.dock,.ch,footer{width:auto;margin:0;grid-column:2}.act{padding-top:0}}
+  .stage{grid-row:1/7}.act,.dock,.next,.ch,footer{width:auto;margin:0;grid-column:2}.act{padding-top:0}}

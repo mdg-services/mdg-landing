@@ -22,6 +22,9 @@ export const register: typeof EN = {
   intro:
     "बस थोड़ी सी जानकारी, और आप शामिल। अपने पंप के हिसाब से साइट चुनिए। काम शुरू करने से पहले हम सेवाएँ तय कर देते हैं और क़ीमत लिखित में पक्की कर देते हैं।",
 
+  appLead: "ऐप से करना आसान लगे? Google Play से डीलर कवच ऐप डाउनलोड करें और ऐप में ही रजिस्टर करें।",
+  appLink: "Google Play पर देखें",
+
   sectionAria: "नामांकन फ़ॉर्म",
   formAria: "डीलर नामांकन",
   /* The gold asterisk sits between these two halves, and in Hindi the mark
