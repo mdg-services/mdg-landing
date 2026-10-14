@@ -13,6 +13,7 @@ import { filmFile, filmLang, langCookie } from "./middleware.ts";
 const ROUTES: Array<{ path: string; module: string; handler: string }> = [
   { path: "/api/enroll", module: "/server/enroll.ts", handler: "processEnrollment" },
   { path: "/api/callback", module: "/server/callback.ts", handler: "processCallback" },
+  { path: "/api/grievance", module: "/server/grievance.ts", handler: "processGrievance" },
 ];
 
 function devApi(): Plugin {

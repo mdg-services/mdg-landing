@@ -55,3 +55,38 @@ few things I can't (or shouldn't) do without you:
    - The firewall counts every post, refused ones included, and counts each
      region separately. A visitor it turns away sees the form's "could not
      send" message with the toll-free number beside it.
+
+7. **Link the website to the admin panel (Vercel environment variables).** The
+   grievance form (`/grievance`) and the "Register your pump" form (`/register`,
+   and the app's sign-up screen) now also hand each submission to the MDG API,
+   so they show on the admin panel's **Grievances** and **Registrations** pages.
+   The website's server does this, never the visitor's browser.
+   - Make the secret with `openssl rand -hex 32`. That prints 64 characters; the
+     backend refuses anything under 32.
+   - In **Vercel → mdg-landing → Settings → Environment Variables**, add
+     `WEBSITE_INTAKE_SECRET=<that value>` and tick **Production only**, leaving
+     Preview and Development unticked. It must be **exactly the same value** as
+     the `WEBSITE_INTAKE_SECRET` set on the backend (`mdg-backend`'s environment
+     on the server), or every hand-off is refused. Preview deployments get no
+     secret on purpose: they fail closed (`/grievance` shows "could not send")
+     instead of writing test submissions into the production admin list.
+   - Optional: `MDG_API_URL`. Leave it unset; it defaults to
+     `https://api.mdgservices.in/api/v1`. Set it only to point a preview
+     deployment at another backend.
+   - **Set both sides before the website goes live.** With no secret on the
+     website, `/grievance` shows "could not send" to everyone (a grievance that
+     cannot reach the admin panel must not look sent), while `/register` carries
+     on emailing the team inbox as before and the admin list simply stays empty.
+     When a registration does not reach the admin list for any reason, the
+     team's email says so in its subject (`[not on admin list]`) and at the top,
+     so it can be added by hand.
+   - The acknowledgement the reporter gets by email uses the same SMTP
+     credentials as step 1. Without them the grievance is still saved, and its
+     number is shown on screen with a note to write it down.
+   - Like step 6, `/api/grievance` is protected by in-memory limits (5 per
+     address and 3 per email address in 10 minutes) that slow a flood rather than
+     cap it, and `/api/enroll` by the same kind (5 per address and 3 per mobile
+     number in 10 minutes). The exact cap for grievances is the backend's own,
+     which counts across every server copy. A firewall rule here would be the
+     other exact cap, but Hobby allows only one rate-limit rule per project and
+     step 6 already uses it.

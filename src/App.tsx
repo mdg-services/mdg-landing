@@ -17,6 +17,7 @@ import Contact from "./components/Contact";
 import FAQ from "./components/FAQ";
 import Footer from "./components/Footer";
 import Register from "./components/Register";
+import Grievance from "./components/Grievance";
 import AssistWidget from "./components/assist/AssistWidget";
 import CallSheet from "./components/CallSheet";
 
@@ -63,6 +64,9 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Landing />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/grievance" element={<Grievance />} />
+        {/* Plural is what people type; same page. */}
+        <Route path="/grievances" element={<Grievance />} />
       </Routes>
       {/* Outside the routes on purpose: the assistant is on every page, and
           its launcher must sit above the navbar (z-50) and the scroll

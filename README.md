@@ -50,9 +50,12 @@ src/
 
 api/
   enroll.ts              # Vercel serverless fn — POST /api/enroll (thin adapter)
+  grievance.ts           # Vercel serverless fn — POST /api/grievance (thin adapter)
 server/                  # transport-agnostic backend core (Node)
   validation.ts          # Zod payload schema (single source of truth)
-  enroll.ts              # processEnrollment(): validate → fan out emails
+  enroll.ts              # processEnrollment(): validate → hand to the API → emails
+  grievance.ts           # processGrievance(): validate → hand to the API → two emails
+  intake.ts              # postIntake(): server-to-server hand-off to the MDG API
   mailer.ts              # Nodemailer transport + sendTemplate()
   emails/
     layout.ts            # one branded HTML shell + helpers
@@ -76,6 +79,26 @@ details to the MDG inbox and a welcome note to the dealer.
   `.env.example`. Without credentials the dev server logs emails instead of
   sending; production requires them. Switching providers touches only the env +
   `server/mailer.ts`.
+
+## Grievances and the admin panel
+
+`/grievance` (also `/grievances`) is where anyone can report a problem. The form
+posts to `POST /api/grievance`, which validates it, hands it to the MDG API
+(`POST /website/grievances`, so it shows on the admin panel's Grievances page and
+comes back with a number like `G-0007`), then sends two emails: an
+acknowledgement to the person, in the language they used, with that number, and
+the details to the team inbox. The acknowledgement never repeats what they wrote
+and promises no reply time.
+
+The `/register` enrolment form is handed to the API the same way
+(`POST /website/enrolments`, Registrations page), before its emails go out. That
+hand-off can never fail an enrolment; the team's inbox is the backstop, and when
+the hand-off failed the team's email says so at the top.
+
+Both hand-offs are server to server with `Authorization: Bearer
+$WEBSITE_INTAKE_SECRET` (`server/intake.ts`). The browser only ever talks to this
+site. `MDG_API_URL` (default `https://api.mdgservices.in/api/v1`) and the secret
+are listed in `.env.example`; see `MANUAL_STEPS.md` step 7.
 
 ## Theme
 

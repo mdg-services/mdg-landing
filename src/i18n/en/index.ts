@@ -16,6 +16,7 @@ import { contact } from "./contact";
 import { faq } from "./faq";
 import { footer } from "./footer";
 import { register } from "./register";
+import { grievance } from "./grievance";
 import { assist } from "./assist";
 
 /** Every visible string on mdgservices.in, in English. */
@@ -38,5 +39,6 @@ export const en = {
   faq,
   footer,
   register,
+  grievance,
   assist,
 };

@@ -8,6 +8,9 @@ import type { SiteType } from "../../data/content";
    they stay in Latin script in both languages: that is how a dealer sees them
    on every screen and on every piece of paper they already have. */
 export const register = {
+  /** The browser tab's title on this page. */
+  pageTitle: "Register your pump · MDG Services",
+
   /* ── the slim header ── */
   /** Used twice: after the "←" in the header, and on the success card. */
   backToHome: "Back to home",
@@ -66,6 +69,9 @@ export const register = {
   /** The enrolment API answers in English and its messages are generic, so a
       failed submit shows this instead of whatever the server said. */
   errorGeneric: "Something went wrong. Please try again.",
+  /** Instead of the line above when the form was refused for coming too often:
+      trying again at once would only be refused again. */
+  errorBusy: "We can't take another registration from you just now. Please try again later.",
   /** The failure note ends on a link that starts a call. */
   errorCallLink: "Or call us now",
   errorEnd: ".",

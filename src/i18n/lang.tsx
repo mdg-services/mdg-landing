@@ -7,6 +7,7 @@ import {
   useCallback,
   useContext,
   useEffect,
+  useLayoutEffect,
   useMemo,
   useState,
   type ReactNode,
@@ -148,8 +149,11 @@ export function LangProvider({ children }: { children: ReactNode }) {
 
   const t = DICTS[lang];
 
-  // Everything outside React that has to agree about the language.
-  useEffect(() => {
+  // Everything outside React that has to agree about the language. A layout
+  // effect, so it lands before the effects of the page below: a page that sets
+  // its own tab title (`usePageTitle`) then has the last word, on a first load
+  // as much as on a language change.
+  useLayoutEffect(() => {
     const root = document.documentElement;
     root.lang = lang;
     root.dataset.lang = lang; // Devanagari needs its own line-height and tracking

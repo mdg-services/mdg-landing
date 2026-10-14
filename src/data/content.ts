@@ -132,3 +132,12 @@ export const TRAINING_HREF = "https://guide.mdgservices.in";
 export const SITE_TYPES = ["Type A", "Type B"] as const;
 
 export type SiteType = (typeof SITE_TYPES)[number];
+
+/**
+ * What a grievance can be about. The value is what the grievance API is sent
+ * and what the admin panel groups by, so it never changes with the language;
+ * only the label a visitor reads does.
+ */
+export const GRIEVANCE_CATEGORIES = ["service", "app", "billing", "staff", "privacy", "other"] as const;
+
+export type GrievanceCategory = (typeof GRIEVANCE_CATEGORIES)[number];

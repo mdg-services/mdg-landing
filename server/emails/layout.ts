@@ -12,6 +12,8 @@ export const MAIL_BRAND = {
   phone: "1800-891-3496",
   phoneHref: "tel:18008913496",
   site: "mdgservices.in",
+  /** The published address, the same as `BRAND.email` on the site. Replies to a mail meant for the public go here. */
+  email: "hello@mdgservices.in",
   navy: "#2C2E80",
   navyDeep: "#1A1B4B",
   gold: "#F5A524",
@@ -56,14 +58,25 @@ export function button(label: string, href: string): string {
   )}</a>`;
 }
 
+/** The footer's first line, in the language the mail is written in. */
+const FOOTER_LINE = {
+  en: `${B.name} — ${B.tagline}. Your trusted partner for petrol pump businesses in India.`,
+  hi: `${B.name} — ${B.tagline}. भारत में पेट्रोल पंप चलाने वालों का भरोसेमंद साथी।`,
+};
+
 /**
  * Wrap body HTML in the branded shell.
- * `preheader` is the hidden inbox-preview line.
+ * `preheader` is the hidden inbox-preview line. `lang` is the language the
+ * mail is written in; it only changes the footer line and the page language.
  */
-export function wrapEmail(opts: { preheader?: string; bodyHtml: string }): string {
-  const { preheader = "", bodyHtml } = opts;
+export function wrapEmail(opts: {
+  preheader?: string;
+  bodyHtml: string;
+  lang?: "en" | "hi";
+}): string {
+  const { preheader = "", bodyHtml, lang = "en" } = opts;
   return `<!doctype html>
-<html lang="en">
+<html lang="${lang}">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
@@ -90,7 +103,7 @@ export function wrapEmail(opts: { preheader?: string; bodyHtml: string }): strin
         <!-- footer -->
         <tr><td style="padding:20px 28px 26px;border-top:1px solid ${B.line};background:#ffffff">
           <p style="margin:0 0 4px;font:400 13px/1.5 Arial,sans-serif;color:${B.muted}">
-            ${B.name} — ${B.tagline}. Your trusted partner for petrol pump businesses in India.
+            ${FOOTER_LINE[lang]}
           </p>
           <p style="margin:0;font:400 13px/1.5 Arial,sans-serif;color:${B.muted}">
             <a href="${B.phoneHref}" style="color:${B.navy};text-decoration:none;font-weight:600">${B.phone}</a>

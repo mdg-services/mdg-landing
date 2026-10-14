@@ -23,6 +23,12 @@ function getTransporter(): Transporter {
       port: env.smtpPort,
       secure: env.smtpSecure,
       auth: { user: env.smtpUser, pass: env.smtpPass },
+      // A mail server that stops answering must fail the send in seconds, not
+      // hold the function until the host cuts it off: the form then shows its
+      // "could not send" note. Nodemailer's own defaults are two minutes.
+      connectionTimeout: 8_000,
+      greetingTimeout: 8_000,
+      socketTimeout: 10_000,
     });
   }
   return transporter;

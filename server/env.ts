@@ -1,7 +1,7 @@
 /**
- * Typed, centralised access to the mail-related environment.
- * Provider-agnostic SMTP — defaults target Hostinger
- * (noreply@mdgservices.in). Nothing else reads `process.env` directly.
+ * Typed, centralised access to the server's environment: the mail settings
+ * (provider-agnostic SMTP, defaults target Hostinger, noreply@mdgservices.in)
+ * and the hand-off to the MDG API. Nothing else reads `process.env` directly.
  */
 export const env = {
   /** SMTP host. Hostinger = smtp.hostinger.com. */
@@ -32,6 +32,17 @@ export const env = {
     .split(",")
     .map((o) => o.trim())
     .filter(Boolean),
+  /**
+   * The MDG API this server hands each submitted form to, so the admin panel
+   * can list it. Not the same thing as the browser-side VITE_ASSIST_API_BASE:
+   * this one is read on the server and may be pointed anywhere without a build.
+   */
+  mdgApiUrl: (process.env.MDG_API_URL || "https://api.mdgservices.in/api/v1").replace(/\/+$/, ""),
+  /**
+   * The shared secret for that hand-off, the same value as the API's own
+   * WEBSITE_INTAKE_SECRET. Empty means "not set up": see server/intake.ts.
+   */
+  intakeSecret: (process.env.WEBSITE_INTAKE_SECRET ?? "").trim(),
   /** True on a real deployment — used to decide whether missing creds are fatal. */
   isProd:
     process.env.NODE_ENV === "production" ||

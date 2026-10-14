@@ -22,6 +22,7 @@ export const footer: typeof EN = {
     contact: "संपर्क कीजिए",
   },
   register: "रजिस्टर कीजिए",
+  grievance: "शिकायत",
 
   reachHeading: "हमसे संपर्क",
   hours: "सुबह 9 से रात 9, हर दिन",

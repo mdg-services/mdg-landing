@@ -54,6 +54,11 @@ export default function Footer() {
                   {t.footer.register}
                 </Link>
               </li>
+              <li>
+                <Link to="/grievance" className="link-quiet text-navy-100 hover:text-white">
+                  {t.footer.grievance}
+                </Link>
+              </li>
             </ul>
           </div>
 

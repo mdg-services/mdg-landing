@@ -7,6 +7,8 @@ import CallUs from "./CallUs";
 import Footer from "./Footer";
 import { Reveal } from "../lib/motion";
 import { EASE } from "../lib/anim";
+import { useSubmissionId } from "../lib/submissionId";
+import { usePageTitle } from "../lib/pageTitle";
 import { BRAND, SITE_TYPES } from "../data/content";
 import { useT } from "../i18n";
 import { en } from "../i18n/en";
@@ -15,15 +17,23 @@ type Status = "idle" | "submitting" | "success" | "error";
 
 export default function Register() {
   const t = useT();
+  usePageTitle(t.register.pageTitle);
   const [status, setStatus] = useState<Status>("idle");
   const [siteType, setSiteType] = useState("");
   const [agreed, setAgreed] = useState(false);
   const [termsOpen, setTermsOpen] = useState(false);
+  // Refused for coming too often, which "please try again" would not fix.
+  const [busy, setBusy] = useState(false);
+  // The same form pressed again carries the same id, so if a send is cut off
+  // and the dealer presses Submit again, the team's admin list shows one
+  // registration and not two. A form changed since the last try gets a new
+  // one, so a correction is never taken for a replay.
+  const submissionIdFor = useSubmissionId();
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const fd = new FormData(e.currentTarget);
-    const payload = {
+    const fields = {
       name: String(fd.get("name") ?? "").trim(),
       mobile: String(fd.get("mobile") ?? "").trim(),
       email: String(fd.get("email") ?? "").trim(),
@@ -32,7 +42,9 @@ export default function Register() {
       sapCode: String(fd.get("sapCode") ?? "").trim(),
       agree: agreed,
     };
+    const payload = { ...fields, submissionId: submissionIdFor(fields) };
 
+    setBusy(false);
     setStatus("submitting");
     try {
       const res = await fetch("/api/enroll", {
@@ -42,6 +54,7 @@ export default function Register() {
       });
       const data = (await res.json().catch(() => ({}))) as { ok?: boolean; error?: string };
       if (!res.ok || !data.ok) {
+        setBusy(res.status === 429);
         throw new Error(data.error || `Enrolment failed (${res.status})`);
       }
       setStatus("success");
@@ -246,7 +259,7 @@ export default function Register() {
                       <Icon name="siren" size={14} />
                     </span>
                     <p className="text-[14px] leading-[1.5] text-ink-soft">
-                      {t.register.errorGeneric}{" "}
+                      {busy ? t.register.errorBusy : t.register.errorGeneric}{" "}
                       <CallUs
                         label={t.register.errorCallLink}
                         className="link-quiet font-semibold text-navy-700 align-baseline"

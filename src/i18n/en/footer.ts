@@ -38,6 +38,8 @@ export const footer = {
   },
   /** Last in the same list, but a route rather than an anchor. */
   register: "Register",
+  /** And the grievance page, last in the list. */
+  grievance: "Grievances",
 
   reachHeading: "Reach us",
   /** When the toll-free line is open. Drawn in capitals by CSS, so it is

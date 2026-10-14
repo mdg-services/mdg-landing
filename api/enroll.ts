@@ -3,6 +3,12 @@ import { processEnrollment } from "../server/enroll.js";
 import { enrollCorsHeaders } from "../server/cors.js";
 
 /**
+ * The API hand-off waits up to 4 s, then two emails can each wait on the mail
+ * server: more than a host's default time for one function.
+ */
+export const config = { maxDuration: 30 };
+
+/**
  * POST /api/enroll — dealer enrolment.
  * Thin HTTP adapter; all logic lives in `server/enroll.ts`.
  *
@@ -27,6 +33,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   try {
     const result = await processEnrollment(req.body, {
       submittedAt: new Date().toISOString(),
+      ip: clientAddress(req),
     });
 
     // `status` is present on both branches, so no narrowing is required.
@@ -38,4 +45,14 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       error: "We couldn't send your enrolment just now. Please try again, or call us.",
     });
   }
+}
+
+/**
+ * The visitor's address as Vercel's edge saw it. Vercel overwrites both headers
+ * on the way in, so the caller cannot choose them.
+ */
+function clientAddress(req: VercelRequest): string | undefined {
+  const header = req.headers["x-real-ip"] ?? req.headers["x-forwarded-for"];
+  const value = Array.isArray(header) ? header[0] : header;
+  return value?.split(",")[0].trim() || undefined;
 }

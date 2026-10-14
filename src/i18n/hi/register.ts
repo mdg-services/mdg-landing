@@ -11,6 +11,8 @@ import type { register as EN } from "../en/register";
    where a legal term has no everyday Hindi word, the English term is kept in
    brackets after the Hindi rather than replaced by a heavier Hindi one. */
 export const register: typeof EN = {
+  pageTitle: "अपना पंप रजिस्टर कीजिए · MDG Services",
+
   backToHome: "होम पर वापस",
 
   /* The English page prints its phrase, a dot, then the Devanagari word. Here
@@ -56,6 +58,7 @@ export const register: typeof EN = {
   agreeAria: "मैं नियम व शर्तें मानता हूँ",
 
   errorGeneric: "कुछ गड़बड़ हो गई। कृपया दोबारा कोशिश कीजिए।",
+  errorBusy: "अभी हम आपका और रजिस्ट्रेशन नहीं ले पा रहे। कृपया कुछ देर बाद कोशिश कीजिए।",
   errorCallLink: "या अभी कॉल कीजिए",
   errorEnd: "।",
 
