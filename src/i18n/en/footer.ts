@@ -40,6 +40,8 @@ export const footer = {
   register: "Register",
   /** And the grievance page, last in the list. */
   grievance: "Grievances",
+  /** The MDG 2024 guide: plain static pages, so a plain link, not a route. */
+  mdgGuide: "MDG 2024 guide",
 
   reachHeading: "Reach us",
   /** When the toll-free line is open. Drawn in capitals by CSS, so it is

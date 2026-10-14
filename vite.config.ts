@@ -2,6 +2,8 @@ import { defineConfig, type Plugin, type ViteDevServer } from "vite";
 import react from "@vitejs/plugin-react";
 import { buildFilmPages, pageSizes } from "./scripts/film-pages.ts";
 import { filmFile, filmLang, langCookie } from "./middleware.ts";
+import { buildGuide, buildPreview } from "./scripts/guide-pages.ts";
+import { releaseDayOf } from "./guide/schedule.ts";
 
 /**
  * Dev-only: serve the POST /api/* endpoints during `vite dev` by calling the
@@ -107,8 +109,48 @@ function filmPages(): Plugin {
   };
 }
 
+/**
+ * The MDG guide (/mdg/, /hi/mdg/, /tools/) is standalone static HTML, not part
+ * of the SPA: scripts/guide-pages.ts writes one snapshot per release day into
+ * dist/_guide/, and middleware.ts serves today's. A missing or broken page
+ * fails the build.
+ *
+ * The dev server serves every page that has words, as if all were live, so a
+ * writer sees a page the moment it is saved.
+ */
+function guidePages(): Plugin {
+  const root = import.meta.dirname;
+  return {
+    name: "guide-pages",
+    generateBundle() {
+      // GUIDE_ALLOW_MISSING=1 is for a local test build only; a real build needs every page
+      // GUIDE_SKIP=1 ships the site without guide pages (sitemaps only)
+      const files = buildGuide({ root, allowMissing: process.env.GUIDE_ALLOW_MISSING === "1", skipPages: process.env.GUIDE_SKIP === "1" });
+      for (const f of files) this.emitFile({ type: "asset", fileName: f.fileName, source: f.source });
+      this.info(`MDG guide: ${files.length} files`);
+    },
+    configureServer(server: ViteDevServer) {
+      server.middlewares.use((req, res, next) => {
+        const p = (req.url || "").split(/[?#]/)[0];
+        const want = p.endsWith("/") ? p : `${p}/`;
+        if (releaseDayOf(want) === undefined && p !== "/sitemap.xml" && p !== "/llms.txt") return next();
+        try {
+          const { files } = buildPreview({ root });
+          const file = p === "/sitemap.xml" || p === "/llms.txt" ? p.slice(1) : `${want.slice(1)}index.html`;
+          const hit = files.find((f) => f.fileName === file);
+          if (!hit) return next();
+          res.setHeader("Content-Type", file.endsWith(".xml") ? "application/xml" : file.endsWith(".txt") ? "text/plain; charset=utf-8" : "text/html; charset=utf-8");
+          res.end(hit.source);
+        } catch (err) {
+          next(err);
+        }
+      });
+    },
+  };
+}
+
 export default defineConfig({
-  plugins: [react(), devApi(), filmPages()],
+  plugins: [react(), devApi(), filmPages(), guidePages()],
   server: { port: 5180, strictPort: true },
   preview: { port: 5180, strictPort: true },
 });

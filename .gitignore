@@ -31,3 +31,9 @@ dist-ssr
 *.sln
 *.sw?
 .vercel
+
+# Local render of the MDG guide (npm run guide -- preview)
+.guide-preview
+
+# Source documents the guide is checked against (MDG text, circulars). Never published.
+.guide-source

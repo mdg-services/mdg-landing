@@ -1,5 +1,13 @@
 /**
- * Vercel Routing Middleware for the film pages only. Two jobs:
+ * Vercel Routing Middleware for the film pages and the MDG guide.
+ *
+ * The MDG guide (/mdg/, /hi/mdg/, /tools/, plus /sitemap.xml and /llms.txt):
+ * every page is built ahead of time, one snapshot per release day under
+ * /_guide/dNN/ (scripts/guide-pages.ts), and guide/schedule.ts says which day
+ * each page goes live. This serves today's snapshot (India time), so five
+ * pages go live each day with no deploy. A page not live yet is a plain 404.
+ *
+ * The film pages, two jobs:
  *
  * 1. It hands the page the visitor's country / state / city (from Vercel's own
  *    edge headers) in a short-lived cookie, so the film's view measurement can
@@ -13,11 +21,36 @@
  * no cookie at all.
  */
 import { next, rewrite } from "@vercel/functions";
+import { releaseDayOf, snapshotDay, snapshotDir } from "./guide/schedule.js";
 
-// The two pages only. A wider pattern ("/film/:path*") would also run this on
-// hls.js, the preview images and the logo, and stamp a cookie on each of them.
+// The two film pages only. A wider pattern ("/film/:path*") would also run this
+// on hls.js, the preview images and the logo, and stamp a cookie on each of them.
 // Vercel's matcher already accepts the trailing-slash form of each path.
-export const config = { matcher: ["/film", "/film/short"] };
+export const config = {
+  matcher: ["/film", "/film/short", "/mdg", "/mdg/:path*", "/hi/mdg", "/hi/mdg/:path*", "/tools/:path*", "/hi/tools/:path*", "/sitemap.xml", "/llms.txt"],
+};
+
+const GUIDE = /^\/(?:hi\/)?(?:mdg|tools)(?:\/|$)/;
+
+const NOT_FOUND_HTML = `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><title>Page not found | MDG Services</title><style>body{margin:0;font:17px/1.6 system-ui,sans-serif;color:#15163A;background:#FCFCFE}main{max-width:620px;margin:0 auto;padding:48px 18px}a{color:#2C2E80}</style></head><body><main><h1>Page not found</h1><p>This page does not exist, or is not published yet.</p><p lang="hi">यह पेज मौजूद नहीं है, या अभी प्रकाशित नहीं हुआ है।</p><p><a href="/mdg/">MDG 2024 guide</a> · <a href="/hi/mdg/" lang="hi">MDG 2024 गाइड</a> · <a href="/">mdgservices.in</a></p></main></body></html>`;
+
+function notFound(): Response {
+  return new Response(NOT_FOUND_HTML, { status: 404, headers: { "content-type": "text/html; charset=utf-8", "cache-control": "public, max-age=0, must-revalidate" } });
+}
+
+/** Today's snapshot of a guide page, the sitemap or llms.txt; null if the path is not ours. */
+export function guideRoute(url: URL, now: Date): Response | null {
+  const p = url.pathname;
+  const day = snapshotDay(now);
+  if (p === "/sitemap.xml" || p === "/llms.txt") return rewrite(new URL(`${snapshotDir(day)}${p}`, url));
+  if (!GUIDE.test(p)) return null;
+  if (!p.endsWith("/") && releaseDayOf(`${p}/`) !== undefined) {
+    return Response.redirect(new URL(`${p}/${url.search}`, url), 308);
+  }
+  const live = releaseDayOf(p);
+  if (live === undefined || day < live) return notFound();
+  return rewrite(new URL(`${snapshotDir(day)}${p}index.html`, url));
+}
 
 /** The cookie value: "country|region|city", URL-encoded. Empty parts stay empty. */
 export function geoCookie(headers: Headers): string | null {
@@ -66,6 +99,8 @@ export function filmFile(pathname: string, lang: FilmLang): string {
 
 export default function middleware(request: Request): Response {
   const url = new URL(request.url);
+  const guide = guideRoute(url, new Date());
+  if (guide) return guide;
   const { lang, asked } = filmLang(url, request.headers.get("cookie"));
   const headers = new Headers();
   const geo = geoCookie(request.headers);

@@ -20,5 +20,5 @@
     "erasableSyntaxOnly": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["vite.config.ts", "scripts/film-pages.ts"]
+  "include": ["vite.config.ts", "scripts/film-pages.ts", "scripts/guide-pages.ts", "scripts/guide-cli.ts", "guide/**/*.ts"]
 }

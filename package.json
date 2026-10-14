@@ -13,7 +13,8 @@
     "preview": "vite preview",
     "review": "node scripts/review.mjs",
     "og": "node scripts/og.mjs",
-    "og:film": "node scripts/og-film.mjs"
+    "og:film": "node scripts/og-film.mjs",
+    "guide": "esbuild scripts/guide-cli.ts --bundle --platform=node --format=esm --packages=external --outfile=node_modules/.cache/guide-cli.mjs --log-level=warning && node node_modules/.cache/guide-cli.mjs"
   },
   "dependencies": {
     "@vercel/functions": "^3.9.11",
@@ -39,6 +40,7 @@
     "eslint-plugin-react-hooks": "^7.1.1",
     "eslint-plugin-react-refresh": "^0.5.2",
     "globals": "^17.6.0",
+    "marked": "^18.0.13",
     "playwright-core": "^1.62.1",
     "pngjs": "^7.0.0",
     "postcss": "^8.5.15",

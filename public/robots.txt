@@ -1,0 +1,7 @@
+# mdgservices.in
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /_guide/
+
+Sitemap: https://mdgservices.in/sitemap.xml

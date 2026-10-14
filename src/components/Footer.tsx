@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { LogoFullWhite } from "./Brand";
 import CallUs from "./CallUs";
 import { BRAND } from "../data/content";
-import { useT } from "../i18n";
+import { useLang, useT } from "../i18n";
 
 /* The targets never change with the language; the labels are looked up by id. */
 const explore = [
@@ -15,6 +15,7 @@ const explore = [
 
 export default function Footer() {
   const t = useT();
+  const { lang } = useLang();
   const year = new Date().getFullYear();
 
   return (
@@ -58,6 +59,12 @@ export default function Footer() {
                 <Link to="/grievance" className="link-quiet text-navy-100 hover:text-white">
                   {t.footer.grievance}
                 </Link>
+              </li>
+              <li>
+                {/* The guide is static HTML outside the app: a full page load, in the reader's language */}
+                <a href={lang === "hi" ? "/hi/mdg/" : "/mdg/"} className="link-quiet text-navy-100 hover:text-white">
+                  {t.footer.mdgGuide}
+                </a>
               </li>
             </ul>
           </div>
