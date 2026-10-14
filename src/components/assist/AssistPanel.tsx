@@ -1,7 +1,12 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { Fragment, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useReducedMotion } from "motion/react";
 import Icon from "../Icon";
 import CallSurface from "./CallSurface";
+import GrievanceForm, {
+  GrievanceNumber,
+  type GrievanceGiven,
+  type GrievanceStart,
+} from "./GrievanceForm";
 import LeadForm, { type LeadValues } from "./LeadForm";
 import { assistDict, type AssistDict } from "./dict";
 import { useVoiceNote } from "./useVoiceNote";
@@ -23,7 +28,9 @@ import {
   submitLead,
 } from "../../lib/assistApi";
 import { LANG_LABEL, useLang } from "../../i18n";
+import type { GrievanceCategory } from "../../data/content";
 import type {
+  AssistGrievanceResult,
   AssistLang,
   AssistLeadField,
   AssistPublicConfig,
@@ -55,6 +62,14 @@ type Msg = {
   audioUrl?: string;
   /** Length of the spoken reply, as the server measured it. Shown before playback starts. */
   audioMs?: number;
+  /**
+   * Set on a reply to somebody who was complaining about MDG itself: what the
+   * assistant took it to be about, and the visitor's own words, which the form
+   * opens with. The card under the reply is drawn from this.
+   */
+  offer?: { category: GrievanceCategory; said: string };
+  /** Set on the confirmation of a registered grievance: the number the card shows. */
+  filed?: string;
 };
 
 const CHAR_LIMIT = 600;
@@ -111,6 +126,20 @@ export default function AssistPanel({
   const [lead, setLead] = useState<{ escalate: boolean; focus?: AssistLeadField } | null>(null);
   const [leadDone, setLeadDone] = useState<"lead" | "callback" | null>(null);
   /**
+   * The grievance form, while it is open, and what it opened with. It takes the
+   * lead form's place rather than sitting beside it: two forms asking for a
+   * name and a number at once is one too many.
+   */
+  const [grievance, setGrievance] = useState<GrievanceStart | null>(null);
+  /**
+   * The one reply that carries a "register this as a grievance?" card. A
+   * complaint that runs over several turns is offered on the newest of them,
+   * not on every one, and once the grievance is filed the offer is gone.
+   */
+  const [offerId, setOfferId] = useState<number | null>(null);
+  /** Whatever the visitor has already told us, so no box is asked twice. */
+  const known = useRef<{ name?: string; mobile?: string }>({});
+  /**
    * The last thing the assistant said out loud, for the one caption line on
    * the call surface. It is not a transcript and it does not accumulate: it is
    * there for a forecourt where the speaker is hard to hear.
@@ -123,8 +152,10 @@ export default function AssistPanel({
   const listRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
 
-  const push = useCallback((msg: Omit<Msg, "id">) => {
-    setMessages((prev) => [...prev, { ...msg, id: nextId++ }]);
+  const push = useCallback((msg: Omit<Msg, "id">): number => {
+    const id = nextId++;
+    setMessages((prev) => [...prev, { ...msg, id }]);
+    return id;
   }, []);
 
 
@@ -306,17 +337,30 @@ export default function AssistPanel({
   );
 
   const applyResult = useCallback(
-    (res: AssistTurnResult) => {
+    (res: AssistTurnResult, typed?: string) => {
       if (res.heard) push({ role: "visitor", text: res.heard, transcribed: true });
-      push({ role: "assistant", text: res.text, audioUrl: res.audioUrl, audioMs: res.audioMs });
+      const id = push({
+        role: "assistant",
+        text: res.text,
+        audioUrl: res.audioUrl,
+        audioMs: res.audioMs,
+        // What they said is what the form opens with: the transcript for a
+        // voice note, the typed words otherwise.
+        offer: res.grievance
+          ? { category: res.grievance.category, said: res.heard ?? typed ?? "" }
+          : undefined,
+      });
+      if (res.grievance) setOfferId(id);
       if (res.asksFor) {
         setLeadDone(null);
         setLead({ escalate: false, focus: res.asksFor });
       }
       // A deflected answer is one a guard wrote, so the visitor is shown the
       // way to a person. Offered, not opened: nobody likes a form appearing
-      // under them mid-sentence.
-      if (res.deflected) setOfferCallback(true);
+      // under them mid-sentence. Not on a reply that already offers a
+      // grievance: that is the better way to a person for this visitor, and
+      // two cards on one reply is a visitor who stops reading.
+      if (res.deflected && !res.grievance) setOfferCallback(true);
     },
     [push],
   );
@@ -335,7 +379,7 @@ export default function AssistPanel({
     push({ role: "visitor", text });
     setBusy(true);
     try {
-      applyResult(await sendMessage(text, lang));
+      applyResult(await sendMessage(text, lang), text);
     } catch (err) {
       handleFailure(err);
     } finally {
@@ -419,9 +463,17 @@ export default function AssistPanel({
     if (!res.ok || !body.ok) throw new Error("callback request failed");
   }, []);
 
+  /** Keep a name and a number the visitor has typed, so the next form starts with them. */
+  const remember = useCallback((given: { name: string; mobile: string }) => {
+    const name = given.name.trim();
+    if (name !== "") known.current.name = name;
+    if (given.mobile !== "") known.current.mobile = given.mobile;
+  }, []);
+
   const handleLeadSubmit = useCallback(
     async (values: LeadValues & { mobile: string }) => {
       const wantsCall = lead?.escalate === true;
+      remember(values);
 
       const done = (route: "lead" | "callback") => {
         setLead(null);
@@ -474,13 +526,54 @@ export default function AssistPanel({
         done("callback");
       }
     },
-    [apiDown, lead, lang, push, mailCallback],
+    [apiDown, lead, lang, push, mailCallback, remember],
   );
 
   const openCallbackForm = useCallback(() => {
     setLeadDone(null);
+    setGrievance(null);
     setLead({ escalate: true });
   }, []);
+
+  /* ── A complaint about us ─────────────────────────────────────────────── */
+
+  /**
+   * Open the grievance form. From the offer card it arrives with the category
+   * and the visitor's own words; from the link in the welcome box it arrives
+   * empty and the visitor says what it is. Already open, it is left alone: a
+   * second tap must not wipe what somebody has half written.
+   */
+  const openGrievance = useCallback(
+    (from?: { category: GrievanceCategory; message: string }) => {
+      const start: GrievanceStart = {
+        name: known.current.name ?? "",
+        mobile: known.current.mobile ?? "",
+        category: from?.category ?? "",
+        message: from?.message ?? "",
+      };
+      setGrievance((open) => open ?? start);
+    },
+    [],
+  );
+
+  const handleGrievanceFiled = useCallback(
+    (result: AssistGrievanceResult, given: GrievanceGiven) => {
+      remember(given);
+      // The button that was pressed is about to leave the page. Focus goes back
+      // to the panel rather than to nowhere, so the keyboard is not stranded.
+      panelRef.current?.focus({ preventScroll: true });
+      setGrievance(null);
+      setOfferId(null);
+      // The server's own line, number and all. The card under it is the number
+      // again, large; the line is there so the transcript says it too.
+      push({
+        role: "assistant",
+        text: result.reply || d.grievance.filedFallback.replace("{ref}", result.ref),
+        filed: result.ref,
+      });
+    },
+    [remember, push, d],
+  );
 
   /* ── Starting a call ──────────────────────────────────────────────────── */
 
@@ -657,6 +750,7 @@ export default function AssistPanel({
                than as a screen. */
             caption={call.talking ? null : caption}
             noticeText={call.notice?.text ?? null}
+            grievanceRefs={call.grievanceRefs}
             talking={call.talking}
             muted={call.muted}
             holdMode={call.holdMode}
@@ -675,6 +769,20 @@ export default function AssistPanel({
               <div className="rounded-2xl bg-paper-warm p-3.5">
                 <p className="text-[14px] leading-[1.65] text-ink-soft">{d.panel.greeting}</p>
                 <p className="mt-2 text-[12.5px] leading-[1.5] text-ink-muted">{d.panel.hint}</p>
+                {/* For the visitor who came to complain and said nothing the
+                    assistant could catch. Opens the same form, with nothing
+                    chosen. */}
+                <p className="mt-1.5 text-[12.5px] leading-[1.5] text-ink-muted">
+                  {d.grievance.linkLead}{" "}
+                  <button
+                    type="button"
+                    onClick={() => openGrievance()}
+                    aria-label={d.grievance.linkAria}
+                    className="inline-block py-1 font-semibold text-navy-700 underline decoration-navy-300 underline-offset-4"
+                  >
+                    {d.grievance.linkAction}
+                  </button>
+                </p>
               </div>
 
               <div role="log" className="mt-3 flex flex-col gap-3">
@@ -696,12 +804,25 @@ export default function AssistPanel({
                       )}
                     </div>
                   ) : (
-                    <div key={m.id} className="max-w-[90%] self-start">
-                      <p className="rounded-2xl rounded-bl-md border border-ink-hairline bg-white px-3.5 py-2.5 text-[14.5px] leading-[1.65] text-ink">
-                        {m.text}
-                      </p>
-                      {m.audioUrl && <VoiceNote src={m.audioUrl} d={d} knownMs={m.audioMs} />}
-                    </div>
+                    <Fragment key={m.id}>
+                      <div className="max-w-[90%] self-start">
+                        <p className="rounded-2xl rounded-bl-md border border-ink-hairline bg-white px-3.5 py-2.5 text-[14.5px] leading-[1.65] text-ink">
+                          {m.text}
+                        </p>
+                        {m.audioUrl && <VoiceNote src={m.audioUrl} d={d} knownMs={m.audioMs} />}
+                      </div>
+
+                      {/* The visitor sounded like they were complaining about us.
+                          Offered, not opened, like the callback card. It steps
+                          aside while the form is open and comes back if the form
+                          is closed without sending. */}
+                      {m.offer && m.id === offerId && !grievance && (
+                        <GrievanceOfferCard d={d} offer={m.offer} onOpen={openGrievance} />
+                      )}
+
+                      {/* The number, set large, and it stays in the conversation. */}
+                      {m.filed && <GrievanceNumber d={d} refs={[m.filed]} />}
+                    </Fragment>
                   ),
                 )}
 
@@ -783,6 +904,11 @@ export default function AssistPanel({
                   <p className="mt-1 text-[13.5px] leading-[1.6] text-ink-soft">
                     {call.ended.text || reasonText(d, call.ended.reason)}
                   </p>
+                  {/* A grievance registered on the call. The line the visitor
+                      heard is gone the moment it was said; this is not. */}
+                  {call.grievanceRefs.length > 0 && (
+                    <GrievanceNumber d={d} refs={call.grievanceRefs} tone="inline" />
+                  )}
                   <button
                     type="button"
                     onClick={() => {
@@ -793,6 +919,14 @@ export default function AssistPanel({
                   >
                     {d.lead.open}
                   </button>
+                </div>
+              )}
+
+              {/* The card above goes when its button is pressed; a grievance
+                  number must not go with it. */}
+              {!call.ended && call.grievanceRefs.length > 0 && (
+                <div className="mt-3">
+                  <GrievanceNumber d={d} refs={call.grievanceRefs} />
                 </div>
               )}
 
@@ -837,8 +971,25 @@ export default function AssistPanel({
                 </div>
               )}
 
+              {/* A complaint about us. In the lead form's place while it is open;
+                  the lead form is still there, behind it, when this closes. */}
+              {grievance && (
+                <div className="mt-3">
+                  <GrievanceForm
+                    d={d}
+                    lang={lang}
+                    initial={grievance}
+                    onFiled={handleGrievanceFiled}
+                    onCancel={() => {
+                      panelRef.current?.focus({ preventScroll: true });
+                      setGrievance(null);
+                    }}
+                  />
+                </div>
+              )}
+
               {/* Name, place, mobile. */}
-              {lead && !leadDone && (
+              {lead && !leadDone && !grievance && (
                 <div className="mt-3">
                   <LeadForm
                     d={d}
@@ -1017,6 +1168,38 @@ export default function AssistPanel({
         )}
       </div>
     </>
+  );
+}
+
+/**
+ * "Register this as a grievance?", under the reply to somebody who was
+ * complaining about us.
+ *
+ * It says what will happen and nothing more: the team looks into it, and a
+ * number comes back. The button is the only way into the form from here, so a
+ * visitor who was only venting is never put in front of one.
+ */
+function GrievanceOfferCard({
+  d,
+  offer,
+  onOpen,
+}: {
+  d: AssistDict;
+  offer: { category: GrievanceCategory; said: string };
+  onOpen: (from: { category: GrievanceCategory; message: string }) => void;
+}) {
+  return (
+    <div className="rounded-2xl border border-ink-hairline bg-paper-warm p-3.5">
+      <p className="font-display text-[15px] font-semibold text-ink">{d.grievance.offerTitle}</p>
+      <p className="mt-1 text-[13.5px] leading-[1.6] text-ink-soft">{d.grievance.offerBody}</p>
+      <button
+        type="button"
+        onClick={() => onOpen({ category: offer.category, message: offer.said })}
+        className="mt-2.5 rounded-full bg-navy-700 px-4 py-2 text-[13px] font-semibold text-white"
+      >
+        {d.grievance.offerAction}
+      </button>
+    </div>
   );
 }
 

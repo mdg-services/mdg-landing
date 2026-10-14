@@ -24,9 +24,11 @@
  * network request at all.
  */
 
+import type { GrievanceCategory } from "../data/content";
 import type {
   AssistEnvelope,
   AssistErrorCode,
+  AssistGrievanceResult,
   AssistLeadResult,
   AssistLang,
   AssistLiveTranscriptToken,
@@ -67,7 +69,9 @@ const MOBILE_RE = /^[6-9]\d{9}$/;
  * Returns null when it is not a number anybody could ring.
  */
 export function normaliseMobile(raw: string): string | null {
-  const digits = raw.replace(/[\s-]/g, "").replace(/^(\+?91)/, "");
+  // A country code or a trunk 0 only when it is extra: "9123456789" is itself
+  // a mobile number, and stripping its "91" left eight digits and a refusal.
+  const digits = raw.replace(/[\s-]/g, "").replace(/^(?:\+?91|0)(?=\d{10}$)/, "");
   return MOBILE_RE.test(digits) ? digits : null;
 }
 
@@ -95,6 +99,7 @@ const KNOWN_CODES = new Set<string>([
   "SESSION_EXPIRED",
   "TURN_LIMIT",
   "CALL_CAPACITY",
+  "GRIEVANCE_LIMIT",
   "PAYLOAD_TOO_LARGE",
 ]);
 
@@ -329,6 +334,36 @@ export function escalate(
   lang: AssistLang,
 ): Promise<{ reply: string }> {
   return authed<{ reply: string }>("/assist/escalate", (token) => jsonInit(token, fields), {
+    lang,
+  });
+}
+
+export interface GrievanceFields {
+  /** One per filled-in form, so a resend after a dropped connection gets the number it already earned. */
+  submissionId: string;
+  name: string;
+  /** Ten digits, already through `normaliseMobile`. */
+  mobile: string;
+  /** Only so the team can write back. Left out when empty. */
+  email?: string;
+  category: GrievanceCategory;
+  message: string;
+}
+
+/**
+ * A complaint about MDG itself, registered as a grievance.
+ *
+ * Not retried on `GRIEVANCE_LIMIT`: that is the server's durable cap saying
+ * this person has filed enough for the hour, and asking again is refused the
+ * same way. A cut-off request IS safe to resend, because `submissionId` makes
+ * the server answer with the number the first attempt got rather than saving a
+ * second grievance.
+ */
+export function fileGrievance(
+  fields: GrievanceFields,
+  lang: AssistLang,
+): Promise<AssistGrievanceResult> {
+  return authed<AssistGrievanceResult>("/assist/grievance", (token) => jsonInit(token, fields), {
     lang,
   });
 }

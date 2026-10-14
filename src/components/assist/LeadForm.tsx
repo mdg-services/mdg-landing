@@ -226,7 +226,8 @@ export default function LeadForm({
   );
 }
 
-function Field({
+/** One labelled box. The grievance form uses it too, so both read as one widget. */
+export function Field({
   ref,
   label,
   value,
@@ -245,7 +246,7 @@ function Field({
   placeholder?: string;
   hint?: string;
   type?: string;
-  inputMode?: "tel" | "text" | "numeric";
+  inputMode?: "tel" | "text" | "numeric" | "email";
   autoComplete?: string;
   maxLength?: number;
 }) {

@@ -200,6 +200,55 @@ export const assist = {
     failed: "We could not send that. Please try again in a moment.",
   },
 
+  /* ── A complaint about MDG itself, registered as a grievance ──
+     The name, mobile number and the "something went wrong" lines are the
+     lead form's own, so each reads the same in both places. No time is
+     promised for the call: the team decides that, not this page. */
+  grievance: {
+    /** In the welcome box, for the visitor who came here to complain and
+        said nothing the assistant could catch. */
+    linkLead: "Have a complaint about us?",
+    linkAction: "Report it",
+    linkAria: "Report a complaint about MDG Services",
+
+    /** Under a reply, when the visitor sounded like they were complaining. */
+    offerTitle: "Register this as a grievance?",
+    offerBody: "Our team will look into it, and you will get a grievance number.",
+    offerAction: "Register a grievance",
+
+    title: "Register a grievance",
+    intro: "Tell us what went wrong. A person from our team will look into it.",
+    email: "Email (optional)",
+    emailPlaceholder: "name@example.com",
+    emailHint: "Only so our team can write back to you.",
+    emailInvalid: "That email address does not look right. Please check it, or leave it empty.",
+    category: "What is it about",
+    categoryChoose: "Choose one",
+    categoryRequired: "Please choose what it is about.",
+    message: "What happened",
+    messagePlaceholder: "Tell us what went wrong and when.",
+    /** `{n}` is what is written so far, `{max}` the most the form takes. */
+    messageCount: "{n} / {max}",
+    messageShort: "Please write a little more, at least 10 characters.",
+    submit: "Register grievance",
+    sending: "Sending",
+    cancel: "Not now",
+    privacy: "We use your details only to look into this and reach you.",
+
+    /** The number is the whole point of the card, so it is set large. */
+    numberLabel: "Your grievance number",
+    numbersLabel: "Your grievance numbers",
+    filedNote: "Note it down. Our team will look into it.",
+    /** If the server's own confirmation ever arrives empty. `{ref}` is the number. */
+    filedFallback: "Your grievance number is {ref}.",
+
+    /** The two ways it can fail. Both end on the website's own page. */
+    limit: "We can't take another grievance from you just now.",
+    failed: "We could not register that just now.",
+    websiteLead: "You can also report it on our website.",
+    websiteLink: "Open the grievance page",
+  },
+
   /* ── When the assistant cannot help, a person still can ── */
   fallback: {
     title: "Let us get a person on it",

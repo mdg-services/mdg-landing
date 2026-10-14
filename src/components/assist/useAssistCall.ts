@@ -5,6 +5,7 @@ import { MicError, openMic, pickMimeType, releaseMic } from "./mic";
 import type { MicFailure } from "./mic";
 import type {
   AssistCallEnded,
+  AssistCallGrievanceFiled,
   AssistCallHeard,
   AssistCallLeadAsk,
   AssistCallNotice,
@@ -161,6 +162,15 @@ export function useAssistCall({
   const [muted, setMutedState] = useState(false);
   const [holdMode, setHoldModeState] = useState(false);
   const [lost, setLost] = useState(false);
+  /**
+   * The numbers of grievances registered on this call, in the order they were.
+   *
+   * The server says them aloud and the caption shows the line, but a caption is
+   * cleared the moment the caller speaks and a spoken number is easy to miss on
+   * a forecourt. So they are kept: on the call surface while it runs, and on
+   * the "call ended" card afterwards. A new call starts with none.
+   */
+  const [grievanceRefs, setGrievanceRefs] = useState<string[]>([]);
 
   const socketRef = useRef<Socket | null>(null);
   const streamRef = useRef<MediaStream | null>(null);
@@ -704,7 +714,13 @@ export function useAssistCall({
     [teardown, dropSession, setPhaseBoth],
   );
 
-  /** Wipe the call away entirely, so the panel can go back to typing. */
+  /**
+   * Wipe the call away entirely, so the panel can go back to typing.
+   *
+   * Not the grievance numbers. They are the one thing from a call the visitor
+   * still needs once its card is closed, so they stay until the next call
+   * starts.
+   */
   const reset = useCallback(() => {
     teardown();
     deadlineRef.current = null;
@@ -728,6 +744,7 @@ export function useAssistCall({
     setEnded(null);
     setNotice(null);
     setLost(false);
+    setGrievanceRefs([]);
     setElapsedMs(0);
     startedAtRef.current = Date.now();
     setPhaseBoth("connecting");
@@ -922,6 +939,14 @@ export function useAssistCall({
 
     sock.on("call:notice", (n: AssistCallNotice) => setNotice(n));
 
+    // Sent the moment the server registers one. Anything without a number in it
+    // is ignored: a card that said "registered" with nothing to note down would
+    // be worse than no card.
+    sock.on("grievance:filed", (g: AssistCallGrievanceFiled) => {
+      const ref = typeof g?.ref === "string" ? g.ref : "";
+      if (ref) setGrievanceRefs((prev) => (prev.includes(ref) ? prev : [...prev, ref]));
+    });
+
     sock.on("lead:ask", (ask: AssistCallLeadAsk) => cbRef.current.onLeadAsk(ask));
 
     sock.on("call:ended", (e: AssistCallEnded) => {
@@ -1039,6 +1064,7 @@ export function useAssistCall({
     elapsedMs,
     notice,
     ended,
+    grievanceRefs,
     refusal,
     talking,
     muted,

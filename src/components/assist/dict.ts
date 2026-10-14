@@ -1,5 +1,6 @@
 import { en } from "../../i18n/en";
 import { hi } from "../../i18n/hi";
+import type { GrievanceCategory } from "../../data/content";
 import type { AssistLang } from "../../types/assist";
 import type { CallPhase } from "./useAssistCall";
 
@@ -17,6 +18,17 @@ export type AssistDict = typeof en.assist;
 
 export function assistDict(lang: AssistLang): AssistDict {
   return lang === "hi" ? hi.assist : en.assist;
+}
+
+/**
+ * The six things a grievance can be about, in the widget's language.
+ *
+ * These are the labels the website's own grievance page already prints, so the
+ * same complaint is called the same thing wherever it is filed. The key is what
+ * the server is sent; only the label changes with the language.
+ */
+export function grievanceCategoryLabels(lang: AssistLang): Record<GrievanceCategory, string> {
+  return lang === "hi" ? hi.grievance.categories : en.grievance.categories;
 }
 
 /**

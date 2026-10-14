@@ -1,5 +1,6 @@
 import { useEffect, useRef } from "react";
 import { callPhaseLabel, type AssistDict } from "./dict";
+import { GrievanceNumber } from "./GrievanceForm";
 import type { CallPhase } from "./useAssistCall";
 
 /**
@@ -39,6 +40,7 @@ export default function CallSurface({
   remainingMs,
   caption,
   noticeText,
+  grievanceRefs,
   talking,
   muted,
   holdMode,
@@ -57,6 +59,8 @@ export default function CallSurface({
   /** The last thing the assistant said, in one line. */
   caption: string | null;
   noticeText: string | null;
+  /** Grievances registered on this call. Kept on screen for the whole of it. */
+  grievanceRefs: string[];
   talking: boolean;
   muted: boolean;
   holdMode: boolean;
@@ -164,6 +168,15 @@ export default function CallSurface({
           </p>
         )}
       </div>
+
+      {/* The number the caller was just told, in writing. The caption above is
+          cleared whenever they speak; this is not, because a number said once
+          over a noisy forecourt is a number nobody caught. */}
+      {grievanceRefs.length > 0 && (
+        <div className="mb-3">
+          <GrievanceNumber d={d} refs={grievanceRefs} tone="dark" />
+        </div>
+      )}
 
       {(noticeText || lost) && (
         <p className="mb-3 text-center text-[13px] leading-[1.5] text-gold-200">

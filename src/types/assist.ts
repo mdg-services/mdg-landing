@@ -16,6 +16,8 @@
  * If a shape here ever disagrees with the shared file, the shared file wins.
  */
 
+import type { GrievanceCategory } from "../data/content";
+
 /** The two languages the assistant speaks. Mirrors the site's own toggle. */
 export type AssistLang = "hi" | "en";
 
@@ -93,8 +95,28 @@ export interface AssistTurnResult {
   deflected: boolean;
   /** Set when the assistant wants the visitor's details next. */
   asksFor?: AssistLeadField;
+  /**
+   * Set when the visitor is complaining about MDG itself, not asking a
+   * question. The widget offers to register it as a grievance.
+   */
+  grievance?: AssistGrievanceOffer;
   /** Turns left before the session's cap. */
   turnsRemaining: number;
+}
+
+/** What the assistant judged the complaint to be about. The visitor can change it before sending. */
+export interface AssistGrievanceOffer {
+  category: GrievanceCategory;
+}
+
+/** `POST /assist/grievance`. */
+export interface AssistGrievanceResult {
+  /** "G-0012". */
+  ref: string;
+  /** The same form sent again: the number it got the first time, nothing new saved. */
+  duplicate: boolean;
+  /** The assistant's confirmation, in the visitor's language, number included. */
+  reply: string;
 }
 
 /** The one detail the assistant is asking for right now. */
@@ -149,6 +171,11 @@ export interface AssistCallLeadAsk {
   text: string;
 }
 
+/** `grievance:filed` on the call socket, the moment a grievance is registered in a call. */
+export interface AssistCallGrievanceFiled {
+  ref: string;
+}
+
 /**
  * The error codes the widget has to behave differently for. Anything else is
  * treated as a generic failure, which always ends with the toll-free number.
@@ -160,6 +187,7 @@ export type AssistErrorCode =
   | "SESSION_EXPIRED"
   | "TURN_LIMIT"
   | "CALL_CAPACITY"
+  | "GRIEVANCE_LIMIT"
   | "PAYLOAD_TOO_LARGE"
   | "NETWORK"
   | "UNKNOWN";
