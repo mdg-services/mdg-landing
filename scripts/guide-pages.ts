@@ -91,10 +91,19 @@ export function checkContent(page: GuidePage, lang: Lang, c: PageContent): strin
   if (page.type !== "Tool") need((c.body.match(/^##\s/gm) || []).length >= 2 || page.type === "Legal", "body needs at least two ## sections");
   for (const ref of c.body.matchAll(/\]\(@([a-z0-9-]+)(?:#[^)]*)?\)/g)) need(byId.has(ref[1]), `link to unknown page @${ref[1]}`);
   for (const id of c.related || []) need(byId.has(id), `related lists unknown page ${id}`);
-  for (const tag of c.body.matchAll(/\{\{([^}]*)\}\}/g)) need(/^(2012:)?[0-9A-Za-z.()–\-, ]+$|^circular$|^annexure [0-9a-z]+$/i.test(tag[1].trim()), `odd clause tag {{${tag[1]}}}`);
+  for (const tag of c.body.matchAll(/\{\{(?!penalty-note\}\})([^}]*)\}\}/g)) need(/^(2012:)?[0-9A-Za-z.()–\-, ]+$|^circular$|^annexure [0-9a-z]+$/i.test(tag[1].trim()), `odd clause tag {{${tag[1]}}}`);
   const text = [c.title, c.description, c.answer || "", c.body, ...(c.faq || []).flatMap((f) => [f.q, f.a])].join("\n");
   for (const bad of FORBIDDEN) need(!bad.test(text), `contains a forbidden word (${bad}); say what a dealer gets, never how the work is done`);
   if (lang === "hi") need(/[\u0900-\u097F]/.test(c.body), "Hindi page has no Devanagari in its body");
+  // Crisp pages: body (without markup) plus FAQ, counted in words.
+  const words = (x: string) => (x.replace(/<[^>]+>/g, " ").replace(/\{\{[^}]*\}\}/g, " ").match(/[\p{L}\p{N}]+/gu) || []).length;
+  // A tool's own form (one HTML block, no blank lines inside) is not reading text.
+  const prose = c.body.replace(/<div class="tool"[\s\S]*?(\n\s*\n|$)/g, " ");
+  const total = words(prose) + (c.faq || []).reduce((n, f) => n + words(f.q) + words(f.a), 0);
+  // Hindi spends about 1.6 words for every English one (के, में, की stand alone).
+  const base = page.type === "Glossary" ? 1100 : page.type === "Tool" ? 750 : page.type === "Hub" || page.type === "Pillar" ? 800 : 650;
+  const limit = Math.round(base * (lang === "hi" ? 1.6 : 1));
+  need(total <= limit, `too long: ${total} words (limit ${limit}); cut, or split into a new page`);
   return errs;
 }
 
@@ -201,7 +210,13 @@ function makeMarked(ctx: Ctx, lang: Lang): Marked {
   return md;
 }
 
+const PENALTY_NOTE: Record<Lang, string> = {
+  en: "These amounts are the minimum: the oil company may take higher action, up to termination {{8.5.1}}. An irregularity must be established first {{8.5.2}}. Instances are counted over five years, including the previous guideline {{8.5.5}}.",
+  hi: "ये रकम कम से कम की कार्रवाई हैं: तेल कंपनी इससे ज़्यादा कार्रवाई कर सकती है, टर्मिनेशन तक {{8.5.1}}। कार्रवाई से पहले अनियमितता साबित होनी चाहिए {{8.5.2}}। गिनती पाँच साल की होती है, पिछली गाइडलाइन समेत {{8.5.5}}।",
+};
+
 function renderBody(ctx: Ctx, lang: Lang, body: string): string {
+  body = body.replace(/^\{\{penalty-note\}\}\s*$/gm, () => `<p class="pnote">${PENALTY_NOTE[lang]}</p>`);
   const md = makeMarked(ctx, lang);
   let html = md.parse(body, { async: false }) as string;
   html = html.replace(/<table>/g, '<div class="tw"><table>').replace(/<\/table>/g, "</table></div>");
@@ -263,7 +278,7 @@ details p{margin:8px 0 0}
 .cta a{display:inline-block;padding:9px 14px;border-radius:9px;font-weight:600;text-decoration:none}
 .cta a.p{background:var(--gold);color:var(--ink)}
 .cta a.s{border:1px solid #9EA1E0;color:#fff}
-.official{font-size:15px;margin:0 0 18px}
+.official{font-size:15px;margin:0 0 18px}.pnote{font-size:14.5px;color:var(--soft);border:1px solid var(--line);border-radius:10px;padding:10px 14px;background:#fff}
 .disc{font-size:13.5px;color:var(--muted);line-height:1.55;border-top:1px solid var(--line);padding-top:14px;margin-top:20px}.disc p{margin:0 0 8px}.disc b{color:var(--soft)}
 footer.bot{background:var(--sunk);margin-top:36px;padding-block:22px 34px;font-size:14px;color:var(--muted)}
 footer.bot ul{list-style:none;padding:0;display:flex;flex-wrap:wrap;gap:6px 16px;margin:0 0 12px}
