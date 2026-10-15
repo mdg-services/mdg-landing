@@ -104,23 +104,63 @@ trust than the whole guide earns.
 
 ## Legal: what we may and may not publish
 
-- Explain in our own words. Short quotes only (a phrase, or one sentence of up
-  to about 25 words, in quotation marks, with its clause). Never copy long
-  passages, whole clauses, annexure forms or test-specification tables word for
-  word. Facts (figures, deadlines, ranges, lists of what is required) may be
-  restated in our words and tables.
-- Never host or attach the MDG PDF. The template links to the official copies.
-- Name the oil companies in plain text only (IndianOil, Bharat Petroleum,
-  Hindustan Petroleum, or IOCL, BPCL, HPCL). No logos. Never suggest they
-  endorse, approve or work with MDG Services.
-- Never name or describe an individual dealer, outlet, officer or court case
-  party. Never print helpline or officer phone numbers.
-- Show cause notices, appeals, terminations: general information only. Say a
-  lawyer or the oil company should be consulted for a specific case. Never
-  draft a reply or tell a dealer what to argue.
-- Two versions of a figure (the toilet penalty): show both in one table, name
-  the version and date of each, say which is current, and tell the reader to
-  confirm with their oil company.
+From the legal review (15 Oct 2026). Copying is the real risk, not explaining.
+
+- **Explain from the dealer's question** (what must I do, by when, what happens
+  if I don't), never by walking the guideline clause by clause in its own
+  order. If a paragraph could be laid beside the clause and matched sentence
+  for sentence, rewrite it.
+- **Facts are free; words are not.** Amounts, deadlines, ranges and clause
+  numbers may be stated. The sentences, tables and examples must be ours.
+  Quote only a short phrase where the exact words matter: 15 words at most, in
+  quotation marks, with the clause number. Never quote an operative penalty
+  sentence, a list or a schedule.
+- **Never reproduce the full list of minor irregularities (8.4) or a whole
+  penalty schedule in the guideline's own order and grouping.** Group by our
+  own topics, in our own words, and give each page the figures its question
+  needs.
+- **Annexure forms, labels and formats:** describe in our own words what each
+  must record. Never copy a form. No screenshots of any guideline or oil
+  company page.
+- **Indian Standards (IS 2796, IS 17586, IS 17021, IS 1460, IS 16531):** name
+  the standard and tell the reader to check the current version. Never copy a
+  test table. The density ranges MDG 2024 itself lists may be stated as a
+  figure with its clause.
+- **Links:** never link to iocl.com (IndianOil's linking policy asks for
+  permission first): write "iocl.com" as plain text. The template links the
+  BPCL-hosted PDF. Never host the PDF.
+- **Name the document in full** the first time on a page: "Marketing Discipline
+  Guidelines 2024 (MDG 2024)". Describe it as the oil companies' rules for
+  dealers, which bind them through the dealership agreement. Do not
+  call them "a law", and never suggest they are not binding.
+- Name IndianOil, BPCL and HPCL in plain text only, at most once in a title or
+  description, never as the lead word. No logos. Never write that MDG
+  Services or Dealer Kavach is official, authorised, approved, certified,
+  recognised or a partner.
+- Never call the 20.03.2025 circular "IndianOil's circular": it is a joint
+  format for all three oil companies, and it sets no penalty of its own.
+- **Keep the qualifiers** next to every penalty: the amounts are the minimum
+  and the oil company may take higher action {{8.5.1}}; an irregularity must
+  be established first {{8.5.2}}; the 45-day and 90-day timelines say
+  "preferably"; the five-year count includes the previous guideline {{8.5.5}};
+  the appeal in {{8.9}} is for termination only.
+- **Show cause, appeal and termination pages** say only what the document says
+  and end with: "General information, not legal advice. For your own notice,
+  speak to an advocate or your oil company." No reply templates, no "you
+  should argue", no outcome promises.
+- **Examples** use made-up outlets, marked "for example" or "illustration".
+  Never name a real dealer, outlet, officer or court case party. Never print
+  helpline or officer phone numbers.
+- **No opinions** on the oil companies or their rules ("harsh", "unfair",
+  "trap"). Say what the clause says and stop.
+- **Never write** "complete guide", "guaranteed", "100% accurate".
+- **Toilet penalty:** MDG 2024 is the rule, shown first. The MDG 2012 figure (as
+  amended to 30.11.2022) may be shown below it, clearly labelled "older
+  guideline, replaced on 24.10.2024". Never present any figure as a 2025
+  Parliament figure. Court matters on toilet access go in a separate dated
+  note that says the position changed during 2025 and to check the latest;
+  never say an order is in force or final. Say "all customers and transit
+  travellers", never "the public".
 
 ## Voice
 

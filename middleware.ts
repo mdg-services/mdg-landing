@@ -1,7 +1,7 @@
 /**
  * Vercel Routing Middleware for the film pages and the MDG guide.
  *
- * The MDG guide (/mdg/, /hi/mdg/, /tools/, plus /sitemap.xml and /llms.txt):
+ * The guides (/guides/, /hi/guides/, /tools/, plus /sitemap.xml and /llms.txt):
  * every page is built ahead of time, one snapshot per release day under
  * /_guide/dNN/ (scripts/guide-pages.ts), and guide/schedule.ts says which day
  * each page goes live. This serves today's snapshot (India time), so five
@@ -27,12 +27,12 @@ import { releaseDayOf, snapshotDay, snapshotDir } from "./guide/schedule.js";
 // on hls.js, the preview images and the logo, and stamp a cookie on each of them.
 // Vercel's matcher already accepts the trailing-slash form of each path.
 export const config = {
-  matcher: ["/film", "/film/short", "/mdg", "/mdg/:path*", "/hi/mdg", "/hi/mdg/:path*", "/tools/:path*", "/hi/tools/:path*", "/sitemap.xml", "/llms.txt"],
+  matcher: ["/film", "/film/short", "/guides", "/guides/:path*", "/hi/guides", "/hi/guides/:path*", "/tools/:path*", "/hi/tools/:path*", "/sitemap.xml", "/llms.txt"],
 };
 
-const GUIDE = /^\/(?:hi\/)?(?:mdg|tools)(?:\/|$)/;
+const GUIDE = /^\/(?:hi\/)?(?:guides|tools)(?:\/|$)/;
 
-const NOT_FOUND_HTML = `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><title>Page not found | MDG Services</title><style>body{margin:0;font:17px/1.6 system-ui,sans-serif;color:#15163A;background:#FCFCFE}main{max-width:620px;margin:0 auto;padding:48px 18px}a{color:#2C2E80}</style></head><body><main><h1>Page not found</h1><p>This page does not exist, or is not published yet.</p><p lang="hi">यह पेज मौजूद नहीं है, या अभी प्रकाशित नहीं हुआ है।</p><p><a href="/mdg/">MDG 2024 guide</a> · <a href="/hi/mdg/" lang="hi">MDG 2024 गाइड</a> · <a href="/">mdgservices.in</a></p></main></body></html>`;
+const NOT_FOUND_HTML = `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><title>Page not found | MDG Services</title><style>body{margin:0;font:17px/1.6 system-ui,sans-serif;color:#15163A;background:#FCFCFE}main{max-width:620px;margin:0 auto;padding:48px 18px}a{color:#2C2E80}</style></head><body><main><h1>Page not found</h1><p>This page does not exist, or is not published yet.</p><p lang="hi">यह पेज मौजूद नहीं है, या अभी प्रकाशित नहीं हुआ है।</p><p><a href="/guides/">Guides for dealers</a> · <a href="/hi/guides/" lang="hi">डीलरों के लिए गाइड</a> · <a href="/">mdgservices.in</a></p></main></body></html>`;
 
 function notFound(): Response {
   return new Response(NOT_FOUND_HTML, { status: 404, headers: { "content-type": "text/html; charset=utf-8", "cache-control": "public, max-age=0, must-revalidate" } });

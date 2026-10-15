@@ -62,7 +62,7 @@ export default function Footer() {
               </li>
               <li>
                 {/* The guide is static HTML outside the app: a full page load, in the reader's language */}
-                <a href={lang === "hi" ? "/hi/mdg/" : "/mdg/"} className="link-quiet text-navy-100 hover:text-white">
+                <a href={lang === "hi" ? "/hi/guides/" : "/guides/"} className="link-quiet text-navy-100 hover:text-white">
                   {t.footer.mdgGuide}
                 </a>
               </li>

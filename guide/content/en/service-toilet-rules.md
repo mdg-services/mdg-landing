@@ -1,16 +1,16 @@
 ---json
 {
   "title": "Petrol pump toilet rules in India under MDG 2024",
-  "description": "The daily toilet checks MDG 2024 requires, who may use the toilet, what an inspector does, and the penalty now versus the replaced MDG 2012 rule.",
-  "answer": "MDG 2024 makes a clean toilet a daily duty. It must be clean at all times, lit, with water, a working flush and latch, signage, open to all customers and transit travellers, and a “Darpan” QR code nearby for feedback {{5.1.14(b)}}. A failure is a minor irregularity: a warning-cum-guidance letter, then Rs 10,000, then Rs 25,000 per irregularity {{8.4(iii)(g)}}. Under the replaced MDG 2012 it was a major irregularity starting at Rs 15,000 {{2012:8.3}}.",
+  "description": "The daily toilet checks Marketing Discipline Guidelines 2024 (MDG 2024) sets, who may use the toilet, and the penalty now versus an older, replaced figure.",
+  "answer": "Marketing Discipline Guidelines 2024 (MDG 2024) makes a clean toilet a daily duty: clean at all times, lit, with water, a working flush and latch, signs, open to all customers and transit travellers at all times within safety protocols, and a “Darpan” QR code nearby for feedback {{5.1.14(b)}}. A failure is a minor irregularity: a warning-cum-guidance letter, then Rs 10,000, then Rs 25,000 per irregularity {{8.4(iii)(g)}}. These are minimum amounts: the oil company may act higher, up to termination {{8.5.1}}, once the irregularity is established {{8.5.2}}. Counting runs over five years and includes the previous guideline {{8.5.5}}. The older MDG 2012 ladder was different {{2012:8.3(vii)}}.",
   "faq": [
-    { "q": "What are the petrol pump toilet rules in India?", "a": "The dealer must check daily that the toilet is clean all the time, lit, has water, a working flush (where there is one) and a working latch, has signage, is open to all customers and transit travellers, and has a “Darpan” QR code nearby. The protocol is displayed near the toilet and a maintenance sheet is kept and displayed {{5.1.14(b)}}." },
-    { "q": "Can the public use a petrol pump toilet?", "a": "MDG 2024 says the toilet must be accessible to all customers and transit travellers at all times, subject to safety protocols {{5.1.14(b)}}. The text does not define either group. A court case in Kerala has dealt with access to petrol pump toilets, and the position changed during 2025. Check the latest position with your oil company or a lawyer." },
-    { "q": "What is the penalty if a petrol pump toilet is dirty or locked?", "a": "Under MDG 2024 it is a minor irregularity. The first instance gets a warning-cum-guidance letter, the second Rs 10,000 per irregularity, and the third onwards Rs 25,000 per irregularity {{8.4(iii)(g)}} {{8.4}}. The oil company may act higher {{8.5.1}}." },
-    { "q": "How do I make a petrol pump toilet complaint?", "a": "Ask for the complaint book or call the oil company person whose name and number must be displayed {{1.6(iv)}} {{1.6(viii)}}. If a “Darpan” QR code is displayed near the toilet, it is there for feedback {{5.1.14(b)}}. A complaint that the toilet is not accessible is one of the situations that lead to a letter listing the penalty {{5.1.14(b)}}." },
-    { "q": "Is the old toilet penalty of Rs 15,000, Rs 25,000 and Rs 35,000 still in force?", "a": "No. Those figures come from MDG 2012 as amended on 30.11.2022, which MDG 2024 replaced from 24.10.2024. The third step there was the higher of Rs 35,000 or 45% of monthly dealer margin, plus a suspension {{2012:8.3}}. Under MDG 2024 the toilet is a minor irregularity with a Rs 10,000 and Rs 25,000 ladder {{8.4}}. Confirm with your oil company." },
+    { "q": "What are the petrol pump toilet rules in India?", "a": "The dealer checks every day that the toilet is clean throughout, lit, supplied with water, fitted with a working latch and a working flush (where one is fitted), and signed. It must be open to all customers and transit travellers at all times within the safety protocols, with a “Darpan” QR code nearby. The protocol is displayed near the toilet, and a maintenance sheet is kept and displayed {{5.1.14(b)}}." },
+    { "q": "Can anyone use a petrol pump toilet?", "a": "MDG 2024 says every customer and transit traveller must be able to use the toilet at all times, within the outlet's safety protocols {{5.1.14(b)}}. The text does not define either group, does not say a purchase is needed, and does not mention a charge. Court note, October 2026: a court case in Kerala dealt with access to outlet toilets during 2025 and the position changed more than once. Check the latest position with your oil company or an advocate." },
+    { "q": "What is the penalty if a petrol pump toilet is dirty or locked?", "a": "Under MDG 2024 it is a minor irregularity: a warning-cum-guidance letter the first time, Rs 10,000 per irregularity the second time, and Rs 25,000 per irregularity from the third time {{8.4(iii)(g)}} {{8.4}}. These are minimum amounts, and the oil company may act higher, up to termination {{8.5.1}}. The irregularity must be established first {{8.5.2}}, and instances are counted over five years, including under the previous guideline {{8.5.5}}." },
+    { "q": "How do I make a petrol pump toilet complaint?", "a": "Ask for the complaint book, or call the oil company person whose name and number must be displayed {{1.6(iv)}} {{1.6(viii)}}. A “Darpan” QR code near the toilet is meant for feedback {{5.1.14(b)}}. A customer's or traveller's complaint that the toilet cannot be accessed is one of the situations in which a letter listing the penalty is issued at once {{5.1.14(b)}}." },
+    { "q": "Is the old toilet penalty of Rs 15,000, Rs 25,000 and Rs 35,000 still in force?", "a": "No. Those figures come from MDG 2012 as amended to 30.11.2022, which MDG 2024 replaced from 24.10.2024. The third step there was the higher of Rs 35,000 or 45% of the monthly dealer margin, plus a suspension {{2012:8.3(vii)}}. Under MDG 2024 the toilet is a minor irregularity with a warning first, then Rs 10,000 and Rs 25,000, as minimum amounts that the oil company may exceed once the irregularity is established {{8.4}} {{8.5.1}} {{8.5.2}}. Figures in news articles may come from even older versions, so confirm with your oil company." },
     { "q": "What is the Darpan QR code at a petrol pump toilet?", "a": "MDG 2024 asks the dealer to display a “Darpan” QR code near the toilet for feedback {{5.1.14(b)}}. The text says nothing more about it, so ask your oil company how the feedback is handled." },
-    { "q": "Does a petrol pump have to keep a toilet maintenance sheet?", "a": "Yes. MDG 2024 says the maintenance sheet is to be maintained and displayed, and the toilet protocol is to be prominently displayed near the toilet {{5.1.14(b)}}." }
+    { "q": "Does a petrol pump have to keep a toilet maintenance sheet?", "a": "Yes. MDG 2024 says a maintenance sheet is kept and displayed, and the toilet protocol is displayed prominently near the toilet {{5.1.14(b)}}. It gives no format, so ask your oil company which one it wants." }
   ],
   "related": ["customer-service", "mdg-2012-vs-2024", "penalties", "service-complaint-book"],
   "updated": "2026-10-15"
@@ -18,88 +18,87 @@
 ---
 ## What the rule says
 
-MDG 2024 lists “non provision of clean toilet facility” as an irregularity {{5.1.14(b)}}. The general duty is a clean toilet on the premises {{1.6(vi)}}. The 20-point circular of 20.03.2025 repeats it as point 7 {{circular}}.
+Marketing Discipline Guidelines 2024 (MDG 2024) is the set of rules the oil companies apply to their petrol pump dealers under the dealership agreement. It binds the dealer through the dealership agreement.
 
-The dealer must check the toilet **every day** against the protocol below. The protocol is displayed near the toilet. A maintenance sheet is kept and displayed {{5.1.14(b)}}.
+MDG 2024 treats the lack of a clean toilet as an irregularity {{5.1.14(b)}}, and sets a general duty to have a clean toilet on the premises {{1.6(vi)}}. Point 7 of the circular of 20.03.2025 repeats the duty {{circular}}.
 
-## The daily toilet checklist
+The dealer checks the toilet **every day** against the protocol. The protocol is displayed near the toilet, and a maintenance sheet is kept and displayed {{5.1.14(b)}}.
 
-| # | The dealer checks that | Clause |
+## The daily toilet checks
+
+| Area | The dealer checks that | Clause |
 |---|---|---|
-| 1 | The toilet is clean all the time | {{5.1.14(b)(i)}} |
-| 2 | Lighting is proper | {{5.1.14(b)(ii)}} |
-| 3 | The flush, wherever there is one, works properly | {{5.1.14(b)(iii)}} |
-| 4 | Water is available | {{5.1.14(b)(iv)}} |
-| 5 | The toilet door has a working latch | {{5.1.14(b)(v)}} |
-| 6 | Signage is in place | {{5.1.14(b)(vi)}} |
-| 7 | The toilet is accessible to all customers and transit travellers at all times, subject to safety protocols | {{5.1.14(b)(vii)}} |
-| 8 | A “Darpan” QR code is displayed near the toilet for feedback | {{5.1.14(b)(viii)}} |
+| Condition | The toilet stays clean all the time; water is available; the flush works wherever one is fitted | {{5.1.14(b)(i)}} {{5.1.14(b)(iv)}} {{5.1.14(b)(iii)}} |
+| Light and door | The lighting is in order; the door has a latch that works | {{5.1.14(b)(ii)}} {{5.1.14(b)(v)}} |
+| Signs and access | Signs are in place; every customer and transit traveller can use the toilet at all times, within the safety protocols | {{5.1.14(b)(vi)}} {{5.1.14(b)(vii)}} |
+| Feedback | A “Darpan” QR code is displayed near the toilet | {{5.1.14(b)(viii)}} |
 
-## Can the public use a petrol pump toilet?
+## Who can use the toilet?
 
-MDG 2024 says the toilet must be accessible to “all customers and Transit travelers at all times”, subject to the safety protocols {{5.1.14(b)(vii)}}.
+MDG 2024 says every customer and every transit traveller must be able to use the toilet at all times, within the outlet's safety protocols {{5.1.14(b)(vii)}}.
 
-The text does not define “customer” or “transit traveller”. It does not say the user must buy fuel, and it does not mention a charge.
+The text does not define “customer” or “transit traveller”. It does not say the user has to buy fuel, and it does not mention a charge.
 
-MDG 2012 had a different line here: the toilet door must not be kept locked {{2012:5.1.14(b)}}. MDG 2024 replaced that with the access rule above.
+MDG 2012 had a different line here: the toilet door must not be kept locked {{2012:5.1.14(b)}}. MDG 2024 replaced it with the access rule above.
 
-### Court matters (2025)
+### Court note, October 2026
 
-A court case in Kerala has dealt with access to petrol pump toilets, and the position changed during 2025. This guide does not report what any order says, and nothing here means that an order is in force or final. Check the latest position with your oil company or a lawyer.
+A court case in Kerala dealt with access to outlet toilets during 2025, and the position changed more than once. Check the latest position with your oil company or an advocate. This guide does not say what any order provides, and nothing here means that an order is in force or final.
 
 ## What happens at an inspection
 
-The inspecting oil company officials act when they find any one of these {{5.1.14(b)}}:
+Oil company officials act when they find any one of these {{5.1.14(b)}}:
 
-1. The toilet is not clean.
-2. There is no water, or the flush is not working.
-3. The door has no latch, or the latch does not work.
-4. The toilet is not accessible to a customer or transit traveller, or a customer or traveller complains that it is not.
+- the toilet is dirty;
+- there is no water, or the flush does not work;
+- the door has no latch, or the latch does not work;
+- a customer or transit traveller cannot use the toilet, or one of them complains that they cannot.
 
-Then a photograph of the toilet is taken (or the complaint is shared), and a letter listing the penalty under MDG is issued “instantly” {{5.1.14(b)}}.
+The officials then photograph the toilet (or pass the complaint on), and a letter listing the penalty under MDG is issued at once {{5.1.14(b)}}.
 
-Lighting, signage and the QR code are not among these four triggers. They are still part of the daily protocol. The text does not say whether one of them alone starts the letter.
+Lighting, signs and the QR code are not among these four. They are still part of the daily protocol. The text does not say whether one of them alone starts the letter.
 
-### A state office letter, December 2025
+## The toilet penalty
 
-On 16.12.2025 IndianOil's Bihar state office wrote to its dealers about toilets. The letter repeated the 5.1.14(b) checklist and asked for corrective steps within 15 days of the letter. It said a focused inspection drive on toilets would start in January 2026, and that non-compliance could bring action under chapter 8 of MDG 2024.
+### What MDG 2024 says
 
-That letter is an oil company document, not MDG text. It came from one state office. Other states and companies may do things differently. Ask your own oil company what it expects.
+This is the rule today. It comes from Marketing Discipline Guidelines 2024, Ver. 1, effective 24.10.2024.
 
-## The penalty: MDG 2024 and the old MDG 2012 rule
+| What MDG 2024 says | Read it with this qualifier |
+|---|---|
+| A toilet failure is a **minor irregularity** {{8.4(iii)(g)}} | Action can follow only once the irregularity is established {{8.5.2}} |
+| First instance: a warning-cum-guidance letter | Instances are counted over five years, and irregularities under the previous guideline within those five years count too {{8.5.5}} |
+| Second instance: Rs 10,000 per irregularity | These amounts are the minimum {{8.5.1}} |
+| Third instance onwards: Rs 25,000 per irregularity {{8.4}} | The oil company may take higher action, up to termination {{8.5.1}} |
 
-Two versions of this penalty are in circulation. Only the first one applies today.
+Two more points to read with the table:
 
-| | MDG 2024 (current) | MDG 2012, Ver. 7 of 30.11.2022 (replaced) |
-|---|---|---|
-| Status | In force from 24.10.2024 | Replaced from 24.10.2024 |
-| Class | Minor irregularity {{8.4(iii)(g)}} | Major irregularity {{2012:8.3}} |
-| First instance | Warning-cum-guidance letter | Rs 15,000 |
-| Second instance | Rs 10,000 per irregularity | Rs 25,000 |
-| Third instance | Rs 25,000 per irregularity (third instance onwards) | Third instance onwards: the higher of Rs 35,000 or 45% of the monthly dealer margin (average of the last 6 months), plus suspension of sales and supplies for 7 days or until the toilet is put right, whichever is later |
-| Clause | {{8.4}} | {{2012:8.3}} |
+- The text does not say how an old major toilet finding (MDG 2012) slots into the new minor ladder. Ask your oil company how it counts yours.
+- Clause 8.4 says irregularities under lines (a) to (h) of 8.4(iii) count as one irregularity for taking action {{8.4}}. Clause 8.5.3 says that when two or more irregularities are found at the same visit, each is counted as an instance in its own class, and action is taken on each with a compounding effect {{8.5.3}}. The text does not say how the two fit together. Ask your oil company how it counts a visit with more than one finding.
 
-Anything written before 24.10.2024 may quote the old figures. Check the date of any article or video, and confirm the current position with your oil company.
+Before action, the oil company issues a show cause notice {{8.5.6}}. See [what a show cause notice is](@inspection-show-cause-notice). For fines that are not paid, see [repeat offences and unpaid fines](@penalties-repeat-and-unpaid).
 
-For example, under the old rule: a dealer's average monthly margin over the last 6 months is Rs 2,00,000. 45% of that is Rs 90,000. That is more than Rs 35,000, so Rs 90,000 would have applied. Under MDG 2024 the same third finding is Rs 25,000 per irregularity.
+Illustration, for a made-up outlet: an inspector finds no water in the toilet on 12 March 2026. That is a first instance, so a warning-cum-guidance letter follows. On 4 September 2026 the latch is found broken. That is a second instance: Rs 10,000. A third finding within five years of the first is Rs 25,000 per irregularity {{8.4}} {{8.5.5}}. Each amount is the minimum {{8.5.1}}.
 
-### How the 2024 ladder works
+### An older figure you may see
 
-- Irregularities under lines (a) to (h) of 8.4(iii) count as **one** irregularity for taking action. A toilet finding and a missing board found together are one irregularity {{8.4}}.
-- Instances are counted over five years, and irregularities under the previous MDG within those five years count as instances {{8.5.5}}. The text does not say how an old major toilet finding slots into the new minor ladder. Ask your oil company how it counts yours.
-- The actions in MDG are the minimum. The oil company can act higher {{8.5.1}}.
-- A fine with no suspension must be paid within 30 days of the company's notice. If not, sales and supplies are suspended from the 31st day, for 15 days {{8.7}}.
+Older guideline, replaced on 24.10.2024; not the rule today.
 
-For example: an inspector finds no water in the toilet on 12 March 2026. That is a first instance, so the dealer gets a warning-cum-guidance letter. On 4 September 2026 the latch is found broken. That is a second instance: Rs 10,000. A third finding within five years of the first is Rs 25,000 per irregularity {{8.4}} {{8.5.5}}.
+| | MDG 2012 (Ver. 7, as amended to 30.11.2022) |
+|---|---|
+| Class | Major irregularity {{2012:8.3(vii)}} |
+| First instance | Rs 15,000 |
+| Second instance | Rs 25,000 |
+| Third instance onwards | The higher of Rs 35,000 or 45% of the monthly dealer margin (average of the last 6 months), plus suspension of sales and supplies for 7 days or until the toilet is fixed, whichever is later |
 
-Before any action the irregularity must be established, and the oil company issues a show cause notice {{8.5.2}} {{8.5.6}}. See [what a show cause notice is](@inspection-show-cause-notice). For a specific notice, speak to a lawyer or your oil company.
+Figures in news articles may come from even older versions. Confirm the current figure with your oil company.
+
+Illustration of the "higher of" step, for a made-up outlet under the old rule only: if the 6-month average margin were Rs 2,00,000, then 45% would be Rs 90,000, which is more than Rs 35,000.
 
 ## The toilet maintenance sheet
 
-MDG says the sheet must be maintained and displayed. It does not give the format {{5.1.14(b)}}.
+MDG says the sheet is maintained and displayed. It gives no format {{5.1.14(b)}}. Ask your oil company which format it wants.
 
-IndianOil's list of display boards includes a monthly sheet. Each day the dealer ticks the toilet checks and two people sign: the one who monitored and the one who cleaned. The sheet says three lines are compulsory: daily cleaning, water and the latch.
-
-That sheet follows the MDG 2012 wording. It has a “door not locked” line and no QR code line. Ask your oil company for the format it wants now.
+The checks in MDG 2024 differ from those in MDG 2012: the QR code line is new, and the “door not locked” line was replaced by the access line {{5.1.14(b)}} {{2012:5.1.14(b)}}. A sheet printed under the older wording may not cover them, so confirm the current format with your oil company.
 
 For all boards and notices, see [boards a petrol pump must display](@service-display-boards).

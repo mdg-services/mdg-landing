@@ -23,7 +23,7 @@ export const footer: typeof EN = {
   },
   register: "रजिस्टर कीजिए",
   grievance: "शिकायत",
-  mdgGuide: "MDG 2024 गाइड",
+  mdgGuide: "डीलरों के लिए गाइड",
 
   reachHeading: "हमसे संपर्क",
   hours: "सुबह 9 से रात 9, हर दिन",

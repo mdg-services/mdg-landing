@@ -1,5 +1,6 @@
 /**
- * Builds the MDG guide (mdgservices.in/mdg/, /hi/mdg/, /tools/) as plain
+ * Builds the guides to the Marketing Discipline Guidelines 2024
+ * (mdgservices.in/guides/, /hi/guides/, /tools/) as plain
  * static HTML, one snapshot per release day.
  *
  * Each page is written by hand in guide/content/<lang>/<id>.md: a JSON header
@@ -22,7 +23,7 @@ import path from "node:path";
 import { Marked, type Renderer, type Tokens } from "marked";
 import { PAGES, PILLARS, VIDEOS, byId, pathOf, type GuidePage, type Lang } from "../guide/inventory.js";
 import { RELEASES, LAST_DAY, dateOfDay, snapshotDir, type Release } from "../guide/schedule.js";
-import { SITE, UI, NOTICE, OFFICIAL, TOLL_FREE, SITE_PAGES } from "../guide/copy.js";
+import { SITE, UI, NOTICE_SHORT, DISCLAIMER, OFFICIAL, TOLL_FREE, SITE_PAGES, EMAIL } from "../guide/copy.js";
 
 export interface GuideFile {
   fileName: string;
@@ -51,7 +52,7 @@ const LANGS: Lang[] = ["en", "hi"];
 // ── Reading and checking the words ──────────────────────────────────────
 
 /** Words that describe how the service works, or overclaim. Never on a public page. */
-const FORBIDDEN = [/\bSDMS\b/i, /\bIRAS\b/i, /\bOCR\b/, /captcha/i, /scrap(e|ing|er)/i, /admin (panel|portal)/i, /\bour AI\b/i, /artificial intelligence/i, /ChatGPT/i, /\bClaude\b/i, /\bLLM\b/];
+const FORBIDDEN = [/complete guide/i, /\bwe guarantee\b|\bguaranteed? (compliance|accuracy|results?)\b/i, /100\s?%\s?accurate/i, /\]\(https?:\/\/(www\.)?iocl\.com/i, /\bSDMS\b/i, /\bIRAS\b/i, /\bOCR\b/, /captcha/i, /scrap(e|ing|er)/i, /admin (panel|portal)/i, /\bour AI\b/i, /artificial intelligence/i, /ChatGPT/i, /\bClaude\b/i, /\bLLM\b/];
 
 export function contentPath(root: string, lang: Lang, id: string): string {
   return path.join(root, "guide", "content", lang, `${id}.md`);
@@ -141,8 +142,10 @@ function clauseTags(html: string, lang: Lang): string {
     let label: string;
     if (/^circular$/i.test(t)) label = lang === "hi" ? "सर्कुलर 20.03.2025" : "Circular 20.03.2025";
     else if (t.startsWith("2012:")) label = `MDG 2012 ${t.slice(5)}`;
-    else if (/^annexure/i.test(t)) label = (lang === "hi" ? "अनुलग्नक " : "Annexure ") + t.replace(/^annexure\s*/i, "");
-    else label = `MDG ${t}`;
+    else if (/^annexure/i.test(t)) label = `MDG Annexure ${t.replace(/^annexure\s*/i, "")}`;
+    else if (/^[0-9]/.test(t)) label = `MDG ${t}`;
+    // Words, not a clause number: "cover page", "introduction", "chapter 6, item 4"
+    else label = `MDG 2024, ${t.charAt(0).toLowerCase()}${t.slice(1)}`;
     return `<span class="cl">${esc(label)}</span>`;
   });
 }
@@ -261,7 +264,7 @@ details p{margin:8px 0 0}
 .cta a.p{background:var(--gold);color:var(--ink)}
 .cta a.s{border:1px solid #9EA1E0;color:#fff}
 .official{font-size:15px;margin:0 0 18px}
-.disc{font-size:13.5px;color:var(--muted);line-height:1.55;border-top:1px solid var(--line);padding-top:14px;margin-top:20px}
+.disc{font-size:13.5px;color:var(--muted);line-height:1.55;border-top:1px solid var(--line);padding-top:14px;margin-top:20px}.disc p{margin:0 0 8px}.disc b{color:var(--soft)}
 footer.bot{background:var(--sunk);margin-top:36px;padding-block:22px 34px;font-size:14px;color:var(--muted)}
 footer.bot ul{list-style:none;padding:0;display:flex;flex-wrap:wrap;gap:6px 16px;margin:0 0 12px}
 footer.bot a{color:var(--soft)}
@@ -399,7 +402,7 @@ function renderPage(ctx: Ctx, r: Release): Rendered {
       publisher: { "@id": `${SITE}/#org` },
       author: { "@id": `${SITE}/#org` },
       isAccessibleForFree: true,
-      about: { "@type": "Thing", name: "Marketing Discipline Guidelines 2024 (MDG 2024)" },
+      about: { "@type": "CreativeWork", name: "Marketing Discipline Guidelines 2024 (MDG 2024)" },
     },
   ];
   if (c.faq?.length) {
@@ -459,22 +462,24 @@ ${ld.map(jsonLd).join("\n")}
     .map((b) => `<a href="${b.href}">${esc(b.name)}</a>`)
     .join(" › ")}</nav>
 <h1>${esc(c.title)}</h1>
-<p class="notice">${esc(NOTICE[lang].short)}</p>
-<p class="checked">${t.checked} ${longDate(c.updated, lang)}.</p>
+<p class="notice">${esc(NOTICE_SHORT[lang])}</p>
+<p class="checked">${t.checked} ${longDate(c.updated, lang)}. ${t.published}</p>
 ${c.answer ? `<div class="answer"><b>${t.shortAnswer}</b><p>${inline(md, c.answer, lang)}</p></div>` : ""}
 ${renderBody(ctx, lang, c.body)}
+${page.id === "disclaimer" ? DISCLAIMER[lang].map(([h, x]) => `<h2>${esc(h)}</h2><p>${esc(x)}</p>`).join("") : ""}
 ${videos ? `<h2>${t.watch}</h2><div class="videos">${videos}</div>` : ""}
 ${children}
 ${faq ? `<h2>${t.faq}</h2>${faq}` : ""}
-<p class="official"><b>${t.officialTitle}:</b> <a href="${OFFICIAL.iocl}" rel="noopener" target="_blank">${t.officialIocl}</a> · <a href="${OFFICIAL.bpcl}" rel="noopener" target="_blank">${t.officialBpcl}</a></p>
+<p class="official"><b>${t.officialTitle}:</b> <a href="${OFFICIAL.bpcl}" rel="noopener" target="_blank">${t.officialBpcl}</a> (${t.officialAlso}).</p>
 ${related ? `<h2>${t.related}</h2><div class="cards">${related}</div>` : ""}
 <section class="cta"><h2>${t.ctaTitle}</h2><p>${t.cta}</p><div class="row"><a class="p" href="/register">${t.register}</a><a class="s" href="${TOLL_FREE.href}">${t.call}</a></div></section>
-<p class="disc">${esc(NOTICE[lang].full)}${discLink ? ` <a href="${discLink.href}">${t.disclaimerLink}</a>.` : ""}</p>
+${page.id === "disclaimer" ? "" : `<section class="disc">${DISCLAIMER[lang].map(([h, x]) => `<p><b>${esc(h)}.</b> ${esc(x)}</p>`).join("")}${discLink ? `<p><a href="${discLink.href}">${t.disclaimerLink}</a></p>` : ""}</section>`}
 </main>
 <footer class="bot"><div class="wrap">
 <ul>${hubLink ? `<li><a href="${hubLink.href}">${t.guide}</a></li>` : ""}${pillarLinks}</ul>
 <ul><li><a href="/">${t.home}</a></li>${updLink ? `<li><a href="${updLink.href}">${t.updates}</a></li>` : ""}${discLink ? `<li><a href="${discLink.href}">${t.disclaimerLink}</a></li>` : ""}<li><a href="/privacy">${t.privacy}</a></li><li><a href="/register">${t.register}</a></li></ul>
 <p>${esc(t.company)}</p>
+<p>${t.report}: <a href="mailto:${EMAIL}">${EMAIL}</a></p>
 </div></footer>
 ${toolJs ? `<script>${toolJs}</script>` : ""}
 </body>
@@ -500,7 +505,7 @@ function llms(ctx: Ctx, releases: Release[]): string {
     const c = ctx.content.get(`${r.lang}:${r.page.id}`)!;
     return `- [${c.title}](${SITE}${r.path}): ${c.description}`;
   });
-  return `# MDG Services: the MDG 2024 guide\n\n> Plain-language explanations of the Marketing Discipline Guidelines 2024 (MDG 2024) for Indian petrol pump dealers, in English and Hindi, by MDG Services. Not the official text: refer to the oil companies' official MDG and circulars for accurate and current rules. MDG Services is not affiliated with IndianOil, BPCL or HPCL.\n\n## Pages\n\n${lines.join("\n")}\n`;
+  return `# MDG Services: guides to the Marketing Discipline Guidelines 2024\n\n> Plain-language explanations of the Marketing Discipline Guidelines 2024 (MDG 2024) for Indian petrol pump dealers, in English and Hindi, published by MDG Services. Not the official text: refer to the oil companies' official guidelines and circulars for accurate and current rules. MDG Services is a private company, not connected with IndianOil, BPCL, HPCL or any government body.\n\n## Pages\n\n${lines.join("\n")}\n`;
 }
 
 /** One snapshot: every page live on `day` (that has words), with links between live pages only. */

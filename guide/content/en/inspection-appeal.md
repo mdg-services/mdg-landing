@@ -1,67 +1,66 @@
 ---json
 {
-  "title": "Petrol pump dealership termination under MDG 2024: the appeal",
-  "description": "Who approves action against a petrol pump dealer under MDG 2024 and how a termination is appealed: 30 days, who hears it, and the 90-day target.",
-  "answer": "Under MDG 2024 a dealer can appeal a termination within 30 days of receiving the order. The appeal goes before the Appellate Authority through the divisional, territory or regional office of the oil company, and is to be decided preferably within 90 days of filing {{8.9}}. Who hears it depends on who approved the termination and whether the dealership is SC/ST {{8.9}}. This is general information, not legal advice.",
+  "title": "Petrol pump dealership termination under Marketing Discipline Guidelines 2024 (MDG 2024): the appeal",
+  "metaTitle": "Petrol pump dealership termination under MDG 2024: the appeal",
+  "description": "What MDG 2024 says about terminating a petrol pump dealership: who approves it, the 30-day window to appeal, who hears the appeal, and the 90-day target.",
+  "answer": "Under the Marketing Discipline Guidelines 2024 (MDG 2024), the oil companies' rules for their dealers, a dealer can appeal a termination within 30 days of receiving the order. The appeal is addressed to the Appellate Authority and sent through the oil company's divisional, territory or regional office; the aim is a decision, preferably within 90 days of filing {{8.9}}. Who hears it depends on who approved the termination and whether the dealership is SC/ST {{8.9}}. The appeal covers termination only. This is general information, not legal advice.",
   "faq": [
-    { "q": "Can a petrol pump dealer appeal against termination under MDG?", "a": "Yes. Where a dealership is terminated by invoking MDG, the dealer has the right to appeal before the Appellate Authority, through the concerned Divisional, Territory or Regional office of the oil company {{8.9}}." },
+    { "q": "Can a petrol pump dealer appeal against termination under MDG?", "a": "Yes. Where a dealership is terminated by invoking MDG, the dealer has a right to appeal to the Appellate Authority, sent through the Divisional, Territory or Regional office concerned {{8.9}}. The clause covers termination only." },
     { "q": "How many days does a dealer have to appeal a dealership termination?", "a": "30 days from the date of receiving the termination order {{8.9}}. The count runs from receipt, not from the date printed on the order." },
-    { "q": "Who hears the appeal against termination of a petrol pump dealership?", "a": "If the dealership is not SC/ST, it is the ED (Retail) at the Head Office, or another ED-level officer there nominated by the company, where the approving authority was below ED rank in the State Office. If the approving authority was of ED rank in the State Office, it is a committee of 2 EDs. For SC/ST dealerships it is a committee of two Directors other than Director (Marketing) {{8.9}}." },
-    { "q": "How long does an appeal against termination take?", "a": "The appeal is to be disposed of preferably within 90 days from the date it is filed in the Divisional, Territory or Regional office {{8.9}}. The word is \"preferably\", so it is a target, not a guarantee." },
-    { "q": "Who can terminate a petrol pump dealership under MDG?", "a": "Termination and all other critical irregularities are approved by the Regional, State or Zonal head of the oil company, at General Manager level or above. For SC/ST dealerships the Director (Marketing) at Head Office approves the termination {{8.8}}." },
-    { "q": "For what reasons can an oil company terminate a petrol pump dealership?", "a": "Under MDG, a critical irregularity brings termination at the first instance {{8.2}}. Repeat major irregularities bring termination at the third instance, or the second for selling normal fuel as branded fuel {{8.3}}. An unpaid fine also ends in termination {{8.7}}." },
-    { "q": "Does an appeal stop the termination?", "a": "MDG 2024 does not say whether the termination stays in force while an appeal is pending. Ask a lawyer and your oil company about the position in your case." },
-    { "q": "Does MDG cover petrol pump lease termination?", "a": "MDG 2024 deals with termination of the dealership because of irregularities. The text does not mention land or premises leases. A lease follows its own agreement and the law, so ask a lawyer." }
+    { "q": "Who hears the appeal against termination of a petrol pump dealership?", "a": "For a dealership that is not SC/ST, it is the ED (Retail) at Head Office, or another ED-level officer there whom the company nominates, where the approving authority was below ED rank in the State Office. Where the approving authority was of ED rank in the State Office, it is a committee of 2 EDs. For SC/ST dealerships it is a committee of two Directors other than Director (Marketing) {{8.9}}." },
+    { "q": "How long does an appeal against termination take?", "a": "The aim is a decision, preferably within 90 days of the date the appeal is filed at the Divisional, Territory or Regional office {{8.9}}. \"Preferably\" makes this a target, not a fixed deadline." },
+    { "q": "Who can terminate a petrol pump dealership under MDG?", "a": "Termination, like every critical irregularity, is approved by the Regional, State or Zonal head of the oil company, at General Manager level or above. For SC/ST dealerships the Director (Marketing) at Head Office approves the termination {{8.8}}." },
+    { "q": "For what reasons can an oil company terminate a petrol pump dealership?", "a": "MDG ties termination to critical irregularities at the first instance {{8.2}}, to major irregularities at the third instance (the second for selling normal fuel as branded fuel) {{8.3}}, and to a fine left unpaid through the extended suspension {{8.7}}. These are minimum actions: the company may act more strongly, up to termination at the first or any instance {{8.5.1}}, once the irregularity is established {{8.5.2}}. Instances are counted over five years, including under the previous guideline {{8.5.5}}." },
+    { "q": "Does an appeal stop the termination?", "a": "MDG 2024 does not say whether the termination stays in force while an appeal is pending. For your own order, speak to an advocate or your oil company." },
+    { "q": "Does MDG cover petrol pump lease termination?", "a": "MDG 2024 deals with termination of the dealership because of irregularities. The text does not mention land or premises leases. A lease follows its own agreement and the law." }
   ],
   "related": ["inspection-show-cause-notice", "penalties", "penalties-repeat-and-unpaid", "inspection"],
   "updated": "2026-10-15"
 }
 ---
-## When MDG allows termination
+## When MDG brings termination
 
-These are the points at which MDG 2024 brings termination.
+The Marketing Discipline Guidelines 2024 (MDG 2024) are the oil companies' rules for their dealers, applied through the dealership agreement. They bind the dealer through the dealership agreement. These are the routes by which they lead to termination.
 
-| Situation | Termination comes at | Clause |
+| Route | Termination comes at | Clause |
 |---|---|---|
-| Any critical irregularity: adulteration, tampered metering or totaliser seals, unauthorised fittings, unauthorised storage, unauthorised purchase or sale, a tank lorry with unauthorised product decanting | The first instance | {{8.2}} |
-| Major irregularities, except branded fuel and automation | The third instance | {{8.3}} |
-| Selling normal MS or HSD as branded fuel | The second instance | {{8.3}} |
-| Automated outlet irregularities | The third instance | {{8.3}} |
-| A fine left unpaid through the extended suspension | After that suspension | {{8.7}} |
-| Any irregularity | Higher action, including termination at the first or any instance, if the oil company's competent authority finds it necessary and the dealership agreement allows | {{8.5.1}} |
+| A critical irregularity. The critical list covers, among other things, product quality, tampering with meters and seals, and unauthorised fittings, storage, purchases or sales. See [the penalty pages](@penalties). | The first instance | {{8.2}} |
+| A major irregularity | The third instance. For selling normal fuel as branded fuel, the second instance. | {{8.3}} |
+| A fine left unpaid through the extended suspension | When that suspension ends | {{8.7}} |
+| Any irregularity, where the oil company's competent authority thinks higher action is needed and the dealership agreement allows it | Possibly the first or any instance | {{8.5.1}} |
 
-Before any of this, the irregularity has to be established {{8.5.2}}, and a show cause notice, a reply and a speaking order come first. See [the show cause timeline](@inspection-show-cause-notice). For a critical irregularity leading to termination, a personal hearing comes before the termination is recommended or approved {{8.6}}.
+Three qualifiers go with this table. The amounts and actions MDG lists are the minimum, and the company may act more strongly, up to termination {{8.5.1}}. The irregularity must be established first {{8.5.2}}. Instances are counted over five years, and the count includes the previous guideline {{8.5.5}}.
+
+MDG also provides for a show cause notice, a reply and a speaking order {{8.5.6}} {{8.5.7}} {{8.5.8}}. See [the show cause timeline](@inspection-show-cause-notice). Where a critical irregularity may lead to termination, a personal hearing comes before the termination is recommended or approved {{8.6}}.
 
 ## Who approves the action
 
-| Class of action | Who approves | Clause |
+| Action | Who approves | Clause |
 |---|---|---|
-| Termination, and all other critical irregularities | The Regional head, State head or Zonal head of the oil company, at General Manager level or above | {{8.8(i)}} |
+| Termination, and every critical irregularity | The Regional, State or Zonal head of the oil company, at General Manager level or above | {{8.8(i)}} |
 | Termination of an SC/ST dealership | The Director (Marketing) at Head Office | {{8.8(i)}} |
-| Major irregularities | IOC: the State Retail Head. BPC and HPC: an authorised officer not below Deputy General Manager, at State, Region or Zonal level | {{8.8(ii)}} |
-| Minor irregularities | The head of the Territory, Regional or Divisional office | {{8.8(iii)}} |
+| A major irregularity | At IndianOil (IOC in the text), the State Retail Head. At BPCL and HPCL (BPC and HPC in the text), an authorised officer of Deputy General Manager rank or above, at State, Region or Zonal level. | {{8.8(ii)}} |
+| A minor irregularity | The head of the Territory, Regional or Divisional office | {{8.8(iii)}} |
 
 ## The appeal, step by step
 
-Clause 8.9 gives the right of appeal where there is a termination arising from invoking MDG {{8.9}}.
+Clause 8.9 gives a right of appeal where a termination arises from invoking MDG {{8.9}}.
 
-1. **Receive the order.** The 30 days run from the date you receive the order {{8.9}}.
-2. **File within 30 days.** The appeal is made to the Appellate Authority, through the concerned Divisional, Territory or Regional office of the oil company {{8.9}}.
-3. **Wait for the decision.** The Appellate Authority can decide the matter. The appeal is to be disposed of preferably within 90 days from the date it is filed in the Divisional, Territory or Regional office {{8.9}}.
-
-General practice, not an MDG rule: write down the date and the way you received the order, whether by post, email or by hand, because the 30 days start there.
+1. **The order is received.** The 30 days run from the date the dealer receives it {{8.9}}.
+2. **The appeal is filed within 30 days.** It is addressed to the Appellate Authority and sent through the Divisional, Territory or Regional office concerned {{8.9}}.
+3. **The decision.** The Appellate Authority can decide the matter. The aim is a decision, preferably within 90 days of filing at that office {{8.9}}.
 
 ### Who the Appellate Authority is
 
 | Case | Appellate Authority | Clause |
 |---|---|---|
-| Not SC/ST. The approving authority was below the rank of ED in the State Office | The ED (Retail) at the Head Office, or another ED-level officer there nominated by the company | {{8.9}} |
-| Not SC/ST. The approving authority was of ED rank in the State Office | A committee of 2 EDs nominated by the company | {{8.9}} |
-| SC/ST dealership | A committee of two Directors other than Director (Marketing) | {{8.9}} |
+| Not SC/ST. The termination was approved below ED rank in the State Office | The ED (Retail) at Head Office, or another ED-level officer there whom the company nominates | {{8.9}} |
+| Not SC/ST. The termination was approved by an officer of ED rank in the State Office | A committee of 2 EDs whom the company nominates | {{8.9}} |
+| An SC/ST dealership | A committee of two Directors other than the Director (Marketing) | {{8.9}} |
 
-MDG prints "ED" without spelling it out. General knowledge, not MDG text: at the oil companies it usually means Executive Director. If you are unsure which officer or committee applies to you, ask your oil company's office.
+MDG prints this rank as "ED" and does not spell it out.
 
-### A dated example
+### An illustration with made-up dates
 
 For example, a termination order reaches the dealer on 10 November 2026.
 
@@ -69,20 +68,18 @@ For example, a termination order reaches the dealer on 10 November 2026.
 |---|---|---|
 | 10 Nov 2026 | The termination order is received | |
 | 1 Dec 2026 | In this example, the appeal is filed at the divisional office | {{8.9}} |
-| 10 Dec 2026 | Last day to file: 30 days after receipt of the order | {{8.9}} |
-| 1 Mar 2027 | The appeal is decided, preferably by this date: 90 days after filing | {{8.9}} |
+| 10 Dec 2026 | Last day to file: 30 days after the order is received | {{8.9}} |
+| 1 Mar 2027 | The appeal is to be decided preferably by this date: 90 days after filing | {{8.9}} |
 
-MDG does not say how to count the days. If a date is close, ask your oil company to confirm in writing how it counts.
+MDG does not say how the days are counted.
 
 ## What MDG 2024 leaves open
 
 - **A stay.** The text does not say whether the termination stays in force while the appeal is pending.
 - **The form.** It gives no form for the appeal and does not list the papers to attach.
 - **Higher-ranked approvers.** The appeal rules cover an approving authority below ED rank and one of ED rank in the State Office. They do not say who hears an appeal where the approving authority ranks above that.
-- **Fines and suspensions.** Clause 8.9 speaks of termination only. It does not set out a separate appeal for a suspension or a fine.
+- **Fines and suspensions.** Clause 8.9 speaks of termination only. It sets out no separate appeal for a suspension or a fine.
 - **Courts and leases.** The text says nothing about courts or about premises leases.
-
-> **Note:** this page is general information about what MDG 2024 says. It cannot tell you what to do about an order you have received. For a specific order, speak to a lawyer and ask your oil company's office to confirm the dates.
 
 ## What changed from MDG 2012
 
@@ -99,3 +96,5 @@ MDG 2024 replaced MDG 2012 as last amended on 30.11.2022 (Ver. 7). The appeal ro
 ## Kerosene dealers
 
 For SKO-LDO dealerships, critical irregularities bring termination at the first instance. Clause 8.10 says all other provisions apply as for retail outlets, as applicable, and that any action is taken only after consulting the local Civil Supplies Authorities {{8.10}}. See [kerosene dealer rules](@sko-dealers).
+
+General information, not legal advice. For your own notice, speak to an advocate or your oil company.
