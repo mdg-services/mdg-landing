@@ -59,8 +59,7 @@ export default function Contact({ c }: { c: Dict["contact"] }) {
             </Reveal>
             <Reveal delay={0.06}>
               <h2 className="mt-6 text-mega text-ink" style={{ fontSize: "clamp(38px, 6.2vw, 96px)" }}>
-                {c.headingLead}
-                <br />
+                {c.headingLead} <br />
                 <span className="text-navy-700">{c.headingAccent}</span>
               </h2>
             </Reveal>

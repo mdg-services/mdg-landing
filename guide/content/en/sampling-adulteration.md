@@ -1,6 +1,7 @@
 ---json
 {
   "title": "Adulteration at a petrol pump: meaning, penalty, who pays",
+  "metaTitle": "Adulteration at a petrol pump: penalty, who pays",
   "description": "What Marketing Discipline Guidelines 2024 (MDG 2024) count as adulteration at a petrol pump, the penalty, and who pays for adulterated fuel in a tank.",
   "answer": "Under Marketing Discipline Guidelines 2024 (MDG 2024), the oil companies' rules for their dealers under the dealership agreement, adulteration is a critical irregularity, and the action for it is termination at the first instance, once it is established {{8.2}} {{8.5.2}}. It covers foreign matter in the fuel, a failed lab comparison, and any other test the competent authority issues {{5.1.1}}. Fuel proven adulterated goes to the nearest refinery, and who pays depends on where the adulteration was proven {{5.1.1}}.",
   "faq": [

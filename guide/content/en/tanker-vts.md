@@ -1,7 +1,8 @@
 ---json
 {
   "title": "Tank lorry VTS and route deviation: the dealer's duty under MDG",
-  "description": "Under the Marketing Discipline Guidelines 2024 (MDG 2024), a dealer follows the tank lorry on VTS and reports any deviation before accepting it. What MDG leaves open.",
+  "metaTitle": "Tank lorry VTS and route deviation: MDG rule",
+  "description": "Under Marketing Discipline Guidelines 2024, a dealer follows the tank lorry on VTS and reports any deviation before accepting it. What MDG leaves open.",
   "answer": "Under the Marketing Discipline Guidelines 2024 (MDG 2024), the dealer follows the tank lorry carrying the outlet's supply on VTS, using the link provided. If a deviation shows, the supply location is told immediately, before the lorry is accepted. Further action follows once the deviation and the oil company officials' instructions have been recorded {{1.5(vii)}}. After an unusual deviation in time or route, decant only on further instructions {{2.3}}. A supply location may not fill a lorry whose VTS is missing or not working as prescribed {{3.2}}.",
   "faq": [
     { "q": "What is VTS at a petrol pump?", "a": "MDG does not spell out the letters. General knowledge, not MDG text: VTS usually means vehicle tracking system. In MDG, the dealer follows the lorry through it and it generates deviation reports and alerts {{1.5(vii)}} {{3.2}}." },

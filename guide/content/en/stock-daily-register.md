@@ -1,7 +1,8 @@
 ---json
 {
   "title": "Petrol pump daily stock register: what MDG 2024 requires",
-  "description": "What a petrol pump's daily stock register holds under the Marketing Discipline Guidelines 2024 (MDG 2024): morning readings, dips, water dip, testing litres, receipts.",
+  "metaTitle": "Petrol pump daily stock register: MDG 2024",
+  "description": "What a petrol pump's daily stock register holds under Marketing Discipline Guidelines 2024: morning readings, dips, water dip, testing litres, receipts.",
   "answer": "Under the Marketing Discipline Guidelines 2024 (MDG 2024), the oil company supplies the daily stock register for all products {{1.3(ii)}}, and the dealer adds a morning record of the pump meter readings and each tank's product and water dips {{1.3}}. The nozzle testing litres go in the stock register {{1.4.2(d)}}. Entries after each tanker go in the register or on the stock display board {{1.2(xiii)}}.",
   "faq": [
     { "q": "Which stock register must a petrol pump keep?", "a": "The daily stock register the oil company supplies for all products, plus a morning record of the meter readings and each tank's product and water dips {{1.3}}." },

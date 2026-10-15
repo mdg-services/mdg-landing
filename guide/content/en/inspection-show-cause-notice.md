@@ -1,8 +1,8 @@
 ---json
 {
   "title": "Petrol pump show cause notice under Marketing Discipline Guidelines 2024 (MDG 2024): the timeline",
-  "metaTitle": "Petrol pump show cause notice under MDG 2024: the timeline",
-  "description": "What MDG 2024 says follows an irregularity: a show cause notice within 30 days, 10 days to reply, a speaking order, a hearing before termination, and fines.",
+  "metaTitle": "Petrol pump show cause notice and reply: MDG 2024",
+  "description": "What MDG 2024 says follows an irregularity: a show cause notice within 30 days, 10 days to reply, a speaking order and a hearing before termination.",
   "answer": "Under the Marketing Discipline Guidelines 2024 (MDG 2024), the oil companies' rules for their dealers, a show cause notice is issued within 30 days of the inspection, or within 30 days of the test results if samples were drawn, together with the reports it relies on {{8.5.6}}. The dealer has 10 days from the date of issue to reply {{8.5.7}}. A reasoned speaking order follows, preferably within 45 days of receiving the reply {{8.5.8}}. This is general information, not legal advice.",
   "faq": [
     { "q": "How many days does a dealer get to reply to a show cause notice under MDG?", "a": "10 days from the date the notice is issued {{8.5.7}}. MDG counts from issue, not from the day the notice reaches the dealer." },

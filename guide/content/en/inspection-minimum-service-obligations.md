@@ -1,6 +1,7 @@
 ---json
 {
   "title": "Petrol pump inspection checklist: 20 service obligations",
+  "metaTitle": "Petrol pump inspection checklist: 20 obligations",
   "description": "The 20 customer-service points an inspector marks YES or NO at a petrol pump, in plain words, and what a NO can cost under clause 5.1.18.",
   "answer": "The 20 Minimum Service Obligations are customer-service points listed in a circular dated 20.03.2025. It is a joint format for the dealers of all three oil companies and points back to clause 5.1.18 of the Marketing Discipline Guidelines 2024 (MDG 2024) {{circular}} {{5.1.18}}. The circular sets no penalty of its own: a NO is acted on under 5.1.18, a minor irregularity {{8.4}}, or under the clause that fits the item.",
   "faq": [

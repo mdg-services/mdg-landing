@@ -1,7 +1,8 @@
 ---json
 {
   "title": "Petrol pump stock variation: the permissible limit (MDG 2024)",
-  "description": "Stock variation at a petrol pump under the Marketing Discipline Guidelines 2024 (MDG 2024): the 4% of tank stock, other allowances, and the action beyond the limit.",
+  "metaTitle": "Petrol pump stock variation limit: MDG 2024",
+  "description": "Stock variation at a petrol pump under the Marketing Discipline Guidelines 2024: the 4% of tank stock, other allowances, and the action beyond the limit.",
   "answer": "Under the Marketing Discipline Guidelines 2024 (MDG 2024), a pump's books and dip may differ by 4% of tank stock, plus a handling loss on sales (MS 0.75%, HSD 0.25%, lower beyond a 600 KL annual average) and shrinkage or TVA where they apply {{5.1.11}}. Beyond that, if the sample passes and nothing else is found, the minimum action is 15 days' suspension, then 30 days, then termination {{8.3(iv)}}.",
   "faq": [
     { "q": "What is the permissible stock variation, or stock loss, at a petrol pump?", "a": "4% of tank stock, plus a handling loss on the litres sold, plus shrinkage and TVA where they apply {{5.1.11}}. In the trade, a stock loss is a negative variation, and the clause words its limit as \"up to 4%\", so ask your oil company how it counts the other allowances {{5.1.11}}." },

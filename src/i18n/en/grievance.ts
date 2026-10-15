@@ -24,6 +24,9 @@ export const grievance = {
   /** What this page is for, in plain words, and what happens to what is sent. */
   intro:
     "Report a problem with our service, the Dealer Kavach app, billing or payment, our staff, or how we handle your data. Write what happened. A person from our team will look into it and get back to you.",
+  /** The search-result description: the intro, cut to fit about 155 characters. */
+  metaDescription:
+    "Report a problem with our service, the Dealer Kavach app, billing, our staff or how we handle your data. Someone from our team will look into it and reply.",
   /** Under the intro, ending on a link that starts a call. */
   callLead: "Rather talk to someone?",
   callLink: "Call us",

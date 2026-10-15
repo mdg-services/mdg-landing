@@ -1,8 +1,8 @@
 ---json
 {
   "title": "Repeat offences under MDG 2024: how a second or third instance is counted",
-  "metaTitle": "Repeat offences under MDG 2024: how an instance is counted",
-  "description": "How the Marketing Discipline Guidelines 2024 count a second or third instance over five years, and what follows when several irregularities are found together.",
+  "metaTitle": "MDG second instance: how repeat offences count",
+  "description": "How the Marketing Discipline Guidelines 2024 count a second or third instance over five years, and what follows when several irregularities come together.",
   "answer": "The Marketing Discipline Guidelines 2024 (MDG 2024), the oil companies' rules for their dealers, count back five years from the date a new irregularity is established to decide whether it is the first, second or third instance. Irregularities under the previous guideline inside those five years count {{8.5.5}}. When several irregularities are found together at one outlet, each is counted as an instance in its own class {{8.5.3}}.",
   "faq": [
     {

@@ -1,6 +1,7 @@
 ---json
 {
   "title": "Density at 15°C calculator for petrol and diesel (Table 53B)",
+  "metaTitle": "Density at 15°C calculator for petrol, diesel",
   "description": "Type the hydrometer reading and the temperature to get the density at 15°C by the ASTM 53B method, and compare it with the invoice density. A helper only.",
   "answer": "Type the hydrometer reading and temperature of the same sample to get the density at 15°C by ASTM Table 53B, the method named in the Marketing Discipline Guidelines 2024 (MDG 2024), the oil companies' rules for their dealers. It should be within 3.0 kg/m³ of the invoice density {{1.2(iv)}}. A helper only: every dealer must hold the printed table {{1.5(vi)}}, and the table decides.",
   "faq": [

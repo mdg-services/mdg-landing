@@ -1,6 +1,7 @@
 ---json
 {
   "title": "Totalizer seal and W&M seal at a petrol pump: MDG 2024 rules",
+  "metaTitle": "Totalizer seal and W&M seal: MDG 2024 rules",
   "description": "What MDG 2024 counts as a tampered W&M or totalizer seal, what the dealer checks daily, and what the action is: termination at the first instance.",
   "answer": "Under the Marketing Discipline Guidelines 2024 (MDG 2024), the dealer checks every day that the Weights & Measures (W&M) seals on each dispensing unit's metering unit and totalizer are correct and that its W&M certificate is valid {{1.4.2(a)}}. Tampered seals, a tampered totalizer and unauthorised fittings are critical, with termination at the first instance once established {{8.2}} {{8.5.2}}.",
   "faq": [

@@ -1,8 +1,8 @@
 ---json
 {
   "title": "How to check a petrol pump for cheating: zero, filter paper, complaint book",
-  "metaTitle": "Petrol pump cheating: what you can check and ask for",
-  "description": "Zero before each delivery under MDG 2024, the closing reading in the March 2025 circular, what else a customer can ask for at a pump, and what a miss costs.",
+  "metaTitle": "Petrol pump zero check and cheating: what to check",
+  "description": "Zero before each delivery under MDG 2024, the closing reading in the March 2025 circular, what a customer can ask for at a pump, and what a miss costs.",
   "answer": "Under the Marketing Discipline Guidelines 2024 (MDG 2024), the pump attendant shows the customer the meter at zero before every delivery, and each pump unit carries a message saying so {{1.4.2(f)}} {{5.1.17}}. The closing reading is shown after delivery under the 20 March 2025 circular {{circular}}, and a customer can ask for filter paper {{1.4.1(a)}} and the complaint book {{1.6(iv)}}.",
   "faq": [
     { "q": "How to check petrol pump cheating?", "a": "Ask the attendant to show zero before fuel flows and the closing reading after {{1.4.2(f)}} {{circular}}. Ask for filter paper {{1.4.1(a)}} and the complaint book {{1.6(iv)}}." },

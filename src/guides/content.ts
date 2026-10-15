@@ -62,8 +62,10 @@ export function checkContent(page: GuidePage, lang: Lang, c: PageContent): strin
     if (!ok) errs.push(`${where}: ${msg}`);
   };
   need(typeof c.title === "string" && c.title.length >= 10 && c.title.length <= 110, "title must be 10-110 characters");
-  if (c.metaTitle !== undefined) need(c.metaTitle.length <= 65, "metaTitle must be at most 65 characters");
-  else need(c.title.length <= 65 || page.type === "Hub", "title over 65 characters needs a shorter metaTitle");
+  // The search-result title is the metaTitle (or title) plus " | MDG Services" (15
+  // characters); Google shows about 60-65, so the page's part stays within 50.
+  if (c.metaTitle !== undefined) need(c.metaTitle.length <= 50, `metaTitle must be at most 50 characters (has ${c.metaTitle.length})`);
+  else need(c.title.length <= 50, `title over 50 characters needs a metaTitle of at most 50 (title has ${c.title.length})`);
   need(typeof c.description === "string" && c.description.length >= 70 && c.description.length <= 170, `description must be 70-170 characters (has ${c.description?.length ?? 0})`);
   need(/^\d{4}-\d{2}-\d{2}$/.test(c.updated || ""), "updated must be YYYY-MM-DD");
   if (page.type !== "Legal" && page.type !== "Hub") {

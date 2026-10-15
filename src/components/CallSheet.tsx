@@ -159,9 +159,10 @@ export default function CallSheet() {
             "group fixed bottom-[88px] right-5 z-[60] inline-flex h-12 items-center gap-2 rounded-full bg-navy-700 pl-4 pr-5 " +
             "text-[15px] font-semibold text-white shadow-lift ring-2 ring-inset ring-gold-400/70 transition-transform duration-150 " +
             "hover:bg-navy-800 active:scale-95 sm:bottom-6 sm:left-6 sm:right-auto sm:h-14 sm:pl-5 sm:pr-6" +
-            // A reading page on a phone: no floating pill over the text. The menu and the
-            // Dealer Kavach box on every guide page carry the call.
-            (onGuides ? " max-sm:hidden" : "")
+            // A reading page on a phone or tablet: no floating pill over the text. The
+            // menu and the Dealer Kavach box on every guide page carry the call. From
+            // 1024px the text column leaves the corner clear.
+            (onGuides ? " max-lg:hidden" : "")
           }
         >
           {arrived && !stillMotion() && <span aria-hidden className="assist-halo" />}

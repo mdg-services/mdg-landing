@@ -1,6 +1,7 @@
 ---json
 {
   "title": "Petrol and diesel density range at 15°C: the MDG 2024 limits",
+  "metaTitle": "Petrol pump density range: MDG 2024",
   "description": "Petrol 720–775 kg/m³, diesel 810–845 kg/m³ and biodiesel blends 820–860 kg/m³ at 15°C, as given in MDG 2024, and why the range is not your daily test.",
   "answer": "The Marketing Discipline Guidelines 2024 (MDG 2024) give these density limits at 15°C: petrol (motor spirit) 720–775 kg/m³, diesel (HSD, BS VI up to B7) 810–845 kg/m³ and biodiesel blends B8–B20 820–860 kg/m³ {{7.6}}. A lab tests samples against these limits. Your own daily checks are different: the tanker reading against the invoice density (within ±3.0 kg/m³) and your recorded reference density {{1.2(iv)}} {{5.1.9}}.",
   "faq": [
@@ -8,7 +9,7 @@
     { "q": "What is the density of petrol at 15°C?", "a": "MDG 2024 gives a range, not one figure: 720–775 kg/m³ at 15°C for every BS VI petrol grade it names, E20 included {{7.6}}. The invoice shows the density of the product loaded for you {{2.2.1(iv)}}." },
     { "q": "What is the diesel density range?", "a": "For BS VI diesel (HSD) up to B7, 810–845 kg/m³ at 15°C. For diesel blended with biodiesel, B8 to B20, 820–860 kg/m³ {{7.6}}." },
     { "q": "Where can I find a petrol pump density chart?", "a": "MDG states the limits in clause 7.6 and Annexure 5 {{7.6}} {{annexure 5}}. To bring a reading to 15°C you also need the ASTM density conversion table, which a dealer must hold but MDG does not print {{1.5(vi)}}." },
-    { "q": "If my density is inside the range, am I safe at an inspection?", "a": "Not on that alone. Samples from your outlet are measured against your own recorded density {{2.10}}, and a missing record is an irregularity by itself {{5.1.9}}." }
+    { "q": "If my density is inside the range, am I safe at an inspection?", "a": "Not on that alone. For a sample from your outlet, the density result is measured against the density you recorded for the tank after the last receipt {{2.10}}, and a missing record is an irregularity by itself {{5.1.9}}." }
   ],
   "related": ["density", "density-invoice-check", "density-reference-10am", "tools-density-at-15"],
   "updated": "2026-10-15"
@@ -35,6 +36,6 @@ The range is the specification a lab tests a sample against {{7.6}} {{annexure 5
 
 - **On receipt:** each compartment, converted to 15°C, within ±3.0 kg/m³ of the invoice density {{1.2(iv)}}.
 - **Every morning and after every load:** your own density goes in the register {{1.4.1(c)}} {{1.2(xiv)}}.
-- **At an inspection:** samples from your outlet are compared with your own recorded density {{2.10}}.
+- **At an inspection:** the density result of a sample from your outlet is compared with the density you recorded for the tank after the last receipt, once at least 50 litres have been dispensed {{2.10}}.
 
 See [the density rules in one place](@density) and [the invoice check](@density-invoice-check). To bring a reading to 15°C, use the ASTM table or the [15°C calculator](@tools-density-at-15).

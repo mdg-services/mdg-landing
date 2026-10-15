@@ -1,7 +1,8 @@
 ---json
 {
   "title": "Boards required at a petrol pump: stock, density and price boards",
-  "description": "Boards, notices and stickers that Marketing Discipline Guidelines 2024 (MDG 2024) asks a petrol pump to display, with the clause for each and what a miss costs.",
+  "metaTitle": "Boards required at a petrol pump: MDG 2024",
+  "description": "Boards, notices and stickers that Marketing Discipline Guidelines 2024 require a petrol pump to display, with the clause for each and what a miss costs.",
   "answer": "Marketing Discipline Guidelines 2024 (MDG 2024) asks a dealer to display the opening stock, density, the authorised selling price of every product, a zero message on each pump, the product name on each nozzle, working hours, the complaint-book message, and the dealer's and oil company's contact names and numbers {{1.3(i)}} {{5.1.15}} {{5.1.17}} {{1.6(iv)}} {{1.6(v)}} {{1.6(viii)}}. A missing price, stock, density, pump-sticker, nozzle-name or contact notice is a minor irregularity {{8.4(iii)}}.",
   "faq": [
     { "q": "What boards are required at a petrol pump?", "a": "Opening stock, density, selling prices, the zero message, nozzle product names, working hours, the complaint-book message, contact names and numbers, and the toilet protocol {{1.3(i)}} {{5.1.15}} {{5.1.17}} {{1.6(iv)}} {{1.6(v)}} {{1.6(viii)}} {{5.1.14(b)}}. Your oil company may give a longer list or its own formats." },

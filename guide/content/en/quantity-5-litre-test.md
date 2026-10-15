@@ -1,8 +1,8 @@
 ---json
 {
   "title": "The 5 litre test at a petrol pump: daily nozzle checks under MDG 2024",
-  "metaTitle": "5 litre test at a petrol pump: MDG 2024 nozzle check",
-  "description": "MDG 2024 makes the dealer check every nozzle before sales each day and keep a W&M-verified 5-litre measure. What to record, what to do on a variation, the penalty.",
+  "metaTitle": "Petrol pump 5 litre test: MDG 2024 daily check",
+  "description": "MDG 2024 makes the dealer check every nozzle before sales each day and keep a W&M-verified 5-litre measure: what to record, a variation, the penalty.",
   "answer": "Under the Marketing Discipline Guidelines 2024 (MDG 2024), the dealer tests every nozzle of every dispensing unit before sales begin each day and writes the testing quantity in the stock register {{1.4.2(d)}}. A Weights & Measures (W&M) verified 5-litre measure is kept for pump testing only {{1.4.2(b)}}, and a variation is reported at once and the unit kept off until it is re-stamped {{1.4.2(d)}}.",
   "faq": [
     { "q": "What is the 5 litre test at a petrol pump?", "a": "Our name for two duties together: a W&M-verified 5-litre measure kept for pump testing {{1.4.2(b)}} and a daily check of every nozzle {{1.4.2(d)}}." },

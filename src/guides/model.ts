@@ -13,7 +13,7 @@ import path from "node:path";
 import { Marked, type Renderer, type Tokens } from "marked";
 import { PAGES, PILLARS, VIDEOS, byId, pathOf, type GuidePage, type Lang } from "../../guide/inventory.ts";
 import { RELEASES, LAST_DAY, dateOfDay, dayOf, type Release } from "../../guide/schedule.ts";
-import { SITE, UI } from "../../guide/copy.ts";
+import { SITE, TOPIC_BLURB, UI } from "../../guide/copy.ts";
 import { loadAll, type PageContent } from "./content.ts";
 
 export type { Lang, Release, GuidePage, PageContent };
@@ -145,6 +145,8 @@ function penaltyNotes(md: string, lang: Lang): string {
   return md.replace(/^[ \t]*\{\{\s*penalty-note\s*\}\}[ \t]*$/gim, `\n${box}\n`);
 }
 
+const TABLE_WORD: Record<Lang, string> = { en: "Table", hi: "तालिका" };
+
 function makeMarked(ctx: Ctx, lang: Lang): Marked {
   const md = new Marked({ gfm: true });
   let h2 = 0;
@@ -154,6 +156,29 @@ function makeMarked(ctx: Ctx, lang: Lang): Marked {
       heading(this: Renderer, token: Tokens.Heading) {
         const inner = this.parser.parseInline(token.tokens);
         return token.depth === 2 ? `<h2 id="s${++h2}">${inner}</h2>\n` : `<h${token.depth}>${inner}</h${token.depth}>\n`;
+      },
+      // A table scrolls sideways in its own box (a keyboard can scroll it too).
+      // With three or more columns it is stacked on a phone instead, each row a
+      // small card whose cells carry their column's name (`data-label`), so the
+      // words are never squeezed into a sliver of a column. See `.tw-stack`.
+      table(this: Renderer, token: Tokens.Table) {
+        const names = token.header.map((h) => plainHeading(h.text));
+        const align = (a: Tokens.TableCell["align"]) => (a ? ` align="${a}"` : "");
+        // explicit roles: stacked cells are display:block, which some browsers read as "no longer a table"
+        const head = token.header
+          .map((h) => `<th role="columnheader" scope="col"${align(h.align)}>${this.parser.parseInline(h.tokens)}</th>`)
+          .join("");
+        const rows = token.rows
+          .map(
+            (row) =>
+              `<tr role="row">${row
+                .map((c, i) => `<td role="cell" data-label="${esc(names[i] ?? "")}"${align(c.align)}>${this.parser.parseInline(c.tokens)}</td>`)
+                .join("")}</tr>`,
+          )
+          .join("\n");
+        const label = `${TABLE_WORD[lang]}: ${names.filter(Boolean).join(", ")}`.slice(0, 120);
+        const stack = token.header.length >= 3 ? " tw-stack" : "";
+        return `<div class="tw${stack}" role="group" tabindex="0" aria-label="${esc(label)}"><table role="table"><thead role="rowgroup"><tr role="row">${head}</tr></thead><tbody role="rowgroup">\n${rows}\n</tbody></table></div>\n`;
       },
       link(this: Renderer, token: Tokens.Link) {
         const text = this.parser.parseInline(token.tokens);
@@ -173,12 +198,10 @@ function makeMarked(ctx: Ctx, lang: Lang): Marked {
   return md;
 }
 
-/** The page's Markdown body as HTML: links resolved, tables made to scroll, clause tags drawn. */
+/** The page's Markdown body as HTML: links resolved, tables made to scroll or stack, clause tags drawn. */
 export function renderBody(ctx: Ctx, lang: Lang, body: string): string {
   const md = makeMarked(ctx, lang);
-  let html = md.parse(penaltyNotes(body, lang), { async: false }) as string;
-  html = html.replace(/<table>/g, '<div class="tw"><table>').replace(/<\/table>/g, "</table></div>");
-  return clauseTags(html, lang);
+  return clauseTags(md.parse(penaltyNotes(body, lang), { async: false }) as string, lang);
 }
 
 /** Inline Markdown only (answers, questions): no paragraphs. */
@@ -208,9 +231,24 @@ export function outline(body: string): { id: string; text: string }[] {
   return out;
 }
 
-/** Plain text for structured data: tags and Markdown marks removed. */
-export function stripMd(s: string): string {
-  return s.replace(/\{\{([^}]+)\}\}/g, (_, t) => `MDG ${t}`).replace(/\[([^\]]+)\]\([^)]+\)/g, "$1").replace(/[*_`]/g, "");
+const ENTITIES: Record<string, string> = { amp: "&", lt: "<", gt: ">", quot: '"', apos: "'" };
+
+/**
+ * The words a reader sees, as plain text: `renderInline`'s HTML with its tags
+ * dropped and its entities turned back into characters. Structured data is
+ * built from this, so the FAQ markup is the same text as the visible answer
+ * (clause tags in the page's own language included), never a second version.
+ */
+export function visibleText(ctx: Ctx, lang: Lang, s: string): string {
+  return renderInline(ctx, lang, s)
+    .replace(/<[^>]+>/g, "")
+    .replace(/&(?:#x([0-9a-f]+)|#(\d+)|([a-z]+));/gi, (m, hex: string | undefined, dec: string | undefined, name: string | undefined) => {
+      if (hex) return String.fromCodePoint(parseInt(hex, 16));
+      if (dec) return String.fromCodePoint(Number(dec));
+      return ENTITIES[(name || "").toLowerCase()] ?? m;
+    })
+    .replace(/\s+/g, " ")
+    .trim();
 }
 
 // ── What a page needs to be drawn ────────────────────────────────────────
@@ -263,7 +301,8 @@ export function buildPageModel(ctx: Ctx, r: Release): PageModel {
   const mainId = pillar.main;
   const isMain = mainId === page.id;
   const published = dateOfDay(r.day);
-  const modified = c.updated > published ? c.updated : published;
+  // the same day the sitemap gives (a hub or topic page also changes when a page it lists goes live)
+  const modified = lastModified(ctx, r);
 
   // Breadcrumb: guide home > topic main page > this page
   const crumbs: Crumb[] = [{ name: t.home, href: lang === "hi" ? "/hi" : "/" }];
@@ -275,7 +314,8 @@ export function buildPageModel(ctx: Ctx, r: Release): PageModel {
       if (m) crumbs.push({ name: lang === "hi" ? pillar.hi : pillar.en, href: m.href });
     }
   }
-  crumbs.push({ name: c.title, href: r.path });
+  // the hub is called "Guides" here as it is on every page below it, not by its long headline
+  crumbs.push({ name: page.id === "hub" ? t.guide : c.title, href: r.path });
 
   // Pages under a topic's main page, and the guide's topic list on the hub
   const children: PageModel["children"] = [];
@@ -288,7 +328,7 @@ export function buildPageModel(ctx: Ctx, r: Release): PageModel {
       topics.push({
         href: tgt.href,
         title: lang === "hi" ? PILLARS[k].hi : PILLARS[k].en,
-        description: descriptionOf(ctx, PILLARS[k].main, tgt.lang),
+        description: TOPIC_BLURB[k]?.[lang] ?? descriptionOf(ctx, PILLARS[k].main, tgt.lang),
         count: PAGES.filter((p) => p.pillar === k && target(ctx, p.id, lang)).length,
       });
     }
@@ -299,7 +339,7 @@ export function buildPageModel(ctx: Ctx, r: Release): PageModel {
       if (!tgt) continue;
       extra.push({ href: tgt.href, title: titleOf(ctx, p.id, tgt.lang), description: descriptionOf(ctx, p.id, tgt.lang) });
     }
-    if (extra.length) children.push({ heading: `${t.tools} · ${t.updates}`, cards: extra });
+    if (extra.length) children.push({ heading: t.toolsAndReference, cards: extra });
   } else if (isMain && page.pillar !== "tools") {
     const cards: Card[] = [];
     for (const p of PAGES.filter((p) => p.pillar === page.pillar && p.id !== page.id)) {
@@ -356,6 +396,28 @@ export function buildPageModel(ctx: Ctx, r: Release): PageModel {
   };
 }
 
+/**
+ * The day a page last changed, for the sitemap. A page's own date is its
+ * `updated` day or the day it went live, whichever is later. A page that lists
+ * other pages (the guides hub, a topic's main page) also changes whenever one
+ * of them goes live, so its date is the newest release day among them.
+ */
+export function lastModified(ctx: Ctx, r: Release): string {
+  const published = dateOfDay(r.day);
+  const updated = ctx.content.get(`${r.lang}:${r.page.id}`)!.updated;
+  let latest = updated > published ? updated : published;
+  const isHub = r.page.id === "hub";
+  const listsOthers = isHub || (PILLARS[r.page.pillar].main === r.page.id && r.page.pillar !== "tools");
+  if (listsOthers) {
+    for (const x of releasesOn(ctx.content, ctx.day)) {
+      if (!isHub && x.page.pillar !== r.page.pillar) continue;
+      const d = dateOfDay(x.day);
+      if (d > latest) latest = d;
+    }
+  }
+  return latest;
+}
+
 // ── Structured data ──────────────────────────────────────────────────────
 
 const ORG = {
@@ -368,7 +430,7 @@ const ORG = {
 };
 
 /** Organization, BreadcrumbList, Article / WebPage and (when the page has questions) FAQPage. */
-export function structuredData(m: PageModel): unknown[] {
+export function structuredData(ctx: Ctx, m: PageModel): unknown[] {
   const { page, lang, c, url } = m;
   const ld: unknown[] = [
     { "@context": "https://schema.org", ...ORG },
@@ -397,7 +459,7 @@ export function structuredData(m: PageModel): unknown[] {
     ld.push({
       "@context": "https://schema.org",
       "@type": "FAQPage",
-      mainEntity: c.faq.map((f) => ({ "@type": "Question", name: stripMd(f.q), acceptedAnswer: { "@type": "Answer", text: stripMd(f.a) } })),
+      mainEntity: c.faq.map((f) => ({ "@type": "Question", name: visibleText(ctx, lang, f.q), acceptedAnswer: { "@type": "Answer", text: visibleText(ctx, lang, f.a) } })),
     });
   }
   return ld;

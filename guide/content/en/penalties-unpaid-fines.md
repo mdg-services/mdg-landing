@@ -1,6 +1,7 @@
 ---json
 {
   "title": "Petrol pump fine not paid in 30 days: what MDG 2024 says",
+  "metaTitle": "Petrol pump fine not paid in 30 days: MDG 2024",
   "description": "What happens under the Marketing Discipline Guidelines 2024 if a petrol pump dealer does not pay a fine: 30 days to pay, then suspension, then termination.",
   "answer": "Under the Marketing Discipline Guidelines 2024 (MDG 2024), the oil companies' rules for their dealers, a fine with no suspension attached is due within 30 days of the date of the company's notice. If it is unpaid, sales and supplies are suspended from the 31st day for 15 days. The fine is still to be paid in that time, or the suspension is extended by another 15 days. If it is still unpaid when the extension ends, the dealership is terminated {{8.7}}.",
   "faq": [
@@ -10,7 +11,7 @@
     },
     {
       "q": "Is the fine still due during the suspension?",
-      "a": "Yes. MDG says the fine should be paid within the suspension period, failing which the suspension is extended for another 15 days {{8.7}}."
+      "a": "Yes. If it is still unpaid at the end of the first 15 days, the suspension runs another 15 days {{8.7}}."
     },
     {
       "q": "Does the 30-day count include the day of the notice?",

@@ -1,3 +1,4 @@
+import { Fragment } from "react";
 import { LogoMark } from "./Brand";
 import Icon from "./Icon";
 import CallUs from "./CallUs";
@@ -53,16 +54,20 @@ export default function Hero({ lang }: { lang: Lang }) {
           </div>
 
           <h1 className="mt-7 text-mega" style={{ fontSize: "clamp(44px, 7.2vw, 96px)" }}>
+            {/* the lines are blocks, so the spaces between them cost nothing on screen; they keep the words apart for anything that reads the text */}
             {[t.hero.headline.line1, t.hero.headline.line2].map((line, i) => (
-              <span key={i} className="block overflow-hidden">
-                <span
-                  className={"line-up block " + (i === 1 ? "text-gold-400" : "text-white")}
-                  style={v({ "--d": `${0.1 + i * 0.12}s` })}
-                >
-                  {line}
+              <Fragment key={i}>
+                {i > 0 && " "}
+                <span className="block overflow-hidden">
+                  <span
+                    className={"line-up block " + (i === 1 ? "text-gold-400" : "text-white")}
+                    style={v({ "--d": `${0.1 + i * 0.12}s` })}
+                  >
+                    {line}
+                  </span>
                 </span>
-              </span>
-            ))}
+              </Fragment>
+            ))}{" "}
             <span className="block overflow-hidden">
               <span className="line-up block text-navy-200" style={v({ "--d": "0.34s" })}>
                 {t.hero.headline.line3}

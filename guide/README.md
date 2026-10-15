@@ -48,7 +48,7 @@ shape. A file is a JSON header between `---json` and `---`, then Markdown.
 ---json
 {
   "title": "The H1, in the words a dealer would search (10-110 chars)",
-  "metaTitle": "Shorter title for search results, only if title > 65 chars",
+  "metaTitle": "Search-result title, at most 50 chars, needed when title > 50",
   "description": "One or two sentences for search results and cards (70-170 chars).",
   "answer": "2-3 sentences that answer the page's main question on their own, with the numbers and {{clause}} tags (80-700 chars).",
   "faq": [ { "q": "A real question people search", "a": "A complete answer of 1-3 sentences, with {{clause}} tags." } ],

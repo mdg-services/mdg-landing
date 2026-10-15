@@ -1,7 +1,7 @@
 ---json
 {
   "title": "Petrol pump self-inspection checklist (MDG 2024)",
-  "description": "Tick YES or NO for the 20 minimum service obligations, the records and the daily checks. Each NO shows its MDG clause and class. Saved only in your browser.",
+  "description": "Tick YES or NO for the 20 minimum service obligations, the records and the daily checks. Each NO shows its clause and class. Saved only in your browser.",
   "answer": "Mark each line YES or NO: the 20 minimum service obligations in the circular dated 20.03.2025, the records in the Marketing Discipline Guidelines 2024 (MDG 2024), the oil companies' rules for their dealers, and its daily checks. Each NO shows its clause and class: critical, major or minor {{circular}} {{5.1.12}} {{8.1}}. The count is for your own use, not an inspection result, and an irregularity must be established first {{8.5.2}}.",
   "faq": [
     { "q": "What is the petrol pump inspection checklist under MDG 2024?", "a": "MDG 2024 sets out no single checklist. This page joins the circular's 20 service obligations, the records and the daily checks into one YES or NO list {{circular}} {{5.1.12}} {{1.4.1(c)}}." },
@@ -24,7 +24,7 @@ Every line below is in our own words. The 20 service points come from a circular
 ## Run through your outlet
 
 <div class="tool" id="si">
-<style>#si .ck{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:flex-start;padding:10px 6px;border-bottom:1px solid #E4E6F1}#si .ck.no{background:#FFF4F2}#si .t{flex:1 1 220px}#si .b{display:flex;gap:6px}#si .b button{margin:0;padding:6px 14px;min-width:60px;background:#fff;color:#2C2E80;border:1px solid #2C2E80}#si .b button[aria-pressed=true]{color:#fff;background:#0E7C5A;border-color:#0E7C5A}#si .b button.n[aria-pressed=true]{background:#B42318;border-color:#B42318}#si .nt{flex:1 1 100%;font-size:13.5px;line-height:1.45;color:#3D3F66}#si h3{margin:20px 0 2px}#si h3:first-of-type{margin-top:12px}#si .sum{position:sticky;bottom:0;background:#fff;border-top:2px solid #2C2E80;padding:8px 6px;margin-top:10px;font-weight:700}#si .clr{background:#fff;color:#2C2E80;border:1px solid #2C2E80}</style>
+<style>#si .ck{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:flex-start;padding:10px 6px;border-bottom:1px solid #E4E6F1}#si .ck.no{background:#FFF4F2}#si .t{flex:1 1 220px}#si .b{display:flex;gap:6px}#si .b button{margin:0;padding:6px 14px;min-width:60px;background:#fff;color:#2C2E80;border:1px solid #2C2E80}#si .b button[aria-pressed=true]{color:#fff;background:#0E7C5A;border-color:#0E7C5A}#si .b button.n[aria-pressed=true]{background:#B42318;border-color:#B42318}#si .nt{flex:1 1 100%;font-size:13.5px;line-height:1.45;color:#3D3F66}#si h3{margin:20px 0 2px}#si h3:first-of-type{margin-top:12px}#si .sum{position:sticky;bottom:0;background:#fff;border-top:2px solid #2C2E80;padding:8px 6px;margin-top:10px;font-weight:700}#si .clr{background:#fff;color:#2C2E80;border:1px solid #2C2E80}@media(max-width:639px){#si .sum{padding-right:76px}}</style>
 <p style="margin:0 0 4px"><b>For your own use.</b> This is a helper. It is not the oil company's inspection or its inspection form, and the oil company's own inspection decides. Your answers stay in this browser only.</p>
 <p style="margin:0">Tap Yes or No on each line. Tap the same button again to clear it.</p>
 <h3>At the pumps and on the forecourt</h3>
@@ -78,7 +78,7 @@ Every line below is in our own words. The 20 service points come from a circular
 <div class="ck" role="group" aria-labelledby="t-d8" data-i="d8" data-k="open" data-c="1.4.2(e)"><span class="t" id="t-d8">Pumps, hoses and nozzles get a daily visual check for leaks, and any leak is reported to the oil company straight away.</span><span class="b"><button type="button" class="y" data-v="1">Yes</button><button type="button" class="n" data-v="0">No</button></span><small class="nt" style="display:none"></small></div>
 <div class="ck" role="group" aria-labelledby="t-d9" data-i="d9" data-k="open" data-c="1.5(vi)"><span class="t" id="t-d9">Calibrated hydrometers and thermometers, a copy of the ASTM density conversion table and whatever other testing kit applies to the outlet are on site, in working condition and ready for an inspector who asks.</span><span class="b"><button type="button" class="y" data-v="1">Yes</button><button type="button" class="n" data-v="0">No</button></span><small class="nt" style="display:none"></small></div>
 <div class="sum" id="si-sum" role="status" aria-live="polite"></div>
-<h3 id="si-fh" style="margin-top:14px"></h3>
+<h3 id="si-fh" style="margin-top:14px">No “No” answers yet.</h3>
 <ol id="si-fix"></ol>
 <button type="button" class="clr" id="si-clr">Clear all answers</button>
 <noscript><p>This checklist needs JavaScript.</p></noscript>

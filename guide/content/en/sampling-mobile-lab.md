@@ -1,7 +1,8 @@
 ---json
 {
   "title": "Mobile lab at a petrol pump: what it tests and what follows",
-  "description": "What a mobile lab does at a petrol pump under Marketing Discipline Guidelines 2024 (MDG 2024): surprise checks, the tests, and what follows a failed sample.",
+  "metaTitle": "Mobile lab at a petrol pump: what it tests",
+  "description": "What a mobile lab does at a petrol pump under Marketing Discipline Guidelines 2024: surprise checks, the tests, and what follows a failed sample.",
   "answer": "Under Marketing Discipline Guidelines 2024 (MDG 2024), the oil companies' rules for their dealers under the dealership agreement, a mobile lab makes surprise checks. It draws nozzle samples of petrol and diesel from every tank and runs clinical tests: appearance, colour, density at 15°C and distillation, plus kinematic viscosity at 40°C for diesel {{2.4.4}} {{7.1}} {{7.4}}. The tests run whatever the density result. No further action is taken on a passing sample. For a failed one, meter and dip readings are recorded, the dealer is advised to suspend sales of that product, and the samples follow the chapter 2 route {{2.4.4}} {{7.6.1}}.",
   "faq": [
     { "q": "What is a mobile lab at a petrol pump?", "a": "It is a testing unit that visits outlets to check petrol, diesel and lube samples by surprise. It works for the oil industry as a whole and carries the logos of all three oil companies, on a visit programme drawn up by the State Level Coordinator. An individual oil company may also run its own {{7.1}} {{7.2}}." },

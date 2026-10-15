@@ -1,8 +1,8 @@
 ---json
 {
   "title": "Marketing Discipline Guidelines 2024 (MDG 2024): the rules for petrol pump dealers",
-  "metaTitle": "Marketing Discipline Guidelines 2024 (MDG 2024), explained",
-  "description": "Marketing Discipline Guidelines 2024 (MDG 2024) in plain words: what the oil companies' dealer rules cover, who must follow them and how irregularities are graded.",
+  "metaTitle": "Marketing Discipline Guidelines 2024 (MDG 2024)",
+  "description": "The Marketing Discipline Guidelines 2024 (MDG 2024) in plain words: what the dealer rules cover, who must follow them, how irregularities are graded.",
   "answer": "Marketing Discipline Guidelines 2024 (MDG 2024) are the public-sector oil companies' rules for their retail outlet (petrol pump) and kerosene dealers. The edition in force took effect on 24.10.2024 and replaced MDG 2012 {{cover page}}. Every irregularity MDG lists is graded critical, major or minor, and the grade sets the first action {{8.1}}.",
   "faq": [
     {

@@ -41,6 +41,8 @@ export default function GuidePage({ ctx, release }: { ctx: Ctx; release: Release
   const m = buildPageModel(ctx, release);
   const { page, lang, c } = m;
   const t = UI[lang];
+  /** A full stop in the page's own script */
+  const stop = lang === "hi" ? "।" : ".";
   const otherLang: Lang = lang === "en" ? "hi" : "en";
   // The switch goes to this page's twin; with no twin live, to the other language's guides.
   const twin = m.twin?.href ?? target(ctx, "hub", otherLang)?.href ?? homeHref(otherLang);
@@ -65,7 +67,7 @@ export default function GuidePage({ ctx, release }: { ctx: Ctx; release: Release
 
   return (
     <div className="min-h-screen bg-paper text-ink">
-      <JsonLd data={structuredData(m)} />
+      <JsonLd data={structuredData(ctx, m)} />
       <Navbar twin={twin} current="guides" />
 
       <main>
@@ -79,7 +81,7 @@ export default function GuidePage({ ctx, release }: { ctx: Ctx; release: Release
           />
           <div className="wrap-narrow relative py-12 sm:py-14 md:py-16">
             <Enter>
-              <nav aria-label={lang === "hi" ? "नेविगेशन पथ" : "Breadcrumb"} className="eyebrow-light">
+              <nav aria-label={lang === "hi" ? "नेविगेशन पथ" : "Breadcrumb"} className="eyebrow-light guide-label">
                 <ol className="flex flex-wrap items-center gap-x-2.5 gap-y-1">
                   {m.crumbs.slice(0, -1).map((b, i) => (
                     <li key={b.href} className="flex items-center gap-2.5">
@@ -105,7 +107,7 @@ export default function GuidePage({ ctx, release }: { ctx: Ctx; release: Release
             {answer && (
               <Enter delay={0.12}>
                 <div className="mt-7 rounded-2xl border border-white/15 bg-white/[0.06] p-5 backdrop-blur sm:p-6">
-                  <p className="eyebrow-light">{t.shortAnswer}</p>
+                  <p className="eyebrow-light guide-label">{t.shortAnswer}</p>
                   <p
                     className="guide-answer mt-3 text-[16px] leading-[1.65] text-navy-50 sm:text-[17px]"
                     dangerouslySetInnerHTML={{ __html: answer }}
@@ -124,13 +126,15 @@ export default function GuidePage({ ctx, release }: { ctx: Ctx; release: Release
 
         {/* the reading column */}
         <article className="wrap-narrow pb-16 pt-8 sm:pb-20 sm:pt-10">
-          <p className="guide-checked mb-8 font-mono text-[12px] leading-[1.6] text-ink-muted">
-            {t.checked} {longDate(c.updated, lang)}. {t.published}
+          <p className="guide-checked guide-label mb-8 font-mono text-[12px] leading-[1.6] text-ink-muted">
+            {t.checked} {longDate(c.updated, lang)}
+            {stop} {t.published} {longDate(m.published, lang)}
+            {stop}
           </p>
 
           {sections.length >= TOC_FROM && (
             <nav aria-label={ON_THIS_PAGE[lang]} className="guide-toc">
-              <p className="eyebrow">{ON_THIS_PAGE[lang]}</p>
+              <p className="eyebrow guide-label">{ON_THIS_PAGE[lang]}</p>
               <ul>
                 {sections.map((sec) => (
                   <li key={sec.id}>
@@ -141,7 +145,8 @@ export default function GuidePage({ ctx, release }: { ctx: Ctx; release: Release
             </nav>
           )}
 
-          {hubFirst && <div className="-mt-14">{groups}</div>}
+          {/* the groups bring their own top margin (mt-14); pull back 1.5rem of it so the gap under the checked line matches the other pages */}
+          {hubFirst && <div className="-mt-6">{groups}</div>}
 
           <div className={hubFirst ? "guide-prose mt-14" : "guide-prose"} dangerouslySetInnerHTML={{ __html: body }} />
           {script && <ToolScript code={script} />}
@@ -163,7 +168,7 @@ export default function GuidePage({ ctx, release }: { ctx: Ctx; release: Release
               <div className="grid gap-3 sm:grid-cols-2">
                 {m.videos.map((v) => (
                   <a key={v.href} href={v.href} rel="noopener" className="guide-card group">
-                    <span className="eyebrow">{t.video} · 1 min</span>
+                    <span className="eyebrow guide-label">{t.video} · 1 min</span>
                     <strong className="mt-3 block font-display text-[17px] font-semibold leading-snug text-ink group-hover:text-navy-700">
                       {v.title}
                     </strong>
@@ -227,7 +232,7 @@ export default function GuidePage({ ctx, release }: { ctx: Ctx; release: Release
               style={{ background: "radial-gradient(circle, rgba(245,165,36,.18), transparent 60%)" }}
             />
             <div className="relative">
-              <h2 id="guide-ad" className="eyebrow-light !text-gold-300">
+              <h2 id="guide-ad" className="eyebrow-light guide-label !text-gold-300">
                 {t.ctaTitle}
               </h2>
               <p className="mt-4 max-w-prose2 text-[16px] leading-[1.65] text-navy-100 sm:text-[17px]">{t.cta}</p>
@@ -255,7 +260,7 @@ export default function GuidePage({ ctx, release }: { ctx: Ctx; release: Release
                 ))}
                 {m.disclaimerHref && (
                   <p className="mt-3">
-                    <a href={m.disclaimerHref} className="guide-link">
+                    <a href={m.disclaimerHref} className="guide-link tap-pad">
                       {t.disclaimerLink}
                     </a>
                   </p>
@@ -263,10 +268,10 @@ export default function GuidePage({ ctx, release }: { ctx: Ctx; release: Release
               </>
             )}
             <SmallLinks m={m} />
-            <p className="mt-5">{t.company}</p>
-            <p className="mt-1">
+            {/* who publishes (company and CIN) is in the disclaimer above and the site footer below; not a third time */}
+            <p className="mt-5">
               {t.report}:{" "}
-              <a href={`mailto:${EMAIL}`} className="guide-link">
+              <a href={`mailto:${EMAIL}`} className="guide-link tap-pad">
                 {EMAIL}
               </a>
             </p>
@@ -279,43 +284,49 @@ export default function GuidePage({ ctx, release }: { ctx: Ctx; release: Release
   );
 }
 
+/**
+ * Cards under a heading. The title is the link (so a link's words are the page's
+ * name, not a title and description run together) and a stretched `::after`
+ * makes the whole card tappable; the description and the page count sit beside
+ * it as ordinary text. See `.guide-card-link` in index.css.
+ */
 function CardGrid({ cards, lang }: { cards: Card[]; lang: Lang }) {
   const t = UI[lang];
   return (
     <div className="grid gap-3 sm:grid-cols-2">
       {cards.map((card) => (
-        <a key={card.href} href={card.href} className="guide-card group">
+        <div key={card.href} className="guide-card group relative">
           <strong className="block font-display text-[17px] font-semibold leading-snug text-ink group-hover:text-navy-700">
-            {card.title}
+            <a href={card.href} className="guide-card-link">
+              {card.title}
+            </a>
             {card.otherLang && <span className="ml-2 text-[13px] font-normal text-ink-muted">({t.english})</span>}
           </strong>
           {card.description && <span className="mt-2 block text-[14.5px] leading-[1.55] text-ink-soft">{card.description}</span>}
           {card.count !== undefined && (
-            <small className="mt-3 block font-mono text-[11px] uppercase tracking-[0.14em] text-ink-muted">
+            <small className="guide-label mt-3 block font-mono text-[11px] uppercase tracking-[0.14em] text-ink-muted">
               {card.count} {card.count === 1 ? t.page : t.pages}
             </small>
           )}
-        </a>
+        </div>
       ))}
     </div>
   );
 }
 
-/** The guides hub, each live topic, the updates page and the site's own pages: links on every page, for readers and for crawlers. */
+/** The guides hub, each live topic and the updates page: links on every page, for readers and for crawlers. (Home and Privacy are in the site footer below.) */
 function SmallLinks({ m }: { m: PageModel }) {
   const t = UI[m.lang];
   const links: { href: string; label: string }[] = [
     ...(m.hub ? [{ href: m.hub.href, label: t.guide }] : []),
     ...m.pillarLinks,
     ...(m.updatesHref ? [{ href: m.updatesHref, label: t.updates }] : []),
-    { href: homeHref(m.lang), label: t.home },
-    { href: "/privacy", label: t.privacy },
   ];
   return (
-    <ul className="mt-5 flex flex-wrap gap-x-5 gap-y-2 text-[13px]">
+    <ul className="mt-5 flex flex-wrap gap-x-5 text-[13px]">
       {links.map((l) => (
         <li key={l.href}>
-          <a href={l.href} className="guide-link">
+          <a href={l.href} className="guide-link inline-flex min-h-[32px] items-center">
             {l.label}
           </a>
         </li>

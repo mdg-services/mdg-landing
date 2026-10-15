@@ -1,7 +1,8 @@
 ---json
 {
   "title": "Petrol pump complaint book and how to complain (MDG 2024)",
-  "description": "Marketing Discipline Guidelines 2024 (MDG 2024) asks for a complaint book and displayed contact numbers at a petrol pump. How to complain, and what a miss costs.",
+  "metaTitle": "Petrol pump complaint book and complaint number",
+  "description": "Marketing Discipline Guidelines 2024 require a complaint book and displayed contact numbers at a petrol pump. How to complain, and what a miss costs.",
   "answer": "Under Marketing Discipline Guidelines 2024 (MDG 2024), a petrol pump keeps a suggestion/complaint book, hands it to a customer on request, and displays a message that it is available {{1.6(iv)}}. It also displays the dealer's and the oil company's contact names and numbers {{1.6(viii)}}. Not keeping or handing over the book is a minor irregularity {{5.1.17}} {{8.4(iii)(c)}}.",
   "faq": [
     { "q": "How do I make a complaint against a petrol pump?", "a": "Ask the dealer for the complaint book, which must be handed over on request {{1.6(iv)}}, or call the oil company person whose name and number are displayed {{1.6(viii)}}." },

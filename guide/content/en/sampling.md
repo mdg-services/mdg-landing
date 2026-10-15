@@ -1,6 +1,7 @@
 ---json
 {
   "title": "3-tier sampling at a petrol pump: who holds which sample",
+  "metaTitle": "3-tier sampling at a petrol pump: MDG 2024",
   "description": "How 3-tier sampling works under Marketing Discipline Guidelines 2024 (MDG 2024): the three samples, who draws and keeps each, and how long they are kept.",
   "answer": "Under Marketing Discipline Guidelines 2024 (MDG 2024), the oil companies' rules for their dealers under the dealership agreement, fuel is sampled at three points, and the lab compares the three samples to show that what an outlet sells is what its oil company supplied {{2.1}}. They are a supply location sample, a tank lorry sample the dealer keeps from every load, and a nozzle sample an inspector draws {{2.5(G)}}. Samples should preferably reach the lab in 10 days, be tested in the next 15, and be reported to the dealer in 5 more {{2.10}}.",
   "faq": [

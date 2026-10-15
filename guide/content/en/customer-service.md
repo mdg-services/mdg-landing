@@ -1,7 +1,8 @@
 ---json
 {
   "title": "What a petrol pump must provide to customers under MDG 2024",
-  "description": "Air, toilet, phone, first aid box, drinking water and complaint book: what Marketing Discipline Guidelines 2024 (MDG 2024) and a March 2025 circular ask of a dealer.",
+  "metaTitle": "Petrol pump free facilities and customer rights",
+  "description": "Air, toilet, phone, first aid box, drinking water and complaint book: what MDG 2024 and a March 2025 circular require of a petrol pump dealer.",
   "answer": "Under Marketing Discipline Guidelines 2024 (MDG 2024), a dealer gives every customer a quality product in the correct quantity at the correct price {{1.6(i)}}, plus air {{1.6(ii)}}, a clean toilet {{1.6(vi)}}, a telephone {{1.6(vii)}}, a first aid box {{1.6(ix)}} and a complaint book {{1.6(iv)}}. A circular of 20.03.2025 adds drinking water and digital payment {{circular}}. A missing facility is a minor irregularity: a warning-cum-guidance letter, then Rs 10,000, then Rs 25,000 per irregularity {{8.4}}. These are minimum amounts {{8.5.1}}.",
   "faq": [
     { "q": "Is air filling at a petrol pump free?", "a": "MDG 2024 asks the dealer to provide air during the outlet's operating hours, and the circular asks for it to be manned {{1.6(ii)}} {{5.1.14(a)}} {{circular}}. The text does not say whether a charge may be made, so ask your oil company." },

@@ -1,7 +1,8 @@
 ---json
 {
   "title": "Water in the underground tank of a petrol pump: what to do",
-  "description": "What MDG 2024 tells a dealer to do when water shows in an underground tank: the daily dip, who to tell, seepage repairs and the ethanol check before sales resume.",
+  "metaTitle": "Water in petrol pump underground tank: what to do",
+  "description": "What MDG 2024 tells a dealer to do when water shows in an underground tank: the daily dip, who to tell, seepage repairs and the ethanol check.",
   "answer": "Under the Marketing Discipline Guidelines 2024 (MDG 2024), the dealer records a water dip every day and reports any water at once to the controlling company office {{1.4.1(b)}}. The company's maintenance representative dips the tanks on every visit, and steps are taken to remove any water found {{4.4}}. For ethanol-blended petrol, the ethanol content is checked after the water is out. If it is outside the desired range, sales stop {{4.3(c)}}.",
   "faq": [
     { "q": "Water found in petrol tank: what should I do?", "a": "Report it at once to the controlling company office {{1.4.1(b)}}. Steps are then taken to remove the water {{4.4}}, and for ethanol-blended petrol the ethanol content is checked before the product is released {{4.3(c)}}." },

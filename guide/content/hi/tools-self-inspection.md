@@ -24,7 +24,7 @@
 ## अपने आउटलेट पर भरें
 
 <div class="tool" id="si">
-<style>#si .ck{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:flex-start;padding:10px 6px;border-bottom:1px solid #E4E6F1}#si .ck.no{background:#FFF4F2}#si .t{flex:1 1 220px}#si .b{display:flex;gap:6px}#si .b button{margin:0;padding:6px 14px;min-width:60px;background:#fff;color:#2C2E80;border:1px solid #2C2E80}#si .b button[aria-pressed=true]{color:#fff;background:#0E7C5A;border-color:#0E7C5A}#si .b button.n[aria-pressed=true]{background:#B42318;border-color:#B42318}#si .nt{flex:1 1 100%;font-size:13.5px;line-height:1.45;color:#3D3F66}#si h3{margin:20px 0 2px}#si h3:first-of-type{margin-top:12px}#si .sum{position:sticky;bottom:0;background:#fff;border-top:2px solid #2C2E80;padding:8px 6px;margin-top:10px;font-weight:700}#si .clr{background:#fff;color:#2C2E80;border:1px solid #2C2E80}</style>
+<style>#si .ck{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:flex-start;padding:10px 6px;border-bottom:1px solid #E4E6F1}#si .ck.no{background:#FFF4F2}#si .t{flex:1 1 220px}#si .b{display:flex;gap:6px}#si .b button{margin:0;padding:6px 14px;min-width:60px;background:#fff;color:#2C2E80;border:1px solid #2C2E80}#si .b button[aria-pressed=true]{color:#fff;background:#0E7C5A;border-color:#0E7C5A}#si .b button.n[aria-pressed=true]{background:#B42318;border-color:#B42318}#si .nt{flex:1 1 100%;font-size:13.5px;line-height:1.45;color:#3D3F66}#si h3{margin:20px 0 2px}#si h3:first-of-type{margin-top:12px}#si .sum{position:sticky;bottom:0;background:#fff;border-top:2px solid #2C2E80;padding:8px 6px;margin-top:10px;font-weight:700}#si .clr{background:#fff;color:#2C2E80;border:1px solid #2C2E80}@media(max-width:639px){#si .sum{padding-right:76px}}</style>
 <p style="margin:0 0 4px"><b>सिर्फ़ आपके अपने इस्तेमाल के लिए।</b> यह मददगार टूल है। यह तेल कंपनी का इंस्पेक्शन या उसका इंस्पेक्शन फ़ॉर्म नहीं है, और फ़ैसला तेल कंपनी का अपना इंस्पेक्शन ही करता है। आपके जवाब सिर्फ़ इसी ब्राउज़र में रहते हैं।</p>
 <p style="margin:0">हर लाइन पर हाँ या नहीं दबाएँ। वही बटन दोबारा दबाने से जवाब हट जाता है।</p>
 <h3>पंपों पर और फ़ोरकोर्ट में</h3>
@@ -78,7 +78,7 @@
 <div class="ck" role="group" aria-labelledby="t-d8" data-i="d8" data-k="open" data-c="1.4.2(e)"><span class="t" id="t-d8">पंप, होज़ और नोज़ल की लीक के लिए रोज़ आँख से जाँच होती है, और लीक की सूचना तुरंत तेल कंपनी को दी जाती है।</span><span class="b"><button type="button" class="y" data-v="1">हाँ</button><button type="button" class="n" data-v="0">नहीं</button></span><small class="nt" style="display:none"></small></div>
 <div class="ck" role="group" aria-labelledby="t-d9" data-i="d9" data-k="open" data-c="1.5(vi)"><span class="t" id="t-d9">कैलिब्रेटेड हाइड्रोमीटर और थर्मामीटर, ASTM डेंसिटी कन्वर्ज़न टेबल और जो भी और जाँच के उपकरण लागू हों, आउटलेट पर चालू हालत में हैं, और माँगने पर इंस्पेक्टर को देने के लिए तैयार हैं।</span><span class="b"><button type="button" class="y" data-v="1">हाँ</button><button type="button" class="n" data-v="0">नहीं</button></span><small class="nt" style="display:none"></small></div>
 <div class="sum" id="si-sum" role="status" aria-live="polite"></div>
-<h3 id="si-fh" style="margin-top:14px"></h3>
+<h3 id="si-fh" style="margin-top:14px">अभी कोई “नहीं” जवाब नहीं।</h3>
 <ol id="si-fix"></ol>
 <button type="button" class="clr" id="si-clr">सारे जवाब मिटाएँ</button>
 <noscript><p>इस चेकलिस्ट के लिए JavaScript चाहिए।</p></noscript>

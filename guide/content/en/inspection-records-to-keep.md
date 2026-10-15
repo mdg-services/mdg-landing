@@ -1,7 +1,7 @@
 ---json
 {
   "title": "Petrol pump records to keep under Marketing Discipline Guidelines 2024 (MDG 2024), and for how long",
-  "metaTitle": "Petrol pump records to keep under MDG 2024, and for how long",
+  "metaTitle": "Petrol pump records to keep under MDG 2024",
   "description": "Which records a petrol pump must keep under MDG 2024, how long each one is kept, what is written each day, and what missing records can cost.",
   "answer": "The Marketing Discipline Guidelines 2024 (MDG 2024) ask a pump to keep the oil company's daily sales register, the density register, pump maintenance records, and purchase invoices and sales bills for this and the previous financial year, the inspection record for the previous five years, and the licences needed to run the outlet {{5.1.12}}. Records missing since the last inspection are a major irregularity. If only older records are missing, it is minor {{8.3}} {{8.4}}.",
   "faq": [

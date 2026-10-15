@@ -1,7 +1,8 @@
 ---json
 {
   "title": "Positive vs negative stock variation at a petrol pump",
-  "description": "How the Marketing Discipline Guidelines 2024 (MDG 2024) treat extra fuel and missing fuel in a tank differently: sales, samples, action, and the usual causes.",
+  "metaTitle": "Positive vs negative stock variation at a pump",
+  "description": "How the Marketing Discipline Guidelines 2024 treat extra fuel and missing fuel in a tank differently: sales, samples, action, and the usual causes.",
   "answer": "Under the Marketing Discipline Guidelines 2024 (MDG 2024), a positive variation beyond the limit (more fuel in the tank than the books show) stops sales and supplies of all products at once and sends samples to the lab. A negative variation beyond the limit (less fuel) lets sales continue while the dealer explains, and supply stops if the oil company does not find the explanation satisfactory {{5.1.11}}.",
   "faq": [
     { "q": "What happens if a petrol pump shows excess stock?", "a": "Within the permissible limit, nothing under this clause. Beyond it, samples go to the lab and sales and supplies of all products stop at once {{5.1.11}}." },

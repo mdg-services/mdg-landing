@@ -1,6 +1,7 @@
 ---json
 {
   "title": "Filter paper test for petrol: what MDG 2024 requires a dealer",
+  "metaTitle": "Filter paper test for petrol: MDG 2024 rule",
   "description": "MDG 2024 makes a dealer keep Whatman 2 filter paper for petrol and give it to any customer who asks. What the rule says and what a failed test sets off.",
   "answer": "Under the Marketing Discipline Guidelines 2024 (MDG 2024), the dealer must keep Whatman 2 filter paper for checking the quality of MS (petrol) and hand it to a customer who asks. A message about it goes on the Customer Education board or poster {{1.4.1(a)}}. If the test fails, the oil company draws samples, and sales and supplies of every product are suspended while they go to the lab {{2.2.2.2}} {{2.5(K)}}.",
   "faq": [
@@ -16,7 +17,7 @@
 ---
 ## What MDG requires of the dealer
 
-On filter paper, MDG asks for three things {{1.4.1(a)}}:
+On filter paper, MDG requires three things of the dealer {{1.4.1(a)}}:
 
 - **Hold the paper.** Keep Whatman 2 filter paper for checking the quality of MS, which is petrol.
 - **Hand it over when asked.** A customer who wants to check the petrol can ask for it.
@@ -36,6 +37,6 @@ The clause names MS only. See [the density rules](@density). To check quantity r
 
 - **The method.** MDG gives no steps, waiting time or description of a pass. Ask your oil company for its method.
 - **The weight of the test.** MDG groups it with the indicative tests, and a joint industry team can take samples whatever such a test shows, even a clean paper {{2.4.3}}. Action follows the lab results {{2.5(K)}}.
-- **A missing paper.** It is not listed as an irregularity. For unlisted matters the oil company acts after an enquiry {{8.5.4}}. Ask your oil company how it treats it.
+- **A missing paper.** MDG's irregularity lists do not name it. Point 14 of the 20.03.2025 circular has the inspector mark a "Q&Q kit" YES or NO {{circular}}, and MDG does not say what the kit holds, so ask your oil company whether the paper counts. For unlisted matters the oil company acts after an enquiry {{8.5.4}}.
 
 General information, not legal advice. For your own notice, speak to an advocate or your oil company.

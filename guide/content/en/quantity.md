@@ -1,7 +1,8 @@
 ---json
 {
   "title": "Petrol pump checking, meters and short delivery under MDG 2024",
-  "description": "What MDG 2024 requires on fuel quantity: daily seal and nozzle checks, the 5-litre measure, zero before delivery, and what short delivery or tampering costs.",
+  "metaTitle": "Petrol pump checking and short delivery: MDG 2024",
+  "description": "What MDG 2024 requires for quantity: daily seal and nozzle checks, the 5-litre measure, zero before delivery, and what short delivery or tampering costs.",
   "answer": "Under the Marketing Discipline Guidelines 2024 (MDG 2024), the dealer checks the Weights & Measures (W&M) seals and certificate of every dispensing unit, tests every nozzle before the first sale each day, keeps a W&M-verified 5-litre measure and brings the meter back to zero before each delivery {{1.4.2(a)}} {{1.4.2(b)}} {{1.4.2(d)}} {{1.4.2(f)}}. A pump found short with its seals intact is a minor irregularity {{8.4(iii)(h)}}; a tampered seal, totalizer or fitting is critical, with termination at the first instance once established {{8.2}} {{8.5.2}}.",
   "faq": [
     { "q": "How is a petrol pump checked?", "a": "The dealer checks the W&M seals and certificate and tests every nozzle each day {{1.4.2(a)}} {{1.4.2(d)}}. Oil company officers and government authorities can also check the outlet {{8.7}}." },

@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 import { guideNow } from "@/guides/clock";
 import { SITE_PAGES } from "../guide/copy.ts";
-import { SITE, contextAt, dateOfDay, releasesOn } from "@/guides/model";
+import { SITE, contextAt, lastModified, releasesOn } from "@/guides/model";
 
 /**
  * The sitemap lists the site's own pages and the guide pages that are live
@@ -18,10 +18,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
   return [
     // the home page is listed as the bare origin, the same address its canonical and hreflang give
     ...[...SITE_PAGES, ...HINDI_PAGES].map((p) => ({ url: p === "/" ? SITE : `${SITE}${p}` })),
-    ...releasesOn(ctx.content, ctx.day).map((r) => {
-      const updated = ctx.content.get(`${r.lang}:${r.page.id}`)!.updated;
-      const published = dateOfDay(r.day);
-      return { url: `${SITE}${r.path}`, lastModified: updated > published ? updated : published };
-    }),
+    ...releasesOn(ctx.content, ctx.day).map((r) => ({ url: `${SITE}${r.path}`, lastModified: lastModified(ctx, r) })),
   ];
 }

@@ -1,7 +1,7 @@
 ---json
 {
   "title": "Marketing Discipline Guidelines 2024 (MDG 2024) glossary: terms and full forms",
-  "metaTitle": "Marketing Discipline Guidelines glossary: MDG terms explained",
+  "metaTitle": "MDG full form and glossary of MDG 2024 terms",
   "description": "A to Z meanings of the short forms and terms in MDG 2024 that a petrol pump dealer meets, such as MDG, OMC, RO, MS, HSD, MPD, NANO and reference density.",
   "answer": "Marketing Discipline Guidelines 2024 (MDG 2024) is the set of rules the public-sector oil companies lay down for their dealers. Short forms you will meet: OMC (oil marketing company), RO (retail outlet), MS (petrol), HSD (diesel), SKO (kerosene) and DU (dispensing unit). Below are about 50 terms in A to Z order, each with its MDG 2024 clause where there is one. Where MDG uses a short form without spelling it out, such as MPD, the entry says so.",
   "faq": [

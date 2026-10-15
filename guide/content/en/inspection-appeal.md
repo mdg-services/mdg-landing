@@ -1,7 +1,7 @@
 ---json
 {
   "title": "Petrol pump dealership termination under Marketing Discipline Guidelines 2024 (MDG 2024): the appeal",
-  "metaTitle": "Petrol pump dealership termination under MDG 2024: the appeal",
+  "metaTitle": "Petrol pump dealership termination: MDG appeal",
   "description": "What MDG 2024 says about terminating a petrol pump dealership: who approves it, the 30-day window to appeal, who hears the appeal, and the 90-day target.",
   "answer": "Under the Marketing Discipline Guidelines 2024 (MDG 2024), the oil companies' rules for their dealers, a dealer can appeal a termination within 30 days of receiving the order. The appeal is addressed to the Appellate Authority and sent through the oil company's divisional, territory or regional office; the aim is a decision, preferably within 90 days of filing {{8.9}}. Who hears it depends on who approved the termination and whether the dealership is SC/ST {{8.9}}. The appeal covers termination only. This is general information, not legal advice.",
   "faq": [

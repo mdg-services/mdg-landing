@@ -1,7 +1,8 @@
 ---json
 {
   "title": "Kerosene (SKO) dealer rules under MDG 2024: duties and penalties",
-  "description": "MDG 2024 rules for PDS kerosene (SKO) wholesale dealers: the seven duties in Chapter 6, the critical, major and minor irregularities, and the penalties in 8.10.",
+  "metaTitle": "SKO dealer rules: kerosene duties under MDG 2024",
+  "description": "MDG 2024 rules for PDS kerosene (SKO) wholesale dealers: the seven duties in Chapter 6, the irregularities by class, and the penalties in 8.10.",
   "answer": "Under the Marketing Discipline Guidelines 2024 (MDG 2024), a PDS kerosene (SKO) dealer has seven duties in Chapter 6, from selling blue-dyed kerosene only to the people it is meant for to keeping a daily account {{chapter 6}}. Clause 8.10 grades lapses as critical (termination if proven), major (allocation cut by 50% for 3 calendar months) or minor (a warning letter) {{8.10}}. Clause 8.5.1 calls MDG's actions a minimum, and 8.10 carries other provisions over only \"as applicable\" {{8.5.1}}.",
   "faq": [
     { "q": "What are the duties of a PDS kerosene dealer under MDG?", "a": "Seven, in Chapter 6: sell blue-dyed kerosene to the intended people at no more than the fixed price, stay open and stocked in working hours, display a stock-cum-price board and keep a daily account {{chapter 6}}." },

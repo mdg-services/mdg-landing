@@ -31,8 +31,7 @@ export default function Membership({ lang }: { lang: Lang }) {
             </Reveal>
             <Reveal delay={0.06}>
               <h2 className="mt-7 text-mega text-white" style={{ fontSize: "clamp(38px, 6.4vw, 92px)" }}>
-                {t.membership.headingLead}
-                <br />
+                {t.membership.headingLead} <br />
                 <span className="text-gold-400">{t.membership.headingAccent}</span>
               </h2>
             </Reveal>

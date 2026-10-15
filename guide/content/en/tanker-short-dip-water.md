@@ -1,7 +1,8 @@
 ---json
 {
   "title": "Short dip or water in a tanker: what MDG 2024 says to do",
-  "description": "What a dealer does when a tank lorry compartment dips short or shows water, under the Marketing Discipline Guidelines 2024 (MDG 2024): top-up, invoice record, signatures.",
+  "metaTitle": "Short dip or water in a tanker: what to do",
+  "description": "What a dealer does when a tank lorry compartment dips short or shows water under Marketing Discipline Guidelines 2024: top-up, invoice record, signatures.",
   "answer": "If a compartment reads short against its calibration certificate, or water shows on the paste, the shortfall (counting the water taken out) is made good by running product through the outlet's dispensing pump until the level is right. Under the Marketing Discipline Guidelines 2024 (MDG 2024), the dealer then writes the observed dip and the quantity pumped in, compartment by compartment, on the back of every invoice copy. The dealer or representative and the driver both sign {{1.2(xi)}}.",
   "faq": [
     { "q": "What is a dip at a petrol pump?", "a": "MDG does not define the word. General knowledge, not MDG text: a dip is the level of product or water read with a dip rod lowered into a tank or tanker compartment. MDG asks for dips in every lorry compartment {{1.2(vii)}} and a daily record of each outlet tank's product and water dips {{1.3}}." },

@@ -2,6 +2,25 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ───────────────────── Space Mono's fallback ─────────────────────
+   next/font can only make a fallback out of Arial, which is proportional:
+   26% wider than Space Mono for the tracked labels, so every label changed
+   size when the real face landed. This one is a monospace face scaled to Space
+   Mono's width (612 per 1,000 against 600, hence 102%) and line height (112 up,
+   36 down at 100px), so the swap changes the letter shapes and nothing else.
+   Several sources because the device may have any of them; all are 0.60 wide.
+   Named in src/fonts/en.ts and hi.ts. */
+@font-face {
+  font-family: "Space Mono Fallback";
+  src:
+    local("Courier New"), local("CourierNewPSMT"), local("Roboto Mono"), local("Droid Sans Mono"),
+    local("Noto Sans Mono"), local("Menlo"), local("DejaVu Sans Mono");
+  ascent-override: 109.8%;
+  descent-override: 35.4%;
+  line-gap-override: 0%;
+  size-adjust: 102%;
+}
+
 /* ───────────────────────── Tokens ───────────────────────── */
 
 :root {
@@ -153,6 +172,8 @@
   @media (hover: hover) and (pointer: fine) {
     .link-quiet:hover::after { transform: scaleX(1); transform-origin: left center; }
   }
+  /* a padded link (see .tap-pad): the underline stays under the words, not under the padding */
+  .link-quiet.tap-pad::after { bottom: calc(0.375rem - 3px); }
 
   /* ── Accordion (FAQ) ────────────────────────────────── */
   .disclose {
@@ -305,6 +326,47 @@
   .guide-prose th,
   .guide-prose td { min-width: 7rem; }
 
+  /* Three or more columns on a phone: each row becomes a small card whose cells
+     carry their column's name (data-label, set in model.ts), so no column is
+     squeezed to a sliver or left off-screen. The heading row stays for screen
+     readers. Two-column tables fit and keep scrolling. */
+  @media (max-width: 639px) {
+    .guide-prose .tw-stack {
+      overflow: visible;
+      border: 0;
+      border-radius: 0;
+      box-shadow: none;
+      background: none;
+    }
+    .guide-prose .tw-stack table,
+    .guide-prose .tw-stack tbody,
+    .guide-prose .tw-stack tr,
+    .guide-prose .tw-stack td { display: block; }
+    .guide-prose .tw-stack thead {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0 0 0 0);
+      white-space: nowrap;
+    }
+    .guide-prose .tw-stack tr {
+      @apply mb-3 overflow-hidden rounded-2xl border border-ink-hairline bg-white shadow-card;
+    }
+    .guide-prose .tw-stack tr td {
+      min-width: 0;
+      @apply border-b border-ink-hairline px-4 py-3;
+    }
+    .guide-prose .tw-stack tr td:last-child { border-bottom-width: 0; }
+    .guide-prose .tw-stack td:empty { display: none; }
+    .guide-prose .tw-stack td::before {
+      content: attr(data-label);
+      @apply mb-1 block font-mono text-[11px] font-medium uppercase tracking-[0.12em] text-ink-muted;
+    }
+    .guide-prose .tw-stack td[data-label=""]::before { display: none; }
+  }
+
   /* a clause tag ({{5.1.9}}) and the "(English)" note beside a link */
   .cl {
     @apply inline-block whitespace-nowrap rounded-md border border-ink-hairline bg-white px-1.5 align-[1px] font-mono text-[12px] font-medium leading-[1.5] text-navy-700;
@@ -334,6 +396,23 @@
   .guide-card {
     @apply block rounded-2xl border border-ink-hairline bg-white p-5 shadow-card transition duration-200;
   }
+  /* The link is the card's title; its ::after stretches over the whole card, so
+     the card is one tap target while the link's own words stay short. */
+  .guide-card-link::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+  }
+  /* the focus ring goes round the whole card (the stretched ::after), not just the title's words */
+  .guide-card-link:focus-visible { outline: none; }
+  .guide-card-link:focus-visible::after {
+    outline: 2px solid theme(colors.gold.400);
+    outline-offset: 3px;
+  }
+  /* A small standalone link (the email, "Full disclaimer"): padded for a thumb,
+     with the padding taken back so the line does not grow. */
+  .tap-pad { @apply -my-1.5 inline-block py-1.5; }
   @media (hover: hover) and (pointer: fine) {
     .guide-card:hover { @apply -translate-y-0.5 border-navy-300; }
   }
@@ -376,6 +455,10 @@
     font-variant-numeric: tabular-nums;
   }
   .guide-prose .tool .out p:last-child { margin-bottom: 0; }
+  /* ToolScript scrolls a result into view (below the sticky header) and focuses it */
+  .guide-prose .tool [id$="-out"],
+  .guide-prose .tool [id$="-err"] { scroll-margin-top: 6rem; }
+  .guide-prose .tool [tabindex="-1"]:focus { outline: none; }
 }
 
 /* ───────────────────── Scroll reveals ─────────────────────
@@ -690,11 +773,23 @@ html[data-lang="hi"] .guide-prose .tool label {
 /* Devanagari at 11-12.5px is harder to read than Latin at the same size, so
    the guides' small text (the breadcrumb and answer label, the notice strip,
    the checked line, the full disclaimer) is a size up in Hindi. */
-html[data-lang="hi"] .guide-hero .eyebrow-light { font-size: 12.5px; }
 html[data-lang="hi"] .guide-notice,
 html[data-lang="hi"] .guide-small { font-size: 14px; }
 html[data-lang="hi"] .guide-small ul { font-size: 14px; }
-html[data-lang="hi"] .guide-checked { font-size: 13px; }
+
+/* The guides' small labels (the breadcrumb, "संक्षेप में", "इस पेज पर", the
+   checked line, the page counts, a stacked table's cell names) are tracked
+   mono capitals in English. The mono face has no Devanagari, so in Hindi the
+   browser drew each line half in one face and half in another, at 11-13px.
+   Hindi sets them in the body face, 13.5px, with no tracking. The clause tags
+   and the numbers keep their mono. */
+html[data-lang="hi"] .guide-label,
+html[data-lang="hi"] .guide-prose .tw-stack td::before {
+  font-family: theme(fontFamily.sans);
+  font-size: 13.5px !important;
+  letter-spacing: normal !important;
+  text-transform: none;
+}
 
 /* The कवच marks and the figures are names and numbers, not
    sentences: they keep their own face and their own spacing. */

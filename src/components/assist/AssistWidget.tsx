@@ -6,7 +6,7 @@ import { useLang } from "../../i18n/client";
 import { assistDict } from "./dict";
 import { ASSIST_BOT_SRC } from "./assets";
 import { onAssistCallRequested } from "../../lib/assistCall";
-import { useOnGuides } from "../../lib/onGuides";
+import { isGuidesPath, useOnGuides } from "../../lib/onGuides";
 
 /**
  * The launcher, and nothing else.
@@ -35,6 +35,10 @@ import { useOnGuides } from "../../lib/onGuides";
  * has to do, and it would pull the panel chunk and the config request down
  * over 2G before the hero has even painted. Instead the phone gets a louder
  * launcher: the same round button with one line of invitation beside it.
+ *
+ * It does not open itself on the guides and tools (reading pages): there the
+ * card would sit on the headline and the short answer. The round button is
+ * enough, and on a phone it steps aside while the page is scrolling (below).
  *
  * Either way, closing it means closing it. The dismissal is remembered for
  * the tab, so moving between the landing page and the enrolment form does not
@@ -88,7 +92,9 @@ export default function AssistWidget({ startWithCall = false }: { startWithCall?
   useEffect(() => {
     // Read straight from storage rather than from state, so this effect has
     // nothing to depend on and runs exactly once, on arrival.
-    if (startWithCall || wasDismissed() || window.innerWidth < CARD_WIDTH_PX) return;
+    // Not on a reading page either: the card would cover the headline and the short
+    // answer of a guide the visitor came to read. The round button stays.
+    if (startWithCall || wasDismissed() || window.innerWidth < CARD_WIDTH_PX || isGuidesPath(window.location.pathname)) return;
     const id = window.setTimeout(() => {
       // never behind the "call us" sheet (open on arrival from a film page's
       // "talk to us"): it would sit under the sheet and take its Escape
@@ -126,6 +132,26 @@ export default function AssistWidget({ startWithCall = false }: { startWithCall?
   const onGuides = useOnGuides();
   const inviting = !open && !dismissed && !onGuides;
 
+  // On a reading page the button sits over the words at the right edge. It
+  // steps aside while the page scrolls and comes back when the reader pauses.
+  const [scrolling, setScrolling] = useState(false);
+  useEffect(() => {
+    if (!onGuides || open) return;
+    let timer = 0;
+    const onScroll = () => {
+      setScrolling(true);
+      window.clearTimeout(timer);
+      timer = window.setTimeout(() => setScrolling(false), 700);
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.clearTimeout(timer);
+      setScrolling(false);
+    };
+  }, [onGuides, open]);
+  const stepAside = onGuides && scrolling && !open;
+
   return (
     <>
       <button
@@ -135,7 +161,10 @@ export default function AssistWidget({ startWithCall = false }: { startWithCall?
         aria-expanded={open}
         aria-haspopup="dialog"
         onClick={toggle}
-        className="group fixed bottom-5 right-5 z-[70] inline-flex items-center gap-2 rounded-full transition-transform duration-150 active:scale-95 sm:bottom-6 sm:right-6"
+        className={
+          "group fixed bottom-5 right-5 z-[70] inline-flex items-center gap-2 rounded-full transition duration-150 active:scale-95 sm:bottom-6 sm:right-6 " +
+          (stepAside ? "pointer-events-none translate-y-2 opacity-0" : "")
+        }
       >
         {inviting && (
           <span className="max-w-[62vw] truncate rounded-full border border-ink-hairline bg-white px-3.5 py-2 text-[13px] font-semibold leading-none text-ink shadow-card sm:hidden">

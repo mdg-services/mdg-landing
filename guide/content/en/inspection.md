@@ -1,6 +1,7 @@
 ---json
 {
   "title": "Petrol pump inspection: who checks, what they check, what follows",
+  "metaTitle": "Petrol pump inspection: who checks, what follows",
   "description": "Who can inspect a petrol pump, what a visit can cover, why a dealer cannot refuse, and what comes next: samples, lab results and a show cause notice.",
   "answer": "Under the Marketing Discipline Guidelines 2024 (MDG 2024), the oil companies' rules for their dealers, company officers, mobile labs, joint industry teams, agencies the company authorises and any authority with the legal power can draw samples at a pump {{2.2.2.2}} {{2.4.3}}. Refusing a visit is a major irregularity {{5.1.8}} {{8.3}}. If an irregularity is found, a show cause notice is due within 30 days {{8.5.6}}.",
   "faq": [

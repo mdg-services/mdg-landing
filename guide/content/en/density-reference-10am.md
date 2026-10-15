@@ -1,7 +1,8 @@
 ---json
 {
   "title": "Morning density by 10 AM: the reference density rule",
-  "description": "MDG 2024 makes a dealer record density every morning by 10 AM and after every tanker. Which figure an inspector asks for, and what happens if it is missing.",
+  "metaTitle": "Petrol pump reference density by 10 AM: MDG 2024",
+  "description": "MDG 2024 makes a dealer record density by 10 AM each morning and after every tanker: which figure an inspector asks for, and what a miss costs.",
   "answer": "Under the Marketing Discipline Guidelines 2024 (MDG 2024), the dealer records the density at 15°C each morning before sales, by 10 AM at the latest, and again after every tanker once at least 50 litres have gone through the pump. If the figure the inspector needs is missing, sales and supplies of every product stop and samples go to the lab {{1.4.1(c)}} {{1.2(xiv)}} {{5.1.9}}.",
   "faq": [
     { "q": "What is reference density at a petrol pump?", "a": "It is the 15°C density an inspector measures your fuel against: the invoice density until the tanker is decanted, then your own mixed-tank reading taken after at least 50 litres have run through the pump {{2.10}} {{3.1(h)}}." },

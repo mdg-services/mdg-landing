@@ -1,6 +1,7 @@
 ---json
 {
   "title": "Tank lorry retention sample: how to draw, label and keep it",
+  "metaTitle": "Tank lorry retention sample: draw, label, keep",
   "description": "How to draw, seal, label and keep the tank lorry retention sample under Marketing Discipline Guidelines 2024 (MDG 2024), and what follows if it is missing.",
   "answer": "Under Marketing Discipline Guidelines 2024 (MDG 2024), the oil companies' rules for their dealers under the dealership agreement, the dealer draws a bottom composite sample from every tank lorry before decanting: 2 x 1 litre of MS and/or 1 x 1 litre of HSD, sealed, labelled as per Annexure 3 and signed jointly with the driver. For each tank, keep the samples from its two latest loads. If the driver will not sign, do not decant {{2.3}} {{2.9.2}} {{annexure 3}}.",
   "faq": [

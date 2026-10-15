@@ -13,6 +13,9 @@
  *    place in a short-lived cookie and pick the Hindi or English file; the
  *    pages themselves are static files generated into public/film.
  *
+ * 4. One address each. /film, /film/short and /privacy are served at one
+ *    address; the same address with a trailing slash is sent to it.
+ *
  * Nothing else runs through here, and every page works the same with no cookie
  * at all.
  */
@@ -33,6 +36,7 @@ export const config = {
     "/grievances",
     "/film",
     "/film/short",
+    "/privacy",
     "/guides",
     "/guides/:path*",
     "/hi/guides",
@@ -61,6 +65,13 @@ export function proxy(request: NextRequest): NextResponse {
     if (gate.kind === "notFound") return notFound(request);
     return NextResponse.next();
   }
+
+  // ── A trailing slash on the film pages and the privacy page ───────────
+  // (they have no slash form; the guides, above, are the opposite)
+  if (pathname.length > 1 && pathname.endsWith("/") && (isFilmPath(pathname) || pathname === "/privacy/")) {
+    return NextResponse.redirect(new URL(pathname.replace(/\/+$/, "") + raw.search, request.url), 308);
+  }
+  if (pathname === "/privacy") return NextResponse.next();
 
   // ── The film pages ────────────────────────────────────────────────────
   if (isFilmPath(pathname)) {

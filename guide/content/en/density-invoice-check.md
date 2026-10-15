@@ -1,6 +1,7 @@
 ---json
 {
   "title": "Tanker density check against the invoice density, step by step",
+  "metaTitle": "Tanker density check against invoice, step by step",
   "description": "How to check a tanker's petrol or diesel against the density on the invoice: sample every compartment, convert to 15°C, stay within ±3.0 kg/m³.",
   "answer": "Under the Marketing Discipline Guidelines 2024 (MDG 2024), each compartment of a tanker is sampled before decanting, after about 20 litres have been run off at its manifold. The dealer reads density and temperature, converts to 15°C with the ASTM table and compares the result with the invoice. The 15°C figure must be within ±3.0 kg/m³ of the invoice density, and each compartment is recorded {{1.2(iv)}} {{1.2(viii)}}. If the quality is in doubt, contact the supply location or the area field officer {{1.2(ix)}}.",
   "faq": [

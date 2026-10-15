@@ -18,13 +18,13 @@
 ## वेरिएशन निकालें
 
 <div class="tool" id="sv">
-<style>#sv .g{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:0 16px}#sv select{max-width:100%}#sv small{display:block;color:#5D5F86;font-weight:400}#sv .r{display:flex;justify-content:space-between;gap:12px;padding:5px 0;border-bottom:1px solid #E4E6F1}#sv .r b{text-align:right;white-space:nowrap}#sv .v{margin:12px 0 0;padding:10px 12px;border-radius:8px;background:#fff;border:1px solid #C5C7ED;font-weight:600}#sv .n{margin:8px 0 0;font-size:14.5px;font-weight:400;color:#3D3F66}</style>
+<style>#sv .g{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:0 16px}#sv .g>div{display:flex;flex-direction:column;justify-content:flex-end}@media(min-width:640px){#sv .g2{grid-template-columns:repeat(2,minmax(0,1fr))}}#sv .v.top{margin:0 0 12px}#sv select{max-width:100%}#sv small{display:block;color:#5D5F86;font-weight:400}#sv .r{display:flex;justify-content:space-between;gap:12px;padding:5px 0;border-bottom:1px solid #E4E6F1}#sv .r b{text-align:right;white-space:nowrap}#sv .v{margin:12px 0 0;padding:10px 12px;border-radius:8px;background:#fff;border:1px solid #C5C7ED;font-weight:600}#sv .n{margin:8px 0 0;font-size:14.5px;font-weight:400;color:#3D3F66}</style>
 <p style="margin:0 0 4px"><b>यह सिर्फ़ मददगार टूल है।</b> आपकी तेल कंपनी का अपना हिसाब ही माना जाता है। एक बार में एक ही प्रोडक्ट का कुल हिसाब भरें।</p>
 <div class="g">
 <div><label for="sv-p">प्रोडक्ट</label><select id="sv-p"><option value="ms">पेट्रोल (MS)</option><option value="hsd">डीज़ल (HSD)</option></select></div>
 <div><label for="sv-u">नीचे की मात्राएँ किसमें हैं</label><select id="sv-u"><option value="1">लीटर</option><option value="1000">किलोलीटर (KL)</option></select></div>
 </div>
-<div class="g">
+<div class="g g2">
 <div><label for="sv-a">A. अवधि की शुरुआत की डिप</label><input id="sv-a" type="text" inputmode="decimal" autocomplete="off"></div>
 <div><label for="sv-b">B. इस अवधि में आया माल</label><input id="sv-b" type="text" inputmode="decimal" autocomplete="off"></div>
 <div><label for="sv-e">E. पंप मीटर पर दिखी बिक्री</label><input id="sv-e" type="text" inputmode="decimal" autocomplete="off"></div>
@@ -47,6 +47,9 @@
 <button type="button" id="sv-go">वेरिएशन निकालें</button>
 <p class="v" id="sv-err" style="display:none" role="alert"></p>
 <div class="out" id="sv-out" style="display:none" role="status" aria-live="polite">
+<p class="v top" id="sv-v1" style="display:none"></p>
+<p class="v top" id="sv-v2" style="display:none"></p>
+<p class="v top" id="sv-v3" style="display:none"></p>
 <div class="r"><span>C. श्रिंकेज या TVA, जो घटाया</span><b id="o-c"></b></div>
 <div class="r"><span>D. रिसीट के बाद का बुक स्टॉक (A + B - C)</span><b id="o-d"></b></div>
 <div class="r"><span>F. अंत का बुक स्टॉक (D - E)</span><b id="o-f"></b></div>
@@ -54,9 +57,6 @@
 <div class="r"><span>वेरिएशन (G - F) <span id="o-vd"></span></span><b id="o-v"></b></div>
 <div class="r"><span>भाग 1: टैंक स्टॉक का 4% (G का 4%)</span><b id="o-4"></b></div>
 <div class="r"><span>भाग 2: बिक्री पर हैंडलिंग लॉस (सिर्फ़ कमी के लिए)</span><b id="o-h"></b></div>
-<p class="v" id="sv-v1" style="display:none"></p>
-<p class="v" id="sv-v2" style="display:none"></p>
-<p class="v" id="sv-v3" style="display:none"></p>
 <p class="n" id="sv-gain" style="display:none"></p>
 <p class="n" id="sv-cp" style="display:none"></p>
 <p class="n" id="sv-cn" style="display:none"></p>

@@ -11,7 +11,7 @@ import { SITE } from "@/seo/site";
 export const metadata: Metadata = {
   metadataBase: new URL(SITE),
   title: { absolute: "Page not found | MDG Services" },
-  robots: { index: false, follow: true },
+  // no `robots` here: Next adds `noindex` to every 404 itself, and a second tag saying the same thing is noise
   icons: { icon: "/favicon.png", apple: "/apple-touch-icon.png" },
 };
 

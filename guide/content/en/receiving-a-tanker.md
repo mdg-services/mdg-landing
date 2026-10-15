@@ -1,7 +1,8 @@
 ---json
 {
   "title": "Tanker decantation at a petrol pump: the MDG 2024 checklist",
-  "description": "How a dealer receives and decants a tank lorry under the Marketing Discipline Guidelines 2024 (MDG 2024): 14 steps, from matching the invoice to recording density.",
+  "metaTitle": "Tanker decantation at a petrol pump: MDG 2024",
+  "description": "How a dealer receives and decants a tank lorry under the Marketing Discipline Guidelines 2024: 14 steps, from matching the invoice to recording density.",
   "answer": "Decantation is emptying a tank lorry into your underground tanks. Under the Marketing Discipline Guidelines 2024 (MDG 2024), you first match the invoice to the lorry {{1.1}}, then follow 14 steps in order: settle and secure the lorry, check the seals, confirm the 15°C density is within ±3.0 kg/m³ of the invoice figure, dip every compartment and test it for water, stop sales from the receiving tank, and draw samples {{1.2(i)}} {{1.2(iv)}} {{1.2(vii)}} {{1.2(viii)}} {{1.2(x)}}. When the lorry is empty, make the stock entry and record density after 50 litres have gone through the pump {{1.2(xii)}} {{1.2(xiii)}} {{1.2(xiv)}}.",
   "faq": [
     { "q": "What does tanker decantation or decant tank mean at a petrol pump?", "a": "Decantation is emptying a tank lorry into the outlet's underground tanks {{1.2(xi)}}. MDG does not use the words \"decant tank\"; read it as the tank that receives the product. With several tanks for a product, that tank's number goes on the retention sample container {{2.3}}." },

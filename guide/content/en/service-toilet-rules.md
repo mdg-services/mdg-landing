@@ -4,10 +4,10 @@
   "description": "The daily toilet checks Marketing Discipline Guidelines 2024 (MDG 2024) sets, who may use the toilet, and the penalty now versus an older, replaced figure.",
   "answer": "Marketing Discipline Guidelines 2024 (MDG 2024) makes a clean toilet a daily duty: clean, lit, with water, a working flush where one is fitted, a working latch, signs, a “Darpan” QR code for feedback, and open to all customers and transit travellers at all times within safety protocols {{5.1.14(b)}}. A failure is a minor irregularity: a warning-cum-guidance letter, then Rs 10,000, then Rs 25,000 per irregularity {{8.4(iii)(g)}}, as minimum amounts {{8.5.1}}.",
   "faq": [
-    { "q": "What are the petrol pump toilet rules in India?", "a": "Eight daily checks, from cleanliness and water to a working latch, signs, open access and a “Darpan” QR code. The protocol is displayed and a maintenance sheet is kept {{5.1.14(b)}}." },
+    { "q": "What are the petrol pump toilet rules in India?", "a": "Eight daily checks, from cleanliness and water to a working latch, signs, open access and a “Darpan” QR code {{5.1.14(b)}}." },
     { "q": "Can anyone use a petrol pump toilet?", "a": "Every customer and transit traveller must be able to use it at all times, within the safety protocols {{5.1.14(b)(vii)}}. MDG does not define either group or mention a purchase or a charge. See the court note." },
     { "q": "What is the penalty if a petrol pump toilet is dirty or locked?", "a": "It is a minor irregularity: a warning-cum-guidance letter, then Rs 10,000, then Rs 25,000 per irregularity, at minimum {{8.4(iii)(g)}} {{8.4}} {{8.5.1}}." },
-    { "q": "How do I make a petrol pump toilet complaint?", "a": "Ask for the complaint book, or call the oil company person whose name and number are displayed {{1.6(iv)}} {{1.6(viii)}}. If a customer or traveller complains the toilet cannot be used, the complaint is shared and a letter listing the penalty is issued at once {{5.1.14(b)}}." },
+    { "q": "How do I make a petrol pump toilet complaint?", "a": "Ask for the complaint book, or call the oil company person whose name and number are displayed {{1.6(iv)}} {{1.6(viii)}}." },
     { "q": "Is the old toilet penalty of Rs 15,000, Rs 25,000 and Rs 35,000 still in force?", "a": "No. Those figures come from MDG 2012 as amended to 30.11.2022, replaced on 24.10.2024 {{2012:8.3(vii)}}. Under MDG 2024 the toilet is a minor irregularity {{8.4}}." }
   ],
   "related": ["customer-service", "mdg-2012-vs-2024", "penalties", "service-complaint-book"],
@@ -65,3 +65,5 @@ Older guideline, replaced on 24.10.2024; not the rule today.
 | Third instance onwards | The higher of Rs 35,000 or 45% of the monthly dealer margin (average of the last 6 months), plus suspension of sales and supplies for 7 days or until the toilet is fixed, whichever is later |
 
 For example, under the old rule only: a 6-month average margin of Rs 2,00,000 makes 45% Rs 90,000, higher than Rs 35,000, so Rs 90,000 applies. News articles may quote even older figures; confirm with your oil company.
+
+General information, not legal advice. For your own notice, speak to an advocate or your oil company.

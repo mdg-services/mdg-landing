@@ -1,7 +1,8 @@
 ---json
 {
   "title": "Automation fails at a petrol pump: what to do about manual mode",
-  "description": "If the automation fails, report it to the oil company at once. Run manual mode only on an email or signed letter from a company official, and keep it. The steps.",
+  "metaTitle": "Petrol pump manual mode if automation fails",
+  "description": "If the automation fails, report it to the oil company at once. Run manual mode only on an email or signed letter from a company official, and keep it.",
   "answer": "Under the Marketing Discipline Guidelines 2024 (MDG 2024), the oil companies' rules for their dealers under the dealership agreement, a dealer whose automation stops working reports it at once to the oil company's authorised official and acts on that official's direction {{1.5(viii)}}. A dispensing unit may run in manual mode, or the tank gauge may stay off, only with permission by email or signed letter from a company official, kept on file {{5.1.16}}. Without it, the first-instance penalty is at least Rs 1,00,000, and the oil company may take higher action {{8.3(vii)}} {{8.5.1}}.",
   "faq": [
     { "q": "What should a petrol pump dealer do when the automation fails?", "a": "Report the fault to the oil company's authorised official at once and follow that official's direction {{1.5(viii)}}. For manual mode, get an email or signed letter before you switch {{5.1.16}}." },

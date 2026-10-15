@@ -15,8 +15,7 @@ export default function Numbers({ lang }: { lang: Lang }) {
             <Reveal>
               <p className="eyebrow">{t.numbers.eyebrow}</p>
               <h2 className="mt-5 text-display text-[26px] leading-[1.06] md:text-[34px]">
-                {t.numbers.headingLine1}
-                <br />
+                {t.numbers.headingLine1} <br />
                 {t.numbers.headingLine2}
               </h2>
             </Reveal>

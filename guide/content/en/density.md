@@ -1,6 +1,7 @@
 ---json
 {
   "title": "Petrol pump density: what MDG 2024 asks a dealer to measure",
+  "metaTitle": "Petrol pump density: what MDG 2024 says",
   "description": "What density at 15°C means, when MDG 2024 has a dealer measure it, the equipment to keep ready, the register and the density board, with clause numbers.",
   "answer": "Density is how heavy the fuel is, in kg/m³, stated at a standard 15°C. The Marketing Discipline Guidelines 2024 (MDG 2024) have the dealer measure it at three moments: on each tanker compartment against the invoice (within ±3.0 kg/m³), after decanting (once at least 50 litres have gone through the pump) and every morning before sales (by 10 AM) {{1.2(iv)}} {{1.2(viii)}} {{1.2(xiv)}} {{1.4.1(c)}} {{5.1.9}}. Calibrated hydrometers and thermometers and the ASTM table must be ready whenever an inspector asks {{1.5(vi)}}.",
   "faq": [

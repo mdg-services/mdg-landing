@@ -1,7 +1,8 @@
 ---json
 {
   "title": "Oil company duties under MDG: what a dealer can expect",
-  "description": "What MDG 2024 requires of the oil company: depot quality checks, water dips, 30-day samples, invoice details, tank lorry checks, GPS, free sample kit and training.",
+  "metaTitle": "Oil company duties to a petrol pump dealer",
+  "description": "What MDG 2024 requires of the oil company: depot quality checks, water dips, 30-day samples, invoice details, tanker checks, GPS, sample kit, training.",
   "answer": "Under the Marketing Discipline Guidelines 2024 (MDG 2024), the oil company must supply the right quality and quantity {{chapter 3}}. At its depots it tests quality, takes water dips, keeps samples for at least 30 days and writes the density at 15°C on your invoice {{3.1}}. It seals tank lorries, keeps GPS working and supplies sample containers and seals free {{3.2}} {{2.6(B)}}.",
   "faq": [
     { "q": "What are the duties of an oil company under MDG?", "a": "Chapter 3 sets them: quality and quantity checks at its storage points {{3.1}}, sealing and GPS tracking of tank lorries {{3.2}}, and training for dealers and their staff {{3.3}}. Other clauses add the free sample kit and repair of its own equipment {{2.6(B)}} {{4.2(a)}}." },

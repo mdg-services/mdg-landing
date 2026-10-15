@@ -1,10 +1,11 @@
 ---json
 {
   "title": "Petrol pump staff: minimum wages, PMSBY, PMJJBY and uniform rules",
-  "description": "What Marketing Discipline Guidelines 2024 (MDG 2024) asks of a dealer for pump staff: minimum wages, PMSBY and PMJJBY, uniform, courtesy, and how MDG 2012 differed.",
-  "answer": "Marketing Discipline Guidelines 2024 (MDG 2024) expects the dealer to meet every statutory duty owed to staff at the outlet, minimum wages first, along with benefits such as PMSBY and PMJJBY {{1.5(x)}} {{5.1.18}}. It gives no rupee figure. Driveway salesmen must wear uniform and badges {{5.1.17}}; a lapse is a minor irregularity {{8.4(iii)(e)}}, with minimum amounts that the oil company may exceed {{8.5.1}}.",
+  "metaTitle": "Petrol pump staff wages, PMSBY, PMJJBY, uniform",
+  "description": "What the Marketing Discipline Guidelines 2024 require of a dealer for pump staff: minimum wages, PMSBY, PMJJBY, uniform, courtesy, and MDG 2012.",
+  "answer": "Marketing Discipline Guidelines 2024 (MDG 2024) requires the dealer to meet every statutory duty owed to staff at the outlet, minimum wages first, along with benefits such as PMSBY and PMJJBY {{1.5(x)}} {{5.1.18}}. It gives no rupee figure. Driveway salesmen must wear uniform and badges {{5.1.17}}; a lapse is a minor irregularity {{8.4(iii)(e)}}, with minimum amounts that the oil company may exceed {{8.5.1}}.",
   "faq": [
-    { "q": "What is the minimum salary for petrol pump staff?", "a": "MDG 2024 gives no figure. It expects the dealer to pay minimum wages as a statutory duty {{1.5(x)}}. Check your State's figure with the labour authority or an adviser." },
+    { "q": "What is the minimum salary for petrol pump staff?", "a": "MDG 2024 gives no figure. It requires the dealer to pay minimum wages as a statutory duty {{1.5(x)}}. Check your State's figure with the labour authority or an adviser." },
     { "q": "Are PMSBY and PMJJBY compulsory for petrol pump staff?", "a": "MDG 2024 names them among the benefits the dealer provides to employees working at the outlet {{1.5(x)}} {{5.1.18}}. It gives no premium or enrolment details, so check the schemes' official sources." },
     { "q": "Must petrol pump staff wear a uniform?", "a": "Driveway salesmen must be in uniform and wear badges {{5.1.17}}. Failing this is a minor irregularity {{8.4(iii)(e)}}. MDG does not describe the uniform or the badge." },
     { "q": "What is the penalty if a dealer does not pay minimum wages?", "a": "MDG 2024 has no separate penalty line for unpaid wages {{8.2}} {{8.3}} {{8.4}} and does not say what the oil company does about them, but the duty to pay stays {{1.5(x)}}. The replaced MDG 2012 had one {{2012:8.3(ix)}}. Ask a labour-law adviser or your oil company about your case." }
@@ -13,7 +14,7 @@
   "updated": "2026-10-15"
 }
 ---
-## What MDG 2024 expects about staff
+## What MDG 2024 requires about staff
 
 | Duty | What MDG says | Clause | If it fails |
 |---|---|---|---|

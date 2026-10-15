@@ -2,6 +2,11 @@ import { usePathname } from "next/navigation";
 
 const GUIDES = /^\/(?:hi\/)?(?:guides|tools)(?:\/|$)/;
 
+/** True for a path under the guides or tools (also usable outside React, e.g. in an effect that runs once). */
+export function isGuidesPath(pathname: string): boolean {
+  return GUIDES.test(pathname);
+}
+
 /**
  * True on the guides and tools pages. These are reading pages: on a phone the
  * floating "Call us" pill and the assistant's invitation bubble sit on top of
@@ -9,5 +14,5 @@ const GUIDES = /^\/(?:hi\/)?(?:guides|tools)(?:\/|$)/;
  * the floating call pill is hidden there on phones (the round assistant button stays).
  */
 export function useOnGuides(): boolean {
-  return GUIDES.test(usePathname() ?? "");
+  return isGuidesPath(usePathname() ?? "");
 }

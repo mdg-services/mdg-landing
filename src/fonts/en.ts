@@ -1,4 +1,4 @@
-import { Inter, Noto_Sans_Devanagari, Space_Grotesk, Space_Mono, Tiro_Devanagari_Hindi } from "next/font/google";
+import { Inter, Space_Grotesk, Space_Mono, Tiro_Devanagari_Hindi } from "next/font/google";
 
 /**
  * The English page's faces, self-hosted by next/font (no request to Google
@@ -9,21 +9,40 @@ import { Inter, Noto_Sans_Devanagari, Space_Grotesk, Space_Mono, Tiro_Devanagari
  * Space Mono, Latin (the mono labels are small, but a late swap of their font
  * moves the lines around them, so they come with the first paint).
  *
- * The Latin faces and the कवच mark use `display: "swap"`: the brand fonts must
- * show on the first visit, because the guides and the homepage have to look
- * like one site. next/font gives each a size-matched fallback, so the swap
- * barely moves a line. Noto Sans Devanagari is `optional`: most Android phones
- * already draw Hindi in Noto Sans Devanagari, so on a slow first visit the
- * device's own copy looks the same and nothing shifts.
+ * ── Which faces may swap, and which may not ───────────────────────────────
  *
- * The two Devanagari faces are only for the कवच marks and the हिंदी switch,
- * 185 kB between them. They are set on <html> by components/LateFonts.tsx once
- * the page has loaded, so they never compete with the first paint; until then
- * those few words are drawn in the device's own Devanagari font.
+ * A face that swaps in after the first paint moves the text drawn in its
+ * fallback if the two differ in width. Measured with the network slowed to a
+ * phone's (Lighthouse's applied throttling), that was the whole of the page's
+ * layout shift: with Inter on `swap`, 8 of the 58 English guide pages shifted
+ * by more than 0.05 (worst 0.108) on a plain run, and 40 of 58 when the font
+ * files arrived 1.5 s late. The body text is Inter, in long paragraphs, and a
+ * paragraph is where a line break flips.
+ *
+ *  - Inter is `optional`: it is used if it arrives with the first paint (it is
+ *    preloaded, so on a normal connection it does) and otherwise the page keeps
+ *    its size-matched fallback for that view and has Inter from the next one.
+ *    Nothing moves either way.
+ *  - Space Grotesk (headings) stays `swap`: the heading face is the brand's
+ *    voice and must show on the first visit; its fallback is within 1-2%
+ *    of its width, so the swap barely moves a line.
+ *  - Space Mono (the tracked labels) stays `swap` but gets a hand-made
+ *    fallback. next/font can only build a fallback from Arial, a proportional
+ *    face standing in for a monospace one, which is 26% too wide. The
+ *    fallback below is a real monospace face scaled to Space Mono's width and
+ *    line height, so the label does not change size when the real one lands.
+ *
+ * The two Devanagari faces are only for the कवच marks and the हिंदी switch.
+ * Tiro Devanagari Hindi (the mark) is set on <html> by components/LateFonts.tsx
+ * once the page has loaded, so it never competes with the first paint; until
+ * then those few words are drawn in the device's own Devanagari font. Noto Sans
+ * Devanagari is not loaded on English pages at all: the हिंदी switch is the
+ * only Hindi text on most of them, and the device's own Devanagari face (on
+ * most Android phones, Noto itself) draws it as well as a 121 kB download would.
  */
 export const inter = Inter({
   subsets: ["latin"],
-  display: "swap",
+  display: "optional",
   variable: "--font-inter",
 });
 
@@ -38,13 +57,9 @@ export const spaceMono = Space_Mono({
   weight: ["400", "700"],
   display: "swap",
   variable: "--font-space-mono",
-});
-
-export const notoDeva = Noto_Sans_Devanagari({
-  subsets: ["devanagari"],
-  display: "optional",
-  preload: false,
-  variable: "--font-noto-deva",
+  // "Space Mono Fallback" is declared by hand in src/index.css
+  adjustFontFallback: false,
+  fallback: ["Space Mono Fallback", "ui-monospace", "monospace"],
 });
 
 export const tiroDeva = Tiro_Devanagari_Hindi({
@@ -59,4 +74,4 @@ export const tiroDeva = Tiro_Devanagari_Hindi({
 export const fontClassNames = [inter, spaceGrotesk, spaceMono].map((f) => f.variable).join(" ");
 
 /** Added to <html> after the page has loaded. */
-export const lateFontClassNames = [notoDeva, tiroDeva].map((f) => f.variable).join(" ");
+export const lateFontClassNames = tiroDeva.variable;

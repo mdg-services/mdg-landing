@@ -1,6 +1,7 @@
 ---json
 {
   "title": "Stock variation calculator for petrol pumps (MDG 2024)",
+  "metaTitle": "Petrol pump stock variation calculator",
   "description": "Enter your dips, receipts and meter sales to see your stock variation against the 4% limit, handling loss and shrinkage or TVA. A helper only.",
   "answer": "Enter the dips, receipts and meter sales. The calculator sets the gap between book stock and your closing dip against the limit in the Marketing Discipline Guidelines 2024 (MDG 2024), the oil companies' rules for their dealers: 4% of tank stock, with the handling loss on sales and any shrinkage or TVA taken into account {{5.1.11}} {{annexure 9}}. A helper only: your oil company's calculation decides.",
   "faq": [
@@ -18,13 +19,13 @@ Check one product's stock variation against the MDG limit {{5.1.11}}. What the l
 ## Work out the variation
 
 <div class="tool" id="sv">
-<style>#sv .g{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:0 16px}#sv select{max-width:100%}#sv small{display:block;color:#5D5F86;font-weight:400}#sv .r{display:flex;justify-content:space-between;gap:12px;padding:5px 0;border-bottom:1px solid #E4E6F1}#sv .r b{text-align:right;white-space:nowrap}#sv .v{margin:12px 0 0;padding:10px 12px;border-radius:8px;background:#fff;border:1px solid #C5C7ED;font-weight:600}#sv .n{margin:8px 0 0;font-size:14.5px;font-weight:400;color:#3D3F66}</style>
+<style>#sv .g{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:0 16px}#sv .g>div{display:flex;flex-direction:column;justify-content:flex-end}@media(min-width:640px){#sv .g2{grid-template-columns:repeat(2,minmax(0,1fr))}}#sv .v.top{margin:0 0 12px}#sv select{max-width:100%}#sv small{display:block;color:#5D5F86;font-weight:400}#sv .r{display:flex;justify-content:space-between;gap:12px;padding:5px 0;border-bottom:1px solid #E4E6F1}#sv .r b{text-align:right;white-space:nowrap}#sv .v{margin:12px 0 0;padding:10px 12px;border-radius:8px;background:#fff;border:1px solid #C5C7ED;font-weight:600}#sv .n{margin:8px 0 0;font-size:14.5px;font-weight:400;color:#3D3F66}</style>
 <p style="margin:0 0 4px"><b>A helper only.</b> Your oil company's own working decides. Use the totals for one product at a time.</p>
 <div class="g">
 <div><label for="sv-p">Product</label><select id="sv-p"><option value="ms">Petrol (MS)</option><option value="hsd">Diesel (HSD)</option></select></div>
 <div><label for="sv-u">Quantities below are in</label><select id="sv-u"><option value="1">Litres</option><option value="1000">Kilolitres (KL)</option></select></div>
 </div>
-<div class="g">
+<div class="g g2">
 <div><label for="sv-a">A. Dip at the start of the period</label><input id="sv-a" type="text" inputmode="decimal" autocomplete="off"></div>
 <div><label for="sv-b">B. Product received in the period</label><input id="sv-b" type="text" inputmode="decimal" autocomplete="off"></div>
 <div><label for="sv-e">E. Sales on the pump meters</label><input id="sv-e" type="text" inputmode="decimal" autocomplete="off"></div>
@@ -47,6 +48,9 @@ Check one product's stock variation against the MDG limit {{5.1.11}}. What the l
 <button type="button" id="sv-go">Work out the variation</button>
 <p class="v" id="sv-err" style="display:none" role="alert"></p>
 <div class="out" id="sv-out" style="display:none" role="status" aria-live="polite">
+<p class="v top" id="sv-v1" style="display:none"></p>
+<p class="v top" id="sv-v2" style="display:none"></p>
+<p class="v top" id="sv-v3" style="display:none"></p>
 <div class="r"><span>C. Shrinkage or TVA deducted</span><b id="o-c"></b></div>
 <div class="r"><span>D. Book stock after receipts (A + B - C)</span><b id="o-d"></b></div>
 <div class="r"><span>F. Book stock at the end (D - E)</span><b id="o-f"></b></div>
@@ -54,9 +58,6 @@ Check one product's stock variation against the MDG limit {{5.1.11}}. What the l
 <div class="r"><span>Variation (G - F) <span id="o-vd"></span></span><b id="o-v"></b></div>
 <div class="r"><span>Part 1: 4% of tank stock (4% of G)</span><b id="o-4"></b></div>
 <div class="r"><span>Part 2: handling loss on sales (used for a shortage only)</span><b id="o-h"></b></div>
-<p class="v" id="sv-v1" style="display:none"></p>
-<p class="v" id="sv-v2" style="display:none"></p>
-<p class="v" id="sv-v3" style="display:none"></p>
 <p class="n" id="sv-gain" style="display:none"></p>
 <p class="n" id="sv-cp" style="display:none"></p>
 <p class="n" id="sv-cn" style="display:none"></p>

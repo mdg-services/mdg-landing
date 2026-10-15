@@ -1,7 +1,8 @@
 ---json
 {
   "title": "Fuel sample failed at a petrol pump: what happens next",
-  "description": "What happens when a fuel sample fails under Marketing Discipline Guidelines 2024 (MDG 2024): how the lab decides, your re-test right and the deadlines that follow.",
+  "metaTitle": "Fuel sample failed at a petrol pump: what next",
+  "description": "What happens when a fuel sample fails under Marketing Discipline Guidelines 2024: how the lab decides, your re-test right and the deadlines that follow.",
   "answer": "Under Marketing Discipline Guidelines 2024 (MDG 2024), the oil companies' rules for their dealers under the dealership agreement, a sample counts as failed when its result and the reference sample's are further apart than the test method allows {{2.10}}. The lab tests the nozzle sample with the tank lorry and supply location samples before anyone decides {{2.5(G)}} {{2.5(I)}}. Within 10 days of receiving the lab report, the dealer can ask for his retained sample to be re-tested at a PSU lab he picks, at his own cost {{2.5(H)}}.",
   "faq": [
     { "q": "Are my sales stopped when a fuel sample is sent to the lab?", "a": "A failed density test, filter paper test or mobile lab clinical test leads an oil company officer to suspend sales and supply of all products, and samples go for priority testing {{2.5(K)}}; chapter 7 words the mobile lab case differently {{7.6.1(b)}}. Positive stock variation beyond the limit, or no reference density at inspection, also means immediate suspension and sampling; if that sample fails, action follows as for adulteration {{5.1.11}} {{5.1.9}}." },

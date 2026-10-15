@@ -31,6 +31,6 @@ export const footer: typeof EN = {
   /* ── the hairline at the bottom ── */
   copyright: "© {year} {name}. सभी अधिकार सुरक्षित।",
   brandLine: "MDG Services, {name} का एक ब्रांड · CIN: {cin}",
-  privacy: "प्राइवेसी पॉलिसी",
+  privacy: "प्राइवेसी पॉलिसी (अंग्रेज़ी में)",
   madeFor: "भारत के पेट्रोल पंप डीलरों के लिए बनाया गया",
 };

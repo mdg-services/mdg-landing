@@ -1,7 +1,8 @@
 ---json
 {
   "title": "Petrol pump first aid box: the MDG 2024 rule and what to keep",
-  "description": "Marketing Discipline Guidelines 2024 (MDG 2024) asks a petrol pump dealer to keep a first aid box with in-date medicines. What a missing box costs, and what to confirm.",
+  "metaTitle": "Petrol pump first aid box: what to keep",
+  "description": "Marketing Discipline Guidelines 2024 require a first aid box with in-date medicines at a petrol pump. What a missing box costs, and what to confirm.",
   "answer": "Marketing Discipline Guidelines 2024 (MDG 2024) requires a first aid box at the outlet, with valid medicines that are not beyond their expiry dates {{1.6(ix)}} {{5.1.14(a)}}. A missing box is a minor irregularity {{8.4(ii)}}. MDG gives no contents list, size or checking interval, so confirm the current list with your oil company.",
   "faq": [
     { "q": "What should be in a petrol pump first aid box?", "a": "MDG 2024 says only that the box holds the necessary valid medicinal aids, and gives no list or size {{1.6(ix)}} {{5.1.14(a)}}. Confirm the current list with your oil company; bandages, dressings and antiseptic are common, but that is general practice, not an MDG rule." },

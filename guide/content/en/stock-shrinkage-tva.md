@@ -1,7 +1,8 @@
 ---json
 {
   "title": "Shrinkage allowance and TVA at a petrol pump explained",
-  "description": "How shrinkage allowance and TVA work in the stock check under the Marketing Discipline Guidelines 2024 (MDG 2024), with worked examples on illustration figures.",
+  "metaTitle": "Shrinkage allowance and TVA at a petrol pump",
+  "description": "How shrinkage allowance and TVA work in the stock check under the Marketing Discipline Guidelines 2024, with worked examples on illustration figures.",
   "answer": "Under the Marketing Discipline Guidelines 2024 (MDG 2024), shrinkage allowance and TVA (temperature variation allowance) are rupee allowances per KL. Annexures 8 and 10 turn each into a percentage of the net price, which is applied to the product received and taken off book stock before it is compared with the dip, within plus or minus 4% {{annexure 8}} {{annexure 9}} {{annexure 10}}. They count only where and when they apply {{5.1.11}}.",
   "faq": [
     { "q": "What is shrinkage allowance at a petrol pump?", "a": "A rupee allowance per KL for shrinkage losses, turned into a percentage of the net price and applied to all of that product received {{5.1.11}} {{annexure 8}}." },

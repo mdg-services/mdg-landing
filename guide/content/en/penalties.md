@@ -1,8 +1,8 @@
 ---json
 {
   "title": "Penalties under the Marketing Discipline Guidelines 2024 (MDG 2024): what each irregularity costs",
-  "metaTitle": "Petrol pump penalties under MDG 2024: what each costs",
-  "description": "What a petrol pump dealer faces under the Marketing Discipline Guidelines 2024 for a critical, major or minor irregularity, and the four kinds of suspension.",
+  "metaTitle": "Petrol pump penalties under MDG 2024",
+  "description": "What a petrol pump dealer faces under the Marketing Discipline Guidelines 2024 for a critical, major or minor irregularity, and how sales get stopped.",
   "answer": "The Marketing Discipline Guidelines 2024 (MDG 2024) are the oil companies' rules for their dealers under the dealership agreement. They sort the irregularities listed in Chapter 5 into three classes {{8.1}}. Critical: termination of the dealership at the first instance {{8.2}}. Major: usually 15 days' suspension of sales and supplies, then 30 days, then termination {{8.3}}. Minor: a warning-cum-guidance letter, then Rs 10,000, then Rs 25,000 per irregularity {{8.4}}. These are minimum actions, and the oil company can act harder {{8.5.1}} once the irregularity is established {{8.5.2}}.",
   "faq": [
     {
@@ -15,7 +15,7 @@
     },
     {
       "q": "Why can a petrol pump be suspended under MDG?",
-      "a": "Four different things can stop sales: a lab-test stop, a stop of one nozzle or unit, a penalty suspension and an unpaid fine. The suspension table on this page shows when each applies {{5.1.9}} {{8.3}} {{8.7}}."
+      "a": "Four main things can stop sales: a lab-test stop, a stop of one nozzle or unit, a penalty suspension and an unpaid fine. The suspension table on this page shows when each applies {{5.1.9}} {{8.3}} {{8.7}}."
     }
   ],
   "related": [
@@ -33,15 +33,17 @@
 |---|---|---|---|
 | Minor {{8.4}} | Warning-cum-guidance letter | Rs 10,000 per irregularity | Rs 25,000 per irregularity, from the third instance on |
 | Major, standard ladder {{8.3}} | 15 days' suspension of sales and supplies | 30 days' suspension | Termination of the dealership |
-| Major, normal fuel sold as branded fuel {{8.3}} | Recovery of the differential price since the last inspection | Termination | n/a |
+| Major, normal fuel intentionally sold as branded fuel {{8.3}} | Recovery of the differential price since the last inspection | Termination | n/a |
 | Major, automation breach {{8.3}} | Rs 1,00,000 | Rs 2,00,000 and 7 days' suspension | Termination |
 | Critical {{8.2}} | Termination | n/a | n/a |
 
 {{penalty-note}}
 
+The miscellaneous minor items (a to h in 8.4) found together count as one irregularity when the action is decided {{8.4}}.
+
 Not sure which class your lapse falls in? See [critical, major or minor: which is my lapse](@penalties-classes).
 
-## Why a pump gets suspended: four different things
+## Why a pump gets suspended: four main reasons
 
 | Kind of stop | When it happens |
 |---|---|
@@ -50,7 +52,7 @@ Not sure which class your lapse falls in? See [critical, major or minor: which i
 | Penalty suspension | 15 or 30 days for most major irregularities, or 7 days with the second automation step {{8.3}}. |
 | Unpaid-fine suspension | Starts on the 31st day, counted from the company's fine notice {{8.7}}. |
 
-Two smaller stops exist. A nozzle that delivers short but inside the permitted band is recorded and keeps selling. The dealer is advised to recalibrate and re-stamp it within 15 days of the finding, or its sales stop until done {{5.1.2(a)}}. If negative stock variation passes the limit and the dealer's explanation is not found satisfactory, supply is suspended {{5.1.11}}.
+Two smaller stops exist. A nozzle that delivers short but inside the permitted band is recorded and keeps selling. The dealer is advised to recalibrate and re-stamp it within 15 days of the finding, or its sales stop until done {{5.1.2(a)}}. If negative stock variation passes the limit and the dealer's explanation is not found satisfactory, supply is suspended {{5.1.11}}. Two more stops come from repairs, not from a penalty: a major pipeline leak, where the dealer is advised to suspend sales {{4.3(b)}}, and ethanol outside the desired range in a tank {{4.3(c)}}.
 
 ## After a finding
 

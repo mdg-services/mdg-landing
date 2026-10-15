@@ -24,7 +24,7 @@ export function siteMetadata(lang: Lang, route: SiteRoute): Metadata {
   const home = route === "";
   const page = canonicalRoute(route);
   const title = home ? t.meta.title : route === "/register" ? t.register.pageTitle : t.grievance.pageTitle;
-  const description = home ? t.meta.description : route === "/register" ? t.register.intro : t.grievance.intro;
+  const description = home ? t.meta.description : route === "/register" ? t.register.intro : t.grievance.metaDescription;
   const ogTitle = home ? t.meta.ogTitle : title;
   const ogDescription = home ? t.meta.ogDescription : description;
   const canonical = pathFor(lang, page);

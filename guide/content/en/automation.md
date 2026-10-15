@@ -1,7 +1,8 @@
 ---json
 {
   "title": "NANO and automated petrol pumps: the MDG 2024 rules for dealers",
-  "description": "What MDG 2024 expects at an automated petrol pump under NANO: reporting faults, written permission for manual mode, and a penalty that starts at Rs 1,00,000.",
+  "metaTitle": "NANO and automated petrol pump rules: MDG 2024",
+  "description": "What MDG 2024 requires at an automated petrol pump under NANO: reporting faults, written permission for manual mode, and a penalty from Rs 1,00,000.",
   "answer": "Under the Marketing Discipline Guidelines 2024 (MDG 2024), the oil companies' rules for their dealers, an automated outlet runs on \"No automation, No Operation\" (NANO). The dealer keeps the automation working, reports any fault to the oil company's authorised official at once and acts on that official's direction {{1.5(viii)}}. Manual mode or a switched-off tank gauge (ATG) needs permission by email or signed letter from a company official, which the dealer keeps {{5.1.16}}. Without it, the first-instance penalty is at least Rs 1,00,000, and the oil company may take higher action {{8.3(vii)}} {{8.5.1}}.",
   "faq": [
     { "q": "What is NANO at a petrol pump?", "a": "NANO stands for \"No automation, No Operation\". Automated outlets are designed around it, so the dealer must see that the automation works, report any fault to the oil company's authorised official at once and follow that official's direction {{1.5(viii)}}." },

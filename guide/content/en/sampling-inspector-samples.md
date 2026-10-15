@@ -1,7 +1,8 @@
 ---json
 {
   "title": "Inspector samples at a petrol pump: who, when, how many",
-  "description": "Who may draw fuel samples at your pump under Marketing Discipline Guidelines 2024 (MDG 2024), when they do, how many bottles they take and what happens to them.",
+  "metaTitle": "Inspector fuel samples at a pump: how many",
+  "description": "Who may draw fuel samples at your pump under Marketing Discipline Guidelines 2024, when they do, how many bottles they take and what happens to them.",
   "answer": "Under Marketing Discipline Guidelines 2024 (MDG 2024), the oil companies' rules for their dealers under the dealership agreement, oil company officials, mobile labs, agencies the oil company has authorised and other authorities the law empowers can draw nozzle samples at your outlet {{2.2.2.2}}. They take six 1-litre bottles from each petrol tank and three from each diesel tank, shared equally between the dealer, the oil company's office and the lab {{2.4.1}} {{2.4.2}}. Refusing or obstructing sampling is a major irregularity {{5.1.8}} {{8.3}}.",
   "faq": [
     { "q": "Who can take a fuel sample from my petrol pump?", "a": "Oil company officials, mobile labs, agencies the oil company has authorised, any authority the law empowers to sample, and joint industry teams {{2.2.2.2}} {{2.4.3}}." },
@@ -28,7 +29,7 @@ Samples come from dispensing-unit nozzles on every MS and HSD tank {{2.2.2.2}}. 
 | MS {{2.4.1}} | 6 x 1 litre | 2 | 2 | 2 |
 | HSD {{2.4.2}} | 3 x 1 litre | 1 | 1 | 1 |
 
-A mobile lab's third set goes to the oil company for testing, not the lab {{2.4.4}}.
+If a mobile lab's sample fails, the third set goes to the oil company for testing, not directly to the lab {{2.4.4}}.
 
 For petrol, the sample should come only through a nozzle that delivers non-2T (not premixed) petrol. If every nozzle on the tank delivers 2T-premixed petrol, precautions are needed so the sample has no 2T oil {{5.1 Note (ii)}}.
 
@@ -53,3 +54,5 @@ Refusing or obstructing sampling or an inspection is a major irregularity {{5.1.
 {{penalty-note}}
 
 See [penalties](@penalties).
+
+General information, not legal advice. For your own notice, speak to an advocate or your oil company.

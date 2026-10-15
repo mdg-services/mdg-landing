@@ -65,20 +65,21 @@ export default function Navbar({
       <div className="wrap-full flex h-16 items-center justify-between md:h-20">
         <a href={onHome ? "#top" : homeHref(lang)} className="flex items-center gap-3" aria-label={t.ui.homeAria}>
           <LogoFull className="h-8 w-auto sm:h-9" priority />
-          <span aria-hidden className="hidden h-6 w-px bg-ink-hairline sm:block" />
-          <span className="hidden font-mono text-[10px] uppercase tracking-[0.2em] text-ink-muted sm:block">
+          {/* the tag line goes where the menu needs the room (1024-1279px) */}
+          <span aria-hidden className="hidden h-6 w-px bg-ink-hairline sm:block lg:hidden xl:block" />
+          <span className="hidden font-mono text-[10px] uppercase tracking-[0.2em] text-ink-muted sm:block lg:hidden xl:block">
             Dealer's <span className="deva normal-case tracking-normal text-navy-700">कवच</span>
           </span>
         </a>
 
-        <nav className="hidden items-center gap-9 md:flex" aria-label={t.ui.primaryNavAria}>
+        <nav className="hidden items-center gap-4 lg:flex xl:gap-9" aria-label={t.ui.primaryNavAria}>
           {items.map((l) => (
             <a
               key={l.key}
               href={l.href}
               aria-current={l.here ? "page" : undefined}
               className={
-                "link-quiet text-[14px] font-medium hover:text-ink " + (l.here ? "text-navy-700" : "text-ink-soft")
+                "link-quiet whitespace-nowrap text-[14px] font-medium hover:text-ink " + (l.here ? "text-navy-700" : "text-ink-soft")
               }
             >
               {l.label}
@@ -90,10 +91,12 @@ export default function Navbar({
           {/* Outside the burger on purpose: a Hindi reader has to be able to
               find the switch without first opening an English menu. */}
           <LanguageToggle twin={twin} />
+          {/* 1024-1279px: the handset alone; from 1280px, with its words */}
+          <CallUs variant="icon" className="hidden text-ink hover:text-navy-700 lg:inline-flex xl:hidden [&_svg]:text-navy-700" />
           <CallUs
-            className="hidden text-[14px] font-semibold text-ink hover:text-navy-700 lg:inline-flex [&_svg]:text-navy-700"
+            className="hidden whitespace-nowrap text-[14px] font-semibold text-ink hover:text-navy-700 xl:inline-flex [&_svg]:text-navy-700"
           />
-          <a href={section("contact")} className="hidden md:inline-flex btn-primary !min-h-[44px] !px-5 !text-[13px]">
+          <a href={section("contact")} className="hidden whitespace-nowrap btn-primary !min-h-[44px] !px-5 !text-[13px] lg:inline-flex">
             {t.ui.talkToUs}
           </a>
           <button
@@ -101,7 +104,7 @@ export default function Navbar({
             aria-label={open ? t.ui.closeMenu : t.ui.openMenu}
             aria-expanded={open}
             aria-controls="mobile-menu"
-            className="grid h-11 w-11 place-items-center rounded-lg border border-ink/15 bg-white md:hidden"
+            className="grid h-11 w-11 place-items-center rounded-lg border border-ink/15 bg-white lg:hidden"
             onClick={() => setOpen((o) => !o)}
           >
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden>
@@ -117,7 +120,7 @@ export default function Navbar({
 
       <div
         id="mobile-menu"
-        className="menu-panel border-t border-ink-hairline bg-paper/95 backdrop-blur md:hidden"
+        className="menu-panel border-t border-ink-hairline bg-paper/95 backdrop-blur lg:hidden"
         data-open={open}
         aria-hidden={!open}
         inert={!open}

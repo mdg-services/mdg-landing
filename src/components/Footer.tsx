@@ -15,13 +15,13 @@ export default function Footer({ lang }: { lang: Lang }) {
   return (
     <footer className="relative overflow-hidden bg-navy-950 text-white">
       <div aria-hidden className="absolute inset-0 bg-grid-dark opacity-30" />
-      <div className="wrap-full relative pt-20 pb-12 md:pt-24">
+      {/* the foot has room under the last line: the floating assistant button (right) and call pill (left) rest there instead of on the text */}
+      <div className="wrap-full relative pt-20 pb-24 md:pt-24">
         <div className="grid items-start gap-12 md:grid-cols-12">
           <div className="md:col-span-5">
             <LogoFullWhite className="h-10 w-auto" />
             <p className="mt-7 font-display text-[24px] font-medium leading-[1.2] text-white md:text-[30px]">
-              Dealer's <span className="deva text-gold-400">कवच</span>.
-              <br />
+              Dealer's <span className="deva text-gold-400">कवच</span>. <br />
               <span className="text-navy-100">{t.footer.promise}</span>
             </p>
             <p className="mt-6 max-w-prose2 text-[14px] leading-[1.6] text-navy-200">
@@ -39,24 +39,24 @@ export default function Footer({ lang }: { lang: Lang }) {
             <ul className="mt-6 space-y-3 text-[15px]">
               {explore.map((id) => (
                 <li key={id}>
-                  <a href={homeHref(lang, id)} className="link-quiet text-navy-100 hover:text-white">
+                  <a href={homeHref(lang, id)} className="link-quiet tap-pad text-navy-100 hover:text-white">
                     {t.footer.explore[id]}
                   </a>
                 </li>
               ))}
               <li>
-                <Link href={pathFor(lang, "/register")} className="link-quiet text-navy-100 hover:text-white">
+                <Link href={pathFor(lang, "/register")} className="link-quiet tap-pad text-navy-100 hover:text-white">
                   {t.footer.register}
                 </Link>
               </li>
               <li>
-                <Link href={pathFor(lang, "/grievance")} className="link-quiet text-navy-100 hover:text-white">
+                <Link href={pathFor(lang, "/grievance")} className="link-quiet tap-pad text-navy-100 hover:text-white">
                   {t.footer.grievance}
                 </Link>
               </li>
               <li>
                 {/* The guides keep a trailing slash on their addresses, so this is a plain link */}
-                <a href={lang === "hi" ? "/hi/guides/" : "/guides/"} className="link-quiet text-navy-100 hover:text-white">
+                <a href={lang === "hi" ? "/hi/guides/" : "/guides/"} className="link-quiet tap-pad text-navy-100 hover:text-white">
                   {t.footer.mdgGuide}
                 </a>
               </li>
@@ -75,18 +75,19 @@ export default function Footer({ lang }: { lang: Lang }) {
                   href={BRAND.playStore}
                   target="_blank"
                   rel="noopener"
-                  className="link-quiet text-navy-100 hover:text-white"
+                  className="link-quiet tap-pad text-navy-100 hover:text-white"
                 >
                   {t.ui.getApp} · Google Play
                 </a>
               </li>
               <li>
-                <a href={`https://www.${BRAND.site}`} target="_blank" rel="noreferrer" className="link-quiet text-navy-100 hover:text-white">
+                {/* this very site: the home page of the language being read, in the same tab */}
+                <a href={homeHref(lang)} className="link-quiet tap-pad text-navy-100 hover:text-white">
                   {BRAND.site}
                 </a>
               </li>
               <li>
-                <a href={`mailto:${BRAND.email}`} className="link-quiet text-navy-100 hover:text-white">
+                <a href={`mailto:${BRAND.email}`} className="link-quiet tap-pad text-navy-100 hover:text-white">
                   {BRAND.email}
                 </a>
               </li>
@@ -101,7 +102,7 @@ export default function Footer({ lang }: { lang: Lang }) {
               {t.footer.brandLine.replace("{name}", BRAND.legalName).replace("{cin}", BRAND.cin)}
             </p>
             <p>
-              <a href="/privacy" className="link-quiet text-navy-200 hover:text-white">
+              <a href="/privacy" className="link-quiet tap-pad text-navy-200 hover:text-white">
                 {t.footer.privacy}
               </a>
             </p>

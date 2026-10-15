@@ -24,7 +24,7 @@ export const TOLL_FREE = { display: "1800‑891‑3496", href: "tel:18008913496"
  * We never host the PDF ourselves.
  */
 export const OFFICIAL = {
-  bpcl: "https://www.bharatpetroleum.in/images/files/MDG-2024-Effective-24-10-2024.pdf",
+  bpcl: "https://www.bharatpetroleum.in/images/files/mdg-2024-effective-24-10-2024.pdf",
 };
 
 export const DOC = "Marketing Discipline Guidelines 2024 (Ver. 1, effective 24.10.2024)";
@@ -46,10 +46,11 @@ export const UI: Record<Lang, Record<string, string>> = {
     video: "Video",
     topics: "Topics",
     tools: "Tools",
+    toolsAndReference: "Tools and reference",
     pages: "pages",
     page: "page",
     checked: `Checked against the ${DOC} on`,
-    published: "Published by MDG Services.",
+    published: "Published by MDG Services on",
     officialTitle: "Read the official text",
     officialBpcl: "Marketing Discipline Guidelines 2024 (PDF on Bharat Petroleum's website)",
     officialAlso: "also published on iocl.com",
@@ -78,17 +79,18 @@ export const UI: Record<Lang, Record<string, string>> = {
     video: "वीडियो",
     topics: "विषय",
     tools: "टूल",
+    toolsAndReference: "टूल और संदर्भ",
     pages: "पेज",
     page: "पेज",
     checked: "Marketing Discipline Guidelines 2024 (Ver. 1, 24.10.2024 से लागू) से मिलाकर जाँचा गया:",
-    published: "प्रकाशक: MDG Services।",
+    published: "प्रकाशक: MDG Services। प्रकाशन की तारीख़:",
     officialTitle: "आधिकारिक दस्तावेज़ पढ़ें",
     officialBpcl: "Marketing Discipline Guidelines 2024 (भारत पेट्रोलियम की वेबसाइट पर PDF)",
     officialAlso: "यह iocl.com पर भी प्रकाशित है",
     ctaTitle: "डीलर कवच के बारे में (विज्ञापन)",
     cta: "डीलर कवच, MDG Services का ऐप है जो आपके आउटलेट की फ़ाइलिंग, रिन्यूअल, निरीक्षण और रोज़ की रिपोर्ट का हिसाब रखता है और डेडलाइन से पहले याद दिलाता है — हिंदी और अंग्रेज़ी में।",
     disclaimerLink: "पूरा अस्वीकरण (डिस्क्लेमर)",
-    privacy: "प्राइवेसी",
+    privacy: "प्राइवेसी (अंग्रेज़ी में)",
     updates: "अपडेट और आधिकारिक PDF",
     company: `MDG Services, ${COMPANY} का एक ब्रांड है, जो भारत में रजिस्टर्ड कंपनी है (CIN ${CIN})।`,
     report: "गलती बताएँ या कानूनी सूचना भेजें",
@@ -96,10 +98,10 @@ export const UI: Record<Lang, Record<string, string>> = {
   },
 };
 
-/** The two-sentence notice at the top of every page. Normal size, never folded away. */
+/** The notice at the top of every page: what MDG 2024 is, and that this page is not the official text. Normal size, never folded away. */
 export const NOTICE_SHORT: Record<Lang, string> = {
-  en: "This is a plain-language explanation by MDG Services (a brand of VRUOOM Private Limited). It is not the official text and is not connected with or approved by IndianOil, BPCL, HPCL or any government body, so please check the current Marketing Discipline Guidelines 2024 and circulars on the oil companies' own websites and with your oil company officer before you act.",
-  hi: "यह पेज MDG Services (VRUOOM Private Limited का ब्रांड) की ओर से आसान भाषा में दी गई जानकारी है। यह आधिकारिक पाठ नहीं है, और इंडियनऑयल, बीपीसीएल, एचपीसीएल या किसी सरकारी संस्था से इसका कोई संबंध या अनुमोदन नहीं है; इसलिए कोई भी कदम उठाने से पहले तेल कंपनियों की अपनी वेबसाइट पर ताज़ा Marketing Discipline Guidelines 2024 और सर्कुलर देखें और अपनी तेल कंपनी के अधिकारी से पूछ लें।",
+  en: "The Marketing Discipline Guidelines 2024 (MDG 2024) are the oil companies' rules for their dealers, and bind dealers through the dealership agreement. This page is a plain-language explanation by MDG Services (a brand of VRUOOM Private Limited). It is not the official text and is not connected with or approved by IndianOil, BPCL, HPCL or any government body, so please check the current guidelines and circulars on the oil companies' own websites and with your oil company officer before you act.",
+  hi: "Marketing Discipline Guidelines 2024 (MDG 2024) तेल कंपनियों के अपने डीलरों के लिए नियम हैं, जो डीलरशिप एग्रीमेंट के ज़रिए डीलरों पर लागू होते हैं। यह पेज MDG Services (VRUOOM Private Limited का ब्रांड) की ओर से आसान भाषा में दी गई जानकारी है। यह आधिकारिक पाठ नहीं है, और इंडियनऑयल, बीपीसीएल, एचपीसीएल या किसी सरकारी संस्था से इसका कोई संबंध या अनुमोदन नहीं है; इसलिए कोई भी कदम उठाने से पहले तेल कंपनियों की अपनी वेबसाइट पर ताज़ा गाइडलाइन और सर्कुलर देखें और अपनी तेल कंपनी के अधिकारी से पूछ लें।",
 };
 
 /** The full disclaimer: at the foot of every page, and the whole of the disclaimer page. [heading, text] pairs. */
@@ -134,5 +136,57 @@ export const DISCLAIMER: Record<Lang, [string, string][]> = {
   ],
 };
 
+/**
+ * One short line for each topic's card on the guides hub (two lines on a phone).
+ * The topic's own page has the full description; this is only the card's blurb.
+ * Keyed by the topic (pillar) in guide/inventory.ts.
+ */
+export const TOPIC_BLURB: Record<string, Record<Lang, string>> = {
+  penalties: {
+    en: "Critical, major and minor irregularities, and the main ways sales are stopped.",
+    hi: "क्रिटिकल, मेजर और माइनर अनियमितता पर कार्रवाई, और बिक्री रुकने के मुख्य तरीके।",
+  },
+  inspection: {
+    en: "Who can inspect a pump, what a visit covers, and what follows a finding.",
+    hi: "पंप की जाँच कौन कर सकता है, विज़िट में क्या आता है, और आगे क्या होता है।",
+  },
+  density: {
+    en: "Density at 15°C: when to measure it, the register and the density board.",
+    hi: "15°C पर डेंसिटी: कब नापनी है, डेंसिटी रजिस्टर और डेंसिटी बोर्ड।",
+  },
+  stock: {
+    en: "The 4% of tank stock limit, other allowances, and the action beyond it.",
+    hi: "टैंक स्टॉक का 4% वाली सीमा, बाकी अलाउंस और सीमा के ऊपर कार्रवाई।",
+  },
+  quantity: {
+    en: "Seals, nozzle checks, the 5-litre measure and zero before delivery.",
+    hi: "सील, नोज़ल की जाँच, 5 लीटर का मेज़र और डिलीवरी से पहले ज़ीरो।",
+  },
+  tanker: {
+    en: "The 14 steps from matching the invoice to recording density.",
+    hi: "इनवॉइस मिलाने से डेंसिटी लिखने तक के 14 कदम।",
+  },
+  sampling: {
+    en: "The three samples, who draws and keeps each, and for how long.",
+    hi: "तीन सैंपल, हर एक कौन लेता और रखता है, और कितने दिन।",
+  },
+  service: {
+    en: "Air, toilet, phone, first aid box, drinking water and the complaint book.",
+    hi: "हवा, टॉयलेट, फ़ोन, फ़र्स्ट एड बॉक्स, पीने का पानी और कंप्लेंट बुक।",
+  },
+  automation: {
+    en: "Reporting faults and written permission for manual mode at automated outlets.",
+    hi: "ऑटोमेटेड पंप पर खराबी की रिपोर्ट और मैनुअल मोड की लिखित अनुमति।",
+  },
+  company: {
+    en: "What MDG 2024 requires of the oil company, from depot checks to training.",
+    hi: "MDG 2024 तेल कंपनी से क्या माँगता है: डिपो की जाँच से ट्रेनिंग तक।",
+  },
+  sko: {
+    en: "Duties, irregularities and penalties for PDS kerosene (SKO) wholesale dealers.",
+    hi: "PDS केरोसिन (SKO) थोक डीलर की ज़िम्मेदारियाँ, अनियमितताएँ और कार्रवाई।",
+  },
+};
+
 /** Static pages of the main site that belong in the sitemap. */
-export const SITE_PAGES = ["/", "/register", "/film", "/film/short", "/grievance", "/privacy"];
+export const SITE_PAGES = ["/", "/register", "/film", "/film?lang=en", "/film/short", "/film/short?lang=en", "/grievance", "/privacy"];

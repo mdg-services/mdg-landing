@@ -1,13 +1,13 @@
 ---json
 {
   "title": "Marketing Discipline Guidelines 2024 (MDG 2024) PDF: where to read it, version and updates",
-  "metaTitle": "Marketing Discipline Guidelines 2024 PDF (MDG 2024) and updates",
-  "description": "Where to read the MDG 2024 text on the oil companies' own websites, its version and effective date, and a dated log of the circulars issued under it that we know of.",
+  "metaTitle": "MDG 2024 PDF: where to read it, and updates",
+  "description": "Where to read the MDG 2024 text on the oil companies' websites, its version and effective date, and a dated log of the circulars we know of under it.",
   "answer": "Marketing Discipline Guidelines 2024 (MDG 2024) is Version 1, effective 24.10.2024, and the oil companies publish it on their own websites. This page links the Bharat Petroleum copy and says where IndianOil publishes its own; we do not host a copy. The one circular we have logged under it is dated 20.03.2025 (Minimum Service Obligations, clause 5.1.18). It is a common format for dealers of all three oil companies and sets no penalty of its own {{cover page}} {{5.1.18}} {{circular}}.",
   "faq": [
     {
       "q": "Where can I download the MDG 2024 PDF, on the IOCL or BPCL website?",
-      "a": "From the oil companies' own websites: open [MDG 2024 on Bharat Petroleum's website](https://www.bharatpetroleum.in/images/files/MDG-2024-Effective-24-10-2024.pdf). IndianOil publishes its own on iocl.com, so search that site for the title. We do not host a copy."
+      "a": "From the oil companies' own websites: open [MDG 2024 on Bharat Petroleum's website](https://www.bharatpetroleum.in/images/files/mdg-2024-effective-24-10-2024.pdf). IndianOil publishes its own on iocl.com, so search that site for the title. We do not host a copy."
     },
     {
       "q": "Has MDG 2024 been amended?",
@@ -15,7 +15,7 @@
     },
     {
       "q": "Are there MDG guidelines for 2025 or 2026?",
-      "a": "We have logged no separate 2025 or 2026 edition. MDG 2024 is the edition in force, and the one 2025 circular we hold sits under its clause 5.1.18 {{5.1.18}} {{circular}}."
+      "a": "We have logged no separate 2025 or 2026 edition. MDG 2024 is the latest edition we hold, and the one 2025 circular we hold sits under its clause 5.1.18 {{5.1.18}} {{circular}}."
     }
   ],
   "related": [
@@ -31,15 +31,15 @@
 
 We link the Bharat Petroleum copy and do not host the document.
 
-- [MDG 2024 on Bharat Petroleum's website](https://www.bharatpetroleum.in/images/files/MDG-2024-Effective-24-10-2024.pdf)
+- [MDG 2024 on Bharat Petroleum's website](https://www.bharatpetroleum.in/images/files/mdg-2024-effective-24-10-2024.pdf)
 
-IndianOil publishes it on iocl.com. We do not link to that site, so search it for "Marketing Discipline Guidelines 2024". Hindustan Petroleum dealers use the same document: its acknowledgement form names all three companies.
+IndianOil publishes it on iocl.com. We do not link to that site, so search it for "Marketing Discipline Guidelines 2024". The cover says the document is for dealerships of public sector marketing companies {{cover page}}, and the handing-over form at its end names IndianOil, Bharat Petroleum and Hindustan Petroleum.
 
 To check your edition, the cover reads "MDG 2024 (Effective 24.10.2024)" and the footer reads "Ver. 1 / 24.10.2024" {{cover page}}.
 
 ## Version
 
-MDG 2024 is Version 1, effective 24.10.2024. It replaced MDG 2012 (Ver. 7, last amended on 30.11.2022) {{cover page}} {{2012:cover page}}. See [MDG 2012 vs MDG 2024](@mdg-2012-vs-2024).
+MDG 2024 is Version 1, effective 24.10.2024 {{cover page}}. It replaced MDG 2012 (Ver. 7, last amended on 30.11.2022) {{2012:cover page}}; MDG 2024 itself calls the older text "the previous MDG" {{8.5.5}}. See [MDG 2012 vs MDG 2024](@mdg-2012-vs-2024).
 
 ## Where to look in the PDF
 
@@ -49,7 +49,7 @@ MDG 2024 is Version 1, effective 24.10.2024. It replaced MDG 2012 (Ver. 7, last 
 | Samples | Chapter 2 (2.1 to 2.10) |
 | Oil company duties, repairs and maintenance | Chapters 3 and 4 |
 | What counts as an irregularity | Chapter 5 (5.1.1 to 5.1.18) |
-| Grades, fines, notices, appeals | Chapter 8 (8.1 to 8.10) |
+| Classes, fines, notices, appeals | Chapter 8 (8.1 to 8.10) |
 | Kerosene dealers; the mobile lab | Chapter 6 and 8.10; Chapter 7 |
 | Forms, labels, test tables | Annexures 1 to 13a |
 
@@ -63,7 +63,7 @@ MDG leaves some detail to oil company circulars {{1.6(xii)}} {{5.1.12}}, so the 
 
 That is the only circular we have logged. Oil companies can also write to their dealers directly, and such letters may not be public, so ask your oil company what applies to you.
 
-MDG asks the dealer to keep the oil company's correspondence at the outlet for ready reference {{1.5(iv)}}. General practice, not an MDG rule:
+MDG requires the dealer to keep the oil company's correspondence at the outlet for ready reference {{1.5(iv)}}. General practice, not an MDG rule:
 
 - Ask your field officer at each visit for circulars issued since your last one.
 - Check your oil company's website for MDG notices.

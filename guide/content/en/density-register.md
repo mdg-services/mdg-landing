@@ -1,7 +1,8 @@
 ---json
 {
   "title": "Density register format for a petrol pump: what MDG 2024 expects",
-  "description": "What a petrol pump density register must record under MDG 2024: the morning reading, tanker compartments, invoice density and density after decanting, with an example.",
+  "metaTitle": "Petrol pump density register format: MDG 2024",
+  "description": "What a petrol pump density register must record under MDG 2024: the morning reading, tanker compartments, invoice density, density after decanting.",
   "answer": "Under the Marketing Discipline Guidelines 2024 (MDG 2024), density records follow the Annexure 1 format, which as laid out covers one tank of one product for a month. The register holds the morning reading, each tanker compartment's reading with the invoice figure, and the reading taken after decanting. Keep it for the present financial year and the one before it {{1.2(xiv)}} {{annexure 1}} {{5.1.12}}.",
   "faq": [
     { "q": "What is the petrol pump density register format?", "a": "Annexure 1: a form headed by a tank number, a product and a month. It holds the date, the morning reading, each tanker compartment's reading, the invoice density at 15°C and the 15°C density after decanting {{1.2(xiv)}} {{annexure 1}}." },

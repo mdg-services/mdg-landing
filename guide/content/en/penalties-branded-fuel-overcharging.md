@@ -1,7 +1,8 @@
 ---json
 {
   "title": "Overcharging and selling normal fuel as branded: MDG penalties",
-  "description": "What the Marketing Discipline Guidelines 2024 say about normal fuel sold as branded fuel and about overcharging: the penalties, and the duty to display prices.",
+  "metaTitle": "Overcharging, selling normal as branded: MDG 2024",
+  "description": "What the Marketing Discipline Guidelines 2024 say about normal fuel sold as branded fuel and about overcharging: the penalties and the price display duty.",
   "answer": "Under the Marketing Discipline Guidelines 2024 (MDG 2024), the oil companies' rules for their dealers, selling normal petrol or diesel as branded fuel on purpose is a major irregularity: recovery of the differential price since the last inspection at the first instance, termination at the second {{5.1.10}} {{8.3}}. Overcharging above the authorised selling price is major too: 15 days' suspension, then 30 days, then termination {{5.1.13}} {{8.3}}. Not displaying the prices is minor {{5.1.15}} {{8.4}}.",
   "faq": [
     {
