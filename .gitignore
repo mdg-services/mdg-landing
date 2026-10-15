@@ -37,3 +37,18 @@ dist-ssr
 
 # Source documents the guide is checked against (MDG text, circulars). Never published.
 .guide-source
+
+# Next.js
+.next
+.next-*
+out
+next-env.d.ts
+*.tsbuildinfo
+
+# The film watch pages are generated into public/film by `npm run film`
+# (scripts/film-build.ts) before every dev and build run. The three
+# committed files there (mark.png, og-*.jpg) stay.
+public/film/index.html
+public/film/en/
+public/film/short/
+public/film/hls-*.js

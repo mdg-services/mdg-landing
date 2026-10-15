@@ -1,8 +1,11 @@
-import { useCallback, useEffect, useRef, useState } from "react";
-import { AnimatePresence, motion } from "motion/react";
+"use client";
+
+import Image from "next/image";
+import { useCallback, useEffect, useRef, useState, useSyncExternalStore } from "react";
 import Icon from "./Icon";
-import { useT } from "../i18n";
-import { EASE } from "../lib/anim";
+import { useT } from "../i18n/client";
+import { usePresence } from "../lib/usePresence";
+import { useOnGuides } from "../lib/onGuides";
 import { onCallChoiceRequested, requestAssistCall, requestCallChoice } from "../lib/assistCall";
 import { TOLL_FREE } from "../lib/tollFree";
 import { ASSIST_BOT_SRC } from "./assist/assets";
@@ -34,19 +37,32 @@ import { ASSIST_BOT_SRC } from "./assist/assets";
  */
 export default function CallSheet() {
   const t = useT();
-  // Read once, as the page first draws; the address bar is tidied after.
-  const [open, setOpen] = useState(hasCallParam);
+  const onGuides = useOnGuides();
+  // `?call=1` is read once, as the page first draws; the address bar is tidied
+  // after. The server render never sees it (it renders the closed sheet), and
+  // useSyncExternalStore lets the browser switch to the open one without a
+  // hydration mismatch.
+  const asked = useSyncExternalStore(subscribeNever, hasCallParam, () => false);
+  const [dismissed, setDismissed] = useState(false);
+  const [opened, setOpened] = useState(false);
+  const open = opened || (asked && !dismissed);
+  const setOpen = useCallback((next: boolean) => {
+    setOpened(next);
+    if (!next) setDismissed(true);
+  }, []);
   /** Came from a film page asking to talk: the handset says so until it is used. */
-  const [arrived, setArrived] = useState(hasCallParam);
+  const [arrivedGone, setArrivedGone] = useState(false);
+  const arrived = asked && !arrivedGone;
+  const clearArrived = () => setArrivedGone(true);
   const firstRef = useRef<HTMLAnchorElement | null>(null);
   const dialogRef = useRef<HTMLDivElement | null>(null);
   /** The floating handset, unmounted while the sheet is open: focus comes back to it. */
   const floatRef = useRef<HTMLButtonElement | null>(null);
 
-  useEffect(() => onCallChoiceRequested(() => setOpen(true)), []);
+  useEffect(() => onCallChoiceRequested(() => setOpen(true)), [setOpen]);
   useEffect(dropCallParam, []);
 
-  const close = useCallback(() => setOpen(false), []);
+  const close = useCallback(() => setOpen(false), [setOpen]);
 
   /* ── While open: the keyboard stays inside, the page holds still, and the
      assistant's card does not open itself behind it ─────────────────────── */
@@ -119,9 +135,12 @@ export default function CallSheet() {
     };
   }, [open, close]);
 
+  // The sheet stays on the page for its closing animation (0.32 s) after `open` is false.
+  const { mounted, leaving } = usePresence(open, 320);
+
   const talkHere = () => {
     setOpen(false);
-    setArrived(false);
+    clearArrived();
     requestAssistCall();
   };
 
@@ -132,43 +151,36 @@ export default function CallSheet() {
           ref={floatRef}
           type="button"
           onClick={() => {
-            setArrived(false);
+            clearArrived();
             requestCallChoice();
           }}
-          aria-label={t.ui.callUsAria}
+          aria-label={`${arrived ? t.ui.callNow : t.ui.callUs}, ${t.ui.callUsNote}`}
           className={
             "group fixed bottom-[88px] right-5 z-[60] inline-flex h-12 items-center gap-2 rounded-full bg-navy-700 pl-4 pr-5 " +
             "text-[15px] font-semibold text-white shadow-lift ring-2 ring-inset ring-gold-400/70 transition-transform duration-150 " +
-            "hover:bg-navy-800 active:scale-95 sm:bottom-6 sm:left-6 sm:right-auto sm:h-14 sm:pl-5 sm:pr-6"
+            "hover:bg-navy-800 active:scale-95 sm:bottom-6 sm:left-6 sm:right-auto sm:h-14 sm:pl-5 sm:pr-6" +
+            // A reading page on a phone: just the handset, so it covers less of the text.
+            (onGuides ? " max-sm:w-12 max-sm:justify-center max-sm:px-0" : "")
           }
         >
           {arrived && !stillMotion() && <span aria-hidden className="assist-halo" />}
           <Icon name="phone" size={18} aria-hidden className="text-gold-400" />
-          <span>{arrived ? t.ui.callNow : t.ui.callUs}</span>
+          <span className={onGuides ? "max-sm:hidden" : undefined}>{arrived ? t.ui.callNow : t.ui.callUs}</span>
         </button>
       )}
 
-      <AnimatePresence>
-        {open && (
-          <motion.div
-            key="call-sheet"
-            className="fixed inset-0 z-[80] flex items-end justify-center sm:items-center"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.18 }}
+      {mounted && (
+          <div
+            className="sheet-fade fixed inset-0 z-[80] flex items-end justify-center sm:items-center"
+            data-leaving={leaving ? "" : undefined}
           >
             <div className="absolute inset-0 bg-navy-950/60" onClick={close} aria-hidden />
-            <motion.div
+            <div
               ref={dialogRef}
               role="dialog"
               aria-modal="true"
               aria-labelledby="call-sheet-title"
-              className="relative w-full max-w-md rounded-t-3xl bg-white px-5 pb-[max(20px,env(safe-area-inset-bottom))] pt-5 text-ink shadow-lift sm:rounded-3xl sm:p-7"
-              initial={{ y: 40 }}
-              animate={{ y: 0 }}
-              exit={{ y: 40 }}
-              transition={{ duration: 0.32, ease: EASE }}
+              className="sheet-rise relative w-full max-w-md rounded-t-3xl bg-white px-5 pb-[max(20px,env(safe-area-inset-bottom))] pt-5 text-ink shadow-lift sm:rounded-3xl sm:p-7"
             >
               <div className="flex items-start justify-between gap-4">
                 <div>
@@ -193,7 +205,7 @@ export default function CallSheet() {
                 <a
                   ref={firstRef}
                   href={TOLL_FREE.href}
-                  onClick={() => setArrived(false)}
+                  onClick={clearArrived}
                   className="flex items-center gap-4 rounded-2xl bg-navy-700 px-4 py-4 text-white transition-colors hover:bg-navy-800"
                 >
                   <span className="grid h-12 w-12 flex-none place-items-center rounded-full bg-gold-400 text-navy-950">
@@ -213,9 +225,10 @@ export default function CallSheet() {
                   onClick={talkHere}
                   className="flex items-center gap-4 rounded-2xl border border-ink-hairline bg-white px-4 py-4 text-left transition-colors hover:border-navy-300 hover:bg-navy-50"
                 >
-                  <img
+                  <Image
                     src={ASSIST_BOT_SRC}
                     alt=""
+                    unoptimized
                     aria-hidden
                     width={48}
                     height={48}
@@ -228,20 +241,34 @@ export default function CallSheet() {
                   </span>
                 </button>
               </div>
-            </motion.div>
-          </motion.div>
+            </div>
+          </div>
         )}
-      </AnimatePresence>
     </>
   );
 }
 
+/** The address bar is read once and never changes under us, so there is nothing to subscribe to. */
+function subscribeNever(): () => void {
+  return () => {};
+}
+
+let callParam: boolean | null = null;
+
+/**
+ * Whether the page was opened with `?call=1`. Read once and remembered: the
+ * address bar is tidied straight after (`dropCallParam`), and the sheet must not
+ * close itself because the parameter it opened for has gone.
+ */
 function hasCallParam(): boolean {
-  try {
-    return new URLSearchParams(window.location.search).get("call") === "1";
-  } catch {
-    return false;
+  if (callParam === null) {
+    try {
+      callParam = new URLSearchParams(window.location.search).get("call") === "1";
+    } catch {
+      callParam = false;
+    }
   }
+  return callParam;
 }
 
 /** Drop `?call=1` once honoured, so a reload or a shared link does not reopen the sheet. */

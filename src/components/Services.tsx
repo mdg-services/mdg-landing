@@ -1,12 +1,11 @@
-import { motion } from "motion/react";
 import Icon from "./Icon";
-import { Reveal, Stagger } from "../lib/motion";
-import { itemUp } from "../lib/anim";
+import { Reveal, item } from "../lib/reveal";
 import { SERVICES } from "../data/content";
-import { useT } from "../i18n";
+import { getT } from "../i18n/server";
+import type { Lang } from "../i18n/lang";
 
-export default function Services() {
-  const t = useT();
+export default function Services({ lang }: { lang: Lang }) {
+  const t = getT(lang);
 
   return (
     <section id="services" className="relative bg-paper-warm">
@@ -36,19 +35,17 @@ export default function Services() {
           </Reveal>
         </div>
 
-        <Stagger gap={0.06} className="mt-14 grid gap-4 sm:grid-cols-2 md:mt-16 lg:grid-cols-3">
-          {SERVICES.map((s) => {
+        <div className="mt-14 grid gap-4 sm:grid-cols-2 md:mt-16 lg:grid-cols-3">
+          {SERVICES.map((s, i) => {
             // Zipped by id, never by position: the two lists are free to
             // fall out of order.
             const card = t.services.items[s.id];
 
             return (
-              <motion.article
+              <article
                 key={s.id}
-                variants={itemUp}
-                whileHover={{ y: -6 }}
-                transition={{ type: "spring", stiffness: 300, damping: 24 }}
-                className="group relative flex flex-col overflow-hidden rounded-2xl border border-ink-hairline bg-white p-6 shadow-card"
+                {...item(i, 0.06)}
+                className="lift group relative flex flex-col overflow-hidden rounded-2xl border border-ink-hairline bg-white p-6 shadow-card"
               >
                 {/* top accent that grows on hover */}
                 <span
@@ -83,10 +80,10 @@ export default function Services() {
                   <span className="h-1.5 w-1.5 rotate-45 bg-gold-400" />
                   <span className="font-mono text-[11px] uppercase tracking-[0.12em] text-navy-700">{card.metric}</span>
                 </div>
-              </motion.article>
+              </article>
             );
           })}
-        </Stagger>
+        </div>
       </div>
     </section>
   );

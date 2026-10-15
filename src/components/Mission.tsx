@@ -1,12 +1,11 @@
-import { motion } from "motion/react";
 import Icon from "./Icon";
-import { useT } from "../i18n";
-import { Reveal, Stagger } from "../lib/motion";
-import { itemUp } from "../lib/anim";
+import { getT } from "../i18n/server";
+import type { Lang } from "../i18n/lang";
+import { Reveal, item, reveal } from "../lib/reveal";
 import { BRAND } from "../data/content";
 
-export default function Mission() {
-  const t = useT();
+export default function Mission({ lang }: { lang: Lang }) {
+  const t = getT(lang);
 
   return (
     <section aria-label={t.mission.sectionAria} className="relative overflow-hidden bg-navy-950 text-white">
@@ -41,41 +40,37 @@ export default function Mission() {
             </Reveal>
 
             {/* 4 E's */}
-            <Stagger gap={0.08} delay={0.2} className="mt-9 flex flex-wrap gap-2.5">
-              {t.mission.fourE.map((e) => (
-                <motion.span
+            <div className="mt-9 flex flex-wrap gap-2.5">
+              {t.mission.fourE.map((e, i) => (
+                <span
                   key={e}
-                  variants={itemUp}
+                  {...item(i, 0.08, 0.2)}
                   className="rounded-full border border-gold-400/40 bg-gold-400/10 px-4 py-2 font-display text-[14px] font-semibold tracking-tight text-gold-300"
                 >
                   {e}
-                </motion.span>
+                </span>
               ))}
-            </Stagger>
+            </div>
           </div>
 
           {/* right: the seven values as a node spine */}
           <div className="md:col-span-6 md:col-start-7">
-            <Stagger gap={0.07} className="relative">
+            <div className="relative">
               {/* connecting line */}
-              <motion.span
+              <span
                 aria-hidden
                 className="absolute left-[11px] top-2 w-px bg-white/15"
-                initial={{ scaleY: 0 }}
-                whileInView={{ scaleY: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-                style={{ transformOrigin: "top", height: "calc(100% - 1rem)" }}
+                {...reveal("line-y", { height: "calc(100% - 1rem)" })}
               />
-              {t.mission.values.map((v) => (
-                <motion.div key={v} variants={itemUp} className="relative flex items-center gap-5 py-3.5">
+              {t.mission.values.map((v, i) => (
+                <div key={v} {...item(i, 0.07)} className="relative flex items-center gap-5 py-3.5">
                   <span className="relative z-10 grid h-6 w-6 shrink-0 place-items-center rounded-full border border-gold-400/50 bg-navy-900">
                     <span className="h-2 w-2 rotate-45 bg-gold-400" />
                   </span>
                   <span className="font-display text-[18px] font-medium text-white md:text-[21px]">{v}</span>
-                </motion.div>
+                </div>
               ))}
-            </Stagger>
+            </div>
           </div>
         </div>
 

@@ -39,7 +39,7 @@ import type {
 
 /** Where the API lives. Overridable so a laptop can point at localhost. */
 export const ASSIST_API_BASE = (
-  import.meta.env.VITE_ASSIST_API_BASE ?? "https://api.mdgservices.in/api/v1"
+  process.env.NEXT_PUBLIC_ASSIST_API_BASE ?? "https://api.mdgservices.in/api/v1"
 ).replace(/\/+$/, "");
 
 /**

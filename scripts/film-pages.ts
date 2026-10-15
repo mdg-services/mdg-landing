@@ -5,7 +5,7 @@
  *
  * Each page is built twice: Hindi, the default because the films are in Hindi,
  * and English (files under film/en and film/short/en). Only /film and
- * /film/short are ever served: middleware.ts picks the file from ?lang= or the
+ * /film/short are ever served: proxy.ts picks the file from ?lang= or the
  * site's mdg_lang cookie, and vercel.json redirects /film/en to /film?lang=en,
  * so a shared link stays one link and the switch always reaches the server.
  *

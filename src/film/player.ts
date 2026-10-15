@@ -672,7 +672,7 @@ interface NetInfo {
     }
     if (firstFrame) {
       clearTimeout(waitT);
-      waitT = setTimeout(() => {
+      waitT = window.setTimeout(() => {
         if (waitMsg) waitMsg.textContent = navigator.onLine === false ? C.s.offline : C.s.wait;
         if (waitBox) waitBox.hidden = false;
         cls("stall", true);

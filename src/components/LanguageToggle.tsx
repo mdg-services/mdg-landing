@@ -1,4 +1,8 @@
-import { LANG_LABEL, useLang, type Lang } from "../i18n";
+"use client";
+
+import { LANG_LABEL, LANG_STORE_KEY, langCookie, type Lang } from "../i18n/lang";
+import { useLang } from "../i18n/client";
+import { siteRoute } from "../routing/site";
 
 const ORDER: Lang[] = ["en", "hi"];
 
@@ -8,17 +12,33 @@ const ORDER: Lang[] = ["en", "hi"];
  * state they are in before they can act; showing both means a dealer who
  * lands on the English page sees the word हिंदी and taps it.
  *
+ * The other language is a plain link to this page's twin (`twin`), because the
+ * URL decides the language: the server sends the right words, and a Hindi
+ * reader never waits for a script to translate the page. The link to an
+ * English page carries `?lang=en` (the proxy turns that into the clean address
+ * plus the `mdg_lang` cookie), so choosing English works with no script and in
+ * a new tab; without it a Hindi browser would be sent straight back to /hi.
+ * The click only adds what a link cannot: the cookie at once, and localStorage
+ * where the film pages look as well.
+ *
  * `tone` picks the treatment for the surface it sits on: the white navbar,
  * or a navy band.
  */
 export default function LanguageToggle({
+  twin,
   tone = "light",
   className = "",
 }: {
+  /** Where the other language's version of this page lives. */
+  twin: string;
   tone?: "light" | "dark";
   className?: string;
 }) {
-  const { lang, setLang, t } = useLang();
+  const { lang, t } = useLang();
+
+  // An English site page is reached as a choice, not as a bare address (guides
+  // do not redirect by language, so their twin needs no query).
+  const hrefFor = (code: Lang) => (code === "en" && siteRoute(twin) ? `${twin}?lang=en` : twin);
 
   const shell =
     tone === "light"
@@ -41,22 +61,45 @@ export default function LanguageToggle({
           tone === "light"
             ? "text-ink-muted hover:text-ink"
             : "text-navy-100 hover:text-white";
+        const label = code === "en" ? "EN" : LANG_LABEL.hi;
+        const cls = `rounded-full px-3 py-1 text-[12.5px] font-semibold leading-[1.5] transition-colors duration-200 ${
+          live ? on : off
+        }`;
+        if (live) {
+          return (
+            <span key={code} aria-current="true" lang={code} className={cls}>
+              {label}
+            </span>
+          );
+        }
         return (
-          <button
+          <a
             key={code}
-            type="button"
-            onClick={() => setLang(code)}
-            aria-pressed={live}
+            href={hrefFor(code)}
+            hrefLang={code}
             lang={code}
+            onClick={() => remember(code)}
             title={code === "hi" ? t.ui.switchToHindi : t.ui.switchToEnglish}
-            className={`rounded-full px-3 py-1 text-[12.5px] font-semibold leading-[1.5] transition-colors duration-200 ${
-              live ? on : off
-            }`}
+            className={cls}
           >
-            {code === "en" ? "EN" : LANG_LABEL.hi}
-          </button>
+            {label}
+          </a>
         );
       })}
     </div>
   );
+}
+
+/** A choice made on purpose: kept for a year, where the proxy and the film pages can read it. */
+function remember(lang: Lang) {
+  try {
+    document.cookie = langCookie(lang);
+  } catch {
+    /* cookies blocked: the page still switches, it just will not be remembered */
+  }
+  try {
+    localStorage.setItem(LANG_STORE_KEY, lang);
+  } catch {
+    /* private mode, storage disabled */
+  }
 }

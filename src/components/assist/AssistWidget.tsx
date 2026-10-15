@@ -1,7 +1,12 @@
+"use client";
+
+import Image from "next/image";
 import { Suspense, lazy, useCallback, useEffect, useState } from "react";
-import { useT } from "../../i18n";
+import { useLang } from "../../i18n/client";
+import { assistDict } from "./dict";
 import { ASSIST_BOT_SRC } from "./assets";
 import { onAssistCallRequested } from "../../lib/assistCall";
+import { useOnGuides } from "../../lib/onGuides";
 
 /**
  * The launcher, and nothing else.
@@ -48,9 +53,10 @@ const AUTO_OPEN_MS = 1_000;
 /** Tailwind's `sm`. Below this the panel is a full sheet, not a card. */
 const CARD_WIDTH_PX = 640;
 
-export default function AssistWidget() {
-  const t = useT();
-  const [open, setOpen] = useState(false);
+export default function AssistWidget({ startWithCall = false }: { startWithCall?: boolean }) {
+  const d = assistDict(useLang().lang);
+  // `startWithCall`: the visitor asked for a call before this loaded, so it opens already dialling.
+  const [open, setOpen] = useState(startWithCall);
   /**
    * True only while the panel is showing because it opened itself. It decides
    * whether the panel grabs the keyboard and claims to be modal, because a
@@ -62,7 +68,7 @@ export default function AssistWidget() {
    * Set when something on the page asked for a call — the icon in the navbar,
    * the hero, the footer. The panel reads it once, on mount, and dials.
    */
-  const [autoCall, setAutoCall] = useState(false);
+  const [autoCall, setAutoCall] = useState(startWithCall);
 
   /* ── "Call us", from anywhere on the page ─────────────────────────────── */
 
@@ -82,7 +88,7 @@ export default function AssistWidget() {
   useEffect(() => {
     // Read straight from storage rather than from state, so this effect has
     // nothing to depend on and runs exactly once, on arrival.
-    if (wasDismissed() || window.innerWidth < CARD_WIDTH_PX) return;
+    if (startWithCall || wasDismissed() || window.innerWidth < CARD_WIDTH_PX) return;
     const id = window.setTimeout(() => {
       // never behind the "call us" sheet (open on arrival from a film page's
       // "talk to us"): it would sit under the sheet and take its Escape
@@ -91,6 +97,7 @@ export default function AssistWidget() {
       setUninvited(true);
     }, AUTO_OPEN_MS);
     return () => window.clearTimeout(id);
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- runs once, on arrival
   }, []);
 
   const close = useCallback(() => {
@@ -114,13 +121,17 @@ export default function AssistWidget() {
   // The invitation is for the phone, where nothing opens by itself. It is
   // part of the button rather than a bubble beside it, so there is one tap
   // target and it does one thing.
-  const inviting = !open && !dismissed;
+  // On a reading page (the guides) the bubble would sit on the text, so the
+  // button stays a plain round one there.
+  const onGuides = useOnGuides();
+  const inviting = !open && !dismissed && !onGuides;
 
   return (
     <>
       <button
         type="button"
-        aria-label={open ? t.assist.launcher.close : t.assist.launcher.aria}
+        // when the invitation is on show, the name starts with its words (WCAG 2.5.3)
+        aria-label={open ? d.launcher.close : inviting ? `${d.launcher.invite}. ${d.launcher.aria}` : d.launcher.aria}
         aria-expanded={open}
         aria-haspopup="dialog"
         onClick={toggle}
@@ -128,7 +139,7 @@ export default function AssistWidget() {
       >
         {inviting && (
           <span className="max-w-[62vw] truncate rounded-full border border-ink-hairline bg-white px-3.5 py-2 text-[13px] font-semibold leading-none text-ink shadow-card sm:hidden">
-            {t.assist.launcher.invite}
+            {d.launcher.invite}
           </span>
         )}
         {/* The launcher gives the panel its shape: it squashes as the card
@@ -162,9 +173,11 @@ export default function AssistWidget() {
           ) : (
             /* Eager, not lazy: this is the one image on the page that has to
                be there the moment the corner is looked at. */
-            <img
+            <Image
               src={ASSIST_BOT_SRC}
               alt=""
+              unoptimized
+              loading="eager"
               aria-hidden
               width={44}
               height={44}
@@ -186,7 +199,7 @@ export default function AssistWidget() {
               role="status"
               className="fixed bottom-24 right-5 z-[70] rounded-full border border-ink-hairline bg-white px-4 py-2 text-[13px] text-ink-muted shadow-card sm:right-6"
             >
-              {t.assist.panel.loading}
+              {d.panel.loading}
             </p>
           }
         >

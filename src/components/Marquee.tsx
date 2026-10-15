@@ -1,8 +1,9 @@
 import { TOKENS } from "../data/content";
-import { useT } from "../i18n";
+import { getT } from "../i18n/server";
+import type { Lang } from "../i18n/lang";
 
-export default function Marquee() {
-  const t = useT();
+export default function Marquee({ lang }: { lang: Lang }) {
+  const t = getT(lang);
   const row = [...TOKENS, ...TOKENS];
   return (
     <section aria-label={t.marquee.sectionAria} className="border-b border-ink-hairline bg-white">

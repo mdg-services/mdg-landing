@@ -1,0 +1,57 @@
+import { revalidatePath } from "next/cache";
+import { RELEASES, dayOf } from "../../../guide/schedule.ts";
+import { guideNow } from "@/guides/clock";
+import { json } from "@/lib/api";
+
+export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
+export const maxDuration = 30;
+
+/**
+ * Daily cron (vercel.json, 06:15 India time): tells Bing, Yandex and the other
+ * IndexNow search engines which MDG guide pages went live today, so they are
+ * crawled the same day. Google does not use IndexNow; it reads the sitemap.
+ *
+ * Before it tells anyone, it throws away the saved copies of everything that
+ * lists the guides by date (the sitemap, llms.txt, the hubs, and the pages with
+ * their "related" and "in this section" links). Those pages refresh hourly, but
+ * only when somebody asks, so without this the first visit after midnight India
+ * time - the crawl IndexNow starts - would still be handed yesterday's list.
+ *
+ * The key is public by design: IndexNow checks it against
+ * https://mdgservices.in/<key>.txt. Vercel signs cron calls with CRON_SECRET.
+ */
+const KEY = "4ae7e0c80185fc80b0c6d75bc28f80ab";
+const HOST = "mdgservices.in";
+
+/**
+ * Everything whose content depends on which guide pages are live today: the
+ * sitemap, llms.txt, both hubs and every guide and tool page (each shows
+ * "related" and "in this section" links to the pages live that day). Each is
+ * named by its real address, which is what the saved copy is filed under.
+ */
+function refreshGuideLists(): void {
+  for (const path of ["/sitemap.xml", "/llms.txt"]) revalidatePath(path);
+  for (const r of RELEASES) revalidatePath(r.path.replace(/\/$/, ""));
+}
+
+async function handler(req: Request): Promise<Response> {
+  const secret = process.env.CRON_SECRET;
+  if (!secret || req.headers.get("authorization") !== `Bearer ${secret}`) {
+    return json({ ok: false, error: "Not allowed." }, 401);
+  }
+  refreshGuideLists();
+  const day = dayOf(guideNow());
+  const urlList = RELEASES.filter((r) => r.day === day).map((r) => `https://${HOST}${r.path}`);
+  if (day === 1) urlList.push(`https://${HOST}/`);
+  if (!urlList.length) return json({ ok: true, day, sent: 0 });
+  const r = await fetch("https://api.indexnow.org/indexnow", {
+    method: "POST",
+    headers: { "content-type": "application/json; charset=utf-8" },
+    body: JSON.stringify({ host: HOST, key: KEY, keyLocation: `https://${HOST}/${KEY}.txt`, urlList }),
+  });
+  return json({ ok: r.ok, status: r.status, day, sent: urlList.length });
+}
+
+// The old function answered every method the same way; so does this.
+export { handler as GET, handler as HEAD, handler as POST, handler as PUT, handler as PATCH, handler as DELETE, handler as OPTIONS };

@@ -1,5 +1,7 @@
+"use client";
+
 import { useEffect, useRef, useState } from "react";
-import { useInView, useReducedMotion } from "motion/react";
+import { useReducedMotion } from "../lib/useReducedMotion";
 
 export default function Counter({
   to,
@@ -17,27 +19,52 @@ export default function Counter({
   className?: string;
 }) {
   const ref = useRef<HTMLSpanElement>(null);
-  const inView = useInView(ref, { once: true, margin: "0px 0px -15% 0px" });
   const reduce = useReducedMotion();
-  const [val, setVal] = useState(0);
+  // The server (and anyone without scripts) gets the real figure. Only when the
+  // figure turns out to be below the fold does the browser park it at 0, out
+  // of sight, so it can count up as it arrives.
+  const [val, setVal] = useState(to);
 
   useEffect(() => {
-    if (!inView) return;
-    if (reduce) {
-      const id = requestAnimationFrame(() => setVal(to));
-      return () => cancelAnimationFrame(id);
-    }
+    const el = ref.current;
+    if (!el || reduce || !("IntersectionObserver" in window)) return;
     let raf = 0;
-    const start = performance.now();
-    const ease = (t: number) => 1 - Math.pow(1 - t, 4);
-    const tick = (now: number) => {
-      const t = Math.min(1, (now - start) / duration);
-      setVal(to * ease(t));
-      if (t < 1) raf = requestAnimationFrame(tick);
+    let parked = false;
+    const count = () => {
+      const start = performance.now();
+      const ease = (t: number) => 1 - Math.pow(1 - t, 4);
+      const tick = (now: number) => {
+        const t = Math.min(1, (now - start) / duration);
+        setVal(to * ease(t));
+        if (t < 1) raf = requestAnimationFrame(tick);
+      };
+      raf = requestAnimationFrame(tick);
     };
-    raf = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(raf);
-  }, [inView, to, duration, reduce]);
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry) return;
+        if (!parked) {
+          // First report: already on screen, so leave the real figure alone.
+          parked = true;
+          if (entry.isIntersecting) {
+            io.disconnect();
+            return;
+          }
+          setVal(0);
+          return;
+        }
+        if (!entry.isIntersecting) return;
+        io.disconnect();
+        count();
+      },
+      { rootMargin: "0px 0px -15% 0px" },
+    );
+    io.observe(el);
+    return () => {
+      io.disconnect();
+      cancelAnimationFrame(raf);
+    };
+  }, [to, duration, reduce]);
 
   const formatted = val.toLocaleString("en-US", {
     minimumFractionDigits: decimals,

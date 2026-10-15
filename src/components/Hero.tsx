@@ -1,11 +1,9 @@
-import { motion, useReducedMotion } from "motion/react";
 import { LogoMark } from "./Brand";
 import Icon from "./Icon";
 import CallUs from "./CallUs";
 import { ORBIT } from "../data/content";
-import { useT } from "../i18n";
-
-const EASE = [0.16, 1, 0.3, 1] as const;
+import { getT } from "../i18n/server";
+import type { Lang } from "../i18n/lang";
 
 /* Portals that flow into the shield. They are other people's systems, so
    the names sit in content.ts and never change with the language. */
@@ -15,8 +13,17 @@ const NODES: Node[] = ORBIT.map((label, i) => {
   return { label, x: 50 + Math.cos(a) * 39, y: 50 + Math.sin(a) * 39 };
 });
 
-export default function Hero() {
-  const t = useT();
+/**
+ * The first screen. It is plain server HTML with CSS entrances (the `enter`,
+ * `line-up`, `pop-in`, `draw` classes in index.css), not script-driven ones:
+ * the words are on screen the moment the page paints, which is what a phone on
+ * a slow line and a crawler both need, and nothing here waits for the page's
+ * JavaScript. Reduced motion is handled once, globally, in index.css.
+ */
+export default function Hero({ lang }: { lang: Lang }) {
+  const t = getT(lang);
+  /** A CSS custom property as inline style. */
+  const v = (vars: Record<string, string>) => vars as React.CSSProperties;
 
   return (
     <section id="top" className="relative overflow-hidden bg-navy-950 text-white">
@@ -36,58 +43,43 @@ export default function Hero() {
       <div className="wrap-full relative grid items-center gap-12 pt-16 pb-20 md:grid-cols-12 md:gap-8 md:pt-24 md:pb-28">
         {/* ── Copy ── */}
         <div className="md:col-span-6">
-          <motion.div
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease: EASE }}
-            className="inline-flex items-center gap-2.5 rounded-full border border-white/15 bg-white/5 px-4 py-1.5 font-mono text-[11px] uppercase tracking-[0.2em] text-navy-100"
+          <div
+            className="enter-solid inline-flex items-center gap-2.5 rounded-full border border-white/15 bg-white/5 px-4 py-1.5 font-mono text-[11px] uppercase tracking-[0.2em] text-navy-100"
+            style={v({ "--rise-y": "12px", "--dur": "0.6s" })}
           >
             <span className="inline-block h-1.5 w-1.5 rotate-45 bg-gold-400" />
             Dealer's <span className="deva normal-case tracking-normal text-gold-300">कवच</span>
             <span className="text-white/30">·</span> {t.hero.eyebrow}
-          </motion.div>
+          </div>
 
           <h1 className="mt-7 text-mega" style={{ fontSize: "clamp(44px, 7.2vw, 96px)" }}>
             {[t.hero.headline.line1, t.hero.headline.line2].map((line, i) => (
               <span key={i} className="block overflow-hidden">
-                <motion.span
-                  className={"block " + (i === 1 ? "text-gold-400" : "text-white")}
-                  initial={{ y: "110%" }}
-                  animate={{ y: 0 }}
-                  transition={{ duration: 0.9, ease: EASE, delay: 0.1 + i * 0.12 }}
+                <span
+                  className={"line-up block " + (i === 1 ? "text-gold-400" : "text-white")}
+                  style={v({ "--d": `${0.1 + i * 0.12}s` })}
                 >
                   {line}
-                </motion.span>
+                </span>
               </span>
             ))}
             <span className="block overflow-hidden">
-              <motion.span
-                className="block text-navy-200"
-                initial={{ y: "110%" }}
-                animate={{ y: 0 }}
-                transition={{ duration: 0.9, ease: EASE, delay: 0.34 }}
-              >
+              <span className="line-up block text-navy-200" style={v({ "--d": "0.34s" })}>
                 {t.hero.headline.line3}
-              </motion.span>
+              </span>
             </span>
           </h1>
 
-          <motion.p
-            initial={{ opacity: 0, y: 14 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, ease: EASE, delay: 0.55 }}
-            className="mt-8 max-w-xl text-[17px] leading-[1.6] text-navy-100 md:text-[19px]"
+          <p
+            className="enter-solid mt-8 max-w-xl text-[17px] leading-[1.6] text-navy-100 md:text-[19px]"
+            style={v({ "--rise-y": "14px", "--dur": "0.7s", "--d": "0.55s" })}
           >
-            {t.hero.subLead}{" "}
-            <span className="text-white">{t.hero.subEmphasis}</span>{" "}
-            {t.hero.subTail}
-          </motion.p>
+            {t.hero.subLead} <span className="text-white">{t.hero.subEmphasis}</span> {t.hero.subTail}
+          </p>
 
-          <motion.div
-            initial={{ opacity: 0, y: 14 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, ease: EASE, delay: 0.68 }}
-            className="mt-9 flex flex-col items-start gap-4 sm:flex-row sm:items-center"
+          <div
+            className="enter-solid mt-9 flex flex-col items-start gap-4 sm:flex-row sm:items-center"
+            style={v({ "--rise-y": "14px", "--dur": "0.7s", "--d": "0.68s" })}
           >
             <a href="#contact" className="btn-gold w-full sm:w-auto">
               {t.hero.ctaPrimary} <Icon name="arrow" size={16} />
@@ -96,14 +88,12 @@ export default function Hero() {
               <span className="text-navy-300">{t.hero.callLabel}</span>
               <CallUs className="font-semibold text-white underline decoration-white/30 underline-offset-4 [&_svg]:text-gold-400" />
             </span>
-          </motion.div>
+          </div>
 
           {/* stat chips */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.6, delay: 0.85 }}
-            className="mt-12 flex flex-wrap items-center gap-x-7 gap-y-3 border-t border-white/10 pt-6"
+          <div
+            className="fade-in mt-12 flex flex-wrap items-center gap-x-7 gap-y-3 border-t border-white/10 pt-6"
+            style={v({ "--dur": "0.6s", "--d": "0.85s" })}
           >
             {t.hero.chips.map((c) => (
               <span key={c.label} className="flex items-baseline gap-2">
@@ -111,7 +101,7 @@ export default function Hero() {
                 <span className="font-mono text-[11px] uppercase tracking-[0.18em] text-navy-200">{c.label}</span>
               </span>
             ))}
-          </motion.div>
+          </div>
         </div>
 
         {/* ── Shield diagram ── */}
@@ -127,13 +117,11 @@ export default function Hero() {
 }
 
 function ShieldDiagram() {
-  const reduce = useReducedMotion();
+  const v = (vars: Record<string, string>) => vars as React.CSSProperties;
   return (
-    <motion.div
-      initial={{ opacity: 0, scale: 0.94 }}
-      animate={{ opacity: 1, scale: 1 }}
-      transition={{ duration: 1, ease: EASE, delay: 0.3 }}
-      className="relative mx-auto aspect-square w-full max-w-[460px]"
+    <div
+      className="pop-in relative mx-auto aspect-square w-full max-w-[460px]"
+      style={v({ "--pop-from": "0.94", "--dur": "1s", "--d": "0.3s" })}
     >
       {/* connector + ring layer */}
       <svg viewBox="0 0 100 100" className="absolute inset-0 h-full w-full" aria-hidden>
@@ -149,12 +137,12 @@ function ShieldDiagram() {
         {/* connectors from each node to the centre */}
         {NODES.map((n, i) => (
           <g key={n.label}>
-            <motion.line
+            <line
+              className="draw"
+              pathLength={1}
               x1={n.x} y1={n.y} x2={50} y2={50}
               stroke="rgba(158,161,224,.30)" strokeWidth="0.3"
-              initial={{ pathLength: 0, opacity: 0 }}
-              animate={{ pathLength: 1, opacity: 1 }}
-              transition={{ duration: 0.8, ease: EASE, delay: 0.6 + i * 0.07 }}
+              style={v({ "--dur": "0.8s", "--d": `${0.6 + i * 0.07}s` })}
             />
             {/* flowing gold pulse toward the shield */}
             <line
@@ -172,44 +160,38 @@ function ShieldDiagram() {
 
       {/* token chips */}
       {NODES.map((n, i) => (
-        <motion.div
+        <div
           key={n.label}
-          className="absolute -translate-x-1/2 -translate-y-1/2"
-          style={{ left: `${n.x}%`, top: `${n.y}%` }}
-          initial={{ opacity: 0, scale: 0.6 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.5, ease: EASE, delay: 0.7 + i * 0.07 }}
+          className="pop-in absolute -translate-x-1/2 -translate-y-1/2"
+          style={v({ left: `${n.x}%`, top: `${n.y}%`, "--pop-from": "0.6", "--dur": "0.5s", "--d": `${0.7 + i * 0.07}s` })}
         >
-          <motion.span
-            className="block whitespace-nowrap rounded-full border border-white/15 bg-navy-900/80 px-2.5 py-1 font-mono text-[10px] font-medium uppercase tracking-[0.12em] text-navy-100 backdrop-blur"
-            animate={reduce ? undefined : { y: [0, -4, 0] }}
-            transition={reduce ? undefined : { duration: 3.5 + (i % 3), repeat: Infinity, ease: "easeInOut", delay: i * 0.2 }}
+          <span
+            className="bob block whitespace-nowrap rounded-full border border-white/15 bg-navy-900/80 px-2.5 py-1 font-mono text-[10px] font-medium uppercase tracking-[0.12em] text-navy-100 backdrop-blur"
+            style={v({ "--dur": `${3.5 + (i % 3)}s`, "--d": `${i * 0.2}s` })}
           >
             {n.label}
-          </motion.span>
-        </motion.div>
+          </span>
+        </div>
       ))}
 
       {/* centre shield */}
       <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
-        <motion.div
+        <div
           aria-hidden
-          className="absolute inset-0 rounded-full"
+          className="breathe absolute inset-0 rounded-full"
           style={{ background: "radial-gradient(circle, rgba(245,165,36,.35), transparent 65%)" }}
-          animate={reduce ? { opacity: 0.7 } : { scale: [1, 1.12, 1], opacity: [0.6, 0.9, 0.6] }}
-          transition={reduce ? undefined : { duration: 4, repeat: Infinity, ease: "easeInOut" }}
         />
         <div className="relative grid h-32 w-32 place-items-center rounded-[28px] border border-white/20 bg-gradient-to-b from-navy-700 to-navy-900 shadow-navy sm:h-40 sm:w-40">
           {/* shield outline drawing in behind the mark */}
           <svg viewBox="0 0 24 24" fill="none" aria-hidden className="absolute h-[120%] w-[120%] text-gold-400/70">
-            <motion.path
+            <path
+              className="draw"
+              pathLength={1}
               d="M12 2.5 4 5.6v6.2c0 4.6 3.4 8 8 9.7 4.6-1.7 8-5.1 8-9.7V5.6l-8-3.1z"
               stroke="currentColor"
               strokeWidth="0.7"
               fill="rgba(245,165,36,.05)"
-              initial={{ pathLength: 0, opacity: 0 }}
-              animate={{ pathLength: 1, opacity: 1 }}
-              transition={{ duration: 1.4, ease: EASE, delay: 0.9 }}
+              style={v({ "--dur": "1.4s", "--d": "0.9s" })}
             />
           </svg>
           <LogoMark white className="relative h-16 w-16 object-contain" />
@@ -218,6 +200,6 @@ function ShieldDiagram() {
           </span>
         </div>
       </div>
-    </motion.div>
+    </div>
   );
 }

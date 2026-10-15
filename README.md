@@ -10,56 +10,57 @@ stats) rather than long prose, so a dealer understands the offer by scanning.
 
 ## Stack
 
-- **Vite + React 19 + TypeScript** (strict)
+- **Next.js 16** (App Router, webpack build) + React 19 + TypeScript (strict). Every
+  page is server-rendered; `"use client"` is only on the interactive leaves
+  (navbar, language switch, forms, call sheet, the assistant).
 - **Tailwind CSS 3** — design tokens in `tailwind.config.js`
-- **Motion** (Framer Motion) for entrance, scroll-linked and interactive motion
-- No external image assets — every visual is SVG/CSS
+- Fonts through `next/font/google` (self-hosted), animation in CSS (scroll reveals
+  are `data-reveal` marks plus one small observer script)
+- No external image assets — every visual is SVG/CSS; logos go through `next/image`
+- Deployed on Vercel (`vercel.json`: `"framework": "nextjs"`)
 
 ## Run
 
 ```bash
 npm install
-npm run dev            # http://localhost:5173  (includes the /api dev server)
-npm run build          # tsc -b && vite build  → dist/
-npm run preview        # serve the production build
+npm run dev            # http://localhost:5180  (film pages are generated first)
+npm run build          # film pages + guide check, then next build --webpack
+npm run start          # serve the production build on :5180
 npm run lint
-npm run typecheck:api  # type-check the serverless backend (server/ + api/)
+npm run typecheck      # tsc --noEmit over everything, backend included
+npm run guide -- check # every guide page's words against the rules
+npm run guide -- schedule
 npm run email:preview  # render email templates to ./.email-preview/*.html
 ```
+
+`MIGRATION_NOTES.md` explains the move from Vite and what behaves differently.
 
 ## Structure
 
 ```
+app/                     # routes (thin files; the work is in src/)
+  (en)/                  # English: /, /register, /grievance(s), /guides/…, /tools/…
+  hi/                    # Hindi twins under /hi
+  api/                   # enroll, callback, grievance, indexnow route handlers
+  sitemap.ts robots.ts llms.txt/ not-found.tsx
+proxy.ts                 # language redirects, guide release gate, film pages
 src/
   data/content.ts        # data only: ids, icons, hrefs, portal names, counter figures
   i18n/
-    lang.tsx             # <LangProvider>, useT(), useLang(), the preference rules
-    parity.ts            # dev-only check that both dictionaries line up
+    lang.ts              # Lang, paths, cookie; server.ts getT(); client.tsx useT()
+    parity.ts            # check that both dictionaries line up
     en/*.ts hi/*.ts      # ALL copy, one file per section, brochure-derived
-  lib/
-    motion.tsx           # <Reveal> / <Stagger> motion wrappers
-    anim.ts              # easing, viewport + variant constants
-  components/
-    Icon.tsx Brand.tsx   # icon set + MDG mark
-    Counter.tsx          # in-view animated number
-    SectionHeader.tsx
-    Navbar.tsx Hero.tsx Marquee.tsx Numbers.tsx Problem.tsx
-    Services.tsx MoreServices.tsx WhyUs.tsx Mission.tsx Process.tsx
-    Membership.tsx Contact.tsx FAQ.tsx Footer.tsx
-  App.tsx main.tsx index.css
-
-api/
-  enroll.ts              # Vercel serverless fn — POST /api/enroll (thin adapter)
-  grievance.ts           # Vercel serverless fn — POST /api/grievance (thin adapter)
-server/                  # transport-agnostic backend core (Node)
-  validation.ts          # Zod payload schema (single source of truth)
-  enroll.ts              # processEnrollment(): validate → hand to the API → emails
-  grievance.ts           # processGrievance(): validate → hand to the API → two emails
-  intake.ts              # postIntake(): server-to-server hand-off to the MDG API
-  mailer.ts              # Nodemailer transport + sendTemplate()
-  emails/
-    layout.ts            # one branded HTML shell + helpers
-    templates.ts         # pure data → EmailContent (add new emails here)
+  views/                 # HomePage, RegisterPage, GrievancePage (server)
+  components/            # sections (server) and interactive leaves (client)
+  guides/                # the guide pages: content.ts (rules), model.ts, GuidePage.tsx
+  routing/               # pure logic the proxy uses (language, guides, film)
+  seo/                   # metadata + JSON-LD
+  fonts/                 # next/font setup, English and Hindi
+  lib/                   # reveal, enter, presence, api helpers
+  index.css              # Tailwind layers, hero/reveal animations, .guide-* styles
+guide/                   # inventory, schedule, copy, content/, tools/ (the guides' source)
+scripts/                 # film-build.ts (public/film), guide-cli.ts, film-pages.ts, …
+server/                  # backend core (Node), used by app/api/*
 ```
 
 ## Email backend
@@ -67,16 +68,16 @@ server/                  # transport-agnostic backend core (Node)
 The `/register` enrolment form posts to `POST /api/enroll`, which emails the
 details to the MDG inbox and a welcome note to the dealer.
 
-- **Where:** Vercel Serverless Function (`api/enroll.ts`). Locally, a Vite dev
-  middleware serves the same route by calling the same core, so `npm run dev`
-  works end-to-end.
+- **Where:** a Next.js route handler (`app/api/enroll/route.ts`), which Vercel runs
+  as a Node function. `npm run dev` serves the same route, so it works end-to-end
+  locally.
 - **Adding another email:** write a `(data) => EmailContent` function in
   `server/emails/templates.ts`, then `sendTemplate(myEmail(data), to)`. The
   transport and branded layout are shared.
 - **Transport:** Nodemailer over plain SMTP (provider-agnostic), set up for
   Hostinger, sending from `noreply@mdgservices.in`. Config via env —
   `SMTP_HOST/PORT/SECURE/USER/PASS`, `MAIL_FROM`, `ENROLLMENT_NOTIFY_TO`. See
-  `.env.example`. Without credentials the dev server logs emails instead of
+  `.env.example`. Without credentials the server logs emails instead of
   sending; production requires them. Switching providers touches only the env +
   `server/mailer.ts`.
 
@@ -135,25 +136,29 @@ reaches us, how reports are produced, or what any internal tool looks like, and
 it carries no screenshots of anything a customer does not already see. Keep it
 that way: a marketing page is the wrong place to publish operational detail.
 
-`npm run review` renders the page at desktop and mobile widths and fails on
-horizontal overflow, broken images, em-dashes, or console errors.
+`npm run review` (against a running `npm run start`) renders the page at desktop
+and mobile widths and fails on horizontal overflow, broken images, em-dashes, or
+console errors.
 `npm run og` regenerates the social card.
 
 ## Two languages
 
-The page reads in English or Hindi, and which one a dealer gets is decided in
-this order:
+The URL decides the language of the HTML: `/` is English and `/hi` is Hindi,
+and every page has a twin under `/hi` (`/hi/register`, `/hi/grievance`,
+`/hi/guides/…`). The server writes `<html lang>` and `data-lang`, so a Hindi
+reader never waits for a script to translate the page.
 
-1. what they last chose here, if they ever chose;
-2. otherwise whatever their phone or browser is set to.
+The EN / हिंदी switch is a link to the page's twin; clicking it also keeps the
+choice in the `mdg_lang` cookie (one year, `Path=/`) and in localStorage
+(`mdg.lang`, which the film pages read). `proxy.ts` then decides when to send a
+visitor of an English address to its Hindi twin:
 
-A dealer who never touches the switch keeps following their phone on every
-visit. The moment they touch it, that choice is theirs and the phone stops
-deciding. `?lang=hi` counts as touching it, so a Hindi link forwarded into a
-dealer WhatsApp group opens in Hindi and stays that way; the parameter is then
-stripped off the URL. The choice is kept in `localStorage` under `mdg.lang`,
-and a browser that refuses storage falls back to the phone's language rather
-than breaking.
+1. `?lang=hi` or `?lang=en` is a choice: redirect to that language's address,
+   set the cookie, drop the parameter (so a Hindi link forwarded into a dealer
+   WhatsApp group opens in Hindi and stays that way);
+2. otherwise the `mdg_lang` cookie, if there is one;
+3. otherwise a browser whose first language is Hindi (`Accept-Language`) goes to
+   `/hi`. A crawler sends neither, so it reads English at `/` and Hindi at `/hi`.
 
 - Devanagari is not Latin with different glyphs. The Hindi block at the bottom
   of `src/index.css` undoes the three things this page does to Latin type that
@@ -163,8 +168,10 @@ than breaking.
   language that runs about 15% longer. It is written flat rather than nested,
   because these dealers are on old Android WebViews.
 - Noto Sans Devanagari sits *behind* Inter, Space Grotesk and Space Mono in
-  every font stack. Each of its `@font-face` rules carries a `unicode-range`,
-  so a reader on the English page never reaches it and never downloads it.
+  every font stack. On the English page the two Devanagari faces are switched on
+  only after the page has loaded (`components/LateFonts.tsx`), so their 185 kB
+  never competes with the first paint; on the Hindi page Noto (the page itself)
+  comes with the first paint and Tiro is switched on after load.
   Tiro Devanagari Hindi stays the face for the कवच brand marks only.
 - The Terms & Conditions are translated so a Hindi reader can understand what
   they are agreeing to, but a translation of a contract is not the contract.

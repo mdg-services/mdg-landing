@@ -1,5 +1,7 @@
+"use client";
+
 import Icon from "./Icon";
-import { useT } from "../i18n";
+import { useT } from "../i18n/client";
 import { requestCallChoice } from "../lib/assistCall";
 
 /**
@@ -46,7 +48,8 @@ export default function CallUs({
     <button
       type="button"
       onClick={requestCallChoice}
-      aria-label={t.ui.callUsAria}
+      // The spoken name must start with the words on the button (WCAG 2.5.3).
+      aria-label={variant === "icon" ? t.ui.callUsAria : `${text}, ${t.ui.callUsNote}`}
       title={variant === "icon" ? t.ui.callUsAria : undefined}
       className={base + className}
     >

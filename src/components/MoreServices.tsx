@@ -1,12 +1,11 @@
-import { motion } from "motion/react";
 import Icon from "./Icon";
-import { useT } from "../i18n";
-import { Reveal, Stagger } from "../lib/motion";
-import { itemUp } from "../lib/anim";
+import { getT } from "../i18n/server";
+import type { Lang } from "../i18n/lang";
+import { Reveal, item } from "../lib/reveal";
 import { EXTRAS } from "../data/content";
 
-export default function MoreServices() {
-  const t = useT();
+export default function MoreServices({ lang }: { lang: Lang }) {
+  const t = getT(lang);
 
   return (
     <section aria-label={t.extras.sectionAria} className="relative overflow-hidden bg-navy-900 text-white">
@@ -35,26 +34,24 @@ export default function MoreServices() {
           </Reveal>
         </div>
 
-        <Stagger gap={0.08} className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {EXTRAS.map((e) => {
+        <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {EXTRAS.map((e, i) => {
             const copy = t.extras.items[e.id];
             return (
-              <motion.div
+              <div
                 key={e.id}
-                variants={itemUp}
-                whileHover={{ y: -6 }}
-                transition={{ type: "spring", stiffness: 300, damping: 24 }}
-                className="rounded-2xl border border-white/12 bg-white/[0.06] p-6 backdrop-blur"
+                {...item(i)}
+                className="lift rounded-2xl border border-white/12 bg-white/[0.06] p-6 backdrop-blur"
               >
                 <span className="grid h-12 w-12 place-items-center rounded-xl bg-gold-400 text-navy-950">
                   <Icon name={e.icon} size={24} />
                 </span>
                 <h3 className="mt-5 font-display text-[17px] font-semibold leading-snug text-white">{copy.title}</h3>
                 <p className="mt-2 text-[13.5px] leading-[1.55] text-navy-100">{copy.note}</p>
-              </motion.div>
+              </div>
             );
           })}
-        </Stagger>
+        </div>
       </div>
     </section>
   );

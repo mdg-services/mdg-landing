@@ -1,13 +1,12 @@
-import { motion } from "motion/react";
-import { Link } from "react-router-dom";
+import Link from "next/link";
 import Icon from "./Icon";
 import CallUs from "./CallUs";
-import { Reveal, Stagger } from "../lib/motion";
-import { itemUp } from "../lib/anim";
-import { useT } from "../i18n";
+import { Reveal, item } from "../lib/reveal";
+import { getT } from "../i18n/server";
+import { pathFor, type Lang } from "../i18n/lang";
 
-export default function Membership() {
-  const t = useT();
+export default function Membership({ lang }: { lang: Lang }) {
+  const t = getT(lang);
 
   return (
     <section id="membership" className="relative overflow-hidden bg-gradient-to-br from-navy-700 via-navy-800 to-navy-950 text-white">
@@ -44,7 +43,7 @@ export default function Membership() {
               {t.membership.intro}
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
-              <Link to="/register" className="btn-gold">
+              <Link href={pathFor(lang, "/register")} className="btn-gold">
                 {t.membership.ctaPrimary} <Icon name="arrow" size={16} />
               </Link>
               <CallUs
@@ -56,15 +55,15 @@ export default function Membership() {
           </Reveal>
         </div>
 
-        <Stagger gap={0.09} className="mt-16 grid gap-px overflow-hidden rounded-2xl border border-white/12 bg-white/10 md:mt-20 md:grid-cols-4">
+        <div className="mt-16 grid gap-px overflow-hidden rounded-2xl border border-white/12 bg-white/10 md:mt-20 md:grid-cols-4">
           {t.membership.promises.map((p, i) => (
-            <motion.div key={p.title} variants={itemUp} className="bg-navy-900/60 p-7 backdrop-blur">
+            <div key={p.title} {...item(i, 0.09)} className="bg-navy-900/60 p-7 backdrop-blur">
               <span className="num text-[26px] font-semibold text-gold-400/60">{String(i + 1).padStart(2, "0")}</span>
               <h3 className="mt-4 font-display text-[22px] font-semibold text-white">{p.title}</h3>
               <p className="mt-2.5 text-[14px] leading-[1.55] text-navy-100">{p.body}</p>
-            </motion.div>
+            </div>
           ))}
-        </Stagger>
+        </div>
       </div>
     </section>
   );

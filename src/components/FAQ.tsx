@@ -1,26 +1,27 @@
+"use client";
+
 import { useState } from "react";
 import SectionHeader from "./SectionHeader";
-import { useT } from "../i18n";
-import { Reveal } from "../lib/motion";
+import type { Dict } from "../i18n/lang";
+import { Reveal } from "../lib/reveal";
 
-export default function FAQ() {
-  const t = useT();
+export default function FAQ({ faq }: { faq: Dict["faq"] }) {
   const [open, setOpen] = useState<number | null>(0);
   return (
-    <section aria-label={t.faq.sectionAria} className="bg-paper-warm">
+    <section aria-label={faq.sectionAria} className="bg-paper-warm">
       <div className="wrap-full py-24 md:py-32">
         <SectionHeader
-          eyebrow={t.faq.eyebrow}
+          eyebrow={faq.eyebrow}
           title={
             <>
-              {t.faq.headingLead} <span className="text-navy-700">{t.faq.headingAccent}</span>
+              {faq.headingLead} <span className="text-navy-700">{faq.headingAccent}</span>
             </>
           }
-          intro={t.faq.intro}
+          intro={faq.intro}
         />
 
         <div className="mt-14 md:mt-16">
-          {t.faq.items.map((f, i) => {
+          {faq.items.map((f, i) => {
             const isOpen = open === i;
             return (
               <Reveal key={f.q} delay={i * 0.04}>

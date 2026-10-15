@@ -1,21 +1,15 @@
-import { Link } from "react-router-dom";
+import Link from "next/link";
 import { LogoFullWhite } from "./Brand";
 import CallUs from "./CallUs";
 import { BRAND } from "../data/content";
-import { useLang, useT } from "../i18n";
+import { getT } from "../i18n/server";
+import { homeHref, pathFor, type Lang } from "../i18n/lang";
 
 /* The targets never change with the language; the labels are looked up by id. */
-const explore = [
-  { id: "services", href: "/#services" },
-  { id: "why", href: "/#why" },
-  { id: "process", href: "/#process" },
-  { id: "membership", href: "/#membership" },
-  { id: "contact", href: "/#contact" },
-] as const;
+const explore = ["services", "why", "process", "membership", "contact"] as const;
 
-export default function Footer() {
-  const t = useT();
-  const { lang } = useLang();
+export default function Footer({ lang }: { lang: Lang }) {
+  const t = getT(lang);
   const year = new Date().getFullYear();
 
   return (
@@ -43,25 +37,25 @@ export default function Footer() {
           <div className="md:col-span-3 md:col-start-7">
             <p className="eyebrow-light">{t.footer.exploreHeading}</p>
             <ul className="mt-6 space-y-3 text-[15px]">
-              {explore.map((l) => (
-                <li key={l.href}>
-                  <a href={l.href} className="link-quiet text-navy-100 hover:text-white">
-                    {t.footer.explore[l.id]}
+              {explore.map((id) => (
+                <li key={id}>
+                  <a href={homeHref(lang, id)} className="link-quiet text-navy-100 hover:text-white">
+                    {t.footer.explore[id]}
                   </a>
                 </li>
               ))}
               <li>
-                <Link to="/register" className="link-quiet text-navy-100 hover:text-white">
+                <Link href={pathFor(lang, "/register")} className="link-quiet text-navy-100 hover:text-white">
                   {t.footer.register}
                 </Link>
               </li>
               <li>
-                <Link to="/grievance" className="link-quiet text-navy-100 hover:text-white">
+                <Link href={pathFor(lang, "/grievance")} className="link-quiet text-navy-100 hover:text-white">
                   {t.footer.grievance}
                 </Link>
               </li>
               <li>
-                {/* The guide is static HTML outside the app: a full page load, in the reader's language */}
+                {/* The guides keep a trailing slash on their addresses, so this is a plain link */}
                 <a href={lang === "hi" ? "/hi/guides/" : "/guides/"} className="link-quiet text-navy-100 hover:text-white">
                   {t.footer.mdgGuide}
                 </a>
@@ -81,7 +75,6 @@ export default function Footer() {
                   href={BRAND.playStore}
                   target="_blank"
                   rel="noopener"
-                  aria-label={t.ui.getAppAria}
                   className="link-quiet text-navy-100 hover:text-white"
                 >
                   {t.ui.getApp} · Google Play

@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { Reveal } from "../lib/motion";
+import { Reveal } from "../lib/reveal";
 
 export default function SectionHeader({
   eyebrow,

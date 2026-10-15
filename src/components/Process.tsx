@@ -1,13 +1,12 @@
-import { motion } from "motion/react";
 import Icon from "./Icon";
 import SectionHeader from "./SectionHeader";
-import { useT } from "../i18n";
-import { Stagger } from "../lib/motion";
-import { itemUp, VIEWPORT, EASE } from "../lib/anim";
+import { getT } from "../i18n/server";
+import type { Lang } from "../i18n/lang";
+import { item, reveal } from "../lib/reveal";
 import { STEPS } from "../data/content";
 
-export default function Process() {
-  const t = useT();
+export default function Process({ lang }: { lang: Lang }) {
+  const t = getT(lang);
 
   return (
     <section id="process" className="bg-paper-warm">
@@ -25,22 +24,18 @@ export default function Process() {
 
         <div className="relative mt-16 md:mt-20">
           {/* horizontal connecting line (desktop) */}
-          <motion.span
+          <span
             aria-hidden
             className="absolute left-0 right-0 top-[27px] hidden h-px bg-gradient-to-r from-navy-300 via-navy-400 to-gold-400 md:block"
-            initial={{ scaleX: 0 }}
-            whileInView={{ scaleX: 1 }}
-            viewport={VIEWPORT}
-            transition={{ duration: 1.1, ease: EASE }}
-            style={{ transformOrigin: "left" }}
+            {...reveal("line-x")}
           />
 
-          <Stagger gap={0.14} className="grid gap-10 md:grid-cols-3 md:gap-8">
-            {STEPS.map((s) => {
+          <div className="grid gap-10 md:grid-cols-3 md:gap-8">
+            {STEPS.map((s, i) => {
               /* zipped by id, never by position */
               const copy = t.process.steps[s.id];
               return (
-                <motion.div key={s.no} variants={itemUp} className="relative">
+                <div key={s.no} {...item(i, 0.14)} className="relative">
                   {/* node */}
                   <div className="flex items-center gap-4 md:block">
                     <span className="relative z-10 grid h-14 w-14 shrink-0 place-items-center rounded-2xl border border-ink-hairline bg-white text-navy-700 shadow-card">
@@ -57,10 +52,10 @@ export default function Process() {
                     </div>
                   </div>
                   <p className="mt-4 max-w-sm text-[15px] leading-[1.6] text-ink-soft md:pr-6">{copy.body}</p>
-                </motion.div>
+                </div>
               );
             })}
-          </Stagger>
+          </div>
         </div>
       </div>
     </section>

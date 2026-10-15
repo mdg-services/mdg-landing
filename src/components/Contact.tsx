@@ -1,15 +1,16 @@
+"use client";
+
 import { useState, type FormEvent } from "react";
 import Icon from "./Icon";
 import CallUs from "./CallUs";
 import { requestCallChoice } from "../lib/assistCall";
 import { TOLL_FREE } from "../lib/tollFree";
-import { Reveal } from "../lib/motion";
-import { useT } from "../i18n";
+import { Reveal } from "../lib/reveal";
+import type { Dict } from "../i18n/lang";
 
 type Status = "idle" | "submitting" | "success" | "error";
 
-export default function Contact() {
-  const t = useT();
+export default function Contact({ c }: { c: Dict["contact"] }) {
   const [showForm, setShowForm] = useState(false);
   const [status, setStatus] = useState<Status>("idle");
 
@@ -54,19 +55,19 @@ export default function Contact() {
         <div className="grid items-end gap-8 md:grid-cols-12">
           <div className="md:col-span-8">
             <Reveal>
-              <p className="eyebrow">{t.contact.eyebrow}</p>
+              <p className="eyebrow">{c.eyebrow}</p>
             </Reveal>
             <Reveal delay={0.06}>
               <h2 className="mt-6 text-mega text-ink" style={{ fontSize: "clamp(38px, 6.2vw, 96px)" }}>
-                {t.contact.headingLead}
+                {c.headingLead}
                 <br />
-                <span className="text-navy-700">{t.contact.headingAccent}</span>
+                <span className="text-navy-700">{c.headingAccent}</span>
               </h2>
             </Reveal>
           </div>
           <Reveal delay={0.12} className="md:col-span-4">
             <p className="max-w-prose2 text-[17px] leading-[1.6] text-ink-soft md:text-[19px]">
-              {t.contact.intro}
+              {c.intro}
             </p>
           </Reveal>
         </div>
@@ -80,7 +81,6 @@ export default function Contact() {
           <button
             type="button"
             onClick={requestCallChoice}
-            aria-label={t.ui.callUsAria}
             className="group mt-14 block w-full rounded-3xl border border-ink-hairline bg-navy-950 p-8 text-left text-white transition-shadow duration-300 hover:shadow-navy md:mt-16 md:p-12"
           >
             <div aria-hidden className="pointer-events-none relative">
@@ -88,10 +88,10 @@ export default function Contact() {
             </div>
             <div className="relative flex flex-wrap items-baseline justify-between gap-x-10 gap-y-3">
               <span className="font-mono text-[11px] uppercase tracking-[0.22em] text-navy-200">
-                {t.contact.tollFree} <span className="mx-1.5 text-white/30">·</span>{" "}
-                <span className="deva normal-case text-gold-300">{t.contact.tollFreeDeva}</span>
+                {c.tollFree} <span className="mx-1.5 text-white/30">·</span>{" "}
+                <span className="deva normal-case text-gold-300">{c.tollFreeDeva}</span>
               </span>
-              <span className="font-mono text-[12px] uppercase tracking-[0.2em] text-navy-200">{t.contact.hours}</span>
+              <span className="font-mono text-[12px] uppercase tracking-[0.2em] text-navy-200">{c.hours}</span>
             </div>
             <div className="relative mt-6 flex flex-wrap items-center gap-5 md:gap-7">
               <span
@@ -105,14 +105,14 @@ export default function Contact() {
                 className="min-w-0 font-semibold text-white"
                 style={{ fontSize: "clamp(30px, 6vw, 72px)", lineHeight: 1.02, letterSpacing: "-0.03em" }}
               >
-                {t.contact.callHeading}
+                {c.callHeading}
               </span>
             </div>
             <div className="relative mt-4 whitespace-nowrap text-[22px] font-semibold tracking-tight text-gold-300 md:text-[28px]">
               {TOLL_FREE.display}
             </div>
             <div className="relative mt-6 inline-flex items-center gap-2 font-mono text-[12px] uppercase tracking-[0.18em] text-gold-300">
-              {t.contact.tapToCall}{" "}
+              {c.tapToCall}{" "}
               <Icon name="arrow" size={16} className="transition-transform duration-300 group-hover:translate-x-1" />
             </div>
           </button>
@@ -121,18 +121,18 @@ export default function Contact() {
         {/* callback form */}
         <div className="mt-14 grid items-start gap-8 border-t border-ink-hairline pt-12 md:grid-cols-12 md:gap-12">
           <Reveal className="md:col-span-5">
-            <p className="eyebrow">{t.contact.callbackEyebrow}</p>
+            <p className="eyebrow">{c.callbackEyebrow}</p>
             <h3 className="mt-5 font-display text-[24px] font-semibold leading-tight text-ink md:text-[28px]">
-              {t.contact.callbackHeading}
+              {c.callbackHeading}
             </h3>
             <p className="mt-3 max-w-[44ch] text-[15px] leading-[1.6] text-ink-soft">
               {/* The opening hours sit inside the sentence, not on the end of
                   it, so each language can place them where it reads best. */}
-              {t.contact.callbackNote.replace("{hours}", t.contact.hoursLower)}
+              {c.callbackNote.replace("{hours}", c.hoursLower)}
             </p>
             {!showForm && (
               <button type="button" onClick={() => setShowForm(true)} className="btn-ghost mt-6">
-                {t.contact.leaveNumber} <Icon name="arrowDown" size={16} />
+                {c.leaveNumber} <Icon name="arrowDown" size={16} />
               </button>
             )}
           </Reveal>
@@ -141,26 +141,26 @@ export default function Contact() {
             <div className="disclose" data-open={showForm} aria-hidden={!showForm}>
               <div>
                 {status !== "success" ? (
-                  <form onSubmit={handleSubmit} aria-label={t.contact.formAria}>
+                  <form onSubmit={handleSubmit} aria-label={c.formAria}>
                     <div className="grid gap-5 sm:grid-cols-2">
                       <Field
-                        label={t.contact.fields.name.label}
+                        label={c.fields.name.label}
                         name="name"
-                        placeholder={t.contact.fields.name.placeholder}
+                        placeholder={c.fields.name.placeholder}
                         required
                       />
                       <Field
-                        label={t.contact.fields.outlet.label}
+                        label={c.fields.outlet.label}
                         name="outlet"
-                        placeholder={t.contact.fields.outlet.placeholder}
+                        placeholder={c.fields.outlet.placeholder}
                       />
                       <Field
-                        label={t.contact.fields.phone.label}
+                        label={c.fields.phone.label}
                         name="phone"
                         type="tel"
                         inputMode="tel"
                         pattern="[0-9+\s\-]{10,15}"
-                        placeholder={t.contact.fields.phone.placeholder}
+                        placeholder={c.fields.phone.placeholder}
                         required
                         className="sm:col-span-2"
                       />
@@ -177,27 +177,27 @@ export default function Contact() {
                           <Icon name="siren" size={14} />
                         </span>
                         <p className="text-[14px] leading-[1.5] text-ink-soft">
-                          {t.contact.errorGeneric}{" "}
+                          {c.errorGeneric}{" "}
                           <CallUs
-                            label={t.contact.errorCallLink}
+                            label={c.errorCallLink}
                             className="link-quiet font-semibold text-navy-700 align-baseline"
                           />
-                          {t.contact.errorEnd}
+                          {c.errorEnd}
                         </p>
                       </div>
                     )}
                     <div className="mt-7 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-                      <p className="order-2 text-[13px] text-ink-muted sm:order-1">{t.contact.privacy}</p>
+                      <p className="order-2 text-[13px] text-ink-muted sm:order-1">{c.privacy}</p>
                       <button
                         type="submit"
                         disabled={status === "submitting"}
                         className={"btn-primary order-1 w-full sm:order-2 sm:w-auto" + (status === "submitting" ? " pointer-events-none opacity-70" : "")}
                       >
                         {status === "submitting" ? (
-                          t.contact.submitting
+                          c.submitting
                         ) : (
                           <>
-                            {t.contact.submit} <Icon name="arrow" size={16} />
+                            {c.submit} <Icon name="arrow" size={16} />
                           </>
                         )}
                       </button>
@@ -209,18 +209,18 @@ export default function Contact() {
                       <span className="grid h-7 w-7 place-items-center rounded-full bg-ok text-white">
                         <Icon name="check" size={15} strokeWidth={2.4} />
                       </span>
-                      <span className="font-mono text-[11px] font-bold uppercase tracking-[0.22em]">{t.contact.success.badge}</span>
+                      <span className="font-mono text-[11px] font-bold uppercase tracking-[0.22em]">{c.success.badge}</span>
                     </div>
                     <p className="mt-4 font-display text-[22px] font-semibold leading-tight text-ink">
-                      {t.contact.success.heading}
+                      {c.success.heading}
                     </p>
                     <p className="mt-2 text-[15px] leading-[1.6] text-ink-soft">
-                      {t.contact.success.bodyLead}{" "}
+                      {c.success.bodyLead}{" "}
                       <CallUs
-                        label={t.contact.success.callLink}
+                        label={c.success.callLink}
                         className="link-quiet font-semibold text-navy-700 align-baseline"
                       />
-                      {t.contact.success.bodyEnd}
+                      {c.success.bodyEnd}
                     </p>
                   </div>
                 )}

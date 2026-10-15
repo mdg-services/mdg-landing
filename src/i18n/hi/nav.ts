@@ -7,4 +7,5 @@ export const nav: typeof EN = {
     process: "कैसे चलता है",
     membership: "क़ीमत",
   },
+  guides: "गाइड",
 };

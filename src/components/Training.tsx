@@ -1,8 +1,7 @@
-import { motion } from "motion/react";
 import Icon from "./Icon";
-import { useT } from "../i18n";
-import { Reveal, Stagger } from "../lib/motion";
-import { itemUp } from "../lib/anim";
+import { getT } from "../i18n/server";
+import type { Lang } from "../i18n/lang";
+import { Reveal, item } from "../lib/reveal";
 import { TRAINING_HREF } from "../data/content";
 
 /**
@@ -10,8 +9,8 @@ import { TRAINING_HREF } from "../data/content";
  * more small uppercase labels than it needs, and this section's heading says
  * what it is without help.
  */
-export default function Training() {
-  const t = useT();
+export default function Training({ lang }: { lang: Lang }) {
+  const t = getT(lang);
 
   return (
     <section aria-label={t.training.sectionAria} className="border-b border-ink-hairline bg-navy-950">
@@ -38,20 +37,20 @@ export default function Training() {
             </a>
           </Reveal>
 
-          <Stagger className="md:col-span-6 grid grid-cols-2 gap-x-8 gap-y-8" gap={0.07}>
-            {t.training.facts.map((f) => (
-              <motion.div
+          <div className="md:col-span-6 grid grid-cols-2 gap-x-8 gap-y-8">
+            {t.training.facts.map((f, i) => (
+              <div
                 key={f.figure}
-                variants={itemUp}
+                {...item(i, 0.07)}
                 className="border-t border-white/15 pt-4"
               >
                 <p className="num text-[34px] font-semibold leading-none text-gold-300 md:text-[40px]">
                   {f.figure}
                 </p>
                 <p className="mt-2.5 text-[14.5px] text-navy-100">{f.label}</p>
-              </motion.div>
+              </div>
             ))}
-          </Stagger>
+          </div>
         </div>
       </div>
     </section>

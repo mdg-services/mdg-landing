@@ -1,0 +1,27 @@
+import type { MetadataRoute } from "next";
+import { guideNow } from "@/guides/clock";
+import { SITE_PAGES } from "../guide/copy.ts";
+import { SITE, contextAt, dateOfDay, releasesOn } from "@/guides/model";
+
+/**
+ * The sitemap lists the site's own pages and the guide pages that are live
+ * today (India time); the guides' list grows by itself, five pages a day, with
+ * no deploy. Refreshed hourly.
+ */
+export const revalidate = 3600;
+
+/** The Hindi twins of the site's own pages. */
+const HINDI_PAGES = ["/hi", "/hi/register", "/hi/grievance"];
+
+export default function sitemap(): MetadataRoute.Sitemap {
+  const ctx = contextAt(guideNow());
+  return [
+    // the home page is listed as the bare origin, the same address its canonical and hreflang give
+    ...[...SITE_PAGES, ...HINDI_PAGES].map((p) => ({ url: p === "/" ? SITE : `${SITE}${p}` })),
+    ...releasesOn(ctx.content, ctx.day).map((r) => {
+      const updated = ctx.content.get(`${r.lang}:${r.page.id}`)!.updated;
+      const published = dateOfDay(r.day);
+      return { url: `${SITE}${r.path}`, lastModified: updated > published ? updated : published };
+    }),
+  ];
+}

@@ -1,5 +1,6 @@
+import Image from "next/image";
 import { Fragment, useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { useReducedMotion } from "motion/react";
+import { useReducedMotion } from "../../lib/useReducedMotion";
 import Icon from "../Icon";
 import CallSurface from "./CallSurface";
 import GrievanceForm, {
@@ -27,7 +28,8 @@ import {
   sendVoice,
   submitLead,
 } from "../../lib/assistApi";
-import { LANG_LABEL, useLang } from "../../i18n";
+import { LANG_LABEL } from "../../i18n/lang";
+import { useLang } from "../../i18n/client";
 import type { GrievanceCategory } from "../../data/content";
 import type {
   AssistGrievanceResult,
@@ -668,9 +670,10 @@ export default function AssistPanel({
         <div className="flex items-start justify-between gap-3 border-b border-ink-hairline px-4 py-3">
           {/* The same face as the launcher, so opening the panel reads as the
               button growing into a card rather than as a second thing. */}
-          <img
+          <Image
             src={ASSIST_BOT_SRC}
             alt=""
+            unoptimized
             aria-hidden
             width={36}
             height={36}

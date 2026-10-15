@@ -1,5 +1,7 @@
-import { en } from "../../i18n/en";
-import { hi } from "../../i18n/hi";
+import { assist as enAssist } from "../../i18n/en/assist";
+import { assist as hiAssist } from "../../i18n/hi/assist";
+import { grievance as enGrievance } from "../../i18n/en/grievance";
+import { grievance as hiGrievance } from "../../i18n/hi/grievance";
 import type { GrievanceCategory } from "../../data/content";
 import type { AssistLang } from "../../types/assist";
 import type { CallPhase } from "./useAssistCall";
@@ -14,10 +16,10 @@ import type { CallPhase } from "./useAssistCall";
  * panel reads whichever dictionary its own toggle points at, and leaves the
  * page alone.
  */
-export type AssistDict = typeof en.assist;
+export type AssistDict = typeof enAssist;
 
 export function assistDict(lang: AssistLang): AssistDict {
-  return lang === "hi" ? hi.assist : en.assist;
+  return lang === "hi" ? hiAssist : enAssist;
 }
 
 /**
@@ -28,7 +30,7 @@ export function assistDict(lang: AssistLang): AssistDict {
  * the server is sent; only the label changes with the language.
  */
 export function grievanceCategoryLabels(lang: AssistLang): Record<GrievanceCategory, string> {
-  return lang === "hi" ? hi.grievance.categories : en.grievance.categories;
+  return lang === "hi" ? hiGrievance.categories : enGrievance.categories;
 }
 
 /**

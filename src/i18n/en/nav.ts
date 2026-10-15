@@ -7,4 +7,6 @@ export const nav = {
     process: "How it works",
     membership: "Pricing",
   } satisfies Record<NavId, string>,
+  /** The guides to the oil companies' dealer rules (/guides/). */
+  guides: "Guides",
 };

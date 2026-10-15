@@ -1,13 +1,12 @@
-import { motion } from "motion/react";
 import Icon from "./Icon";
 import SectionHeader from "./SectionHeader";
-import { Stagger } from "../lib/motion";
-import { itemUp } from "../lib/anim";
+import { item } from "../lib/reveal";
 import { PILLARS } from "../data/content";
-import { useT } from "../i18n";
+import { getT } from "../i18n/server";
+import type { Lang } from "../i18n/lang";
 
-export default function WhyUs() {
-  const t = useT();
+export default function WhyUs({ lang }: { lang: Lang }) {
+  const t = getT(lang);
 
   return (
     <section id="why" className="bg-white">
@@ -23,17 +22,15 @@ export default function WhyUs() {
           intro={t.why.intro}
         />
 
-        <Stagger gap={0.08} className="mt-14 grid gap-4 sm:grid-cols-2 md:mt-16 lg:grid-cols-4">
+        <div className="mt-14 grid gap-4 sm:grid-cols-2 md:mt-16 lg:grid-cols-4">
           {PILLARS.map((p, i) => {
             /* Zip by id: the tile order comes from PILLARS, the words from the dictionary. */
             const copy = t.why.pillars[p.id];
             return (
-              <motion.div
+              <div
                 key={p.id}
-                variants={itemUp}
-                whileHover={{ y: -6 }}
-                transition={{ type: "spring", stiffness: 300, damping: 24 }}
-                className="group relative flex flex-col overflow-hidden rounded-2xl border border-ink-hairline bg-paper-warm p-7"
+                {...item(i)}
+                className="lift group relative flex flex-col overflow-hidden rounded-2xl border border-ink-hairline bg-paper-warm p-7"
               >
                 <span
                   aria-hidden
@@ -50,10 +47,10 @@ export default function WhyUs() {
                 <p className="relative mt-2.5 text-[14.5px] leading-[1.55] text-ink-soft">
                   {copy.body}
                 </p>
-              </motion.div>
+              </div>
             );
           })}
-        </Stagger>
+        </div>
       </div>
     </section>
   );

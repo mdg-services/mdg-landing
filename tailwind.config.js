@@ -1,6 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
+  content: ["./app/**/*.{js,ts,jsx,tsx}", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
       colors: {
@@ -52,11 +52,17 @@ export default {
         // Devanagari always sits BEHIND the Latin faces. Each @font-face
         // carries a unicode-range, so an English reader never reaches the
         // Hindi font and never downloads it.
-        sans: ["Inter", '"Noto Sans Devanagari"', "system-ui", "ui-sans-serif", "sans-serif"],
-        display: ['"Space Grotesk"', "Inter", '"Noto Sans Devanagari"', "system-ui", "sans-serif"],
+        //
+        // The faces come from next/font (src/fonts), self-hosted: each
+        // variable holds the real family plus its metric-matched fallback.
+        // The two Devanagari variables (--font-noto-deva, --font-tiro) are not
+        // set on the English page until it has finished loading (see
+        // components/LateFonts.tsx), so each use carries a fallback.
+        sans: ["var(--font-inter)", "var(--font-noto-deva, system-ui)", "system-ui", "ui-sans-serif", "sans-serif"],
+        display: ["var(--font-grotesk)", "var(--font-inter)", "var(--font-noto-deva, system-ui)", "system-ui", "sans-serif"],
         // The brand's own Devanagari face, for the कवच marks only.
-        deva: ['"Tiro Devanagari Hindi"', '"Noto Sans Devanagari"', '"Space Grotesk"', "serif"],
-        mono: ['"Space Mono"', '"Noto Sans Devanagari"', "ui-monospace", "SFMono-Regular", "monospace"],
+        deva: ["var(--font-tiro, serif)", "var(--font-noto-deva, system-ui)", "var(--font-grotesk)", "serif"],
+        mono: ["var(--font-space-mono)", "var(--font-noto-deva, system-ui)", "ui-monospace", "SFMono-Regular", "monospace"],
       },
       letterSpacing: {
         tightest: "-0.04em",
