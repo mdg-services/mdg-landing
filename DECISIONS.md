@@ -43,7 +43,9 @@ truth for content + theme is the dealer brochure (Canva, "Dealer's कवच").
   complaint).
 - **D9.** Faithfully represent all 9 brochure service categories + the 4 "More
   services" + 7 Mission values + 4 Why-us pillars. Keep the brochure's toll-free
-  (1800-891-3496) and mdgservices.in contact details.
+  (1800-891-3496) and mdgservices.in contact details. The number came off the
+  site on 23 Aug 2026 and came back on 9 Oct as one choice in the call sheet; it
+  now lives only in `src/lib/tollFree.ts`.
 
 ## Dealer enrolment page (`/register`)
 - **D11.** Added `react-router-dom` and a second route, `/register`, holding the
@@ -51,9 +53,12 @@ truth for content + theme is the dealer brochure (Canva, "Dealer's कवच").
   enrolment form. Kept it a client-side route (SPA) with a `vercel.json` rewrite
   so deep links resolve. The landing's "Reserve your slot" CTA and a footer link
   point to it.
-- **D12.** T&C text is stored verbatim in `data/content.ts` (`TERMS`); the only
-  edit is de-duplicating an obvious "It is It is" typo and normalising
-  "MAJEOUR"→"MAJEURE". Legal wording is otherwise untouched.
+- **D12.** T&C text is the signed agreement's ten clauses, word for word. They
+  live in `src/i18n/en/register.ts`, with the Hindi translation in
+  `src/i18n/hi/register.ts`, and are copied into
+  `mdg-client/src/features/register/terms.ts` for the app's sign-up screen:
+  change a clause in all three together. Legal wording is otherwise untouched;
+  the comment above `terms` in `register.ts` lists the edits made.
 - **D13.** The enrolment form validates client-side (required fields + a required
   "agree" checkbox gating submit), then posts to the email backend below.
 
@@ -72,6 +77,9 @@ truth for content + theme is the dealer brochure (Canva, "Dealer's कवच").
   - `server/enroll.ts` — `processEnrollment()`: validate → fan out notification +
     welcome concurrently. Called by both `api/enroll.ts` (prod) and a Vite dev
     middleware (`vite.config.ts`), so local `npm run dev` exercises the real path.
+    Since 14 Oct it also hands each enrolment to the MDG API (`server/intake.ts`)
+    so it shows on the admin Registrations page; a failed hand-off never fails
+    the enrolment (see D22).
 - **D16.** Transport = **Nodemailer over plain SMTP** (provider-agnostic),
   configured for **Hostinger** by default and sending from the domain mailbox
   `noreply@mdgservices.in` (good SPF/DKIM deliverability, no third-party email
@@ -88,5 +96,29 @@ truth for content + theme is the dealer brochure (Canva, "Dealer's कवच").
 
 ## Skills / tooling
 - **D10.** `ui-ux-pro-max` and `taste-skill` are already installed locally as
-  Claude skills, so they are referenced directly rather than cloned into the repo
+  skills, so they are referenced directly rather than cloned into the repo
   (the `/build-product` clone-and-pin step is satisfied by the local install).
+
+## Later decisions (Aug–Oct 2026)
+
+The detail for each lives where it is named.
+
+- **D18.** English and Hindi. A dealer who never touches the switch follows
+  their phone's language; the first touch makes the choice theirs. Aug 2026.
+  See "Two languages" in `README.md`.
+- **D19.** A website assistant (chat, voice note, live call), lazy-loaded so a
+  visitor who never opens it never downloads it. ADR 0009; the runbook is
+  `docs/ASSIST_RUNBOOK.md`.
+- **D20.** The film pages (`/film`, `/film/short`) are plain static pages, not
+  part of the React app; the video streams from S3, and `middleware.ts` picks
+  Hindi or English (Hindi unless the visitor chose). ADR 0015.
+- **D21.** A spam guard on the call-back form, 9 Oct: every post carries
+  `elapsed`, a hidden box catches scripts, JSON only, and in-memory limits. The
+  exact cap is a Vercel firewall rule only the owner can add (`MANUAL_STEPS.md`).
+- **D22.** Grievances and enrolments are handed to the MDG API server to server
+  with a shared secret, 14 Oct, so the admin panel lists them. The browser never
+  talks to the API for these two forms, and the team's inbox stays the backstop.
+  The assistant's grievance form is separate: it posts to the API itself.
+- **D23.** The app's sign-up screen posts to `/api/enroll` from another origin,
+  6 Oct, so the site answers CORS for `ENROLL_ALLOWED_ORIGINS` and tags the form
+  `source: "app"`.
