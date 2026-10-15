@@ -1,20 +1,49 @@
 ---json
 {
   "title": "Marketing Discipline Guidelines 2024 (MDG 2024): the rules for petrol pump dealers",
-  "metaTitle": "MDG 2024: Marketing Discipline Guidelines explained",
+  "metaTitle": "Marketing Discipline Guidelines 2024 (MDG 2024), explained",
   "description": "Marketing Discipline Guidelines 2024 (MDG 2024) in plain words: what the oil companies' dealer rules cover, who must follow them and how irregularities are graded.",
   "answer": "Marketing Discipline Guidelines 2024 (MDG 2024) are the public-sector oil companies' rules for their retail outlet (petrol pump) and kerosene dealers, applied under the dealership agreement {{8.5.1}}. They are the oil companies' own rules, and they bind dealers through the dealership agreement. The edition in force took effect on 24.10.2024 and replaced MDG 2012 {{cover page}}. Every irregularity is graded critical, major or minor, and the grade sets the first action {{8.1}}. The amounts are minimums, and an irregularity must be established before any action {{8.5.1}} {{8.5.2}}.",
   "faq": [
-    { "q": "What is the full form of MDG in a petrol pump?", "a": "MDG stands for Marketing Discipline Guidelines. The first set was framed in 1981-82 {{introduction}}. The edition in force is Marketing Discipline Guidelines 2024 (MDG 2024), Version 1, effective 24.10.2024 {{cover page}}." },
-    { "q": "Petrol pump ke niyam: which rules must a petrol pump dealer follow?", "a": "The main set is MDG 2024, which deals with fuel quality, quantity, price, records and customer service. Beyond it, the dealer must follow the statutory rules, the petroleum and explosives authority's rules and the Government's order on MS and HSD malpractices {{1.5(i)}} {{1.5(ii)}} {{1.5(v)}}." },
-    { "q": "Who has to follow MDG 2024?", "a": "Dealers of retail outlet (RO) and kerosene (SKO) dealerships of the public-sector marketing companies {{cover page}}. The acknowledgement form at the end of the text names IndianOil, Bharat Petroleum and Hindustan Petroleum. The oil companies have duties of their own, set in Chapter 3 {{3.1}}." },
-    { "q": "When did MDG 2024 come into effect?", "a": "On 24.10.2024. The text is marked Version 1 of that date {{cover page}}. It replaced MDG 2012, which was last amended on 30.11.2022 (Ver. 7) {{2012:cover page}}." },
-    { "q": "What are the three types of irregularity under MDG?", "a": "Critical, major and minor {{8.1}}. The first action for a critical irregularity is termination {{8.2}}. For a major one it is usually a 15-day suspension of sales and supplies, then 30 days, then termination {{8.3}}. For a minor one it is a warning-cum-guidance letter, then Rs 10,000, then Rs 25,000 per irregularity {{8.4}}. These are minimum actions: the oil company may take higher action, up to termination {{8.5.1}}, once the irregularity is established {{8.5.2}}. The second and third instance are counted over five years, including instances under the previous guideline {{8.5.5}}." },
-    { "q": "Does MDG 2024 replace MDG 2012?", "a": "Yes. MDG 2024 is the edition in force. It still looks back at the previous guideline when it counts repeat irregularities over five years {{8.5.5}}. The [comparison of the two](@mdg-2012-vs-2024) shows what changed for dealers." },
-    { "q": "Where can I read the MDG 2024 text?", "a": "On the oil companies' own websites. [MDG 2024 PDF and updates](@official-pdf-and-updates) links the Bharat Petroleum copy, says where IndianOil publishes its own, and lists the circulars under MDG 2024 that we know of." },
-    { "q": "Can I rely on this guide instead of the MDG text?", "a": "No. This guide is MDG Services' plain-language explanation of MDG 2024. It is not the text itself and it is not legal advice. Read the clause in the document and confirm with your oil company's officer before you act on a figure." }
+    {
+      "q": "What is the full form of MDG in a petrol pump?",
+      "a": "MDG stands for Marketing Discipline Guidelines. The first set was framed in 1981-82 {{introduction}}. The edition in force is Marketing Discipline Guidelines 2024 (MDG 2024), Version 1, effective 24.10.2024 {{cover page}}."
+    },
+    {
+      "q": "Petrol pump ke niyam: which rules must a petrol pump dealer follow?",
+      "a": "The main set is MDG 2024, which deals with fuel quality, quantity, price, records and customer service. Beyond it, the dealer must follow the statutory rules, the petroleum and explosives authority's rules and the Government's order on MS and HSD malpractices {{1.5(i)}} {{1.5(ii)}} {{1.5(v)}}."
+    },
+    {
+      "q": "Who has to follow MDG 2024?",
+      "a": "Dealers of retail outlet (RO) and kerosene (SKO) dealerships of the public-sector marketing companies {{cover page}}. The acknowledgement form at the end of the text names IndianOil, Bharat Petroleum and Hindustan Petroleum. The oil companies have duties of their own, set in Chapter 3 {{3.1}}."
+    },
+    {
+      "q": "When did MDG 2024 come into effect?",
+      "a": "On 24.10.2024. The text is marked Version 1 of that date {{cover page}}. It replaced MDG 2012, which was last amended on 30.11.2022 (Ver. 7) {{2012:cover page}}."
+    },
+    {
+      "q": "What are the three types of irregularity under MDG?",
+      "a": "Critical, major and minor {{8.1}}. The first action for a critical irregularity is termination {{8.2}}. For a major one it is usually a 15-day suspension of sales and supplies, then 30 days, then termination {{8.3}}. For a minor one it is a warning-cum-guidance letter, then Rs 10,000, then Rs 25,000 per irregularity {{8.4}}. These are minimum actions: the oil company may take higher action, up to termination {{8.5.1}}, once the irregularity is established {{8.5.2}}. The second and third instance are counted over five years, including instances under the previous guideline {{8.5.5}}."
+    },
+    {
+      "q": "Does MDG 2024 replace MDG 2012?",
+      "a": "Yes. MDG 2024 is the edition in force. It still looks back at the previous guideline when it counts repeat irregularities over five years {{8.5.5}}. The [comparison of the two](@mdg-2012-vs-2024) shows what changed for dealers."
+    },
+    {
+      "q": "Where can I read the MDG 2024 text?",
+      "a": "On the oil companies' own websites. [MDG 2024 PDF and updates](@official-pdf-and-updates) links the Bharat Petroleum copy, says where IndianOil publishes its own, and lists the circulars under MDG 2024 that we know of."
+    },
+    {
+      "q": "Can I rely on this guide instead of the MDG text?",
+      "a": "No. This guide is MDG Services' plain-language explanation of MDG 2024. It is not the text itself and it is not legal advice. Read the clause in the document and confirm with your oil company's officer before you act on a figure."
+    }
   ],
-  "related": ["glossary", "official-pdf-and-updates", "mdg-2012-vs-2024", "penalties"],
+  "related": [
+    "glossary",
+    "official-pdf-and-updates",
+    "mdg-2012-vs-2024",
+    "penalties"
+  ],
   "updated": "2026-10-15"
 }
 ---

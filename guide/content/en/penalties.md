@@ -1,20 +1,53 @@
 ---json
 {
-  "title": "MDG penalties for petrol pumps: what each irregularity costs",
+  "title": "Penalties under the Marketing Discipline Guidelines 2024 (MDG 2024): what each irregularity costs",
+  "metaTitle": "Petrol pump penalties under MDG 2024: what each costs",
   "description": "What each kind of irregularity costs a petrol pump dealer under the Marketing Discipline Guidelines 2024, grouped by topic, with the three action ladders.",
   "answer": "The Marketing Discipline Guidelines 2024 (MDG 2024) are the oil companies' rules for their dealers under the dealership agreement. They sort the irregularities listed in Chapter 5 into three classes {{8.1}}. Critical: termination of the dealership at the first instance {{8.2}}. Major: usually 15 days' suspension of sales and supplies, then 30 days, then termination {{8.3}}. Minor: a warning-cum-guidance letter, then Rs 10,000, then Rs 25,000 per irregularity {{8.4}}. These are minimum actions, and the oil company can act harder {{8.5.1}} once the irregularity is established {{8.5.2}}.",
   "faq": [
-    { "q": "What is the meaning of MDG penalty?", "a": "It is the action an oil company takes against a dealer once an irregularity from Chapter 5 of MDG 2024 is established. The action depends on the class of the irregularity and on whether this is the first, second or third instance. It can be a letter, a money penalty, a suspension of sales and supplies, or termination of the dealership {{8.1}} {{8.2}} {{8.3}} {{8.4}}." },
-    { "q": "What are the irregularities under MDG?", "a": "MDG 2024 sorts the irregularities of Chapter 5 into critical, major and minor {{8.1}}. By topic they cover fuel quality and adulteration; meters, seals and quantity; stock, supply sources and records; prices, displays, facilities and service; automation; and refusing an inspection or a sample. The page sets them out topic by topic, with the class of each." },
-    { "q": "What is the penalty for a petrol pump under MDG?", "a": "It depends on the class. Critical: termination at the first instance {{8.2}}. Major: usually 15 days' suspension, then 30 days, then termination, with separate ladders for normal fuel sold as branded fuel and for automation breaches {{8.3}}. Minor: a warning-cum-guidance letter, then Rs 10,000, then Rs 25,000 per irregularity {{8.4}}. These are minimum actions {{8.5.1}}." },
-    { "q": "Why can a petrol pump be suspended under MDG?", "a": "There are four main kinds. A stop while a lab tests the fuel: sales of all products halt at once, for example when the reference density is missing {{5.1.9}}. A stop of one dispensing unit or nozzle, for seal or short-delivery findings {{5.1.2(a)}} {{5.1.2(b)}}. A penalty suspension: 15 or 30 days for most major irregularities, or 7 days along with the second automation penalty {{8.3}}. A suspension for an unpaid fine, from the 31st day {{8.7}}." },
-    { "q": "Is the first penalty always a warning?", "a": "No. Only minor irregularities start with a warning-cum-guidance letter {{8.4}}. A first major irregularity usually means 15 days' suspension {{8.3}}, and a first critical irregularity means termination {{8.2}}." },
-    { "q": "Can the oil company give a bigger penalty than the MDG table?", "a": "MDG 2024 calls its actions the minimum. The oil company's competent authority can go further where it sees the need, up to termination at the first instance or any later one, in line with the dealership agreement {{8.5.1}}." },
-    { "q": "Can a dealer be penalised without proof?", "a": "MDG requires the oil company to establish the irregularity first; it cannot act against a dealer before that {{8.5.2}}. A show cause notice follows within 30 days of the inspection, or within 30 days of the test results if samples were drawn {{8.5.6}}." },
-    { "q": "What happens if two irregularities are found on the same day?", "a": "MDG says each one is counted as an instance in its own class and draws its own action, which it calls a compounding effect {{8.5.3}}. Separately, 8.4 counts the miscellaneous minor items as one irregularity when action is decided {{8.4}}. MDG does not say how the two fit together, so ask your oil company how it counts your case." },
-    { "q": "Can a termination be appealed?", "a": "MDG gives the dealer a right to appeal within 30 days of receiving the order when the termination arises from MDG. The appeal in MDG is for termination only {{8.9}}." }
+    {
+      "q": "What is the meaning of MDG penalty?",
+      "a": "It is the action an oil company takes against a dealer once an irregularity from Chapter 5 of MDG 2024 is established. The action depends on the class of the irregularity and on whether this is the first, second or third instance. It can be a letter, a money penalty, a suspension of sales and supplies, or termination of the dealership {{8.1}} {{8.2}} {{8.3}} {{8.4}}."
+    },
+    {
+      "q": "What are the irregularities under MDG?",
+      "a": "MDG 2024 sorts the irregularities of Chapter 5 into critical, major and minor {{8.1}}. By topic they cover fuel quality and adulteration; meters, seals and quantity; stock, supply sources and records; prices, displays, facilities and service; automation; and refusing an inspection or a sample. The page sets them out topic by topic, with the class of each."
+    },
+    {
+      "q": "What is the penalty for a petrol pump under MDG?",
+      "a": "It depends on the class. Critical: termination at the first instance {{8.2}}. Major: usually 15 days' suspension, then 30 days, then termination, with separate ladders for normal fuel sold as branded fuel and for automation breaches {{8.3}}. Minor: a warning-cum-guidance letter, then Rs 10,000, then Rs 25,000 per irregularity {{8.4}}. These are minimum actions {{8.5.1}}."
+    },
+    {
+      "q": "Why can a petrol pump be suspended under MDG?",
+      "a": "There are four main kinds. A stop while a lab tests the fuel: sales of all products halt at once, for example when the reference density is missing {{5.1.9}}. A stop of one dispensing unit or nozzle, for seal or short-delivery findings {{5.1.2(a)}} {{5.1.2(b)}}. A penalty suspension: 15 or 30 days for most major irregularities, or 7 days along with the second automation penalty {{8.3}}. A suspension for an unpaid fine, from the 31st day {{8.7}}."
+    },
+    {
+      "q": "Is the first penalty always a warning?",
+      "a": "No. Only minor irregularities start with a warning-cum-guidance letter {{8.4}}. A first major irregularity usually means 15 days' suspension {{8.3}}, and a first critical irregularity means termination {{8.2}}."
+    },
+    {
+      "q": "Can the oil company give a bigger penalty than the MDG table?",
+      "a": "MDG 2024 calls its actions the minimum. The oil company's competent authority can go further where it sees the need, up to termination at the first instance or any later one, in line with the dealership agreement {{8.5.1}}."
+    },
+    {
+      "q": "Can a dealer be penalised without proof?",
+      "a": "MDG requires the oil company to establish the irregularity first; it cannot act against a dealer before that {{8.5.2}}. A show cause notice follows within 30 days of the inspection, or within 30 days of the test results if samples were drawn {{8.5.6}}."
+    },
+    {
+      "q": "What happens if two irregularities are found on the same day?",
+      "a": "MDG says each one is counted as an instance in its own class and draws its own action, which it calls a compounding effect {{8.5.3}}. Separately, 8.4 counts the miscellaneous minor items as one irregularity when action is decided {{8.4}}. MDG does not say how the two fit together, so ask your oil company how it counts your case."
+    },
+    {
+      "q": "Can a termination be appealed?",
+      "a": "MDG gives the dealer a right to appeal within 30 days of receiving the order when the termination arises from MDG. The appeal in MDG is for termination only {{8.9}}."
+    }
   ],
-  "related": ["penalties-repeat-and-unpaid", "penalties-branded-fuel-overcharging", "inspection-show-cause-notice", "inspection-appeal"],
+  "related": [
+    "penalties-repeat-and-unpaid",
+    "penalties-branded-fuel-overcharging",
+    "inspection-show-cause-notice",
+    "inspection-appeal"
+  ],
   "updated": "2026-10-15"
 }
 ---

@@ -1,19 +1,49 @@
 ---json
 {
-  "title": "MDG repeat offences and unpaid fines: how instances are counted",
+  "title": "Repeat offences and unpaid fines under the Marketing Discipline Guidelines 2024 (MDG 2024)",
+  "metaTitle": "Repeat offences and unpaid fines under MDG 2024",
   "description": "How the Marketing Discipline Guidelines 2024 count a second or third instance over five years, what follows irregularities found together, and an unpaid fine.",
   "answer": "The Marketing Discipline Guidelines 2024 (MDG 2024), the oil companies' rules for their dealers, count back five years from the date a new irregularity is established to decide whether it is the second or third instance. Irregularities under the previous guideline inside those five years count {{8.5.5}}. A fine with no suspension attached is due within 30 days of the company's notice. If it stays unpaid, sales and supplies are suspended from the 31st day for 15 days, then for another 15 days, and then the dealership is terminated {{8.7}}.",
   "faq": [
-    { "q": "What does second instance mean in MDG?", "a": "The oil company counts back five years from the date the new irregularity is established, finds one earlier instance in that window, and treats the new one as the second. The second-instance action then applies, for example 30 days' suspension for most major irregularities or Rs 10,000 per irregularity for minor ones {{8.5.5}} {{8.3}} {{8.4}}. MDG does not say whether the earlier one must be the same irregularity or only the same class, so ask your oil company if it matters." },
-    { "q": "How many years are counted for a second or third instance?", "a": "Five years. Counting back from the date the new irregularity is established, the oil company checks the earlier ones in that window to see where the new one stands: first, second or third {{8.5.5}}." },
-    { "q": "Do irregularities under the old MDG count as instances?", "a": "Yes, when they fall inside the five-year window. MDG 2024 counts irregularities from the previous guideline in that window as instances {{8.5.5}}." },
-    { "q": "What if two irregularities are found together at a petrol pump?", "a": "MDG says each is counted as an instance in its own class, and suitable action is taken for each irregularity and for its instance. It calls this a compounding effect {{8.5.3}}. Separately, 8.4 counts the miscellaneous minor items as one irregularity when action is decided {{8.4}}. MDG does not say how the two statements fit together." },
-    { "q": "What happens if a petrol pump fine is not paid?", "a": "A fine with no suspension attached is due within 30 days of the company's notice. If it is unpaid, sales and supplies are suspended from the 31st day for 15 days. The fine is still to be paid during that suspension. If it is not, the suspension is extended by another 15 days, and if it is still unpaid when that ends, the dealership is terminated {{8.7}}." },
-    { "q": "Why is a petrol pump suspended?", "a": "There are four main reasons. Sales stop at once while a lab tests the fuel {{5.1.9}}. A single dispensing unit or nozzle stops for seal or short-delivery findings {{5.1.2(a)}} {{5.1.2(b)}}. A penalty suspension of 15 or 30 days follows a major irregularity {{8.3}}. Or a fine is left unpaid {{8.7}}." },
-    { "q": "Which fines does the 30-day payment rule cover?", "a": "MDG 8.7 covers some major and minor irregularities where the action is only a fine and sales and supplies are not suspended, and it does not list them {{8.7}}. The steps on the ladders that are a fine alone are the Rs 10,000 and Rs 25,000 minor penalties {{8.4}} and the first automation penalty of Rs 1,00,000 {{8.3}}. Whether any other step is covered is not stated, so ask your oil company." },
-    { "q": "Can a termination after an unpaid fine be appealed?", "a": "MDG gives the dealer a right to appeal against a termination arising from MDG within 30 days of receiving the order. The appeal in MDG is for termination only {{8.9}}." }
+    {
+      "q": "What does second instance mean in MDG?",
+      "a": "The oil company counts back five years from the date the new irregularity is established, finds one earlier instance in that window, and treats the new one as the second. The second-instance action then applies, for example 30 days' suspension for most major irregularities or Rs 10,000 per irregularity for minor ones {{8.5.5}} {{8.3}} {{8.4}}. MDG does not say whether the earlier one must be the same irregularity or only the same class, so ask your oil company if it matters."
+    },
+    {
+      "q": "How many years are counted for a second or third instance?",
+      "a": "Five years. Counting back from the date the new irregularity is established, the oil company checks the earlier ones in that window to see where the new one stands: first, second or third {{8.5.5}}."
+    },
+    {
+      "q": "Do irregularities under the old MDG count as instances?",
+      "a": "Yes, when they fall inside the five-year window. MDG 2024 counts irregularities from the previous guideline in that window as instances {{8.5.5}}."
+    },
+    {
+      "q": "What if two irregularities are found together at a petrol pump?",
+      "a": "MDG says each is counted as an instance in its own class, and suitable action is taken for each irregularity and for its instance. It calls this a compounding effect {{8.5.3}}. Separately, 8.4 counts the miscellaneous minor items as one irregularity when action is decided {{8.4}}. MDG does not say how the two statements fit together."
+    },
+    {
+      "q": "What happens if a petrol pump fine is not paid?",
+      "a": "A fine with no suspension attached is due within 30 days of the company's notice. If it is unpaid, sales and supplies are suspended from the 31st day for 15 days. The fine is still to be paid during that suspension. If it is not, the suspension is extended by another 15 days, and if it is still unpaid when that ends, the dealership is terminated {{8.7}}."
+    },
+    {
+      "q": "Why is a petrol pump suspended?",
+      "a": "There are four main reasons. Sales stop at once while a lab tests the fuel {{5.1.9}}. A single dispensing unit or nozzle stops for seal or short-delivery findings {{5.1.2(a)}} {{5.1.2(b)}}. A penalty suspension of 15 or 30 days follows a major irregularity {{8.3}}. Or a fine is left unpaid {{8.7}}."
+    },
+    {
+      "q": "Which fines does the 30-day payment rule cover?",
+      "a": "MDG 8.7 covers some major and minor irregularities where the action is only a fine and sales and supplies are not suspended, and it does not list them {{8.7}}. The steps on the ladders that are a fine alone are the Rs 10,000 and Rs 25,000 minor penalties {{8.4}} and the first automation penalty of Rs 1,00,000 {{8.3}}. Whether any other step is covered is not stated, so ask your oil company."
+    },
+    {
+      "q": "Can a termination after an unpaid fine be appealed?",
+      "a": "MDG gives the dealer a right to appeal against a termination arising from MDG within 30 days of receiving the order. The appeal in MDG is for termination only {{8.9}}."
+    }
   ],
-  "related": ["penalties", "inspection-show-cause-notice", "inspection-appeal", "penalties-branded-fuel-overcharging"],
+  "related": [
+    "penalties",
+    "inspection-show-cause-notice",
+    "inspection-appeal",
+    "penalties-branded-fuel-overcharging"
+  ],
   "updated": "2026-10-15"
 }
 ---

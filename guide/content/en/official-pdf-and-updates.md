@@ -1,19 +1,45 @@
 ---json
 {
   "title": "Marketing Discipline Guidelines 2024 (MDG 2024) PDF: where to read it, version and updates",
-  "metaTitle": "MDG 2024 PDF: where to read it, version and updates",
+  "metaTitle": "Marketing Discipline Guidelines 2024 PDF (MDG 2024) and updates",
   "description": "Where to read the MDG 2024 text on the oil companies' own websites, its version and effective date, and a dated log of the circulars issued under it that we know of.",
   "answer": "Marketing Discipline Guidelines 2024 (MDG 2024) is Version 1, effective 24.10.2024, and the oil companies publish it on their own websites. This page links the Bharat Petroleum copy and says where IndianOil publishes its own; we do not host a copy. The one circular we have logged under it is dated 20.03.2025 (Minimum Service Obligations, clause 5.1.18). It is a common format for dealers of all three oil companies and sets no penalty of its own. Oil companies can also write to dealers directly, so ask your field officer what applies to you {{cover page}} {{5.1.18}} {{circular}}.",
   "faq": [
-    { "q": "Where can I download the MDG 2024 PDF?", "a": "From the oil companies' own websites. Open [MDG 2024 on Bharat Petroleum's website](https://www.bharatpetroleum.in/images/files/MDG-2024-Effective-24-10-2024.pdf), or search iocl.com for IndianOil's copy. We do not host a copy." },
-    { "q": "Where is MDG 2024 on the IOCL website?", "a": "IndianOil publishes it as a PDF on iocl.com. We give that address as plain text only, so search the site for 'Marketing Discipline Guidelines 2024'. Check that the cover reads MDG 2024 (Effective 24.10.2024) and the footer reads Ver. 1 / 24.10.2024 {{cover page}}." },
-    { "q": "Where is MDG 2024 on the BPCL website?", "a": "Bharat Petroleum publishes it as a PDF: [MDG 2024 on Bharat Petroleum's website](https://www.bharatpetroleum.in/images/files/MDG-2024-Effective-24-10-2024.pdf). The acknowledgement form at the end of MDG 2024 names IndianOil, Bharat Petroleum and Hindustan Petroleum, so Hindustan Petroleum dealers work from the same document." },
-    { "q": "Has MDG 2024 been amended?", "a": "The text we hold is Version 1 dated 24.10.2024 {{cover page}}, and we have logged no revised edition. The acknowledgement form at its end speaks of an 'MDG - 2024 amendment'. Circulars issued under it, such as the one dated 20.03.2025, add detail. Oil companies can also write to their dealers directly, so ask yours whether a newer version or letter exists." },
-    { "q": "Are there MDG guidelines for 2025 or 2026?", "a": "We have logged no separate 2025 or 2026 edition. MDG 2024 is the edition we hold as in force. A circular on customer service standards dated 20.03.2025 sits under clause 5.1.18 of MDG 2024 {{5.1.18}} {{circular}}. Ask your oil company whether anything newer has reached dealers." },
-    { "q": "Is MDG 2012 still valid?", "a": "No. MDG 2012 (Ver. 7, last amended on 30.11.2022) was replaced when MDG 2024 took effect on 24.10.2024 {{cover page}}. The 2024 text still counts irregularities under the previous guideline within five years as instances {{8.5.5}}." },
-    { "q": "How do I find circulars issued after MDG 2024?", "a": "Ask your sales officer or field officer for circulars issued under MDG 2024, check your oil company's website, and keep every circular in the outlet's file. MDG 2024 asks the dealer to keep company correspondence at the outlet for ready reference {{1.5(iv)}}. Oil companies can write to dealers directly, so a letter may not be on any website." }
+    {
+      "q": "Where can I download the MDG 2024 PDF?",
+      "a": "From the oil companies' own websites. Open [MDG 2024 on Bharat Petroleum's website](https://www.bharatpetroleum.in/images/files/MDG-2024-Effective-24-10-2024.pdf), or search iocl.com for IndianOil's copy. We do not host a copy."
+    },
+    {
+      "q": "Where is MDG 2024 on the IOCL website?",
+      "a": "IndianOil publishes it as a PDF on iocl.com. We give that address as plain text only, so search the site for 'Marketing Discipline Guidelines 2024'. Check that the cover reads MDG 2024 (Effective 24.10.2024) and the footer reads Ver. 1 / 24.10.2024 {{cover page}}."
+    },
+    {
+      "q": "Where is MDG 2024 on the BPCL website?",
+      "a": "Bharat Petroleum publishes it as a PDF: [MDG 2024 on Bharat Petroleum's website](https://www.bharatpetroleum.in/images/files/MDG-2024-Effective-24-10-2024.pdf). The acknowledgement form at the end of MDG 2024 names IndianOil, Bharat Petroleum and Hindustan Petroleum, so Hindustan Petroleum dealers work from the same document."
+    },
+    {
+      "q": "Has MDG 2024 been amended?",
+      "a": "The text we hold is Version 1 dated 24.10.2024 {{cover page}}, and we have logged no revised edition. The acknowledgement form at its end speaks of an 'MDG - 2024 amendment'. Circulars issued under it, such as the one dated 20.03.2025, add detail. Oil companies can also write to their dealers directly, so ask yours whether a newer version or letter exists."
+    },
+    {
+      "q": "Are there MDG guidelines for 2025 or 2026?",
+      "a": "We have logged no separate 2025 or 2026 edition. MDG 2024 is the edition we hold as in force. A circular on customer service standards dated 20.03.2025 sits under clause 5.1.18 of MDG 2024 {{5.1.18}} {{circular}}. Ask your oil company whether anything newer has reached dealers."
+    },
+    {
+      "q": "Is MDG 2012 still valid?",
+      "a": "No. MDG 2012 (Ver. 7, last amended on 30.11.2022) was replaced when MDG 2024 took effect on 24.10.2024 {{cover page}}. The 2024 text still counts irregularities under the previous guideline within five years as instances {{8.5.5}}."
+    },
+    {
+      "q": "How do I find circulars issued after MDG 2024?",
+      "a": "Ask your sales officer or field officer for circulars issued under MDG 2024, check your oil company's website, and keep every circular in the outlet's file. MDG 2024 asks the dealer to keep company correspondence at the outlet for ready reference {{1.5(iv)}}. Oil companies can write to dealers directly, so a letter may not be on any website."
+    }
   ],
-  "related": ["mdg-2012-vs-2024", "inspection-minimum-service-obligations", "glossary", "hub"],
+  "related": [
+    "mdg-2012-vs-2024",
+    "inspection-minimum-service-obligations",
+    "glossary",
+    "hub"
+  ],
   "updated": "2026-10-15"
 }
 ---

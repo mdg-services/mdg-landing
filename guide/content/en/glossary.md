@@ -1,20 +1,49 @@
 ---json
 {
   "title": "Marketing Discipline Guidelines 2024 (MDG 2024) glossary: terms and full forms",
-  "metaTitle": "MDG glossary: full forms and meanings of petrol pump terms",
+  "metaTitle": "Marketing Discipline Guidelines glossary: MDG terms explained",
   "description": "A to Z meanings of the short forms and terms in MDG 2024 that a petrol pump dealer meets, such as MDG, OMC, RO, MS, HSD, MPD, NANO and reference density.",
   "answer": "Marketing Discipline Guidelines 2024 (MDG 2024) is the set of rules the public-sector oil companies lay down for their dealers. Short forms you will meet: OMC (oil marketing company), RO (retail outlet), MS (petrol), HSD (diesel), SKO (kerosene) and DU (dispensing unit). Below are more than 50 terms in A to Z order, each with its MDG 2024 clause where there is one. Where MDG uses a short form without spelling it out, such as MPD, the entry says so.",
   "faq": [
-    { "q": "What is the full form of MDG in a petrol pump?", "a": "MDG is Marketing Discipline Guidelines. The first set was framed in 1981-82 {{introduction}}, and the edition in force is MDG 2024, effective 24.10.2024 {{cover page}}." },
-    { "q": "What does MDG mean for a petrol pump dealer?", "a": "MDG is the oil companies' rules for their dealers under the dealership agreement. It binds the dealer through the dealership agreement. It sets how a dealer handles fuel, keeps records and serves customers, and what the oil company may do when a rule is broken. Every breach is graded critical, major or minor {{8.1}}, and each grade has its own first action {{8.2}} {{8.3}} {{8.4}}." },
-    { "q": "What is the full form of MPD in a petrol pump?", "a": "MDG 2024 uses MPD next to DU (dispensing unit) and does not spell it out {{5.1.2(a)}} {{5.1.17}}. In the trade it is read as multi-product dispenser, a machine with nozzles for more than one product." },
-    { "q": "What is the full form of HSD?", "a": "HSD is High Speed Diesel, the diesel sold at the pump. MDG's test tables also use the name automotive diesel fuel {{7.6}}." },
-    { "q": "What is a NANO petrol pump?", "a": "NANO is not a size of pump. It stands for 'No Automation, No Operation', the principle automated outlets are designed on. The dealer must keep the automation working and report any fault to the oil company's official at once {{1.5(viii)}}." },
-    { "q": "What is OMC in the petrol pump business?", "a": "OMC is oil marketing company. In MDG 2024 it means the public-sector oil marketing companies {{introduction}}. The text shortens their names to IOC, BPC and HPC {{8.8}}, and the acknowledgement form at its end names IndianOil, Bharat Petroleum and Hindustan Petroleum." },
-    { "q": "What is reference density?", "a": "It is the density an inspector compares your fuel with. Until a tanker is decanted, it is the density on the invoice. After that it is the density of the mixed product in your tank, recorded once at least 50 litres have been dispensed {{2.10}}. At an inspection, the figures to show are your morning density and, after a delivery, the mixed-tank density {{5.1.9}}." },
-    { "q": "What is the difference between a critical, major and minor irregularity?", "a": "Critical irregularities lead to termination at the first instance {{8.2}}. Major ones usually mean a 15-day suspension of sales and supplies, then 30 days, then termination {{8.3}}. Minor ones mean a warning-cum-guidance letter, then Rs 10,000, then Rs 25,000 per irregularity {{8.4}}. These are minimum actions: the oil company may take higher action, up to termination {{8.5.1}}, once the irregularity is established {{8.5.2}}. The second and third instance are counted over five years, including the previous guideline {{8.5.5}}." }
+    {
+      "q": "What is the full form of MDG in a petrol pump?",
+      "a": "MDG is Marketing Discipline Guidelines. The first set was framed in 1981-82 {{introduction}}, and the edition in force is MDG 2024, effective 24.10.2024 {{cover page}}."
+    },
+    {
+      "q": "What does MDG mean for a petrol pump dealer?",
+      "a": "MDG is the oil companies' rules for their dealers under the dealership agreement. It binds the dealer through the dealership agreement. It sets how a dealer handles fuel, keeps records and serves customers, and what the oil company may do when a rule is broken. Every breach is graded critical, major or minor {{8.1}}, and each grade has its own first action {{8.2}} {{8.3}} {{8.4}}."
+    },
+    {
+      "q": "What is the full form of MPD in a petrol pump?",
+      "a": "MDG 2024 uses MPD next to DU (dispensing unit) and does not spell it out {{5.1.2(a)}} {{5.1.17}}. In the trade it is read as multi-product dispenser, a machine with nozzles for more than one product."
+    },
+    {
+      "q": "What is the full form of HSD?",
+      "a": "HSD is High Speed Diesel, the diesel sold at the pump. MDG's test tables also use the name automotive diesel fuel {{7.6}}."
+    },
+    {
+      "q": "What is a NANO petrol pump?",
+      "a": "NANO is not a size of pump. It stands for 'No Automation, No Operation', the principle automated outlets are designed on. The dealer must keep the automation working and report any fault to the oil company's official at once {{1.5(viii)}}."
+    },
+    {
+      "q": "What is OMC in the petrol pump business?",
+      "a": "OMC is oil marketing company. In MDG 2024 it means the public-sector oil marketing companies {{introduction}}. The text shortens their names to IOC, BPC and HPC {{8.8}}, and the acknowledgement form at its end names IndianOil, Bharat Petroleum and Hindustan Petroleum."
+    },
+    {
+      "q": "What is reference density?",
+      "a": "It is the density an inspector compares your fuel with. Until a tanker is decanted, it is the density on the invoice. After that it is the density of the mixed product in your tank, recorded once at least 50 litres have been dispensed {{2.10}}. At an inspection, the figures to show are your morning density and, after a delivery, the mixed-tank density {{5.1.9}}."
+    },
+    {
+      "q": "What is the difference between a critical, major and minor irregularity?",
+      "a": "Critical irregularities lead to termination at the first instance {{8.2}}. Major ones usually mean a 15-day suspension of sales and supplies, then 30 days, then termination {{8.3}}. Minor ones mean a warning-cum-guidance letter, then Rs 10,000, then Rs 25,000 per irregularity {{8.4}}. These are minimum actions: the oil company may take higher action, up to termination {{8.5.1}}, once the irregularity is established {{8.5.2}}. The second and third instance are counted over five years, including the previous guideline {{8.5.5}}."
+    }
   ],
-  "related": ["hub", "penalties", "density-reference-10am", "sampling"],
+  "related": [
+    "hub",
+    "penalties",
+    "density-reference-10am",
+    "sampling"
+  ],
   "updated": "2026-10-15"
 }
 ---
