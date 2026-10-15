@@ -9,12 +9,12 @@ import { Inter, Noto_Sans_Devanagari, Space_Grotesk, Space_Mono, Tiro_Devanagari
  * Space Mono, Latin (the mono labels are small, but a late swap of their font
  * moves the lines around them, so they come with the first paint).
  *
- * Every face is `display: "optional"`: the browser uses a face only if it
- * arrives in the first ~100 ms, otherwise it keeps the size-matched fallback
- * for that page view (and has the face cached for the next). A "swap" face
- * arriving late re-wraps the text already read, which cost real phones a
- * small layout shift on most pages; this costs none, and the brand fonts show
- * from the second page view on a slow link.
+ * The Latin faces and the कवच mark use `display: "swap"`: the brand fonts must
+ * show on the first visit, because the guides and the homepage have to look
+ * like one site. next/font gives each a size-matched fallback, so the swap
+ * barely moves a line. Noto Sans Devanagari is `optional`: most Android phones
+ * already draw Hindi in Noto Sans Devanagari, so on a slow first visit the
+ * device's own copy looks the same and nothing shifts.
  *
  * The two Devanagari faces are only for the कवच marks and the हिंदी switch,
  * 185 kB between them. They are set on <html> by components/LateFonts.tsx once
@@ -23,20 +23,20 @@ import { Inter, Noto_Sans_Devanagari, Space_Grotesk, Space_Mono, Tiro_Devanagari
  */
 export const inter = Inter({
   subsets: ["latin"],
-  display: "optional",
+  display: "swap",
   variable: "--font-inter",
 });
 
 export const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
-  display: "optional",
+  display: "swap",
   variable: "--font-grotesk",
 });
 
 export const spaceMono = Space_Mono({
   subsets: ["latin"],
   weight: ["400", "700"],
-  display: "optional",
+  display: "swap",
   variable: "--font-space-mono",
 });
 
@@ -50,7 +50,7 @@ export const notoDeva = Noto_Sans_Devanagari({
 export const tiroDeva = Tiro_Devanagari_Hindi({
   subsets: ["devanagari"],
   weight: "400",
-  display: "optional",
+  display: "swap",
   preload: false,
   variable: "--font-tiro",
 });

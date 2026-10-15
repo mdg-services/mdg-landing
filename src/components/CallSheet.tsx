@@ -159,13 +159,14 @@ export default function CallSheet() {
             "group fixed bottom-[88px] right-5 z-[60] inline-flex h-12 items-center gap-2 rounded-full bg-navy-700 pl-4 pr-5 " +
             "text-[15px] font-semibold text-white shadow-lift ring-2 ring-inset ring-gold-400/70 transition-transform duration-150 " +
             "hover:bg-navy-800 active:scale-95 sm:bottom-6 sm:left-6 sm:right-auto sm:h-14 sm:pl-5 sm:pr-6" +
-            // A reading page on a phone: just the handset, so it covers less of the text.
-            (onGuides ? " max-sm:w-12 max-sm:justify-center max-sm:px-0" : "")
+            // A reading page on a phone: no floating pill over the text. The menu and the
+            // Dealer Kavach box on every guide page carry the call.
+            (onGuides ? " max-sm:hidden" : "")
           }
         >
           {arrived && !stillMotion() && <span aria-hidden className="assist-halo" />}
           <Icon name="phone" size={18} aria-hidden className="text-gold-400" />
-          <span className={onGuides ? "max-sm:hidden" : undefined}>{arrived ? t.ui.callNow : t.ui.callUs}</span>
+          <span>{arrived ? t.ui.callNow : t.ui.callUs}</span>
         </button>
       )}
 

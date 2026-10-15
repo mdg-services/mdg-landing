@@ -3,19 +3,24 @@
  *
  * Every page is built at once, but only PER_DAY pages (counting each language
  * as a page) go live each day, starting on START in India time. The site does
- * this by itself: the build writes one snapshot of the guide per day under
- * /_guide/dNN/, and middleware.ts serves the snapshot for today's date. No
- * daily deploy, no cron.
+ * this by itself: proxy.ts answers 404 for a page before its day (India time),
+ * and the pages, sitemap and llms.txt are re-rendered as the days pass. No
+ * daily deploy.
+ *
+ * Pages already published stay on the day they went live (FIRST_CALENDAR,
+ * KEEP_THROUGH_DAY). Everything else follows from the next day.
  *
  * Order: the guide's front door and disclaimer first, then wave 1, 2, 3 in
  * inventory order, with each topic's main page pulled forward to its earliest
  * page so a page never goes live before the page above it. A page and its
  * Hindi twin go out together when the day has room; when it does not, the
- * next single page fills the gap and the pair goes out the next day.
+ * next single page fills the gap, or the English page goes today and its Hindi
+ * twin first thing the next day.
  *
- * Pure data and arithmetic: middleware.ts imports this, so no Node APIs.
+ * Pure data and arithmetic: proxy.ts imports this, so no Node APIs.
  */
 import { PAGES, PILLARS, pathOf, type GuidePage, type Lang } from "./inventory.js";
+import { FIRST_CALENDAR } from "./release-history.js";
 
 /** Pages that go live each day. Each language counts as one page. */
 export const PER_DAY = 5;
@@ -42,14 +47,36 @@ function sortKey(page: GuidePage, index: number): [number, number, number] {
   return [first, wave, index];
 }
 
+/**
+ * Pages of FIRST_CALENDAR that had gone live by the end of this day keep the day
+ * they went live. Raise it to the current day whenever the page list changes,
+ * before deploying, so nothing already published moves or disappears.
+ */
+export const KEEP_THROUGH_DAY = 2;
+
 function build(): Release[] {
   const ordered = PAGES.map((p, i) => ({ p, k: sortKey(p, i) }))
     .sort((a, b) => a.k[0] - b.k[0] || a.k[1] - b.k[1] || a.k[2] - b.k[2])
     .map((x) => x.p);
-  const units = ordered.map((page) => (page.hi ? (["en", "hi"] as Lang[]) : (["en"] as Lang[])).map((lang) => ({ page, lang })));
 
+  // Already published: fixed on their day.
+  const byPath = new Map<string, { page: GuidePage; lang: Lang }>();
+  for (const page of PAGES) for (const lang of page.hi ? (["en", "hi"] as Lang[]) : (["en"] as Lang[])) byPath.set(pathOf(page, lang), { page, lang });
   const out: Release[] = [];
-  let day = 1;
+  const pinned = new Set<string>();
+  for (const [path, day] of FIRST_CALENDAR) {
+    const hit = byPath.get(path);
+    if (!hit || day > KEEP_THROUGH_DAY) continue;
+    out.push({ ...hit, path, day });
+    pinned.add(path);
+  }
+
+  const units = ordered
+    .map((page) => (page.hi ? (["en", "hi"] as Lang[]) : (["en"] as Lang[])).map((lang) => ({ page, lang })).filter((u) => !pinned.has(pathOf(u.page, u.lang))))
+    .filter((u) => u.length > 0);
+
+  // Everything else from the first day after the pinned ones.
+  let day = pinned.size ? KEEP_THROUGH_DAY + 1 : 1;
   let room = PER_DAY;
   const place = (unit: { page: GuidePage; lang: Lang }[]) => {
     for (const u of unit) out.push({ page: u.page, lang: u.lang, path: pathOf(u.page, u.lang), day });
@@ -71,10 +98,13 @@ function build(): Release[] {
       place(units.splice(filler + 1, 1)[0]);
       continue;
     }
-    day += 1;
-    room = PER_DAY;
+    // No single page to fill the gap: the English page goes today, its Hindi twin
+    // tomorrow, so every day carries exactly PER_DAY pages.
+    const fits = room;
+    units[0] = next.slice(fits);
+    place(next.slice(0, fits));
   }
-  return out;
+  return out.sort((a, b) => a.day - b.day);
 }
 
 export const RELEASES: Release[] = build();

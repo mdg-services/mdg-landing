@@ -2,23 +2,18 @@
 {
   "title": "Stock variation calculator for petrol pumps (MDG 2024)",
   "description": "Enter your dips, receipts and meter sales to see your stock variation against the 4% limit, handling loss and shrinkage or TVA. A helper only.",
-  "answer": "Enter the dip at the start, the receipts, the sales on the meters and the dip at the end. The calculator works out the book stock, finds its gap to your closing dip and sets that gap against the limit in the Marketing Discipline Guidelines 2024 (MDG 2024), the oil companies' rules for their dealers: 4% of tank stock, with the handling loss on sales and any shrinkage or TVA taken into account {{5.1.11}} {{annexure 9}}. Where MDG leaves a point open, such as whether the handling loss counts with the 4% for a shortage, the calculator says so and shows both readings. It is a helper only. Your oil company's own calculation decides.",
+  "answer": "Enter the dips, receipts and meter sales. The calculator sets the gap between book stock and your closing dip against the limit in the Marketing Discipline Guidelines 2024 (MDG 2024), the oil companies' rules for their dealers: 4% of tank stock, with the handling loss on sales and any shrinkage or TVA taken into account {{5.1.11}} {{annexure 9}}. A helper only: your oil company's calculation decides.",
   "faq": [
-    { "q": "How is stock variation calculated at a petrol pump?", "a": "Start with the opening dip, add what was received, take off shrinkage or TVA where they apply, then take off the sales shown on the meters. That gives the stock the books say should be in the tank. The gap between it and the closing dip is the variation, and it is judged against 4% of tank stock plus the other allowances {{5.1.11}} {{annexure 9}}." },
-    { "q": "What is the stock variation formula in MDG Annexure 9?", "a": "Annexure 9 builds the book closing stock from the opening dip and the receipts, less the shrinkage share and less the meter sales. It then lets that figure differ from the closing dip by up to 4% of the dip figure, either way {{annexure 9}}." },
-    { "q": "Is the 4% worked out on opening stock or closing stock?", "a": "On the closing dip. Annexure 9 sets the 4% against the closing stock as per dip {{annexure 9}}. The clause itself says \"4 % of tank stock\" {{5.1.11}}." },
-    { "q": "How is the shrinkage allowance worked out?", "a": "The oil company gives an allowance in rupees per KL for your location. Divide it by the net price, which is the price before commission, taxes and the allowance are added, and you get a percentage. Apply that percentage to everything received in the period being checked {{annexure 8}}. The calculator rounds the percentage to two decimals, as the annexures do." },
-    { "q": "What is TVA in petrol pump stock variation?", "a": "TVA is the temperature variation allowance. It appears on the oil company's invoice as a credit. It becomes a percentage in the same way as shrinkage, and counts only for the litres on which the invoices actually gave the TVA credit. It is generally revised every quarter {{annexure 10}}." },
-    { "q": "Which handling loss rate applies to my sales?", "a": "Petrol (MS): 0.75% of sales up to an annual average of 600 KL, and 0.60% on the quantity beyond that. Diesel (HSD): 0.25% up to 600 KL and 0.20% beyond it {{5.1.11}}. MDG gives the 600 KL as an annual average and does not say how that is applied to the period you are checking, so ask your oil company." },
-    { "q": "Why does the calculator sometimes say the result depends on how the allowances are counted?", "a": "For a negative variation, the clause words the limit as \"up to 4%\" and does not say in that sentence whether the handling loss is counted with it {{5.1.11}}. When the shortage falls between the 4% alone and the 4% plus the handling loss, the answer depends on how your oil company counts, so the calculator shows both readings." },
-    { "q": "Does this calculator replace the oil company's own stock check?", "a": "No. It is a helper. The oil company's own working decides, and the oil company has to establish an irregularity before it acts against a dealer {{5.1.11}} {{8.5.2}}." },
-    { "q": "Does the calculator save or send my figures?", "a": "No. The sum is worked out on your own phone or computer. Nothing you type is stored or sent anywhere." }
+    { "q": "How is stock variation calculated at a petrol pump?", "a": "Work out the stock the books say should be in the tank, then compare it with the closing dip. The gap is the variation, set against 4% of the closing dip {{annexure 9}} {{5.1.11}}." },
+    { "q": "Is the 4% worked out on opening stock or closing stock?", "a": "On the closing dip {{annexure 9}}. The clause itself says \"4 % of tank stock\" {{5.1.11}}." },
+    { "q": "Why does the calculator say the result depends?", "a": "It means the shortage is within the limit only if your oil company counts the handling loss with the 4%. Ask it how it counts {{5.1.11}}." },
+    { "q": "Does the calculator save or send my figures?", "a": "No. The sum is worked out on your own phone or computer, and nothing you type is stored or sent." }
   ],
   "related": ["stock-variation", "stock-shrinkage-tva", "stock-positive-negative", "stock-daily-register"],
   "updated": "2026-10-15"
 }
 ---
-This page works out the stock variation of one product from your own dips and meter readings. It follows the limit in clause 5.1.11 of the Marketing Discipline Guidelines 2024 (MDG 2024), the oil companies' rules for their dealers under the dealership agreement, and the method shown in its Annexures 8 to 10 {{5.1.11}}. For what the limit means and what follows when it is crossed, see [stock variation: the permissible limit](@stock-variation). The calculator is a helper, and your oil company's own calculation decides.
+Check one product's stock variation against the MDG limit {{5.1.11}}. What the limit means is on the [permissible limit](@stock-variation) page.
 
 ## Work out the variation
 
@@ -71,74 +66,38 @@ This page works out the stock variation of one product from your own dips and me
 <noscript><p>This calculator needs JavaScript.</p></noscript>
 </div>
 
-## How the sum runs
+## The sum
 
-The calculator builds the stock the books say you should hold, then compares it with what the dip shows. It follows the method of Annexure 9 in this order {{annexure 9}}:
-
-1. Start with the dip at the beginning of the period (A) and add everything received (B).
-2. Where shrinkage or TVA applies, take its share off the receipts (C). The result is the book stock after receipts (D).
-3. Take off the sales shown on the pump meters (E). What is left is the stock the books say should be in the tank (F).
-4. Compare F with the dip at the end of the period (G). The gap, G minus F, is the variation. The test is whether the gap stays within plus or minus 4% of G.
-
-A plus sign means the tank holds more than the books. A minus sign means it holds less. MDG does not define "positive" and "negative" variation in these words; this is how the trade uses them.
+- **Book stock:** A (start dip) + B (received) - C (shrinkage or TVA, if any) - E (meter sales) = F {{annexure 9}}.
+- **Variation:** G (end dip) - F.
+- **Limit:** 4% of G {{5.1.11}} {{annexure 9}}.
 
 ## What counts toward the limit
 
-| Part | Figure | Where it comes from |
-|---|---|---|
-| Normal operating variation | 4% of tank stock. Annexure 9 works it on the closing dip, G | {{5.1.11}} {{annexure 9}} |
-| Handling loss on sales (petrol: evaporation and handling) | Petrol (MS): 0.75% up to an annual average of 600 KL, then 0.60%. Diesel (HSD): 0.25% up to 600 KL, then 0.20% | {{5.1.11}} |
-| Shrinkage or TVA | Deducted from the book stock as C, only where and when it applies | {{5.1.11}} {{annexure 9}} |
+Handling loss on sales: petrol (MS) 0.75% up to an annual average of 600 KL, then 0.60%; diesel (HSD) 0.25% up to 600 KL, then 0.20% {{5.1.11}}. Shrinkage or TVA is taken off as C only where and when it applies {{5.1.11}} {{annexure 9}}.
 
-The calculator reads these as follows.
+The calculator reads the two directions like this:
 
-- **Positive variation (tank holds more).** It is set against 4% of G. The handling loss is not added, because the clause calls it a loss and does not say how it would apply to a gain. This leaves less room than adding it to the limit.
-- **Negative variation (tank holds less).** It is first set against 4% of G alone. If the shortage is larger, it is set against the 4% plus the handling loss. A shortage between the two is shown as "depends". For a negative variation the clause words the limit as "up to 4%" and does not say in that sentence whether the handling loss counts with it {{5.1.11}}.
-- **Shrinkage or TVA** is taken off the book stock, as the annexure does, so it reduces a shortage and adds to a gain {{annexure 9}}.
+- **Gain (tank holds more):** set against 4% of G alone. The clause does not say how the handling loss applies to a gain, so it is not added {{5.1.11}}.
+- **Shortage (tank holds less):** set against 4% of G, then 4% plus the handling loss. In between, the result is "depends".
 
-## Where the shrinkage or TVA percentage comes from
+Type the shrinkage or TVA allowance (rupees per KL) with the net price, or the percentage your oil company gives; [shrinkage and TVA](@stock-shrinkage-tva) explains it.
 
-MDG does not fix one percentage for all outlets. Your oil company gives an allowance in rupees per KL for your location, and the annexures show how to turn it into a percentage.
+> **Note:** the sample percentages in Annexures 8 and 10 rest on 1998 prices {{annexure 8}} {{annexure 10}}. Do not use them for your outlet; take the figures from your oil company.
 
-- **Shrinkage allowance:** divide the allowance by the net price, which is the price before commission, taxes and the allowance are added. Apply the percentage to everything received in the period being checked {{annexure 8}}.
-- **TVA:** the same division. The percentage counts only for the litres on which the invoices gave the TVA credit. The invoice carries TVA as a credit, and it is generally revised every quarter {{annexure 10}}.
+## An example
 
-You can type the allowance and the net price, or the percentage your oil company gives you. The calculator rounds a worked-out percentage to two decimals, the way the annexures do.
+A made-up petrol outlet, in litres, with annual average sales under 600 KL:
 
-> **Note:** the sample percentages printed in Annexures 8 and 10 are illustrations built on 1998 prices {{annexure 8}} {{annexure 10}}. Do not use them for your outlet. Take the allowance and the net price from your oil company's price build-up or invoices.
-
-## Three worked examples
-
-These are made-up outlets with figures of our own, for illustration. Quantities are in litres. In all three the annual average sales are below 600 KL, for example 450 KL typed into that box.
-
-| | Example 1: diesel | Example 2: petrol | Example 3: diesel |
-|---|---|---|---|
-| A. Dip at the start | 14,000 | 16,000 | 9,000 |
-| B. Received | 10,000 | 20,000 | 14,000 |
-| Shrinkage allowance | none | 0.52%, an example figure | none |
-| E. Sales on the meters | 19,200 | 32,000 | 20,500 |
-| G. Dip at the end | 4,700 | 3,600 | 3,000 |
-| C. Deducted | 0 | 104 | 0 |
-| F. Book stock at the end | 4,800 | 3,896 | 2,500 |
-| Variation (G - F) | -100 | -296 | +500 |
-| 4% of G | 188 | 144 | 120 |
-| Handling loss on sales | 48 | 240 | 51 |
-| Result | Within the limit on every reading | Depends: within only if the handling loss counts with the 4% | Beyond the limit |
-
-Example 2 shows why the calculator may say "depends". The shortage of 296 litres is more than the 4% alone (144 litres) but less than the 4% plus the handling loss (384 litres). Which reading applies is for your oil company to say.
+- Start dip 16,000; received 20,000; shrinkage 0.52% (an example figure), so C is 104; meter sales 32,000; end dip 3,600.
+- F is 16,000 + 20,000 - 104 - 32,000 = 3,896, so the variation is 3,600 - 3,896 = -296.
+- 4% of G is 144. With the handling loss (0.75% of 32,000 = 240) it is 384.
+- 296 is above 144 and below 384: the result is "depends".
 
 ## What MDG leaves to your oil company
 
-The calculator does not fill these gaps with a guess. It shows the part as a range, or asks you to type the oil company's figure.
+- **The 600 KL line.** MDG gives 600 KL as an annual average, not how it applies to your period. Above 600 KL the calculator shows a range; type the part your oil company counts in the first 600 KL for one figure.
+- **A shortage.** Whether the handling loss counts with "up to 4%" {{5.1.11}}.
+- **Tank or product.** MDG does not say which the check uses.
 
-- **The 600 KL line.** MDG gives the 600 KL as an annual average. It does not say how that average is applied to the period you are checking, or how one period's sales are split between the two rates. If your annual average is above 600 KL, the calculator shows the handling loss as a range, from every litre at the lower rate to every litre at the higher one. Type the part your oil company counts in the first 600 KL to get one figure.
-- **A negative variation.** The "up to 4%" wording, as above {{5.1.11}}.
-- **A positive variation.** How the handling loss applies to a gain {{5.1.11}}.
-- **The shrinkage or TVA percentage and the quantity it applies to.** These come from your oil company and your invoices {{annexure 8}} {{annexure 10}}.
-- **Tank or product.** MDG does not say whether the check is made per tank or per product. Ask your oil company, then enter the figures the same way.
-
-Where the text is unclear, confirm with your oil company before you rely on any figure.
-
-## After the number
-
-A variation beyond the permissible limit is an irregularity that the oil company has to establish before it takes any action {{8.5.2}}. If the sample passes the quality tests, MDG classes it as major {{8.3}}. The actions in Chapter 8 are the minimum, and the oil company may take higher action {{8.5.1}}. The amounts and steps are on the [penalties page](@penalties) and the [positive and negative variation page](@stock-positive-negative). The entries the check is built on are in the [daily stock register](@stock-daily-register).
+The oil company must establish an irregularity before it acts {{8.5.2}}. See [penalties](@penalties) and the [daily stock register](@stock-daily-register).

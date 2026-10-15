@@ -3,39 +3,27 @@
   "title": "Marketing Discipline Guidelines 2024 (MDG 2024) glossary: terms and full forms",
   "metaTitle": "Marketing Discipline Guidelines glossary: MDG terms explained",
   "description": "A to Z meanings of the short forms and terms in MDG 2024 that a petrol pump dealer meets, such as MDG, OMC, RO, MS, HSD, MPD, NANO and reference density.",
-  "answer": "Marketing Discipline Guidelines 2024 (MDG 2024) is the set of rules the public-sector oil companies lay down for their dealers. Short forms you will meet: OMC (oil marketing company), RO (retail outlet), MS (petrol), HSD (diesel), SKO (kerosene) and DU (dispensing unit). Below are more than 50 terms in A to Z order, each with its MDG 2024 clause where there is one. Where MDG uses a short form without spelling it out, such as MPD, the entry says so.",
+  "answer": "Marketing Discipline Guidelines 2024 (MDG 2024) is the set of rules the public-sector oil companies lay down for their dealers. Short forms you will meet: OMC (oil marketing company), RO (retail outlet), MS (petrol), HSD (diesel), SKO (kerosene) and DU (dispensing unit). Below are about 50 terms in A to Z order, each with its MDG 2024 clause where there is one. Where MDG uses a short form without spelling it out, such as MPD, the entry says so.",
   "faq": [
     {
       "q": "What is the full form of MDG in a petrol pump?",
-      "a": "MDG is Marketing Discipline Guidelines. The first set was framed in 1981-82 {{introduction}}, and the edition in force is MDG 2024, effective 24.10.2024 {{cover page}}."
+      "a": "MDG is Marketing Discipline Guidelines. The edition in force is MDG 2024, effective 24.10.2024 {{cover page}}."
     },
     {
       "q": "What does MDG mean for a petrol pump dealer?",
-      "a": "MDG is the oil companies' rules for their dealers under the dealership agreement. It binds the dealer through the dealership agreement. It sets how a dealer handles fuel, keeps records and serves customers, and what the oil company may do when a rule is broken. Every breach is graded critical, major or minor {{8.1}}, and each grade has its own first action {{8.2}} {{8.3}} {{8.4}}."
-    },
-    {
-      "q": "What is the full form of MPD in a petrol pump?",
-      "a": "MDG 2024 uses MPD next to DU (dispensing unit) and does not spell it out {{5.1.2(a)}} {{5.1.17}}. In the trade it is read as multi-product dispenser, a machine with nozzles for more than one product."
-    },
-    {
-      "q": "What is the full form of HSD?",
-      "a": "HSD is High Speed Diesel, the diesel sold at the pump. MDG's test tables also use the name automotive diesel fuel {{7.6}}."
+      "a": "It is the oil companies' rule book for dealers. Each breach is graded critical, major or minor {{8.1}}."
     },
     {
       "q": "What is a NANO petrol pump?",
-      "a": "NANO is not a size of pump. It stands for 'No Automation, No Operation', the principle automated outlets are designed on. The dealer must keep the automation working and report any fault to the oil company's official at once {{1.5(viii)}}."
+      "a": "NANO is not a size of pump. It stands for 'No Automation, No Operation' {{1.5(viii)}}."
     },
     {
-      "q": "What is OMC in the petrol pump business?",
-      "a": "OMC is oil marketing company. In MDG 2024 it means the public-sector oil marketing companies {{introduction}}. The text shortens their names to IOC, BPC and HPC {{8.8}}, and the acknowledgement form at its end names IndianOil, Bharat Petroleum and Hindustan Petroleum."
+      "q": "What is the full form of MPD in a petrol pump?",
+      "a": "MDG 2024 uses MPD next to DU (dispensing unit) and does not spell it out {{5.1.2(a)}} {{5.1.17}}. In the trade it is read as multi-product dispenser."
     },
     {
-      "q": "What is reference density?",
-      "a": "It is the density an inspector compares your fuel with. Until a tanker is decanted, it is the density on the invoice. After that it is the density of the mixed product in your tank, recorded once at least 50 litres have been dispensed {{2.10}}. At an inspection, the figures to show are your morning density and, after a delivery, the mixed-tank density {{5.1.9}}."
-    },
-    {
-      "q": "What is the difference between a critical, major and minor irregularity?",
-      "a": "Critical irregularities lead to termination at the first instance {{8.2}}. Major ones usually mean a 15-day suspension of sales and supplies, then 30 days, then termination {{8.3}}. Minor ones mean a warning-cum-guidance letter, then Rs 10,000, then Rs 25,000 per irregularity {{8.4}}. These are minimum actions: the oil company may take higher action, up to termination {{8.5.1}}, once the irregularity is established {{8.5.2}}. The second and third instance are counted over five years, including the previous guideline {{8.5.5}}."
+      "q": "What is the full form of HSD?",
+      "a": "HSD is High Speed Diesel, the diesel sold at the pump. MDG's test tables also call it automotive diesel fuel {{7.6}}."
     }
   ],
   "related": [
@@ -47,73 +35,64 @@
   "updated": "2026-10-15"
 }
 ---
-Terms and short forms from Marketing Discipline Guidelines 2024 (MDG 2024), the oil companies' rules for their dealers under the dealership agreement, in A to Z order. Each entry says what the term means and gives the clause where there is one. Where MDG uses a short form without spelling it out, we say so. A meaning that is common in the trade but not printed in MDG is marked as trade usage. Where an entry names a standard, check its current version.
+Terms from Marketing Discipline Guidelines 2024 (MDG 2024), the oil companies' rules for their dealers, in A to Z order. "(Trade reading)" marks a meaning MDG does not spell out. Where an entry names a standard, check its current version.
 
 ## Numbers and A to C
 
-- **3-tier sampling.** The three-way sample check of Chapter 2. A lab tests the sample from your nozzle against the tank lorry retention sample you keep and the matching supply location sample, to confirm that what you sell is what the oil company supplied {{2.1}} {{2.5(G)}}. See [how sampling works](@sampling).
-- **Adulteration.** Putting a foreign substance into petrol or diesel, unlawfully or without permission, so that the fuel falls short of the BIS standard. MDG also counts a sample whose results differ from the reference sample by more than the test method allows, and any further test the competent authority sets for spotting adulteration {{5.1.1}}. It is a critical irregularity {{8.2}}.
-- **Annexure.** The numbered forms, labels and tables at the back of MDG 2024: 13 of them, plus 12a and 13a. Annexure 1 is the format for the density record {{annexure 1}}.
-- **ASTM Table 53B.** The conversion table for bringing a tanker's density to 15°C so it can be compared with the invoice {{1.2(iv)}}. The dealer must have it, along with calibrated hydrometers and thermometers, in working order {{1.5(vi)}}. Use the table itself and check that you hold its current version. Do not convert by rule of thumb.
-- **ATG.** Part of the automation at an automated outlet. Switching it off, or leaving it not working, without authorisation from the competent authority is an irregularity {{5.1.16}}. MDG does not spell out the letters; in the trade it is read as automatic tank gauge.
-- **BIS.** Bureau of Indian Standards. MDG tests petrol against IS 2796, IS 17586 and IS 17021, and diesel against IS 1460 and IS 16531 {{5.1.1}}. Check the current version of each standard.
-- **Branded fuel.** Fuel sold under a brand name, as against ordinary petrol or diesel. Selling ordinary fuel as branded fuel on purpose is a major irregularity {{5.1.10}} {{8.3}}. See [branded fuel and overcharging](@penalties-branded-fuel-overcharging).
-- **CA / CSA / DSM.** Staff titles used in the 20.03.2025 circular, which says one of them must man each dispensing unit during working hours {{circular}}. The circular does not spell them out. In the trade DSM is usually read as driveway salesman, the term MDG uses in {{5.1.17}}.
-- **Clinical tests.** The quick checks a mobile lab runs on nozzle samples at the outlet: appearance, colour, density at 15°C and distillation for petrol, and the same plus viscosity at 40°C for diesel {{7.4}}. They are run whether or not the density test passes {{7.4}}.
-- **Composite density.** The density of the mixed fuel in a storage tank after a delivery, taken from the nozzle once at least 50 litres have been dispensed {{1.2(xiv)}} {{2.10}}. See [the 10 AM rule](@density-reference-10am).
-- **Controlling office.** The oil company office that controls your outlet; MDG gives no further definition. The dealer reports water in a tank, tampered seals and suspected product loss from a leaking tank to it {{1.4.1(b)}} {{1.4.2(a)}} {{4.3(c)}}.
-- **Critical irregularity.** The most serious grade: seven irregularities, such as adulteration, tampered seals and unauthorised purchases or sales. The first action is termination at the first instance {{8.2}}. Actions in MDG are minimums {{8.5.1}}, and the irregularity must be established first {{8.5.2}}.
+- **3-tier sampling.** The lab compares your nozzle sample with the tanker retention sample and the supply location sample {{2.1}} {{2.5(G)}}. [Sampling](@sampling).
+- **Adulteration.** A foreign substance put into petrol or diesel illegally or without authority, so that it fails the BIS standard. MDG also counts a sample outside the reference sample's test limits {{5.1.1}}. A critical irregularity {{8.2}}.
+- **Annexure.** The numbered forms, labels and tables at the back of MDG 2024: 13, plus 12a and 13a {{annexure 1}}.
+- **ASTM Table 53B.** Brings a tanker's density to 15°C {{1.2(iv)}}. Use the table, not a rule of thumb {{1.5(vi)}}.
+- **ATG.** Part of the automation; switching it off without authorisation is an irregularity {{5.1.16}}. Automatic tank gauge (trade reading).
+- **BIS.** Bureau of Indian Standards. MDG names IS 2796, IS 17586 and IS 17021 for petrol, IS 1460 and IS 16531 for diesel {{5.1.1}}.
+- **Branded fuel.** Fuel sold under a brand name. Selling ordinary fuel as branded, on purpose, is major {{5.1.10}} {{8.3}}.
+- **CA / CSA / DSM.** Staff titles in the 20.03.2025 circular {{circular}}. DSM is read as driveway salesman (trade reading) {{5.1.17}}.
+- **Composite density.** Density of the mixed fuel in a tank after a delivery, taken once at least 50 litres have gone through the pump {{1.2(xiv)}} {{2.10}}.
+- **Critical, major and minor irregularity.** The three grades that set the first action: critical {{8.2}}, major {{8.3}}, minor {{8.4}}. [Penalties](@penalties).
 
 ## D to M
 
-- **Darpan QR.** A QR code the dealer must display near the toilet so customers can give feedback {{5.1.14(b)}}. MDG names it "Darpan" without saying where the code comes from.
-- **Decanting.** Unloading a tank lorry into the outlet's underground tanks. MDG sets out the dealer's steps in order {{1.2}}. See [receiving a tanker](@receiving-a-tanker).
-- **Density at 15°C.** The fuel's density restated at 15°C. The invoice carries it, and the dealer's own check must land within ±3.0 kg/m³ of it {{1.2(iv)}}. See [density](@density).
-- **Dip rod.** The rod used to measure the product level in each tank lorry compartment. It is supplied with the tank lorry along with a calibration certificate, and it carries Weights & Measures certification {{1.1}} {{1.2(vii)}}.
-- **DU (dispensing unit).** The fuel dispensing machine on the island. The dealer checks its Weights & Measures seal every day and tests every nozzle before sales begin {{1.4.2(a)}} {{1.4.2(d)}}.
-- **FTL.** Named in {{2.5(H)}} as FTL-Noida, one of the places where a dealer can have their own retained sample tested after a sample fails, alongside a PSU laboratory of their choice in the same or a nearby state. The request is due within 10 days of getting the lab report, and the dealer pays {{2.5(H)}}. MDG does not spell out the letters. See [what happens when a sample fails](@sampling-failed).
-- **GPS.** Appears in the heading of 3.2, "Sealing / GPS", where the text treats GPS and VTS together and makes the supply location responsible for the system running smoothly {{3.2}}. See VTS.
-- **HSD.** High Speed Diesel, the diesel sold at the pump. MDG's test tables also use the name automotive diesel fuel {{7.6}}.
-- **Instance.** The running count of an irregularity: first, second, third. MDG looks back five years from the date the new irregularity is established, and instances under the previous guideline within those five years count {{8.5.5}}. See [repeat offences](@penalties-repeat-and-unpaid).
-- **IQCM.** Industry Quality Control Manual: the oil industry's procedures for quality checks and sampling at supply locations {{2.2.1}} {{3.1}}.
-- **LDO.** Appears in MDG 2024 only in the phrase "SKO-LDO dealerships" and is not spelled out {{5}} {{8.10}}. In the trade it is read as light diesel oil.
-- **Major irregularity.** The middle grade: seven irregularities, such as refusing an inspection, having no reference density at the inspection, missing records since the last inspection and overcharging. The first action is usually a suspension of sales and supplies that lengthens with each repeat and ends in termination; branded-fuel sales and automation lapses have ladders of their own {{8.3}}. The figures are on the [penalties](@penalties) page. These are minimum actions {{8.5.1}}, and the irregularity must be established first {{8.5.2}}.
-- **MDG.** Marketing Discipline Guidelines, the oil companies' rules for their dealers. First framed in 1981-82; the edition in force is MDG 2024, effective 24.10.2024 {{introduction}} {{cover page}}. See the [MDG 2024 guide](@hub).
-- **Minor irregularity.** The lightest grade. It covers lapses in facilities, displays, housekeeping and customer service, older records missing, and short delivery with Weights & Measures seals intact. The first action is a warning-cum-guidance letter, then fines per irregularity {{8.4}}. The figures are on the [penalties](@penalties) page. These are minimum actions {{8.5.1}}, and the irregularity must be established first {{8.5.2}}.
-- **Mobile lab.** The oil industry's mobile laboratory, which makes surprise quality checks at outlets {{7.1}} and tests petrol and diesel from the nozzles on the spot {{2.4.4}}. See [mobile lab](@sampling-mobile-lab).
-- **MPD.** Used beside DU for the dispensing machine, as in "dual DU / MPD" {{5.1.2(a)}}. Each of its nozzles must show the product name {{5.1.17}}. MDG does not spell it out; in the trade it is read as multi-product dispenser.
-- **MS.** Motor Spirit, the petrol sold at the pump. MDG's test table treats motor spirit and motor gasoline as one product {{7.6}}.
+- **Darpan QR.** A QR code near the toilet for customer feedback {{5.1.14(b)}}. MDG does not say where it comes from.
+- **Density at 15°C.** Density restated at 15°C; your check must land within ±3.0 kg/m³ of the invoice {{1.2(iv)}}. [Density](@density).
+- **Dip rod.** Measures the product level in each tank lorry compartment; W&M certified {{1.1}} {{1.2(vii)}}.
+- **DU (dispensing unit).** The dispensing machine on the island; its W&M seal is checked every day {{1.4.2(a)}}.
+- **FTL.** Named as FTL-Noida, a place to test your retained sample after a failure {{2.5(H)}}. The letters are not spelled out.
+- **HSD.** High Speed Diesel, the diesel sold at the pump {{introduction}} {{7.6}}.
+- **Instance.** The count of an irregularity (first, second, third) over five years, including the previous guideline {{8.5.5}}.
+- **IQCM.** Industry Quality Control Manual: quality-check and sampling procedures at supply locations {{2.2.1}} {{3.1}}.
+- **LDO.** Appears only in "SKO-LDO dealerships" {{5}} {{8.10}}. Light diesel oil (trade reading).
+- **MDG.** Marketing Discipline Guidelines, the oil companies' rules for dealers {{introduction}}. [MDG 2024 guide](@hub).
+- **Mobile lab.** The industry's mobile laboratory, which tests nozzle samples at the outlet {{7.1}} {{2.4.4}}.
+- **MPD.** Used beside DU for the dispensing machine {{5.1.2(a)}} {{5.1.17}}. Multi-product dispenser (trade reading).
+- **MS.** Motor Spirit, the petrol sold at the pump {{introduction}} {{7.6}}.
 
 ## N to R
 
-- **NANO.** "No Automation, No Operation", the principle on which automated outlets are designed. The dealer must keep the automation working, report any fault at once to the oil company's official, and follow that official's directions {{1.5(viii)}}. A generator or UPS must cover power cuts {{1.5(ix)}}. See [automated outlets](@automation).
-- **OMC.** Oil marketing company. In MDG 2024 it means the public-sector oil marketing companies {{introduction}}. The text shortens their names to IOC, BPC and HPC {{8.8}}, and the acknowledgement form at its end names IndianOil, Bharat Petroleum and Hindustan Petroleum.
-- **PDS.** Public Distribution System, the route by which kerosene (SKO) reaches ration shops through wholesale dealers {{6}}.
-- **PESO.** The petroleum and explosives authority. MDG prints its name as "Petroleum & Explosives Standards Organization" and tells the dealer to follow its rules {{1.5(ii)}}. A tank lorry needs a valid Explosives License from it {{3.1(i)}}.
-- **PMSBY and PMJJBY.** Short forms for the Pradhan Mantri Suraksha Bima Yojana and the Pradhan Mantri Jeevan Jyoti Bima Yojana, two insurance (bima) schemes. MDG 2024 makes minimum wages and the other benefits, these two schemes among them, a dealer duty {{1.5(x)}} {{5.1.18}}. The full names appear in MDG 2012 {{2012:5.1.18}}. See [staff wages and uniform](@service-staff-wages-uniform).
-- **Proof level.** A level mark on the tank lorry's calibration certificate and dip rod. The dealer checks the Weights & Measures markings on the rod at the bottom and at the proof level {{1.2(v)}} {{1.2(vi)}}. MDG does not define it further.
-- **Q&Q kit.** Item 14 of the 20.03.2025 circular lists it next to the first aid box {{circular}}. The circular does not spell out the letters or the contents; in the trade it is read as quality-and-quantity kit. Ask your oil company what yours should hold.
-- **Reference density.** The density an inspector measures your fuel against. Until the tanker is decanted, it is the density on the invoice. Afterwards it is the composite density of the tank {{2.10}}. At an inspection the figures to show are your morning density (recorded by 10 AM) and, after a delivery, the composite density {{5.1.9}}. See [reference density at 10 AM](@density-reference-10am).
-- **Reproducibility limit.** The gap between two test results that the test method itself tolerates. MDG writes "reproducibility/permissible limit". A sample counts as failed when its results and the reference sample's fall outside that tolerance {{2.10}}. MDG neither defines the term nor prints the numbers.
-- **Retention sample (tank lorry).** A sample from each tanker load that the dealer keeps: 2 x 1 litre of MS and/or 1 x 1 litre of HSD, sealed, labelled and signed by dealer and driver. For each tank the dealer keeps the samples of the two most recent loads {{2.3}} {{2.9.2}}. See [retention samples](@sampling-retention).
+- **NANO.** "No Automation, No Operation": keep automation working and report any fault at once {{1.5(viii)}}. [Automated outlets](@automation).
+- **OMC.** Oil marketing company: the public-sector companies {{introduction}}, named in the acknowledgement form as IndianOil, Bharat Petroleum and Hindustan Petroleum.
+- **PDS.** Public Distribution System, through which kerosene (SKO) reaches ration shops {{6}}.
+- **PESO.** The petroleum and explosives authority; the dealer follows its rules {{1.5(ii)}} {{3.1}}.
+- **PMSBY and PMJJBY.** Pradhan Mantri Suraksha Bima Yojana and Pradhan Mantri Jeevan Jyoti Bima Yojana, two insurance schemes named in the wage duty {{1.5(x)}}; MDG 2012 prints the full names {{2012:5.1.18}}.
+- **Proof level.** A level mark on the tank lorry's dip rod and calibration certificate {{1.2(v)}} {{1.2(vi)}}. MDG does not define it.
+- **Reference density.** What an inspector measures your fuel against: the invoice density until decanting, then the tank's composite density {{2.10}} {{5.1.9}}.
+- **Retention sample.** A sealed sample from each tanker load; keep the two most recent loads of each tank {{2.3}} {{2.9.2}}.
 - **RO.** Retail outlet, the petrol pump {{introduction}}.
-- **RSP.** Retail selling price. The dealer must display the retail selling prices of the products sold from the outlet: MS, HSD, CNG and Auto LPG {{5.1.15}}. The 20.03.2025 circular uses the same short form {{circular}}.
+- **RSP.** Retail selling price, displayed for every product sold {{5.1.15}}.
 
 ## S to Z
 
-- **Show cause notice.** The written notice that lists the irregularities found. It is due within 30 days of the inspection, or within 30 days of the test results where samples were drawn, along with the reports it relies on. The dealer has 10 days from issue to reply {{8.5.6}} {{8.5.7}}. See [show cause notice](@inspection-show-cause-notice).
-- **Shrinkage allowance.** A loss allowance that applies only at some locations and times {{5.1.11}}. MDG turns its rupee rate per KL into a percentage of the net price and applies that percentage to the receipts in the period being checked {{annexure 8}}. See [shrinkage and TVA](@stock-shrinkage-tva).
+- **Show cause notice.** The written notice of the irregularities found. It is due within 30 days of the inspection, or of the test results if samples were drawn; the dealer has 10 days from issue to reply {{8.5.6}} {{8.5.7}}. [Notice timeline](@inspection-show-cause-notice).
+- **Shrinkage allowance.** A loss allowance that applies only at some locations and times {{5.1.11}} {{annexure 8}}. [Shrinkage and TVA](@stock-shrinkage-tva).
 - **SKO.** Superior Kerosene Oil. SKO dealers under the Public Distribution System are also called wholesale dealers {{6}}.
-- **SL, SL1, SL2.** Samples held at the supply location. MDG calls your last retained tanker sample TL1 and the matching supply location sample SL1. A lab tests the nozzle sample against TL1 and SL1, and goes on to TL2 and SL2 only if the nozzle sample fails while TL1 passes {{2.5(G)}}. MDG does not spell out TL2 and SL2; read from context, TL2 is the other retained load and SL2 its matching supply location sample.
-- **SLC.** State Level Coordinator. Sets up the mobile lab programme and is told when a mobile lab sample fails {{7.2}} {{7.6.1}}.
-- **Speaking order.** The reasoned decision the oil company's officer issues after reading the reply to a show cause notice, preferably within 45 days of receiving the reply. It records what was found, what the dealer replied and why the reply was or was not accepted {{8.5.8}}.
-- **Stock variation.** The gap between the stock your books show and the stock in the tank, after allowing 4% of tank stock as normal operating variation and the listed losses from evaporation, handling, shrinkage and temperature {{5.1.11}}. See [stock variation](@stock-variation).
-- **Supply location.** The oil company's storage point, depot or installation that fills tank lorries. Chapter 3 sets its duties {{2.2.1}} {{3.1}}.
-- **TL / TT.** Tank lorry, also written tank truck: the tanker. MDG uses both TL and TT, for the vehicle and for its retention sample {{2.5}}, and the density record in Annexure 1 writes it as tank truck {{annexure 1}}.
-- **TLF.** Judging by how MDG uses it, the point at the supply location where tank lorries are filled; MDG does not spell out the letters. The invoice should show which TLF point and storage tank the load came from, the density at 15°C and the time of release {{2.2.1}}.
-- **Totaliser (totalizer).** The unit that keeps the dispensing unit's running total. Tampering includes a seal that lets the reading be manipulated, deliberately disabling the unit, and not reporting that it has stopped working {{5.1.3}}. It is a critical irregularity {{8.2}}.
-- **TVA.** Temperature Variation Allowance. Where it applies, each invoice shows it as a credit. In a stock check it is counted only for the quantity it was allowed on {{5.1.11}} {{annexure 10}}.
-- **VTS.** The system that tracks a tank lorry on its way to your outlet. Supply locations may not fill a lorry whose VTS is missing or not working as prescribed, and the alerts cover both time and route deviations {{3.2}}. The dealer is to follow the lorry on the link provided and tell the supply location about any deviation before accepting it {{1.5(vii)}}. MDG does not spell out VTS; in the trade it is read as vehicle tracking system. See [tracking and route deviation](@tanker-vts).
-- **Water finding paste.** The paste used to check each tank lorry compartment for water. For ethanol-blended petrol, a suitable paste must be used {{1.2(vii)}}. See [water finding paste](@tanker-water-finding-paste).
-- **Whatman 2.** The filter paper a dealer must keep for checking petrol and make available to customers who ask. The Customer Education board or poster should carry a message about it {{1.4.1(a)}}. See [filter paper test](@density-filter-paper).
-- **W&M.** Weights & Measures Department. Its seals sit on the metering unit and totaliser. It certifies the dip rod, verifies the 5-litre measure and re-stamps a pump after recalibration {{1.4.2(a)}} {{1.4.2(b)}} {{1.4.2(d)}}. The Legal Metrology Act, 2009 sets the permissible limits for short delivery {{5.1.2(a)}}.
+- **SL, SL1, SL2.** Samples held at the supply location. The lab tests your nozzle sample against TL1 and SL1, then TL2 and SL2 only if it fails while TL1 passes {{2.5(G)}}. TL2 and SL2 are the other load and its sample (trade reading).
+- **SLC.** State Level Coordinator, told when a mobile lab sample fails {{7.2}} {{7.6.1}}.
+- **Speaking order.** The reasoned decision after the reply to a show cause notice, preferably within 45 days {{8.5.8}}.
+- **Stock variation.** The gap between your books and the tank stock, after the allowed 4% and listed losses {{5.1.11}}. [Stock variation](@stock-variation).
+- **TL / TT.** Tank lorry, also written tank truck: the tanker {{2.5}} {{annexure 1}}.
+- **TLF.** The point at the supply location where tank lorries are filled (trade reading); the invoice shows which one {{2.2.1}}.
+- **Totaliser (totalizer).** Keeps a dispensing unit's running total; tampering with it is critical {{5.1.3}} {{8.2}}.
+- **TVA.** Temperature Variation Allowance, a credit on the invoice where it applies {{5.1.11}} {{annexure 10}}.
+- **VTS / GPS.** The system that tracks a tank lorry on its way to your outlet; 3.2 treats GPS and VTS together. Report any deviation before accepting the load {{3.2}} {{1.5(vii)}}. Vehicle tracking system (trade reading).
+- **Water finding paste.** Checks each tank lorry compartment for water; ethanol-blended petrol needs a suitable paste {{1.2(vii)}}.
+- **Whatman 2.** The filter paper a dealer keeps for checking petrol and makes available to customers on request {{1.4.1(a)}}. [Filter paper test](@density-filter-paper).
+- **W&M.** Weights & Measures Department: its seals sit on the metering unit and totaliser {{1.4.2(a)}}.

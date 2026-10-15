@@ -2,7 +2,7 @@
 
 Plain-language pages that explain the Marketing Discipline Guidelines 2024
 (MDG 2024) for petrol pump dealers, in English and Hindi, at
-mdgservices.in/mdg/ and /hi/mdg/. The job of the guide: when a dealer, a
+mdgservices.in/guides/ and /hi/guides/ (tools at /tools/ and /hi/tools/). The job of the guide: when a dealer, a
 manager or a customer asks a question about MDG, in Google or in an AI
 assistant, the clearest and most correct answer is ours.
 
@@ -13,8 +13,8 @@ assistant, the clearest and most correct answer is ours.
 | Fixed words, notices, disclaimer | `guide/copy.ts` |
 | The words of each page | `guide/content/<en|hi>/<id>.md` |
 | Calculator and checklist scripts | `guide/tools/<id>.js` |
-| Page builder | `scripts/guide-pages.ts` |
-| Today's snapshot, served live | `middleware.ts` |
+| Page rules and rendering | `src/guides/` (`content.ts` rules, `model.ts`, `GuidePage.tsx`) |
+| Release gate (404 before a page's day) | `proxy.ts` → `src/routing/` |
 | Source documents (never published, not in git) | `.guide-source/` |
 
 Commands, from `mdg-landing/`:
@@ -36,8 +36,8 @@ npm run guide -- schedule
 ```
 
 `npm run build` fails if any page is missing or breaks a rule below, so
-nothing half-written can ship. `npm run dev` serves every written page at its
-real address.
+nothing half-written can ship. `npm run dev` serves the site; pages appear on
+their release day (see `MIGRATION_NOTES.md` for the fake-date preview).
 
 ## How a page file looks
 
@@ -78,6 +78,27 @@ shape. A file is a JSON header between `---json` and `---`, then Markdown.
   date, the short-answer box, the video cards, the list of pages in a section,
   the FAQ section, related pages, the official PDF links, the Dealer Kavach
   box and the disclaimer.
+
+## Length and shape: crisp, one question per page
+
+The owner's rule: "Do not bloat the page. Make it crisp. If a topic needs more,
+break it into multiple pages."
+
+- **One page answers one dealer question.** If it needs more than its length,
+  it becomes two pages (a new entry in `inventory.ts`), not a longer page.
+- **Length, body plus FAQ:** a topic's main page 450-700 words; every other page
+  300-550; the glossary one line per term. The build fails above 800 (main),
+  650 (others), 1,100 (glossary), 750 (tools) English words; Hindi limits are
+  1.6 times these, because Hindi spends more words on the same meaning.
+- **Shape:** the short answer; then the one table or step list that carries the
+  answer; then at most one short example; then 3-5 FAQs, each answer one or two
+  sentences that do not repeat the body.
+- **Never re-explain** what MDG is or how it binds dealers: the template's
+  notice does that on every page. Link to another page instead of repeating it.
+- **Penalty qualifiers:** wherever a penalty ladder or penalty figure appears,
+  put `{{penalty-note}}` on its own line straight after it. It renders the
+  standard note (minimum amounts, 8.5.1; established first, 8.5.2; five-year
+  count incl. the previous guideline, 8.5.5). Do not write those out in prose.
 
 ## Accuracy: the rules that matter most
 
