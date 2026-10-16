@@ -32,6 +32,11 @@ export default function Footer({ lang }: { lang: Lang }) {
               <span className="font-semibold text-white">{BRAND.legalName}</span>
               {t.footer.legalAfterName.replace("{cin}", BRAND.cin)}
             </p>
+            <p className="mt-4 max-w-prose2 text-[14px] leading-[1.6] text-navy-200">
+              {t.footer.whatsappBeforeName}
+              <span className="font-semibold text-white">{BRAND.whatsappName}</span>
+              {t.footer.whatsappAfterName}
+            </p>
           </div>
 
           <div className="md:col-span-3 md:col-start-7">

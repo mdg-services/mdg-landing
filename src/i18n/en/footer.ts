@@ -23,6 +23,10 @@ export const footer = {
       the language wants it. */
   legalBeforeName: "MDG Services is a brand operated by ",
   legalAfterName: ", a company registered in India (CIN {cin}).",
+  /** The WhatsApp account's name, BRAND.whatsappName, is printed in white
+      like the company name above it, so this sentence is split the same way. */
+  whatsappBeforeName: "On WhatsApp, Dealer's Kavach messages come from our business account, ",
+  whatsappAfterName: ".",
 
   /* ── the two link columns ── */
   exploreHeading: "Explore",
