@@ -54,6 +54,14 @@ function sortKey(page: GuidePage, index: number): [number, number, number] {
  */
 export const KEEP_THROUGH_DAY = 2;
 
+/**
+ * Early releases the owner asked for. On `day`, the pages of the next `days`
+ * days go out as well, and everything after moves up by that many days, so the
+ * daily rhythm carries on from the new point.
+ * - 17 Oct 2026 (day 3): "release the next 10 pages" (days 4 and 5).
+ */
+export const PULLED_FORWARD: ReadonlyArray<{ day: number; days: number }> = [{ day: 3, days: 2 }];
+
 function build(): Release[] {
   const ordered = PAGES.map((p, i) => ({ p, k: sortKey(p, i) }))
     .sort((a, b) => a.k[0] - b.k[0] || a.k[1] - b.k[1] || a.k[2] - b.k[2])
@@ -103,6 +111,9 @@ function build(): Release[] {
     const fits = room;
     units[0] = next.slice(fits);
     place(next.slice(0, fits));
+  }
+  for (const pull of PULLED_FORWARD) {
+    for (const r of out) if (r.day > pull.day) r.day = Math.max(pull.day, r.day - pull.days);
   }
   return out.sort((a, b) => a.day - b.day);
 }

@@ -5,7 +5,8 @@ import { homeJsonLd } from "@/seo/graph";
 import { siteMetadata } from "@/seo/site";
 
 /** Static, refreshed daily so the footer's year turns over on its own. */
-export const revalidate = 86400;
+// Hourly: the "Guides for dealers" cards grow as guide pages go live.
+export const revalidate = 3600;
 
 export const metadata: Metadata = siteMetadata("en", "");
 

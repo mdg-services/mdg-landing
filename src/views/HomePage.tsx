@@ -13,6 +13,7 @@ import Process from "../components/Process";
 import Membership from "../components/Membership";
 import Contact from "../components/Contact";
 import FAQ from "../components/FAQ";
+import HomeGuides from "../components/HomeGuides";
 import Footer from "../components/Footer";
 import { getT } from "../i18n/server";
 import { twinOf, type Lang } from "../i18n/lang";
@@ -40,6 +41,7 @@ export default function HomePage({ lang }: { lang: Lang }) {
         <Training lang={lang} />
         <Membership lang={lang} />
         <Contact c={t.contact} />
+        <HomeGuides lang={lang} />
         <FAQ faq={t.faq} />
       </main>
       <Footer lang={lang} />

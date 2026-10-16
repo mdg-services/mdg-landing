@@ -14,6 +14,7 @@ import { training } from "./training";
 import { membership } from "./membership";
 import { contact } from "./contact";
 import { faq } from "./faq";
+import { guides } from "./guides";
 import { footer } from "./footer";
 import { register } from "./register";
 import { grievance } from "./grievance";
@@ -37,6 +38,7 @@ export const en = {
   membership,
   contact,
   faq,
+  guides,
   footer,
   register,
   grievance,
