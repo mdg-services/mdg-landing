@@ -33,9 +33,11 @@ export default function Footer({ lang }: { lang: Lang }) {
               {t.footer.legalAfterName.replace("{cin}", BRAND.cin)}
             </p>
             <p className="mt-4 max-w-prose2 text-[14px] leading-[1.6] text-navy-200">
-              {t.footer.whatsappBeforeName}
-              <span className="font-semibold text-white">{BRAND.whatsappName}</span>
-              {t.footer.whatsappAfterName}
+              {t.footer.whatsappBefore}
+              <span className="font-semibold text-white">{BRAND.whatsappNames[0]}</span>
+              {t.footer.whatsappJoin}
+              <span className="font-semibold text-white">{BRAND.whatsappNames[1]}</span>
+              {t.footer.whatsappAfter}
             </p>
           </div>
 

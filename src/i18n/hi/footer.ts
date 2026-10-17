@@ -9,8 +9,9 @@ export const footer: typeof EN = {
      name and the comma, and the registration clause rides on the second. */
   legalBeforeName: "MDG Services, ",
   legalAfterName: " का एक ब्रांड है, जो भारत में रजिस्टर्ड कंपनी है (CIN {cin})।",
-  whatsappBeforeName: "WhatsApp पर Dealer's कवच के संदेश हमारे बिज़नेस अकाउंट ",
-  whatsappAfterName: " से आते हैं।",
+  whatsappBefore: "WhatsApp पर हमारे बिज़नेस अकाउंट ",
+  whatsappJoin: " और ",
+  whatsappAfter: " हैं।",
 
   /* ── the two link columns ── */
   exploreHeading: "और देखिए",

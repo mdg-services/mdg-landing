@@ -24,9 +24,10 @@ export const BRAND = {
      it belongs behind that component, not beside it. */
   site: "mdgservices.in",
   email: "hello@mdgservices.in",
-  /** The name our WhatsApp Business number shows. Meta approves that name only
-      if it appears on this site, so the footer prints it in both languages. */
-  whatsappName: "MDG Services Kavach",
+  /** The names our two WhatsApp Business numbers show. Meta approves a name only
+      if it appears on this site, so the footer prints both, in both languages.
+      Spelled exactly as submitted, straight apostrophe included. */
+  whatsappNames: ["Dealer's Kavach", "MDG Services"],
   /** The Dealer Kavach app. Its sign-in screen opens the same enrolment form as /register. */
   playStore: "https://play.google.com/store/apps/details?id=in.mdgservices.dealerkavach",
   since: 2021,
