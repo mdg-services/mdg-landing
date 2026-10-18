@@ -5,8 +5,8 @@ export const KK_PATH = "/khata-kavach" as const;
 
 /** The two apps as they open in a phone's browser today. Android apps are not on Google Play yet. */
 export const KK_APPS = {
-  pump: "https://khata-kavach-pump.vercel.app",
-  transporter: "https://khata-kavach-transporter.vercel.app",
+  pump: "https://khata-pump.mdgservices.in",
+  transporter: "https://khata-transporter.mdgservices.in",
 } as const;
 
 /** One app screen: a small WebP cut from the product's own demo data (made-up names, made-up trucks). */
