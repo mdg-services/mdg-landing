@@ -42,21 +42,22 @@ export default {
           faint: "#9B9DBE",
           hairline: "#E4E6F1",
         },
-        // ── Khata Kavach's own palette (its brand guide): ink first, one blue,
-        //    paper is the accent. Used on the /khata-kavach page and the home
-        //    page's second-app panel, never to restyle Dealer's Kavach. ──
+        // ── Khata Kavach's own palette, the same as its apps since 18 Oct 2026: pine green
+        //    for actions and dark panels, a cream page. Used on the /khata-kavach page and
+        //    the home page's second-app panel, never to restyle Dealer's Kavach. (The key is
+        //    still called siyahi, the old blue's name, so no class had to change.) ──
         kk: {
-          siyahi: "#1D2A78", // the one blue
-          deep: "#131B57", // pressed
-          wash: "#E5E8F5",
+          siyahi: "#0F4A3D", // pine: the one brand colour
+          deep: "#0A3B30", // pressed
+          wash: "#E3EEE8",
           cream: "#F4EFE3", // marketing ground
-          paper: "#F6F5F1",
-          surface: "#FBFAF7",
-          coal: "#14171C",
-          ink: "#0E1A2B",
-          soft: "#3D4756",
-          muted: "#586274", // the lightest text allowed on paper or cream
-          steel: "#9AA6B5", // dark grounds only
+          paper: "#F6F5EF",
+          surface: "#FFFEFB",
+          coal: "#0B3F33",
+          ink: "#14231F",
+          soft: "#43524D",
+          muted: "#5B6964", // the lightest text allowed on paper or cream
+          steel: "#9FB3AC", // dark grounds only
         },
         // The nozzle's three lights. They mean one thing each and appear ONLY
         // inside the nozzle demo on /khata-kavach, never as decoration.

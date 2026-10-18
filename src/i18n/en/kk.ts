@@ -36,7 +36,7 @@ export const kk = {
       "Never lends or holds your money",
     ],
     phoneAlt:
-      "The nozzle screen on a pump's phone: a green light, the truck number UP00 SH 1001, and 'Fill 200 L diesel'.",
+      "The nozzle screen on a pump's phone: 'You can fill' for truck UP00 SH 1001, 200 L of diesel, with the litres and rupees typed from the dispenser.",
     card: {
       heading: "The same line",
       plate: "UP00 SH 1001",
@@ -91,7 +91,7 @@ export const kk = {
     appLink: "Open the Pump app (web)",
     alts: [
       "Khata Kavach Pump, the Today screen: credit given today, this month's credit, money received and the total owed.",
-      "Khata Kavach Pump, one transporter's account: the amount owed against his limit, with a Payment received button.",
+      "Khata Kavach Pump, one transporter's account: the amount owed against the limit, with a Record a payment button.",
     ],
   },
 
