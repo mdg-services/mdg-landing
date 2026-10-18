@@ -77,7 +77,10 @@ const nextConfig: NextConfig = {
 
   async rewrites() {
     return {
-      beforeFiles: [{ source: "/privacy", destination: "/privacy.html" }],
+      beforeFiles: [
+        { source: "/privacy", destination: "/privacy.html" },
+        { source: "/khata-kavach/privacy", destination: "/kk-privacy.html" },
+      ],
       afterFiles: [],
       fallback: [],
     };
