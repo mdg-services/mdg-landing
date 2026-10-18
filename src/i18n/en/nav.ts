@@ -9,4 +9,9 @@ export const nav = {
   } satisfies Record<NavId, string>,
   /** The guides to the oil companies' dealer rules (/guides/). */
   guides: "Guides",
+  /* The two apps. "Products" opens a small menu with both. */
+  products: "Products",
+  productsAria: "Our apps",
+  dealerKavach: { name: "Dealer's Kavach", note: "Paperwork and filings" },
+  khata: { name: "Khata Kavach", note: "Credit fuel for transporters" },
 };

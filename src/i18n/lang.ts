@@ -36,7 +36,7 @@ export function langCookie(lang: Lang): string {
 }
 
 /** Pages that exist in both languages, as English paths ("" is the home page). */
-export type SiteRoute = "" | "/register" | "/grievance" | "/grievances";
+export type SiteRoute = "" | "/register" | "/grievance" | "/grievances" | "/khata-kavach";
 
 /** The public path of a site page in a language: ("", "hi") -> "/hi". */
 export function pathFor(lang: Lang, route: SiteRoute = ""): string {

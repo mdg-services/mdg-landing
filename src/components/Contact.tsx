@@ -4,6 +4,7 @@ import { useState, type FormEvent } from "react";
 import Icon from "./Icon";
 import CallUs from "./CallUs";
 import { requestCallChoice } from "../lib/assistCall";
+import { postCallback } from "../lib/callback";
 import { TOLL_FREE } from "../lib/tollFree";
 import { Reveal } from "../lib/reveal";
 import type { Dict } from "../i18n/lang";
@@ -22,23 +23,13 @@ export default function Contact({ c }: { c: Dict["contact"] }) {
       phone: String(fd.get("phone") ?? "").trim(),
       outlet: String(fd.get("outlet") ?? "").trim(),
       message: String(fd.get("message") ?? "").trim(),
-      // The hidden box, and how long the page has been open: the server
-      // quietly drops a request a script filled in.
+      // The hidden box: the server quietly drops a request a script filled in.
       website: String(fd.get("website") ?? ""),
-      elapsed: Math.round(performance.now()),
     };
 
     setStatus("submitting");
     try {
-      const res = await fetch("/api/callback", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
-      const data = (await res.json().catch(() => ({}))) as { ok?: boolean; error?: string };
-      if (!res.ok || !data.ok) {
-        throw new Error(data.error || `Callback request failed (${res.status})`);
-      }
+      await postCallback(payload);
       setStatus("success");
     } catch (err) {
       // The API answers in English and both of its messages are generic, so

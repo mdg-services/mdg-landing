@@ -56,6 +56,8 @@ const DISMISS_KEY = "mdg-assist-dismissed";
 const AUTO_OPEN_MS = 1_000;
 /** Tailwind's `sm`. Below this the panel is a full sheet, not a card. */
 const CARD_WIDTH_PX = 640;
+/** The Khata Kavach page opens on a real app screen at the right of the first screen; the card would sit on it. */
+const isKkPath = (pathname: string) => /^\/(hi\/)?khata-kavach\/?$/.test(pathname);
 
 export default function AssistWidget({ startWithCall = false }: { startWithCall?: boolean }) {
   const d = assistDict(useLang().lang);
@@ -93,8 +95,9 @@ export default function AssistWidget({ startWithCall = false }: { startWithCall?
     // Read straight from storage rather than from state, so this effect has
     // nothing to depend on and runs exactly once, on arrival.
     // Not on a reading page either: the card would cover the headline and the short
-    // answer of a guide the visitor came to read. The round button stays.
-    if (startWithCall || wasDismissed() || window.innerWidth < CARD_WIDTH_PX || isGuidesPath(window.location.pathname)) return;
+    // answer of a guide the visitor came to read. The round button stays. The same goes
+    // for the Khata Kavach page, whose first screen is the product shown at its right.
+    if (startWithCall || wasDismissed() || window.innerWidth < CARD_WIDTH_PX || isGuidesPath(window.location.pathname) || isKkPath(window.location.pathname)) return;
     const id = window.setTimeout(() => {
       // never behind the "call us" sheet (open on arrival from a film page's
       // "talk to us"): it would sit under the sheet and take its Escape

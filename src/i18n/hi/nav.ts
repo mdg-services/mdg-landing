@@ -8,4 +8,8 @@ export const nav: typeof EN = {
     membership: "क़ीमत",
   },
   guides: "गाइड",
+  products: "हमारे ऐप",
+  productsAria: "हमारे ऐप",
+  dealerKavach: { name: "Dealer's कवच", note: "काग़ज़ी काम और फ़ाइलिंग" },
+  khata: { name: "खाता कवच", note: "ट्रांसपोर्टर को उधार डीज़ल" },
 };

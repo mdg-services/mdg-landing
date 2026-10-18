@@ -4,7 +4,7 @@ import Icon from "./Icon";
 import CallUs from "./CallUs";
 import { ORBIT } from "../data/content";
 import { getT } from "../i18n/server";
-import type { Lang } from "../i18n/lang";
+import { pathFor, type Lang } from "../i18n/lang";
 
 /* Portals that flow into the shield. They are other people's systems, so
    the names sit in content.ts and never change with the language. */
@@ -82,8 +82,22 @@ export default function Hero({ lang }: { lang: Lang }) {
             {t.hero.subLead} <span className="text-white">{t.hero.subEmphasis}</span> {t.hero.subTail}
           </p>
 
+          {/* the second app, said quietly: a text link with a thumb-sized target */}
+          <p
+            className="fade-in mt-6 text-[15px] leading-snug text-navy-200"
+            style={v({ "--dur": "0.6s", "--d": "0.78s" })}
+          >
+            {t.hero.alsoLabel}{" "}
+            <a
+              href={pathFor(lang, "/khata-kavach")}
+              className="-my-3 inline-block py-3 font-semibold text-white underline decoration-white/40 underline-offset-4 hover:decoration-white"
+            >
+              {t.hero.alsoLink}
+            </a>
+          </p>
+
           <div
-            className="enter-solid mt-9 flex flex-col items-start gap-4 sm:flex-row sm:items-center"
+            className="enter-solid mt-7 flex flex-col items-start gap-4 sm:flex-row sm:items-center"
             style={v({ "--rise-y": "14px", "--dur": "0.7s", "--d": "0.68s" })}
           >
             <a href="#contact" className="btn-gold w-full sm:w-auto">

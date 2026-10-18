@@ -20,6 +20,8 @@ import { footer } from "./footer";
 import { register } from "./register";
 import { grievance } from "./grievance";
 import { assist } from "./assist";
+import { products } from "./products";
+import { kk } from "./kk";
 
 /** Every visible string on mdgservices.in, in Hindi.
  *
@@ -50,4 +52,6 @@ export const hi: Dict = {
   register,
   grievance,
   assist,
+  products,
+  kk,
 };

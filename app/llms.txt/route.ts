@@ -54,6 +54,8 @@ export function GET(): Response {
   const company = [
     `- ${line("MDG Services: Dealer's Kavach", `${SITE}/`, en.meta.description)}`,
     `  - हिंदी: ${line("MDG Services: Dealer's कवच", `${SITE}/hi`, hi.meta.description)}`,
+    `- ${line("Khata Kavach", `${SITE}/khata-kavach`, en.kk.meta.description)}`,
+    `  - हिंदी: ${line("खाता कवच", `${SITE}/hi/khata-kavach`, hi.kk.meta.description)}`,
     `- ${line(en.register.pageTitle, `${SITE}/register`, en.register.intro)}`,
     `  - हिंदी: ${line(hi.register.pageTitle, `${SITE}/hi/register`, hi.register.intro)}`,
     `- ${line(en.grievance.pageTitle, `${SITE}/grievance`, en.grievance.metaDescription)}`,

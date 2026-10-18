@@ -19,7 +19,7 @@
  */
 import { LANG_COOKIE, isLang, pathFor, type Lang, type SiteRoute } from "../i18n/lang";
 
-const ROUTES = ["", "/register", "/grievance", "/grievances"] as const;
+const ROUTES = ["", "/register", "/grievance", "/grievances", "/khata-kavach"] as const;
 
 /** Which of the site's own pages a path is, and in which language; null for anything else. */
 export function siteRoute(pathname: string): { lang: Lang; route: SiteRoute } | null {

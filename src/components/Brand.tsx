@@ -48,3 +48,52 @@ export function LogoMark({
     />
   );
 }
+
+/* ── Khata Kavach's own marks (public/kk, from its brand guide) ──
+   Outlined-path SVGs: no font is loaded to draw them, so they do not go
+   through next/image. The width and height are the file's own aspect, so the
+   space is held before it arrives. The lockup reads Hindi-first on the Hindi
+   page and English-first on the English one. */
+
+const KK_LOCKUP: Record<"en" | "hi", { w: number; h: number }> = {
+  en: { w: 1071, h: 286 },
+  hi: { w: 974, h: 286 },
+};
+
+export function KkLockup({
+  lang,
+  white = false,
+  className,
+  alt,
+  eager = false,
+}: {
+  lang: "en" | "hi";
+  white?: boolean;
+  className?: string;
+  alt: string;
+  /** True only for the one on the first screen; every other one waits until it is near. */
+  eager?: boolean;
+}) {
+  const { w, h } = KK_LOCKUP[lang];
+  return (
+    // eslint-disable-next-line @next/next/no-img-element
+    <img
+      src={`/kk/lockup-${lang}${white ? "-white" : ""}.svg`}
+      alt={alt}
+      width={w}
+      height={h}
+      className={className}
+      draggable={false}
+      decoding="async"
+      loading={eager ? undefined : "lazy"}
+    />
+  );
+}
+
+export function KkMark({ white = false, small = false, className, alt = "" }: { white?: boolean; small?: boolean; className?: string; alt?: string }) {
+  const src = small ? "/kk/mark-small.svg" : white ? "/kk/mark-white.svg" : "/kk/mark.svg";
+  return (
+    // eslint-disable-next-line @next/next/no-img-element
+    <img src={src} alt={alt} width={64} height={small ? 69 : 64} className={className} draggable={false} decoding="async" loading="lazy" />
+  );
+}

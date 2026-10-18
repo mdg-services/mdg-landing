@@ -42,6 +42,30 @@ export default {
           faint: "#9B9DBE",
           hairline: "#E4E6F1",
         },
+        // ── Khata Kavach's own palette (its brand guide): ink first, one blue,
+        //    paper is the accent. Used on the /khata-kavach page and the home
+        //    page's second-app panel, never to restyle Dealer's Kavach. ──
+        kk: {
+          siyahi: "#1D2A78", // the one blue
+          deep: "#131B57", // pressed
+          wash: "#E5E8F5",
+          cream: "#F4EFE3", // marketing ground
+          paper: "#F6F5F1",
+          surface: "#FBFAF7",
+          coal: "#14171C",
+          ink: "#0E1A2B",
+          soft: "#3D4756",
+          muted: "#586274", // the lightest text allowed on paper or cream
+          steel: "#9AA6B5", // dark grounds only
+        },
+        // The nozzle's three lights. They mean one thing each and appear ONLY
+        // inside the nozzle demo on /khata-kavach, never as decoration.
+        light: {
+          go: "#0F7A3D",
+          wait: "#F5A100",
+          "wait-ink": "#8A4B00",
+          stop: "#B42318",
+        },
         // ── "Handled / done" success, used only in diagram states ──
         ok: {
           DEFAULT: "#12A87B",

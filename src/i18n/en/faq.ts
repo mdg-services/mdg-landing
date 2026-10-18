@@ -36,5 +36,9 @@ export const faq = {
       q: "Do you sign an NDA?",
       a: "Yes, before we look at any of your documents. We can also work under your dealership's own confidentiality framework if you have one.",
     },
+    {
+      q: "Do you have anything for credit fuel sales to transporters?",
+      a: "Yes. Khata Kavach replaces paper coupons between your pump and its transporters. See its page.",
+    },
   ],
 };

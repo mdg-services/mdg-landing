@@ -71,6 +71,7 @@ const nextConfig: NextConfig = {
       { source: "/hi/register/", destination: "/hi/register", permanent: true },
       { source: "/hi/grievance/", destination: "/hi/grievance", permanent: true },
       { source: "/hi/grievances/", destination: "/hi/grievances", permanent: true },
+      { source: "/hi/khata-kavach/", destination: "/hi/khata-kavach", permanent: true },
     ];
   },
 

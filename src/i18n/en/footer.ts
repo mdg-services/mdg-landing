@@ -13,7 +13,7 @@
 export const footer = {
   /* ── the brand column ── */
   /** The muted line under "Dealer's कवच". */
-  promise: "Compliance software for India’s petrol pump dealers.",
+  promise: "Apps for petrol pump dealers and the transporters who buy from them.",
   /** `{tagline}` is BRAND.tagline, which stays English in both languages,
       so the sentence is written around it rather than starting with it. */
   satisfaction: "{tagline}. Your satisfaction fuels our energy.",
@@ -48,6 +48,13 @@ export const footer = {
   grievance: "Grievances",
   /** The dealer guides to the Marketing Discipline Guidelines: plain static pages, so a plain link, not a route. */
   mdgGuide: "Guides for dealers",
+
+  /** The apps column: Dealer's Kavach on this page, Khata Kavach on its own. */
+  appsHeading: "Our apps",
+  dealerApp: "Dealer's Kavach",
+  khataApp: "Khata Kavach",
+  /** Not a link: the Android app is not on Google Play yet. */
+  khataAndroid: "Khata Kavach for Android: coming to Google Play",
 
   reachHeading: "Reach us",
   /** When the toll-free line is open. Drawn in capitals by CSS, so it is

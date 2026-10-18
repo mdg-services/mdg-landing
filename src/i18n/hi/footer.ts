@@ -2,7 +2,7 @@ import type { footer as EN } from "../en/footer";
 
 export const footer: typeof EN = {
   /* ── the brand column ── */
-  promise: "भारत के पेट्रोल पंप डीलरों के लिए कंप्लायंस सॉफ़्टवेयर।",
+  promise: "पेट्रोल पंप डीलरों और उनके ट्रांसपोर्टरों के लिए ऐप।",
   satisfaction: "{tagline}. आपकी संतुष्टि ही हमारी ऊर्जा है।",
   /* The company name is printed in white in the middle of the sentence. Hindi
      puts the owner before the thing owned, so the first half is just the brand
@@ -27,6 +27,11 @@ export const footer: typeof EN = {
   register: "रजिस्टर कीजिए",
   grievance: "शिकायत",
   mdgGuide: "डीलरों के लिए गाइड",
+
+  appsHeading: "हमारे ऐप",
+  dealerApp: "Dealer's कवच",
+  khataApp: "खाता कवच",
+  khataAndroid: "खाता कवच एंड्रॉइड पर: जल्द Google Play पर",
 
   reachHeading: "हमसे संपर्क",
   hours: "सुबह 9 से रात 9, हर दिन",

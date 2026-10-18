@@ -23,10 +23,17 @@ export function siteMetadata(lang: Lang, route: SiteRoute): Metadata {
   const t = getT(lang);
   const home = route === "";
   const page = canonicalRoute(route);
-  const title = home ? t.meta.title : route === "/register" ? t.register.pageTitle : t.grievance.pageTitle;
-  const description = home ? t.meta.description : route === "/register" ? t.register.intro : t.grievance.metaDescription;
-  const ogTitle = home ? t.meta.ogTitle : title;
-  const ogDescription = home ? t.meta.ogDescription : description;
+  /* what each page says about itself in search and in a link preview */
+  const heads: Record<SiteRoute, { title: string; description: string; ogTitle: string; ogDescription: string }> = {
+    "": { title: t.meta.title, description: t.meta.description, ogTitle: t.meta.ogTitle, ogDescription: t.meta.ogDescription },
+    "/register": { title: t.register.pageTitle, description: t.register.intro, ogTitle: t.register.pageTitle, ogDescription: t.register.intro },
+    "/grievance": { title: t.grievance.pageTitle, description: t.grievance.metaDescription, ogTitle: t.grievance.pageTitle, ogDescription: t.grievance.metaDescription },
+    "/grievances": { title: t.grievance.pageTitle, description: t.grievance.metaDescription, ogTitle: t.grievance.pageTitle, ogDescription: t.grievance.metaDescription },
+    "/khata-kavach": { title: t.kk.meta.title, description: t.kk.meta.description, ogTitle: t.kk.meta.ogTitle, ogDescription: t.kk.meta.description },
+  };
+  const { title, description, ogTitle, ogDescription } = heads[route];
+  /* the Khata Kavach pages share the home card until they have their own (public/og-kk.png) */
+  const image = OG_IMAGE;
   const canonical = pathFor(lang, page);
 
   return {
@@ -48,13 +55,13 @@ export function siteMetadata(lang: Lang, route: SiteRoute): Metadata {
       description: ogDescription,
       url: canonical,
       locale: lang === "hi" ? "hi_IN" : "en_IN",
-      images: [OG_IMAGE],
+      images: [image],
     },
     twitter: {
       card: "summary_large_image",
       title: ogTitle,
       description: ogDescription,
-      images: [OG_IMAGE.url],
+      images: [image.url],
     },
     // Bing Webmaster Tools ownership check; keep it, Bing re-checks.
     ...(home ? { other: { "msvalidate.01": BING_VERIFICATION } } : {}),

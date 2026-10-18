@@ -1,6 +1,7 @@
 import ScrollProgress from "../components/ScrollProgress";
 import Navbar from "../components/Navbar";
 import Hero from "../components/Hero";
+import Products from "../components/Products";
 import Marquee from "../components/Marquee";
 import Numbers from "../components/Numbers";
 import Problem from "../components/Problem";
@@ -30,6 +31,7 @@ export default function HomePage({ lang }: { lang: Lang }) {
       <Navbar onHome twin={twinOf("", lang)} />
       <main>
         <Hero lang={lang} />
+        <Products lang={lang} />
         <Marquee lang={lang} />
         <Numbers lang={lang} />
         <Problem lang={lang} />

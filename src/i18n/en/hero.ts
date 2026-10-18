@@ -23,6 +23,9 @@ export const hero = {
   subTail: "on track, so your dealership is never caught short.",
 
   ctaPrimary: "Talk to us",
+  /** A quiet line under the buttons that points at the second app. */
+  alsoLabel: "Also from MDG Services:",
+  alsoLink: "Khata Kavach, credit fuel without paper coupons",
   /** Sits just before the phone number, which is the same in either language. */
   callLabel: "or",
 
