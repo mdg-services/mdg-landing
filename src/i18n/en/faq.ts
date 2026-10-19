@@ -37,8 +37,8 @@ export const faq = {
       a: "Yes, before we look at any of your documents. We can also work under your dealership's own confidentiality framework if you have one.",
     },
     {
-      q: "Do you have anything for credit fuel sales to transporters?",
-      a: "Yes. Khata Kavach replaces paper coupons between your pump and its transporters. See its page.",
+      q: "Do you have anything for credit sales to regular customers, like transporters?",
+      a: "Yes. Khata Kavach is a shared credit book between your pump and its regular customers. Each sale is one line both sides see, with a photo if you want, and you can make numbered bills. See its page.",
     },
   ],
 };

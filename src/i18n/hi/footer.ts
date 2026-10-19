@@ -2,13 +2,13 @@ import type { footer as EN } from "../en/footer";
 
 export const footer: typeof EN = {
   /* ── the brand column ── */
-  promise: "पेट्रोल पंप डीलरों और उनके ट्रांसपोर्टरों के लिए ऐप।",
+  promise: "पेट्रोल पंप डीलरों के लिए ऐप, और पक्के ग्राहकों के उधार का हिसाब।",
   satisfaction: "{tagline}. आपकी संतुष्टि ही हमारी ऊर्जा है।",
   /* The company name is printed in white in the middle of the sentence. Hindi
      puts the owner before the thing owned, so the first half is just the brand
      name and the comma, and the registration clause rides on the second. */
   legalBeforeName: "MDG Services, ",
-  legalAfterName: " का एक ब्रांड है, जो भारत में रजिस्टर्ड कंपनी है (CIN {cin})।",
+  legalAfterName: " (भारत में रजिस्टर्ड कंपनी, CIN {cin}) का एक ब्रांड है।",
   whatsappBefore: "WhatsApp पर हमारे बिज़नेस अकाउंट ",
   whatsappJoin: " और ",
   whatsappAfter: " हैं।",
@@ -40,5 +40,5 @@ export const footer: typeof EN = {
   copyright: "© {year} {name}. सभी अधिकार सुरक्षित।",
   brandLine: "MDG Services, {name} का एक ब्रांड · CIN: {cin}",
   privacy: "प्राइवेसी पॉलिसी (अंग्रेज़ी में)",
-  madeFor: "भारत के पेट्रोल पंप डीलरों के लिए बनाया गया",
+  madeFor: "भारत के पेट्रोल पंप डीलरों और उधार पर बेचने वाले बिज़नेस के लिए बनाया गया",
 };

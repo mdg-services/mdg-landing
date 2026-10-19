@@ -13,5 +13,5 @@ export const nav = {
   products: "Products",
   productsAria: "Our apps",
   dealerKavach: { name: "Dealer's Kavach", note: "Paperwork and filings" },
-  khata: { name: "Khata Kavach", note: "Credit fuel for transporters" },
+  khata: { name: "Khata Kavach", note: "Credit to regular customers" },
 };

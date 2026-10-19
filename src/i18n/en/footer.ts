@@ -13,7 +13,7 @@
 export const footer = {
   /* ── the brand column ── */
   /** The muted line under "Dealer's कवच". */
-  promise: "Apps for petrol pump dealers and the transporters who buy from them.",
+  promise: "Apps for petrol pump dealers and credit sales to regular customers.",
   /** `{tagline}` is BRAND.tagline, which stays English in both languages,
       so the sentence is written around it rather than starting with it. */
   satisfaction: "{tagline}. Your satisfaction fuels our energy.",
@@ -67,5 +67,5 @@ export const footer = {
   brandLine: "MDG Services is a brand of {name} · CIN: {cin}",
   /** The privacy page itself is English only. Its link is not. */
   privacy: "Privacy Policy",
-  madeFor: "Made for India's fuel station dealers",
+  madeFor: "Made for India's fuel station dealers and credit-selling businesses",
 };
