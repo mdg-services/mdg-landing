@@ -47,11 +47,11 @@ const nextConfig: NextConfig = {
   // so the proxy (proxy.ts) takes over both directions.
   skipTrailingSlashRedirect: true,
 
-  // The guide pages read their words from guide/content at render time, which
-  // also happens when a page is refreshed in production, so the files ship
-  // with every function that can render one.
+  // The guide pages read their words from guide/content and kk-guide/content
+  // at render time, which also happens when a page is refreshed in production,
+  // so the files ship with every function that can render one.
   outputFileTracingIncludes: {
-    "/**": ["./guide/content/**/*", "./guide/tools/**/*"],
+    "/**": ["./guide/content/**/*", "./guide/tools/**/*", "./kk-guide/content/**/*", "./kk-guide/tools/**/*"],
   },
 
   images: {

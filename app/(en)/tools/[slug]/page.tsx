@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { GuideRoute, guideMetadata, releaseFor, toolParams } from "@/guides/route";
+import { MDG } from "@/guides/collections";
 
 /** Refreshed hourly: the pages it links to are the ones live today. */
 export const revalidate = 3600;
@@ -11,13 +12,13 @@ export const revalidate = 3600;
 type Props = { params: Promise<{ slug: string }> };
 
 export function generateStaticParams() {
-  return toolParams("en");
+  return toolParams(MDG, "en");
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  return guideMetadata(releaseFor("en", "tools", [(await params).slug]));
+  return guideMetadata(MDG, releaseFor(MDG, "en", "tools", [(await params).slug]));
 }
 
 export default async function Page({ params }: Props) {
-  return <GuideRoute release={releaseFor("en", "tools", [(await params).slug])} />;
+  return <GuideRoute col={MDG} release={releaseFor(MDG, "en", "tools", [(await params).slug])} />;
 }

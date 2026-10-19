@@ -1,9 +1,7 @@
 import SectionHeader from "./SectionHeader";
 import { getT } from "../i18n/server";
 import type { Lang } from "../i18n/lang";
-import { PAGES, PILLARS, pathOf } from "../../guide/inventory";
-import { TOPIC_BLURB } from "../../guide/copy";
-import { contextAt, descriptionOf, isLive, titleOf } from "../guides/model";
+import { MDG, contextAt, descriptionOf, isLive, pathOf, titleOf } from "../guides/model";
 import { guideNow } from "../guides/clock";
 
 /** How many guide cards the homepage shows. */
@@ -18,9 +16,9 @@ const SHOWN = 6;
  */
 export default function HomeGuides({ lang }: { lang: Lang }) {
   const t = getT(lang).guides;
-  const ctx = contextAt(guideNow());
-  const mains = new Set(Object.values(PILLARS).map((p) => p.main));
-  const candidates = PAGES.filter((p) => p.pillar !== "hub" && p.pillar !== "tools" && isLive(ctx, p.id, lang));
+  const ctx = contextAt(MDG, guideNow());
+  const mains = new Set(Object.values(MDG.pillars).map((p) => p.main));
+  const candidates = MDG.pages.filter((p) => !MDG.notTopics.includes(p.pillar) && isLive(ctx, p.id, lang));
   const picked = [...candidates.filter((p) => mains.has(p.id)), ...candidates.filter((p) => !mains.has(p.id))].slice(0, SHOWN);
   if (!picked.length) return null;
   const hubHref = lang === "hi" ? "/hi/guides/" : "/guides/";
@@ -31,7 +29,7 @@ export default function HomeGuides({ lang }: { lang: Lang }) {
         <SectionHeader eyebrow={t.eyebrow} title={t.title} intro={t.intro} />
         <div className="mt-12 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {picked.map((p) => {
-            const blurb = mains.has(p.id) ? TOPIC_BLURB[p.pillar]?.[lang] : undefined;
+            const blurb = mains.has(p.id) ? MDG.topicBlurb[p.pillar]?.[lang] : undefined;
             return (
               <div key={p.id} className="guide-card group relative">
                 <strong className="block font-display text-[17px] font-semibold leading-snug text-ink group-hover:text-navy-700">

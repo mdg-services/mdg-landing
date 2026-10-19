@@ -1,74 +1,88 @@
 /**
  * What the guide pages are made of, apart from how they look: which pages are
  * live, where a link to one should point, how the Markdown becomes HTML, and
- * the structured data search engines read.
+ * the structured data search engines read. It serves both collections (the
+ * MDG guides and the Khata Kavach pages, src/guides/collections.ts): every
+ * function works on a `Ctx`, which carries its collection.
  *
- * "Live" is a matter of the date. guide/schedule.ts puts each page on a day
- * (five a day, India time); a page is live from that day on. Every page that
- * is live links only to pages that are live, so the links, the lists and the
- * sitemap grow by themselves each day with no deploy.
+ * "Live" is a matter of the date. Each collection's schedule puts each page on
+ * a day (five a day, India time); a page is live from that day on. Every page
+ * that is live links only to pages that are live, so the links, the lists and
+ * the sitemap grow by themselves each day with no deploy.
  */
 import { readFileSync, existsSync } from "node:fs";
 import path from "node:path";
 import { Marked, type Renderer, type Tokens } from "marked";
-import { PAGES, PILLARS, VIDEOS, byId, pathOf, type GuidePage, type Lang } from "../../guide/inventory.ts";
-import { RELEASES, LAST_DAY, dateOfDay, dayOf, type Release } from "../../guide/schedule.ts";
-import { SITE, TOPIC_BLURB, UI } from "../../guide/copy.ts";
+import { pathIn } from "../../guide/calendar.ts";
+import { SITE } from "../../guide/copy.ts";
 import { loadAll, type PageContent } from "./content.ts";
+import { esc } from "./tags.ts";
+import { ALL, COLLECTIONS, KK, MDG } from "./collections.ts";
+import type { AnyPage, AnyRelease, Collection, CollectionKey, Crumb, Lang } from "./collection.ts";
 
-export type { Lang, Release, GuidePage, PageContent };
-export { PAGES, PILLARS, VIDEOS, byId, pathOf, RELEASES, LAST_DAY, dateOfDay, SITE, UI };
+export type { Lang, PageContent, AnyPage, AnyRelease, Collection, CollectionKey, Crumb };
+export { SITE, ALL, COLLECTIONS, MDG, KK };
+
+/** The public path of a page in a language. */
+export const pathOf = pathIn;
 
 // ── Reading the words (once per server) ─────────────────────────────────
 
-let loaded: Map<string, PageContent> | undefined;
+const loaded = new Map<CollectionKey, Map<string, PageContent>>();
 
 /**
- * Every page's words, read and checked once. A page that is missing or breaks a
- * rule throws here, so a build with a bad page fails instead of shipping it.
+ * Every page's words, read and checked once per collection. A page that is
+ * missing or breaks a rule throws here, so a build with a bad page fails
+ * instead of shipping it.
  *
  *  - GUIDE_ALLOW_MISSING=1 lets pages with no words yet be skipped (a local
  *    test build only; a real build needs every page).
  *  - GUIDE_SKIP=1 ships the site with no guide pages at all.
  */
-export function loadContent(): Map<string, PageContent> {
-  if (loaded) return loaded;
-  if (process.env.GUIDE_SKIP === "1") return (loaded = new Map());
-  const { content, errors } = loadAll(process.cwd());
+export function loadContent(col: Collection): Map<string, PageContent> {
+  const hit = loaded.get(col.key);
+  if (hit) return hit;
+  if (process.env.GUIDE_SKIP === "1") {
+    loaded.set(col.key, new Map());
+    return loaded.get(col.key)!;
+  }
+  const { content, errors } = loadAll(process.cwd(), col);
   const real = errors.filter((e) => !(process.env.GUIDE_ALLOW_MISSING === "1" && e.endsWith(": missing")));
-  if (real.length) throw new Error(`MDG guide content has ${real.length} problem(s):\n  ${real.join("\n  ")}`);
-  return (loaded = content);
+  if (real.length) throw new Error(`${col.label} content has ${real.length} problem(s):\n  ${real.join("\n  ")}`);
+  loaded.set(col.key, content);
+  return content;
 }
 
 /** The page's script, for a tool page ("" for any other page or a tool with no script). */
-export function toolScript(page: GuidePage): string {
+export function toolScript(col: Collection, page: AnyPage): string {
   if (page.type !== "Tool") return "";
-  const file = path.join(process.cwd(), "guide", "tools", `${page.id}.js`);
+  const file = path.join(process.cwd(), col.toolsDir, `${page.id}.js`);
   return existsSync(file) ? readFileSync(file, "utf8") : "";
 }
 
 // ── Which pages are live ────────────────────────────────────────────────
 
 export interface Ctx {
+  col: Collection;
   day: number;
   live: Set<string>; // "lang:id"
   content: Map<string, PageContent>;
 }
 
 /** The pages that have words and whose day has come, as of `day`. */
-export function releasesOn(content: Map<string, PageContent>, day: number): Release[] {
-  return RELEASES.filter((r) => r.day <= day && content.has(`${r.lang}:${r.page.id}`));
+export function releasesOn(col: Collection, content: Map<string, PageContent>, day: number): AnyRelease[] {
+  return col.releases.filter((r) => r.day <= day && content.has(`${r.lang}:${r.page.id}`));
 }
 
 /**
- * The picture of the guide as of `now`. `atLeast` is a page's own release day:
- * a page is always built as if it were live, so one built ahead of its day (at
- * deploy time) never links to itself as missing.
+ * The picture of a collection as of `now`. `atLeast` is a page's own release
+ * day: a page is always built as if it were live, so one built ahead of its
+ * day (at deploy time) never links to itself as missing.
  */
-export function contextAt(now: Date, atLeast = 0): Ctx {
-  const content = loadContent();
-  const day = Math.min(LAST_DAY, Math.max(dayOf(now), atLeast));
-  return { day, content, live: new Set(releasesOn(content, day).map((r) => `${r.lang}:${r.page.id}`)) };
+export function contextAt(col: Collection, now: Date, atLeast = 0): Ctx {
+  const content = loadContent(col);
+  const day = Math.min(col.lastDay, Math.max(col.dayOf(now), atLeast));
+  return { col, day, content, live: new Set(releasesOn(col, content, day).map((r) => `${r.lang}:${r.page.id}`)) };
 }
 
 export function isLive(ctx: Ctx, id: string, lang: Lang): boolean {
@@ -77,7 +91,7 @@ export function isLive(ctx: Ctx, id: string, lang: Lang): boolean {
 
 /** Where a link to page `id` should point from a page in `lang`: same language if live, else English if live. */
 export function target(ctx: Ctx, id: string, lang: Lang): { href: string; lang: Lang } | null {
-  const p = byId.get(id);
+  const p = ctx.col.byId.get(id);
   if (!p) return null;
   if (isLive(ctx, id, lang)) return { href: pathOf(p, lang), lang };
   if (lang === "hi" && isLive(ctx, id, "en")) return { href: pathOf(p, "en"), lang: "en" };
@@ -92,10 +106,10 @@ export function descriptionOf(ctx: Ctx, id: string, lang: Lang): string {
   return ctx.content.get(`${lang}:${id}`)?.description || ctx.content.get(`en:${id}`)?.description || "";
 }
 
-/** The page at a public path ("/hi/guides/density/"), with its language. */
-const BY_PATH = new Map(RELEASES.map((r) => [r.path, r]));
-export function releaseAt(pathname: string): Release | undefined {
-  return BY_PATH.get(pathname);
+/** The page at a public path ("/hi/guides/density/") in a collection, with its language. */
+const BY_PATH = new Map<CollectionKey, Map<string, AnyRelease>>(ALL.map((c) => [c.key, new Map(c.releases.map((r) => [r.path, r]))]));
+export function releaseAt(col: Collection, pathname: string): AnyRelease | undefined {
+  return BY_PATH.get(col.key)!.get(pathname);
 }
 
 // ── Markdown to HTML ─────────────────────────────────────────────────────
@@ -109,40 +123,6 @@ const MONTHS: Record<Lang, string[]> = {
 export function longDate(iso: string, lang: Lang): string {
   const [y, m, d] = iso.split("-").map(Number);
   return `${d} ${MONTHS[lang][m - 1]} ${y}`;
-}
-
-const esc = (s: string) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
-
-/** {{5.1.9}} -> a clause tag. */
-function clauseTags(html: string, lang: Lang): string {
-  return html.replace(/\{\{([^}]+)\}\}/g, (_, raw: string) => {
-    const t = raw.trim();
-    let label: string;
-    if (/^circular$/i.test(t)) label = lang === "hi" ? "सर्कुलर 20.03.2025" : "Circular 20.03.2025";
-    else if (t.startsWith("2012:")) label = `MDG 2012 ${t.slice(5)}`;
-    else if (/^annexure/i.test(t)) label = `MDG Annexure ${t.replace(/^annexure\s*/i, "")}`;
-    else if (/^[0-9]/.test(t)) label = `MDG ${t}`;
-    // Words, not a clause number: "cover page", "introduction", "chapter 6, item 4"
-    else label = `MDG 2024, ${t.charAt(0).toLowerCase()}${t.slice(1)}`;
-    return `<span class="cl">${esc(label)}</span>`;
-  });
-}
-
-/**
- * The compact note a penalty page can ask for with `{{penalty-note}}` on a
- * line of its own: the three qualifiers that belong beside every penalty
- * amount, in the page's language. The clause numbers are ordinary `{{…}}` tags,
- * so they draw as clause chips like every other reference (the words are the
- * content owner's, as shipped in the static pages on main).
- */
-export const PENALTY_NOTE: Record<Lang, string> = {
-  en: "These amounts are the minimum: the oil company may take higher action, up to termination {{8.5.1}}. An irregularity must be established first {{8.5.2}}. Instances are counted over five years, including the previous guideline {{8.5.5}}.",
-  hi: "ये रकम कम से कम की कार्रवाई हैं: तेल कंपनी इससे ज़्यादा कार्रवाई कर सकती है, टर्मिनेशन तक {{8.5.1}}। कार्रवाई से पहले अनियमितता साबित होनी चाहिए {{8.5.2}}। गिनती पाँच साल की होती है, पिछली गाइडलाइन समेत {{8.5.5}}।",
-};
-
-function penaltyNotes(md: string, lang: Lang): string {
-  const box = `<aside class="penalty-note" lang="${lang}"><p>${esc(PENALTY_NOTE[lang])}</p></aside>`;
-  return md.replace(/^[ \t]*\{\{\s*penalty-note\s*\}\}[ \t]*$/gim, `\n${box}\n`);
 }
 
 const TABLE_WORD: Record<Lang, string> = { en: "Table", hi: "तालिका" };
@@ -187,7 +167,7 @@ function makeMarked(ctx: Ctx, lang: Lang): Marked {
           const [id, hash] = href.slice(1).split("#");
           const t = target(ctx, id, lang);
           if (!t) return text; // not live yet: plain words, no dead link
-          const note = t.lang !== lang ? ` <span class="ln">(${UI[lang].english})</span>` : "";
+          const note = t.lang !== lang ? ` <span class="ln">(${ctx.col.ui[lang].english})</span>` : "";
           return `<a href="${t.href}${hash ? `#${hash}` : ""}">${text}</a>${note}`;
         }
         const ext = /^https?:\/\//.test(href) && !href.startsWith(SITE);
@@ -198,18 +178,18 @@ function makeMarked(ctx: Ctx, lang: Lang): Marked {
   return md;
 }
 
-/** The page's Markdown body as HTML: links resolved, tables made to scroll or stack, clause tags drawn. */
+/** The page's Markdown body as HTML: links resolved, tables made to scroll or stack, tags drawn. */
 export function renderBody(ctx: Ctx, lang: Lang, body: string): string {
   const md = makeMarked(ctx, lang);
-  return clauseTags(md.parse(penaltyNotes(body, lang), { async: false }) as string, lang);
+  return ctx.col.tags(md.parse(ctx.col.prepare(body, lang), { async: false }) as string, lang);
 }
 
 /** Inline Markdown only (answers, questions): no paragraphs. */
 export function renderInline(ctx: Ctx, lang: Lang, s: string): string {
-  return clauseTags(makeMarked(ctx, lang).parseInline(s, { async: false }) as string, lang);
+  return ctx.col.tags(makeMarked(ctx, lang).parseInline(s, { async: false }) as string, lang);
 }
 
-/** A heading's words without Markdown marks, links or clause tags. */
+/** A heading's words without Markdown marks, links or tags. */
 function plainHeading(s: string): string {
   return s
     .replace(/\{\{[^}]+\}\}/g, "")
@@ -237,7 +217,7 @@ const ENTITIES: Record<string, string> = { amp: "&", lt: "<", gt: ">", quot: '"'
  * The words a reader sees, as plain text: `renderInline`'s HTML with its tags
  * dropped and its entities turned back into characters. Structured data is
  * built from this, so the FAQ markup is the same text as the visible answer
- * (clause tags in the page's own language included), never a second version.
+ * (tags in the page's own language included), never a second version.
  */
 export function visibleText(ctx: Ctx, lang: Lang, s: string): string {
   return renderInline(ctx, lang, s)
@@ -253,11 +233,6 @@ export function visibleText(ctx: Ctx, lang: Lang, s: string): string {
 
 // ── What a page needs to be drawn ────────────────────────────────────────
 
-export interface Crumb {
-  name: string;
-  href: string;
-}
-
 export interface Card {
   href: string;
   title: string;
@@ -269,8 +244,8 @@ export interface Card {
 }
 
 export interface PageModel {
-  release: Release;
-  page: GuidePage;
+  release: AnyRelease;
+  page: AnyPage;
   lang: Lang;
   c: PageContent;
   url: string;
@@ -279,7 +254,7 @@ export interface PageModel {
   crumbs: Crumb[];
   /** the other language's address, when that page is live */
   twin: { lang: Lang; href: string } | null;
-  /** the guides hub in this page's language (or English), when live */
+  /** the collection's front door in this page's language (or English), when live */
   hub: { href: string } | null;
   /** cards under a heading: topics on the hub, the pages of a topic on its main page */
   children: { heading: string; cards: Card[] }[];
@@ -290,26 +265,33 @@ export interface PageModel {
   updatesHref: string | null;
 }
 
-export function buildPageModel(ctx: Ctx, r: Release): PageModel {
+/** A topic is a pillar with pages of its own, not the front door or the tools. */
+function topics(col: Collection): string[] {
+  return Object.keys(col.pillars).filter((k) => !col.notTopics.includes(k));
+}
+
+export function buildPageModel(ctx: Ctx, r: AnyRelease): PageModel {
+  const { col } = ctx;
   const { page, lang } = r;
   const c = ctx.content.get(`${lang}:${page.id}`)!;
-  const t = UI[lang];
+  const t = col.ui[lang];
   const url = `${SITE}${r.path}`;
   const twinLang: Lang = lang === "en" ? "hi" : "en";
   const twinLive = page.hi && isLive(ctx, page.id, twinLang);
-  const pillar = PILLARS[page.pillar];
+  const pillar = col.pillars[page.pillar];
   const mainId = pillar.main;
   const isMain = mainId === page.id;
-  const published = dateOfDay(r.day);
+  const published = col.dateOfDay(r.day);
   // the same day the sitemap gives (a hub or topic page also changes when a page it lists goes live)
   const modified = lastModified(ctx, r);
+  const isTopicPage = !col.notTopics.includes(page.pillar);
 
-  // Breadcrumb: guide home > topic main page > this page
-  const crumbs: Crumb[] = [{ name: t.home, href: lang === "hi" ? "/hi" : "/" }];
+  // Breadcrumb: home > (the product) > the collection's front door > topic main page > this page
+  const crumbs: Crumb[] = [{ name: t.home, href: lang === "hi" ? "/hi" : "/" }, ...col.crumbsBefore(lang)];
   if (page.id !== "hub") {
-    const hub = target(ctx, "hub", lang);
+    const hub = col.hubInCrumbs ? target(ctx, "hub", lang) : null;
     if (hub) crumbs.push({ name: t.guide, href: hub.href });
-    if (!isMain && page.pillar !== "hub" && page.pillar !== "tools") {
+    if (!isMain && isTopicPage) {
       const m = target(ctx, mainId, lang);
       if (m) crumbs.push({ name: lang === "hi" ? pillar.hi : pillar.en, href: m.href });
     }
@@ -317,32 +299,31 @@ export function buildPageModel(ctx: Ctx, r: Release): PageModel {
   // the hub is called "Guides" here as it is on every page below it, not by its long headline
   crumbs.push({ name: page.id === "hub" ? t.guide : c.title, href: r.path });
 
-  // Pages under a topic's main page, and the guide's topic list on the hub
+  // Pages under a topic's main page, and the topic list on the hub
   const children: PageModel["children"] = [];
   if (page.id === "hub") {
-    const topics: Card[] = [];
-    for (const k of Object.keys(PILLARS) as (keyof typeof PILLARS)[]) {
-      if (k === "hub" || k === "tools") continue;
-      const tgt = target(ctx, PILLARS[k].main, lang);
+    const cards: Card[] = [];
+    for (const k of topics(col)) {
+      const tgt = target(ctx, col.pillars[k].main, lang);
       if (!tgt) continue;
-      topics.push({
+      cards.push({
         href: tgt.href,
-        title: lang === "hi" ? PILLARS[k].hi : PILLARS[k].en,
-        description: TOPIC_BLURB[k]?.[lang] ?? descriptionOf(ctx, PILLARS[k].main, tgt.lang),
-        count: PAGES.filter((p) => p.pillar === k && target(ctx, p.id, lang)).length,
+        title: lang === "hi" ? col.pillars[k].hi : col.pillars[k].en,
+        description: col.topicBlurb[k]?.[lang] ?? descriptionOf(ctx, col.pillars[k].main, tgt.lang),
+        count: col.pages.filter((p) => p.pillar === k && target(ctx, p.id, lang)).length,
       });
     }
-    if (topics.length) children.push({ heading: t.topics, cards: topics });
+    if (cards.length) children.push({ heading: t.topics, cards });
     const extra: Card[] = [];
-    for (const p of PAGES.filter((p) => (p.pillar === "hub" && p.id !== "hub") || p.pillar === "tools")) {
+    for (const p of col.pages.filter((p) => col.notTopics.includes(p.pillar) && p.id !== "hub")) {
       const tgt = target(ctx, p.id, lang);
       if (!tgt) continue;
       extra.push({ href: tgt.href, title: titleOf(ctx, p.id, tgt.lang), description: descriptionOf(ctx, p.id, tgt.lang) });
     }
     if (extra.length) children.push({ heading: t.toolsAndReference, cards: extra });
-  } else if (isMain && page.pillar !== "tools") {
+  } else if (isMain && isTopicPage) {
     const cards: Card[] = [];
-    for (const p of PAGES.filter((p) => p.pillar === page.pillar && p.id !== page.id)) {
+    for (const p of col.pages.filter((p) => p.pillar === page.pillar && p.id !== page.id)) {
       const tgt = target(ctx, p.id, lang);
       if (!tgt) continue;
       cards.push({
@@ -356,7 +337,7 @@ export function buildPageModel(ctx: Ctx, r: Release): PageModel {
   }
 
   // Related: hand-picked first, then other pages on the same topic
-  const relIds = [...(c.related || []), ...PAGES.filter((p) => p.pillar === page.pillar && p.id !== page.id && p.id !== mainId).map((p) => p.id)];
+  const relIds = [...(c.related || []), ...col.pages.filter((p) => p.pillar === page.pillar && p.id !== page.id && p.id !== mainId).map((p) => p.id)];
   const seen = new Set<string>();
   const related: Card[] = relIds
     .filter((id) => id !== page.id && !seen.has(id) && seen.add(id))
@@ -366,14 +347,13 @@ export function buildPageModel(ctx: Ctx, r: Release): PageModel {
     .map(({ id, tgt }) => ({ href: tgt.href, title: titleOf(ctx, id, tgt.lang), description: descriptionOf(ctx, id, tgt.lang) }));
 
   const videos = (page.videos || [])
-    .filter((v) => VIDEOS[v])
-    .map((v) => ({ href: `https://guide.mdgservices.in/${v}-${lang}`, title: VIDEOS[v][lang] }));
+    .filter((v) => col.videos[v])
+    .map((v) => ({ href: `https://guide.mdgservices.in/${v}-${lang}`, title: col.videos[v][lang] }));
 
   const pillarLinks: PageModel["pillarLinks"] = [];
-  for (const k of Object.keys(PILLARS) as (keyof typeof PILLARS)[]) {
-    if (k === "hub" || k === "tools") continue;
-    const tgt = target(ctx, PILLARS[k].main, lang);
-    if (tgt) pillarLinks.push({ href: tgt.href, label: lang === "hi" ? PILLARS[k].hi : PILLARS[k].en });
+  for (const k of topics(col)) {
+    const tgt = target(ctx, col.pillars[k].main, lang);
+    if (tgt) pillarLinks.push({ href: tgt.href, label: lang === "hi" ? col.pillars[k].hi : col.pillars[k].en });
   }
 
   return {
@@ -392,26 +372,27 @@ export function buildPageModel(ctx: Ctx, r: Release): PageModel {
     videos,
     pillarLinks,
     disclaimerHref: target(ctx, "disclaimer", lang)?.href ?? null,
-    updatesHref: target(ctx, "official-pdf-and-updates", lang)?.href ?? null,
+    updatesHref: col.updatesId ? (target(ctx, col.updatesId, lang)?.href ?? null) : null,
   };
 }
 
 /**
  * The day a page last changed, for the sitemap. A page's own date is its
  * `updated` day or the day it went live, whichever is later. A page that lists
- * other pages (the guides hub, a topic's main page) also changes whenever one
- * of them goes live, so its date is the newest release day among them.
+ * other pages (the hub, a topic's main page) also changes whenever one of them
+ * goes live, so its date is the newest release day among them.
  */
-export function lastModified(ctx: Ctx, r: Release): string {
-  const published = dateOfDay(r.day);
+export function lastModified(ctx: Ctx, r: AnyRelease): string {
+  const { col } = ctx;
+  const published = col.dateOfDay(r.day);
   const updated = ctx.content.get(`${r.lang}:${r.page.id}`)!.updated;
   let latest = updated > published ? updated : published;
   const isHub = r.page.id === "hub";
-  const listsOthers = isHub || (PILLARS[r.page.pillar].main === r.page.id && r.page.pillar !== "tools");
+  const listsOthers = isHub || (col.pillars[r.page.pillar].main === r.page.id && !col.notTopics.includes(r.page.pillar));
   if (listsOthers) {
-    for (const x of releasesOn(ctx.content, ctx.day)) {
+    for (const x of releasesOn(col, ctx.content, ctx.day)) {
       if (!isHub && x.page.pillar !== r.page.pillar) continue;
-      const d = dateOfDay(x.day);
+      const d = col.dateOfDay(x.day);
       if (d > latest) latest = d;
     }
   }
@@ -452,7 +433,7 @@ export function structuredData(ctx: Ctx, m: PageModel): unknown[] {
       publisher: { "@id": `${SITE}/#org` },
       author: { "@id": `${SITE}/#org` },
       isAccessibleForFree: true,
-      about: { "@type": "CreativeWork", name: "Marketing Discipline Guidelines 2024 (MDG 2024)" },
+      about: ctx.col.about(page, lang),
     },
   ];
   if (c.faq?.length) {

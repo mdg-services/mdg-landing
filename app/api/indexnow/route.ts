@@ -1,5 +1,6 @@
 import { revalidatePath } from "next/cache";
 import { RELEASES, dayOf } from "../../../guide/schedule.ts";
+import { KK_RELEASES, kkDayOf } from "../../../kk-guide/schedule.ts";
 import { guideNow } from "@/guides/clock";
 import { json } from "@/lib/api";
 
@@ -9,8 +10,9 @@ export const maxDuration = 30;
 
 /**
  * Daily cron (vercel.json, 06:15 India time): tells Bing, Yandex and the other
- * IndexNow search engines which MDG guide pages went live today, so they are
- * crawled the same day. Google does not use IndexNow; it reads the sitemap.
+ * IndexNow search engines which guide pages went live today (the MDG guides
+ * and the Khata Kavach pages, each on its own calendar), so they are crawled
+ * the same day. Google does not use IndexNow; it reads the sitemap.
  *
  * Before it tells anyone, it throws away the saved copies of everything that
  * lists the guides by date (the sitemap, llms.txt, the hubs, and the pages with
@@ -26,13 +28,15 @@ const HOST = "mdgservices.in";
 
 /**
  * Everything whose content depends on which guide pages are live today: the
- * sitemap, llms.txt, both hubs and every guide and tool page (each shows
- * "related" and "in this section" links to the pages live that day). Each is
- * named by its real address, which is what the saved copy is filed under.
+ * sitemap, llms.txt, the hubs, every guide and tool page (each shows
+ * "related" and "in this section" links to the pages live that day), and the
+ * pages that list the newest guides (the home pages, the Khata Kavach page).
+ * Each is named by its real address, which is what the saved copy is filed
+ * under.
  */
 function refreshGuideLists(): void {
-  for (const path of ["/sitemap.xml", "/llms.txt"]) revalidatePath(path);
-  for (const r of RELEASES) revalidatePath(r.path.replace(/\/$/, ""));
+  for (const path of ["/sitemap.xml", "/llms.txt", "/", "/hi", "/khata-kavach", "/hi/khata-kavach"]) revalidatePath(path);
+  for (const r of [...RELEASES, ...KK_RELEASES]) revalidatePath(r.path.replace(/\/$/, ""));
 }
 
 async function handler(req: Request): Promise<Response> {
@@ -41,16 +45,19 @@ async function handler(req: Request): Promise<Response> {
     return json({ ok: false, error: "Not allowed." }, 401);
   }
   refreshGuideLists();
-  const day = dayOf(guideNow());
-  const urlList = RELEASES.filter((r) => r.day === day).map((r) => `https://${HOST}${r.path}`);
+  const now = guideNow();
+  const day = dayOf(now);
+  const kkDay = kkDayOf(now);
+  const urlList = [...RELEASES.filter((r) => r.day === day), ...KK_RELEASES.filter((r) => r.day === kkDay)].map((r) => `https://${HOST}${r.path}`);
   if (day === 1) urlList.push(`https://${HOST}/`);
-  if (!urlList.length) return json({ ok: true, day, sent: 0 });
+  if (kkDay === 1) urlList.push(`https://${HOST}/khata-kavach`, `https://${HOST}/hi/khata-kavach`);
+  if (!urlList.length) return json({ ok: true, day, kkDay, sent: 0 });
   const r = await fetch("https://api.indexnow.org/indexnow", {
     method: "POST",
     headers: { "content-type": "application/json; charset=utf-8" },
     body: JSON.stringify({ host: HOST, key: KEY, keyLocation: `https://${HOST}/${KEY}.txt`, urlList }),
   });
-  return json({ ok: r.ok, status: r.status, day, sent: urlList.length });
+  return json({ ok: r.ok, status: r.status, day, kkDay, sent: urlList.length });
 }
 
 // The old function answered every method the same way; so does this.

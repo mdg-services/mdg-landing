@@ -214,6 +214,14 @@ export const kk = {
     ],
   },
 
+  /* ── the guides: a few live pages on giving and keeping credit ── */
+  guides: {
+    sectionAria: "Guides on selling on credit",
+    heading: "Selling on credit, in plain words.",
+    intro: "Short pages on credit limits, getting paid, bills and how Khata Kavach compares, in Hindi and English.",
+    all: "See all guides",
+  },
+
   /* ── the way in ── */
   cta: {
     heading: "Retire the paper slip.",

@@ -4,7 +4,6 @@ import { Enter } from "../lib/enter";
 import JsonLd from "../seo/JsonLd";
 import ToolScript from "./ToolScript";
 import {
-  UI,
   buildPageModel,
   longDate,
   outline,
@@ -13,14 +12,15 @@ import {
   structuredData,
   target,
   toolScript,
+  type AnyRelease,
   type Card,
   type Ctx,
   type Lang,
   type PageModel,
-  type Release,
 } from "./model";
-import { DISCLAIMER, EMAIL, NOTICE_SHORT, OFFICIAL, TOLL_FREE } from "../../guide/copy.ts";
-import { homeHref, pathFor } from "../i18n/lang";
+import { EMAIL, OFFICIAL } from "../../guide/copy.ts";
+import { homeHref } from "../i18n/lang";
+import { guideNav } from "./nav";
 
 /** The jump-link list on a page with several sections. */
 const ON_THIS_PAGE: Record<Lang, string> = { en: "On this page", hi: "इस पेज पर" };
@@ -30,17 +30,20 @@ const TOC_FROM = 4;
 
 /**
  * One page of the guides, drawn in the site's own design: its navbar and
- * footer, a navy band with the breadcrumb, the title and the short answer, a
+ * footer, a dark band with the breadcrumb, the title and the short answer, a
  * calm reading column on the paper background, and the notice and disclaimer
  * kept in view but quiet.
  *
  * It is a server component. The only script on it is the tool's own, on a tool
  * page (`ToolScript`). Its styles are the `.guide-*` rules in index.css.
  */
-export default function GuidePage({ ctx, release }: { ctx: Ctx; release: Release }) {
+export default function GuidePage({ ctx, release }: { ctx: Ctx; release: AnyRelease }) {
   const m = buildPageModel(ctx, release);
   const { page, lang, c } = m;
-  const t = UI[lang];
+  const { col } = ctx;
+  const t = col.ui[lang];
+  const look = col.look;
+  const cta = col.cta(lang);
   /** A full stop in the page's own script */
   const stop = lang === "hi" ? "।" : ".";
   const otherLang: Lang = lang === "en" ? "hi" : "en";
@@ -48,8 +51,8 @@ export default function GuidePage({ ctx, release }: { ctx: Ctx; release: Release
   const twin = m.twin?.href ?? target(ctx, "hub", otherLang)?.href ?? homeHref(otherLang);
   const body = renderBody(ctx, lang, c.body);
   const answer = c.answer ? renderInline(ctx, lang, c.answer) : "";
-  const script = toolScript(page);
-  const disclaimer = DISCLAIMER[lang];
+  const script = toolScript(col, page);
+  const disclaimer = col.disclaimer[lang];
   // "MDG 2024" stays on one line in the heading; a break inside it reads as two things
   const h1 = c.title.replace(/MDG 2024/g, "MDG\u00a02024");
   const sections = page.id === "hub" ? [] : outline(c.body);
@@ -59,25 +62,25 @@ export default function GuidePage({ ctx, release }: { ctx: Ctx; release: Release
   const groups = m.children.map((group) => (
     <section key={group.heading} className="guide-section">
       <h2 className="guide-h2">{group.heading}</h2>
-      <CardGrid cards={group.cards} lang={lang} />
+      <CardGrid cards={group.cards} t={t} hover={look.cardHover} />
     </section>
   ));
   // the hub is a front page: its topic cards come first, the explanation after
   const hubFirst = page.id === "hub";
 
   return (
-    <div className="min-h-screen bg-paper text-ink">
+    <div className={col.themeClass ? `${look.root} ${col.themeClass}` : look.root}>
       <JsonLd data={structuredData(ctx, m)} />
-      <Navbar twin={twin} current="guides" />
+      <Navbar twin={twin} current={col.nav} {...guideNav(col, lang)} />
 
       <main>
         {/* hero band: breadcrumb, title, short answer */}
-        <section className="guide-hero relative overflow-hidden bg-navy-950 text-white">
+        <section className={look.hero}>
           <div aria-hidden className="absolute inset-0 bg-grid-dark opacity-40" />
           <div
             aria-hidden
             className="pointer-events-none absolute -right-24 -top-20 h-[22rem] w-[22rem] rounded-full sm:h-[26rem] sm:w-[26rem]"
-            style={{ background: "radial-gradient(circle, rgba(245,165,36,.16), transparent 60%)" }}
+            style={{ background: look.heroGlow }}
           />
           <div className="wrap-narrow relative py-12 sm:py-14 md:py-16">
             <Enter>
@@ -109,7 +112,7 @@ export default function GuidePage({ ctx, release }: { ctx: Ctx; release: Release
                 <div className="mt-7 rounded-2xl border border-white/15 bg-white/[0.06] p-5 backdrop-blur sm:p-6">
                   <p className="eyebrow-light guide-label">{t.shortAnswer}</p>
                   <p
-                    className="guide-answer mt-3 text-[16px] leading-[1.65] text-navy-50 sm:text-[17px]"
+                    className={`guide-answer mt-3 text-[16px] leading-[1.65] ${look.answerText} sm:text-[17px]`}
                     dangerouslySetInnerHTML={{ __html: answer }}
                   />
                 </div>
@@ -121,7 +124,7 @@ export default function GuidePage({ ctx, release }: { ctx: Ctx; release: Release
 
         {/* the notice: a slim strip, always in view */}
         <div className="border-b border-ink-hairline bg-paper-warm">
-          <p className="guide-notice wrap-narrow py-3 text-[13px] leading-[1.6] text-ink-muted">{NOTICE_SHORT[lang]}</p>
+          <p className="guide-notice wrap-narrow py-3 text-[13px] leading-[1.6] text-ink-muted">{col.notice[lang]}</p>
         </div>
 
         {/* the reading column */}
@@ -169,7 +172,7 @@ export default function GuidePage({ ctx, release }: { ctx: Ctx; release: Release
                 {m.videos.map((v) => (
                   <a key={v.href} href={v.href} rel="noopener" className="guide-card group">
                     <span className="eyebrow guide-label">{t.video} · 1 min</span>
-                    <strong className="mt-3 block font-display text-[17px] font-semibold leading-snug text-ink group-hover:text-navy-700">
+                    <strong className={`mt-3 block font-display text-[17px] font-semibold leading-snug text-ink ${look.cardHover}`}>
                       {v.title}
                     </strong>
                   </a>
@@ -187,7 +190,7 @@ export default function GuidePage({ ctx, release }: { ctx: Ctx; release: Release
                 {c.faq.map((f, i) => (
                   <details key={f.q} className="guide-faq">
                     <summary>
-                      <span className="num text-[15px] font-semibold text-navy-500">{String(i + 1).padStart(2, "0")}</span>
+                      <span className={`num text-[15px] font-semibold ${look.faqNumber}`}>{String(i + 1).padStart(2, "0")}</span>
                       <span
                         className="font-display text-[17px] font-semibold leading-snug text-ink md:text-[19px]"
                         dangerouslySetInnerHTML={{ __html: renderInline(ctx, lang, f.q) }}
@@ -205,43 +208,45 @@ export default function GuidePage({ ctx, release }: { ctx: Ctx; release: Release
             </section>
           )}
 
-          <p className="mt-12 rounded-2xl border border-ink-hairline bg-white p-4 text-[15px] leading-[1.6] text-ink-soft">
-            <b className="font-semibold text-ink">{t.officialTitle}:</b>{" "}
-            <a href={OFFICIAL.bpcl} rel="noopener" target="_blank" className="guide-link">
-              {t.officialBpcl}
-            </a>{" "}
-            ({t.officialAlso}).
-          </p>
+          {col.officialBox && (
+            <p className="mt-12 rounded-2xl border border-ink-hairline bg-white p-4 text-[15px] leading-[1.6] text-ink-soft">
+              <b className="font-semibold text-ink">{t.officialTitle}:</b>{" "}
+              <a href={OFFICIAL.bpcl} rel="noopener" target="_blank" className="guide-link">
+                {t.officialBpcl}
+              </a>{" "}
+              ({t.officialAlso}).
+            </p>
+          )}
 
           {related.length > 0 && (
             <section className="guide-section">
               <h2 className="guide-h2">{t.related}</h2>
-              <CardGrid cards={related} lang={lang} />
+              <CardGrid cards={related} t={t} hover={look.cardHover} />
             </section>
           )}
 
           {/* the one sales line, and it says it is an advertisement */}
           <section
             aria-labelledby="guide-ad"
-            className="relative mt-14 overflow-hidden rounded-3xl bg-gradient-to-br from-navy-700 via-navy-800 to-navy-950 p-6 text-white sm:p-9"
+            className={look.ctaBox}
           >
             <div aria-hidden className="absolute inset-0 bg-grid-dark opacity-30" />
             <div
               aria-hidden
               className="pointer-events-none absolute -right-20 -top-20 h-[18rem] w-[18rem] rounded-full"
-              style={{ background: "radial-gradient(circle, rgba(245,165,36,.18), transparent 60%)" }}
+              style={{ background: look.ctaGlow }}
             />
             <div className="relative">
-              <h2 id="guide-ad" className="eyebrow-light guide-label !text-gold-300">
-                {t.ctaTitle}
+              <h2 id="guide-ad" className={look.ctaTitle}>
+                {cta.title}
               </h2>
-              <p className="mt-4 max-w-prose2 text-[16px] leading-[1.65] text-navy-100 sm:text-[17px]">{t.cta}</p>
+              <p className={look.ctaText}>{cta.text}</p>
               <div className="mt-7 flex flex-col gap-3 sm:flex-row sm:items-center">
-                <a href={pathFor(lang, "/register")} className="btn-gold">
-                  {t.register}
+                <a href={cta.primary.href} className={look.ctaPrimary}>
+                  {cta.primary.label}
                 </a>
-                <a href={TOLL_FREE.href} className="btn-on-dark-ghost">
-                  {t.call}
+                <a href={cta.secondary.href} className={look.ctaSecondary}>
+                  {cta.secondary.label}
                 </a>
               </div>
             </div>
@@ -267,7 +272,7 @@ export default function GuidePage({ ctx, release }: { ctx: Ctx; release: Release
                 )}
               </>
             )}
-            <SmallLinks m={m} />
+            <SmallLinks m={m} t={t} />
             {/* who publishes (company and CIN) is in the disclaimer above and the site footer below; not a third time */}
             <p className="mt-5">
               {t.report}:{" "}
@@ -290,13 +295,12 @@ export default function GuidePage({ ctx, release }: { ctx: Ctx; release: Release
  * makes the whole card tappable; the description and the page count sit beside
  * it as ordinary text. See `.guide-card-link` in index.css.
  */
-function CardGrid({ cards, lang }: { cards: Card[]; lang: Lang }) {
-  const t = UI[lang];
+function CardGrid({ cards, t, hover }: { cards: Card[]; t: Record<string, string>; hover: string }) {
   return (
     <div className="grid gap-3 sm:grid-cols-2">
       {cards.map((card) => (
         <div key={card.href} className="guide-card group relative">
-          <strong className="block font-display text-[17px] font-semibold leading-snug text-ink group-hover:text-navy-700">
+          <strong className={`block font-display text-[17px] font-semibold leading-snug text-ink ${hover}`}>
             <a href={card.href} className="guide-card-link">
               {card.title}
             </a>
@@ -315,8 +319,7 @@ function CardGrid({ cards, lang }: { cards: Card[]; lang: Lang }) {
 }
 
 /** The guides hub, each live topic and the updates page: links on every page, for readers and for crawlers. (Home and Privacy are in the site footer below.) */
-function SmallLinks({ m }: { m: PageModel }) {
-  const t = UI[m.lang];
+function SmallLinks({ m, t }: { m: PageModel; t: Record<string, string> }) {
   const links: { href: string; label: string }[] = [
     ...(m.hub ? [{ href: m.hub.href, label: t.guide }] : []),
     ...m.pillarLinks,

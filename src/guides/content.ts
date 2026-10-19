@@ -1,20 +1,21 @@
 /**
- * Reading and checking the words of the guides to the Marketing Discipline
- * Guidelines 2024 (mdgservices.in/guides/, /hi/guides/, /tools/).
+ * Reading and checking the words of the guide pages, for either collection:
+ * the MDG guides (guide/content/) and the Khata Kavach pages
+ * (kk-guide/content/).
  *
- * Each page is written by hand in guide/content/<lang>/<id>.md: a JSON header
+ * Each page is written by hand in <contentDir>/<lang>/<id>.md: a JSON header
  * (title, description, short answer, questions) and a Markdown body. This file
  * parses a page, and checks it against the rules every page must keep. The
- * page renderer (src/guides/render.tsx) and the command line
- * (`npm run guide -- check`) both use it, so a page that breaks a rule fails
- * the build and the check the same way.
+ * page builder (model.ts) and the command line (`npm run guide -- check`) both
+ * use it, so a page that breaks a rule fails the build and the check the same
+ * way.
  *
  * No React and nothing from the browser in here: the command line bundles it
  * on its own.
  */
 import { existsSync, readFileSync } from "node:fs";
 import path from "node:path";
-import { PAGES, byId, type GuidePage, type Lang } from "../../guide/inventory.ts";
+import type { AnyPage, Collection, Lang } from "./collection";
 
 export interface FaqItem {
   q: string;
@@ -35,11 +36,11 @@ export interface PageContent {
 
 export const LANGS: Lang[] = ["en", "hi"];
 
-/** Words that describe how the service works, or overclaim. Never on a public page. */
-const FORBIDDEN = [/complete guide/i, /\bwe guarantee\b|\bguaranteed? (compliance|accuracy|results?)\b/i, /100\s?%\s?accurate/i, /\]\(https?:\/\/(www\.)?iocl\.com/i, /\bSDMS\b/i, /\bIRAS\b/i, /\bOCR\b/, /captcha/i, /scrap(e|ing|er)/i, /admin (panel|portal)/i, /\bour AI\b/i, /artificial intelligence/i, /ChatGPT/i, /\bClaude\b/i, /\bLLM\b/];
+/** Words that describe how the service works, or overclaim. Never on a public page of either collection. */
+const FORBIDDEN = [/complete guide/i, /\bwe guarantee\b|\bguaranteed? (compliance|accuracy|results?)\b/i, /100\s?%\s?accurate/i, /admin (panel|portal)/i, /\bour AI\b/i, /artificial intelligence/i, /ChatGPT/i, /\bClaude\b/i, /\bLLM\b/];
 
-export function contentPath(root: string, lang: Lang, id: string): string {
-  return path.join(root, "guide", "content", lang, `${id}.md`);
+export function contentPath(root: string, col: Collection, lang: Lang, id: string): string {
+  return path.join(root, col.contentDir, lang, `${id}.md`);
 }
 
 export function parseContent(raw: string, where: string): PageContent {
@@ -55,8 +56,8 @@ export function parseContent(raw: string, where: string): PageContent {
 }
 
 /** Every problem with one page's words, as readable lines. Empty = fine. */
-export function checkContent(page: GuidePage, lang: Lang, c: PageContent): string[] {
-  const where = `${lang}/${page.id}.md`;
+export function checkContent(col: Collection, page: AnyPage, lang: Lang, c: PageContent): string[] {
+  const where = `${col.key === "mdg" ? "" : `${col.key}:`}${lang}/${page.id}.md`;
   const errs: string[] = [];
   const need = (ok: unknown, msg: string) => {
     if (!ok) errs.push(`${where}: ${msg}`);
@@ -75,11 +76,11 @@ export function checkContent(page: GuidePage, lang: Lang, c: PageContent): strin
   for (const f of c.faq || []) need(f && f.q && f.a && f.a.length >= 40, `faq item "${f?.q}" needs a question and an answer of 40+ characters`);
   need(!/^#\s/m.test(c.body), "body must not contain a level-1 heading (# ...); the title is the H1");
   if (page.type !== "Tool") need((c.body.match(/^##\s/gm) || []).length >= 2 || page.type === "Legal", "body needs at least two ## sections");
-  for (const ref of c.body.matchAll(/\]\(@([a-z0-9-]+)(?:#[^)]*)?\)/g)) need(byId.has(ref[1]), `link to unknown page @${ref[1]}`);
-  for (const id of c.related || []) need(byId.has(id), `related lists unknown page ${id}`);
-  for (const tag of c.body.matchAll(/\{\{([^}]*)\}\}/g)) need(/^(2012:)?[0-9A-Za-z.()–\-, ]+$|^circular$|^annexure [0-9a-z]+$|^penalty-note$/i.test(tag[1].trim()), `odd clause tag {{${tag[1]}}}`);
+  for (const ref of c.body.matchAll(/\]\(@([a-z0-9-]+)(?:#[^)]*)?\)/g)) need(col.byId.has(ref[1]), `link to unknown page @${ref[1]}`);
+  for (const id of c.related || []) need(col.byId.has(id), `related lists unknown page ${id}`);
+  for (const tag of c.body.matchAll(/\{\{([^}]*)\}\}/g)) need(col.tagOk(tag[1]), `odd tag {{${tag[1]}}}`);
   const text = [c.title, c.description, c.answer || "", c.body, ...(c.faq || []).flatMap((f) => [f.q, f.a])].join("\n");
-  for (const bad of FORBIDDEN) need(!bad.test(text), `contains a forbidden word (${bad}); say what a dealer gets, never how the work is done`);
+  for (const bad of [...FORBIDDEN, ...col.forbidden]) need(!bad.test(text), `contains a forbidden word (${bad}); say what the reader gets, never how the work is done, and claim nothing we cannot prove`);
   if (lang === "hi") need(/[ऀ-ॿ]/.test(c.body), "Hindi page has no Devanagari in its body");
   // Crisp pages: the body (without markup) plus the questions, counted in words.
   const words = (x: string) => (x.replace(/<[^>]+>/g, " ").replace(/\{\{[^}]*\}\}/g, " ").match(/[\p{L}\p{N}]+/gu) || []).length;
@@ -93,20 +94,21 @@ export function checkContent(page: GuidePage, lang: Lang, c: PageContent): strin
   return errs;
 }
 
-export function loadAll(root: string): { content: Map<string, PageContent>; errors: string[] } {
+export function loadAll(root: string, col: Collection): { content: Map<string, PageContent>; errors: string[] } {
   const content = new Map<string, PageContent>();
   const errors: string[] = [];
-  for (const page of PAGES) {
+  for (const page of col.pages) {
     for (const lang of LANGS) {
       if (lang === "hi" && !page.hi) continue;
-      const file = contentPath(root, lang, page.id);
+      const where = `${col.key === "mdg" ? "" : `${col.key}:`}${lang}/${page.id}.md`;
+      const file = contentPath(root, col, lang, page.id);
       if (!existsSync(file)) {
-        errors.push(`${lang}/${page.id}.md: missing`);
+        errors.push(`${where}: missing`);
         continue;
       }
       try {
-        const c = parseContent(readFileSync(file, "utf8"), `${lang}/${page.id}.md`);
-        errors.push(...checkContent(page, lang, c));
+        const c = parseContent(readFileSync(file, "utf8"), where);
+        errors.push(...checkContent(col, page, lang, c));
         content.set(`${lang}:${page.id}`, c);
       } catch (e) {
         errors.push((e as Error).message);

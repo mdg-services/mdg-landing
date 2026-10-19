@@ -10,9 +10,22 @@ const CARDS = [
     stats: [["536 / 557", "figures matched your own book"], ["45", "compliance items on the clock"], ["2", "languages, everywhere"]],
     foot: "mdgservices.in",
   },
+  {
+    // Khata Kavach: the product page and its guides. Pine and cream, like the apps.
+    key: "kk",
+    out: "/Users/dissu/Documents/PP/mdg-service/mdg-landing/public/og-kk.png",
+    bg: "#0B3F33", fg: "#FFFEFB", dim: "#C9DDD4", accent: "#E3EEE8", line: "#1F5A4B",
+    mark: "Khata Kavach · MDG Services",
+    h: `Every credit sale written once.<br><span style="color:#E3EEE8">Seen by both.</span>`,
+    sub: `The shared credit book between a business and its regular customers. The customer asks first, the counter checks the limit, and both see every sale.`,
+    stats: [["2", "apps: one for the business, one for the customer"], ["3", "lights at the counter: serve, call the manager, no credit"], ["0", "rupees lent or held by Khata Kavach"]],
+    foot: "mdgservices.in/khata-kavach",
+  },
 ];
+// ONLY=kk renders just that card (the others stay byte for byte as they are).
+const only = process.env.ONLY;
 const b = await chromium.launch({ executablePath: "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" });
-for (const c of CARDS) {
+for (const c of CARDS.filter((x) => !only || x.key === only)) {
   const p = await b.newPage({ viewport: { width: 1200, height: 630 }, deviceScaleFactor: 2 });
   await p.setContent(`<!doctype html><html><head><meta charset="utf-8">
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500&family=Tiro+Devanagari+Hindi&display=swap" rel="stylesheet">

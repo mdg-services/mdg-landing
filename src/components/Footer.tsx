@@ -91,6 +91,13 @@ export default function Footer({ lang }: { lang: Lang }) {
                 <Link href={pathFor(lang, "/khata-kavach")} className="link-quiet tap-pad text-navy-100 hover:text-white">
                   {t.footer.khataApp}
                 </Link>
+                {/* the Khata Kavach guides keep a trailing slash on their addresses, so this is a plain link */}
+                <a
+                  href={lang === "hi" ? "/hi/khata-kavach/guides/" : "/khata-kavach/guides/"}
+                  className="link-quiet tap-pad mt-1 block text-[13.5px] text-navy-300 hover:text-white"
+                >
+                  {t.footer.khataGuides}
+                </a>
                 {/* not a link: the Android app is not on Google Play yet */}
                 <p className="mt-1 text-[13.5px] leading-snug text-navy-300">{t.footer.khataAndroid}</p>
               </li>

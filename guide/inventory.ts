@@ -37,7 +37,11 @@ export type PageType =
   | "Glossary"
   | "Comparison"
   | "Updates"
-  | "Legal";
+  | "Legal"
+  // used by the Khata Kavach pages (kk-guide/inventory.ts)
+  | "Feature"
+  | "Trade"
+  | "Example";
 
 export interface GuidePage {
   /** File name in guide/content/<lang>/, and the id used by [text](@id) links. */

@@ -1,19 +1,20 @@
 import { guideNow } from "@/guides/clock";
-import { PAGES, PILLARS, SITE, contextAt, isLive, pathOf, type Ctx, type Lang } from "@/guides/model";
+import { KK, MDG, SITE, contextAt, isLive, pathOf, type Ctx, type Lang } from "@/guides/model";
 import { getT } from "@/i18n/server";
 
 /**
  * llms.txt: a plain list of the site's pages for AI assistants that read it,
- * grouped the way the guide is: the company and the app, a "start here"
- * section, then one section per topic and one for the tools, each page
- * followed by its Hindi twin. Only the guide pages that are live today are
- * listed. Refreshed hourly, like the sitemap.
+ * grouped the way the guides are: the company and the apps, the MDG guides (a
+ * "start here" section, then one section per topic and one for the tools), then
+ * the Khata Kavach pages (the same, per topic), each page followed by its Hindi
+ * twin. Only the guide pages that are live today are listed. Refreshed hourly,
+ * like the sitemap.
  */
 export const revalidate = 3600;
 
 /** The sections, in order: the pillar they list and the heading they carry. */
-const SECTIONS: { pillar: keyof typeof PILLARS; heading: string }[] = [
-  { pillar: "hub", heading: "Start here: the guide, disclaimer and reference pages" },
+const SECTIONS: { pillar: string; heading: string }[] = [
+  { pillar: "hub", heading: "MDG guides: start here (the guide, disclaimer and reference pages)" },
   { pillar: "penalties", heading: "Penalties" },
   { pillar: "inspection", heading: "Inspections and notices" },
   { pillar: "density", heading: "Density and quality" },
@@ -32,7 +33,7 @@ const line = (title: string, url: string, description: string) => `[${title}](${
 
 /** One page's lines: the English entry, then its Hindi twin under it (or the Hindi entry alone when only that one is live). */
 function entry(ctx: Ctx, id: string): string[] {
-  const page = PAGES.find((p) => p.id === id)!;
+  const page = ctx.col.byId.get(id)!;
   const out: string[] = [];
   const one = (lang: Lang, nested: boolean) => {
     const c = ctx.content.get(`${lang}:${id}`)!;
@@ -47,7 +48,9 @@ function entry(ctx: Ctx, id: string): string[] {
 }
 
 export function GET(): Response {
-  const ctx = contextAt(guideNow());
+  const now = guideNow();
+  const ctx = contextAt(MDG, now);
+  const kk = contextAt(KK, now);
   const en = getT("en");
   const hi = getT("hi");
 
@@ -63,10 +66,20 @@ export function GET(): Response {
   ];
 
   const sections = SECTIONS.map(({ pillar, heading }) => {
-    const lines = PAGES.filter((p) => p.pillar === pillar).flatMap((p) => entry(ctx, p.id));
+    const lines = MDG.pages.filter((p) => p.pillar === pillar).flatMap((p) => entry(ctx, p.id));
     return lines.length ? `## ${heading}\n\n${lines.join("\n")}\n` : "";
   }).filter(Boolean);
 
-  const text = `# MDG Services: guides to the Marketing Discipline Guidelines 2024\n\n> Plain-language explanations of the Marketing Discipline Guidelines 2024 (MDG 2024) for Indian petrol pump dealers, in English and Hindi, published by MDG Services. Not the official text: refer to the oil companies' official guidelines and circulars for accurate and current rules. MDG Services is a private company, not connected with IndianOil, BPCL, HPCL or any government body.\n\n## The company and the app\n\n${company.join("\n")}\n\n${sections.join("\n")}`;
+  // The Khata Kavach pages, in the order of their topics: the front door first.
+  const kkSections = Object.entries(KK.pillars).map(([pillar, meta]) => {
+    const lines = KK.pages.filter((p) => p.pillar === pillar).flatMap((p) => entry(kk, p.id));
+    const heading = pillar === "hub" ? "Khata Kavach: start here" : `Khata Kavach: ${meta.en}`;
+    return lines.length ? `## ${heading}\n\n${lines.join("\n")}\n` : "";
+  }).filter(Boolean);
+
+  const kkIntro = kkSections.length
+    ? "\n## About the Khata Kavach pages\n\nPlain-language pages from MDG Services, the maker of Khata Kavach, on selling goods on credit (udhar) to regular customers and keeping the account, in English and Hindi. Facts about other apps come from their own websites on the date each page shows; check them there. General information, not legal, tax or financial advice.\n\n"
+    : "";
+  const text = `# MDG Services: Dealer's Kavach, Khata Kavach and plain-language guides\n\n> MDG Services (a brand of VRUOOM Private Limited, India) makes two apps: Dealer's Kavach, which keeps an Indian petrol pump dealer's filings, renewals, inspections and daily reports on time, and Khata Kavach, a shared credit book between a business and its regular customers. It also publishes plain-language guides in English and Hindi: to the Marketing Discipline Guidelines 2024 (MDG 2024) for petrol pump dealers, and to selling goods on credit. The MDG guides are not the official text: refer to the oil companies' official guidelines and circulars for accurate and current rules. MDG Services is a private company, not connected with IndianOil, BPCL, HPCL or any government body.\n\n## The company and the apps\n\n${company.join("\n")}\n\n${sections.join("\n")}${kkIntro}${kkSections.join("\n")}`;
   return new Response(text, { headers: { "content-type": "text/plain; charset=utf-8" } });
 }

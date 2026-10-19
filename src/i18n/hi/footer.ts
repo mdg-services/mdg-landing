@@ -31,6 +31,7 @@ export const footer: typeof EN = {
   appsHeading: "हमारे ऐप",
   dealerApp: "Dealer's कवच",
   khataApp: "खाता कवच",
+  khataGuides: "उधार पर माल बेचने की गाइड",
   khataAndroid: "खाता कवच एंड्रॉइड पर: जल्द Google Play पर",
 
   reachHeading: "हमसे संपर्क",

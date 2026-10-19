@@ -53,6 +53,8 @@ export const footer = {
   appsHeading: "Our apps",
   dealerApp: "Dealer's Kavach",
   khataApp: "Khata Kavach",
+  /** The Khata Kavach guides' front door: a plain link (guide addresses keep their trailing slash). */
+  khataGuides: "Guides on selling on credit",
   /** Not a link: the Android app is not on Google Play yet. */
   khataAndroid: "Khata Kavach for Android: coming to Google Play",
 

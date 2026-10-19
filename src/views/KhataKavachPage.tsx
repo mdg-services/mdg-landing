@@ -9,6 +9,7 @@ import KkTransporter from "../components/kk/KkTransporter";
 import KkNozzle from "../components/kk/KkNozzle";
 import KkTrust from "../components/kk/KkTrust";
 import KkFaq from "../components/kk/KkFaq";
+import KkGuides from "../components/kk/KkGuides";
 import KkCta from "../components/kk/KkCta";
 import { KK_ANCHORS } from "../data/kk";
 import { getT } from "../i18n/server";
@@ -49,6 +50,7 @@ export default function KhataKavachPage({ lang }: { lang: Lang }) {
         <KkTransporter lang={lang} />
         <KkNozzle lang={lang} />
         <KkTrust lang={lang} />
+        <KkGuides lang={lang} />
         <KkFaq lang={lang} />
         <KkCta
           t={t.kk.cta}

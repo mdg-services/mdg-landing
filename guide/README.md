@@ -16,6 +16,7 @@ assistant, the clearest and most correct answer is ours.
 | Page rules and rendering | `src/guides/` (`content.ts` rules, `model.ts`, `GuidePage.tsx`) |
 | Release gate (404 before a page's day) | `proxy.ts` → `src/routing/` |
 | Source documents (never published, not in git) | `.guide-source/` |
+| The Khata Kavach pages (same machine, own data and calendar) | `kk-guide/` (see `kk-guide/README.md`); what differs per set is in `src/guides/collections.ts` |
 
 Commands, from `mdg-landing/`:
 

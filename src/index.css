@@ -459,6 +459,39 @@
   .guide-prose .tool [id$="-out"],
   .guide-prose .tool [id$="-err"] { scroll-margin-top: 6rem; }
   .guide-prose .tool [tabindex="-1"]:focus { outline: none; }
+
+  /* The Khata Kavach pages: the same guide page in the product's own colours
+     (pine and cream, like /khata-kavach and the apps) instead of navy and gold.
+     `.kk-guide` wraps the page (src/guides/collections.ts, look + themeClass). */
+  .kk-guide .eyebrow { @apply text-kk-siyahi; }
+  .kk-guide .eyebrow::before,
+  .kk-guide .eyebrow-light::before { @apply bg-kk-wash; }
+  .kk-guide .eyebrow-light { @apply text-kk-steel; }
+  .kk-guide .guide-prose a,
+  .kk-guide .guide-faq-a a,
+  .kk-guide .guide-link { @apply text-kk-siyahi decoration-kk-steel; }
+  .kk-guide .guide-prose a:hover,
+  .kk-guide .guide-faq-a a:hover,
+  .kk-guide .guide-link:hover { @apply decoration-kk-siyahi; }
+  .kk-guide .guide-prose ul { @apply marker:text-kk-steel; }
+  .kk-guide .guide-prose ol { @apply marker:text-kk-siyahi; }
+  .kk-guide .guide-prose blockquote {
+    @apply border-kk-wash bg-kk-wash/60;
+    border-left-color: theme(colors.kk.siyahi);
+  }
+  .kk-guide .cl { @apply text-kk-siyahi; }
+  .kk-guide .guide-answer a { @apply text-kk-cream decoration-kk-cream/40; }
+  .kk-guide .guide-answer a:hover { @apply decoration-kk-cream; }
+  .kk-guide .guide-toc a:hover { @apply border-kk-steel text-kk-siyahi; }
+  .kk-guide .guide-faq-plus { @apply text-kk-siyahi; }
+  .kk-guide .guide-faq > summary:hover .guide-faq-plus { @apply border-kk-steel; }
+  .kk-guide .guide-card-link:focus-visible::after { outline-color: theme(colors.kk.siyahi); }
+  @media (hover: hover) and (pointer: fine) {
+    .kk-guide .guide-card:hover { @apply border-kk-steel; }
+  }
+  .kk-guide .guide-prose .tool input[type="text"],
+  .kk-guide .guide-prose .tool select { @apply focus:border-kk-siyahi; }
+  .kk-guide .guide-prose .tool button { @apply bg-kk-siyahi hover:bg-kk-deep; }
 }
 
 /* ───────────────────── Scroll reveals ─────────────────────

@@ -4,6 +4,8 @@ import { pathFor, type Lang, type SiteRoute } from "../i18n/lang";
 
 export const SITE = "https://mdgservices.in";
 export const OG_IMAGE = { url: "/og.png", width: 2400, height: 1260, alt: "MDG Services · Dealer's कवच" };
+/** Khata Kavach's own card (scripts/og.mjs, ONLY=kk): the product page and its guides. */
+export const KK_OG_IMAGE = { url: "/og-kk.png", width: 2400, height: 1260, alt: "Khata Kavach · MDG Services: every credit sale written once, seen by both" };
 
 /** Bing Webmaster Tools ownership check; keep it, Bing re-checks. */
 export const BING_VERIFICATION = "573ECDE597341A4280A1604DF38F4ADC";
@@ -32,8 +34,8 @@ export function siteMetadata(lang: Lang, route: SiteRoute): Metadata {
     "/khata-kavach": { title: t.kk.meta.title, description: t.kk.meta.description, ogTitle: t.kk.meta.ogTitle, ogDescription: t.kk.meta.description },
   };
   const { title, description, ogTitle, ogDescription } = heads[route];
-  /* the Khata Kavach pages share the home card until they have their own (public/og-kk.png) */
-  const image = OG_IMAGE;
+  /* the Khata Kavach page wears its own card */
+  const image = route === "/khata-kavach" ? KK_OG_IMAGE : OG_IMAGE;
   const canonical = pathFor(lang, page);
 
   return {

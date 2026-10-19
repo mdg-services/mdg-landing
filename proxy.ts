@@ -6,8 +6,10 @@
  *    and `/hi…` is Hindi; a `?lang=` choice, the `mdg_lang` cookie or a Hindi
  *    browser can send a visitor of an English address to its /hi twin
  *    (src/routing/site.ts).
- * 2. The guides. Five pages go live a day (guide/schedule.ts); a page whose day
- *    has not come is a real 404, and guide addresses keep their trailing slash
+ * 2. The guide pages: the MDG guides (/guides/, /tools/) and the Khata Kavach
+ *    pages (/khata-kavach/…). Each set goes live five pages a day on its own
+ *    calendar (guide/schedule.ts, kk-guide/schedule.ts); a page whose day has
+ *    not come is a real 404, and guide addresses keep their trailing slash
  *    (src/routing/guides.ts).
  * 3. The film pages (/film, /film/short). They hand the page the visitor's
  *    place in a short-lived cookie and pick the Hindi or English file; the
@@ -44,6 +46,9 @@ export const config = {
     "/hi/guides/:path*",
     "/tools/:path*",
     "/hi/tools/:path*",
+    // the Khata Kavach pages below the product page (one or more parts after it)
+    "/khata-kavach/:path+",
+    "/hi/khata-kavach/:path+",
     // a ?lang= on a Hindi address is a choice too
     { source: "/hi/:path*", has: [{ type: "query", key: "lang" }] },
     { source: "/hi", has: [{ type: "query", key: "lang" }] },
