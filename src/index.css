@@ -492,6 +492,7 @@
   .kk-guide .guide-prose .tool input[type="text"],
   .kk-guide .guide-prose .tool select { @apply focus:border-kk-siyahi; }
   .kk-guide .guide-prose .tool button { @apply bg-kk-siyahi hover:bg-kk-deep; }
+  .kk-guide .guide-prose .tool input[type="checkbox"] { @apply mr-2 h-[18px] w-[18px] align-[-3px]; accent-color: theme(colors.kk.siyahi); }
 }
 
 /* ───────────────────── Scroll reveals ─────────────────────

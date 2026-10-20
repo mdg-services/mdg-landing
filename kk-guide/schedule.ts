@@ -12,6 +12,7 @@
  */
 import { KK_PAGES, KK_PILLARS, type KkPage } from "./inventory.js";
 import { buildCalendar, dateFrom, dayFrom, type Release as CalendarRelease } from "../guide/calendar.js";
+import { KK_FIRST_CALENDAR } from "./release-history.js";
 
 /** Pages that go live each day. Each language counts as one page. */
 export const KK_PER_DAY = 5;
@@ -21,10 +22,16 @@ export const KK_START = "2026-10-19";
 
 export type KkRelease = CalendarRelease<KkPage>;
 
-/** [path, day] of pages already published (none yet). */
-export const KK_PUBLISHED: ReadonlyArray<readonly [string, number]> = [];
+/** [path, day] of pages published (the calendar frozen on 20 Oct 2026, day 2). */
+export const KK_PUBLISHED: ReadonlyArray<readonly [string, number]> = KK_FIRST_CALENDAR;
 
-export const KK_KEEP_THROUGH_DAY = 0;
+/**
+ * Pages of KK_PUBLISHED that had gone live by the end of this day keep their
+ * day. Raise it to the current day whenever the page list changes, before
+ * deploying.
+ * - 20 Oct 2026 (day 2): the udhar khata format and the credit-limit calculator added.
+ */
+export const KK_KEEP_THROUGH_DAY = 2;
 
 export const KK_RELEASES: KkRelease[] = buildCalendar({
   pages: KK_PAGES,

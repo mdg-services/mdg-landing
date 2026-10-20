@@ -70,6 +70,16 @@ export const KK_PAGES: KkPage[] = [
     brief: "How to set a credit limit for a regular customer, with worked examples in litres, bags and rupees. One-line answer first. The common rule of thumb: about what the customer buys from you in one credit period (monthly purchase × credit days ÷ 30), started lower for a new customer and raised after on-time payment; say it is a rule of thumb, not a law. A table of three made-up customers (a transporter buying diesel, a contractor buying cement, a retailer) with monthly purchase, credit days, the worked limit. Credit period: 7, 15 or 30 days and how it ties to the limit. What to do when a good customer is slightly over (decide in advance who may allow it; see @counter-over-limit). Set the limit in rupees, not litres or bags, because prices move. Mention that Khata Kavach checks the rupee limit at the counter (one sentence).",
   },
   {
+    id: "tool-khata-format", pillar: "credit", path: `${P}/credit/udhar-khata-format/`, hi: true, type: "Tool", wave: 1,
+    queries: ["udhar khata format", "udhar khata excel sheet", "udhar khata book pdf", "khata book excel format", "udhari chart", "उधार खाता फॉर्मेट", "excel mein udhar khata kaise banaye"],
+    brief: "A free udhar khata format to download and use: an Excel sheet (English or Hindi headings) with one sheet for every line and a customer sheet that adds up each customer's balance and credit left, and a printable A4 khata page (one page per customer) as a PDF. The page shows the columns as a table, how to use the sheet in five steps, and what a sheet cannot do that a shared book does (the customer does not see it as it happens). The download is free and needs no sign-up; Khata Kavach's own price is not mentioned.",
+  },
+  {
+    id: "tool-credit-limit", pillar: "credit", path: `${P}/credit/credit-limit-calculator/`, hi: true, type: "Tool", wave: 1,
+    queries: ["credit limit calculator", "how much credit to give a customer", "udhar ki limit kitni rakhe", "credit limit kaise nikale", "उधार की सीमा कैसे तय करें"],
+    brief: "A credit-limit calculator using the rule of thumb on the credit-limit page: monthly purchase × credit days ÷ 30, half for a new customer, rounded down to the nearest Rs 1,000, capped at what the owner says they could carry if the customer paid a month late. Shows the working. A rule of thumb, not a law; nothing typed is stored or sent.",
+  },
+  {
     id: "counter", pillar: "counter", path: `${P}/counter/`, hi: true, type: "Pillar", wave: 1,
     queries: ["counter staff udhar", "staff giving credit without owner", "credit sale at counter", "उधार काउंटर पर", "credit sale control"],
     brief: "Credit at the counter: who decides, who records, who sees. The owner sets the rules but is not at the counter for every sale; staff decide in seconds. The three questions staff need answered before goods go out (is this customer allowed credit today, how much is left, has the customer asked for it), and the record that must come out of every credit sale (vehicle, item, quantity, rupees, who served, time, a slip number or photo). What goes wrong with memory, a register or paper slips (no dramatisation, no statistics). The principle: decide the rule once, let the screen apply it, and let both sides see the record. Link the counter pages.",

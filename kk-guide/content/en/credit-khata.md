@@ -6,7 +6,7 @@
   "answer": "Give each customer one page. Every credit line shows the date and time, vehicle, item, quantity, rupees and who served. Every payment line shows the amount, how it was paid and which bill it clears. Never overwrite: strike a wrong line out and write a new one with the reason. Keep a running balance and share a statement each month.",
   "faq": [
     { "q": "Udhar khata kaise likhe? (How do I write an udhar khata?)", "a": "Draw one page per customer with columns for date, entry, vehicle, item and quantity, rupees given, rupees received and balance. Write each sale when it happens, not at night." },
-    { "q": "Can I keep an udhar khata in Excel (udhar khata excel sheet)?", "a": "Yes. Use the same columns, one sheet per customer. The balance cell is the balance above it, plus Given, minus Received." },
+    { "q": "Can I keep an udhar khata in Excel (udhar khata excel sheet)?", "a": "Yes. Use the same columns, or download the free [udhar khata format](@tool-khata-format), which works out each customer's balance for you." },
     { "q": "What is the udhar khata format?", "a": "One page per customer, with columns for date, entry, vehicle, item and quantity, rupees given, rupees received and balance. The table below shows it, with a made-up example." },
     { "q": "Udhar ka hisab kaise rakhe?", "a": "Give each customer a page, write each sale when it happens, never overwrite, and keep a running balance. A shared book such as Khata Kavach does the same on a phone." },
     { "q": "How do I carry over the balance from my old book?", "a": "Write the old balance as the first line of the customer's new page and carry on from there. When you add a customer, Khata Kavach has an optional box \"Balance from the paper book\"." },

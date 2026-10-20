@@ -20,7 +20,7 @@ Ask: how much does this customer buy from you in one credit period? That is a se
 
 **Limit = monthly purchase × credit days ÷ 30**
 
-It is a rule of thumb, not a law. Your own margin, the customer's other dues and how reliably they have paid you can move it up or down. A new customer starts lower, say at half, and rises after on-time payments.
+It is a rule of thumb, not a law. Your own margin, the customer's other dues and how reliably they have paid you can move it up or down. A new customer starts lower, say at half, and rises after on-time payments. To work it out for one customer, use the [credit limit calculator](@tool-credit-limit).
 
 ## Three worked limits
 
