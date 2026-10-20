@@ -22,14 +22,27 @@ export const KK_START = "2026-10-19";
 
 export type KkRelease = CalendarRelease<KkPage>;
 
-/** [path, day] of pages published (the calendar frozen on 20 Oct 2026, day 2). */
-export const KK_PUBLISHED: ReadonlyArray<readonly [string, number]> = KK_FIRST_CALENDAR;
+/**
+ * Pages put out ahead of the calendar, on a day of their own choosing, outside
+ * the five a day. Every page here must be on or before KK_KEEP_THROUGH_DAY.
+ * - 20 Oct 2026 (day 2): the udhar khata format and the credit-limit calculator.
+ */
+const KK_EARLY: ReadonlyArray<readonly [string, number]> = [
+  ["/khata-kavach/credit/udhar-khata-format/", 2],
+  ["/hi/khata-kavach/credit/udhar-khata-format/", 2],
+  ["/khata-kavach/credit/credit-limit-calculator/", 2],
+  ["/hi/khata-kavach/credit/credit-limit-calculator/", 2],
+];
+
+/** [path, day] of pages published (the calendar frozen on 20 Oct 2026, day 2, and the early pages). */
+export const KK_PUBLISHED: ReadonlyArray<readonly [string, number]> = [...KK_FIRST_CALENDAR, ...KK_EARLY];
 
 /**
  * Pages of KK_PUBLISHED that had gone live by the end of this day keep their
  * day. Raise it to the current day whenever the page list changes, before
  * deploying.
- * - 20 Oct 2026 (day 2): the udhar khata format and the credit-limit calculator added.
+ * - 20 Oct 2026 (day 2): the udhar khata format and the credit-limit calculator added,
+ *   and put out the same day (KK_EARLY).
  */
 export const KK_KEEP_THROUGH_DAY = 2;
 
