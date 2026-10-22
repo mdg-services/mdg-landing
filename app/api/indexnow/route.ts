@@ -15,7 +15,7 @@ export const maxDuration = 30;
  * the same day. Google does not use IndexNow; it reads the sitemap.
  *
  * Before it tells anyone, it throws away the saved copies of everything that
- * lists the guides by date (the sitemap, llms.txt, the hubs, and the pages with
+ * lists the guides by date (llms.txt, the hubs, and the pages with
  * their "related" and "in this section" links). Those pages refresh hourly, but
  * only when somebody asks, so without this the first visit after midnight India
  * time - the crawl IndexNow starts - would still be handed yesterday's list.
@@ -27,15 +27,16 @@ const KEY = "4ae7e0c80185fc80b0c6d75bc28f80ab";
 const HOST = "mdgservices.in";
 
 /**
- * Everything whose content depends on which guide pages are live today: the
- * sitemap, llms.txt, the hubs, every guide and tool page (each shows
+ * Everything whose content depends on which guide pages are live today:
+ * llms.txt, the hubs, every guide and tool page (each shows
  * "related" and "in this section" links to the pages live that day), and the
  * pages that list the newest guides (the home pages, the Khata Kavach page).
  * Each is named by its real address, which is what the saved copy is filed
  * under.
  */
 function refreshGuideLists(): void {
-  for (const path of ["/sitemap.xml", "/llms.txt", "/", "/hi", "/khata-kavach", "/hi/khata-kavach"]) revalidatePath(path);
+  // The sitemap is built fresh on every request, so it has no saved copy to throw away.
+  for (const path of ["/llms.txt", "/", "/hi", "/khata-kavach", "/hi/khata-kavach"]) revalidatePath(path);
   for (const r of [...RELEASES, ...KK_RELEASES]) revalidatePath(r.path.replace(/\/$/, ""));
 }
 

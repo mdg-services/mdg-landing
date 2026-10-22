@@ -7,9 +7,14 @@ import { ALL, SITE, contextAt, lastModified, releasesOn } from "@/guides/model";
  * The sitemap lists the site's own pages and the guide pages of both
  * collections (the MDG guides, the Khata Kavach pages) that are live today
  * (India time); each list grows by itself, five pages a day, with no deploy.
- * Refreshed hourly.
+ *
+ * Built fresh on every request. With `revalidate = 3600` it worked under
+ * `next start` but never refreshed on Vercel: the CDN kept answering with the
+ * copy made at deploy time (on 22 Oct 2026 it still listed 20 Oct's pages, 20
+ * live guide pages missing). Crawlers ask for it a few times a day, so the
+ * cost is nothing.
  */
-export const revalidate = 3600;
+export const dynamic = "force-dynamic";
 
 /** The Hindi twins of the site's own pages. */
 const HINDI_PAGES = ["/hi", "/hi/register", "/hi/grievance"];
