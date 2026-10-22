@@ -92,7 +92,7 @@ video::cue{font:600 clamp(19px,5.4vw,28px)/1.4 var(--sys);color:var(--fg);backgr
 /* the speed, always in view with the controls: a tap goes 1.2x, 1x, 1.5x */
 .rate{margin-left:auto;min-width:56px;min-height:44px;padding:0 12px;border:0;border-radius:999px;background:rgba(247,247,255,.16);
   font-size:16px;font-weight:800;font-variant-numeric:tabular-nums}
-.hd{margin-left:8px;padding:2px 6px;border:1.5px solid currentColor;border-radius:5px;font-size:12px;font-weight:800;
+.hd{position:absolute;top:12px;right:12px;padding:2px 6px;border:1.5px solid currentColor;border-radius:5px;font-size:12px;font-weight:800;
   line-height:1.2;letter-spacing:.04em}
 .ic{display:grid;place-items:center;width:46px;height:46px;border:0;border-radius:50%;background:transparent}
 .ic svg{width:26px;height:26px}
@@ -179,7 +179,7 @@ video::cue{font:600 clamp(19px,5.4vw,28px)/1.4 var(--sys);color:var(--fg);backgr
 .dot.dark{background:rgba(247,247,255,.07);box-shadow:inset 0 0 0 1px var(--edge)}
 /* the reply: the one green thing, a deep green bar with its own edge; its second line says the message is typed */
 .btn.reply{justify-content:flex-start;gap:14px;min-height:72px;padding:12px 18px 12px 12px;border-radius:18px;
-  background:linear-gradient(100deg,var(--wa-deep),var(--wa-mid) 70%,#24834f);box-shadow:inset 0 0 0 1px rgba(88,214,141,.5);
+  background:linear-gradient(100deg,#13703a,#1a8c4b 55%,#23a95c);box-shadow:inset 0 0 0 1px rgba(110,231,160,.55);
   color:#fff;text-align:left}
 .btn.reply .dot{background:rgba(255,255,255,.12);box-shadow:inset 0 0 0 1px rgba(255,255,255,.2)}
 .btn.reply .dot svg{width:28px;height:28px}
@@ -197,12 +197,14 @@ video::cue{font:600 clamp(19px,5.4vw,28px)/1.4 var(--sys);color:var(--fg);backgr
 /* ── under the picture: the reply, always on the first screen ── */
 .act{display:flex;flex-direction:column;gap:12px;padding:12px 16px}
 .act .btn{max-width:none}
+.act .alt{justify-content:flex-start;gap:14px;min-height:60px;padding:0 18px;border-radius:18px;background:rgba(245,165,36,.06)}
+.act .alt svg{width:24px;height:24px}
+.act .alt::after{content:"";width:10px;height:10px;margin:0 6px 0 auto;border-right:2.5px solid currentColor;border-bottom:2.5px solid currentColor;transform:rotate(-45deg)}
 .ended .act{display:none}
-.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 /* ── the other ways in, least effort first: cards with a defining edge ── */
 .next{display:flex;flex-direction:column;gap:14px;padding:28px 16px 4px;scroll-margin-top:12px}
-.next h2,.ch h2{margin:0;font-size:22px;font-weight:800;line-height:1.3}
-.way,.cb,.ch ol,.dock{border-radius:18px;background:var(--card);box-shadow:inset 0 0 0 1px var(--edge)}
+.next h2{margin:0;font-size:22px;font-weight:800;line-height:1.3}
+.way,.box,.ch ol,.safe,.tabs{border-radius:18px;background:var(--card);box-shadow:inset 0 0 0 1px var(--edge)}
 .way{display:flex;align-items:center;gap:16px;min-height:76px;padding:16px 16px 16px 18px;text-decoration:none;color:var(--fg)}
 .way div{flex:1;min-width:0}
 .way b{display:block;font-size:17px;line-height:1.35}
@@ -210,33 +212,42 @@ video::cue{font:600 clamp(19px,5.4vw,28px)/1.4 var(--sys);color:var(--fg);backgr
 .way span{display:block;margin-top:4px;color:var(--dim);font-size:16px;line-height:1.4}
 .way .dot.dark svg{width:26px;height:26px}
 /* the form: its own card, a head like the rows above, marks inside the boxes */
-.cb{display:flex;flex-direction:column;gap:12px;padding:18px}
-.cb .head{display:flex;align-items:flex-start;gap:16px;margin-bottom:4px}
-.cb .head b{display:block;font-size:18px;line-height:1.35}
-.cb .head p{margin:4px 0 0;color:var(--dim);font-size:16px;line-height:1.45}
-.f{position:relative;display:block}
-.f>svg{position:absolute;left:16px;top:50%;width:20px;height:20px;margin-top:-10px;color:var(--dim);pointer-events:none}
-.cb input{width:100%;min-height:54px;padding:12px 14px 12px 48px;border:1px solid var(--field);border-radius:14px;background:rgba(7,8,28,.45);
+.cb{display:flex;flex-direction:column;gap:8px}
+.head{display:flex;align-items:center;gap:16px}
+.head b{display:block;font-size:18px;line-height:1.35}
+.head span,.cb .head p{display:block;margin:2px 0 0;color:var(--dim);font-size:16px;line-height:1.45}
+.cb .head{margin-bottom:8px}
+.cb label{margin-top:8px;font-size:16px;font-weight:700}
+.cb label i{font-style:normal;font-weight:500;color:var(--dim)}
+.cb input{width:100%;min-height:54px;padding:12px 16px;border:1px solid var(--field);border-radius:14px;background:rgba(7,8,28,.45);
   color:var(--fg);font:inherit;font-size:17px}
 .cb input::placeholder{color:#a3a5d4}
 .cb input:focus{outline:0;border-color:var(--acc);box-shadow:0 0 0 1px var(--acc)}
 .cb input[aria-invalid=true]{border-color:var(--bad);box-shadow:0 0 0 1px var(--bad)}
-.cb .btn{max-width:none;margin-top:4px;border-radius:14px}
-.cb .btn svg{margin-left:2px}
+.tel{display:flex;gap:10px}
+.tel span{display:grid;place-items:center;flex:none;min-width:68px;border:1px solid var(--field);border-radius:14px;font-weight:700}
+.cb .btn{max-width:none;margin-top:12px;border-radius:16px}
 .cb .btn:disabled{opacity:.6}
-.cb .msg{margin:0;font-size:16px;font-weight:700;color:var(--bad);overflow-wrap:anywhere}
+.cb .msg{margin:8px 0 0;font-size:16px;font-weight:700;color:var(--bad);overflow-wrap:anywhere}
 .cb .msg:empty{display:none}
 .cb .msg.ok{color:#8ee6b0}
-.cb .after{display:none;align-items:center;gap:12px;min-height:48px;color:#5be095;font-weight:700}
-.cb .after .dot{width:36px;height:36px;background:rgba(37,211,102,.15)}
-.cb .after svg{width:20px;height:20px}
-.cb.done .f,.cb.done button,.cb.done .head p{display:none}
-.cb.done .msg{font-size:19px}
-.cb.done .after{display:flex}
+.safe{display:flex;align-items:flex-start;gap:14px;padding:16px 18px}
+.safe b{display:block;font-size:16px}
+.safe span{display:block;margin-top:4px;color:var(--dim);font-size:15px;line-height:1.45}
+.okc{display:grid;place-items:center;flex:none;width:28px;height:28px;border-radius:50%;background:#1fa855;color:#fff}
+.okc svg{width:18px;height:18px}
 /* ── chapters: one card, a still from the film on each row ── */
-.ch{display:flex;flex-direction:column;gap:14px;padding:28px 16px 4px}
-.ch .top{display:flex;align-items:baseline;justify-content:space-between;gap:12px}
-.ch .top span{color:var(--dim);font-size:15px;font-variant-numeric:tabular-nums;white-space:nowrap}
+.info{display:flex;flex-direction:column;gap:14px;padding:28px 16px 4px}
+.info [role=tabpanel]{display:flex;flex-direction:column;gap:10px}
+.info [hidden]{display:none}
+.tabs{display:flex;gap:4px;padding:4px;border-radius:16px}
+.tabs button{flex:1;min-height:48px;border:0;border-radius:12px;background:none;color:var(--dim);font-size:16px;font-weight:700}
+.tabs [aria-selected=true]{background:rgba(245,165,36,.12);color:var(--acc);box-shadow:inset 0 -2px 0 var(--acc)}
+.meta{margin:0 4px;color:var(--dim);font-size:15px;text-align:right;font-variant-numeric:tabular-nums}
+.box{display:flex;flex-direction:column;gap:14px;padding:18px}
+.about{overflow:hidden}
+.about p{margin:0;color:var(--dim);font-size:16px;line-height:1.55}
+.about img{display:block;width:calc(100% + 36px);height:auto;margin:4px -18px -18px}
 .ch ol{list-style:none;margin:0;padding:6px}
 .ch li+li{border-top:1px solid var(--rule)}
 .ch button{display:flex;align-items:center;gap:14px;width:100%;min-height:64px;padding:10px;border:0;border-radius:14px;
@@ -253,22 +264,55 @@ video::cue{font:600 clamp(19px,5.4vw,28px)/1.4 var(--sys);color:var(--fg);backgr
 .ch button[aria-current] .tt span{color:var(--acc)}
 .ch button[aria-current] .tt b{font-weight:700}
 @media (max-width:419px){.tt{flex-direction:column;gap:2px}.ch img{width:84px;height:52px}}
-/* ── settings, folded away: most people never need them ── */
-.dock{margin:28px 16px 0}
-.dock summary{display:flex;align-items:center;min-height:60px;padding:0 18px;font-size:17px;font-weight:700;cursor:pointer;list-style:none}
-.dock summary::-webkit-details-marker{display:none}
-.dock summary::after{content:"";width:10px;height:10px;margin:-6px 6px 0 auto;border-right:2.5px solid var(--dim);
-  border-bottom:2.5px solid var(--dim);transform:rotate(45deg)}
-.dock[open] summary::after{margin-top:6px;transform:rotate(225deg)}
-.dock[open]{display:flex;flex-direction:column;gap:12px;padding-bottom:16px}
-.dock[open]>*:not(summary){margin:0 18px}
+/* ── a screen for each thing to do, and sheets over the film ── */
+html.lock{overflow:hidden}
+.view{position:fixed;inset:0;z-index:40;display:flex;overflow:auto;overscroll-behavior:contain;background:var(--bg)}
+.view .pane{display:flex;flex:1;flex-direction:column;gap:16px;width:100%;max-width:480px;margin:0 auto;padding:4px 16px 28px}
+.bar{display:flex;align-items:center;gap:6px;min-height:56px;margin:0 -8px}
+.bar b{font-size:19px;font-weight:800}
+.bar .x{margin-left:auto}
+.ic svg{pointer-events:none}
+.sheet{align-items:flex-end;background:rgba(7,8,28,.66)}
+.sheet .pane{flex:none;border-radius:24px 24px 0 0;background:var(--card);box-shadow:inset 0 1px 0 var(--edge);
+  padding-bottom:max(24px,env(safe-area-inset-bottom))}
+.hero{display:flex;flex-direction:column;align-items:center;gap:6px;padding:12px 0 4px;text-align:center}
+.hero p{margin:10px 0 0;font-size:17px}
+.hero>span{color:var(--dim);font-size:16px}
+.dot.xl{width:96px;height:96px}
+.dot.xl svg{width:44px;height:44px}
+.num{color:var(--acc);font-size:32px;font-weight:800;letter-spacing:.01em;text-decoration:none;font-variant-numeric:tabular-nums}
+.view .btn{max-width:none}
+.thanks{margin:auto 0;gap:12px}
+.thanks b{font-size:28px}
+.thanks p{margin:0 0 16px;color:var(--dim);font-size:17px;line-height:1.5}
+.tick{position:relative;display:grid;place-items:center;width:96px;height:96px;margin-bottom:12px;border-radius:50%;background:#1fa855;color:#fff}
+.tick svg{width:52px;height:52px}
+/* a few dots of colour round the tick */
+.fx{position:absolute;left:50%;top:50%;width:6px;height:6px;border-radius:50%;
+  box-shadow:-70px -40px 0 var(--acc),68px -46px 0 #5be095,-82px 18px 0 #9aa0ff,84px 22px 0 var(--acc),-40px -74px 0 #5be095,44px 70px 0 #9aa0ff,-54px 64px 0 var(--acc)}
+.pts{list-style:none;margin:0;padding:6px 18px}
+.pts li{display:flex;align-items:center;gap:16px;padding:14px 0}
+.pts li+li{border-top:1px solid var(--rule)}
+.pts b{display:block;font-size:17px}
+.pts span{display:block;margin-top:2px;color:var(--dim);font-size:15px;line-height:1.4}
+.lead{margin:-6px 0 4px;color:var(--dim);font-size:16px;line-height:1.5}
+.btn.wa{background:linear-gradient(100deg,#13703a,#1a8c4b 55%,#23a95c);color:#fff}
+.btn.wa svg{width:24px;height:24px}
+.btn.line{background:transparent;box-shadow:inset 0 0 0 1px var(--edge)}
+.apps{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:6px}
+.apps a,.apps button{display:flex;flex-direction:column;align-items:center;gap:8px;min-height:44px;padding:4px 0;border:0;background:none;
+  color:var(--fg);font-size:14px;font-weight:600;text-decoration:none}
+.apps [hidden]{display:none}
+.dot.g{background:#25d366;color:#fff}
+.dot.tg{background:#2aa3df;color:#fff}
+.dot.em{background:#ea4335;color:#fff}
+.sets{display:flex;flex-direction:column;gap:14px}
 .set{display:flex;align-items:center;gap:12px}
 .set>span{flex:0 0 78px;font-size:16px;font-weight:600;color:var(--dim)}
 .seg{display:flex;flex:1;gap:2px;padding:3px;border-radius:999px;background:rgba(7,8,28,.45);box-shadow:inset 0 0 0 1px var(--edge)}
 .seg button{flex:1;min-height:44px;padding:0 6px;border:0;border-radius:999px;background:transparent;color:var(--dim);
   font-size:16px;font-weight:700;font-variant-numeric:tabular-nums;white-space:nowrap}
 .seg button[aria-pressed=true]{background:var(--fg);color:var(--ink)}
-.dock .btn{width:auto;max-width:none;margin-top:4px;box-shadow:inset 0 0 0 1px var(--edge)}
 .soon{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:28px;height:100%;
   text-align:center;background:var(--panel)}
 .soon img{width:72px;height:72px;opacity:.95}
@@ -279,15 +323,17 @@ footer a{display:inline-flex;align-items:center;min-height:44px;color:var(--dim)
 /* press feedback on everything a thumb can hit */
 .btn,.way,.lnk,.rate,.wpill,.ch button,.seg button{transition:transform .12s var(--out),background-color .15s var(--out)}
 .btn:active,.way:active,.lnk:active,.rate:active,.wpill:active{transform:scale(.97)}
-@media (hover:hover){.seg button:hover,.ch button:hover{background:var(--panel2)}.way:hover{box-shadow:inset 0 0 0 1px rgba(247,247,255,.28)}.btn.reply:hover{box-shadow:inset 0 0 0 1px #58d68d}.ic:hover,.rate:hover{background:rgba(247,247,255,.24)}}
+@media (hover:hover){.seg button:hover,.ch button:hover{background:var(--panel2)}.way:hover{box-shadow:inset 0 0 0 1px rgba(247,247,255,.28)}.btn.reply:hover{box-shadow:inset 0 0 0 1px #6ee7a0}.tabs button:hover{color:var(--fg)}.ic:hover,.rate:hover{background:rgba(247,247,255,.24)}}
 @media (prefers-reduced-motion:reduce){.snd{animation:none}.load i::after{animation:none;width:100%;opacity:.6}
   .wait i{animation-duration:2.4s}.ui,.stage.on .ui{transition:none}.btn,.way,.lnk,.rate,.wpill{transition:none}
   .btn:active,.way:active,.lnk:active,.rate:active,.wpill:active{transform:none}}
 @media (min-width:600px){:root{--hd:64px}
   header p{display:block}
   .stage{width:var(--stage);border-radius:14px}
-  .act,.next,.ch,footer{width:max(var(--stage),340px);margin:0 auto;padding-left:0;padding-right:0}
-  .dock{width:max(var(--stage),340px);margin:28px auto 0}}
+  .act,.next,.info,footer{width:max(var(--stage),340px);margin:0 auto;padding-left:0;padding-right:0}
+  .view{align-items:center;padding:24px;background:rgba(7,8,28,.72)}
+  .view .pane{flex:none;max-height:100%;overflow:auto;border-radius:24px;background:var(--bg);box-shadow:inset 0 0 0 1px var(--edge),0 30px 80px rgba(0,0,0,.5)}
+  .sheet .pane{background:var(--card)}}
 /* a phone held sideways: the picture is already short, so it keeps its height and the page scrolls */
 @media (orientation:landscape) and (max-height:500px){:root{--bar:0px}.snd{padding:9px 14px;font-size:15px;gap:6px}}
 /* side by side: the picture never needs to make room for the reply bar */
@@ -296,4 +342,4 @@ footer a{display:inline-flex;align-items:center;min-height:44px;color:var(--dim)
   main{display:grid;grid-template-columns:var(--stage) 360px;gap:8px 28px;justify-content:center;
   align-items:start;padding-bottom:24px}
   /* the film stays in view while the column beside it scrolls */
-  .stage{grid-row:1/7;position:sticky;top:12px}.act,.dock,.next,.ch,footer{width:auto;margin:0;grid-column:2}.act{padding:0}.next,.ch{padding-top:24px}.dock{margin:24px 0 0}}
+  .stage{grid-row:1/7;position:sticky;top:12px}.act,.next,.info,footer{width:auto;margin:0;grid-column:2}.act{padding:0}.next,.info{padding-top:24px}}

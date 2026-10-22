@@ -39,8 +39,8 @@ interface PageConfig {
   lang: "hi" | "en";
   s: {
     play: string; pause: string; wait: string; offline: string; slow: string; cbNoName: string; cbBad: string;
-    cbSending: string; cbDone: string; cbFail: string; cbBusy: string; cbFilm: string; speed: string; tapChange: string;
-    restart: string;
+    cbSending: string; cbFail: string; cbBusy: string; cbFilm: string; speed: string; tapChange: string;
+    restart: string; copied: string;
   };
   /** where the full film's controls start carrying the WhatsApp reply (the fees chapter); 0 = never */
   lateAt: number;
@@ -589,7 +589,8 @@ interface NetInfo {
   document.addEventListener("pointerdown", () => cls("kb", false), true);
   document.addEventListener("keydown", (e) => {
     if (e.key === "Tab") cls("kb", true);
-    if (e.ctrlKey || e.metaKey || e.altKey) return;
+    // a screen or sheet over the film owns the keyboard
+    if (e.ctrlKey || e.metaKey || e.altKey || document.documentElement.classList.contains("lock")) return;
     const t = e.target as HTMLElement;
     // typing a name or a number into the call-back form is not a command
     if (t && t.closest && t.closest("input:not(#seek),textarea,select,[contenteditable]")) return;
@@ -794,7 +795,7 @@ interface NetInfo {
      speed he picks is kept for his next visit. The default speed is set as
      well as the current one: loading a source puts the current speed back to
      the default, which would quietly undo the 1.2x (and his choice). */
-  const RATES = [1.2, 1, 1.5]; // the speed button's order: back to normal is one tap away
+  const RATES = [1.2, 1, 1.5]; // the speeds there are; the button in the controls opens the settings sheet
   let rate = 1.2;
   try {
     const kept = Number(localStorage.getItem("mdg_rate"));
@@ -830,10 +831,6 @@ interface NetInfo {
     markRate();
   };
   chips.forEach((b) => b.addEventListener("click", () => pickRate(Number(b.dataset.rate) || 1.2)));
-  rateBtn?.addEventListener("click", () => {
-    pickRate(RATES[(RATES.indexOf(rate) + 1) % RATES.length]);
-    showUi();
-  });
   // Once the film is playing, a speed set from the browser's own player (an
   // iPhone's full screen) is his choice too. Before that, a change is the
   // browser loading the source, and the 1.2x goes back on.
@@ -967,10 +964,11 @@ interface NetInfo {
       })
         .then((r) => {
           if (!r.ok) throw new Error(String(r.status));
-          cb.classList.add("done");
-          say(C.s.cbDone.replace("{n}", () => name), true);
-          // the card gets shorter: keep the thank-you where he is looking
-          if (cbMsg) cbMsg.scrollIntoView({ block: "nearest" });
+          if (btn) btn.disabled = false;
+          say("", true);
+          cb.reset();
+          // the thank-you takes the form's place, so Back goes to the screen before it
+          openView("v-ok", true);
           // counted with the other ways of joining
           cta("register");
           beat();
@@ -984,6 +982,113 @@ interface NetInfo {
         .then(() => window.clearTimeout(t));
     });
   }
+
+  /* ── screens and sheets ───────────────────────────────────────────────────
+     Each thing a dealer can do has its own simple screen over the page (call
+     us, the form, the thank-you, the app), and settings and sharing are
+     sheets over the film. Every one is a history entry, so the phone's Back
+     button closes it, as the arrow and the cross do. A screen pauses the film
+     and it carries on when he comes back; a sheet leaves it playing. */
+  const stack: HTMLElement[] = [];
+  let resumeAfter = false;
+  let opener: HTMLElement | null = null;
+  const lock = (on: boolean) => document.documentElement.classList.toggle("lock", on);
+  function openView(id: string, replace?: boolean) {
+    const el = $(id);
+    if (!el || stack[stack.length - 1] === el) return;
+    if (!stack.length) opener = document.activeElement as HTMLElement;
+    if (!el.classList.contains("sheet") && !v!.paused) {
+      resumeAfter = true;
+      v!.pause();
+    }
+    leaveFs();
+    if (replace && stack.length) stack[stack.length - 1].hidden = true;
+    if (replace && stack.length) stack[stack.length - 1] = el;
+    else {
+      stack.push(el);
+      history.pushState({ mdgView: stack.length }, "");
+    }
+    el.hidden = false;
+    lock(true);
+    const first = el.querySelector<HTMLElement>("[data-close],[data-home]");
+    if (first) first.focus({ preventScroll: true });
+  }
+  const hideTop = () => {
+    const el = stack.pop();
+    if (el) el.hidden = true;
+    if (stack.length) return;
+    lock(false);
+    if (resumeAfter) v!.play().catch(() => {});
+    resumeAfter = false;
+    if (opener && opener.focus) opener.focus({ preventScroll: true });
+  };
+  addEventListener("popstate", (e) => {
+    const depth = (e.state && e.state.mdgView) || 0;
+    while (stack.length > depth) hideTop();
+  });
+  document.addEventListener("click", (e) => {
+    const t = e.target as HTMLElement;
+    if (!t || !t.closest) return;
+    const o = t.closest<HTMLElement>("[data-open]");
+    if (o) {
+      e.preventDefault();
+      openView(o.dataset.open || "");
+    } else if (t.closest("[data-close]") || t.classList.contains("view")) history.back();
+    else if (t.closest("[data-home]")) history.go(-stack.length);
+  });
+  document.addEventListener(
+    "keydown",
+    (e) => {
+      if (e.key === "Escape" && stack.length) {
+        e.preventDefault();
+        history.back();
+      }
+    },
+    true,
+  );
+  // Chapters | About
+  const tabs = document.querySelectorAll<HTMLButtonElement>("[role=tab]");
+  tabs.forEach((b) =>
+    b.addEventListener("click", () =>
+      tabs.forEach((x) => {
+        const on = x === b;
+        x.setAttribute("aria-selected", String(on));
+        const panel = $(x.getAttribute("aria-controls") || "");
+        if (panel) panel.hidden = !on;
+      }),
+    ),
+  );
+  // Sending the film to a friend: WhatsApp (the data-wa links above), Telegram,
+  // email, the phone's own share list, or the link copied.
+  const enc = encodeURIComponent;
+  const tg = $<HTMLAnchorElement>("tg");
+  const em = $<HTMLAnchorElement>("em");
+  if (tg) tg.href = `https://t.me/share/url?url=${enc(shareUrl)}&text=${enc(C.title)}`;
+  if (em) em.href = `mailto:?subject=${enc(C.title)}&body=${enc(`${C.title}\n${shareUrl}`)}`;
+  [tg, em].forEach((a) => a && a.addEventListener("click", () => cta("share")));
+  const more = $<HTMLButtonElement>("more");
+  const nav = navigator as Navigator & { share?: (d: { title: string; url: string }) => Promise<void> };
+  if (more) {
+    if (!nav.share) more.hidden = true;
+    more.addEventListener("click", () => {
+      cta("share");
+      if (nav.share) nav.share({ title: C.title, url: shareUrl }).catch(() => {});
+    });
+  }
+  const copy = $<HTMLButtonElement>("copy");
+  copy?.addEventListener("click", () => {
+    cta("share");
+    const label = copy.querySelector("span");
+    const done = () => {
+      if (!label) return;
+      const was = label.textContent;
+      label.textContent = C.s.copied;
+      window.setTimeout(() => (label.textContent = was), 2500);
+    };
+    const ask = () => window.prompt(C.title, shareUrl);
+    if (navigator.clipboard) navigator.clipboard.writeText(shareUrl).then(done, ask);
+    else ask();
+  });
 
   /* ── playback ────────────────────────────────────────────────────────── */
   const deep = Number((location.hash.match(/t=(\d+(?:\.\d+)?)/) || [])[1]) || 0;

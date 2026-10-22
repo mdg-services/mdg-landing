@@ -35,3 +35,10 @@ done <<'PICKS'
 9 1466.35 0.50
 10 1519.25 0.48
 PICKS
+
+# The About card's wider picture (540x300): the dealer under his pump's canopy.
+ffmpeg -nostdin -loglevel error -y -ss 383.37 -i "$SRC" -frames:v 1 "$TMP/f.png"
+H=$(magick identify -format %h "$TMP/f.png")
+magick "$TMP/f.png" -crop "540x300+0+$(python3 -c "print(max(0, min($H - 300, round($H * 0.45 - 150))))")" +repage -strip "$TMP/a.png"
+cwebp -quiet -q 70 -m 6 "$TMP/a.png" -o "$OUT/kavach-about.webp"
+echo "about: $OUT/kavach-about.webp"

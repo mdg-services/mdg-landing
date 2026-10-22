@@ -11,9 +11,10 @@
  *
  * Not part of the React app: a dealer on a cheap phone on 2G should see the
  * poster and the first seconds of the film before the SPA would even have
- * downloaded. Budget: HTML + inline CSS/JS <= 18.5 kB gzipped per page. It was
+ * downloaded. Budget: HTML + inline CSS/JS <= 21 kB gzipped per page. It was
  * 15 kB until the WhatsApp reply, the speed button and the form's errors, then
- * the owner's card design with its marks and the chapter stills (22 Oct 2026);
+ * the owner's card design, and then a screen for each thing to do (call us,
+ * the form, thank you, the app) with settings and sharing as sheets (22 Oct 2026);
  * 1 kB is about 33 ms at 250 kbps, against the poster and the ~120 kB hls.js
  * that decide the first frame. The stills themselves load lazily, below the fold.
  *
@@ -140,7 +141,36 @@ const T = {
     cbOutlet: "पंप का नाम",
     cbOptional: "ज़रूरी नहीं",
     cbSend: "मेरा नंबर भेजें",
-    cbFaster: "जल्दी बात करनी है? WhatsApp पर लिख दीजिए",
+    cbNameHint: "अपना पूरा नाम लिखिए",
+    cbOutletHint: "पंप का नाम लिखिए",
+    safeTitle: "आपकी जानकारी हमारे पास सुरक्षित है।",
+    safeSub: "हम आपसे सिर्फ़ डीलर कवच के बारे में ही संपर्क करेंगे।",
+    thanksTitle: "धन्यवाद!",
+    thanksSub: "आपका नंबर हमें मिल गया है। हमारी टीम जल्द ही आपको कॉल करेगी।",
+    backToVideo: "वापस फ़िल्म पर",
+    goBack: "पीछे जाएँ",
+    close: "बंद करें",
+    callUs: "हमें कॉल करें",
+    callNow: "अभी कॉल करें",
+    preferCb: "कॉल बैक चाहिए?",
+    preferCbSub: "नाम और नंबर भेजिए, हम आपको कॉल करेंगे।",
+    appGet: "डीलर कवच ऐप लीजिए",
+    appOn: "Google Play पर उपलब्ध",
+    appOpen: "Google Play में खोलें",
+    appPts: [
+      ["मिनटों में रजिस्टर करें", "अपना खाता बनाइए और शुरू कीजिए।"],
+      ["सब कुछ एक जगह", "रिकॉर्ड रखिए, नज़र रखिए, नियमों का पालन कीजिए।"],
+      ["सुरक्षित और भरोसेमंद", "आपका डेटा हमारे पास सुरक्षित रहता है।"],
+    ],
+    about: "फ़िल्म के बारे में",
+    aboutTitle: "डीलर कवच के बारे में",
+    aboutText: "पेट्रोल पंप डीलरों की रोज़ की चुनौतियों पर एक सच्ची नज़र, और MDG Services कैसे आपके पंप का काम आसानी, सटीकता और भरोसे के साथ संभालने में मदद करती है।",
+    shareTitle: "दोस्त को यह फ़िल्म भेजें",
+    shareSub: "WhatsApp से भेजें, या लिंक कॉपी करके कहीं भी भेजें।",
+    shareWa: "WhatsApp पर भेजें",
+    copyLink: "लिंक कॉपी करें",
+    email: "ईमेल",
+    more: "और",
     tollTitle: "टोल-फ़्री नंबर पर कॉल करें",
     tollHours: "सुबह 9 से रात 9, हर दिन",
     appTitle: "ऐप डाउनलोड करें",
@@ -155,13 +185,13 @@ const T = {
       cbNoName: "अपना नाम लिखिए।",
       cbBad: "10 अंक का मोबाइल नंबर लिखिए।",
       cbSending: "भेज रहे हैं…",
-      cbDone: "धन्यवाद, {n}! हमारी टीम आपको कॉल करेगी।",
       cbFail: "भेज नहीं पाए। इंटरनेट देखकर फिर कोशिश करें।",
       cbBusy: "अभी बहुत सारे अनुरोध आ गए हैं। कृपया 1800-891-3496 पर कॉल करें।",
       cbFilm: "फ़िल्म",
       speed: "रफ़्तार",
       tapChange: "बदलने के लिए दबाएँ",
       restart: "शुरू से, आवाज़ के साथ",
+      copied: "लिंक कॉपी हो गया",
     },
   },
   en: {
@@ -224,7 +254,36 @@ const T = {
     cbOutlet: "Pump name",
     cbOptional: "optional",
     cbSend: "Send my number",
-    cbFaster: "In a hurry? Write to us on WhatsApp",
+    cbNameHint: "Enter your full name",
+    cbOutletHint: "Enter pump name",
+    safeTitle: "Your information is safe with us.",
+    safeSub: "We will only contact you about Dealer's कवच.",
+    thanksTitle: "Thank you!",
+    thanksSub: "We've received your number. Our team will call you shortly.",
+    backToVideo: "Back to video",
+    goBack: "Back",
+    close: "Close",
+    callUs: "Call us",
+    callNow: "Call now",
+    preferCb: "Prefer a callback?",
+    preferCbSub: "Send your name and number and we'll call you.",
+    appGet: "Get the Dealer Kavach app",
+    appOn: "Available on Google Play",
+    appOpen: "Open in Google Play",
+    appPts: [
+      ["Register in minutes", "Create your account and get started."],
+      ["Everything in one place", "Track, record and stay compliant."],
+      ["Secure and reliable", "Your data stays safe with us."],
+    ],
+    about: "About",
+    aboutTitle: "About Dealer's कवच",
+    aboutText: "A real look at the everyday challenges of petrol pump dealers, and how MDG Services helps you run your pump with ease, accuracy and trust.",
+    shareTitle: "Send this film to a friend",
+    shareSub: "Share it on WhatsApp, or copy the link to share it anywhere.",
+    shareWa: "Share on WhatsApp",
+    copyLink: "Copy link",
+    email: "Email",
+    more: "More",
     tollTitle: "Call our toll-free number",
     tollHours: "9am to 9pm, every day",
     appTitle: "Download the app",
@@ -238,13 +297,13 @@ const T = {
       cbNoName: "Please write your name.",
       cbBad: "Please write a 10-digit mobile number.",
       cbSending: "Sending…",
-      cbDone: "Thank you, {n}! Our team will call you.",
       cbFail: "Couldn't send. Check your internet and try again.",
       cbBusy: "Too many requests just now. Please call 1800-891-3496.",
       cbFilm: "Film",
       speed: "Speed",
       tapChange: "tap to change",
       restart: "From the start, with sound",
+      copied: "Link copied",
     },
   },
 };
@@ -286,6 +345,15 @@ const ICON = {
   /** Google Play's own four-colour mark, for the "get the app" row */
   play4:
     '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#00a0ff" d="M3.6 2.3c-.3.3-.4.7-.4 1.2v17c0 .5.1.9.4 1.2l9.5-9.7z"/><path fill="#ffbc00" d="m16.3 15.3-3.2-3.3 3.2-3.3 3.9 2.2c1.1.6 1.1 1.6 0 2.2z"/><path fill="#ff3a44" d="m16.3 15.3-3.2-3.3-9.5 9.7c.4.4 1 .4 1.6.1z"/><path fill="#00d26a" d="M16.3 8.7 5.2 2.2c-.6-.4-1.2-.3-1.6.1l9.5 9.7z"/></svg>',
+  arrow: '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20 11H7.8l5.6-5.6L12 4l-8 8 8 8 1.4-1.4L7.8 13H20z"/></svg>',
+  x: '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 6.4 17.6 5 12 10.6 6.4 5 5 6.4 10.6 12 5 17.6 6.4 19 12 13.4 17.6 19 19 17.6 13.4 12z"/></svg>',
+  check: '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg>',
+  join: '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M15 12a4 4 0 1 0-4-4 4 4 0 0 0 4 4zm-9-2V7H4v3H1v2h3v3h2v-3h3v-2zm9 4c-2.7 0-8 1.3-8 4v2h16v-2c0-2.7-5.3-4-8-4z"/></svg>',
+  link: '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3.9 12A3.1 3.1 0 0 1 7 8.9h4V7H7a5 5 0 0 0 0 10h4v-1.9H7A3.1 3.1 0 0 1 3.9 12zM8 13h8v-2H8zm9-6h-4v1.9h4a3.1 3.1 0 0 1 0 6.2h-4V17h4a5 5 0 0 0 0-10z"/></svg>',
+  tg: '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m21.9 4.3-3.2 15.2c-.2 1-.9 1.3-1.7.8l-4.8-3.6-2.3 2.2c-.3.3-.5.5-1 .5l.3-4.9 8.9-8c.4-.3-.1-.5-.6-.2L6.5 13.2l-4.7-1.5c-1-.3-1-1 .2-1.5L20.6 3c.9-.3 1.6.2 1.3 1.3z"/></svg>',
+  dots: '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 10a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm6 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm6 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4z"/></svg>',
+  clip: '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 3h-4.2a3 3 0 0 0-5.6 0H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2zm-7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm-2 14-4-4 1.4-1.4 2.6 2.6 6.6-6.6L18 9z"/></svg>',
+  shield: '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 1 3 5v6c0 5.5 3.8 10.7 9 12 5.2-1.3 9-6.5 9-12V5zm-2 16-4-4 1.4-1.4 2.6 2.6 6.6-6.6L18 9z"/></svg>',
   share:
     '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18 16a3 3 0 0 0-2.4 1.2l-6.7-3.5a3 3 0 0 0 0-1.4l6.7-3.5A3 3 0 1 0 15 7l-6.7 3.5a3 3 0 1 0 0 3L15 17a3 3 0 1 0 3-1z"/></svg>',
   phone:
@@ -457,35 +525,80 @@ ${foot}</main>
   const replyHref = `https://wa.me/${WA_REPLY}`;
   const reply = (cls: string, sub = true) =>
     `<a class="${cls}" data-reply href="${replyHref}" target="_blank" rel="noopener"><i class="dot">${ICON.wa}</i><span><b>${w.reply}</b>${sub ? `<small>${w.replySub}</small>` : ""}</span></a>`;
-  // Sharing the film with someone else is a quiet link with a share arrow, never green.
+  // Sharing the film opens its own sheet: WhatsApp, a copied link, and the
+  // other apps. A quiet link with a share arrow, never green.
   const share = (cls: string, text: string) =>
-    `<a class="${cls}" data-wa href="https://wa.me/" target="_blank" rel="noopener">${ICON.share}${text}</a>`;
+    `<a class="${cls}" data-open="v-share" href="https://wa.me/">${ICON.share}${text}</a>`;
   const fullBtn = (cls: string) =>
     `<a class="${cls}" data-full href="/film?from=short">${ICON.play}${w.full(a.fullMin)}</a>`;
   // "join" goes to the enrolment page in the language this page is in. Staying
   // on a page with the switch in view counts as choosing it, so the site keeps it.
-  const regBtn = (cls: string) => `<a class="${cls}" data-reg href="/register?lang=${lang}">${w.join}</a>`;
-  /** One way in: a tinted circle with its mark, the words, a chevron. `lines` are the lines under the title. */
-  const way = (href: string, tone: string, icon: string, title: string, lines: string, ext = false) =>
-    `<a class="way" data-reg href="${href}"${ext ? ' target="_blank" rel="noopener"' : ""}><i class="dot ${tone}">${icon}</i><div><b>${title}</b>${lines}</div></a>`;
-  // The other ways in, least effort first: ring us, leave a number, or the app.
-  // (Registering on the site is the "join" button; the assistant is on the home
-  // page.) The call-back goes to the admin's
-  // Call-backs page and the team's inbox with the share code, so a dealer who
-  // came from a personal WhatsApp link is known by it.
-  // A box with its mark inside it: the mark says what goes in once the words
-  // are typed over the placeholder, and the label is there for a screen reader.
-  const field = (name: string, icon: string, label: string, attrs: string, placeholder: string) =>
-    `<label class="f">${icon}<span class="sr">${label}</span><input name="${name}" placeholder="${esc(placeholder)}" ${attrs}></label>`;
-  const next = `<section class="next" id="next"><h2>${w.next}</h2>
-${way(TOLL_FREE_TEL, "gold", ICON.phone, w.tollTitle, `<strong>${TOLL_FREE_SHOWN}</strong><span>${w.tollHours}</span>`)}
-${way(PLAY_URL, "dark", ICON.play4, w.appTitle, `<span>${w.appSub}</span>`, true)}
-<form class="cb" id="cb" novalidate><div class="head"><i class="dot lilac">${ICON.mail}</i><div><b>${w.cbTitle}</b><p>${w.cbLead}</p></div></div>
-${field("name", ICON.user, w.cbName, 'autocomplete="name" maxlength="120" required', w.cbName)}
-${field("phone", ICON.phone, w.cbPhone, 'type="tel" inputmode="tel" autocomplete="tel-national" maxlength="16" required', w.cbPhoneEg)}
-${field("outlet", ICON.home, w.cbOutlet, 'maxlength="160"', `${w.cbOutlet} (${w.cbOptional})`)}
+  const regBtn = (cls: string) => `<a class="${cls}" data-reg href="/register?lang=${lang}">${ICON.join}${w.join}</a>`;
+  /** A card that leads somewhere: a tinted circle with its mark, the words, a chevron. */
+  const way = (attrs: string, tone: string, icon: string, title: string, lines: string) =>
+    `<a class="way" ${attrs}><i class="dot ${tone}">${icon}</i><div><b>${title}</b>${lines}</div></a>`;
+  /*
+   * One screen for each thing a dealer can do, each with a way back: call us,
+   * leave a number, the thank-you, the app. Over the page, not new pages, so
+   * the film keeps its place; the phone's Back button closes them (player.ts).
+   * Settings and sharing are sheets over the film.
+   */
+  const view = (id: string, title: string, body: string, sheet = false) =>
+    `<div class="view${sheet ? " sheet" : ""}" id="${id}" role="dialog" aria-modal="true" aria-labelledby="${id}-t" hidden><div class="pane"><div class="bar">${
+      sheet
+        ? `<b id="${id}-t">${title}</b><button type="button" class="ic x" data-close aria-label="${w.close}">${ICON.x}</button>`
+        : `<button type="button" class="ic" data-close aria-label="${w.goBack}">${ICON.arrow}</button><b id="${id}-t">${title}</b>`
+    }</div>${body}</div></div>`;
+  const callView = view(
+    "v-call",
+    w.callUs,
+    `<div class="hero"><i class="dot gold xl">${ICON.phone}</i><p>${w.tollTitle}</p><a class="num" data-reg href="${TOLL_FREE_TEL}">${TOLL_FREE_SHOWN}</a><span>${w.tollHours}</span></div>
+<a class="btn pri" data-reg href="${TOLL_FREE_TEL}">${ICON.phone}${w.callNow}</a>
+${way('data-open="v-cb" href="#"', "lilac", ICON.mail, w.preferCb, `<span>${w.preferCbSub}</span>`)}`,
+  );
+  // The call-back form. Its words go to the admin's Call-backs page and the
+  // team's inbox with the share code, so a dealer who came from a personal
+  // WhatsApp link is known by it.
+  const formView = view(
+    "v-cb",
+    w.cbTitle,
+    `<form class="cb" id="cb" novalidate><div class="head"><i class="dot lilac">${ICON.mail}</i><p>${w.cbLead}</p></div>
+<label for="cb-name">${w.cbName}</label><input id="cb-name" name="name" placeholder="${w.cbNameHint}" autocomplete="name" maxlength="120" required>
+<label for="cb-phone">${w.cbPhone}</label><div class="tel"><span>+91</span><input id="cb-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel-national" maxlength="16" placeholder="${w.cbPhoneEg}" required></div>
+<label for="cb-outlet">${w.cbOutlet} <i>(${w.cbOptional})</i></label><input id="cb-outlet" name="outlet" placeholder="${w.cbOutletHint}" maxlength="160">
 <input name="website" tabindex="-1" autocomplete="off" hidden>
-<p class="msg" id="cbmsg" role="status" aria-live="polite"></p><button type="submit" class="btn pri">${w.cbSend}${ICON.send}</button>${reply("after", false).replace(w.reply, w.cbFaster)}</form></section>`;
+<p class="msg" id="cbmsg" role="status" aria-live="polite"></p><button type="submit" class="btn pri">${w.cbSend}${ICON.send}</button></form>
+<div class="safe"><i class="okc">${ICON.check}</i><div><b>${w.safeTitle}</b><span>${w.safeSub}</span></div></div>`,
+  );
+  const thanksView = view(
+    "v-ok",
+    "",
+    `<div class="hero thanks"><i class="tick">${ICON.check}<i class="fx"></i></i><b>${w.thanksTitle}</b><p>${w.thanksSub}</p><button type="button" class="btn pri" data-home>${w.backToVideo}</button></div>`,
+  );
+  const appView = view(
+    "v-app",
+    w.appTitle,
+    `<div class="box"><div class="head"><i class="dot dark">${ICON.play4}</i><div><b>${w.appGet}</b><span>${w.appOn}</span></div></div><a class="btn pri" data-reg href="${PLAY_URL}" target="_blank" rel="noopener">${w.appOpen}</a></div>
+<ul class="box pts">${w.appPts.map(([t, d], i) => `<li><i class="dot lilac">${[ICON.join, ICON.clip, ICON.shield][i]}</i><div><b>${t}</b><span>${d}</span></div></li>`).join("")}</ul>`,
+  );
+  const setView = view(
+    "v-set",
+    w.settings,
+    `<div class="sets">${seg(w.speed, "speed", [["data-rate", "1", "1x"], ["data-rate", "1.2", "1.2x"], ["data-rate", "1.5", "1.5x"]])}${seg(w.subs, "subs", [["data-cc", "1", w.on], ["data-cc", "0", w.off]])}${seg(w.pic, "qual", [["data-q", "auto", w.auto], ["data-q", "hd", "HD"], ["data-q", "lite", w.lite]], true)}</div>${share("btn line", w.friend)}`,
+    true,
+  );
+  const app = (attrs: string, tone: string, icon: string, label: string, tag = "a") =>
+    `<${tag} ${attrs}><i class="dot ${tone}">${icon}</i>${label}</${tag}>`;
+  const shareView = view(
+    "v-share",
+    w.shareTitle,
+    `<p class="lead">${w.shareSub}</p><a class="btn wa" data-wa href="https://wa.me/" target="_blank" rel="noopener">${ICON.wa}${w.shareWa}</a><button type="button" class="btn line" id="copy">${ICON.link}<span>${w.copyLink}</span></button>
+<div class="apps">${app('data-wa href="https://wa.me/" target="_blank" rel="noopener"', "g", ICON.wa, "WhatsApp")}${app('id="tg" href="https://t.me/" target="_blank" rel="noopener"', "tg", ICON.tg, "Telegram")}${app('id="em" href="mailto:"', "em", ICON.mail, w.email)}${app('type="button" id="more"', "dark", ICON.dots, w.more, "button")}</div>`,
+    true,
+  );
+  const next = `<section class="next" id="next"><h2>${w.next}</h2>
+${way(`data-open="v-call" href="${TOLL_FREE_TEL}"`, "gold", ICON.phone, w.callUs, `<strong>${TOLL_FREE_SHOWN}</strong><span>${w.tollHours}</span>`)}
+${way(`data-open="v-app" href="${PLAY_URL}" target="_blank" rel="noopener"`, "dark", ICON.play4, w.appTitle, `<span>${w.appSub}</span>`)}</section>`;
   // the end of either film: the reply first, then the next film or the form, then again / share
   const endBody =
     p.kind === "short"
@@ -494,25 +607,32 @@ ${field("outlet", ICON.home, w.cbOutlet, 'maxlength="160"', `${w.cbOutlet} (${w.
   // A still from the film at each chapter, cut by scripts/film-chapter-stills.sh
   // into public/film/ch/<film>-<n>.webp. Below the fold, so they load lazily
   // and never compete with the poster; a chapter without one simply has none.
+  const has = (file: string) => existsSync(path.join(a.root, "public/film/ch", file));
   const still = (i: number) =>
-    existsSync(path.join(a.root, `public/film/ch/${f.film}-${i}.webp`))
+    has(`${f.film}-${i}.webp`)
       ? `<img src="/film/ch/${f.film}-${i}.webp" width="96" height="60" loading="lazy" decoding="async" alt="">`
       : "";
-  const chapters = chapterList.length
-    ? `<section class="ch"><div class="top"><h2>${w.chapters}</h2><span>${mmss(f.duration || 0)} · ${w.chapterCount(chapterList.length)}</span></div><ol>${chapterList
-        .map(
-          (c, i) =>
-            `<li><button type="button" data-t="${c.t}"><i class="pl">${ICON.play}</i><span class="tt"><span>${mmss(c.t)}</span><b>${esc(c.title)}</b></span>${still(i)}</button></li>`,
-        )
-        .join("")}</ol></section>`
-    : "";
+  const chapterRows = `<p class="meta">${mmss(f.duration || 0)} · ${w.chapterCount(chapterList.length)}</p><ol>${chapterList
+    .map(
+      (c, i) =>
+        `<li><button type="button" data-t="${c.t}"><i class="pl">${ICON.play}</i><span class="tt"><span>${mmss(c.t)}</span><b>${esc(c.title)}</b></span>${still(i)}</button></li>`,
+    )
+    .join("")}</ol>`;
+  const about = `<div class="box about"><div class="head"><i class="dot gold">${ICON.user}</i><b>${w.aboutTitle}</b></div><p>${w.aboutText}</p>${
+    has("kavach-about.webp") ? `<img src="/film/ch/kavach-about.webp" width="540" height="300" loading="lazy" decoding="async" alt="">` : ""
+  }</div>`;
+  // Chapters and About as two tabs on the full film; the short has only About.
+  const info = chapterList.length
+    ? `<section class="info ch"><div class="tabs" role="tablist"><button type="button" role="tab" id="t-ch" aria-controls="p-ch" aria-selected="true">${w.chapters}</button><button type="button" role="tab" id="t-ab" aria-controls="p-ab" aria-selected="false">${w.about}</button></div><div id="p-ch" role="tabpanel" aria-labelledby="t-ch">${chapterRows}</div><div id="p-ab" role="tabpanel" aria-labelledby="t-ab" hidden>${about}</div></section>`
+    : `<section class="info">${about}</section>`;
   return `${head}
 <div class="stage" id="stage">
 <video id="v" playsinline preload="auto" controls crossorigin="anonymous" poster="${poster}" aria-label="${esc(title)}"><track kind="captions" srclang="hi" label="हिन्दी" default src="${f.base}/${f.captions}"></video>
 <div class="load" id="load" hidden><b id="loadmsg">${w.loading}</b><i></i></div>
 <div class="ui" id="ui">
+<span class="hd" id="hd" hidden>HD</span>
 <div class="mid">${skip("back", -1, w.back)}<button type="button" class="pp" id="pp" aria-label="${w.pause}">${ICON.pause}${ICON.play}</button>${skip("fwd", 1, w.fwd)}</div>
-<div class="low">${p.kind === "full" ? `<a class="wpill" data-reply href="${replyHref}" target="_blank" rel="noopener">${ICON.wa}${w.replyPill}</a>` : ""}<p class="now" id="chap"></p><div class="row"><span class="time" id="time">0:00 / ${mmss(f.duration || 0)}</span><span class="hd" id="hd" hidden>HD</span><button type="button" class="rate" id="rate">1.2x</button><button type="button" class="ic" id="mute" aria-label="${w.sound}">${ICON.sound}${ICON.muted}</button><button type="button" class="ic" id="fs" aria-label="${w.fs}">${ICON.fs}${ICON.unfs}</button></div>
+<div class="low">${p.kind === "full" ? `<a class="wpill" data-reply href="${replyHref}" target="_blank" rel="noopener">${ICON.wa}${w.replyPill}</a>` : ""}<p class="now" id="chap"></p><div class="row"><span class="time" id="time">0:00 / ${mmss(f.duration || 0)}</span><button type="button" class="rate" id="rate" data-open="v-set">1.2x</button><button type="button" class="ic" id="mute" aria-label="${w.sound}">${ICON.sound}${ICON.muted}</button><button type="button" class="ic" id="fs" aria-label="${w.fs}">${ICON.fs}${ICON.unfs}</button></div>
 <div class="seek"><div class="ticks" id="ticks"></div><input type="range" id="seek" min="0" max="${f.duration}" step="0.1" value="0" aria-label="${w.seek}"></div></div>
 </div>
 <div class="mini"></div>
@@ -526,9 +646,9 @@ ${field("outlet", ICON.home, w.cbOutlet, 'maxlength="160"', `${w.cbOutlet} (${w.
 </div>
 <div class="act">${reply("btn reply")}${p.kind === "short" ? fullBtn("btn alt") : regBtn("btn alt")}</div>
 ${next}
-${chapters}
-<details class="dock"><summary>${w.settings}</summary>${seg(w.speed, "speed", [["data-rate", "1", "1x"], ["data-rate", "1.2", "1.2x"], ["data-rate", "1.5", "1.5x"]])}${seg(w.subs, "subs", [["data-cc", "1", w.on], ["data-cc", "0", w.off]])}${seg(w.pic, "qual", [["data-q", "auto", w.auto], ["data-q", "hd", "HD"], ["data-q", "lite", w.lite]], true)}${share("btn", w.friend)}</details>
+${info}
 ${foot}</main>
+${callView}${formView}${thanksView}${appView}${setView}${shareView}
 <script type="application/json" id="cfg">${JSON.stringify(cfg).replace(/</g, "\\u003c")}</script>
 <script>${js}</script>
 </body></html>
