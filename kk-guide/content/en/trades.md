@@ -11,7 +11,7 @@
     { "q": "What does Khata Kavach cost?", "a": "The price depends on your business. Call us on the number shown on this page. A person answers, 9am to 9pm, every day." }
   ],
   "related": ["trade-petrol-pump", "trade-transporter", "trade-cement", "trade-sand", "compare-billing-apps"],
-  "updated": "2026-10-19"
+  "updated": "2026-10-22"
 }
 ---
 ## The one test: does a vehicle come to collect?
@@ -44,4 +44,4 @@ Every item has its own unit: litres, bags, tonnes, kg, pieces, or just rupees. O
 
 By default the customer sends a request from their own phone. At the counter, staff see a green, amber or red light. Both sides see every sale as one line once the phone is online, and a correction is a new line. The owner's Today screen shows credit given today, money received this month and who is near the limit.
 
-MDG sets the business up. The business adds its own customers. Hindi is the main language in both apps, with English one tap away.
+A business starts Khata Kavach on its own, in the Business app, in about a minute. It then adds its own customers. Hindi is the main language in both apps, with English one tap away.

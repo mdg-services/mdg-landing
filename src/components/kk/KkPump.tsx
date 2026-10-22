@@ -35,7 +35,7 @@ export default function KkPump({ lang }: { lang: Lang }) {
             ))}
           </ul>
           <div className="mt-10 flex flex-col items-start gap-3 sm:flex-row sm:items-center sm:gap-7">
-            <a href={`#${KK_ANCHORS.start}`} className="kk-btn-light w-full sm:w-auto">
+            <a href={KK_APPS.signup} target="_blank" rel="noopener" className="kk-btn-light w-full sm:w-auto">
               {p.cta}
             </a>
             <a href={KK_APPS.pump} target="_blank" rel="noopener" className="kk-link text-kk-cream">

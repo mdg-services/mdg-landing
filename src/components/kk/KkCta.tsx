@@ -12,8 +12,9 @@ import type { Dict } from "../../i18n/lang";
 type Status = "idle" | "submitting" | "success" | "error";
 
 /**
- * The way in: call, or leave a number and say who you are (a pump owner or a
- * transporter). The form posts to the site's existing call-back route; the
+ * The way in. First: a business owner starts on his own in the Business app
+ * (self sign-up, since 22 Oct 2026). Second: call, or leave a number and say who
+ * you are (a business owner or a customer). The form posts to the site's existing call-back route; the
  * product and the role travel in its message line ("Khata Kavach · Pump
  * owner"), so the team knows which call this is. Nothing on the server
  * changed for it. The role tag is always English, because the team reads it.
@@ -70,8 +71,11 @@ export default function KkCta({
             {t.heading}
           </h2>
           <p className="mt-6 max-w-[30rem] text-[19px] leading-[1.55] text-kk-cream md:text-[21px]">{t.sub}</p>
-          <div className="mt-8">
-            <CallUs variant="button" label={t.callLabel} className="kk-btn-light w-full sm:w-auto [&_svg]:text-kk-siyahi" />
+          <div className="mt-8 flex flex-col items-stretch gap-3 sm:flex-row sm:items-center">
+            <a href={KK_APPS.signup} target="_blank" rel="noopener" className="kk-btn-light w-full sm:w-auto">
+              {t.startLabel}
+            </a>
+            <CallUs variant="button" label={t.callLabel} className="btn-on-dark-ghost w-full sm:w-auto" />
           </div>
           <div className="mt-10">
             <p className="text-[17px] text-kk-cream">{t.alreadyLabel}</p>

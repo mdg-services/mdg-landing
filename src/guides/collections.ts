@@ -11,6 +11,7 @@ import { DISCLAIMER, NOTICE_SHORT, SITE, TOLL_FREE, TOPIC_BLURB, UI } from "../.
 import { KK_PAGES, KK_PILLARS } from "../../kk-guide/inventory.ts";
 import { KK_RELEASES, KK_LAST_DAY, kkDayOf, kkDateOfDay } from "../../kk-guide/schedule.ts";
 import { KK_CTA, KK_DISCLAIMER, KK_NOTICE, KK_TOPIC_BLURB, KK_UI } from "../../kk-guide/copy.ts";
+import { KK_APPS } from "../data/kk.ts";
 import type { AnyPage, AnyRelease, Collection, CollectionKey, Lang } from "./collection";
 import { mdgClauseTags, mdgPenaltyNotes, mdgTagOk, sourceTagOk, sourceTags } from "./tags";
 
@@ -135,7 +136,8 @@ export const KK: Collection = {
   cta: (lang) => ({
     title: KK_UI[lang].ctaTitle,
     text: KK_CTA[lang].text,
-    primary: { href: `${hiPrefix(lang, "/khata-kavach")}#start`, label: KK_CTA[lang].primary },
+    // A business starts on its own in the Business app; the call is the second way in.
+    primary: { href: KK_APPS.signup, label: KK_CTA[lang].primary },
     secondary: { href: TOLL_FREE.href, label: KK_UI[lang].call },
   }),
 };

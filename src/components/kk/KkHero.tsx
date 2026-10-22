@@ -1,7 +1,7 @@
 import PhoneFrame from "../PhoneFrame";
 import Icon from "../Icon";
 import { KkLockup } from "../Brand";
-import { KK_ANCHORS, KK_SCREENS } from "../../data/kk";
+import { KK_ANCHORS, KK_APPS, KK_SCREENS } from "../../data/kk";
 import { getT } from "../../i18n/server";
 import type { Lang } from "../../i18n/lang";
 
@@ -34,7 +34,8 @@ export default function KkHero({ lang }: { lang: Lang }) {
           <p className="mt-6 max-w-[34rem] text-[18px] leading-[1.55] text-kk-soft md:mt-6 md:text-[20px]">{h.sub}</p>
 
           <div className="mt-8 flex flex-col items-start gap-3 md:mt-7 sm:flex-row sm:items-center sm:gap-7">
-            <a href={`#${KK_ANCHORS.start}`} className="kk-btn-primary w-full sm:w-auto">
+            {/* The owner starts on his own in the Business app: no call needed. */}
+            <a href={KK_APPS.signup} target="_blank" rel="noopener" className="kk-btn-primary w-full sm:w-auto">
               {h.ctaPump}
             </a>
             <a href={`#${KK_ANCHORS.transporter}`} className="kk-link text-kk-siyahi">

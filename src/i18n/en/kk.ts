@@ -33,7 +33,7 @@ export const kk = {
     headlineLine1: "Every sale written once.",
     headlineLine2: "Seen by both.",
     sub: "Khata Kavach is the shared credit book between a business and the customers it sells to on credit. No paper slips.",
-    ctaPump: "Set it up for my business",
+    ctaPump: "Start my business",
     ctaTransporter: "I am a customer",
     assurances: [
       "Hindi first, English one tap away",
@@ -96,7 +96,7 @@ export const kk = {
       "Make a numbered bill in a tap: a PDF on your letterhead, ready to send on WhatsApp from your own number.",
       "Money received against a bill marks it paid, and that much credit opens again.",
     ],
-    cta: "Set it up for my business",
+    cta: "Start my business in the app",
     appLink: "Open the Business app (web)",
     alts: [
       "Khata Kavach Business, the Today screen: credit given today, a Due on bills card, this month's credit and money received.",
@@ -193,7 +193,7 @@ export const kk = {
       },
       {
         q: "Can a customer sign up themselves?",
-        a: "No. MDG Services sets up the business first, and the business adds its customers.",
+        a: "No. The business adds its customers and sends each one a link on WhatsApp. A business starts on its own, in the Business app.",
       },
       {
         q: "Does my counter staff need training?",
@@ -225,7 +225,8 @@ export const kk = {
   /* ── the way in ── */
   cta: {
     heading: "Retire the paper slip.",
-    sub: "Call us, or leave your number. We will tell you whether Khata Kavach fits your business.",
+    sub: "Start your business in the Business app in about a minute, then add your customers on WhatsApp. Want to talk first? Call us, or leave your number.",
+    startLabel: "Start my business in the app",
     callLabel: "Call us",
     formTitle: "Leave your number",
     roleLabel: "I am",

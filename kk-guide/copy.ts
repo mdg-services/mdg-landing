@@ -77,11 +77,11 @@ export const KK_UI: Record<Lang, Record<string, string>> = {
 export const KK_CTA: Record<Lang, { text: string; primary: string }> = {
   en: {
     text: "Khata Kavach is a shared credit book from MDG Services. Your customer asks before they take, your counter staff see the limit before they give, and both of you see every sale, payment and bill. It never lends or holds money.",
-    primary: "Set it up for my business",
+    primary: "Start my business in the app",
   },
   hi: {
     text: "खाता कवच, MDG Services का साझा उधार खाता है। ग्राहक माल लेने से पहले माँग भेजता है, काउंटर स्टाफ़ देने से पहले उधार की सीमा देखता है, और दोनों तरफ़ हर बिक्री, हर पेमेंट और हर बिल दिखता है। यह न उधार देता है, न आपका पैसा अपने पास रखता है।",
-    primary: "मेरे बिज़नेस में लगवाइए",
+    primary: "ऐप में अपना बिज़नेस शुरू कीजिए",
   },
 };
 

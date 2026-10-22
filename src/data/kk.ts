@@ -7,6 +7,8 @@ export const KK_PATH = "/khata-kavach" as const;
 export const KK_APPS = {
   pump: "https://khata-pump.mdgservices.in",
   transporter: "https://khata-transporter.mdgservices.in",
+  /** Where a business owner starts his own business: the Business app's sign-up (no call needed since 22 Oct 2026). */
+  signup: "https://khata-pump.mdgservices.in/signup",
 } as const;
 
 /** One app screen: a small WebP cut from the product's own demo data (made-up names, made-up trucks). */

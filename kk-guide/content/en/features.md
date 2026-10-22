@@ -9,10 +9,10 @@
     { "q": "Is the Khata Kavach app on Google Play?", "a": "Not yet. Both apps open in the phone's browser today, and Android apps are coming to Google Play. There is no iPhone app." },
     { "q": "Does Khata Kavach give loans or hold my money?", "a": "No. You set the credit limit for each customer. The customer pays you directly and you record it. Khata Kavach keeps the account and never lends or holds money." },
     { "q": "Which businesses is Khata Kavach for?", "a": "Businesses whose regular customers collect goods in their own vehicles, because every sale is tied to a vehicle number. Fuel stations, transporters, cement, sand, bricks and wholesalers whose buyers send a vehicle are examples." },
-    { "q": "How much does Khata Kavach cost?", "a": "The price depends on your business, so call us. MDG sets the apps up for you, and a person answers the phone from 9am to 9pm, every day." }
+    { "q": "How much does Khata Kavach cost?", "a": "The price depends on your business, so call us. A person answers the phone from 9am to 9pm, every day." }
   ],
   "related": ["feature-requests", "feature-counter-light", "feature-bills", "trades"],
-  "updated": "2026-10-19"
+  "updated": "2026-10-22"
 }
 ---
 ## Two apps, one shared line
@@ -46,4 +46,4 @@ Every item has its own unit: litres, bags, tonnes, kg, pieces, boxes, cylinders,
 - It does not lend, hold or collect money.
 - It does not send messages by itself. One tap opens your own WhatsApp with the message ready.
 - It does not track stock or record cash sales.
-- It does not let a business or customer sign up alone. MDG sets up the business, and the business adds its customers.
+- It does not let a customer sign up alone: the business adds its customers. A business starts on its own, in the Business app.
