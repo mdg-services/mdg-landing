@@ -38,6 +38,27 @@ function greetingName(name: string): string | undefined {
 /** What the team's mail says when the enrolment did not reach the admin panel. */
 const NOT_ON_ADMIN_LIST =
   "This registration did NOT reach the admin Registrations page — add it by hand or check the website's WEBSITE_INTAKE_SECRET.";
+/** How handing a call-back to the admin's Call-backs page went (server/callback.ts). */
+export type CallbackHandOff = "ok" | "slow" | "full" | "refused" | "unreachable";
+/** What the team's email says when it did not simply work, and the tag on its subject. */
+const CALLBACK_HAND_OFF: Record<Exclude<CallbackHandOff, "ok">, { note: string; tag: string }> = {
+  slow: {
+    note: "The admin Call-backs page did not answer in time, so this request MAY not be on it. Check the Call-backs page before calling, so two people do not ring the same person.",
+    tag: "[check admin list]",
+  },
+  full: {
+    note: "The admin Call-backs page took no more requests this hour, so this request is NOT on it. This email is the only record: call them from here.",
+    tag: "[not on admin list]",
+  },
+  refused: {
+    note: "This request did NOT reach the admin Call-backs page — this email is the only record. Call them from here, and check the website's WEBSITE_INTAKE_SECRET.",
+    tag: "[not on admin list]",
+  },
+  unreachable: {
+    note: "The website could not reach the admin Call-backs page, so this request is probably NOT on it. Call them from here.",
+    tag: "[not on admin list]",
+  },
+};
 
 /**
  * Internal notification to the MDG inbox when a dealer enrols.
@@ -143,11 +164,18 @@ export function welcomeEmail(data: EnrollmentData): EmailContent {
   };
 }
 
-/** Internal notification when someone uses the homepage "Leave my number" form. */
+/**
+ * Internal notification when someone asks for a call: the homepage "Leave my
+ * number", the film pages' "we'll call you", the Khata Kavach page or the
+ * assistant's fallback. `handOff` is how handing it to the admin panel's
+ * Call-backs page went; when it did not simply work, this mail says why at the
+ * top and tags the subject.
+ */
 export function callbackNotificationEmail(
   data: CallbackData,
-  meta: { submittedAt: string }
+  meta: { submittedAt: string; handOff?: CallbackHandOff }
 ): EmailContent {
+  const flag = meta.handOff && meta.handOff !== "ok" ? CALLBACK_HAND_OFF[meta.handOff] : null;
   const when = new Date(meta.submittedAt).toLocaleString("en-IN", {
     dateStyle: "medium",
     timeStyle: "short",
@@ -169,6 +197,7 @@ export function callbackNotificationEmail(
   ];
 
   const body = `
+    ${flag ? `<div style="margin:0 0 16px;padding:12px 16px;background:#FFF7E6;border:1px solid ${B.gold};border-radius:10px;font:600 15px/1.5 Arial,sans-serif;color:${B.ink}">${escapeHtml(flag.note)}</div>` : ""}
     ${heading("New callback request")}
     ${paragraph(
       fromFilm
@@ -179,7 +208,7 @@ export function callbackNotificationEmail(
   `;
 
   return {
-    subject: `Callback request${fromFilm ? " (film)" : ""} — ${data.name}`,
+    subject: `Callback request${fromFilm ? " (film)" : ""}${flag ? ` ${flag.tag}` : ""} — ${data.name}`,
     html: wrapEmail({ preheader: `${data.name} · ${data.phone}`, bodyHtml: body }),
     text: [
       "New callback request",
@@ -191,6 +220,7 @@ export function callbackNotificationEmail(
       `Came from: ${fromFilm ? "Film page" : "Website"}`,
       ...(data.ref ? [`Link code: ${data.ref}`] : []),
       `Submitted: ${when} IST`,
+      ...(flag ? ["", flag.note] : []),
     ].join("\n"),
   };
 }

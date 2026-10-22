@@ -67,6 +67,10 @@ export const callbackSchema = z.object({
     .regex(/^[A-Za-z0-9_-]{1,32}$/)
     .optional()
     .catch(undefined),
+  /** Which film page it was sent from. Anything else is dropped, not refused. */
+  film: z.enum(["kavach", "kavach-short"]).optional().catch(undefined),
+  /** The language of the page the form was on. */
+  lang: z.enum(["hi", "en"]).optional().catch(undefined),
 });
 
 export type CallbackData = z.infer<typeof callbackSchema>;

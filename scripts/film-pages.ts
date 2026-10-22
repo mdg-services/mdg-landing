@@ -11,7 +11,10 @@
  *
  * Not part of the React app: a dealer on a cheap phone on 2G should see the
  * poster and the first seconds of the film before the SPA would even have
- * downloaded. Budget: HTML + inline CSS/JS <= 15 kB gzipped per page.
+ * downloaded. Budget: HTML + inline CSS/JS <= 17 kB gzipped per page. It was
+ * 15 kB until the WhatsApp reply, the speed button and the form's labels and
+ * errors (22 Oct 2026); 1 kB is about 33 ms at 250 kbps, against the poster
+ * and the ~120 kB hls.js that decide the first frame.
  *
  * Updating a film = package a new version (marketing/films/web/package.mjs),
  * paste its film.json into src/film/films.json, rebuild, deploy. A film whose
@@ -56,6 +59,14 @@ const DEFAULT_BEACON = "https://api.mdgservices.in/api/v1/films/beacon";
 const PLAY_URL = "https://play.google.com/store/apps/details?id=in.mdgservices.dealerkavach";
 /** Same number as src/lib/tollFree.ts; this script is not part of the app, so it is not imported. */
 const TOLL_FREE_TEL = "tel:18008913496";
+/**
+ * Our WhatsApp business number that sends the film ("MDG Services", +91 94702
+ * 93412; the backend's WHATSAPP_PHONE_NUMBER_ID). "Reply on WhatsApp" opens
+ * the chat with this number, which for a dealer who got the film there is the
+ * very chat the film came in. The reply lands in the admin's WhatsApp inbox.
+ * Change it here if the film is ever sent from another number.
+ */
+const WA_REPLY = "919470293412";
 
 /* What each page says about its film. Outcomes only. */
 const PAGES: Record<FilmId, { path: string; kind: "full" | "short"; og: string }> = {
@@ -83,6 +94,15 @@ const T = {
     full: (m: number) => `पूरी फ़िल्म देखें · ${m} मिनट`,
     fullSoon: (m: number) => `पूरी फ़िल्म देखें (${m} मिनट) →`,
     join: "डीलर कवच से जुड़ें",
+    reply: "WhatsApp पर जवाब दें",
+    replySub: "संदेश तैयार है, बस भेज दीजिए",
+    /** what the reply opens with, ready to send; the fixed start lets the team spot it in the inbox */
+    replyText: "डीलर कवच फ़िल्म: मुझे रुचि है। कृपया मुझे कॉल करें।",
+    replyPill: "रुचि है? WhatsApp पर बताइए",
+    endAsk: "पसंद आया? WhatsApp पर बताइए",
+    friend: "दोस्त को फ़िल्म भेजें",
+    friendShort: "दोस्त को भेजें",
+    settings: "सेटिंग",
     loading: "फ़िल्म साफ़ तस्वीर में आ रही है",
     back: "10 सेकंड पीछे",
     fwd: "10 सेकंड आगे",
@@ -108,24 +128,20 @@ const T = {
     lite: "कम डेटा",
     chapters: "अध्याय",
     inFull: "पूरी फ़िल्म में",
-    thanks: "देखने के लिए धन्यवाद",
-    startFor: "अपने पंप के लिए डीलर कवच शुरू करें",
-    next: "आगे क्या करें?",
-    cbTitle: "हम आपको कॉल करें",
-    cbLead: "नाम और मोबाइल नंबर छोड़िए — हमारी टीम आपको कॉल करेगी।",
+    next: "बात करने के और तरीके",
+    cbTitle: "हम आपको कॉल करेंगे",
+    cbLead: "नाम और नंबर भेजिए, हमारी टीम आपको कॉल करेगी।",
     cbName: "आपका नाम",
     cbPhone: "मोबाइल नंबर",
-    cbOutlet: "पंप का नाम (ज़रूरी नहीं)",
-    cbOutletAria: "पंप का नाम",
-    cbSend: "मुझे कॉल करें",
+    cbPhoneEg: "जैसे 98765 43210",
+    cbOutlet: "पंप का नाम",
+    cbOptional: "ज़रूरी नहीं",
+    cbSend: "मेरा नंबर भेजें",
+    cbFaster: "जल्दी बात करनी है? WhatsApp पर लिख दीजिए",
     tollTitle: "टोल-फ़्री नंबर पर कॉल करें",
     tollSub: "1800-891-3496 · सुबह 9 से रात 9, हर दिन",
     appTitle: "ऐप डाउनलोड करें",
     appSub: "Google Play से डीलर कवच ऐप लें, उसी में रजिस्टर करें",
-    regTitle: "वेबसाइट पर रजिस्टर करें",
-    regSub: "दो मिनट का फ़ॉर्म",
-    talkTitle: "वेबसाइट पर बात करें",
-    talkSub: "हमारे सहायक से बोलकर पूछें — फ़ोन की ज़रूरत नहीं",
     /** what the player says at run time */
     run: {
       play: "चलाएँ",
@@ -133,11 +149,16 @@ const T = {
       wait: "रुकिए…",
       offline: "इंटरनेट बंद है, जुड़ते ही चलेगी",
       slow: "इंटरनेट धीमा है, बस थोड़ी देर और…",
-      cbBad: "अपना नाम और 10 अंकों का मोबाइल नंबर भरें।",
+      cbNoName: "अपना नाम लिखिए।",
+      cbBad: "10 अंक का मोबाइल नंबर लिखिए।",
       cbSending: "भेज रहे हैं…",
-      cbDone: "धन्यवाद! हमारी टीम जल्द ही आपको कॉल करेगी।",
+      cbDone: "धन्यवाद, {n}! हमारी टीम आपको कॉल करेगी।",
       cbFail: "भेज नहीं पाए। इंटरनेट देखकर फिर कोशिश करें।",
+      cbBusy: "अभी बहुत सारे अनुरोध आ गए हैं। कृपया 1800-891-3496 पर कॉल करें।",
       cbFilm: "फ़िल्म",
+      speed: "रफ़्तार",
+      tapChange: "बदलने के लिए दबाएँ",
+      restart: "शुरू से, आवाज़ के साथ",
     },
   },
   en: {
@@ -157,6 +178,14 @@ const T = {
     full: (m: number) => `Full film · ${m} min`,
     fullSoon: (m: number) => `Watch the full film (${m} min) →`,
     join: "Join Dealer's कवच",
+    reply: "Reply on WhatsApp",
+    replySub: "Message ready, just tap send",
+    replyText: "Dealer's Kavach film: I'm interested. Please call me.",
+    replyPill: "Interested? Tell us on WhatsApp",
+    endAsk: "Liked it? Tell us on WhatsApp",
+    friend: "Send the film to a friend",
+    friendShort: "Send to a friend",
+    settings: "Settings",
     loading: "Loading the film in a clear picture",
     back: "Back 10 seconds",
     fwd: "Forward 10 seconds",
@@ -182,35 +211,36 @@ const T = {
     lite: "Save data",
     chapters: "Chapters",
     inFull: "In the full film",
-    thanks: "Thanks for watching",
-    startFor: "Start Dealer's कवच for your pump",
-    next: "What next?",
-    cbTitle: "We'll call you",
-    cbLead: "Leave your name and mobile number and our team will call you.",
+    next: "Other ways to reach us",
+    cbTitle: "We'll call you back",
+    cbLead: "Send your name and number and our team will call you.",
     cbName: "Your name",
     cbPhone: "Mobile number",
-    cbOutlet: "Pump name (optional)",
-    cbOutletAria: "Pump name",
-    cbSend: "Call me",
+    cbPhoneEg: "e.g. 98765 43210",
+    cbOutlet: "Pump name",
+    cbOptional: "optional",
+    cbSend: "Send my number",
+    cbFaster: "In a hurry? Write to us on WhatsApp",
     tollTitle: "Call our toll-free number",
     tollSub: "1800-891-3496 · 9am to 9pm, every day",
     appTitle: "Download the app",
     appSub: "Get the Dealer Kavach app on Google Play and register in it",
-    regTitle: "Register on the website",
-    regSub: "A two-minute form",
-    talkTitle: "Talk to us on the website",
-    talkSub: "Ask our assistant out loud, no phone needed",
     run: {
       play: "Play",
       pause: "Pause",
       wait: "Loading…",
       offline: "No internet. It will play when you're back online.",
       slow: "Slow internet, nearly there…",
-      cbBad: "Enter your name and a 10-digit mobile number.",
+      cbNoName: "Please write your name.",
+      cbBad: "Please write a 10-digit mobile number.",
       cbSending: "Sending…",
-      cbDone: "Thank you! Our team will call you soon.",
+      cbDone: "Thank you, {n}! Our team will call you.",
       cbFail: "Couldn't send. Check your internet and try again.",
+      cbBusy: "Too many requests just now. Please call 1800-891-3496.",
       cbFilm: "Film",
+      speed: "Speed",
+      tapChange: "tap to change",
+      restart: "From the start, with sound",
     },
   },
 };
@@ -245,11 +275,11 @@ const ICON = {
   replay:
     '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 5V1L7 6l5 5V7a6 6 0 1 1-6 6H4a8 8 0 1 0 8-8z"/></svg>',
   wa: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5a9.5 9.5 0 0 0-8.2 14.3L2.5 21.5l4.8-1.3A9.5 9.5 0 1 0 12 2.5z" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M8.7 7.4c.3-.5.6-.5.9-.5h.6c.2 0 .5 0 .7.5l.9 2.1c.1.2.1.4 0 .6l-.6.8c-.2.2-.2.4 0 .7.6 1 1.4 1.8 2.4 2.4.3.2.5.1.7 0l.8-.9c.2-.2.4-.2.6-.1l2 1c.3.1.4.3.4.5 0 .6-.2 1.3-.7 1.7-.6.5-1.5.8-2.5.5-1.3-.4-3-1.2-4.4-2.7-1.5-1.5-2.3-3-2.6-4.2-.2-.9 0-1.8.4-2.4z" fill="currentColor"/></svg>',
+  share:
+    '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18 16a3 3 0 0 0-2.4 1.2l-6.7-3.5a3 3 0 0 0 0-1.4l6.7-3.5A3 3 0 1 0 15 7l-6.7 3.5a3 3 0 1 0 0 3L15 17a3 3 0 1 0 3-1z"/></svg>',
   phone:
     '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.6 10.8a15.2 15.2 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25c1.1.37 2.3.57 3.6.57a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1z"/></svg>',
   app: '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 2h10a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2zm0 3v14h10V5zm4 2h2v5h2l-3 3-3-3h2z"/></svg>',
-  form: '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 2h9l5 5v13a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2zm8 1.5V8h4.5zM7 12v2h10v-2zm0 4v2h7v-2z"/></svg>',
-  talk: '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4 3h16a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H9l-5 4v-4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2zm4 6.5a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zm4 0a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zm4 0a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3z"/></svg>',
 };
 
 const esc = (s: string) =>
@@ -400,12 +430,24 @@ ${foot}</main>
   }
 
   const chapterList = (f.chapters || []).map((c) => ({ t: c.t, title: chapterName(lang, c.title) }));
+  // From the chapter on fees on, the full film has said what it does and what
+  // it costs: from there the controls carry a small "tell us on WhatsApp" too.
+  const fees = (f.chapters || []).find((c) => c.title.normalize("NFC") === "फ़ीस".normalize("NFC"));
   const cfg = {
     film: f.film, title, duration: f.duration, base: f.base, hls: f.hls, playlists: f.playlists, mp4: f.mp4,
     captions: f.captions, chapters: chapterList, beacon: a.beacon, hlsJs: a.hlsSrc, url, kind: p.kind, lang, s: w.run,
+    lateAt: p.kind === "full" && fees ? fees.t : 0, replyText: w.replyText,
   };
-  const wa = (cls: string, text: string) =>
-    `<a class="${cls}" data-wa href="https://wa.me/" target="_blank" rel="noopener">${ICON.wa}${text}</a>`;
+  // Green is for one thing only: telling us, in our WhatsApp chat, that he is
+  // interested. wa.me opens the chat with the words typed and not yet sent; the
+  // player adds the words (kept once, in cfg), so without it the link still
+  // opens the right chat, just empty.
+  const replyHref = `https://wa.me/${WA_REPLY}`;
+  const reply = (cls: string, sub = true) =>
+    `<a class="${cls}" data-reply href="${replyHref}" target="_blank" rel="noopener">${ICON.wa}<span><b>${w.reply}</b>${sub ? `<small>${w.replySub}</small>` : ""}</span></a>`;
+  // Sharing the film with someone else is a quiet link with a share arrow, never green.
+  const share = (cls: string, text: string) =>
+    `<a class="${cls}" data-wa href="https://wa.me/" target="_blank" rel="noopener">${ICON.share}${text}</a>`;
   const fullBtn = (cls: string) =>
     `<a class="${cls}" data-full href="/film?from=short">${ICON.play}${w.full(a.fullMin)}</a>`;
   // "join" goes to the enrolment page in the language this page is in. Staying
@@ -413,21 +455,27 @@ ${foot}</main>
   const regBtn = (cls: string) => `<a class="${cls}" data-reg href="/register?lang=${lang}">${w.join}</a>`;
   const way = (href: string, icon: string, title: string, sub: string, ext = false) =>
     `<a class="way" data-reg href="${href}"${ext ? ' target="_blank" rel="noopener"' : ""}>${icon}<div><b>${title}</b><span>${sub}</span></div></a>`;
-  // The ways in, most-asked first. The callback goes to the team's inbox with the
-  // share code, so a dealer who came from a personal WhatsApp link is known by it.
+  // The other ways in, least effort first: ring us, leave a number, or the app.
+  // (Registering on the site is the "join" button; the assistant is on the home
+  // page.) The call-back goes to the admin's
+  // Call-backs page and the team's inbox with the share code, so a dealer who
+  // came from a personal WhatsApp link is known by it.
+  const field = (name: string, label: string, attrs: string, hint = "") =>
+    `<label for="cb-${name}">${label}${hint ? ` <i>(${hint})</i>` : ""}</label><input id="cb-${name}" name="${name}" ${attrs}>`;
   const next = `<section class="next" id="next"><h2>${w.next}</h2>
+${way(TOLL_FREE_TEL, ICON.phone, w.tollTitle, w.tollSub)}
 <form class="cb" id="cb" novalidate><b>${w.cbTitle}</b><p>${w.cbLead}</p>
-<input name="name" autocomplete="name" placeholder="${w.cbName}" aria-label="${w.cbName}" maxlength="120" required>
-<input name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="${w.cbPhone}" aria-label="${w.cbPhone}" maxlength="16" required>
-<input name="outlet" placeholder="${w.cbOutlet}" aria-label="${w.cbOutletAria}" maxlength="160">
+${field("name", w.cbName, 'autocomplete="name" maxlength="120" required')}
+${field("phone", w.cbPhone, `type="tel" inputmode="tel" autocomplete="tel-national" placeholder="${w.cbPhoneEg}" maxlength="16" required`)}
+${field("outlet", w.cbOutlet, 'maxlength="160"', w.cbOptional)}
 <input name="website" tabindex="-1" autocomplete="off" hidden>
-<button type="submit" class="btn pri">${ICON.phone}${w.cbSend}</button><p class="msg" id="cbmsg" role="status" aria-live="polite"></p></form>
-<div class="ways">${way(TOLL_FREE_TEL, ICON.phone, w.tollTitle, w.tollSub)}${way(PLAY_URL, ICON.app, w.appTitle, w.appSub, true)}${way(`/register?lang=${lang}`, ICON.form, w.regTitle, w.regSub)}${way(`/?call=1&amp;lang=${lang}`, ICON.talk, w.talkTitle, w.talkSub)}</div></section>`;
-  // the short ends on what the full film holds; the full film on the next step
+<p class="msg" id="cbmsg" role="status" aria-live="polite"></p><button type="submit" class="btn pri">${w.cbSend}</button>${reply("after", false).replace(w.reply, w.cbFaster)}</form>
+${way(PLAY_URL, ICON.app, w.appTitle, w.appSub, true)}</section>`;
+  // the end of either film: the reply first, then the next film or the form, then again / share
   const endBody =
     p.kind === "short"
-      ? `<p class="k">${w.inFull}</p><ul class="peek">${a.peek.map((t) => `<li>${esc(t)}</li>`).join("")}</ul>${fullBtn("btn pri")}`
-      : `<img src="/film/mark.png" width="56" height="56" alt=""><p class="k">${w.thanks}</p><b>${w.startFor}</b>${regBtn("btn pri")}`;
+      ? `<b class="ask">${w.inFull}</b><ul class="peek">${a.peek.map((t) => `<li>${esc(t)}</li>`).join("")}</ul>${reply("btn reply")}${fullBtn("btn alt")}`
+      : `<b class="ask">${w.endAsk}</b>${reply("btn reply")}${regBtn("btn alt")}`;
   const chapters = chapterList.length
     ? `<section class="ch"><h2>${w.chapters}</h2><ol>${chapterList
         .map((c) => `<li><button type="button" data-t="${c.t}"><span>${mmss(c.t)}</span>${esc(c.title)}</button></li>`)
@@ -435,26 +483,26 @@ ${foot}</main>
     : "";
   return `${head}
 <div class="stage" id="stage">
-<video id="v" playsinline preload="auto" controls crossorigin="anonymous" poster="${poster}"><track kind="captions" srclang="hi" label="हिन्दी" default src="${f.base}/${f.captions}"></video>
+<video id="v" playsinline preload="auto" controls crossorigin="anonymous" poster="${poster}" aria-label="${esc(title)}"><track kind="captions" srclang="hi" label="हिन्दी" default src="${f.base}/${f.captions}"></video>
 <div class="load" id="load" hidden><b id="loadmsg">${w.loading}</b><i></i></div>
 <div class="ui" id="ui">
 <div class="mid">${skip("back", -1, w.back)}<button type="button" class="pp" id="pp" aria-label="${w.pause}">${ICON.pause}${ICON.play}</button>${skip("fwd", 1, w.fwd)}</div>
-<div class="low"><p class="now" id="chap"></p><div class="row"><span class="time" id="time">0:00 / ${mmss(f.duration || 0)}</span><span class="hd" id="hd" hidden>HD</span><button type="button" class="ic" id="mute" aria-label="${w.sound}">${ICON.sound}${ICON.muted}</button><button type="button" class="ic" id="fs" aria-label="${w.fs}">${ICON.fs}${ICON.unfs}</button></div>
+<div class="low">${p.kind === "full" ? `<a class="wpill" data-reply href="${replyHref}" target="_blank" rel="noopener">${ICON.wa}${w.replyPill}</a>` : ""}<p class="now" id="chap"></p><div class="row"><span class="time" id="time">0:00 / ${mmss(f.duration || 0)}</span><span class="hd" id="hd" hidden>HD</span><button type="button" class="rate" id="rate">1.2x</button><button type="button" class="ic" id="mute" aria-label="${w.sound}">${ICON.sound}${ICON.muted}</button><button type="button" class="ic" id="fs" aria-label="${w.fs}">${ICON.fs}${ICON.unfs}</button></div>
 <div class="seek"><div class="ticks" id="ticks"></div><input type="range" id="seek" min="0" max="${f.duration}" step="0.1" value="0" aria-label="${w.seek}"></div></div>
 </div>
 <div class="mini"></div>
-<div class="nudge" id="nl">${w.back}</div><div class="nudge r" id="nr">${w.fwd}</div>
+<div class="nudge" id="nl">${w.back}</div><div class="nudge r" id="nr">${w.fwd}</div><div class="nudge c" id="nc">${w.run.restart}</div>
 <div class="wait" id="wait" hidden><i></i><b id="waitmsg">${w.wait}</b></div>
 <button type="button" class="snd" id="snd" hidden>${ICON.sound}${w.soundOn}</button>
 <button type="button" class="resume" id="resume" hidden>${ICON.play}<span>${w.resume}</span></button>
 <button type="button" class="big" id="big" hidden><span>${ICON.play}</span>${w.play}</button>
 <div class="err" id="err" hidden><b>${w.err}</b><p>${w.errHow}</p><button type="button" class="btn pri" id="retry">${ICON.replay}${w.retry}</button></div>
-<div class="end" id="end" hidden>${endBody}<div class="two"><button type="button" class="btn" id="replay">${ICON.replay}${w.replay}</button>${wa("btn wa", w.share)}</div></div>
+<div class="end" id="end" role="group" aria-label="${esc(title)}" aria-live="polite" hidden>${endBody}<div class="two"><button type="button" class="lnk" id="replay">${ICON.replay}${w.replay}</button>${share("lnk", w.friendShort)}</div></div>
 </div>
-<div class="act">${p.kind === "short" ? fullBtn("btn pri") : regBtn("btn pri")}${wa("btn wa", w.share)}</div>
-<div class="dock">${seg(w.speed, "speed", [["data-rate", "1", "1x"], ["data-rate", "1.2", "1.2x"], ["data-rate", "1.5", "1.5x"]])}${seg(w.subs, "subs", [["data-cc", "1", w.on], ["data-cc", "0", w.off]])}${seg(w.pic, "qual", [["data-q", "auto", w.auto], ["data-q", "hd", "HD"], ["data-q", "lite", w.lite]], true)}</div>
+<div class="act">${reply("btn reply")}${p.kind === "short" ? fullBtn("btn alt") : regBtn("btn alt")}</div>
 ${next}
 ${chapters}
+<details class="dock"><summary>${w.settings}</summary>${seg(w.speed, "speed", [["data-rate", "1", "1x"], ["data-rate", "1.2", "1.2x"], ["data-rate", "1.5", "1.5x"]])}${seg(w.subs, "subs", [["data-cc", "1", w.on], ["data-cc", "0", w.off]])}${seg(w.pic, "qual", [["data-q", "auto", w.auto], ["data-q", "hd", "HD"], ["data-q", "lite", w.lite]], true)}${share("btn", w.friend)}</details>
 ${foot}</main>
 <script type="application/json" id="cfg">${JSON.stringify(cfg).replace(/</g, "\\u003c")}</script>
 <script>${js}</script>

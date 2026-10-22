@@ -15,7 +15,7 @@
 import type HlsType from "hls.js";
 
 type FilmId = "kavach" | "kavach-short";
-type Cta = "full" | "register" | "share" | "replay" | "chapter" | "speed";
+type Cta = "full" | "register" | "share" | "replay" | "chapter" | "speed" | "reply";
 type Range = [number, number];
 
 interface PageConfig {
@@ -37,7 +37,15 @@ interface PageConfig {
   kind: "full" | "short";
   /** the page's language, and what the player says at run time in it */
   lang: "hi" | "en";
-  s: { play: string; pause: string; wait: string; offline: string; slow: string; cbBad: string; cbSending: string; cbDone: string; cbFail: string; cbFilm: string };
+  s: {
+    play: string; pause: string; wait: string; offline: string; slow: string; cbNoName: string; cbBad: string;
+    cbSending: string; cbDone: string; cbFail: string; cbBusy: string; cbFilm: string; speed: string; tapChange: string;
+    restart: string;
+  };
+  /** where the full film's controls start carrying the WhatsApp reply (the fees chapter); 0 = never */
+  lateAt: number;
+  /** what "reply on WhatsApp" opens with, ready to send */
+  replyText: string;
 }
 
 interface NetInfo {
@@ -60,9 +68,22 @@ interface NetInfo {
   const snd = $<HTMLButtonElement>("snd");
   const big = $<HTMLButtonElement>("big");
   const end = $("end");
+  const page = document.querySelector("main");
   const load = $("load");
   const errBox = $("err");
   const cls = (c: string, on: boolean) => stage.classList.toggle(c, on);
+  /* The picture gives up the reply bar's height so the reply is on the first
+     phone screen. page.css guesses 84 px; a bigger system font or a wrapped
+     line makes the button taller, so measure the real one. */
+  const replyBar = document.querySelector<HTMLElement>(".act .reply");
+  const noBar = matchMedia("(min-width:980px), (orientation:landscape) and (max-height:500px)");
+  const fitBar = () => {
+    const root = document.documentElement.style;
+    if (!replyBar || noBar.matches) root.removeProperty("--bar");
+    else if (replyBar.offsetHeight) root.setProperty("--bar", `${replyBar.offsetHeight + 20}px`);
+  };
+  fitBar();
+  addEventListener("resize", fitBar);
   // the page's own controls replace the browser's; without this script the browser's stay
   v.controls = false;
   cls("js", true);
@@ -399,7 +420,9 @@ interface NetInfo {
       seek.style.setProperty("--b", pc(b));
     }
     stage.style.setProperty("--q", String(d ? Math.min(1, t / d) : 0));
-    if (timeEl) timeEl.textContent = `${clock(t)} / ${clock(d)}`;
+    const at = `${clock(t)} / ${clock(d)}`;
+    if (timeEl) timeEl.textContent = at;
+    if (seek) seek.setAttribute("aria-valuetext", at);
   };
   const shown = () => stage.classList.contains("on");
   const hideUi = () => {
@@ -437,15 +460,16 @@ interface NetInfo {
     if (v.paused || v.ended) v.play().catch(() => {});
     else v.pause();
   };
-  const nudges = [$("nl"), $("nr")];
+  const nudges = [$("nl"), $("nr"), $("nc")];
+  const flash = (el: HTMLElement | null) => {
+    if (!el) return;
+    el.classList.remove("go");
+    void el.offsetWidth; // restart the animation on a second skip
+    el.classList.add("go");
+  };
   const jump = (dt: number) => {
     v.currentTime = Math.max(0, Math.min(dur() - 0.3, (v.currentTime || 0) + dt));
-    const el = nudges[dt < 0 ? 0 : 1];
-    if (el) {
-      el.classList.remove("go");
-      void el.offsetWidth; // restart the animation on a second skip
-      el.classList.add("go");
-    }
+    flash(nudges[dt < 0 ? 0 : 1]);
     paint();
   };
 
@@ -536,7 +560,7 @@ interface NetInfo {
   let tapT = 0;
   stage.addEventListener("click", (e) => {
     const t = e.target as HTMLElement;
-    if (stage.classList.contains("over") || (t && t.closest && t.closest("button,a,input"))) return;
+    if (stage.classList.contains("over") || (t && t.closest && t.closest("button,a,input,summary"))) return;
     if (v.muted && unmutedAt === undefined && !probing) {
       soundOn(true);
       if (firstFrame) showUi();
@@ -560,12 +584,16 @@ interface NetInfo {
     if (side) tapT = window.setTimeout(act, 250);
     else act();
   });
+  // Keyboard focus brings the hidden controls up (page.css), but only for a
+  // keyboard: a clicked button keeps focus, and the controls would never hide.
+  document.addEventListener("pointerdown", () => cls("kb", false), true);
   document.addEventListener("keydown", (e) => {
+    if (e.key === "Tab") cls("kb", true);
     if (e.ctrlKey || e.metaKey || e.altKey) return;
     const t = e.target as HTMLElement;
     // typing a name or a number into the call-back form is not a command
     if (t && t.closest && t.closest("input:not(#seek),textarea,select,[contenteditable]")) return;
-    const inCtl = !!(t && t.closest && t.closest("button,a,input"));
+    const inCtl = !!(t && t.closest && t.closest("button,a,input,summary"));
     const k = e.key;
     if ((k === " " || k === "k") && !inCtl) {
       e.preventDefault();
@@ -626,6 +654,7 @@ interface NetInfo {
   /* ── watched ranges ──────────────────────────────────────────────────── */
   v.addEventListener("timeupdate", () => {
     markChapter();
+    if (C.lateAt) cls("late", v.currentTime >= C.lateAt);
     if (v.paused || v.seeking || stallAt !== null || !firstFrame) return;
     const t = v.currentTime;
     if (cur && t >= cur[1] && t - cur[1] <= 1.5) {
@@ -660,6 +689,7 @@ interface NetInfo {
     if (!cur && !v.seeking) cur = [v.currentTime, v.currentTime];
     if (big) big.hidden = true;
     if (end) end.hidden = true;
+    if (page) page.classList.remove("ended");
     over();
     unwait();
   });
@@ -682,6 +712,8 @@ interface NetInfo {
   v.addEventListener("ended", () => {
     ended = true;
     if (end) end.hidden = false;
+    // the end card carries the reply: the bar under it would say it twice
+    if (page) page.classList.add("ended");
     over();
     // the end card's next steps lead below the picture, which full screen hides
     leaveFs();
@@ -730,9 +762,12 @@ interface NetInfo {
   const soundOn = (fromTap: boolean) => {
     if (unmutedAt === undefined) {
       unmutedAt = r2(v.currentTime || 0);
-      if (fromTap && v.currentTime < 15) {
+      const at = v.currentTime || 0;
+      if (fromTap && at < 15) {
         v.currentTime = 0;
         restarted = true;
+        // say why the film jumped back, or it reads as a fault
+        if (at > 2) flash(nudges[2]);
       }
       captions(false);
     }
@@ -746,6 +781,7 @@ interface NetInfo {
   let probing = false;
   v.addEventListener("volumechange", () => {
     cls("mut", v.muted || !v.volume);
+    muteBtn?.setAttribute("aria-pressed", String(v.muted || !v.volume));
     if (probing) return;
     if (!v.muted && v.volume > 0) soundOn(false);
     // the gold "sound on" pill is for a film that has never had sound; a viewer
@@ -753,17 +789,64 @@ interface NetInfo {
     else if (snd && firstFrame && unmutedAt === undefined) snd.hidden = false;
   });
 
-  /* ── speed ───────────────────────────────────────────────────────────── */
+  /* ── speed: 1.2x unless he chose otherwise ─────────────────────────────
+     The films' Hindi voice is unhurried, so they start a little faster. A
+     speed he picks is kept for his next visit. The default speed is set as
+     well as the current one: loading a source puts the current speed back to
+     the default, which would quietly undo the 1.2x (and his choice). */
+  const RATES = [1.2, 1, 1.5]; // the speed button's order: back to normal is one tap away
+  let rate = 1.2;
+  try {
+    const kept = Number(localStorage.getItem("mdg_rate"));
+    if (RATES.indexOf(kept) >= 0) rate = kept;
+  } catch {
+    /* storage blocked: 1.2x */
+  }
+  const applyRate = () => {
+    v.defaultPlaybackRate = rate;
+    v.playbackRate = rate;
+  };
+  applyRate();
+  v.addEventListener("loadedmetadata", applyRate);
   const chips = document.querySelectorAll<HTMLButtonElement>("[data-rate]");
-  const markRate = () =>
-    chips.forEach((b) => b.setAttribute("aria-pressed", String(Number(b.dataset.rate) === v.playbackRate)));
-  chips.forEach((b) =>
-    b.addEventListener("click", () => {
-      v.playbackRate = Number(b.dataset.rate) || 1;
-      cta("speed");
-    }),
-  );
-  v.addEventListener("ratechange", markRate);
+  const rateBtn = $<HTMLButtonElement>("rate");
+  const markRate = () => {
+    const r = v.playbackRate;
+    chips.forEach((b) => b.setAttribute("aria-pressed", String(Number(b.dataset.rate) === r)));
+    if (rateBtn) {
+      rateBtn.textContent = `${r}x`;
+      rateBtn.setAttribute("aria-label", `${C.s.speed} ${r}x, ${C.s.tapChange}`);
+    }
+  };
+  const pickRate = (r: number) => {
+    rate = r;
+    applyRate();
+    try {
+      localStorage.setItem("mdg_rate", String(r));
+    } catch {
+      /* storage blocked: kept for this visit only */
+    }
+    cta("speed");
+    markRate();
+  };
+  chips.forEach((b) => b.addEventListener("click", () => pickRate(Number(b.dataset.rate) || 1.2)));
+  rateBtn?.addEventListener("click", () => {
+    pickRate(RATES[(RATES.indexOf(rate) + 1) % RATES.length]);
+    showUi();
+  });
+  // Once the film is playing, a speed set from the browser's own player (an
+  // iPhone's full screen) is his choice too. Before that, a change is the
+  // browser loading the source, and the 1.2x goes back on.
+  v.addEventListener("ratechange", () => {
+    if (v.playbackRate !== rate) {
+      if (!firstFrame) applyRate();
+      else if (RATES.indexOf(v.playbackRate) >= 0) {
+        rate = v.playbackRate;
+        v.defaultPlaybackRate = rate;
+      }
+    }
+    markRate();
+  });
 
   /* ── chapters ────────────────────────────────────────────────────────── */
   const chBtns = Array.from(document.querySelectorAll<HTMLButtonElement>("[data-t]"));
@@ -808,8 +891,16 @@ interface NetInfo {
       beat();
     }),
   );
+  // "reply on WhatsApp": the reply itself lands in the admin's WhatsApp inbox; this counts the tap
+  document.querySelectorAll<HTMLAnchorElement>("a[data-reply]").forEach((a) => {
+    a.href += `?text=${encodeURIComponent(C.replyText)}`;
+    a.addEventListener("click", () => {
+      cta("reply");
+      beat();
+    });
+  });
 
-  /* ── "we call you": straight to the team's inbox, with the share code ───── */
+  /* ── "we call you": to the admin's Call-backs page and the team's inbox, with the share code ── */
   const cb = $<HTMLFormElement>("cb");
   const cbMsg = $("cbmsg");
   if (cb) {
@@ -818,20 +909,43 @@ interface NetInfo {
       cbMsg.textContent = t;
       cbMsg.className = ok ? "msg ok" : "msg";
     };
+    const box = (n: string) => cb.querySelector<HTMLInputElement>(`[name=${n}]`);
+    const nameBox = box("name");
+    const phoneBox = box("phone");
+    /** A 10-digit Indian mobile from however it was typed: Devanagari digits, spaces, dashes, +91, a leading 0. */
+    const mobile = (raw: string) => {
+      const d = raw
+        .replace(/[०-९]/g, (x) => String(x.charCodeAt(0) - 0x966))
+        .replace(/[^\d+]/g, "")
+        .replace(/^(\+?91|0)(?=\d{10}$)/, "");
+      return /^[6-9]\d{9}$/.test(d) ? d : "";
+    };
+    const mark = (el: HTMLInputElement | null, bad: boolean) => {
+      if (el) el.setAttribute("aria-invalid", String(bad));
+    };
+    phoneBox?.addEventListener("blur", () => {
+      if (phoneBox.value.trim()) mark(phoneBox, !mobile(phoneBox.value));
+    });
+    cb.addEventListener("input", (e) => mark(e.target as HTMLInputElement, false));
     cb.addEventListener("submit", (e) => {
       e.preventDefault();
       const f = new FormData(cb);
       const val = (k: string) => String(f.get(k) || "").trim();
       const name = val("name");
-      // spaces and dashes are how people type numbers; the inbox wants digits
-      const phone = val("phone").replace(/[\s-]/g, "");
-      if (!name || !/^\+?\d{10,13}$/.test(phone)) {
-        say(C.s.cbBad, false);
+      const phone = mobile(val("phone"));
+      mark(nameBox, !name);
+      mark(phoneBox, !phone);
+      if (!name || !phone) {
+        say(name ? C.s.cbBad : C.s.cbNoName, false);
+        (name ? phoneBox : nameBox)?.focus();
         return;
       }
       const btn = cb.querySelector("button");
       if (btn) btn.disabled = true;
       say(C.s.cbSending, true);
+      // a 2G link that never answers must not leave him on "sending" for ever
+      const stop = window.AbortController ? new AbortController() : null;
+      const t = window.setTimeout(() => stop && stop.abort(), 15000);
       fetch("/api/callback", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -843,23 +957,31 @@ interface NetInfo {
           outlet: val("outlet"),
           message: `${C.s.cbFilm}: ${C.title}`,
           source: "film",
+          film: C.film,
+          lang: C.lang,
           ref: tag,
           website: val("website"),
           elapsed: Math.round(now()),
         }),
+        signal: stop ? stop.signal : undefined,
       })
         .then((r) => {
           if (!r.ok) throw new Error(String(r.status));
           cb.classList.add("done");
-          say(C.s.cbDone, true);
-          // counted with the other ways of joining: the film's tally knows six kinds of tap
+          say(C.s.cbDone.replace("{n}", () => name), true);
+          // the card gets shorter: keep the thank-you where he is looking
+          if (cbMsg) cbMsg.scrollIntoView({ block: "nearest" });
+          // counted with the other ways of joining
           cta("register");
           beat();
         })
-        .catch(() => {
+        .catch((err: Error) => {
           if (btn) btn.disabled = false;
-          say(C.s.cbFail, false);
-        });
+          // too many from his network (many phones share one address): the
+          // toll-free number works when the form cannot
+          say(err && err.message === "429" ? C.s.cbBusy : C.s.cbFail, false);
+        })
+        .then(() => window.clearTimeout(t));
     });
   }
 

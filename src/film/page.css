@@ -1,17 +1,22 @@
 /* Inlined into /film and /film/short. Device fonts only: Devanagari comes from the phone.
    The scene: a dealer opens a WhatsApp link on his phone, at the pump or at home at night.
-   The picture is the brightest thing on the screen; everything around it is deep navy. */
-:root{--bg:#101133;--panel:#1a1c4a;--line:#2f3280;--fg:#f7f7ff;--dim:#c5c7ed;--acc:#f5a524;--ink:#101133;
-  --night:#07081c;--wa:#1fa855;--veil:rgba(7,8,28,.82);
+   The picture is the brightest thing on the screen; everything around it is deep navy.
+   Two colours carry meaning: green is only "reply to us on WhatsApp", gold is the next step.
+   Surfaces are told apart by a step in tone, not by outlines. */
+:root{--bg:#101133;--panel:#1b1d4d;--panel2:#24275e;--line:#2f3280;--fg:#f7f7ff;--dim:#c5c7ed;--acc:#f5a524;--ink:#101133;
+  --night:#07081c;--wa:#25d366;--field:#7a7ec8;--bad:#ff9a8a;--veil:rgba(7,8,28,.82);
   --sys:system-ui,-apple-system,"Segoe UI",Roboto,"Noto Sans Devanagari","Nirmala UI",sans-serif;
   --out:cubic-bezier(.25,1,.5,1);
-  /* --hd is the header's height: one line on a phone */
-  --hd:52px;--stage:min(100vw,calc((100vh - var(--hd))*9/16));--fold:calc(100vh - var(--hd))}
-@supports (height:100svh){:root{--stage:min(100vw,calc((100svh - var(--hd))*9/16));--fold:calc(100svh - var(--hd))}}
+  /* --hd is the header's height: one line on a phone. --bar is the reply bar under the
+     picture: the picture gives up that much height so the reply is on the first screen. */
+  --hd:52px;--bar:84px;--stage:min(100vw,calc((100vh - var(--hd) - var(--bar))*9/16));--fold:calc(100vh - var(--hd) - var(--bar))}
+@supports (height:100svh){:root{--stage:min(100vw,calc((100svh - var(--hd) - var(--bar))*9/16));--fold:calc(100svh - var(--hd) - var(--bar))}}
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%;color-scheme:dark}
 body{margin:0;background:var(--bg);color:var(--fg);font:17px/1.5 var(--sys);-webkit-font-smoothing:antialiased}
 a{color:inherit}
+::selection{background:var(--acc);color:var(--ink)}
+:focus-visible{outline:3px solid var(--acc);outline-offset:2px}
 button{font:inherit;color:inherit;cursor:pointer;-webkit-tap-highlight-color:transparent}
 svg{display:block}
 [hidden]{display:none!important}
@@ -19,15 +24,15 @@ header{display:flex;align-items:center;gap:10px;padding:0 16px;height:var(--hd);
 header a{display:flex;flex:0 0 auto}
 header div{min-width:0}
 header img{width:32px;height:32px}
+header>a{padding:6px;margin:-6px}
 /* हिंदी | EN: both always on screen, the live one filled, as on the rest of the site */
-.lang{display:flex;flex:none;margin-left:auto;padding:3px;border:1px solid rgba(247,247,255,.22);border-radius:999px;
-  background:rgba(247,247,255,.07)}
-.lang a{display:grid;place-items:center;min-width:44px;min-height:36px;padding:0 11px;border-radius:999px;color:var(--dim);
-  font-size:14px;font-weight:700;line-height:1;text-decoration:none}
+.lang{display:flex;flex:none;margin-left:auto;padding:3px;border-radius:999px;background:rgba(247,247,255,.1)}
+.lang a{display:grid;place-items:center;min-width:44px;min-height:40px;padding:0 11px;border-radius:999px;color:var(--fg);
+  font-size:16px;font-weight:700;line-height:1;text-decoration:none}
 .lang a[aria-current]{background:var(--acc);color:var(--ink)}
 h1{margin:0;font-size:17px;line-height:1.3;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 /* on a phone the title says it; the line is for desktop and for link previews */
-header p{display:none;margin:0;font-size:14px;line-height:1.35;color:var(--dim)}
+header p{display:none;margin:0;font-size:15px;line-height:1.35;color:var(--dim);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 /* a 360-px phone: the title takes two lines rather than lose its end to the switch */
 @media (max-width:399px){header{gap:8px;padding:0 12px}.lang a{min-width:40px;padding:0 9px}
   h1{font-size:15px;line-height:1.25;white-space:normal;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2}}
@@ -50,10 +55,14 @@ video::cue{font:600 clamp(19px,5.4vw,28px)/1.4 var(--sys);color:var(--fg);backgr
 @keyframes sweep{from{transform:translateX(-100%)}to{transform:translateX(330%)}}
 
 /* the controls: hidden while the film plays, a tap brings them for 3 s */
-.ui{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;opacity:0;visibility:hidden;
+/* hidden by opacity only, so a keyboard or a screen reader can still reach them, and keyboard focus brings
+   them up. :focus-visible, not :focus-within: a tapped button keeps focus in Chrome, and the controls would
+   never hide again. Its own rule, so a browser without :has drops only this line. */
+.ui{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;opacity:0;pointer-events:none;
   background:linear-gradient(to top,var(--veil) 0,rgba(7,8,28,.4) 30%,rgba(7,8,28,.22) 55%,rgba(7,8,28,.3));
-  transition:opacity .2s var(--out),visibility 0s .2s}
-.stage.on .ui{opacity:1;visibility:visible;transition:opacity .2s var(--out)}
+  transition:opacity .2s var(--out)}
+.stage.on .ui{opacity:1;pointer-events:auto}
+.stage.kb .ui:has(:focus-visible){opacity:1;pointer-events:auto}
 .mid{position:absolute;left:0;right:0;top:50%;transform:translateY(-50%);display:flex;align-items:center;
   justify-content:center;gap:clamp(28px,10vw,56px)}
 .stage.stall .mid{visibility:hidden}
@@ -65,30 +74,39 @@ video::cue{font:600 clamp(19px,5.4vw,28px)/1.4 var(--sys);color:var(--fg);backgr
 .stage.paused .pp svg:first-child,.stage:not(.paused) .pp svg+svg{display:none}
 .sk{position:relative;width:58px;height:58px}
 .sk svg{width:34px;height:34px}
-.sk span{position:absolute;left:0;right:0;top:52.5%;transform:translateY(-50%);font-size:11px;font-weight:800;
+.sk span{position:absolute;left:0;right:0;top:52.5%;transform:translateY(-50%);font-size:13px;font-weight:800;
   line-height:1;text-align:center}
 .low{padding:0 12px 6px}
-.now{margin:0 4px;font-size:15px;font-weight:600;color:var(--dim);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.now{margin:0 4px;font-size:16px;font-weight:600;color:var(--dim);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  text-shadow:0 1px 6px rgba(0,0,0,.7)}
+/* from the fees chapter on, the controls carry the reply too: low, by the thumb */
+.wpill{display:none;align-items:center;gap:8px;width:max-content;max-width:100%;margin:0 4px 8px;padding:9px 16px;border-radius:999px;
+  background:var(--wa);color:var(--ink);font-size:16px;font-weight:800;text-decoration:none;white-space:nowrap;overflow:hidden}
+.wpill svg{width:20px;height:20px;flex:none}
+.stage.late .wpill{display:flex}
 .now:empty{display:none}
 .row{display:flex;align-items:center;gap:4px;min-height:44px;padding-left:4px}
-.time{font-size:15px;font-weight:600;font-variant-numeric:tabular-nums}
-.hd{margin-left:8px;padding:2px 6px;border:1.5px solid currentColor;border-radius:5px;font-size:11px;font-weight:800;
+.time{flex:none;font-size:16px;font-weight:600;font-variant-numeric:tabular-nums;white-space:nowrap}
+@media (max-width:339px){.hd{display:none!important}}
+/* the speed, always in view with the controls: a tap goes 1.2x, 1x, 1.5x */
+.rate{margin-left:auto;min-width:56px;min-height:44px;padding:0 12px;border:0;border-radius:999px;background:rgba(247,247,255,.16);
+  font-size:16px;font-weight:800;font-variant-numeric:tabular-nums}
+.hd{margin-left:8px;padding:2px 6px;border:1.5px solid currentColor;border-radius:5px;font-size:12px;font-weight:800;
   line-height:1.2;letter-spacing:.04em}
 .ic{display:grid;place-items:center;width:46px;height:46px;border:0;border-radius:50%;background:transparent}
 .ic svg{width:26px;height:26px}
-#mute{margin-left:auto}
 #mute svg+svg,.stage.mut #mute svg:first-child,#fs svg+svg,.stage.fs #fs svg:first-child{display:none}
 .stage.mut #mute svg+svg,.stage.fs #fs svg+svg{display:block}
-.seek{position:relative;height:40px}
+.seek{position:relative;height:48px}
 .seek input{position:absolute;inset:0;width:100%;height:100%;margin:0;-webkit-appearance:none;appearance:none;
   background:transparent;cursor:pointer;--p:0%;--b:0%}
 .seek input::-webkit-slider-runnable-track{height:5px;border-radius:3px;background:linear-gradient(to right,var(--acc) var(--p),
   rgba(247,247,255,.5) var(--p),rgba(247,247,255,.5) var(--b),rgba(247,247,255,.22) var(--b))}
 .seek input::-moz-range-track{height:5px;border-radius:3px;background:linear-gradient(to right,var(--acc) var(--p),
   rgba(247,247,255,.5) var(--p),rgba(247,247,255,.5) var(--b),rgba(247,247,255,.22) var(--b))}
-.seek input::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;margin-top:-7.5px;border:0;
+.seek input::-webkit-slider-thumb{-webkit-appearance:none;width:24px;height:24px;margin-top:-9.5px;border:0;
   border-radius:50%;background:var(--acc);box-shadow:0 1px 6px rgba(0,0,0,.5)}
-.seek input::-moz-range-thumb{width:20px;height:20px;border:0;border-radius:50%;background:var(--acc)}
+.seek input::-moz-range-thumb{width:24px;height:24px;border:0;border-radius:50%;background:var(--acc)}
 /* chapter starts: small gaps in the bar */
 .ticks{position:absolute;left:0;right:0;top:50%;height:5px;margin-top:-2.5px;pointer-events:none;z-index:1}
 .ticks i{position:absolute;top:0;width:3px;height:5px;margin-left:-1.5px;background:var(--night)}
@@ -100,7 +118,9 @@ video::cue{font:600 clamp(19px,5.4vw,28px)/1.4 var(--sys);color:var(--fg);backgr
 .nudge{position:absolute;top:34%;left:7%;padding:10px 16px;border-radius:999px;background:rgba(16,17,51,.78);
   font-size:15px;font-weight:700;opacity:0;pointer-events:none}
 .nudge.r{left:auto;right:7%}
+.nudge.c{left:50%;transform:translateX(-50%);white-space:nowrap}
 .nudge.go{animation:nudge .75s var(--out)}
+.nudge.c.go{animation-duration:2.4s}
 @keyframes nudge{0%{opacity:0}15%,65%{opacity:1}to{opacity:0}}
 .wait{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;
   gap:12px;pointer-events:none;text-align:center}
@@ -113,13 +133,14 @@ video::cue{font:600 clamp(19px,5.4vw,28px)/1.4 var(--sys);color:var(--fg);backgr
    films keep their own on-screen words below the top ~10% and their cards' detail low */
 .snd{position:absolute;left:50%;top:max(10px,2.2%);transform:translateX(-50%);display:flex;align-items:center;gap:10px;
   padding:13px 22px;border:0;border-radius:999px;background:var(--acc);color:var(--ink);font-size:19px;font-weight:800;
-  white-space:nowrap;box-shadow:0 10px 30px rgba(0,0,0,.45);animation:pulse 2.4s ease-in-out infinite}
+  white-space:nowrap;box-shadow:0 10px 30px rgba(0,0,0,.45);animation:pulse 2.4s ease-in-out 5}
 .snd svg{width:24px;height:24px}
+.stage.over .snd{display:none}
 @keyframes pulse{0%,100%{box-shadow:0 10px 30px rgba(0,0,0,.45),0 0 0 0 rgba(245,165,36,.55)}
   50%{box-shadow:0 10px 30px rgba(0,0,0,.45),0 0 0 14px rgba(245,165,36,0)}}
 /* back where he left off: low, where the thumb is */
 .resume{position:absolute;left:16px;right:16px;bottom:24%;display:flex;align-items:center;gap:12px;padding:13px 16px;
-  border:1px solid var(--line);border-radius:14px;background:rgba(16,17,51,.94);text-align:left;font-size:16px;
+  border:0;border-radius:14px;background:rgba(27,29,77,.96);text-align:left;font-size:16px;
   font-weight:600;line-height:1.35;box-shadow:0 10px 30px rgba(0,0,0,.45)}
 .resume svg{flex:none;width:22px;height:22px;color:var(--acc)}
 .resume b{font-variant-numeric:tabular-nums}
@@ -132,84 +153,117 @@ video::cue{font:600 clamp(19px,5.4vw,28px)/1.4 var(--sys);color:var(--fg);backgr
   padding:28px 24px;background:var(--bg);text-align:center}
 .err b{font-size:22px}
 .err p{margin:0 0 6px;color:var(--dim)}
-.end .k{margin:0;color:var(--acc);font-size:16px;font-weight:700}
-.end>b{max-width:15em;font-size:23px;line-height:1.35;margin-bottom:6px}
-.end img{width:56px;height:56px}
-.peek{list-style:none;margin:2px 0 10px;padding:0;display:flex;flex-direction:column;gap:12px;font-size:20px;
+/* the end: over the film's own last frame, the ask low where the thumb is */
+.end{justify-content:flex-end;gap:12px;padding:24px 20px 20px;background:linear-gradient(rgba(7,8,28,.62),rgba(7,8,28,.97) 40%)}
+.end .ask{max-width:16em;font-size:24px;line-height:1.3;margin-bottom:4px}
+.end .btn{max-width:360px}
+.peek{list-style:none;margin:0 0 8px;padding:0;display:flex;flex-direction:column;gap:10px;font-size:19px;
   font-weight:700;line-height:1.3;text-align:left}
 .peek li{display:flex;align-items:center;gap:12px}
 .peek li::before{content:"";flex:none;width:9px;height:9px;border-radius:2px;background:var(--acc);transform:rotate(45deg)}
-.two{display:flex;gap:10px;width:100%;max-width:340px}
-.two .btn{flex:1;font-size:16px;padding:12px 10px}
+.two{display:flex;justify-content:center;gap:8px 20px;flex-wrap:wrap;width:100%;max-width:360px}
 
-/* ── buttons ── */
-.btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;max-width:340px;min-height:52px;
-  padding:12px 20px;border-radius:14px;border:1px solid var(--line);background:var(--panel);font-size:17px;
+/* ── buttons: one shape, fully round ── */
+.btn{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;max-width:340px;min-height:52px;
+  padding:12px 20px;border-radius:999px;border:0;background:var(--panel2);font-size:17px;
   font-weight:700;line-height:1.3;text-decoration:none}
-.btn.pri{background:var(--acc);border-color:var(--acc);color:var(--ink);font-size:18px}
-.btn.wa{background:var(--wa);border-color:var(--wa);color:#fff}
+.btn.pri{background:var(--acc);color:var(--ink);font-size:18px}
+.btn.alt{background:transparent;box-shadow:inset 0 0 0 2px var(--acc);color:var(--acc)}
 .btn svg{width:20px;height:20px;flex:0 0 auto}
+/* the reply: the one green thing, its second line says the message is already typed */
+.btn.reply{min-height:64px;padding:10px 22px;background:var(--wa);color:var(--ink);text-align:left}
+.btn.reply svg{width:28px;height:28px}
+.reply span{display:flex;flex-direction:column}
+.reply b{font-size:19px;line-height:1.25}
+.reply small{font-size:15px;font-weight:600;line-height:1.3}
+/* replay and share on the end card: words, not more buttons */
+.lnk{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 4px;border:0;background:none;
+  font-size:17px;font-weight:700;text-decoration:underline;text-underline-offset:4px}
+.lnk svg{width:20px;height:20px}
 
-/* ── under the picture: the next step, then the settings ── */
-.act{display:flex;gap:10px;padding:14px 16px 4px}
-.act .btn{width:auto;max-width:none}
-.act .pri{flex:1}
-.act .wa{flex:none;padding:12px 18px}
-/* too narrow for both on one line without the gold one wrapping: one row each */
-@media (max-width:399px){.act{flex-wrap:wrap}.act .pri,.act .wa{flex:1 1 100%}}
-.dock{display:flex;flex-direction:column;gap:10px;padding:12px 16px 8px}
-.set{display:flex;align-items:center;gap:12px}
-.set>span{flex:0 0 74px;font-size:15px;font-weight:600;color:var(--dim)}
-.seg{display:flex;flex:1;gap:2px;padding:3px;border:1px solid var(--line);border-radius:13px}
-.seg button{flex:1;min-height:42px;padding:0 6px;border:0;border-radius:10px;background:transparent;color:var(--dim);
-  font-size:15px;font-weight:700;font-variant-numeric:tabular-nums;white-space:nowrap}
-.seg button[aria-pressed=true]{background:var(--acc);color:var(--ink)}
-/* ── the next step: we call him, he talks to us now, the app, or the form ── */
-.next{padding:18px 16px 6px;scroll-margin-top:12px}
-.next h2{margin:0 0 12px;font-size:21px;font-weight:800}
-.cb{display:flex;flex-direction:column;gap:10px;padding:16px;border:1px solid var(--line);border-radius:16px;background:var(--panel)}
+/* ── under the picture: the reply, always on the first screen ── */
+.act{display:flex;flex-direction:column;gap:10px;padding:10px 16px}
+.act .btn{max-width:none}
+.ended .act{display:none}
+/* ── the other ways in, least effort first ── */
+.next{display:flex;flex-direction:column;gap:10px;padding:18px 16px 6px;scroll-margin-top:12px}
+.next h2{margin:0 0 2px;font-size:21px;font-weight:800}
+.cb{display:flex;flex-direction:column;gap:8px;padding:16px;border-radius:16px;background:var(--panel)}
 .cb>b{font-size:19px}
-.cb>p{margin:0;color:var(--dim);font-size:15px;line-height:1.45}
-.cb input{width:100%;min-height:52px;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:var(--bg);
+.cb>p{margin:0 0 4px;color:var(--dim);font-size:16px;line-height:1.45}
+.cb label{margin-top:4px;font-size:16px;font-weight:700}
+.cb label i{font-style:normal;font-weight:600;color:var(--dim)}
+.cb input{width:100%;min-height:52px;padding:12px 14px;border:1.5px solid var(--field);border-radius:12px;background:var(--bg);
   color:var(--fg);font:inherit;font-size:17px}
-.cb input::placeholder{color:#9799c9}
+.cb input::placeholder{color:#a3a5d4}
 .cb input:focus{outline:2px solid var(--acc);outline-offset:1px}
-.cb .btn{max-width:none}
+.cb input[aria-invalid=true]{border:2px solid var(--bad)}
+.cb .btn{max-width:none;margin-top:4px}
 .cb .btn:disabled{opacity:.6}
-.cb .msg{margin:0;font-size:16px;font-weight:700;color:#ffb4a8}
+.cb .msg{margin:4px 0 0;font-size:16px;font-weight:700;color:var(--bad);overflow-wrap:anywhere}
 .cb .msg:empty{display:none}
 .cb .msg.ok{color:#8ee6b0}
-.cb.done input,.cb.done button{display:none}
-.ways{display:flex;flex-direction:column;gap:10px;margin-top:12px}
-.way{display:flex;align-items:center;gap:14px;min-height:68px;padding:12px 14px 12px 16px;border:1px solid var(--line);
-  border-radius:16px;text-decoration:none}
+.cb .after{display:none;align-items:center;gap:10px;min-height:48px;color:var(--wa);font-weight:700}
+.cb .after svg{width:24px;height:24px;flex:none}
+.cb.done label,.cb.done input,.cb.done button,.cb.done>p:not(.msg){display:none}
+.cb.done .msg{font-size:19px}
+.cb.done .after{display:flex}
+.way{display:flex;align-items:center;gap:14px;min-height:68px;padding:12px 14px 12px 16px;border-radius:16px;
+  background:var(--panel);text-decoration:none}
 .way>svg{flex:none;width:26px;height:26px;color:var(--acc)}
 .way div{flex:1;min-width:0}
 .way b{display:block;font-size:17px}
-.way span{display:block;margin-top:2px;color:var(--dim);font-size:14px;line-height:1.35}
-.way::after{content:"›";flex:none;font-size:28px;line-height:1;color:var(--dim)}
-.ch{padding:14px 16px 28px}
-.ch h2{margin:0 0 6px;font-size:15px;color:var(--dim);font-weight:600}
+.way span{display:block;margin-top:2px;color:var(--dim);font-size:16px;line-height:1.35}
+.way::after{content:"";flex:none;width:10px;height:10px;margin-right:6px;border-right:2.5px solid var(--dim);
+  border-bottom:2.5px solid var(--dim);transform:rotate(-45deg)}
+.ch{padding:18px 16px 8px}
+.ch h2{margin:0 0 6px;font-size:21px;font-weight:800}
 .ch ol{list-style:none;margin:0;padding:0}
 .ch button{display:flex;gap:14px;align-items:baseline;width:100%;min-height:48px;padding:12px;border:0;border-radius:10px;
   background:transparent;text-align:left;font-size:17px;line-height:1.35}
-.ch button span{flex:none;min-width:44px;color:var(--dim);font-size:14px;font-variant-numeric:tabular-nums}
+.ch button span{flex:none;min-width:48px;color:var(--dim);font-size:16px;font-variant-numeric:tabular-nums}
 .ch button[aria-current]{background:var(--panel);font-weight:700}
 .ch button[aria-current] span{color:var(--acc)}
+/* ── settings, folded away: most people never need them ── */
+.dock{margin:8px 16px 0;border-radius:16px;background:var(--panel)}
+.dock summary{display:flex;align-items:center;min-height:56px;padding:0 16px;font-size:17px;font-weight:700;cursor:pointer;list-style:none}
+.dock summary::-webkit-details-marker{display:none}
+.dock summary::after{content:"";width:10px;height:10px;margin:-6px 6px 0 auto;border-right:2.5px solid var(--dim);
+  border-bottom:2.5px solid var(--dim);transform:rotate(45deg)}
+.dock[open] summary::after{margin-top:6px;transform:rotate(225deg)}
+.dock[open]{display:flex;flex-direction:column;gap:10px;padding-bottom:14px}
+.dock[open]>*:not(summary){margin:0 16px}
+.set{display:flex;align-items:center;gap:12px}
+.set>span{flex:0 0 78px;font-size:16px;font-weight:600;color:var(--dim)}
+.seg{display:flex;flex:1;gap:2px;padding:3px;border-radius:999px;background:var(--bg)}
+.seg button{flex:1;min-height:44px;padding:0 6px;border:0;border-radius:999px;background:transparent;color:var(--dim);
+  font-size:16px;font-weight:700;font-variant-numeric:tabular-nums;white-space:nowrap}
+.seg button[aria-pressed=true]{background:var(--fg);color:var(--ink)}
+.dock .btn{width:auto;max-width:none;margin-top:4px}
 .soon{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:28px;height:100%;
-  text-align:center;background:radial-gradient(120% 70% at 50% 30%,#2c2e80 0%,var(--bg) 70%)}
+  text-align:center;background:var(--panel)}
 .soon img{width:72px;height:72px;opacity:.95}
 .soon b{font-size:30px;line-height:1.25}
 .soon p{margin:0 0 10px;color:var(--dim);max-width:30ch}
-footer{padding:4px 16px 28px;color:var(--dim);font-size:14px}
-footer a{color:var(--dim)}
-@media (hover:hover){.seg button:hover,.ch button:hover,.way:hover{background:rgba(47,50,128,.55)}.ic:hover{background:rgba(247,247,255,.12)}}
+footer{padding:12px 16px 28px;color:var(--dim);font-size:16px}
+footer a{display:inline-flex;align-items:center;min-height:44px;color:var(--dim)}
+/* press feedback on everything a thumb can hit */
+.btn,.way,.lnk,.rate,.wpill,.ch button,.seg button{transition:transform .12s var(--out),background-color .15s var(--out)}
+.btn:active,.way:active,.lnk:active,.rate:active,.wpill:active{transform:scale(.97)}
+@media (hover:hover){.seg button:hover,.ch button:hover,.way:hover{background:var(--panel2)}.ic:hover,.rate:hover{background:rgba(247,247,255,.24)}}
 @media (prefers-reduced-motion:reduce){.snd{animation:none}.load i::after{animation:none;width:100%;opacity:.6}
-  .wait i{animation-duration:2.4s}.ui,.stage.on .ui{transition:none}}
+  .wait i{animation-duration:2.4s}.ui,.stage.on .ui{transition:none}.btn,.way,.lnk,.rate,.wpill{transition:none}
+  .btn:active,.way:active,.lnk:active,.rate:active,.wpill:active{transform:none}}
 @media (min-width:600px){:root{--hd:64px}
   header p{display:block}
   .stage{width:var(--stage);border-radius:14px}
-  .act,.dock,.next,.ch,footer{width:var(--stage);margin:0 auto;padding-left:0;padding-right:0}}
-@media (min-width:980px){main{display:grid;grid-template-columns:var(--stage) 360px;gap:8px 28px;justify-content:center;
+  .act,.next,.ch,footer{width:max(var(--stage),340px);margin:0 auto;padding-left:0;padding-right:0}
+  .dock{width:max(var(--stage),340px);margin:8px auto 0}}
+/* a phone held sideways: the picture is already short, so it keeps its height and the page scrolls */
+@media (orientation:landscape) and (max-height:500px){:root{--bar:0px}.snd{padding:9px 14px;font-size:15px;gap:6px}}
+/* side by side: the picture never needs to make room for the reply bar */
+@media (min-width:980px){:root{--bar:0px}
+  header{max-width:calc(var(--stage) + 388px)}
+  main{display:grid;grid-template-columns:var(--stage) 360px;gap:8px 28px;justify-content:center;
   align-items:start;padding-bottom:24px}
-  .stage{grid-row:1/7}.act,.dock,.next,.ch,footer{width:auto;margin:0;grid-column:2}.act{padding-top:0}}
+  .stage{grid-row:1/7}.act,.dock,.next,.ch,footer{width:auto;margin:0;grid-column:2}.act{padding:0}.dock{margin:0}}
