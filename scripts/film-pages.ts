@@ -11,10 +11,11 @@
  *
  * Not part of the React app: a dealer on a cheap phone on 2G should see the
  * poster and the first seconds of the film before the SPA would even have
- * downloaded. Budget: HTML + inline CSS/JS <= 17 kB gzipped per page. It was
- * 15 kB until the WhatsApp reply, the speed button and the form's labels and
- * errors (22 Oct 2026); 1 kB is about 33 ms at 250 kbps, against the poster
- * and the ~120 kB hls.js that decide the first frame.
+ * downloaded. Budget: HTML + inline CSS/JS <= 18.5 kB gzipped per page. It was
+ * 15 kB until the WhatsApp reply, the speed button and the form's errors, then
+ * the owner's card design with its marks and the chapter stills (22 Oct 2026);
+ * 1 kB is about 33 ms at 250 kbps, against the poster and the ~120 kB hls.js
+ * that decide the first frame. The stills themselves load lazily, below the fold.
  *
  * Updating a film = package a new version (marketing/films/web/package.mjs),
  * paste its film.json into src/film/films.json, rebuild, deploy. A film whose
@@ -23,7 +24,7 @@
  * The beacon endpoint comes from FILM_BEACON_URL at build time (defaults to
  * production); point it at a local stub to test.
  */
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { createRequire } from "node:module";
 import path from "node:path";
 import { gzipSync } from "node:zlib";
@@ -59,6 +60,7 @@ const DEFAULT_BEACON = "https://api.mdgservices.in/api/v1/films/beacon";
 const PLAY_URL = "https://play.google.com/store/apps/details?id=in.mdgservices.dealerkavach";
 /** Same number as src/lib/tollFree.ts; this script is not part of the app, so it is not imported. */
 const TOLL_FREE_TEL = "tel:18008913496";
+const TOLL_FREE_SHOWN = "1800-891-3496";
 /**
  * Our WhatsApp business number that sends the film ("MDG Services", +91 94702
  * 93412; the backend's WHATSAPP_PHONE_NUMBER_ID). "Reply on WhatsApp" opens
@@ -127,6 +129,7 @@ const T = {
     auto: "अपने-आप",
     lite: "कम डेटा",
     chapters: "अध्याय",
+    chapterCount: (n: number) => `${n} अध्याय`,
     inFull: "पूरी फ़िल्म में",
     next: "बात करने के और तरीके",
     cbTitle: "हम आपको कॉल करेंगे",
@@ -139,7 +142,7 @@ const T = {
     cbSend: "मेरा नंबर भेजें",
     cbFaster: "जल्दी बात करनी है? WhatsApp पर लिख दीजिए",
     tollTitle: "टोल-फ़्री नंबर पर कॉल करें",
-    tollSub: "1800-891-3496 · सुबह 9 से रात 9, हर दिन",
+    tollHours: "सुबह 9 से रात 9, हर दिन",
     appTitle: "ऐप डाउनलोड करें",
     appSub: "Google Play से डीलर कवच ऐप लें, उसी में रजिस्टर करें",
     /** what the player says at run time */
@@ -210,6 +213,7 @@ const T = {
     auto: "Auto",
     lite: "Save data",
     chapters: "Chapters",
+    chapterCount: (n: number) => `${n} chapters`,
     inFull: "In the full film",
     next: "Other ways to reach us",
     cbTitle: "We'll call you back",
@@ -222,7 +226,7 @@ const T = {
     cbSend: "Send my number",
     cbFaster: "In a hurry? Write to us on WhatsApp",
     tollTitle: "Call our toll-free number",
-    tollSub: "1800-891-3496 · 9am to 9pm, every day",
+    tollHours: "9am to 9pm, every day",
     appTitle: "Download the app",
     appSub: "Get the Dealer Kavach app on Google Play and register in it",
     run: {
@@ -275,11 +279,17 @@ const ICON = {
   replay:
     '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 5V1L7 6l5 5V7a6 6 0 1 1-6 6H4a8 8 0 1 0 8-8z"/></svg>',
   wa: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5a9.5 9.5 0 0 0-8.2 14.3L2.5 21.5l4.8-1.3A9.5 9.5 0 1 0 12 2.5z" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M8.7 7.4c.3-.5.6-.5.9-.5h.6c.2 0 .5 0 .7.5l.9 2.1c.1.2.1.4 0 .6l-.6.8c-.2.2-.2.4 0 .7.6 1 1.4 1.8 2.4 2.4.3.2.5.1.7 0l.8-.9c.2-.2.4-.2.6-.1l2 1c.3.1.4.3.4.5 0 .6-.2 1.3-.7 1.7-.6.5-1.5.8-2.5.5-1.3-.4-3-1.2-4.4-2.7-1.5-1.5-2.3-3-2.6-4.2-.2-.9 0-1.8.4-2.4z" fill="currentColor"/></svg>',
+  mail: '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 4-8 5-8-5V6l8 5 8-5z"/></svg>',
+  user: '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zm0 2c-2.7 0-8 1.3-8 4v2h16v-2c0-2.7-5.3-4-8-4z"/></svg>',
+  home: '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>',
+  send: '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M2.5 21 23 12 2.5 3v7l14.5 2-14.5 2z"/></svg>',
+  /** Google Play's own four-colour mark, for the "get the app" row */
+  play4:
+    '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#00a0ff" d="M3.6 2.3c-.3.3-.4.7-.4 1.2v17c0 .5.1.9.4 1.2l9.5-9.7z"/><path fill="#ffbc00" d="m16.3 15.3-3.2-3.3 3.2-3.3 3.9 2.2c1.1.6 1.1 1.6 0 2.2z"/><path fill="#ff3a44" d="m16.3 15.3-3.2-3.3-9.5 9.7c.4.4 1 .4 1.6.1z"/><path fill="#00d26a" d="M16.3 8.7 5.2 2.2c-.6-.4-1.2-.3-1.6.1l9.5 9.7z"/></svg>',
   share:
     '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18 16a3 3 0 0 0-2.4 1.2l-6.7-3.5a3 3 0 0 0 0-1.4l6.7-3.5A3 3 0 1 0 15 7l-6.7 3.5a3 3 0 1 0 0 3L15 17a3 3 0 1 0 3-1z"/></svg>',
   phone:
     '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.6 10.8a15.2 15.2 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25c1.1.37 2.3.57 3.6.57a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1z"/></svg>',
-  app: '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 2h10a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2zm0 3v14h10V5zm4 2h2v5h2l-3 3-3-3h2z"/></svg>',
 };
 
 const esc = (s: string) =>
@@ -339,7 +349,7 @@ export async function buildFilmPages(opts: { root: string; beaconUrl?: string })
     const p = PAGES[id];
     const live = !!(f && f.version && f.base && f.duration);
     for (const lang of LANGS) {
-      const html = page({ f, p, lang, live, css, js, beacon, hlsSrc: `/${hls.fileName}`, fullMin, peek: peek(films.kavach, lang) });
+      const html = page({ f, p, lang, live, css, js, beacon, hlsSrc: `/${hls.fileName}`, fullMin, peek: peek(films.kavach, lang), root });
       files.push({ fileName: `${p.path.slice(1)}/${lang === "hi" ? "" : `${lang}/`}index.html`, source: html });
     }
   }
@@ -371,6 +381,8 @@ function page(a: {
   hlsSrc: string;
   fullMin: number;
   peek: string[];
+  /** the project root, to find the chapter stills */
+  root: string;
 }): string {
   const { f, p, lang, live, js } = a;
   // the "coming soon" card's rules only matter while a film is not published
@@ -444,7 +456,7 @@ ${foot}</main>
   // opens the right chat, just empty.
   const replyHref = `https://wa.me/${WA_REPLY}`;
   const reply = (cls: string, sub = true) =>
-    `<a class="${cls}" data-reply href="${replyHref}" target="_blank" rel="noopener">${ICON.wa}<span><b>${w.reply}</b>${sub ? `<small>${w.replySub}</small>` : ""}</span></a>`;
+    `<a class="${cls}" data-reply href="${replyHref}" target="_blank" rel="noopener"><i class="dot">${ICON.wa}</i><span><b>${w.reply}</b>${sub ? `<small>${w.replySub}</small>` : ""}</span></a>`;
   // Sharing the film with someone else is a quiet link with a share arrow, never green.
   const share = (cls: string, text: string) =>
     `<a class="${cls}" data-wa href="https://wa.me/" target="_blank" rel="noopener">${ICON.share}${text}</a>`;
@@ -453,32 +465,45 @@ ${foot}</main>
   // "join" goes to the enrolment page in the language this page is in. Staying
   // on a page with the switch in view counts as choosing it, so the site keeps it.
   const regBtn = (cls: string) => `<a class="${cls}" data-reg href="/register?lang=${lang}">${w.join}</a>`;
-  const way = (href: string, icon: string, title: string, sub: string, ext = false) =>
-    `<a class="way" data-reg href="${href}"${ext ? ' target="_blank" rel="noopener"' : ""}>${icon}<div><b>${title}</b><span>${sub}</span></div></a>`;
+  /** One way in: a tinted circle with its mark, the words, a chevron. `lines` are the lines under the title. */
+  const way = (href: string, tone: string, icon: string, title: string, lines: string, ext = false) =>
+    `<a class="way" data-reg href="${href}"${ext ? ' target="_blank" rel="noopener"' : ""}><i class="dot ${tone}">${icon}</i><div><b>${title}</b>${lines}</div></a>`;
   // The other ways in, least effort first: ring us, leave a number, or the app.
   // (Registering on the site is the "join" button; the assistant is on the home
   // page.) The call-back goes to the admin's
   // Call-backs page and the team's inbox with the share code, so a dealer who
   // came from a personal WhatsApp link is known by it.
-  const field = (name: string, label: string, attrs: string, hint = "") =>
-    `<label for="cb-${name}">${label}${hint ? ` <i>(${hint})</i>` : ""}</label><input id="cb-${name}" name="${name}" ${attrs}>`;
+  // A box with its mark inside it: the mark says what goes in once the words
+  // are typed over the placeholder, and the label is there for a screen reader.
+  const field = (name: string, icon: string, label: string, attrs: string, placeholder: string) =>
+    `<label class="f">${icon}<span class="sr">${label}</span><input name="${name}" placeholder="${esc(placeholder)}" ${attrs}></label>`;
   const next = `<section class="next" id="next"><h2>${w.next}</h2>
-${way(TOLL_FREE_TEL, ICON.phone, w.tollTitle, w.tollSub)}
-<form class="cb" id="cb" novalidate><b>${w.cbTitle}</b><p>${w.cbLead}</p>
-${field("name", w.cbName, 'autocomplete="name" maxlength="120" required')}
-${field("phone", w.cbPhone, `type="tel" inputmode="tel" autocomplete="tel-national" placeholder="${w.cbPhoneEg}" maxlength="16" required`)}
-${field("outlet", w.cbOutlet, 'maxlength="160"', w.cbOptional)}
+${way(TOLL_FREE_TEL, "gold", ICON.phone, w.tollTitle, `<strong>${TOLL_FREE_SHOWN}</strong><span>${w.tollHours}</span>`)}
+${way(PLAY_URL, "dark", ICON.play4, w.appTitle, `<span>${w.appSub}</span>`, true)}
+<form class="cb" id="cb" novalidate><div class="head"><i class="dot lilac">${ICON.mail}</i><div><b>${w.cbTitle}</b><p>${w.cbLead}</p></div></div>
+${field("name", ICON.user, w.cbName, 'autocomplete="name" maxlength="120" required', w.cbName)}
+${field("phone", ICON.phone, w.cbPhone, 'type="tel" inputmode="tel" autocomplete="tel-national" maxlength="16" required', w.cbPhoneEg)}
+${field("outlet", ICON.home, w.cbOutlet, 'maxlength="160"', `${w.cbOutlet} (${w.cbOptional})`)}
 <input name="website" tabindex="-1" autocomplete="off" hidden>
-<p class="msg" id="cbmsg" role="status" aria-live="polite"></p><button type="submit" class="btn pri">${w.cbSend}</button>${reply("after", false).replace(w.reply, w.cbFaster)}</form>
-${way(PLAY_URL, ICON.app, w.appTitle, w.appSub, true)}</section>`;
+<p class="msg" id="cbmsg" role="status" aria-live="polite"></p><button type="submit" class="btn pri">${w.cbSend}${ICON.send}</button>${reply("after", false).replace(w.reply, w.cbFaster)}</form></section>`;
   // the end of either film: the reply first, then the next film or the form, then again / share
   const endBody =
     p.kind === "short"
       ? `<b class="ask">${w.inFull}</b><ul class="peek">${a.peek.map((t) => `<li>${esc(t)}</li>`).join("")}</ul>${reply("btn reply")}${fullBtn("btn alt")}`
       : `<b class="ask">${w.endAsk}</b>${reply("btn reply")}${regBtn("btn alt")}`;
+  // A still from the film at each chapter, cut by scripts/film-chapter-stills.sh
+  // into public/film/ch/<film>-<n>.webp. Below the fold, so they load lazily
+  // and never compete with the poster; a chapter without one simply has none.
+  const still = (i: number) =>
+    existsSync(path.join(a.root, `public/film/ch/${f.film}-${i}.webp`))
+      ? `<img src="/film/ch/${f.film}-${i}.webp" width="96" height="60" loading="lazy" decoding="async" alt="">`
+      : "";
   const chapters = chapterList.length
-    ? `<section class="ch"><h2>${w.chapters}</h2><ol>${chapterList
-        .map((c) => `<li><button type="button" data-t="${c.t}"><span>${mmss(c.t)}</span>${esc(c.title)}</button></li>`)
+    ? `<section class="ch"><div class="top"><h2>${w.chapters}</h2><span>${mmss(f.duration || 0)} · ${w.chapterCount(chapterList.length)}</span></div><ol>${chapterList
+        .map(
+          (c, i) =>
+            `<li><button type="button" data-t="${c.t}"><i class="pl">${ICON.play}</i><span class="tt"><span>${mmss(c.t)}</span><b>${esc(c.title)}</b></span>${still(i)}</button></li>`,
+        )
         .join("")}</ol></section>`
     : "";
   return `${head}
