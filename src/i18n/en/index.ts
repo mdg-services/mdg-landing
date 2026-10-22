@@ -21,6 +21,7 @@ import { grievance } from "./grievance";
 import { assist } from "./assist";
 import { products } from "./products";
 import { kk } from "./kk";
+import { films } from "./films";
 
 /** Every visible string on mdgservices.in, in English. */
 export const en = {
@@ -47,4 +48,5 @@ export const en = {
   assist,
   products,
   kk,
+  films,
 };

@@ -23,6 +23,8 @@ export const hero = {
   subTail: "on track, so your dealership is never caught short.",
 
   ctaPrimary: "Talk to us",
+  /** The second button: straight to the 40-second film (/film/short). */
+  filmLink: "Watch the film · 40 sec",
   /** A quiet line under the buttons that points at the second app. */
   alsoLabel: "Also from MDG Services:",
   alsoLink: "Khata Kavach, credit to regular customers, without paper slips",

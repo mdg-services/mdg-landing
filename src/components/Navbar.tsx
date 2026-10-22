@@ -87,6 +87,8 @@ export default function Navbar({
   const khataHref = pathFor(lang, "/khata-kavach");
   const items: NavItem[] =
     itemsOverride ?? [
+      // the films, for a visitor who came on their own (the section is on the home page)
+      { key: "film", href: section("film"), label: t.nav.film, here: false },
       // "The app" is now a row of the Products menu; the other links stay.
       ...NAV.filter((l) => l.id !== "services").map((l) => ({
         key: l.id,

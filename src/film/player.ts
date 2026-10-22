@@ -40,7 +40,7 @@ interface PageConfig {
   s: {
     play: string; pause: string; wait: string; offline: string; slow: string; cbNoName: string; cbBad: string;
     cbSending: string; cbFail: string; cbBusy: string; cbFilm: string; speed: string; tapChange: string;
-    restart: string; copied: string;
+    restart: string; copied: string; talk: string;
   };
   /** where the full film's controls start carrying the WhatsApp reply (the fees chapter); 0 = never */
   lateAt: number;
@@ -888,14 +888,20 @@ interface NetInfo {
       beat();
     }),
   );
-  // "reply on WhatsApp": the reply itself lands in the admin's WhatsApp inbox; this counts the tap
+  // "reply on WhatsApp": the reply itself lands in the admin's WhatsApp inbox; this counts the tap.
+  // Without a share code the visitor found the film on their own: there is no
+  // chat to reply in, so the bar offers to start one (same number, same message).
   document.querySelectorAll<HTMLAnchorElement>("a[data-reply]").forEach((a) => {
+    const words = a.querySelector("b");
+    if (!tag && words) words.textContent = C.s.talk;
     a.href += `?text=${encodeURIComponent(C.replyText)}`;
     a.addEventListener("click", () => {
       cta("reply");
       beat();
     });
   });
+  // the new words can wrap differently: the picture makes room for the bar as it is now
+  if (!tag) fitBar();
 
   /* ── "we call you": to the admin's Call-backs page and the team's inbox, with the share code ── */
   const cb = $<HTMLFormElement>("cb");

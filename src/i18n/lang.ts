@@ -50,6 +50,15 @@ export function homeHref(lang: Lang, hash = ""): string {
   return hash ? `/#${hash}` : "/";
 }
 
+/**
+ * A film page in a language: ("en", "short") -> "/film/short?lang=en". The
+ * film pages answer Hindi unless told otherwise, and a visitor on /hi may still
+ * carry an English choice from an earlier visit, so both languages say it.
+ */
+export function filmHref(lang: Lang, film: "full" | "short"): string {
+  return `${film === "full" ? "/film" : "/film/short"}?lang=${lang}`;
+}
+
 /** The same page in the other language, for the switch. */
 export function twinOf(route: SiteRoute, lang: Lang): string {
   return pathFor(lang === "en" ? "hi" : "en", route);

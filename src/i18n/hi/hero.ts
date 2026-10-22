@@ -23,6 +23,7 @@ export const hero: typeof EN = {
   subTail: "समय पर निपटाता है, ताकि आपकी डीलरशिप कभी न अटके।",
 
   ctaPrimary: "बात कीजिए",
+  filmLink: "फ़िल्म देखिए · 40 सेकंड",
   alsoLabel: "MDG Services का एक और ऐप:",
   alsoLink: "खाता कवच, पक्के ग्राहकों को उधार, बिना कच्ची पर्ची",
   callLabel: "या",

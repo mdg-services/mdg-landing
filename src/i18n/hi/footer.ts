@@ -17,6 +17,7 @@ export const footer: typeof EN = {
   exploreHeading: "और देखिए",
   explore: {
     services: "सेवाएँ",
+    film: "फ़िल्म देखिए",
     /* The top bar says "कैसे चलता है" here; the footer keeps its own shorter
        label, the way the English side does. */
     why: "हम क्यों",

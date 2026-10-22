@@ -9,6 +9,8 @@ export const nav = {
   } satisfies Record<NavId, string>,
   /** The guides to the oil companies' dealer rules (/guides/). */
   guides: "Guides",
+  /** The home page's film section (#film): the two films on /film/short and /film. */
+  film: "Film",
   /* The two apps. "Products" opens a small menu with both. */
   products: "Products",
   productsAria: "Our apps",

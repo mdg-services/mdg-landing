@@ -6,7 +6,7 @@ import { getT } from "../i18n/server";
 import { homeHref, pathFor, type Lang } from "../i18n/lang";
 
 /* The targets never change with the language; the labels are looked up by id. */
-const explore = ["services", "why", "process", "membership", "contact"] as const;
+const explore = ["services", "film", "why", "process", "membership", "contact"] as const;
 
 export default function Footer({ lang }: { lang: Lang }) {
   const t = getT(lang);

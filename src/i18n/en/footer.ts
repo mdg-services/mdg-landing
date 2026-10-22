@@ -37,6 +37,7 @@ export const footer = {
       says "The app" where the footer says "Services". */
   explore: {
     services: "Services",
+    film: "Watch the film",
     why: "Why us",
     process: "Process",
     membership: "Pricing",

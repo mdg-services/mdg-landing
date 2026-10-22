@@ -70,6 +70,13 @@ const TOLL_FREE_SHOWN = "1800-891-3496";
  * Change it here if the film is ever sent from another number.
  */
 const WA_REPLY = "919470293412";
+/** The day both films went up on these pages, for search engines' video results. */
+const PUBLISHED = "2026-10-04T00:00:00+05:30";
+/** A running time as schema.org wants it: 1589.7 s -> "PT26M30S". */
+const isoDuration = (s: number) => {
+  const all = Math.round(s);
+  return `PT${Math.floor(all / 60)}M${all % 60}S`;
+};
 
 /* What each page says about its film. Outcomes only. */
 const PAGES: Record<FilmId, { path: string; kind: "full" | "short"; og: string }> = {
@@ -192,6 +199,8 @@ const T = {
       tapChange: "बदलने के लिए दबाएँ",
       restart: "शुरू से, आवाज़ के साथ",
       copied: "लिंक कॉपी हो गया",
+      /** the reply bar's words for a visitor who did not get the film on WhatsApp: there is no chat to reply in */
+      talk: "WhatsApp पर बात करें",
     },
   },
   en: {
@@ -304,6 +313,7 @@ const T = {
       tapChange: "tap to change",
       restart: "From the start, with sound",
       copied: "Link copied",
+      talk: "Chat with us on WhatsApp",
     },
   },
 };
@@ -462,6 +472,22 @@ function page(a: {
   const title = w.title[f.film] || f.title;
   const desc = w.desc[f.film](a.fullMin);
   const poster = live ? `${f.base}/${f.poster}` : "";
+  /* The film as a search engine reads it, so the page can come up as a video
+     result for someone who has never heard of us. */
+  const video = live
+    ? `<script type="application/ld+json">${JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "VideoObject",
+        name: title,
+        description: desc,
+        thumbnailUrl: [poster, SITE + p.og],
+        uploadDate: PUBLISHED,
+        duration: isoDuration(f.duration || 0),
+        contentUrl: `${f.base}/${f.mp4}`,
+        inLanguage: "hi",
+        publisher: { "@type": "Organization", name: "MDG Services", url: SITE, logo: { "@type": "ImageObject", url: `${SITE}/film/mark.png` } },
+      }).replace(/</g, "\\u003c")}</script>\n`
+    : "";
   /* Hindi unless the visitor chose otherwise. A choice made on the site before
      the mdg_lang cookie existed lives only in localStorage: honour it once,
      through ?lang=, which also sets the cookie for every later visit. */
@@ -493,7 +519,7 @@ ${follow}
 <meta property="og:image:height" content="630">
 <meta property="og:locale" content="${w.locale}">
 <meta name="twitter:card" content="summary_large_image">
-${live ? `<link rel="preconnect" href="${MEDIA_ORIGIN}" crossorigin>\n<link rel="preload" as="image" href="${poster}" crossorigin="anonymous" fetchpriority="high">\n` : ""}<style>${css}</style>
+${video}${live ? `<link rel="preconnect" href="${MEDIA_ORIGIN}" crossorigin>\n<link rel="preload" as="image" href="${poster}" crossorigin="anonymous" fetchpriority="high">\n` : ""}<style>${css}</style>
 </head><body>
 <header><a href="/" aria-label="MDG Services"><img src="/film/mark.png" width="32" height="32" alt=""></a><div><h1>${esc(title)}</h1><p>${esc(desc)}</p></div>${toggle}</header>
 <main>`;
