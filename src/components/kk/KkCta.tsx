@@ -5,6 +5,8 @@ import CallUs from "../CallUs";
 import Icon from "../Icon";
 import { KK_ANCHORS, KK_APPS } from "../../data/kk";
 import { postCallback } from "../../lib/callback";
+import { onMobileInput, toMobile } from "../../lib/mobile";
+import { useT } from "../../i18n/client";
 import type { Dict } from "../../i18n/lang";
 
 type Status = "idle" | "submitting" | "success" | "error";
@@ -26,6 +28,7 @@ export default function KkCta({
   t: Dict["kk"]["cta"];
   contact: Pick<Dict["contact"], "errorGeneric" | "errorCallLink" | "errorEnd" | "submitting" | "privacy" | "success">;
 }) {
+  const { ui } = useT();
   const [status, setStatus] = useState<Status>("idle");
   const [role, setRole] = useState<"pump" | "transporter">("pump");
 
@@ -33,11 +36,14 @@ export default function KkCta({
     e.preventDefault();
     const fd = new FormData(e.currentTarget);
     const tag = role === "pump" ? t.roleTagPump : t.roleTagTransporter;
+    const phone = String(fd.get("phone") ?? "").trim();
     setStatus("submitting");
     try {
       await postCallback({
         name: String(fd.get("name") ?? "").trim(),
-        phone: String(fd.get("phone") ?? "").trim(),
+        // As ten plain digits, however it was typed; the box's own check has
+        // already stopped anything that is not a mobile.
+        phone: toMobile(phone) ?? phone,
         outlet: String(fd.get("outlet") ?? "").trim(),
         message: `Khata Kavach · ${tag}`,
         website: String(fd.get("website") ?? ""),
@@ -83,7 +89,7 @@ export default function KkCta({
         <div className="md:col-span-6">
           <div className="rounded-[1.75rem] bg-kk-cream p-6 text-kk-ink md:p-9">
             {status !== "success" ? (
-              <form onSubmit={onSubmit} aria-labelledby="kk-form-title">
+              <form onSubmit={onSubmit} onInput={onMobileInput("phone", ui.mobileInvalid)} aria-labelledby="kk-form-title">
                 <h3 id="kk-form-title" className="text-[26px] font-bold leading-tight text-kk-ink md:text-[30px]">
                   {t.formTitle}
                 </h3>
@@ -130,7 +136,6 @@ export default function KkCta({
                     inputMode="tel"
                     autoComplete="tel"
                     required
-                    pattern="[0-9+\s\-]{10,15}"
                     placeholder="9XXXXXXXXX"
                     className={input}
                   />

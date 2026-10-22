@@ -27,4 +27,6 @@ export const ui = {
   languageAria: "Language",
   switchToEnglish: "Read this page in English",
   switchToHindi: "इस पेज को हिंदी में पढ़ें",
+  /** Every phone box on the site: what the browser says when the number is not a mobile. */
+  mobileInvalid: "Enter a 10-digit mobile number that starts with 6, 7, 8 or 9.",
 };

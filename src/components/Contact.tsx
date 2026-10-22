@@ -7,20 +7,26 @@ import { requestCallChoice } from "../lib/assistCall";
 import { postCallback } from "../lib/callback";
 import { TOLL_FREE } from "../lib/tollFree";
 import { Reveal } from "../lib/reveal";
+import { onMobileInput, toMobile } from "../lib/mobile";
+import { useT } from "../i18n/client";
 import type { Dict } from "../i18n/lang";
 
 type Status = "idle" | "submitting" | "success" | "error";
 
 export default function Contact({ c }: { c: Dict["contact"] }) {
+  const { ui } = useT();
   const [showForm, setShowForm] = useState(false);
   const [status, setStatus] = useState<Status>("idle");
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const fd = new FormData(e.currentTarget);
+    const phone = String(fd.get("phone") ?? "").trim();
     const payload = {
       name: String(fd.get("name") ?? "").trim(),
-      phone: String(fd.get("phone") ?? "").trim(),
+      // As ten plain digits, however it was typed; the box's own check has
+      // already stopped anything that is not a mobile.
+      phone: toMobile(phone) ?? phone,
       outlet: String(fd.get("outlet") ?? "").trim(),
       message: String(fd.get("message") ?? "").trim(),
       // The hidden box: the server quietly drops a request a script filled in.
@@ -131,7 +137,7 @@ export default function Contact({ c }: { c: Dict["contact"] }) {
             <div className="disclose" data-open={showForm} aria-hidden={!showForm}>
               <div>
                 {status !== "success" ? (
-                  <form onSubmit={handleSubmit} aria-label={c.formAria}>
+                  <form onSubmit={handleSubmit} onInput={onMobileInput("phone", ui.mobileInvalid)} aria-label={c.formAria}>
                     <div className="grid gap-5 sm:grid-cols-2">
                       <Field
                         label={c.fields.name.label}
@@ -149,7 +155,6 @@ export default function Contact({ c }: { c: Dict["contact"] }) {
                         name="phone"
                         type="tel"
                         inputMode="tel"
-                        pattern="[0-9+\s\-]{10,15}"
                         placeholder={c.fields.phone.placeholder}
                         required
                         className="sm:col-span-2"
@@ -228,7 +233,6 @@ function Field({
   name,
   type = "text",
   inputMode,
-  pattern,
   placeholder,
   required,
   className,
@@ -237,7 +241,6 @@ function Field({
   name: string;
   type?: string;
   inputMode?: "tel" | "text" | "email" | "search" | "url" | "numeric";
-  pattern?: string;
   placeholder?: string;
   required?: boolean;
   className?: string;
@@ -252,7 +255,6 @@ function Field({
         name={name}
         type={type}
         inputMode={inputMode}
-        pattern={pattern}
         required={required}
         placeholder={placeholder}
         className="mt-2.5 w-full rounded-xl border border-ink-hairline bg-paper-warm px-4 py-3.5 text-[16px] text-ink outline-none transition-colors duration-200 placeholder:text-ink-faint focus:border-navy-500 focus:bg-white"

@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { toMobile } from "../src/lib/mobile.js";
 
 /** Optional free-text field that treats "" the same as "not provided". */
 const optionalText = (max: number) =>
@@ -14,11 +15,24 @@ const optionalText = (max: number) =>
  */
 const submissionId = z.string().regex(/^[A-Za-z0-9_-]{8,64}$/);
 
-/** The same rule the API checks a mobile number against. */
+/**
+ * A 10-digit Indian mobile, by the rule every form on the site checks in the
+ * browser (`src/lib/mobile.ts`), and handed on as those ten plain digits.
+ * Hindi digits, spaces, +91 and a leading 0 are accepted and taken off here
+ * too, for an older page or the app that sends the number as it was typed.
+ * The API's own rule is looser (10 to 15 digits, spaces, + and -), so what
+ * passes here always passes there.
+ */
 const mobile = z
   .string()
   .trim()
-  .regex(/^[0-9+\s-]{10,15}$/, "Enter a valid mobile number");
+  .max(40)
+  .transform((value, ctx) => {
+    const ten = toMobile(value);
+    if (ten) return ten;
+    ctx.addIssue({ code: "custom", message: "Enter a 10-digit mobile number" });
+    return z.NEVER;
+  });
 
 /**
  * The dealer-enrolment payload. This is the single source of truth for the
@@ -53,10 +67,7 @@ export type EnrollmentData = z.infer<typeof enrollmentSchema>;
 /** The homepage "Leave my number" callback request. */
 export const callbackSchema = z.object({
   name: z.string().trim().min(1, "Name is required").max(120),
-  phone: z
-    .string()
-    .trim()
-    .regex(/^[0-9+\s-]{10,15}$/, "Enter a valid phone number"),
+  phone: mobile,
   outlet: optionalText(160),
   message: optionalText(1000),
   /** Where the form was filled in. The homepage never sends it; the film pages do. */

@@ -22,4 +22,5 @@ export const ui: typeof EN = {
   languageAria: "भाषा",
   switchToEnglish: "Read this page in English",
   switchToHindi: "इस पेज को हिंदी में पढ़ें",
+  mobileInvalid: "10 अंकों का मोबाइल नंबर लिखिए, जो 6, 7, 8 या 9 से शुरू हो।",
 };

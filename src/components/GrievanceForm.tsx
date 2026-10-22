@@ -6,8 +6,9 @@ import Icon from "./Icon";
 import CallUs from "./CallUs";
 import { Reveal } from "../lib/reveal";
 import { useSubmissionId } from "../lib/submissionId";
+import { onMobileInput, toMobile } from "../lib/mobile";
 import { GRIEVANCE_CATEGORIES } from "../data/content";
-import { useLang } from "../i18n/client";
+import { useLang, useT } from "../i18n/client";
 import { pathFor, type Dict, type Lang } from "../i18n/lang";
 
 type Status = "idle" | "submitting" | "success" | "error";
@@ -34,6 +35,7 @@ type NamedField = (typeof NAMED_FIELDS)[number];
  */
 export default function GrievanceForm({ g }: { g: Dict["grievance"] }) {
   const { lang } = useLang();
+  const { ui } = useT();
   const [status, setStatus] = useState<Status>("idle");
   const [category, setCategory] = useState("");
   const [message, setMessage] = useState("");
@@ -66,9 +68,12 @@ export default function GrievanceForm({ g }: { g: Dict["grievance"] }) {
     }
 
     const fd = new FormData(e.currentTarget);
+    const mobile = String(fd.get("mobile") ?? "").trim();
     const fields = {
       name: String(fd.get("name") ?? "").trim(),
-      mobile: String(fd.get("mobile") ?? "").trim(),
+      // As ten plain digits, however it was typed; the box's own check has
+      // already stopped anything that is not a mobile.
+      mobile: toMobile(mobile) ?? mobile,
       email: String(fd.get("email") ?? "").trim(),
       outlet: String(fd.get("outlet") ?? "").trim(),
       category,
@@ -139,7 +144,12 @@ export default function GrievanceForm({ g }: { g: Dict["grievance"] }) {
             {status === "success" && sent ? (
               <SuccessCard sent={sent} g={g} lang={lang} />
             ) : (
-              <form onSubmit={handleSubmit} aria-label={g.formAria} className="card p-5 sm:p-8">
+              <form
+                onSubmit={handleSubmit}
+                onInput={onMobileInput("mobile", ui.mobileInvalid)}
+                aria-label={g.formAria}
+                className="card p-5 sm:p-8"
+              >
                 <div className="grid gap-5 sm:grid-cols-2">
                   <Field
                     label={g.fields.name.label}
@@ -155,7 +165,6 @@ export default function GrievanceForm({ g }: { g: Dict["grievance"] }) {
                     type="tel"
                     inputMode="tel"
                     autoComplete="tel"
-                    pattern="[0-9+\s\-]{10,15}"
                     placeholder={g.fields.mobile.placeholder}
                     required
                   />

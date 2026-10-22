@@ -36,6 +36,7 @@ import type {
   AssistSessionCreated,
   AssistTurnResult,
 } from "../types/assist";
+import { toMobile } from "./mobile";
 
 /** Where the API lives. Overridable so a laptop can point at localhost. */
 export const ASSIST_API_BASE = (
@@ -61,18 +62,14 @@ const TIMEOUT_MS = { normal: 45_000, voice: 90_000 } as const;
 /** How long to wait before the single retry a rate-limited request gets. */
 const RATE_LIMIT_BACKOFF_MS = 1_500;
 
-/** The mobile rule, identical to `assistMobileSchema` on the server. */
-const MOBILE_RE = /^[6-9]\d{9}$/;
-
 /**
- * Normalise what somebody typed into ten digits, then check it.
- * Returns null when it is not a number anybody could ring.
+ * Normalise what somebody typed into ten digits, then check it: the site's one
+ * phone rule (`lib/mobile.ts`), whose final check is identical to
+ * `assistMobileSchema` on the server. Returns null when it is not a number
+ * anybody could ring.
  */
 export function normaliseMobile(raw: string): string | null {
-  // A country code or a trunk 0 only when it is extra: "9123456789" is itself
-  // a mobile number, and stripping its "91" left eight digits and a refusal.
-  const digits = raw.replace(/[\s-]/g, "").replace(/^(?:\+?91|0)(?=\d{10}$)/, "");
-  return MOBILE_RE.test(digits) ? digits : null;
+  return toMobile(raw);
 }
 
 /** A failure the widget can decide about, rather than a status code. */

@@ -7,8 +7,9 @@ import CallUs from "./CallUs";
 import { Reveal } from "../lib/reveal";
 import { usePresence } from "../lib/usePresence";
 import { useSubmissionId } from "../lib/submissionId";
+import { onMobileInput, toMobile } from "../lib/mobile";
 import { SITE_TYPES } from "../data/content";
-import { useLang } from "../i18n/client";
+import { useLang, useT } from "../i18n/client";
 import { pathFor, type Dict, type Lang } from "../i18n/lang";
 
 type Status = "idle" | "submitting" | "success" | "error";
@@ -29,6 +30,7 @@ export default function RegisterForm({
   originalTerms?: Dict["register"]["terms"];
 }) {
   const { lang } = useLang();
+  const { ui } = useT();
   const [status, setStatus] = useState<Status>("idle");
   const [siteType, setSiteType] = useState("");
   const [agreed, setAgreed] = useState(false);
@@ -44,9 +46,12 @@ export default function RegisterForm({
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const fd = new FormData(e.currentTarget);
+    const mobile = String(fd.get("mobile") ?? "").trim();
     const fields = {
       name: String(fd.get("name") ?? "").trim(),
-      mobile: String(fd.get("mobile") ?? "").trim(),
+      // As ten plain digits, however it was typed; the box's own check has
+      // already stopped anything that is not a mobile.
+      mobile: toMobile(mobile) ?? mobile,
       email: String(fd.get("email") ?? "").trim(),
       siteType,
       pumpName: String(fd.get("pumpName") ?? "").trim(),
@@ -94,7 +99,12 @@ export default function RegisterForm({
             {status === "success" ? (
               <SuccessCard r={r} lang={lang} />
             ) : (
-              <form onSubmit={handleSubmit} aria-label={r.formAria} className="card p-5 sm:p-8">
+              <form
+                onSubmit={handleSubmit}
+                onInput={onMobileInput("mobile", ui.mobileInvalid)}
+                aria-label={r.formAria}
+                className="card p-5 sm:p-8"
+              >
                 <div className="grid gap-5 sm:grid-cols-2">
                   <Field
                     label={r.fields.name.label}
@@ -107,7 +117,6 @@ export default function RegisterForm({
                     name="mobile"
                     type="tel"
                     inputMode="tel"
-                    pattern="[0-9+\s\-]{10,15}"
                     placeholder={r.fields.mobile.placeholder}
                     required
                   />
@@ -284,8 +293,12 @@ function TermsModal({
   return (
     <>
       {mounted && (
+        // The call choice's layer (CallSheet.tsx): above the assistant's
+        // launcher (z-70), which on a phone otherwise sat on this sheet's
+        // Close button. The call choice still opens over it from the "call
+        // us" link in the clauses, because it comes later on the page.
         <div
-          className="sheet-fade fixed inset-0 z-[70] flex items-end justify-center sm:items-center sm:p-6"
+          className="sheet-fade fixed inset-0 z-[80] flex items-end justify-center sm:items-center sm:p-6"
           data-leaving={leaving ? "" : undefined}
         >
           {/* backdrop */}
@@ -406,7 +419,6 @@ function Field({
   name,
   type = "text",
   inputMode,
-  pattern,
   placeholder,
   required,
   className,
@@ -415,7 +427,6 @@ function Field({
   name: string;
   type?: string;
   inputMode?: "tel" | "text" | "email" | "search" | "url" | "numeric";
-  pattern?: string;
   placeholder?: string;
   required?: boolean;
   className?: string;
@@ -430,7 +441,6 @@ function Field({
         name={name}
         type={type}
         inputMode={inputMode}
-        pattern={pattern}
         required={required}
         placeholder={placeholder}
         className="mt-2.5 w-full rounded-xl border border-ink-hairline bg-white px-4 py-3.5 text-[16px] text-ink outline-none transition-colors duration-200 placeholder:text-ink-faint focus:border-navy-500"
