@@ -35,9 +35,18 @@ function greetingName(name: string): string | undefined {
   return first.length > 0 && first.length <= 40 && /^[\p{L}\p{M}]+$/u.test(first) ? first : undefined;
 }
 
-/** What the team's mail says when the enrolment did not reach the admin panel. */
-const NOT_ON_ADMIN_LIST =
-  "This registration did NOT reach the admin Registrations page — add it by hand or check the website's WEBSITE_INTAKE_SECRET.";
+/**
+ * How handing a registration to the MDG API went (server/enroll.ts). Anything
+ * but `ok` means the dealer was shown an error and has NOT been registered.
+ */
+export type EnrollHandOff = "ok" | "busy" | "failed";
+/** What the team's mail says, and the tag on its subject, when the registration was not saved. */
+const NOT_REGISTERED: Record<Exclude<EnrollHandOff, "ok">, string> = {
+  failed:
+    "This person is NOT registered. The website could not hand the registration to our system, and they were shown an error. Call them and register them by hand, and check the website's WEBSITE_INTAKE_SECRET and the API.",
+  busy: "This person is NOT registered. Our system refused it because this number has tried too many times this hour, and they were shown a \"call us\" message. Call them.",
+};
+const NOT_REGISTERED_TAG = "[NOT REGISTERED — call them]";
 /** How handing a call-back to the admin's Call-backs page went (server/callback.ts). */
 export type CallbackHandOff = "ok" | "slow" | "full" | "refused" | "unreachable";
 /** What the team's email says when it did not simply work, and the tag on its subject. */
@@ -63,13 +72,16 @@ const CALLBACK_HAND_OFF: Record<Exclude<CallbackHandOff, "ok">, { note: string; 
 /**
  * Internal notification to the MDG inbox when a dealer enrols.
  *
- * `onAdminList` is whether the enrolment reached the admin panel's
- * Registrations page. When it did not, this mail is the only record, and says
+ * `handOff` is whether the registration was saved in our system. When it was
+ * not, the dealer was shown an error, this mail is the only record, and it says
  * so at the top and in the subject, where it cannot be missed.
+ *
+ * It shows that a password was chosen, never the password: the type of `data`
+ * does not even have one.
  */
 export function enrollmentNotificationEmail(
   data: EnrollmentData,
-  meta: { submittedAt: string; onAdminList?: boolean }
+  meta: { submittedAt: string; handOff?: EnrollHandOff; hasPassword?: boolean }
 ): EmailContent {
   const when = new Date(meta.submittedAt).toLocaleString("en-IN", {
     dateStyle: "medium",
@@ -77,7 +89,8 @@ export function enrollmentNotificationEmail(
     timeZone: "Asia/Kolkata",
   });
   const fromApp = data.source === "app";
-  const onAdminList = meta.onAdminList !== false;
+  const handOff = meta.handOff ?? "ok";
+  const notRegistered = handOff === "ok" ? null : NOT_REGISTERED[handOff];
 
   const rows: Array<[string, string]> = [
     ["Name", escapeHtml(data.name)],
@@ -95,13 +108,16 @@ export function enrollmentNotificationEmail(
     ["Pump name", data.pumpName ? escapeHtml(data.pumpName) : "—"],
     ["SAP code", escapeHtml(data.sapCode)],
     ["Agreed to T&C", "Yes"],
+    ["WhatsApp messages", data.consentWhatsApp ? "Agreed" : "Not asked"],
+    ["Chose a password", meta.hasPassword ? "Yes" : "No"],
+    ...(data.ref ? ([["Link code", escapeHtml(data.ref)]] as Array<[string, string]>) : []),
     ["Came from", fromApp ? "Dealer Kavach app" : "Website"],
     ["Submitted", escapeHtml(when) + " IST"],
   ];
 
   const body = `
     ${heading("New dealer enrolment")}
-    ${onAdminList ? "" : `<div style="margin:0 0 16px;padding:12px 16px;background:#FFF7E6;border:1px solid ${B.gold};border-radius:10px;font:600 15px/1.5 Arial,sans-serif;color:${B.ink}">${escapeHtml(NOT_ON_ADMIN_LIST)}</div>`}
+    ${notRegistered ? `<div style="margin:0 0 16px;padding:12px 16px;background:#FFF7E6;border:1px solid ${B.gold};border-radius:10px;font:600 15px/1.5 Arial,sans-serif;color:${B.ink}">${escapeHtml(notRegistered)}</div>` : ""}
     ${paragraph(`A dealer just submitted the enrolment form ${fromApp ? "in the Dealer Kavach app" : "on the website"}. Details below — reply to this email to reach ${escapeHtml(data.name)} directly.`)}
     ${dataTable(rows)}
   `;
@@ -109,11 +125,11 @@ export function enrollmentNotificationEmail(
   return {
     // The app's tag sits after "enrolment", so a filter on the old subject
     // still catches both.
-    subject: `New dealer enrolment${fromApp ? " (app)" : ""}${onAdminList ? "" : " [not on admin list]"} — ${data.name}${data.pumpName ? ` (${data.pumpName})` : ""}`,
+    subject: `New dealer enrolment${fromApp ? " (app)" : ""}${notRegistered ? ` ${NOT_REGISTERED_TAG}` : ""} — ${data.name}${data.pumpName ? ` (${data.pumpName})` : ""}`,
     html: wrapEmail({ preheader: `${data.name} · ${data.siteType} · SAP ${data.sapCode}`, bodyHtml: body }),
     text: [
       "New dealer enrolment",
-      ...(onAdminList ? [] : ["", NOT_ON_ADMIN_LIST]),
+      ...(notRegistered ? ["", notRegistered] : []),
       "",
       `Name:       ${data.name}`,
       `Mobile:     ${data.mobile}`,
@@ -122,44 +138,91 @@ export function enrollmentNotificationEmail(
       `Pump name:  ${data.pumpName ?? "—"}`,
       `SAP code:   ${data.sapCode}`,
       `Agreed:     Yes`,
+      `WhatsApp:   ${data.consentWhatsApp ? "Agreed" : "Not asked"}`,
+      `Password:   ${meta.hasPassword ? "Chosen" : "Not chosen"}`,
+      ...(data.ref ? [`Link code:  ${data.ref}`] : []),
       `Came from:  ${fromApp ? "Dealer Kavach app" : "Website"}`,
       `Submitted:  ${when} IST`,
     ].join("\n"),
   };
 }
 
-/** Friendly welcome to the dealer who just enrolled. */
+/**
+ * The welcome copy, in the language of the page the dealer registered on. One
+ * promise and no time in it: MDG's team will be in touch, and when is theirs to
+ * say. Then the order things happen in: approval, a WhatsApp message, and signing
+ * in with the mobile number and the password they chose (never repeated here).
+ */
+const WELCOME = {
+  en: {
+    subject: (name?: string) => `Welcome to MDG Services${name ? `, ${name}` : ""} — your enrolment is in`,
+    preheader: "Your enrolment is in. MDG's team will contact you shortly.",
+    heading: (name?: string) => (name ? `Welcome aboard, ${name}` : "Welcome aboard"),
+    thanks: "Thank you for enrolling with {brand} — the Dealer's कवच program. Your details are with our team.",
+    nextHeading: "What happens next:",
+    steps: [
+      "MDG's team will contact you shortly.",
+      "Once your registration is approved, you will get a message on WhatsApp.",
+      "Then open the Dealer Kavach app and sign in with your mobile number and the password you chose when you registered.",
+    ],
+    callButton: (phone: string) => `Call us — ${phone}`,
+    reach: "Prefer we reach out first? No problem — just keep your phone handy. We answer in plain Hindi or English.",
+    signOff: "Warm regards,",
+    team: `Team ${B.name}`,
+  },
+  hi: {
+    subject: (name?: string) => `MDG Services में आपका स्वागत है${name ? `, ${name}` : ""} — आपका रजिस्ट्रेशन मिल गया`,
+    preheader: "आपका रजिस्ट्रेशन मिल गया। MDG की टीम जल्द संपर्क करेगी।",
+    heading: (name?: string) => (name ? `स्वागत है, ${name}` : "स्वागत है"),
+    thanks: "{brand} के डीलर कवच के लिए रजिस्टर करने का धन्यवाद। आपकी जानकारी हमारी टीम के पास है।",
+    nextHeading: "आगे क्या होगा:",
+    steps: [
+      "MDG की टीम जल्द संपर्क करेगी।",
+      "आपका रजिस्ट्रेशन मंज़ूर होते ही आपको WhatsApp पर संदेश आएगा।",
+      "फिर डीलर कवच ऐप खोलिए और अपने मोबाइल नंबर और रजिस्टर करते समय चुने गए पासवर्ड से साइन इन कीजिए।",
+    ],
+    callButton: (phone: string) => `कॉल कीजिए — ${phone}`,
+    reach: "चाहें तो हम ही पहले संपर्क करेंगे — बस अपना फ़ोन पास रखिए। हम सीधी हिंदी या अंग्रेज़ी में बात करते हैं।",
+    signOff: "सादर,",
+    team: `टीम ${B.name}`,
+  },
+} as const;
+
+/** Friendly welcome to the dealer who just enrolled, once their registration is saved. */
 export function welcomeEmail(data: EnrollmentData): EmailContent {
+  const lang = data.lang ?? "en";
+  const c = WELCOME[lang];
   // A stranger can type any address into the form, so only a plain first name
   // is ever repeated back; anything else gets the plain greeting.
   const name = greetingName(data.name);
 
   const body = `
-    ${heading(name ? `Welcome aboard, ${name}` : "Welcome aboard")}
-    ${paragraph(`Thank you for enrolling with <strong style="color:${B.ink}">${B.name}</strong> — the Dealer's कवच program. Your details are with our team.`)}
-    ${paragraph(`<strong style="color:${B.ink}">What happens next:</strong> a team member will call you to confirm the exact services that fit your pump and lock your pricing in writing — usually within one working day, 9am–9pm.`)}
-    <div style="margin:22px 0 6px">${button(`Call us — ${B.phone}`, B.phoneHref)}</div>
-    ${paragraph(`Prefer we reach out first? No problem — just keep your phone handy. We answer in plain Hindi or English.`)}
-    <p style="margin:18px 0 0;font:400 15px/1.65 Arial,sans-serif;color:${B.soft}">Warm regards,<br/><strong style="color:${B.ink}">Team ${B.name}</strong></p>
+    ${heading(c.heading(name))}
+    ${paragraph(escapeHtml(c.thanks).replace("{brand}", `<strong style="color:${B.ink}">${escapeHtml(B.name)}</strong>`))}
+    ${paragraph(`<strong style="color:${B.ink}">${escapeHtml(c.nextHeading)}</strong>`)}
+    <ol style="margin:0 0 16px;padding-left:22px;font:400 15px/1.65 Arial,sans-serif;color:${B.soft}">
+      ${c.steps.map((step) => `<li style="margin:0 0 6px">${escapeHtml(step)}</li>`).join("")}
+    </ol>
+    <div style="margin:22px 0 6px">${button(c.callButton(B.phone), B.phoneHref)}</div>
+    ${paragraph(escapeHtml(c.reach))}
+    <p style="margin:18px 0 0;font:400 15px/1.65 Arial,sans-serif;color:${B.soft}">${escapeHtml(c.signOff)}<br/><strong style="color:${B.ink}">${escapeHtml(c.team)}</strong></p>
   `;
 
   return {
-    subject: `Welcome to MDG Services${name ? `, ${name}` : ""} — your enrolment is in`,
-    html: wrapEmail({
-      preheader: "Your enrolment is in. We'll call to confirm your services and pricing.",
-      bodyHtml: body,
-    }),
+    subject: c.subject(name),
+    html: wrapEmail({ preheader: c.preheader, bodyHtml: body, lang }),
     text: [
-      name ? `Welcome aboard, ${name}` : "Welcome aboard",
+      c.heading(name),
       "",
-      `Thank you for enrolling with ${B.name} — the Dealer's Kavach program. Your details are with our team.`,
+      c.thanks.replace("{brand}", B.name),
       "",
-      "What happens next: a team member will call you to confirm the exact services that fit your pump and lock your pricing in writing — usually within one working day, 9am-9pm.",
+      c.nextHeading,
+      ...c.steps.map((step, i) => `${i + 1}. ${step}`),
       "",
-      `Call us anytime: ${B.phone}`,
+      `${B.phone}`,
       "",
-      `Warm regards,`,
-      `Team ${B.name}`,
+      c.signOff,
+      c.team,
     ].join("\n"),
   };
 }

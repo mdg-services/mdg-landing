@@ -37,6 +37,8 @@ export default function RegisterForm({
   const [termsOpen, setTermsOpen] = useState(false);
   // Refused for coming too often, which "please try again" would not fix.
   const [busy, setBusy] = useState(false);
+  // What is wrong with the two password boxes, shown under the one it is about.
+  const [passwordProblem, setPasswordProblem] = useState<PasswordProblem | null>(null);
   // The same form pressed again carries the same id, so if a send is cut off
   // and the dealer presses Submit again, the team's admin list shows one
   // registration and not two. A form changed since the last try gets a new
@@ -45,8 +47,18 @@ export default function RegisterForm({
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    const fd = new FormData(e.currentTarget);
+    const form = e.currentTarget;
+    const fd = new FormData(form);
     const mobile = String(fd.get("mobile") ?? "").trim();
+    // Exactly as typed: a password with a space at either end is a password.
+    const password = String(fd.get("password") ?? "");
+    const problem = passwordProblemOf(password, String(fd.get("passwordConfirm") ?? ""));
+    if (problem) {
+      setPasswordProblem(problem);
+      const box = form.elements.namedItem(problem === "short" ? "password" : "passwordConfirm");
+      if (box instanceof HTMLInputElement) box.focus();
+      return;
+    }
     const fields = {
       name: String(fd.get("name") ?? "").trim(),
       // As ten plain digits, however it was typed; the box's own check has
@@ -57,10 +69,22 @@ export default function RegisterForm({
       pumpName: String(fd.get("pumpName") ?? "").trim(),
       sapCode: String(fd.get("sapCode") ?? "").trim(),
       agree: agreed,
+      // The one tick also agrees to the WhatsApp messages about the account,
+      // and the label next to it says so.
+      consentWhatsApp: agreed,
+      password,
+      lang,
+      // The film link's code, when the dealer came from one, so the team can
+      // see which message brought them. Only a well-formed one is sent.
+      ref: refFromAddress(),
     };
+    // The password is part of what makes two attempts "the same form" (in
+    // memory only, never sent): a corrected password is a new registration to
+    // the API, not a replay of the first.
     const payload = { ...fields, submissionId: submissionIdFor(fields) };
 
     setBusy(false);
+    setPasswordProblem(null);
     setStatus("submitting");
     try {
       const res = await fetch("/api/enroll", {
@@ -100,6 +124,11 @@ export default function RegisterForm({
               <SuccessCard r={r} lang={lang} />
             ) : (
               <form
+                // POST, never the browser's default GET: on a slow phone a tap
+                // can land before this page's script has loaded, and a GET would
+                // put the chosen password in the address, the history and the
+                // host's access log. With POST nothing typed reaches a URL.
+                method="post"
                 onSubmit={handleSubmit}
                 onInput={onMobileInput("mobile", ui.mobileInvalid)}
                 aria-label={r.formAria}
@@ -126,6 +155,30 @@ export default function RegisterForm({
                     type="email"
                     inputMode="email"
                     placeholder={r.fields.email.placeholder}
+                    className="sm:col-span-2"
+                  />
+                </div>
+
+                {/* The password the dealer signs in to the app with. Chosen
+                    here so nobody at MDG ever has to make one or pass one on. */}
+                <div className="mt-5 grid gap-5 sm:grid-cols-2">
+                  <PasswordField
+                    r={r}
+                    label={r.fields.password.label}
+                    name="password"
+                    placeholder={r.fields.password.placeholder}
+                    hint={r.fields.password.hint}
+                    problem={passwordProblem === "short" ? r.passwordShort : undefined}
+                    onType={() => setPasswordProblem(null)}
+                    className="sm:col-span-2"
+                  />
+                  <PasswordField
+                    r={r}
+                    label={r.fields.passwordConfirm.label}
+                    name="passwordConfirm"
+                    placeholder={r.fields.passwordConfirm.placeholder}
+                    problem={passwordProblem === "mismatch" ? r.passwordMismatch : undefined}
+                    onType={() => setPasswordProblem(null)}
                     className="sm:col-span-2"
                   />
                 </div>
@@ -397,6 +450,14 @@ function SuccessCard({ r, lang }: { r: Dict["register"]; lang: Lang }) {
       <p className="mt-5 font-display text-[23px] font-semibold leading-tight text-ink sm:text-[26px]">
         {r.success.heading}
       </p>
+      {/* The one promise, with no time in it: when the team calls is theirs to
+          say. Then what comes after, in order. */}
+      <p className="mt-3 max-w-prose2 text-[15.5px] font-semibold leading-[1.6] text-ink sm:text-[16px]">
+        {r.success.promise}
+      </p>
+      <p className="mt-2 max-w-prose2 text-[15.5px] leading-[1.6] text-ink-soft sm:text-[16px]">
+        {r.success.next}
+      </p>
       <p className="mt-3 max-w-prose2 text-[15.5px] leading-[1.6] text-ink-soft sm:text-[16px]">
         {/* The opening hours sit inside the sentence, not on the end of it, so
             each language can place them where it reads best. */}
@@ -410,6 +471,102 @@ function SuccessCard({ r, lang }: { r: Dict["register"]; lang: Lang }) {
       <Link href={pathFor(lang)} className="btn-ghost mt-7 w-full sm:w-auto">
         {r.backToHome}
       </Link>
+    </div>
+  );
+}
+
+type PasswordProblem = "short" | "mismatch";
+
+/** What is wrong with the two password boxes, or null when they are fine. The server keeps the same minimum. */
+function passwordProblemOf(password: string, again: string): PasswordProblem | null {
+  if (password.length < 8) return "short";
+  if (password !== again) return "mismatch";
+  return null;
+}
+
+/**
+ * The film link's share code (`?r=`) this page was opened with, when it is one
+ * the API will take. Read when the form is sent, not when the page is drawn:
+ * the page is built once and the code is the visitor's own.
+ */
+function refFromAddress(): string | undefined {
+  try {
+    const code = new URLSearchParams(window.location.search).get("r");
+    return code && /^[A-Za-z0-9_-]{1,32}$/.test(code) ? code : undefined;
+  } catch {
+    return undefined;
+  }
+}
+
+/**
+ * A password box with a Show / Hide button inside it. It is an ordinary
+ * uncontrolled field (the form reads it from its `FormData`), so the value
+ * stays in the browser until Submit; only the box's type flips. Browsers are
+ * told it is a NEW password, so they offer to save it rather than fill it in.
+ */
+function PasswordField({
+  r,
+  label,
+  name,
+  placeholder,
+  hint,
+  problem,
+  onType,
+  className,
+}: {
+  r: Dict["register"];
+  label: ReactNode;
+  name: string;
+  placeholder?: string;
+  hint?: string;
+  problem?: string;
+  onType: () => void;
+  className?: string;
+}) {
+  const [shown, setShown] = useState(false);
+  return (
+    <div className={"block " + (className ?? "")}>
+      <label>
+        <span className="font-mono text-[11px] font-medium uppercase tracking-[0.18em] text-ink-muted">
+          {label}
+          <span className="ml-1 text-gold-600">*</span>
+        </span>
+        <span className="relative mt-2.5 block">
+          <input
+            name={name}
+            type={shown ? "text" : "password"}
+            required
+            autoComplete="new-password"
+            autoCapitalize="none"
+            autoCorrect="off"
+            spellCheck={false}
+            placeholder={placeholder}
+            aria-invalid={problem ? true : undefined}
+            aria-describedby={problem ? `${name}-problem` : undefined}
+            onInput={onType}
+            className={
+              "w-full rounded-xl border bg-white py-3.5 pl-4 pr-20 text-[16px] text-ink outline-none transition-colors duration-200 placeholder:text-ink-faint focus:border-navy-500 " +
+              (problem ? "border-gold-500" : "border-ink-hairline")
+            }
+          />
+          <button
+            type="button"
+            onClick={() => setShown((v) => !v)}
+            aria-pressed={shown}
+            aria-label={shown ? r.passwordHideAria : r.passwordShowAria}
+            className="absolute inset-y-0 right-0 px-4 text-[14px] font-semibold text-navy-700 underline decoration-navy-300 underline-offset-2 transition-colors hover:decoration-navy-700"
+          >
+            {shown ? r.passwordHide : r.passwordShow}
+          </button>
+        </span>
+      </label>
+      {problem ? (
+        <p id={`${name}-problem`} role="alert" className="mt-2 text-[13.5px] font-medium text-gold-700">
+          {problem}
+        </p>
+      ) : hint ? (
+        <p className="mt-2 text-[13px] leading-[1.5] text-ink-muted">{hint}</p>
+      ) : null}
     </div>
   );
 }

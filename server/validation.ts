@@ -60,9 +60,44 @@ export const enrollmentSchema = z.object({
    * than refusing an enrolment the team's inbox should still get.
    */
   submissionId: submissionId.optional().catch(undefined),
+  /**
+   * The password the dealer chose for Dealer Kavach. It goes to the MDG API and
+   * nowhere else: not into an email, a log line, an error or the answer to the
+   * browser. Optional only because a copy of the app from before this field
+   * still registers without one (the API then makes a temporary password on
+   * approval); the website's own form will not send without it. A password
+   * that is there but too short is an error, never quietly dropped, or the
+   * dealer would believe they had chosen one.
+   */
+  password: z
+    .string()
+    .min(8, "Use at least 8 characters")
+    .max(200, "Use at most 200 characters")
+    .optional(),
+  /**
+   * That the one tick also agreed to WhatsApp messages about the account. Sent
+   * on only when the form said so: an older app's tick did not cover it.
+   */
+  consentWhatsApp: z.boolean().optional().catch(undefined),
+  /** The film link's share code (`?r=`) the form was opened from. Dropped, not refused, when malformed. */
+  ref: z
+    .string()
+    .regex(/^[A-Za-z0-9_-]{1,32}$/)
+    .optional()
+    .catch(undefined),
+  /** The language of the page the form was on: it decides which Terms text the tick is recorded against. */
+  lang: z.enum(["hi", "en"]).optional().catch(undefined),
 });
 
-export type EnrollmentData = z.infer<typeof enrollmentSchema>;
+/** What the form carried, password included. Only `processEnrollment` handles this. */
+export type EnrollmentSubmission = z.infer<typeof enrollmentSchema>;
+
+/**
+ * The same without the password, and the only shape the email templates take.
+ * Typed this way so a template that tried to print the password would not
+ * compile, and `processEnrollment` takes it out before anything else sees it.
+ */
+export type EnrollmentData = Omit<EnrollmentSubmission, "password">;
 
 /** The homepage "Leave my number" callback request. */
 export const callbackSchema = z.object({

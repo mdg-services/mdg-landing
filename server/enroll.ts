@@ -1,7 +1,8 @@
 import { enrollmentSchema, type EnrollmentData } from "./validation.js";
 import { sendTemplate } from "./mailer.js";
-import { enrollmentNotificationEmail, welcomeEmail } from "./emails/templates.js";
-import { postIntake } from "./intake.js";
+import { enrollmentNotificationEmail, welcomeEmail, type EnrollHandOff } from "./emails/templates.js";
+import { IntakeRefused, postIntake } from "./intake.js";
+import { termsRecord } from "./terms.js";
 import { env } from "./env.js";
 import { RecentLog, addressKey } from "./recent.js";
 import type { ProcessResult } from "./result.js";
@@ -17,8 +18,12 @@ const PER_MOBILE = 3;
 const sentByAddress = new RecentLog(WINDOW_MS);
 const sentByMobile = new RecentLog(WINDOW_MS);
 
+/** What a visitor is told when the registration could not be saved. The same words the form shows. */
+const NOT_REGISTERED = "We could not complete your registration. Please try again, or call us.";
+const TOO_MANY = "Too many requests just now. Please call us instead.";
+
 /**
- * Validate an enrolment payload, hand it to the admin list and fan out the
+ * Validate an enrolment payload, hand it to the MDG API and fan out the
  * emails.
  *
  * Transport-agnostic: the Vercel function and the local dev server both call
@@ -26,12 +31,17 @@ const sentByMobile = new RecentLog(WINDOW_MS);
  * /register page and the Dealer Kavach app's sign-up screen both come through
  * here.
  *
- * - The enrolment is handed to the MDG API first, so the admin panel lists it.
- *   That can never fail the enrolment: the email to the team inbox is what is
- *   relied on, the admin list is a view. When it fails, the team's email says
- *   so at the top, because that email is then the only record.
+ * - The registration is handed to the MDG API first, and that hand-off is what
+ *   makes it a registration: the API holds the dealer's password (as a hash),
+ *   the Terms they ticked and the campaign it came from. So when it fails the
+ *   visitor is told so, never shown "success". The team is still emailed, with
+ *   the subject marked "[NOT REGISTERED — call them]", because a person who
+ *   tried to register is a person to ring.
+ * - The password is taken out of the form here and goes to the API and nowhere
+ *   else: not to a template, a log line, an error or the answer.
  * - The internal notification always goes to `ENROLLMENT_NOTIFY_TO`.
- * - The welcome email is sent only when the dealer supplied an address.
+ * - The welcome email is sent only when the registration was saved and the
+ *   dealer supplied an address.
  * - The two emails are sent concurrently; if either fails the whole call
  *   rejects so the caller can surface a retry.
  *
@@ -52,7 +62,9 @@ export async function processEnrollment(
     };
   }
 
-  const data = parsed.data;
+  // The password stays in this scope. Everything below that is not the API
+  // hand-off sees `data`, which does not have it.
+  const { password, ...data } = parsed.data;
   const now = Date.now();
   // "+91 98765 43210" and "9876543210" are the same number.
   const mobile = data.mobile.replace(/\D/g, "").slice(-10);
@@ -62,11 +74,11 @@ export async function processEnrollment(
   // us" rather than wait for a call that is not coming.
   if (address && sentByAddress.count(address, now) >= PER_ADDRESS) {
     console.warn(`[enroll] not sent: over ${PER_ADDRESS} from one address in 10 minutes`);
-    return { ok: false, status: 429, error: "Too many requests just now. Please call us instead." };
+    return { ok: false, status: 429, error: TOO_MANY };
   }
   if (sentByMobile.count(mobile, now) >= PER_MOBILE) {
     console.warn(`[enroll] not sent: over ${PER_MOBILE} for one mobile number in 10 minutes`);
-    return { ok: false, status: 429, error: "Too many requests just now. Please call us instead." };
+    return { ok: false, status: 429, error: TOO_MANY };
   }
 
   // Counted before anything goes out, so a burst of requests sent together
@@ -76,15 +88,17 @@ export async function processEnrollment(
   const submittedAt = meta.submittedAt ?? new Date().toISOString();
 
   // First, so the team's email can say whether it worked.
-  const onAdminList = await handToAdminList(data);
+  const handOff = await handToApi(data, password);
 
   const jobs: Array<Promise<void>> = [
-    sendTemplate(enrollmentNotificationEmail(data, { submittedAt, onAdminList }), env.notifyTo, {
+    sendTemplate(enrollmentNotificationEmail(data, { submittedAt, handOff, hasPassword: password !== undefined }), env.notifyTo, {
       replyTo: data.email,
     }),
   ];
 
-  if (data.email) {
+  // The welcome says "your enrolment is in" and what comes next. Said to
+  // someone who was just shown an error, it would be false.
+  if (data.email && handOff === "ok") {
     jobs.push(sendTemplate(welcomeEmail(data), data.email));
   }
 
@@ -97,36 +111,70 @@ export async function processEnrollment(
     for (const takeBack of undo) takeBack();
     throw failedEmail.reason;
   }
+  // Not undone: the visitor's retries stay counted, so a registration that
+  // cannot be saved cannot turn the team's inbox into a stream either.
+  if (handOff === "busy") return { ok: false, status: 429, error: TOO_MANY };
+  if (handOff === "failed") return { ok: false, status: 502, error: NOT_REGISTERED };
   return { ok: true, status: 200 };
 }
 
+/** The API hand-off waits this long for each try. */
+const HAND_OFF_TIMEOUT_MS = 6_000;
+/** Tries before a registration is called unsaved. */
+const HAND_OFF_TRIES = 2;
+
 /**
- * Hand an enrolment to the MDG API. Never rejects: a failure is logged and the
- * enrolment goes on, because the team's inbox already has it. Says whether it
- * got there, for the team's email.
+ * Hand a registration to the MDG API. Never rejects: it says how it went.
+ *
+ * - `ok`: saved. The API also answers `ok` for a repeat of the same
+ *   `submissionId`, which is why trying twice is safe.
+ * - `busy`: the API's own cap (a few per mobile an hour) said no. Trying again
+ *   at once would only be refused again.
+ * - `failed`: it did not get there, or the API refused it for a reason a retry
+ *   will not change.
+ *
+ * A try that did not get an answer (timeout, network, a 5xx) is made once
+ * more. A refusal is not: the API has answered. What is logged is the status
+ * and the code, never the body, so neither the password nor the visitor's
+ * details reach a log line.
+ *
+ * Fields are named one by one, so a field added to the form later is not sent
+ * by accident. The Terms fingerprint is ours (`termsRecord`), not the browser's.
  */
-async function handToAdminList(data: EnrollmentData): Promise<boolean> {
-  try {
-    // Named field by field: the admin list takes the details, not the
-    // agreement tick, and a field added to the form later is not sent by
-    // accident.
-    await postIntake(
-      "/website/enrolments",
-      {
-        submissionId: data.submissionId,
-        name: data.name,
-        mobile: data.mobile,
-        email: data.email,
-        siteType: data.siteType,
-        pumpName: data.pumpName,
-        sapCode: data.sapCode,
-        source: data.source,
-      },
-      { timeoutMs: 4_000, standIn: { id: "dev", duplicate: false } }
-    );
-    return true;
-  } catch (err) {
-    console.error("[enroll] could not hand the enrolment to the admin list:", err);
-    return false;
+async function handToApi(data: EnrollmentData, password: string | undefined): Promise<EnrollHandOff> {
+  const body = {
+    submissionId: data.submissionId,
+    name: data.name,
+    mobile: data.mobile,
+    email: data.email,
+    siteType: data.siteType,
+    pumpName: data.pumpName,
+    sapCode: data.sapCode,
+    source: data.source,
+    password,
+    ...termsRecord(data.lang),
+    consentWhatsApp: data.consentWhatsApp,
+    ref: data.ref,
+    lang: data.lang,
+  };
+  for (let attempt = 1; attempt <= HAND_OFF_TRIES; attempt += 1) {
+    try {
+      await postIntake("/website/enrolments", body, {
+        timeoutMs: HAND_OFF_TIMEOUT_MS,
+        standIn: { id: "dev", duplicate: false },
+      });
+      return "ok";
+    } catch (err) {
+      if (err instanceof IntakeRefused) {
+        if (err.status === 429) return "busy";
+        if (err.status < 500) {
+          console.error(`[enroll] the API refused the registration: ${err.message}`);
+          return "failed";
+        }
+      }
+      const what = err instanceof Error ? err.message : "unknown error";
+      console.error(`[enroll] could not hand the registration to the API (try ${attempt}): ${what}`);
+    }
   }
+  return "failed";
 }

@@ -146,6 +146,11 @@ interface NetInfo {
   }
   const fullLinks = document.querySelectorAll<HTMLAnchorElement>("a[data-full]");
   fullLinks.forEach((a) => (a.href = withTag("/film", "from=short")));
+  // "Register" carries the share code to the form, which sends it with the
+  // registration so the team can see which message brought the dealer
+  document.querySelectorAll<HTMLAnchorElement>("a[data-reg]").forEach((a) => {
+    if (tag) a.href += `&r=${tag}`;
+  });
 
   /* ── ids ─────────────────────────────────────────────────────────────── */
   const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/;

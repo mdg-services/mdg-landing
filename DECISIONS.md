@@ -122,3 +122,12 @@ The detail for each lives where it is named.
 - **D23.** The app's sign-up screen posts to `/api/enroll` from another origin,
   6 Oct, so the site answers CORS for `ENROLL_ALLOWED_ORIGINS` and tags the form
   `source: "app"`.
+- **D24.** A registration is what the MDG API saved, 23 Oct (onboarding v2). The
+  form now takes the password the dealer chooses and one tick that also covers
+  WhatsApp messages about the account; `/api/enroll` sends both to the API with
+  the Terms version and a server-computed fingerprint of the clause text. When
+  the API cannot be reached the visitor sees an error (not success) and the team
+  gets an email marked `[NOT REGISTERED — call them]`. This reverses D22's "the
+  team's inbox stays the backstop" for enrolments only: for them the API is the
+  record. One promise on every surface: "MDG's team will contact you shortly",
+  with no time in it.

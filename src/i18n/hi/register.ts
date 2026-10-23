@@ -40,7 +40,20 @@ export const register: typeof EN = {
     email: { label: "आपका ईमेल", placeholder: "अपना ईमेल लिखिए" },
     pumpName: { label: "पंप का नाम", placeholder: "अपने पंप का नाम" },
     sapCode: { label: "SAP कोड", placeholder: "अपना SAP कोड" },
+    password: {
+      label: "पासवर्ड चुनिए",
+      placeholder: "कम से कम 8 अक्षर",
+      hint: "डीलर कवच ऐप में आप अपने मोबाइल नंबर और इसी पासवर्ड से साइन इन करेंगे। MDG में कोई इसे देख नहीं सकता।",
+    },
+    passwordConfirm: { label: "पासवर्ड दोबारा लिखिए", placeholder: "वही पासवर्ड फिर से" },
   },
+
+  passwordShow: "दिखाइए",
+  passwordHide: "छिपाइए",
+  passwordShowAria: "पासवर्ड दिखाइए",
+  passwordHideAria: "पासवर्ड छिपाइए",
+  passwordShort: "कम से कम 8 अक्षर रखिए।",
+  passwordMismatch: "दोनों पासवर्ड एक जैसे नहीं हैं।",
 
   siteTypeLegend: "साइट का प्रकार",
   /* The label only. The value the API is sent, and the name the signed
@@ -54,12 +67,14 @@ export const register: typeof EN = {
      so the tail carries the verb as well as the full stop. */
   agreeLead: "मैंने",
   termsLink: "नियम व शर्तें",
-  agreeTail: " पढ़ ली हैं और मुझे मंज़ूर हैं।",
-  agreeAria: "मैं नियम व शर्तें मानता हूँ",
+  /* The same tick covers the messages about the account that come on WhatsApp. */
+  agreeTail:
+    " पढ़ ली हैं और मुझे मंज़ूर हैं। मैं अपने खाते से जुड़े संदेश WhatsApp पर पाने के लिए भी सहमत हूँ।",
+  agreeAria: "मैं नियम व शर्तें मानता हूँ और अपने खाते से जुड़े संदेश WhatsApp पर पाने के लिए सहमत हूँ",
 
-  errorGeneric: "कुछ गड़बड़ हो गई। कृपया दोबारा कोशिश कीजिए।",
-  errorBusy: "अभी हम आपका और रजिस्ट्रेशन नहीं ले पा रहे। कृपया कुछ देर बाद कोशिश कीजिए।",
-  errorCallLink: "या अभी कॉल कीजिए",
+  errorGeneric: "आपका रजिस्ट्रेशन पूरा नहीं हो पाया। कृपया दोबारा कोशिश कीजिए, या",
+  errorBusy: "अभी हम आपका और रजिस्ट्रेशन नहीं ले पा रहे। कृपया कुछ देर बाद कोशिश कीजिए, या",
+  errorCallLink: "अभी कॉल कीजिए",
   errorEnd: "।",
 
   privacy: "आपकी जानकारी हम किसी के साथ साझा नहीं करेंगे।",
@@ -70,9 +85,10 @@ export const register: typeof EN = {
 
   success: {
     badge: "नामांकन मिल गया",
-    heading: "धन्यवाद। आपकी जानकारी हम तक पहुँच गई है।",
-    bodyLead:
-      "हमारी टीम कॉल करके आपकी सेवाएँ और क़ीमत पक्की कर लेगी, आमतौर पर एक घंटे के भीतर ({hours})। इंतज़ार नहीं कर सकते?",
+    heading: "धन्यवाद। आपका रजिस्ट्रेशन हम तक पहुँच गया है।",
+    promise: "MDG की टीम जल्द संपर्क करेगी।",
+    next: "मंज़ूरी के बाद आपको WhatsApp पर संदेश आएगा। फिर डीलर कवच ऐप में अपने मोबाइल नंबर और यहाँ चुने पासवर्ड से साइन इन कीजिए।",
+    bodyLead: "इंतज़ार नहीं कर सकते? हमारी लाइन {hours} खुली रहती है।",
     callLink: "सीधे कॉल कीजिए",
     bodyEnd: "।",
   },

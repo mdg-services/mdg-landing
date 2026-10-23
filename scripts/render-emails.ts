@@ -31,10 +31,22 @@ const grievanceMeta = { ref: "G-0007", submittedAt: "2026-10-14T09:30:00.000Z" }
 
 const outDir = ".email-preview";
 mkdirSync(outDir, { recursive: true });
-writeFileSync(`${outDir}/welcome.html`, welcomeEmail(data).html);
+writeFileSync(`${outDir}/welcome.html`, welcomeEmail({ ...data, lang: "en" }).html);
+writeFileSync(`${outDir}/welcome-hi.html`, welcomeEmail({ ...data, lang: "hi" }).html);
 writeFileSync(
   `${outDir}/notify.html`,
-  enrollmentNotificationEmail(data, { submittedAt: "2026-06-18T09:30:00.000Z" }).html
+  enrollmentNotificationEmail(data, {
+    submittedAt: "2026-06-18T09:30:00.000Z",
+    hasPassword: true,
+  }).html
+);
+writeFileSync(
+  `${outDir}/notify-not-registered.html`,
+  enrollmentNotificationEmail(data, {
+    submittedAt: "2026-06-18T09:30:00.000Z",
+    handOff: "failed",
+    hasPassword: true,
+  }).html
 );
 writeFileSync(`${outDir}/grievance-ack-en.html`, grievanceAckEmail(grievance, grievanceMeta).html);
 writeFileSync(

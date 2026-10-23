@@ -81,7 +81,7 @@ Three forms post to this site's own functions, and each emails the team inbox
 
 | Route | Who posts it | What it sends |
 |---|---|---|
-| `POST /api/enroll` | `/register`, and the Dealer Kavach app's sign-up screen | the details to the team, a welcome note to the dealer |
+| `POST /api/enroll` | `/register`, and the Dealer Kavach app's sign-up screen | the registration to our API, the details to the team, a welcome note to the dealer |
 | `POST /api/callback` | the homepage's "Leave my number", the film pages, the assistant's fallback | the name and number to the team |
 | `POST /api/grievance` | `/grievance` | see below |
 
@@ -93,6 +93,18 @@ Three forms post to this site's own functions, and each emails the team inbox
   the form arrives tagged `source: "app"`. Its Terms & Conditions are a word-for-word
   copy in `mdg-client/src/features/register/terms.ts`: change a clause in
   `src/i18n/{en,hi}/register.ts` and there in the same pass.
+- **A registration is what our API saved.** `/api/enroll` hands it to the MDG API
+  first (`server/intake.ts`), with the password the dealer chose (the API hashes it
+  at once), the Terms version and a fingerprint of the clause text in the page's
+  language (`server/terms.ts`, computed here, never from the browser), their
+  WhatsApp consent, the film link's `?r=` code and the page language. If the
+  API cannot be reached after two tries, the visitor is told so and is not shown
+  success; the team is still emailed, the subject marked `[NOT REGISTERED — call
+  them]`, and no welcome goes out. The password is taken out of the form at the
+  top of `processEnrollment` and goes to the API and nowhere else: no email, log
+  line, error or answer carries it. Changing a Terms clause: bump `TERMS_VERSION`
+  in `src/i18n/en/register.ts` and append an entry to `TERMS_HISTORY` in
+  `scripts/enroll.check.ts` (`npm run check:enroll` fails until you do).
 - **The call-back guard.** Each valid call-back is one email, so
   `/api/callback` accepts JSON only (415 otherwise), quietly drops a post with
   the hidden `website` box filled in or sent under 2 s after the page opened

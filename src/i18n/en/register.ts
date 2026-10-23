@@ -7,6 +7,16 @@ import type { SiteType } from "../../data/content";
    UPI, Type A / Type B) belong to other people's systems and paperwork, so
    they stay in Latin script in both languages: that is how a dealer sees them
    on every screen and on every piece of paper they already have. */
+/**
+ * Which edition of the Terms & Conditions below a dealer ticks. The server
+ * sends it with every registration, together with a fingerprint of the clause
+ * text in the page's language, so a registration can prove what it agreed to.
+ * CHANGE THE VERSION WHENEVER A CLAUSE CHANGES, in either language: the
+ * fingerprints are pinned in `scripts/enroll.check.ts`, and that check fails
+ * on a changed clause with an unchanged version.
+ */
+export const TERMS_VERSION = "2026-10-06";
+
 export const register = {
   /** The browser tab's title on this page. */
   pageTitle: "Register your pump · MDG Services",
@@ -45,7 +55,23 @@ export const register = {
     email: { label: "Your Email", placeholder: "Enter your email" },
     pumpName: { label: "Pump Name", placeholder: "Your pump's name" },
     sapCode: { label: "SAP Code", placeholder: "Your SAP code" },
+    /* Chosen here, used to sign in to the app: the team never makes or sees it. */
+    password: {
+      label: "Choose a password",
+      placeholder: "At least 8 characters",
+      hint: "You will sign in to the Dealer Kavach app with your mobile number and this password. Nobody at MDG can see it.",
+    },
+    passwordConfirm: { label: "Type the password again", placeholder: "The same password again" },
   },
+
+  /** The small button inside a password box, and what a screen reader hears. */
+  passwordShow: "Show",
+  passwordHide: "Hide",
+  passwordShowAria: "Show the password",
+  passwordHideAria: "Hide the password",
+  /** Shown under the box that is wrong, in the language on screen. */
+  passwordShort: "Use at least 8 characters.",
+  passwordMismatch: "The two passwords are not the same.",
 
   siteTypeLegend: "Site type",
   /**
@@ -63,17 +89,19 @@ export const register = {
      stop; in Hindi the verb lands after the link, so the tail carries it. */
   agreeLead: "I have read and agree to the",
   termsLink: "Terms & Conditions",
-  agreeTail: ".",
-  agreeAria: "I agree to the Terms and Conditions",
+  /* The same tick also covers the messages about the account that arrive on
+     WhatsApp (the account-ready message and the bill), so it says so. */
+  agreeTail: ", and I agree to get messages about my account on WhatsApp.",
+  agreeAria: "I agree to the Terms and Conditions, and to messages about my account on WhatsApp",
 
   /** The enrolment API answers in English and its messages are generic, so a
       failed submit shows this instead of whatever the server said. */
-  errorGeneric: "Something went wrong. Please try again.",
+  errorGeneric: "We could not complete your registration. Please try again, or",
   /** Instead of the line above when the form was refused for coming too often:
       trying again at once would only be refused again. */
-  errorBusy: "We can't take another registration from you just now. Please try again later.",
-  /** The failure note ends on a link that starts a call. */
-  errorCallLink: "Or call us now",
+  errorBusy: "We can't take another registration from you just now. Please try again later, or",
+  /** Both notes end on a link that starts a call, so each says "or" last. */
+  errorCallLink: "call us now",
   errorEnd: ".",
 
   privacy: "We will never share your details.",
@@ -88,13 +116,16 @@ export const register = {
   /* ── after a successful enrolment ── */
   success: {
     badge: "Enrolment received",
-    heading: "Thank you. Your details are with us.",
+    heading: "Thank you. Your registration is with us.",
+    /** The one promise on this page. It names no time: when the team calls is theirs to say. */
+    promise: "MDG's team will contact you shortly.",
+    /** What happens after that, in the order it happens. */
+    next: "Once your registration is approved, you will get a message on WhatsApp. Then sign in to the Dealer Kavach app with your mobile number and the password you chose here.",
     /** `{hours}` is filled in with `hours` above, so the opening times can
         sit wherever the sentence wants them rather than being glued on in
         English word order. The sentence then wraps a link, so its last two
         pieces are separate keys. */
-    bodyLead:
-      "A team member will call to confirm your services and pricing, usually within the hour ({hours}). Can't wait?",
+    bodyLead: "Can't wait? Our line is open {hours}.",
     callLink: "Call us directly",
     bodyEnd: ".",
   },
