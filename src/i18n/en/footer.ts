@@ -40,7 +40,6 @@ export const footer = {
     film: "Watch the film",
     why: "Why us",
     process: "Process",
-    membership: "Pricing",
     contact: "Get in touch",
   },
   /** Last in the same list, but a route rather than an anchor. */
@@ -59,6 +58,21 @@ export const footer = {
   /** Not a link: the Android app is not on Google Play yet. */
   khataAndroid: "Khata Kavach for Android: coming to Google Play",
 
+  /** The row under the columns: the company, and the rules a customer is under. */
+  companyHeading: "Company",
+  company: {
+    about: "About us",
+    contact: "Contact us",
+    /** The pricing page; the home page's pricing band is reached from the top bar. */
+    pricing: "Pricing",
+  },
+  policiesHeading: "Policies",
+  policies: {
+    terms: "Terms and conditions",
+    refund: "Refund and cancellation",
+    shipping: "Shipping and delivery",
+  },
+
   reachHeading: "Reach us",
   /** When the toll-free line is open. Drawn in capitals by CSS, so it is
       written here in ordinary case. */
@@ -68,7 +82,7 @@ export const footer = {
   /** `{year}` is the current year and `{name}` the registered company. */
   copyright: "© {year} {name}. All rights reserved.",
   brandLine: "MDG Services is a brand of {name} · CIN: {cin}",
-  /** The privacy page itself is English only. Its link is not. */
+  /** The privacy page itself is English only. Its link is not. It sits in the Policies row. */
   privacy: "Privacy Policy",
   madeFor: "Made for India's fuel station dealers and credit-selling businesses",
 };

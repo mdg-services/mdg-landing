@@ -1,6 +1,7 @@
 /**
  * Which language a visitor to the site's own pages (/, /register, /grievance,
- * /grievances and their /hi twins) should be sent to.
+ * /grievances, /khata-kavach, the company pages (/about, /contact, /pricing,
+ * /terms, /refund-policy, /shipping) and their /hi twins) should be sent to.
  *
  * The URL decides the language of the HTML. This only decides when to send a
  * visitor to the other URL:
@@ -17,9 +18,9 @@
  *
  * Pure functions on strings; proxy.ts does the responding.
  */
-import { LANG_COOKIE, isLang, pathFor, type Lang, type SiteRoute } from "../i18n/lang";
+import { COMPANY_ROUTES, LANG_COOKIE, isLang, pathFor, type Lang, type SiteRoute } from "../i18n/lang";
 
-const ROUTES = ["", "/register", "/grievance", "/grievances", "/khata-kavach"] as const;
+const ROUTES = ["", "/register", "/grievance", "/grievances", "/khata-kavach", ...COMPANY_ROUTES] as const;
 
 /** Which of the site's own pages a path is, and in which language; null for anything else. */
 export function siteRoute(pathname: string): { lang: Lang; route: SiteRoute } | null {

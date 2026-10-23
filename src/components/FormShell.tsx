@@ -22,6 +22,7 @@ export default function FormShell({
   heading,
   intro,
   extra,
+  headingSize = "clamp(34px, 6vw, 72px)",
   children,
 }: {
   lang: Lang;
@@ -32,9 +33,12 @@ export default function FormShell({
   /** The Devanagari gloss, printed only where it says something the eyebrow does not. */
   eyebrowDeva?: string;
   heading: string;
-  intro: string;
+  /** Words, or words with a link in them (the company pages' intros). */
+  intro: ReactNode;
   /** The smaller paragraph under the intro (the app link, or the call link). */
   extra: ReactNode;
+  /** The heading's CSS font size; the company pages' headings are sentences and run smaller. */
+  headingSize?: string;
   children: ReactNode;
 }) {
   const t = getT(lang);
@@ -85,7 +89,7 @@ export default function FormShell({
               </p>
             </Enter>
             <Enter delay={0.06}>
-              <h1 className="mt-5 text-mega text-white" style={{ fontSize: "clamp(34px, 6vw, 72px)" }}>
+              <h1 className="mt-5 text-mega text-white" style={{ fontSize: headingSize }}>
                 {heading}
               </h1>
             </Enter>

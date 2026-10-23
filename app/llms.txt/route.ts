@@ -1,6 +1,9 @@
 import { guideNow } from "@/guides/clock";
 import { KK, MDG, SITE, contextAt, isLive, pathOf, type Ctx, type Lang } from "@/guides/model";
 import { getT } from "@/i18n/server";
+import { DOC_KEY } from "@/i18n/doc";
+import { COMPANY_ROUTES, pathFor } from "@/i18n/lang";
+import { docFacts, fill } from "@/lib/docText";
 
 /**
  * llms.txt: a plain list of the site's pages for AI assistants that read it,
@@ -63,6 +66,16 @@ export function GET(): Response {
     `  - हिंदी: ${line(hi.register.pageTitle, `${SITE}/hi/register`, hi.register.intro)}`,
     `- ${line(en.grievance.pageTitle, `${SITE}/grievance`, en.grievance.metaDescription)}`,
     `  - हिंदी: ${line(hi.grievance.pageTitle, `${SITE}/hi/grievance`, hi.grievance.metaDescription)}`,
+    // About, contact, pricing, terms, refund and shipping: the pages that say who is behind the site
+    ...COMPANY_ROUTES.flatMap((route) => {
+      const facts = docFacts("en");
+      const d = en[DOC_KEY[route]];
+      const h = hi[DOC_KEY[route]];
+      return [
+        `- ${line(d.pageTitle, `${SITE}${pathFor("en", route)}`, fill(d.metaDescription, facts))}`,
+        `  - हिंदी: ${line(h.pageTitle, `${SITE}${pathFor("hi", route)}`, fill(h.metaDescription, docFacts("hi")))}`,
+      ];
+    }),
   ];
 
   const sections = SECTIONS.map(({ pillar, heading }) => {

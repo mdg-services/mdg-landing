@@ -6,7 +6,19 @@ import { getT } from "../i18n/server";
 import { homeHref, pathFor, type Lang } from "../i18n/lang";
 
 /* The targets never change with the language; the labels are looked up by id. */
-const explore = ["services", "film", "why", "process", "membership", "contact"] as const;
+const explore = ["services", "film", "why", "process", "contact"] as const;
+
+/* The company pages' targets never change with the language either; labels by id. */
+const company = [
+  { id: "about", route: "/about" },
+  { id: "contact", route: "/contact" },
+  { id: "pricing", route: "/pricing" },
+] as const;
+const policies = [
+  { id: "terms", route: "/terms" },
+  { id: "refund", route: "/refund-policy" },
+  { id: "shipping", route: "/shipping" },
+] as const;
 
 export default function Footer({ lang }: { lang: Lang }) {
   const t = getT(lang);
@@ -126,16 +138,45 @@ export default function Footer({ lang }: { lang: Lang }) {
           </div>
         </div>
 
-        <div className="mt-16 flex flex-col items-start justify-between gap-3 border-t border-white/10 pt-6 text-[13px] text-navy-300 sm:flex-row sm:items-center">
+        {/* The company and its policies: who we are, what it costs, and the rules a customer is under. The pages a payment provider's review looks for are all linked from here, on every page. */}
+        <div className="mt-16 grid gap-10 border-t border-white/10 pt-10 md:grid-cols-12">
+          <nav aria-label={t.footer.companyHeading} className="md:col-span-4">
+            <p className="eyebrow-light">{t.footer.companyHeading}</p>
+            <ul className="mt-5 flex flex-wrap gap-x-6 gap-y-2.5 text-[15px]">
+              {company.map((c) => (
+                <li key={c.route}>
+                  <Link href={pathFor(lang, c.route)} className="link-quiet tap-pad text-navy-100 hover:text-white">
+                    {t.footer.company[c.id]}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
+          <nav aria-label={t.footer.policiesHeading} className="md:col-span-8">
+            <p className="eyebrow-light">{t.footer.policiesHeading}</p>
+            <ul className="mt-5 flex flex-wrap gap-x-6 gap-y-2.5 text-[15px]">
+              {policies.map((c) => (
+                <li key={c.route}>
+                  <Link href={pathFor(lang, c.route)} className="link-quiet tap-pad text-navy-100 hover:text-white">
+                    {t.footer.policies[c.id]}
+                  </Link>
+                </li>
+              ))}
+              <li>
+                {/* the privacy page is one static page, in English only: a plain link */}
+                <a href="/privacy" className="link-quiet tap-pad text-navy-100 hover:text-white">
+                  {t.footer.privacy}
+                </a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+
+        <div className="mt-10 flex flex-col items-start justify-between gap-3 border-t border-white/10 pt-6 text-[13px] text-navy-300 sm:flex-row sm:items-center">
           <div className="space-y-1">
             <p>{t.footer.copyright.replace("{year}", String(year)).replace("{name}", BRAND.legalName)}</p>
             <p className="text-[12px] text-navy-400">
               {t.footer.brandLine.replace("{name}", BRAND.legalName).replace("{cin}", BRAND.cin)}
-            </p>
-            <p>
-              <a href="/privacy" className="link-quiet tap-pad text-navy-200 hover:text-white">
-                {t.footer.privacy}
-              </a>
             </p>
           </div>
           <p className="font-mono text-[11px] uppercase tracking-[0.2em]">{t.footer.madeFor}</p>

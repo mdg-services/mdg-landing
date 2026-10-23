@@ -18,6 +18,8 @@ export const membership = {
 
   ctaPrimary: "Get started",
   ctaSecondary: "Call to discuss",
+  /** A plain line under the two buttons, to the pricing page. */
+  pricesLink: "See prices and how to pay",
 
   /* The four tiles along the bottom. A list, not a keyed record: the ids for
      these live nowhere else, and the numeral on each tile comes from its

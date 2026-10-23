@@ -1,0 +1,127 @@
+import { cards, p, steps, table, ul, type DocPage } from "../doc";
+
+/* /pricing. What is sold, the rupee price, GST, how to pay.
+
+   The figures are the ones the site assistant already quotes
+   (mdg-backend/src/assist/llm/prompts.ts): the nine standard services at
+   3,000 rupees a month plus 18% GST, the first month free, and everything
+   together "in the region of" 15,000 plus GST, quoted on the work. They come
+   from PRICING in data/content.ts, so this page and the assistant cannot drift.
+
+   TODO-OWNER (Khata Kavach): no price has ever been published for it, and the
+   site's FAQ says only "it depends on your business, call us". The card below
+   therefore says "Pricing on request". If Razorpay's reviewer wants a rupee
+   figure for it, or if you want to charge for it, set one and replace the card.
+
+   TODO-OWNER (per outlet): "for one outlet" below is my reading. The assistant's
+   published line says only "3000 rupees plus 18% GST for the standard services".
+   Confirm that the price is per outlet, or drop the words.
+
+   TODO-OWNER (GST invoice): this page promises a GST invoice for each payment.
+   Dealer Kavach's payment system does not generate GST tax invoices yet (ADR
+   0022 §1), so an invoice has to be issued by hand until it does. Keep the
+   promise or soften the sentence.
+
+   Never add "pay in the app" wording here or anywhere on the site: Google
+   Play's payments policy makes that a Play Billing matter (ADR 0022 §1). Payment is
+   by a link that arrives by SMS, email or WhatsApp, or on the website. */
+export const pricing: DocPage = {
+  pageTitle: "Pricing · MDG Services",
+  metaDescription:
+    "Dealer's Kavach costs {standard} a month plus {gstPercent} GST, with the first month free. Prices in rupees, paid online through Razorpay by UPI, card, netbanking or wallet.",
+  eyebrow: "Pricing",
+  eyebrowDeva: "क़ीमत",
+  heading: "Simple monthly pricing, in rupees.",
+  intro:
+    "Dealer's Kavach is a monthly subscription, and the first month is free. Prices are in Indian rupees, GST is added, and what we agree is written down before you start.",
+  updated: "23 October 2026",
+  legal: true,
+  sections: [
+    {
+      id: "plans",
+      heading: "Plans",
+      blocks: [
+        cards([
+          {
+            kicker: "Dealer's Kavach",
+            title: "Standard services",
+            price: "{standard}",
+            priceNote: "a month, plus {gstPercent} GST ({standardTotal} in all)",
+            body: "The nine standard services, for one outlet. The first month is free.",
+            items: [
+              "SDMS, MDG and inspection compliance",
+              "Document and renewal reminders",
+              "Automation, web portal and XTRA campaign support",
+              "DOD and stock punctuality",
+              "Prepare Pro Manager",
+            ],
+          },
+          {
+            kicker: "Dealer's Kavach",
+            title: "Everything, with the premium services",
+            price: "Around {everythingAround}",
+            priceNote: "a month, plus GST, quoted on the work",
+            body: "The standard services plus the four premium ones. The exact figure for your outlet is agreed in writing before you start.",
+            items: ["Quick response for safety", "Digital payment reconciliation", "Account support", "Cyber security"],
+          },
+          {
+            kicker: "Khata Kavach",
+            title: "Pricing on request",
+            body: "It depends on your business. Call us and we will tell you.",
+            link: { label: "Contact us", href: "route:/contact" },
+          },
+        ]),
+      ],
+    },
+    {
+      id: "example",
+      heading: "What you pay in a month",
+      blocks: [
+        p("For the standard services of one outlet:"),
+        table(
+          ["For one outlet, in a month", "Amount"],
+          [
+            ["Dealer's Kavach, standard services", "{standard}"],
+            ["GST at {gstPercent}", "{gst}"],
+            ["**You pay**", "**{standardTotal}**"],
+          ],
+        ),
+        p("The first month is free. If you are happy to carry on, payment starts from the first of the next month."),
+      ],
+    },
+    {
+      id: "pay",
+      heading: "How you pay",
+      blocks: [
+        steps([
+          [
+            "You get a payment link",
+            "It arrives by SMS, email or WhatsApp, with the amount and what it is for. You can also pay from your account in a web browser.",
+          ],
+          [
+            "Pay the way you like",
+            "UPI, debit or credit card, netbanking or a wallet, on Razorpay's secure page. We never see or keep your card number, UPI PIN or bank login.",
+          ],
+          [
+            "Get your receipt",
+            "Razorpay confirms the payment to us, and you get a confirmation and a GST invoice for the amount.",
+          ],
+        ]),
+      ],
+    },
+    {
+      id: "good-to-know",
+      heading: "Good to know",
+      blocks: [
+        ul([
+          "All prices are in Indian rupees (INR). GST at {gstPercent} is added on top.",
+          "You are not asked to pay anything during the free month.",
+          "The price is written down before you begin and does not rise in the middle of what we agreed. No surprise fees.",
+          "You can cancel any time. See the [Refund and cancellation policy](route:/refund-policy).",
+          "A subscription is for software delivered online. There is nothing to ship; see [Shipping and delivery](route:/shipping).",
+          "Our [Terms and conditions](route:/terms) apply to every subscription.",
+        ]),
+      ],
+    },
+  ],
+};

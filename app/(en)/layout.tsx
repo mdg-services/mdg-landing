@@ -4,7 +4,7 @@ import RootShell from "@/shell/RootShell";
 import { fontClassNames, lateFontClassNames } from "@/fonts/en";
 import { SITE } from "@/seo/site";
 
-/** The English site: /, /register, /grievance, /guides/…, /tools/…. Hindi lives under /hi. */
+/** The English site: /, /register, /grievance, /about, /contact, /pricing, /terms, /refund-policy, /shipping, /guides/…, /tools/…. Hindi lives under /hi. */
 export const metadata: Metadata = {
   metadataBase: new URL(SITE),
   icons: { icon: "/favicon.png", apple: "/apple-touch-icon.png" },

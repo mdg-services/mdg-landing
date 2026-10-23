@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { getT } from "../i18n/server";
-import { pathFor, type Lang, type SiteRoute } from "../i18n/lang";
+import { DOC_KEY } from "../i18n/doc";
+import { docFacts, fill } from "../lib/docText";
+import { pathFor, type CompanyRoute, type Lang, type SiteRoute } from "../i18n/lang";
 
 export const SITE = "https://mdgservices.in";
 export const OG_IMAGE = { url: "/og.png", width: 2400, height: 1260, alt: "MDG Services · Dealer's कवच" };
@@ -25,6 +27,12 @@ export function siteMetadata(lang: Lang, route: SiteRoute): Metadata {
   const t = getT(lang);
   const home = route === "";
   const page = canonicalRoute(route);
+  /* a company page's head: its own title, and its description with the facts (a price, the company) filled in */
+  const company = (r: CompanyRoute) => {
+    const doc = t[DOC_KEY[r]];
+    const description = fill(doc.metaDescription, docFacts(lang));
+    return { title: doc.pageTitle, description, ogTitle: doc.pageTitle, ogDescription: description };
+  };
   /* what each page says about itself in search and in a link preview */
   const heads: Record<SiteRoute, { title: string; description: string; ogTitle: string; ogDescription: string }> = {
     "": { title: t.meta.title, description: t.meta.description, ogTitle: t.meta.ogTitle, ogDescription: t.meta.ogDescription },
@@ -32,6 +40,12 @@ export function siteMetadata(lang: Lang, route: SiteRoute): Metadata {
     "/grievance": { title: t.grievance.pageTitle, description: t.grievance.metaDescription, ogTitle: t.grievance.pageTitle, ogDescription: t.grievance.metaDescription },
     "/grievances": { title: t.grievance.pageTitle, description: t.grievance.metaDescription, ogTitle: t.grievance.pageTitle, ogDescription: t.grievance.metaDescription },
     "/khata-kavach": { title: t.kk.meta.title, description: t.kk.meta.description, ogTitle: t.kk.meta.ogTitle, ogDescription: t.kk.meta.description },
+    "/about": company("/about"),
+    "/contact": company("/contact"),
+    "/pricing": company("/pricing"),
+    "/terms": company("/terms"),
+    "/refund-policy": company("/refund-policy"),
+    "/shipping": company("/shipping"),
   };
   const { title, description, ogTitle, ogDescription } = heads[route];
   /* the Khata Kavach page wears its own card */
