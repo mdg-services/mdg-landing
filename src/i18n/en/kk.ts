@@ -205,7 +205,7 @@ export const kk = {
       },
       {
         q: "What does it cost?",
-        a: "It depends on your business. Call us and we will tell you.",
+        a: "Nothing while Khata Kavach is new. If that ever changes, we will tell you well before anything is charged.",
       },
       {
         q: "Do I still need Dealer's Kavach?",

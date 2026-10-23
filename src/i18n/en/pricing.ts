@@ -8,19 +8,15 @@ import { cards, p, steps, table, ul, type DocPage } from "../doc";
    together "in the region of" 15,000 plus GST, quoted on the work. They come
    from PRICING in data/content.ts, so this page and the assistant cannot drift.
 
-   TODO-OWNER (Khata Kavach): no price has ever been published for it, and the
-   site's FAQ says only "it depends on your business, call us". The card below
-   therefore says "Pricing on request". If Razorpay's reviewer wants a rupee
-   figure for it, or if you want to charge for it, set one and replace the card.
+   Khata Kavach is free while it is new (owner, 23 Oct 2026). If that changes,
+   this card, the Hindi one and the FAQ change together.
 
    TODO-OWNER (per outlet): "for one outlet" below is my reading. The assistant's
    published line says only "3000 rupees plus 18% GST for the standard services".
    Confirm that the price is per outlet, or drop the words.
 
-   TODO-OWNER (GST invoice): this page promises a GST invoice for each payment.
-   Dealer Kavach's payment system does not generate GST tax invoices yet (ADR
-   0022 §1), so an invoice has to be issued by hand until it does. Keep the
-   promise or soften the sentence.
+   The GST invoice promised below is issued by the payment system itself the
+   moment a payment is confirmed (ADR 0022 §11).
 
    Never add "pay in the app" wording here or anywhere on the site: Google
    Play's payments policy makes that a Play Billing matter (ADR 0022 §1). Payment is
@@ -66,9 +62,11 @@ export const pricing: DocPage = {
           },
           {
             kicker: "Khata Kavach",
-            title: "Pricing on request",
-            body: "It depends on your business. Call us and we will tell you.",
-            link: { label: "Contact us", href: "route:/contact" },
+            title: "Free while it is new",
+            price: "₹0",
+            priceNote: "a month, while Khata Kavach is new",
+            body: "Sign up from the app and use it at no charge. If that ever changes, we will tell you well before anything is charged.",
+            link: { label: "About Khata Kavach", href: "route:/khata-kavach" },
           },
         ]),
       ],

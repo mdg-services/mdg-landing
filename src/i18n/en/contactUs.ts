@@ -3,12 +3,8 @@ import { cards, facts, p, type DocPage } from "../doc";
 /* /contact. Every way to reach the company, the registered office, and where
    a complaint or a billing question goes. The phone number is the toll-free
    line the home page already prints (lib/tollFree.ts), the hours are the ones
-   the call card prints, and the email is the company's own (BRAND.companyEmail).
-   No new number is introduced here.
-
-   TODO-OWNER: the footer still prints hello@mdgservices.in while this page
-   prints hello@vruoom.com. Razorpay's review compares the two; pick one
-   address and change BRAND.email or BRAND.companyEmail so they match.
+   the call card prints, and the email is the one every page prints
+   (BRAND.companyEmail, the same as the footer's). No new number is introduced here.
    TODO-OWNER: if you want a named Grievance Officer on this page (some
    platforms expect one), add the name and designation to the last section. */
 export const contactUs: DocPage = {

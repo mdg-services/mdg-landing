@@ -32,11 +32,10 @@ export const BRAND = {
      it belongs behind that component, not beside it. */
   site: "mdgservices.in",
   email: "hello@mdgservices.in",
-  /* The company's own address, the one vruoom.com publishes. The company pages
-     (/about, /contact, /terms, /refund-policy …) print this one and the footer
-     still prints `email` above. TODO-OWNER: pick one address for both places;
-     Razorpay's review compares what the site says with what the company says. */
-  companyEmail: "hello@vruoom.com",
+  /* The address the company pages (/about, /contact, /terms, /refund-policy …)
+     print. The same as `email` on purpose: one address on every page, because a
+     payment gateway's review compares what each page says (owner, 23 Oct 2026). */
+  companyEmail: "hello@mdgservices.in",
   /** The registered office on one line, as vruoom.com prints it in its footer.
       A fact, not a sentence, so it reads the same in both languages. */
   registeredOffice: `${OFFICE.street}, ${OFFICE.city}, ${OFFICE.state} ${OFFICE.pin}`,
