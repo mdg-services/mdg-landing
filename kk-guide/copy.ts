@@ -147,8 +147,8 @@ export const KK_TOPIC_BLURB: Record<string, Record<Lang, string>> = {
     hi: "ग्राहक की रिक्वेस्ट, काउंटर की बत्ती, फ़ोटो, बिल, और किसे क्या दिखता है।",
   },
   trades: {
-    en: "Fuel, cement, sand and wholesale, where customers collect in their own vehicles.",
-    hi: "डीज़ल, सीमेंट, बालू और थोक, जहाँ ग्राहक अपनी गाड़ी से माल ले जाते हैं।",
+    en: "Fuel, cement, sand, gas, wholesale and dairy: by vehicle number or by pickup code.",
+    hi: "डीज़ल, सीमेंट, बालू, गैस, थोक और डेयरी: गाड़ी नंबर से या 4 अंक के कोड से।",
   },
   examples: {
     en: "Made-up businesses walked through real situations, with figures that add up.",

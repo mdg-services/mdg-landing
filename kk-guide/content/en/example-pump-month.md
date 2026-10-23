@@ -11,14 +11,14 @@
     { "q": "What does the owner see when a sale goes past the limit?", "a": "The sale is saved with the manager's name and flagged \"Over the limit\". The owner sees it in \"Look at these\" for the next 7 days, and the customer sees the flag on their own phone." }
   ],
   "related": ["examples", "example-contractor-limit", "feature-counter-light", "trade-petrol-pump", "feature-bills"],
-  "updated": "2026-10-19"
+  "updated": "2026-10-23"
 }
 ---
 > **Example:** a made-up business with made-up figures. It is not a real customer.
 
 ## The set-up
 
-Sharma Traders, a made-up fuel business, sells diesel on credit to Sharma Roadlines, a made-up transport business with three trucks: UP00 SH 1005, 1006 and 1007. The rate is Rs 90 a litre. The owner sets a [credit limit](@credit-limit) of Rs 2,00,000.
+Sharma Traders, a made-up fuel business, sells diesel on credit to Sharma Roadlines, a made-up transport business with three trucks: UP00 SH 1005, 1006 and 1007. The rate is Rs 90 a litre. The owner sets a [credit limit](@credit-limit) of Rs 2,00,000. A fuel business works by vehicle number, so each request names a truck. Other trades work by a 4-digit pickup code: see [a contractor's limit](@example-contractor-limit).
 
 ## What happens at the counter
 

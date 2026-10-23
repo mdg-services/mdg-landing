@@ -4,20 +4,20 @@ import { getT } from "../../i18n/server";
 import type { Lang } from "../../i18n/lang";
 
 /**
- * At the nozzle: the one thing on the page you can try. Pick one of three
- * made-up trucks and see what the nozzle man sees: a green, amber or red light,
+ * At the counter: the one thing on the page you can try. Pick one of three
+ * made-up pickup codes and see what the counter staff see: a green, amber or red light,
  * with the reason and the next step. This is the only place on the whole site
  * where those three colours appear, because there they mean one thing each.
  *
- * It needs no script. The three trucks are radio buttons and each result is
+ * It needs no script. The three codes are radio buttons and each result is
  * shown by the radio before it (CSS sibling selectors), so it works with
- * scripts off and a keyboard's arrow keys move between trucks. The stamp
+ * scripts off and a keyboard's arrow keys move between codes. The stamp
  * (180 ms, once) plays when a result is shown; reduced motion drops it.
  *
  * Each light says a word and the next step, so colour is never the only signal.
  */
 
-/** Tailwind needs whole class names, so each truck's classes are spelled out. */
+/** Tailwind needs whole class names, so each code's classes are spelled out. */
 const SLOT = {
   go: {
     id: "kk-truck-go",
@@ -114,7 +114,7 @@ export default function KkNozzle({ lang }: { lang: Lang }) {
                 SLOT[d.light].chipFocus
               }
             >
-              <span className="num text-[23px] font-bold leading-tight tracking-wide">{d.plate}</span>
+              <span className="num text-[23px] font-bold leading-tight tracking-wide">{d.code}</span>
               <span className="text-[15px] opacity-90">{n.states[d.light].name}</span>
             </label>
           ))}
@@ -137,7 +137,7 @@ export default function KkNozzle({ lang }: { lang: Lang }) {
                   {s.word}
                 </p>
                 <div className="mt-6 rounded-2xl bg-kk-surface px-5 py-4 text-kk-ink md:mt-8">
-                  <p className="num text-[30px] font-bold leading-none tracking-wide md:text-[40px]">{d.plate}</p>
+                  <p className="num text-[30px] font-bold leading-none tracking-wide md:text-[40px]">{d.code}</p>
                   <p className="mt-2 text-[16px] text-kk-soft">{s.name}</p>
                 </div>
                 <p

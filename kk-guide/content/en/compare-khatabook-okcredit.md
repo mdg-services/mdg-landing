@@ -43,6 +43,6 @@ Facts about Khatabook and OkCredit from their own websites and app listings, che
 
 ## Where Khata Kavach fits
 
-If your customers collect goods by vehicle and you want them to ask first and see each sale, that is the job Khata Kavach does. The customer has their own app and, by default, sends a request for that vehicle before credit is given. Counter staff see a green, amber or red light before goods go out. A correction is a new line that both sides see. It keeps the account: it never lends and never holds money. Price: call us.
+If you give goods on credit and want customers to ask first and see each sale, that is the job Khata Kavach does. The customer has their own app and, by default, sends a request before credit is given: per vehicle, or with a pickup code. Counter staff see a green, amber or red light before goods go out. A correction is a new line that both sides see. It keeps the account: it never lends and never holds money. Price: call us.
 
 See [Khatabook](@compare-khatabook) and [OkCredit](@compare-okcredit) on their own, or [how to choose an app](@compare-choose-app).

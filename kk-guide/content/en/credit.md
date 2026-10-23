@@ -11,14 +11,14 @@
     { "q": "What is a credit period?", "a": "It is the number of days a customer has to pay for what they took, commonly 7, 15 or 30. The period and the limit go together: see [how to set a credit limit](@credit-limit)." }
   ],
   "related": ["credit-without-stress", "credit-limit", "credit-who", "counter", "getting-paid"],
-  "updated": "2026-10-19"
+  "updated": "2026-10-23"
 }
 ---
 ## Should you give udhar at all?
 
 This page is for a business that sells goods on credit to its regular business customers: a transporter who fills up every day, a contractor who takes cement every week. It is not about lending money to a friend.
 
-In fuel, cement, building material, sand, bricks and wholesale (see [wholesale credit](@trade-wholesale)), credit is common. Regular customers collect in their own vehicles and pay later. A supplier who says no to all credit may find that some of them buy elsewhere.
+In fuel, cement, building material, sand, bricks and wholesale (see [wholesale credit](@trade-wholesale)), credit is common. Regular customers send their own vehicle or their own person to collect, and pay later. A supplier who says no to all credit may find that some of them buy elsewhere.
 
 Credit has a cost. Your money stays with the customer until they pay, and some customers pay late. So the useful question is not "credit or no credit". It is "credit on what rules".
 
@@ -32,7 +32,7 @@ Every credit seller makes the same five decisions, written down or not. Make eac
 | How much | One limit in rupees for each customer | [How to set a credit limit](@credit-limit) |
 | For how long | The credit period (7, 15 or 30 days) and when new credit stops if it runs late | [When to stop credit](@paid-stop-credit) |
 | Who may say yes | Who at the counter can allow a sale past the limit, and who cannot | [Over the limit](@counter-over-limit) |
-| How it is recorded | The same things written for every sale: vehicle, item, quantity, rupees, who served, time | [Credit at the counter](@counter) |
+| How it is recorded | The same things written for every sale: vehicle or who collected, item, quantity, rupees, who served, time | [Credit at the counter](@counter) |
 
 Put the five answers on one page, in plain words, so the whole team applies them the same way. The [credit policy template](@credit-policy) shows how. For plain meanings of the words, see the [credit and khata glossary](@glossary).
 
@@ -44,4 +44,6 @@ Most of the worry in udhar is not the credit itself. It is not knowing: what a c
 
 Khata Kavach is a shared credit book between a business and its regular customers. By default, the customer asks from their own phone before goods go out. The counter phone shows a green, amber or red light against the limit you set. Both of you see every sale, payment and bill as soon as the phone is online.
 
-You set every limit. Khata Kavach never lends and never holds money: the customer pays you directly, and you record it. It suits businesses whose customers collect in their own vehicles, because every sale is tied to a vehicle number.
+You set every limit. Khata Kavach never lends and never holds money: the customer pays you directly, and you record it.
+
+It is for businesses that give goods on credit to regular customers, such as fuel stations, cement, gas agencies or dairies. The owner picks once how the counter knows the customer: by vehicle number (a fuel station starts here), or by a 4-digit pickup code (every other trade starts here) that the customer passes to whoever collects.

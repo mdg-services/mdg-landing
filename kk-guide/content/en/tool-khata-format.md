@@ -12,7 +12,7 @@
     { "q": "Do I have to give my email or phone to download it?", "a": "No. The links download the files straight away. Change them and use them as you like." }
   ],
   "related": ["credit-khata", "tool-credit-limit", "credit-policy", "compare-paper"],
-  "updated": "2026-10-20"
+  "updated": "2026-10-23"
 }
 ---
 Two ways to keep an udhar khata properly: an Excel sheet that does the sums, or a printed page for a register.
@@ -33,7 +33,7 @@ Two ways to keep an udhar khata properly: an Excel sheet that does the sums, or 
 | Tab | What you type | What it works out |
 |---|---|---|
 | Customers | Name, phone, credit limit, credit days (for your reference), balance from the old book | Total udhar given, total received, balance now, credit left |
-| Khata | Date, customer (picked from the list), vehicle, item, quantity and unit, udhar given or money received, how paid, UTR or cheque number, slip or bill number, who served, note | The customer's balance after every line |
+| Khata | Date, customer (picked from the list), vehicle (or who collected), item, quantity and unit, udhar given or money received, how paid, UTR or cheque number, slip or bill number, who served, note | The customer's balance after every line |
 | How to use | Nothing | Short steps and what the colours mean |
 
 Yellow cells are for typing; grey cells work out by themselves. On the Customers tab a row turns red when the balance is over the limit, and orange when less than a fifth of the limit is left. On the Khata tab the balance turns red on a line that took the customer over. The colours follow the limit only, not late payments.

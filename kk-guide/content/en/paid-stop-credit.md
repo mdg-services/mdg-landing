@@ -7,11 +7,11 @@
   "faq": [
     { "q": "Udhar band kab kare: after one late payment?", "a": "Not always. One slip deserves a reminder. Count repeats in your rule, for example a second missed promise, or a bill 30 days past due." },
     { "q": "How do I stop credit without losing the customer?", "a": "Make it about the account, not the person, and keep the door open: cash sales stay available." },
-    { "q": "How do I make sure counter staff follow the stop?", "a": "Freeze the account in Khata Kavach. As soon as the counter phone is online, the customer's vehicles show a red \"No credit\" light and staff see \"You can serve for cash\". A light cannot stop a person handing over goods; it tells staff what the owner decided." },
+    { "q": "How do I make sure counter staff follow the stop?", "a": "Freeze the account in Khata Kavach. As soon as the counter phone is online, the customer shows a red \"No credit\" light and staff see \"You can serve for cash\". A light cannot stop a person handing over goods; it tells staff what the owner decided." },
     { "q": "Does stopping credit get my old money back?", "a": "No. It only stops the balance growing. The old dues still need the steps in [udhar vasuli ke upay](@paid-udhar-wapas)." }
   ],
   "related": ["getting-paid", "credit-limit", "counter-over-limit", "paid-reminder-messages", "paid-cheque-bounce"],
-  "updated": "2026-10-19"
+  "updated": "2026-10-23"
 }
 ---
 ## Signals, and what to do
@@ -40,8 +40,8 @@ Say it plainly and kindly. For example (made-up figures): "Namaste Gupta ji. Rs 
 
 ## How Khata Kavach holds the line
 
-- **Freeze.** The owner can freeze an account with "Freeze account". As soon as the counter phone is online, the customer's vehicles show a red "No credit" light at the counter, staff see "You can serve for cash", and the customer's app says no goods will be given. Only the owner can freeze or unfreeze. Khata Kavach never freezes an account on its own.
-- **A softer step.** Lower the limit, or set the account so that a full limit means "no credit, cash only" instead of "a manager can allow it". See [over the limit at the counter](@counter-over-limit).
+- **Freeze.** The owner can freeze an account with "Freeze account". As soon as the counter phone is online, the customer shows a red "No credit" light at the counter, staff see "You can serve for cash", and the customer's app says no goods will be given. Only the owner can freeze or unfreeze. Khata Kavach never freezes an account on its own.
+- **A softer step.** Lower the limit, or set the account so that a full limit means "no credit, cash only" instead of "a manager can allow it". If the customer was on "Trust him", set "With no request" back to "No credit" or "Manager PIN". See [over the limit at the counter](@counter-over-limit).
 - **Find them.** The customers list has "Watch" and "Frozen" filters.
 
 ## Restarting

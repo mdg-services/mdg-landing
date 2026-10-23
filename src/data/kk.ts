@@ -44,11 +44,11 @@ export const KK_SCREENS = {
   },
 } as const;
 
-/** The three made-up trucks in the nozzle demo. Each is one light. */
+/** The three made-up pickup codes in the counter demo. Each is one light. */
 export const KK_DEMO = [
-  { light: "go", plate: "UP00 SH 1001" },
-  { light: "stop", plate: "UP00 SH 1004" },
-  { light: "wait", plate: "UP00 GT 2002" },
+  { light: "go", code: "4821" },
+  { light: "stop", code: "6150" },
+  { light: "wait", code: "7306" },
 ] as const;
 
 export type KkLight = (typeof KK_DEMO)[number]["light"];

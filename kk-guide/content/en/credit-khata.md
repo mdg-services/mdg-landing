@@ -3,7 +3,7 @@
   "title": "How to keep an udhar khata: a format to copy, on paper or phone",
   "metaTitle": "How to keep an udhar khata: a format to copy",
   "description": "Keep your udhar ka hisab properly: the columns every credit and payment line needs, a made-up example page, and how a shared book changes it.",
-  "answer": "Give each customer one page. Every credit line shows the date and time, vehicle, item, quantity, rupees and who served. Every payment line shows the amount, how it was paid and which bill it clears. Never overwrite: strike a wrong line out and write a new one with the reason. Keep a running balance and share a statement each month.",
+  "answer": "Give each customer one page. Every credit line shows the date and time, vehicle or who collected, item, quantity, rupees and who served. Every payment line shows the amount, how it was paid and which bill it clears. Never overwrite: strike a wrong line out and write a new one with the reason. Keep a running balance and share a statement each month.",
   "faq": [
     { "q": "Udhar khata kaise likhe? (How do I write an udhar khata?)", "a": "Draw one page per customer with columns for date, entry, vehicle, item and quantity, rupees given, rupees received and balance. Write each sale when it happens, not at night." },
     { "q": "Can I keep an udhar khata in Excel (udhar khata excel sheet)?", "a": "Yes. Use the same columns, or download the free [udhar khata format](@tool-khata-format), which works out each customer's balance for you." },
@@ -13,7 +13,7 @@
     { "q": "Can the customer see the khata in Khata Kavach?", "a": "Yes. The customer's \"Account\" screen shows every line, newest first, with who served, and the slip number and photo if the counter added them." }
   ],
   "related": ["credit-policy", "feature-corrections", "feature-customer-app", "compare-paper"],
-  "updated": "2026-10-19"
+  "updated": "2026-10-23"
 }
 ---
 ## One page for each customer
@@ -25,7 +25,7 @@ An udhar khata (udhar ka hisab) only works if each customer has their own page a
 | Column | What to write |
 |---|---|
 | Date and time | When the goods left |
-| Vehicle | The number plate that collected |
+| Who collected | The number plate, or the person's name |
 | Item and quantity | In its own unit: litres, bags, tonnes, pieces |
 | Rupees given | The value of the sale |
 | Who served | The staff member |

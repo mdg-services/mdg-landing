@@ -12,7 +12,7 @@
     { "q": "Do I need internet to send requests?", "a": "Yes. The Send button waits for internet and reads \"When online\"." }
   ],
   "related": ["trades", "feature-customer-app", "feature-requests", "counter-driver", "trade-petrol-pump"],
-  "updated": "2026-10-19"
+  "updated": "2026-10-23"
 }
 ---
 ## The problem: the total reaches you at month end
@@ -30,6 +30,8 @@ Your drivers take diesel on your account. If you see the total only when the bil
 The Customer app shows these in the same line the supplier wrote, as soon as the supplier's phone is online.
 
 ## Send a request for each truck
+
+This is the fuel-station flow. Other trades work by a 4-digit pickup code instead.
 
 In the Customer app:
 

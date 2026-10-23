@@ -3,7 +3,7 @@
   "title": "Customer requests: the customer asks before the goods go out",
   "metaTitle": "Customer request before credit: how it works",
   "description": "How a customer request works in Khata Kavach: the customer asks from their phone, the counter sees it, and no request means no credit by default.",
-  "answer": "In Khata Kavach every credit sale starts with a request from the customer's own phone, one per vehicle. The counter sees the request and, if the account is in order, shows a green light. By default, with no request the light is red, \"No credit\", and staff can serve for cash. The owner can let a manager allow a sale without a request, for chosen customers.",
+  "answer": "In Khata Kavach a credit sale starts with a request from the customer's own phone: one per vehicle, or one with a 4-digit pickup code, as the owner chooses. The counter sees the request and, if the account is in order, shows a green light. By default, with no request the light is red, \"No credit\", and staff can serve for cash. For chosen customers, the owner can let a manager's PIN allow a sale without a request, or trust a regular customer up to his limit.",
   "faq": [
     { "q": "Does the customer send a request for every credit sale?", "a": "Yes, by default. One request covers one sale. If part of it is given, the request is used up and the rest is not carried over." },
     { "q": "What if the customer forgets to send a request?", "a": "The counter light is red. Staff can serve for cash, ask the driver to get the customer to send a request and tap Refresh, or tell the owner, who will ask the customer." },
@@ -12,38 +12,37 @@
     { "q": "Does a request mean the customer is approved for credit?", "a": "No. A request is just an ask. The business's limit for that customer and the counter light decide whether goods go out on credit." }
   ],
   "related": ["features", "feature-counter-light", "counter-driver", "feature-customer-app"],
-  "updated": "2026-10-19"
+  "updated": "2026-10-23"
 }
 ---
 ## What the customer does
 
-The customer opens a link from the business, reads the terms once and taps "I agree". After that, sending a request takes a few taps.
+The customer opens a link from the business and taps "I agree" once. What they send follows the owner's choice of how the counter knows the customer.
 
-1. Tap "Send requests". The screen asks "Which vehicles need goods today?"
-2. Pick vehicles: "All N vehicles", "Same as last time" (yesterday's vehicles and amounts), or search by vehicle number. A vehicle that already has an open request today is left out.
-3. Say how much: in the item's own unit (litres, bags, kg), in "Rupees", or "As needed". For items sold by the litre, the third choice reads "Full tank". Use one amount for every vehicle, or a different one for each.
-4. Pick the item from the business's list.
-5. Check "Valid till". It is today unless the customer picks tomorrow or the day after.
-6. Send. Up to 200 vehicles go in one batch. The Send button waits for internet and reads "When online" until then.
+**By vehicle number: one request for each vehicle.** Tap "Send requests" and answer "Which vehicles need goods today?" Pick the item, say how much (in the item's own unit, in "Rupees", or "As needed") and check "Valid till", today by default.
 
-A customer who sent a request by mistake taps "Made a mistake? Take them all back", or "Cancel this request" on one. If a rupee request may take the balance over the limit, the app warns "Your balance may go over the limit". It is a warning, nothing more. The limit is checked at the counter.
+**By code or name: one request for one item.** Tap "Send requests", pick the item, say how much, and add "For whom / where" if you like, such as "Raju, site 2". The app shows "Your pickup code", four digits, and "Send on WhatsApp" passes it to whoever collects.
+
+A customer who sent a request by mistake taps "Cancel this request", or "Made a mistake? Take them all back". If a rupee request may take the balance over the limit, the app warns "Your balance may go over the limit". It is a warning only; the counter checks the limit.
 
 ## What the counter sees
 
-The home screen lists "To serve today: N vehicles", each with a chip.
+By vehicle number, the home screen lists "To serve today: N vehicles", each with a chip. By code or name, staff type the code in "Code or customer name", and the right code shows "Code matches" and the light. Picked by name instead, the screen says "Ask for the code", and a manager's PIN can allow it. A wrong code is refused.
 
 | Chip | Light | What staff do |
 |---|---|---|
-| "Can serve" | Green: "You can serve" | Check "To give" (for example 50 bags) and tap "Enter sale". |
+| "Can serve" | Green: "You can serve" | Check "To give" and tap "Enter sale". |
 | "Needs PIN" | Amber: "Call the manager" | A manager types a PIN. See [the counter light](@feature-counter-light). |
 | "No credit" | Red | "You can serve for cash." |
 
-A vehicle with no request comes up red with "No request for this vehicle today".
+## When there is no request
 
-## When the owner allows no-request sales
+The owner sets this for each customer, under "With no request":
 
-The owner can switch on "A manager can allow a sale without a request" for chosen customers. Their vehicles then show amber, and a manager types a PIN. The sale is marked "No request" and "Manager allowed it", and the customer sees both marks. It stays off unless the owner turns it on.
+- **"No credit"** (the default): red.
+- **"Manager PIN"**: amber. The sale is marked "No request" and "Manager allowed it", and the customer sees both marks.
+- **"Trust him"**: any staff can give goods on his name, with no request or code, up to his limit, which always applies. New customers of a gas agency, wholesaler or dairy start here.
 
 ## Why this takes the stress off the owner
 
-By default, credit goes out only against a request the customer sent. A sale beyond what was asked is marked "More than requested", and the owner sees it. The request sits on the customer's own phone and in the shared record, so both sides can see what was asked for. See [what a driver collecting on credit needs](@counter-driver).
+By default, credit goes out only against a request the customer sent. A sale beyond what was asked is marked "More than requested", and the owner sees it. The request sits on the customer's phone and in the shared record, so both sides see what was asked for. See [what a driver collecting on credit needs](@counter-driver).

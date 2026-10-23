@@ -11,14 +11,14 @@
     { "q": "Where does the contractor see how much credit is left?", "a": "On the home screen of the customer app, under \"Available credit\", with the limit beside it. The owner sees what is owed against the limit on the customer's page." }
   ],
   "related": ["examples", "example-dispute", "trade-cement", "credit-limit", "feature-requests"],
-  "updated": "2026-10-19"
+  "updated": "2026-10-23"
 }
 ---
 > **Example:** a made-up business with made-up figures. It is not a real customer.
 
 ## The set-up
 
-A made-up building material dealer sells to a made-up contractor on credit. The owner sets a [credit limit](@credit-limit) of Rs 50,000 for the contractor, whose two vehicles are UP00 SH 2001 and UP00 SH 2002. Nothing is owed on Monday. Rates in this example: cement Rs 400 a bag, sand Rs 1,100 a tonne, steel Rs 65 a kilo.
+A made-up building material dealer sells to a made-up contractor on credit. The owner sets a [credit limit](@credit-limit) of Rs 50,000 for the contractor. This dealer works by pickup code: the contractor sends a request for each load, the app gives it a 4-digit code, and the contractor passes the code to whoever collects, here his labourer Raju. Nothing is owed on Monday. Rates in this example: cement Rs 400 a bag, sand Rs 1,100 a tonne, steel Rs 65 a kilo.
 
 ## The week
 
@@ -36,7 +36,7 @@ Sales come to Rs 76,800 (20,000 + 11,000 + 13,000 + 24,000 + 8,800). Less the Rs
 
 ## Why each line went the way it did
 
-- **By default, every sale starts with a request.** Before each sale the contractor sends a request for that vehicle from the customer app. Cement is asked in bags, sand in tonnes. See [customer requests](@feature-requests).
+- **By default, every sale starts with a request.** Before each sale the contractor sends a request from the customer app: one item, how much, and "For whom / where" (for example "Raju, site 2"). The app gives it "Your pickup code", which he sends on WhatsApp to whoever collects. Cement is asked in bags, sand in tonnes. At the counter, staff type the code in "Code or customer name" and see "Code matches" and the light. The counter adds "Collected by" Raju, so the line reads "Taken by Raju". See [customer requests](@feature-requests).
 - **Wednesday, near the limit.** After the steel, Rs 44,000 is owed, 88 percent of the limit. The owner's Today screen lists the contractor under "Near or past the limit", with "Ask for payment on WhatsApp".
 - **Thursday, a request taken back.** The contractor sends a request for 40 bags, then taps "Cancel this request". No goods went out, so there is no sale.
 - **Thursday, a payment.** The contractor pays Rs 30,000 to the dealer. The owner records it as "Payment received". Credit left rises from Rs 6,000 to Rs 36,000.

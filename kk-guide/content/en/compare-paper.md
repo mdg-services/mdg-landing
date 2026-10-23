@@ -3,7 +3,7 @@
   "title": "Paper khata, register or Excel vs a shared credit app: which fits?",
   "metaTitle": "Paper khata or credit app: which fits?",
   "description": "Paper and Excel need no training and no signal. A shared credit app adds things paper and Excel do not do. A plain table, and when to stay and when to switch.",
-  "answer": "A paper khata, a register or an Excel sheet costs little, needs no signal and is familiar at the counter. Khata Kavach adds three things: the customer sees each sale in their own app as soon as the counter phone is online, the limit is checked at the counter before goods go out, and a correction leaves a visible line. Stay with paper while you know every sale yourself. Look at an app when customers send vehicles and you cannot be at the counter.",
+  "answer": "A paper khata, a register or an Excel sheet costs little, needs no signal and is familiar at the counter. Khata Kavach adds three things: the customer sees each sale in their own app as soon as the counter phone is online, the limit is checked at the counter before goods go out, and a correction leaves a visible line. Stay with paper while you know every sale yourself. Look at an app when customers send drivers or labourers and you cannot be at the counter.",
   "faq": [
     { "q": "How long is a paper udhar register enough for a small business?", "a": "Yes, when you are at the counter for every sale and your customers are few. It starts to strain when staff serve customers you do not see, because you learn about a sale later." },
     { "q": "Excel or paper: when should I move to an app?", "a": "When you cannot be at the counter for every sale, or a customer disputes a line and neither side can show it. Excel adds totals and search, but shows your customer nothing unless you send a file. Our page on keeping a khata has the columns to use." },
@@ -28,7 +28,7 @@ A paper khata, a register and an Excel sheet have run trade for years. Paper nee
 | Can a line change without the other side seeing | Yes, unless the customer holds a copy | Yes, unless the customer holds a copy | Once the line has been sent, no. A correction is a new line; the old line stays, struck out |
 | How the customer knows | When you tell them or show the book | When you send the file or a statement | In their own app, as soon as the counter phone is online |
 | Limit checked before goods go out | By hand | By hand | Green, amber or red light at the counter |
-| Customer asks first | Only if you make it a rule | Only if you make it a rule | By default: one request per vehicle |
+| Customer asks first | Only if you make it a rule | Only if you make it a rule | By default: a request, per vehicle or with a 4-digit pickup code |
 | Month-end bill | You add up and write it | You build it from the sheet | A numbered bill from the unbilled sales, made in a tap |
 
 Paper and Excel rows describe general practice, not a named app's claim. The Khata Kavach column was checked on 19 October 2026. Tell us if anything has changed.
@@ -37,7 +37,7 @@ Paper and Excel rows describe general practice, not a named app's claim. The Kha
 
 Stay with paper if customers are few, you see every sale, and no one else serves on credit. Look at an app when:
 
-- customers send drivers and you are not at the counter;
+- customers send drivers or labourers and you are not at the counter;
 - month end takes days of adding up;
 - a customer says "we took 40, not 50" and neither side can show the line.
 

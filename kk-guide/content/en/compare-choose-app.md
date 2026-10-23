@@ -5,7 +5,7 @@
   "description": "Choosing an udhar khata app (udhar ka hisab rakhne wala app) for a business that sells on credit: nine questions to ask before you install, and why each one matters.",
   "answer": "To choose an udhar khata app, ask nine things before you install: does the customer see each entry, who can enter a sale, is there a limit and who can go past it, does it work with no signal, can you add a photo, is the bill plain or a GST tax invoice, does the company lend or handle money, which languages, and what is free and what costs. No app is right for every business. Your answers decide.",
   "faq": [
-    { "q": "Which is the best udhar khata app (udhar ka hisab rakhne wala app) for my shop?", "a": "No app is best for every business. A shop with walk-in families, a business that needs GST invoices and a supplier whose customers send vehicles need different things. Answer the nine questions, then compare two or three apps." },
+    { "q": "Which is the best udhar khata app (udhar ka hisab rakhne wala app) for my shop?", "a": "No app is best for every business. A shop with walk-in families, a business that needs GST invoices and a supplier with regular credit customers need different things. Answer the nine questions, then compare two or three apps." },
     { "q": "What is a digital udhar khata?", "a": "It is the khata book on a phone: each credit sale and payment is a line, and the balance is worked out. Some apps also show the lines to the customer, set limits or make bills." },
     { "q": "Is a free udhar khata app enough?", "a": "It can be. Check what the free plan covers, whether it shows ads, and what messages, bills or extra phones cost. Each app's own pricing page is the place to check." }
   ],
@@ -34,10 +34,10 @@ This page is for a business that sells to regular customers on credit, not for a
 - **Paper, a register or Excel:** no phone, no training. See [paper khata or an app](@compare-paper).
 - **Ledger apps** such as Khatabook and OkCredit: an everyday khata, reminders, bills, many languages.
 - **Billing apps** such as Vyapar and myBillBook: GST invoices, stock and accounts.
-- **A shared credit book:** regular customers who collect goods in their own vehicles. See [ledger app or shared credit book](@compare-ledger-vs-shared).
+- **A shared credit book:** regular customers who take goods on credit. See [ledger app or shared credit book](@compare-ledger-vs-shared).
 
 Facts about Khatabook, OkCredit, Vyapar and myBillBook from their own websites and app listings, checked on 19 October 2026. Tell us if anything has changed.
 
 ## Khata Kavach's answers
 
-Khata Kavach is our own app. The customer sees every sale in their own app and, by default, sends a request for each vehicle. Staff sign in with a 4-digit PIN. The limit is checked at the counter, and by default a manager's PIN is needed past it. It works at the counter with no signal, once the app has been opened with internet. A sale can carry a photo. The bill is a numbered bill, not a GST tax invoice. It never lends and never holds money. Hindi first, English one tap away. For the price, call us. Both apps open in the phone's browser today; Android apps are coming to Google Play.
+Khata Kavach is our own app. The customer sees every sale in their own app and, by default, sends a request first: per vehicle, or with a 4-digit pickup code that they pass to whoever collects. Staff sign in with a 4-digit PIN. The limit is checked at the counter, and by default a manager's PIN is needed past it. It works at the counter with no signal, once the app has been opened with internet. A sale can carry a photo. The bill is a numbered bill, not a GST tax invoice. It never lends and never holds money. Hindi first, English one tap away. For the price, call us. Both apps open in the phone's browser today; Android apps are coming to Google Play.

@@ -8,7 +8,9 @@
  * Hindi twin at "/hi" + path. Writers' rules: kk-guide/README.md.
  *
  * `brief` is the writer's scope: what the page must cover. It never reaches the
- * site. `queries` are real searches (Google and YouTube suggestions, Brave
+ * site. Briefs written before 23 Oct 2026 describe every request as "for a vehicle";
+ * where they do, README.md's "How the counter knows the customer" wins (pickup
+ * codes, trusted customers, vehicle numbers for fuel). `queries` are real searches (Google and YouTube suggestions, Brave
  * results, Oct 2026) the page should answer in the words people type.
  */
 import type { PageType, PillarMeta } from "../guide/inventory.js";
@@ -112,7 +114,7 @@ export const KK_PAGES: KkPage[] = [
   {
     id: "trades", pillar: "trades", path: `${P}/for/`, hi: true, type: "Pillar", wave: 1,
     queries: ["credit app for business", "b2b credit management", "udhar app for wholesale", "transporter credit app"],
-    brief: "Who Khata Kavach is for, and who it is not for. For: businesses whose regular customers collect goods in their own vehicles, on credit: fuel stations and transporters, cement and building material dealers and contractors, sand and aggregate suppliers, wholesalers whose buyers send a vehicle. Every sale is tied to a vehicle number and each item has its own unit. Not for (say plainly): shops that deliver to homes without a vehicle, businesses that need GST tax invoices, stock or accounting from the same app (point to billing software), or anyone wanting someone else to carry the credit. A table: trade / what is sold, in which unit / who collects / fits?",
+    brief: "Who Khata Kavach is for, and who it is not for. For: businesses that give goods on credit to regular customers: fuel stations and transporters, cement and building material dealers and contractors, sand and aggregate suppliers, gas agencies, wholesalers and distributors, dairies. The goods can go in the customer's vehicle, with a labourer or hired tractor carrying the request's pickup code, or to a trusted customer by name; each item has its own unit. Not for (say plainly): walk-in buyers with no credit account, businesses that need GST tax invoices, stock or accounting from the same app (point to billing software), or anyone wanting someone else to carry the credit. A table: trade / what is sold, in which unit / who collects / fits?",
   },
   {
     id: "trade-petrol-pump", pillar: "trades", path: `${P}/for/petrol-pump/`, hi: true, type: "Trade", wave: 1,

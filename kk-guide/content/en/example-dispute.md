@@ -9,20 +9,20 @@
     { "q": "Can a sale be corrected after a bill is made?", "a": "Not while it is on a bill. The owner cancels the bill first, then the sale is corrected, then a new bill is made. The cancelled bill's number is not used again." }
   ],
   "related": ["examples", "counter-disputes", "feature-corrections", "feature-photo", "example-contractor-limit"],
-  "updated": "2026-10-19"
+  "updated": "2026-10-23"
 }
 ---
 > **Example:** a made-up business with made-up figures. It is not a real customer.
 
 ## The set-up
 
-A made-up building material dealer sells cement at Rs 400 a bag to a made-up contractor on credit, with a limit of Rs 50,000. The contractor's tractor, UP00 SH 2001, needs cement, and the contractor sends a request for 50 bags. Rs 10,000 is already owed.
+A made-up building material dealer sells cement at Rs 400 a bag to a made-up contractor on credit, with a limit of Rs 50,000. The contractor needs cement and sends a request for 50 bags. The app gives it a 4-digit pickup code, which the contractor passes to Raju, who collects with a hired tractor. Rs 10,000 is already owed.
 
 ## What both phones show
 
 At 10:40 am, "Staff A" (a made-up name) records the sale. The line on the dealer's phone and the contractor's phone reads:
 
-- **Sale:** 50 bags, Rs 20,000. Given by Staff A.
+- **Sale:** 50 bags, Rs 20,000. Given by Staff A on the pickup code ("Code matches"). The counter added "Collected by" Raju, so the line reads "Taken by Raju".
 - **Photo:** the loaded tractor, added by the counter.
 - **Flags:** none. 50 bags matches the request, so "More than requested" does not show.
 

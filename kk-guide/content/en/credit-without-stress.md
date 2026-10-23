@@ -11,7 +11,7 @@
     { "q": "Should I stop giving credit altogether?", "a": "Many businesses cannot, because regular customers buy on credit. Decide who gets it, how much and for how many days instead. See the [plain guide to selling on credit](@credit)." }
   ],
   "related": ["credit", "credit-limit", "counter-over-limit", "paid-stop-credit", "feature-requests"],
-  "updated": "2026-10-19"
+  "updated": "2026-10-23"
 }
 ---
 ## The honest answer first
@@ -23,7 +23,7 @@ If your regular customers buy on udhar, you cannot just stop. What hurts is not 
 | Habit | What it prevents |
 |---|---|
 | 1. A limit in rupees for every customer | One balance growing until it hurts. Use rupees, not litres or bags, because prices move. |
-| 2. The customer asks before goods go out | A vehicle arriving with nobody having asked for credit. |
+| 2. The customer asks before goods go out | Goods collected on credit that nobody asked for. |
 | 3. One named person may say yes past the limit | Counter staff deciding alone, in a hurry. |
 | 4. Every credit sale recorded the same way, with who served | Gaps nobody can explain later. |
 | 5. The customer sees what they owe | A surprise at month end, and an argument about what was taken. |
@@ -37,7 +37,7 @@ Choose the days for habit 7 in advance, say 30: see [when to stop credit](@paid-
 Khata Kavach is a shared credit book. You still decide every rule.
 
 - **Habits 1 and 3:** you set each customer's limit. The counter phone shows a green, amber or red light. By default, past the limit a manager's PIN is needed for that one sale, and the owner's Today screen flags it.
-- **Habit 2:** the customer sends a request from their own phone for that vehicle. No request, no credit by default.
+- **Habit 2:** the customer sends a request from their own phone: for a vehicle or, in other trades, for an item. No request, no credit by default; the owner can set a trusted customer to "Trust him".
 - **Habits 4 and 5:** every sale is one line both sides see as soon as the phone is online, with who served and a photo if one was added. Once a sale has reached the customer's phone, nothing is edited; a correction is a new line.
 - **Habit 6:** a numbered bill takes one tap, on your letterhead, with a UPI QR if you have put your UPI ID in your business details. It is a bill, not a GST tax invoice.
 - **Habit 7:** a customer's page shows how old the balance is (0 to 15, 16 to 30, 31 to 60 and over 60 days), and the Today screen shows who is near or past the limit. You can freeze an account yourself. Nothing stops credit on its own.

@@ -10,7 +10,7 @@
     { "q": "Can WhatsApp chats be used as evidence?", "a": "A chat on a phone is an electronic record, so the same certificate rule normally applies {{BSA 2023, s.63}}. Keep the chat, with its dates, next to the bill it talks about. Whether a chat counts as a signed acknowledgment is not settled." }
   ],
   "related": ["paid-time-limit", "paid-legal-steps", "credit-khata", "counter-disputes", "feature-photo"],
-  "updated": "2026-10-19"
+  "updated": "2026-10-23"
 }
 ---
 ## What an entry can and cannot do
@@ -26,10 +26,10 @@ A record kept on a phone or server normally goes to court with a certificate att
 | Keep this | Why it helps |
 |---|---|
 | A bill the customer received, and the WhatsApp message it went in | Shows the amount and period were sent to them |
-| A signed delivery slip, from the driver or the customer's person | Shows the goods reached that vehicle |
+| A signed delivery slip, from the driver or the customer's person | Shows who took the goods |
 | A dated balance confirmation, signed by the customer on paper | Shows they accept the amount. Signed before the time limit ends, it starts the 3 years afresh {{Limitation Act 1963, s.18}} |
 | Payment records with UTR or cheque number | Show what was paid, and against which bill |
-| Photos of the number plate, load or slip | Show what was given, to which vehicle, and when |
+| Photos of the load, the slip and, if a vehicle came, its number plate | Show what was given, who took it, and when |
 
 The 3 years are explained in [the time limit to recover dues](@paid-time-limit).
 
@@ -41,7 +41,7 @@ The 3 years are explained in [the time limit to recover dues](@paid-time-limit).
 
 ## Keep the record clean
 
-Every credit line needs the date, time, customer, vehicle, item, quantity, rupees, who served and a slip number. Never overwrite: strike out the wrong line and add a new one with the reason. See [how to keep a khata](@credit-khata) and [how to settle a disputed sale](@counter-disputes).
+Every credit line needs the date, time, customer, vehicle or who collected, item, quantity, rupees, who served and a slip number. Never overwrite: strike out the wrong line and add a new one with the reason. See [how to keep a khata](@credit-khata) and [how to settle a disputed sale](@counter-disputes).
 
 In Khata Kavach, each sale is one line, with a [photo](@feature-photo) if the counter added one. As soon as the phone is online, the customer sees the same line in their own app. A correction is a new line, so both sides can see what changed. That gives you a clear record to show if you ever need it.
 

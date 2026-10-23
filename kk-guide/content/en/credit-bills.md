@@ -12,7 +12,7 @@
     { "q": "Who can make or cancel a bill in Khata Kavach?", "a": "The owner or a manager makes a bill. Only the owner can cancel one. A cancelled bill's number is never used again, its sales go back to unbilled, and you can make a new bill." }
   ],
   "related": ["feature-bills", "example-bill-payment", "compare-billing-apps", "paid-gst"],
-  "updated": "2026-10-19"
+  "updated": "2026-10-23"
 }
 ---
 ## The words and what they mean
@@ -31,13 +31,13 @@ Petrol and diesel are outside GST {{Finance Ministry reply, Rajya Sabha, 21 Jul 
 - A bill number and the date.
 - The period it covers and the due day.
 - Your name, address and GSTIN if you have one, and the customer's name.
-- Each sale: date, vehicle, item, quantity in its unit, rupees.
+- Each sale: date, vehicle or who collected, item, quantity in its unit, rupees.
 - The total in figures and in words.
 - How to pay: bank details or a UPI QR.
 
 ## What a Khata Kavach bill is
 
-The owner or a manager makes a bill from a customer's unbilled sales in a tap. It is a numbered PDF on your letterhead. If you have added your UPI ID, it carries a UPI QR for exactly what is still due. One tap opens your own WhatsApp with a message and the bill's PDF link ready to send. The customer pays you directly. Record the money received against the bill and it shows paid (or part paid).
+The owner or a manager makes a bill from a customer's unbilled sales in a tap. It is a numbered PDF on your letterhead. If the counter added who collected the goods ("Taken by Raju"), the bill shows it. If you have added your UPI ID, it carries a UPI QR for exactly what is still due. One tap opens your own WhatsApp with a message and the bill's PDF link ready to send. The customer pays you directly. Record the money received against the bill and it shows paid (or part paid).
 
 It is a bill, not a GST tax invoice, and it does not replace one. If you issue tax invoices, keep making them in your billing software. See [numbered bills, with a UPI QR if you add your UPI ID](@feature-bills), [a bill with a part payment](@example-bill-payment) and [GST when a customer has not paid](@paid-gst).
 

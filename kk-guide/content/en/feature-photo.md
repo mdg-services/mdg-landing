@@ -12,12 +12,12 @@
     { "q": "Is a photo proof in court?", "a": "We do not claim that. The photo is kept with the sale's line, so both sides have a clear record to show if they ever need it. Whether it counts in a dispute is for an advocate and a court to say." }
   ],
   "related": ["features", "feature-corrections", "counter-disputes", "feature-customer-app"],
-  "updated": "2026-10-19"
+  "updated": "2026-10-23"
 }
 ---
 ## How staff add a photo
 
-1. Find the vehicle and tap "Enter sale" on the green screen.
+1. Find the customer by code, or the vehicle, and tap "Enter sale" on the green screen.
 2. Type the quantity and the rupees ("Type exactly what was given").
 3. Tap "Photo" and take a picture, or pick one from the phone. The screen says "The photo goes with the sale".
 4. Tap "Done".
@@ -38,7 +38,7 @@ A customer sees only the photos of their own sales.
 
 ## What it helps with
 
-When a customer or a driver asks "what exactly went out?", both sides can open the same line and look. The line shows the vehicle, item, quantity, rupees, time and who served. With a photo, there is a picture beside the figures.
+When a customer or a driver asks "what exactly went out?", both sides can open the same line and look. The line shows the item, quantity, rupees, time, who served, and the vehicle or who collected. With a photo, there is a picture beside the figures.
 
 > **Note:** A photo makes a sale easier to question and answer. It does not stop a wrong sale. A wrong sale shows up on both phones, with the name of who served.
 

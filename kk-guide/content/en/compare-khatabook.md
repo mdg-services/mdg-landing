@@ -5,7 +5,7 @@
   "description": "How Khatabook and Khata Kavach compare, from Khatabook's own website and store listings, checked on 19 October 2026: price, bills, loans, limits, and who should stay.",
   "answer": "Khatabook is a widely downloaded digital khata app for businesses, with GST and non-GST bills, inventory, loans through partners, and iPhone and desktop apps; its site calls the apps free. Khata Kavach is a shared credit book: by default the customer asks before goods go out, counter staff see a light, and both sides see every sale. Stay with Khatabook if you sell to walk-in buyers or need GST invoices. Facts checked on 19 October 2026.",
   "faq": [
-    { "q": "Which khata app fits a business whose customers send vehicles?", "a": "Khata Kavach works differently: by default the customer asks before goods go out, and both sides see every sale. For an everyday khata with walk-in buyers, Khatabook may fit better." },
+    { "q": "Which khata app fits a business with regular credit customers?", "a": "Khata Kavach works differently: by default the customer asks before goods go out, and both sides see every sale. For an everyday khata with walk-in buyers, Khatabook may fit better." },
     { "q": "Khatabook safe hai? Is Khatabook safe?", "a": "We cannot rate an app's safety. Its Play listing says data is encrypted in transit, and its site lists ISO 27001. Those are the company's own words. Read its terms before you decide." },
     { "q": "Is Khatabook really free?", "a": "That is the company's own wording. Its terms also say it sells prepaid KB Coins, whose price is subject to change. Check its site for current terms." },
     { "q": "Khatabook kaisa hai? Is it good for a business?", "a": "We do not review apps. The table above shows what Khatabook lists, and its Google Play ratings are in the first section. Check the rows that matter to your business." }
@@ -41,8 +41,8 @@ Far more downloads, iPhone and desktop apps, GST and non-GST invoices, inventory
 
 ## Where Khata Kavach works differently
 
-By default, every credit sale starts with a request from the customer's own app for that vehicle. Counter staff see the light before goods go out. By default a manager's PIN is needed past the limit, or the owner can choose cash only. The owner's Today screen lists flagged sales from the last 7 days. A correction is a new line. See the [customer's app](@feature-customer-app) and the [counter light](@feature-counter-light).
+By default, every credit sale starts with a request from the customer's own app, by vehicle or by pickup code. Counter staff see the light before goods go out. By default a manager's PIN is needed past the limit, or the owner can choose cash only. The owner's Today screen lists flagged sales from the last 7 days. A correction is a new line. See the [customer's app](@feature-customer-app) and the [counter light](@feature-counter-light).
 
 ## Who should stay with Khatabook
 
-Stay if you sell to walk-in buyers, or need GST invoices, stock, or an iPhone or desktop app. Look at Khata Kavach if regular customers collect in their own vehicles and you want them to ask first.
+Stay if you sell to walk-in buyers, or need GST invoices, stock, or an iPhone or desktop app. Look at Khata Kavach if regular customers take goods on credit and you want them to ask first.
