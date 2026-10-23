@@ -12,6 +12,14 @@ import type { IconName } from "../components/Icon";
    the established MDG Services voice. No placeholders.
    ───────────────────────────────────────────────────────────── */
 
+/** The registered office in parts, for the page's structured data. */
+export const OFFICE = {
+  street: "Flat 103, First Floor, Plot No. 3P, Sector 23",
+  city: "Gurugram",
+  state: "Haryana",
+  pin: "122017",
+} as const;
+
 export const BRAND = {
   name: "MDG Services",
   legalName: "VRUOOM PRIVATE LIMITED",
@@ -24,6 +32,13 @@ export const BRAND = {
      it belongs behind that component, not beside it. */
   site: "mdgservices.in",
   email: "hello@mdgservices.in",
+  /* The address the company pages (/about, /contact, /terms, /refund-policy …)
+     print. The same as `email` on purpose: one address on every page, because a
+     payment gateway's review compares what each page says (owner, 23 Oct 2026). */
+  companyEmail: "hello@mdgservices.in",
+  /** The registered office on one line, as vruoom.com prints it in its footer.
+      A fact, not a sentence, so it reads the same in both languages. */
+  registeredOffice: `${OFFICE.street}, ${OFFICE.city}, ${OFFICE.state} ${OFFICE.pin}`,
   /** The names our two WhatsApp Business numbers show. Meta approves a name only
       if it appears on this site, so the footer prints both, in both languages.
       Spelled exactly as submitted, straight apostrophe included. */
@@ -34,6 +49,19 @@ export const BRAND = {
   /** A brand line, not a sentence: it stays in English in both languages. */
   tagline: "Fueling Success",
 };
+
+/* What Dealer's Kavach costs, as the site assistant already quotes it
+   (mdg-backend/src/assist/llm/prompts.ts) and as /pricing prints it: the nine
+   standard services at 3,000 rupees a month plus GST, and everything together
+   "in the region of" 15,000 plus GST, quoted on the work. Whole rupees and
+   display only: what an outlet is actually billed is the amount an admin
+   raises for it, in paise, on the server. Khata Kavach has no published price,
+   so none is written here. */
+export const PRICING = {
+  standard: 3000,
+  everythingAround: 15000,
+  gstPercent: 18,
+} as const;
 
 /** Section anchors. The labels are per-language; the targets are not. */
 export const NAV = [

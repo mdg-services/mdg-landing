@@ -22,6 +22,13 @@ import { assist } from "./assist";
 import { products } from "./products";
 import { kk } from "./kk";
 import { films } from "./films";
+import { docs } from "./docs";
+import { about } from "./about";
+import { contactUs } from "./contactUs";
+import { pricing } from "./pricing";
+import { terms } from "./terms";
+import { refund } from "./refund";
+import { shipping } from "./shipping";
 
 /** Every visible string on mdgservices.in, in English. */
 export const en = {
@@ -49,4 +56,11 @@ export const en = {
   products,
   kk,
   films,
+  docs,
+  about,
+  contactUs,
+  pricing,
+  terms,
+  refund,
+  shipping,
 };

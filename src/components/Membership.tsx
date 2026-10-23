@@ -51,6 +51,11 @@ export default function Membership({ lang }: { lang: Lang }) {
                 className="btn-on-dark-ghost"
               />
             </div>
+            <p className="mt-6">
+              <Link href={pathFor(lang, "/pricing")} className="link-quiet tap-pad font-semibold text-gold-300 hover:text-gold-200">
+                {t.membership.pricesLink} →
+              </Link>
+            </p>
           </Reveal>
         </div>
 

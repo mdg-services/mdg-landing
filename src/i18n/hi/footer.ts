@@ -22,7 +22,6 @@ export const footer: typeof EN = {
        label, the way the English side does. */
     why: "हम क्यों",
     process: "प्रोसेस",
-    membership: "क़ीमत",
     contact: "संपर्क कीजिए",
   },
   register: "रजिस्टर कीजिए",
@@ -34,6 +33,19 @@ export const footer: typeof EN = {
   khataApp: "खाता कवच",
   khataGuides: "उधार पर माल बेचने की गाइड",
   khataAndroid: "खाता कवच एंड्रॉइड पर: जल्द Google Play पर",
+
+  companyHeading: "कंपनी",
+  company: {
+    about: "हमारे बारे में",
+    contact: "संपर्क कीजिए",
+    pricing: "क़ीमत",
+  },
+  policiesHeading: "नीतियाँ",
+  policies: {
+    terms: "नियम व शर्तें",
+    refund: "रिफ़ंड और कैंसिलेशन",
+    shipping: "शिपिंग और डिलीवरी",
+  },
 
   reachHeading: "हमसे संपर्क",
   hours: "सुबह 9 से रात 9, हर दिन",

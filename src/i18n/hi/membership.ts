@@ -13,6 +13,7 @@ export const membership: typeof EN = {
 
   ctaPrimary: "शुरू कीजिए",
   ctaSecondary: "कॉल करके बात कीजिए",
+  pricesLink: "क़ीमत और भुगतान का तरीक़ा देखिए",
 
   promises: [
     {

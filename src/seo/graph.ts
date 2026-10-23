@@ -1,6 +1,9 @@
 import { SITE } from "./site";
+import { BRAND, OFFICE } from "../data/content";
+import { TOLL_FREE } from "../lib/tollFree";
 import { getT } from "../i18n/server";
-import { pathFor, type Lang } from "../i18n/lang";
+import { DOC_KEY } from "../i18n/doc";
+import { pathFor, type CompanyRoute, type Lang } from "../i18n/lang";
 
 /**
  * The home page's structured data: the company, the site, and the questions
@@ -97,6 +100,76 @@ export function kkJsonLd(lang: Lang) {
           name: f.q,
           acceptedAnswer: { "@type": "Answer", text: f.a },
         })),
+      },
+    ],
+  };
+}
+
+/**
+ * The structured data of a company page: the page itself (an About, a Contact
+ * or a plain web page), where it sits in the site, and the company behind it.
+ * About and Contact add what a reader of those pages looks for: the registered
+ * office, the company number, how to reach it and when. No price and no rating.
+ */
+export function companyJsonLd(lang: Lang, route: CompanyRoute) {
+  const doc = getT(lang)[DOC_KEY[route]];
+  const url = `${SITE}${pathFor(lang, route)}`;
+  const inLanguage = lang === "hi" ? "hi-IN" : "en-IN";
+  const full = route === "/about" || route === "/contact";
+  const pageType = route === "/about" ? "AboutPage" : route === "/contact" ? "ContactPage" : "WebPage";
+  return {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": `${SITE}/#org`,
+        name: "MDG Services",
+        legalName: BRAND.legalName,
+        url: `${SITE}/`,
+        ...(full
+          ? {
+              foundingDate: "2021-10-13",
+              identifier: { "@type": "PropertyValue", propertyID: "CIN", value: BRAND.cin },
+              address: {
+                "@type": "PostalAddress",
+                streetAddress: OFFICE.street,
+                addressLocality: OFFICE.city,
+                addressRegion: OFFICE.state,
+                postalCode: OFFICE.pin,
+                addressCountry: "IN",
+              },
+              contactPoint: {
+                "@type": "ContactPoint",
+                contactType: "customer support",
+                email: BRAND.companyEmail,
+                telephone: TOLL_FREE.href.replace("tel:", ""),
+                availableLanguage: ["English", "Hindi"],
+                hoursAvailable: {
+                  "@type": "OpeningHoursSpecification",
+                  dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+                  opens: "09:00",
+                  closes: "21:00",
+                },
+              },
+            }
+          : {}),
+      },
+      {
+        "@type": pageType,
+        "@id": `${url}#page`,
+        url,
+        name: doc.eyebrow,
+        inLanguage,
+        isPartOf: { "@id": `${SITE}/#site` },
+        about: { "@id": `${SITE}/#org` },
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": `${url}#crumbs`,
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: "MDG Services", item: `${SITE}${lang === "hi" ? "/hi" : "/"}` },
+          { "@type": "ListItem", position: 2, name: doc.eyebrow, item: url },
+        ],
       },
     ],
   };

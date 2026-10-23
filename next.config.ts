@@ -72,6 +72,20 @@ const nextConfig: NextConfig = {
       { source: "/hi/grievance/", destination: "/hi/grievance", permanent: true },
       { source: "/hi/grievances/", destination: "/hi/grievances", permanent: true },
       { source: "/hi/khata-kavach/", destination: "/hi/khata-kavach", permanent: true },
+      ...["about", "contact", "pricing", "terms", "refund-policy", "shipping"].map((page) => ({
+        source: `/hi/${page}/`,
+        destination: `/hi/${page}`,
+        permanent: true,
+      })),
+      // The refund page has three names people (and payment reviewers) type. They
+      // all go to the one address, in both languages; the English slash forms
+      // are turned away here too, since this runs before the proxy.
+      ...["refund", "cancellation"].flatMap((name) => [
+        { source: `/${name}`, destination: "/refund-policy", permanent: true },
+        { source: `/${name}/`, destination: "/refund-policy", permanent: true },
+        { source: `/hi/${name}`, destination: "/hi/refund-policy", permanent: true },
+        { source: `/hi/${name}/`, destination: "/hi/refund-policy", permanent: true },
+      ]),
     ];
   },
 

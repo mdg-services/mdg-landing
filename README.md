@@ -44,7 +44,8 @@ npm run logos:gen -- <full-logo.png> <mark.png>   # remake the logo PNGs
 
 ```
 app/                     # routes (thin files; the work is in src/)
-  (en)/                  # English: /, /register, /grievance(s), /guides/…, /tools/…
+  (en)/                  # English: /, /register, /grievance(s), /about, /contact, /pricing, /terms,
+                         #   /refund-policy, /shipping, /guides/…, /tools/…
   hi/                    # Hindi twins under /hi
   api/                   # enroll, callback, grievance, indexnow route handlers
   sitemap.ts robots.ts llms.txt/ not-found.tsx
@@ -54,8 +55,10 @@ src/
   i18n/
     lang.ts              # Lang, paths, cookie; server.ts getT(); client.tsx useT()
     parity.ts            # check that both dictionaries line up
-    en/*.ts hi/*.ts      # ALL copy, one file per section, brochure-derived
-  views/                 # HomePage, RegisterPage, GrievancePage (server)
+    doc.ts               # the shape of a company page (sections of blocks) and its builders
+    en/*.ts hi/*.ts      # ALL copy, one file per section, brochure-derived; the company pages
+                         #   (about, contactUs, pricing, terms, refund, shipping) are data in this shape
+  views/                 # HomePage, RegisterPage, GrievancePage, DocPage (the company pages) (server)
   components/            # sections (server) and interactive leaves (client)
   guides/                # the guide pages: content.ts (rules), model.ts, GuidePage.tsx
   routing/               # pure logic the proxy uses (language, guides, film)

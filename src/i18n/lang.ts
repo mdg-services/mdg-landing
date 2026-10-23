@@ -35,8 +35,17 @@ export function langCookie(lang: Lang): string {
   return `${LANG_COOKIE}=${lang}; Path=/; Max-Age=31536000; SameSite=Lax; Secure`;
 }
 
+/**
+ * The company pages a payment provider's review reads: who we are, how to
+ * reach us, what it costs, the terms, the refund rules and how access is
+ * delivered. Each has a Hindi twin under /hi. (/refund and /cancellation are
+ * redirects to /refund-policy; see next.config.ts.)
+ */
+export const COMPANY_ROUTES = ["/about", "/contact", "/pricing", "/terms", "/refund-policy", "/shipping"] as const;
+export type CompanyRoute = (typeof COMPANY_ROUTES)[number];
+
 /** Pages that exist in both languages, as English paths ("" is the home page). */
-export type SiteRoute = "" | "/register" | "/grievance" | "/grievances" | "/khata-kavach";
+export type SiteRoute = "" | "/register" | "/grievance" | "/grievances" | "/khata-kavach" | CompanyRoute;
 
 /** The public path of a site page in a language: ("", "hi") -> "/hi". */
 export function pathFor(lang: Lang, route: SiteRoute = ""): string {

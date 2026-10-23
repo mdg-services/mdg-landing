@@ -2,8 +2,9 @@
  * The site's proxy (what Next.js 16 calls middleware): the small amount of
  * per-request logic that cannot be decided when a page is built.
  *
- * 1. Language. `/`, `/register`, `/grievance`, `/grievances` and `/khata-kavach` are English
- *    and `/hi…` is Hindi; a `?lang=` choice, the `mdg_lang` cookie or a Hindi
+ * 1. Language. `/`, `/register`, `/grievance`, `/grievances`, `/khata-kavach` and the
+ *    company pages (`/about`, `/contact`, `/pricing`, `/terms`, `/refund-policy`,
+ *    `/shipping`) are English and `/hi…` is Hindi; a `?lang=` choice, the `mdg_lang` cookie or a Hindi
  *    browser can send a visitor of an English address to its /hi twin
  *    (src/routing/site.ts).
  * 2. The guide pages: the MDG guides (/guides/, /tools/) and the Khata Kavach
@@ -37,6 +38,12 @@ export const config = {
     "/grievance",
     "/grievances",
     "/khata-kavach",
+    "/about",
+    "/contact",
+    "/pricing",
+    "/terms",
+    "/refund-policy",
+    "/shipping",
     "/film",
     "/film/short",
     "/privacy",
