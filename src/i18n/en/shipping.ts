@@ -50,7 +50,7 @@ export const shipping: DocPage = {
           ],
           [
             "You start using it",
-            "Sign in on your phone or in a web browser. Your first month of Dealer's Kavach is free.",
+            "Sign in on your phone or in a web browser. If your first month does not suit you, you get that month's payment back.",
           ],
         ]),
       ],

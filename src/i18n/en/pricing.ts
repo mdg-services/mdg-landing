@@ -4,8 +4,12 @@ import { cards, p, steps, table, ul, type DocPage } from "../doc";
 
    The figures are the ones the site assistant already quotes
    (mdg-backend/src/assist/llm/prompts.ts): the nine standard services at
-   3,000 rupees a month plus 18% GST, the first month free, and everything
-   together "in the region of" 15,000 plus GST, quoted on the work. They come
+   3,000 rupees a month plus 18% GST, and everything
+   together "in the region of" 15,000 plus GST, quoted on the work. There is
+   NO free month (owner, 23 Oct 2026): the first month is paid, and a dealer
+   who is not happy with it, for any reason, gets that month's payment back.
+   Once per dealer, first month only. The refund policy, the terms and the site
+   assistant say the same. They come
    from PRICING in data/content.ts, so this page and the assistant cannot drift.
 
    Khata Kavach is free while it is new (owner, 23 Oct 2026). If that changes,
@@ -24,12 +28,12 @@ import { cards, p, steps, table, ul, type DocPage } from "../doc";
 export const pricing: DocPage = {
   pageTitle: "Pricing · MDG Services",
   metaDescription:
-    "Dealer's Kavach costs {standard} a month plus {gstPercent} GST, with the first month free. Prices in rupees, paid online through Razorpay by UPI, card, netbanking or wallet.",
+    "Dealer's Kavach costs {standard} a month plus {gstPercent} GST, with your first month's money back if you are not happy. Prices in rupees, paid online through Razorpay by UPI, card, netbanking or wallet.",
   eyebrow: "Pricing",
   eyebrowDeva: "क़ीमत",
   heading: "Simple monthly pricing, in rupees.",
   intro:
-    "Dealer's Kavach is a monthly subscription, and the first month is free. Prices are in Indian rupees, GST is added, and what we agree is written down before you start.",
+    "Dealer's Kavach is a monthly subscription, and if your first month does not suit you, you get that month's payment back. Prices are in Indian rupees, GST is added, and what we agree is written down before you start.",
   updated: "23 October 2026",
   legal: true,
   sections: [
@@ -43,7 +47,7 @@ export const pricing: DocPage = {
             title: "Standard services",
             price: "{standard}",
             priceNote: "a month, plus {gstPercent} GST ({standardTotal} in all)",
-            body: "The nine standard services, for one outlet. The first month is free.",
+            body: "The nine standard services, for one outlet. Not happy with your first month? You get that month's payment back.",
             items: [
               "SDMS, MDG and inspection compliance",
               "Document and renewal reminders",
@@ -84,7 +88,9 @@ export const pricing: DocPage = {
             ["**You pay**", "**{standardTotal}**"],
           ],
         ),
-        p("The first month is free. If you are happy to carry on, payment starts from the first of the next month."),
+        p(
+          "You pay {standardTotal} for your first month. If you are not happy with it, for any reason, tell us by the end of that month and we refund the full {standardTotal}. This is once per dealer, for the first month only.",
+        ),
       ],
     },
     {
@@ -113,7 +119,7 @@ export const pricing: DocPage = {
       blocks: [
         ul([
           "All prices are in Indian rupees (INR). GST at {gstPercent} is added on top.",
-          "You are not asked to pay anything during the free month.",
+          "Not happy with your first month, for any reason? Tell us by the end of it and we refund that month in full, GST included. Once per dealer, first month only.",
           "The price is written down before you begin and does not rise in the middle of what we agreed. No surprise fees.",
           "You can cancel any time. See the [Refund and cancellation policy](route:/refund-policy).",
           "A subscription is for software delivered online. There is nothing to ship; see [Shipping and delivery](route:/shipping).",

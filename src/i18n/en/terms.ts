@@ -82,7 +82,8 @@ export const terms: DocPage = {
       heading: "4. Subscription and price",
       blocks: [
         ul([
-          "Dealer's Kavach is a monthly subscription. The first month is free. After that it renews every month until you cancel.",
+          "Dealer's Kavach is a monthly subscription that renews every month until you cancel.",
+          "Your first month comes with a money-back promise: if you are not happy with it, for any reason, tell us by the end of that month and we refund that month's payment in full. It applies once per dealer, to the first month only, as set out in the [Refund and cancellation policy](route:/refund-policy).",
           "The plans and prices are on the [Pricing](route:/pricing) page. Prices are in Indian rupees, and GST is added.",
           "The price for your outlet is agreed in writing before you start, and we do not raise it during the period agreed. If we change a price after that, we tell you in writing at least 30 days before it applies, and you may cancel before then.",
           "Khata Kavach is free while it is new. If that changes, we tell you in writing at least 30 days before anything is charged, and you may stop using it before then.",

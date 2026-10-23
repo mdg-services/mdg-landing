@@ -35,7 +35,10 @@ export const refund: DocPage = {
               "You cancel",
               "You pay nothing for the following month. The service carries on to the end of the month you have paid for.",
             ],
-            ["You stop during the free first month", "You pay nothing. There is nothing to refund."],
+            [
+              "You are not happy with your first month",
+              "Tell us by the end of it and we refund that month in full, GST included. Once per dealer.",
+            ],
             [
               "You are charged twice, or a payment was made by mistake",
               "We refund it in full, to the original payment method, within 7 working days.",
@@ -60,16 +63,16 @@ export const refund: DocPage = {
           ],
         ]),
         p(
-          "Your service keeps working until the end of the month you have already paid for. We do not refund part of a month that has begun, unless it was charged in error.",
+          "Your service keeps working until the end of the month you have already paid for. We do not refund part of a month that has begun, unless it was charged in error or it is your first month (see below).",
         ),
       ],
     },
     {
-      id: "free-month",
-      heading: "The free first month",
+      id: "first-month",
+      heading: "Your first month's money back",
       blocks: [
         p(
-          "The first month of Dealer's Kavach is free. If you stop during it, you owe nothing, and nothing needs refunding.",
+          "If you are not happy with Dealer's Kavach in your first paid month, for any reason, tell us by the end of that month. We refund the whole first-month payment, GST included, to the way you paid, within 7 working days, and your subscription ends. You do not have to give a reason. This applies once per dealer, to the first month only; later months follow the cancellation rules above.",
         ),
       ],
     },
