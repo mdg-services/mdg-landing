@@ -85,7 +85,7 @@ export const terms: DocPage = {
           "Dealer's Kavach is a monthly subscription. The first month is free. After that it renews every month until you cancel.",
           "The plans and prices are on the [Pricing](route:/pricing) page. Prices are in Indian rupees, and GST is added.",
           "The price for your outlet is agreed in writing before you start, and we do not raise it during the period agreed. If we change a price after that, we tell you in writing at least 30 days before it applies, and you may cancel before then.",
-          "Khata Kavach is priced on request. The price is agreed with you before anything is charged.",
+          "Khata Kavach is free while it is new. If that changes, we tell you in writing at least 30 days before anything is charged, and you may stop using it before then.",
         ]),
       ],
     },
