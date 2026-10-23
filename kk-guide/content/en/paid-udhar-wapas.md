@@ -11,7 +11,7 @@
     { "q": "Can I charge interest on late udhar?", "a": "Agree interest in writing before the sale. Where nothing was agreed, a court decides {{Interest Act 1978, s.3}}. Khata Kavach does not add interest." }
   ],
   "related": ["getting-paid", "paid-reminder-messages", "paid-stop-credit", "paid-legal-steps", "paid-ageing", "paid-time-limit"],
-  "updated": "2026-10-19"
+  "updated": "2026-10-23"
 }
 ---
 ## The seven steps
@@ -43,7 +43,7 @@ Public shaming or threats can backfire. If in doubt, ask an advocate.
 - **Steps 1 and 2.** Each customer's page shows what is owed against the limit, every sale and payment with its date, and how old the balance is. A numbered PDF bill goes from your own WhatsApp, with a UPI QR if your UPI ID is in your business details.
 - **Step 3.** Customers near or past the limit show on Today with an "Ask for payment on WhatsApp" button, which opens your WhatsApp with the message ready. Once a bill is past the due day you set, "Send a reminder" does the same. You press send.
 - **Step 4.** "Record a payment" takes part payments. That much credit opens again.
-- **Step 5.** The owner can freeze the account. As soon as the counter phone is online, its vehicles show red.
+- **Step 5.** The owner can freeze the account. As soon as the counter phone is online, that customer shows red.
 
 Khata Kavach keeps the account. It never lends, never holds money, and does not collect dues for you.
 

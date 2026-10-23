@@ -7,11 +7,11 @@
   "faq": [
     { "q": "What is the difference between an example and a case study?", "a": "A case study reports what really happened to a real business. An example invents a business to explain how something works. The pages here are examples, and each one says so at the top." },
     { "q": "How is credit left worked out in these examples?", "a": "It is the credit limit minus what the customer owes. A sale lowers it, and money received raises it by the same amount. The owner sets the limit for each customer." },
-    { "q": "Do the examples work for any trade?", "a": "They are for businesses whose regular customers collect goods in their own vehicles, because every sale is tied to a vehicle number. Examples cover fuel, and cement, sand and steel." },
+    { "q": "Do the examples work for any trade?", "a": "They show the two ways a counter knows the customer: by vehicle number (the diesel month) and by a 4-digit pickup code (the cement examples). Khata Kavach is for businesses that give goods on credit to regular customers, not for walk-in buyers." },
     { "q": "Do the examples show what Khata Kavach costs?", "a": "No. The price depends on your business. Call us." }
   ],
   "related": ["example-pump-month", "example-contractor-limit", "example-dispute", "example-bill-payment", "features"],
-  "updated": "2026-10-19"
+  "updated": "2026-10-23"
 }
 ---
 > **Example:** a made-up business with made-up figures. It is not a real customer.
@@ -22,14 +22,15 @@ Each page takes one made-up business and follows one real situation, from the cu
 
 ## The four examples
 
-- [A month of diesel credit](@example-pump-month): a fuel business and a transport customer with three trucks. It shows a request before every sale, a red light when no request was sent, a typo warning, a manager's PIN past a Rs 2,00,000 limit, one bill and a part payment.
-- [A contractor's limit, bag by bag](@example-contractor-limit): a building material dealer and a contractor. One Rs 50,000 limit covers cement in bags, sand in tonnes and steel in kilos. A request is taken back, and a payment opens credit again.
+- [A month of diesel credit](@example-pump-month): a fuel business and a transport customer with three trucks, known at the counter by vehicle number. It shows a request before every sale, a red light when no request was sent, a typo warning, a manager's PIN past a Rs 2,00,000 limit, one bill and a part payment.
+- [A contractor's limit, bag by bag](@example-contractor-limit): a building material dealer and a contractor. One Rs 50,000 limit covers cement in bags, sand in tonnes and steel in kilos. Each load has a request and a 4-digit pickup code. A request is taken back, and a payment opens credit again.
 - [A disputed sale](@example-dispute): a contractor says 40 bags went out, not 50. It shows what both phones show, how a manager corrects the line with a reason, and why the old line stays.
 - [A bill and a part payment](@example-bill-payment): a bill sent on WhatsApp, the "Part paid" status, and what changes when money is recorded without choosing a bill.
 
 | Idea | Where to see it |
 |---|---|
 | The customer asks first | Diesel month, contractor limit |
+| How the counter knows the customer | By vehicle number: diesel month. By pickup code: contractor limit, disputed sale |
 | A manager's PIN past the limit | Diesel month |
 | One limit, many units | Contractor limit |
 | A correction, with the old line kept | Disputed sale |

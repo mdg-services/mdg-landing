@@ -11,7 +11,7 @@
     { "q": "Does the counter need internet?", "a": "No signal at the counter is fine once the app has been opened with internet at least once. The sale is saved on the phone and sent when it is online. The owner's screens do need internet." }
   ],
   "related": ["trades", "credit-limit", "trade-transporter", "feature-counter-light", "example-pump-month"],
-  "updated": "2026-10-19"
+  "updated": "2026-10-23"
 }
 ---
 ## Six decisions for diesel on credit
@@ -30,6 +30,8 @@
 Petrol and diesel are outside GST {{Finance Ministry reply, Rajya Sabha, 21 Jul 2026}}. State VAT and central excise apply instead. For the bill rules in your state, ask a chartered accountant. The Khata Kavach bill is a numbered bill, not a GST tax invoice. Other trades: see [GST on an unpaid sale](@paid-gst).
 
 ## How it runs at the counter
+
+A fuel station starts on "By vehicle number", as below. Other trades start on "By code or name": the customer's request gets a 4-digit pickup code instead.
 
 1. By default, the transporter sends a request for each truck from the Customer app, in litres or rupees.
 2. At the counter, staff type the last 4 digits of the vehicle number and see [a light](@feature-counter-light). Green says "You can serve" and shows "Credit left". Amber asks for a manager's PIN. Red says "No credit": serve for cash.

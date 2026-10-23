@@ -13,7 +13,7 @@
     { "q": "Can I cancel a bill?", "a": "The owner can, with a reason. Managers cannot. The sales go back to unbilled, the number is never reused, and you can make a new bill." }
   ],
   "related": ["features", "example-bill-payment", "credit-bills", "feature-customer-app"],
-  "updated": "2026-10-19"
+  "updated": "2026-10-23"
 }
 ---
 ## Make a bill in a tap
@@ -25,7 +25,7 @@ On a customer's page, the owner or a manager taps "Make a bill". The bill covers
 | Part | What it shows |
 |---|---|
 | Top | "BILL", your letterhead: name, address, phone, logo, and GSTIN and PAN if you entered them. "Bill to" with the customer's name on the bill. |
-| Lines | Number, day, vehicle, item, quantity, rate and amount for each sale. With more than one item, a "By item" summary. |
+| Lines | Number, day, vehicle or "Taken by" name, item, quantity, rate and amount for each sale. With more than one item, a "By item" summary. |
 | Total | In figures and in words. |
 | How to pay | Your bank details if entered, and a UPI QR for exactly the amount still due. |
 | Foot | Your own note, "For [your business]", "Authorised signatory", and "Computer-made bill. Made with Khata Kavach." |

@@ -67,27 +67,60 @@ apps. Show this with facts, never with adjectives.
 The true differences, in the order they matter (truth sheet section 6):
 
 1. The customer asks first. Every credit sale starts with a request from the
-   customer's phone for that vehicle. No request, no credit by default.
+   customer's phone. No request, no credit by default. The request is shown at
+   the counter in one of two ways, chosen once by the owner (see "How the counter
+   knows the customer" below): by **vehicle number**, or by a **4-digit pickup
+   code** the customer sends to whoever collects. The owner can also trust a
+   regular customer, who then needs no request, up to the limit.
 2. One shared line, seen by both. Nothing is edited: a correction is a new
    line, so both sides see what changed.
 3. The limit is checked at the counter, before goods go out: a green, amber or
    red light, and a manager's PIN to go past it. The owner sees every one.
 4. The owner's Today screen answers the daily questions: credit given today,
    money received, still owed, who is near the limit, which sales look wrong.
-5. The counter stays simple: last 4 digits, one light, type what was given,
-   Done. Counter staff never see a customer's phone number.
+5. The counter stays simple: the pickup code (or the last 4 digits of the
+   vehicle number), one light, type what was given, Done. Counter staff never
+   see a customer's phone number.
 6. No signal at the counter? The sale is saved on the phone and sent later.
 7. A numbered bill in a tap, on the business's letterhead, with a UPI QR, sent
    from its own WhatsApp. Money received against a bill marks it paid.
 8. It never lends and never holds money.
-9. Hindi first; every item has its own unit (litre, bag, tonne, kg, piece…).
-10. MDG sets it up and a person answers the phone, 9am to 9pm, every day.
+9. Hindi first; every item has its own unit (litre, bag, tonne, kg, piece…, or
+   the owner's own word, like dozen or packet). Sign-up asks which unit.
+10. A business starts on its own in the Business app in about a minute; a person
+    at MDG answers the phone, 9am to 9pm, every day.
 
-**Who it is for, honestly:** businesses whose regular customers collect goods
-in their own vehicles (every sale is tied to a vehicle number): fuel stations
-and transporters, cement and building material, sand and aggregate, bricks,
-and wholesalers whose buyers send a vehicle. Do not write that it suits shops
-that deliver without a vehicle, or every trade.
+**Who it is for, honestly:** businesses that give goods on credit to regular
+customers: fuel stations and transporters, cement and building material, sand
+and aggregate, bricks, gas agencies, wholesalers and distributors, dairies. The
+goods can go in the customer's vehicle, with a labourer or a hired tractor, with
+the customer's shop boy, or with the business's own delivery boy. Do not write
+that it suits every trade, or walk-in shoppers buying on the spot: it is for
+regular customers with a credit account.
+
+### How the counter knows the customer (since 23 Oct 2026)
+
+The owner picks one, in the Business app under "माल और यूनिट" → "काउंटर पर ग्राहक
+कैसे पहचानें" ("How the counter knows the customer"). A fuel station starts on
+the first, every other trade on the second; the owner can switch.
+
+| | "By vehicle number" (गाड़ी नंबर से) | "By code or name" (कोड या नाम से) |
+|---|---|---|
+| The customer's request | One per vehicle: "Which vehicles need goods today?" | One item, how much, and "For whom / where" (किसके लिए / कहाँ), e.g. "Raju, site 2". The app gives it a 4-digit pickup code: "Your pickup code" (आपका कोड), with "Send on WhatsApp" (व्हाट्सऐप पर भेजो) to pass it to whoever collects. |
+| At the counter | Staff type the last 4 digits of the vehicle number | Staff type the code in the box "Code or customer name" (कोड या ग्राहक का नाम). The right code shows "Code matches" (कोड सही) and the light. Picked by name instead, the screen says "Ask for the code" (कोड पूछो); with no code a manager's PIN can allow it, marked "Manager allowed it". A wrong code is refused. |
+| Who took it | The vehicle number is on every line | The counter can add "Collected by" (लेने वाला), e.g. Raju; the line reads "Taken by Raju" and the bill shows it. |
+
+**Per customer, with no request** (the owner sets it on the customer's page,
+"With no request" / बिना रिक्वेस्ट आए तो): "No credit" (उधार नहीं, the default),
+"Manager PIN" (मैनेजर PIN), or "Trust him" (भरोसे पर दो): any of the staff can give
+goods on his name, with no request or code, up to his limit. New customers of a
+gas agency, a wholesaler or a dairy start on "Trust him". The credit limit
+always applies.
+
+Write about the code as a habit people already know: the customer passes four
+digits to whoever collects, like a gas delivery code. Never say codes "stop
+fraud"; say "goods go out only against the customer's request, its code, a
+manager's PIN, or the owner's trust".
 
 ## Product claims: never write these
 

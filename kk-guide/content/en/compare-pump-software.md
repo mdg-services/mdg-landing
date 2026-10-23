@@ -26,7 +26,7 @@ Khata Kavach does not run a pump: no nozzles, shifts, tanks, stock or Tally. It 
 |---|---|---|---|---|
 | Credit limits | Yes | Yes | Yes | Yes, in rupees |
 | Customer app | Yes, and a web portal | Yes, a credit-customer app | Yes: dashboard and SMS alerts | Yes |
-| Customer asks first | Yes: request for a vehicle, QR code, OTP to the driver; manual slips also work | Its site says customers can submit credit requests | Not stated on its pages | By default, yes: one request per vehicle |
+| Customer asks first | Yes: request for a vehicle, QR code, OTP to the driver; manual slips also work | Its site says customers can submit credit requests | Not stated on its pages | By default, yes: a request per vehicle, or with a pickup code |
 | Tally | Yes | Yes, Tally Prime | Not stated on its pages | No |
 | Counter works with no signal | Not stated on its pages | Not stated on its pages | Not stated on its pages | Yes, once opened with internet |
 | Languages | English, App Store listing | Multi-language, none named | Not stated on its pages | Hindi first, English one tap away |

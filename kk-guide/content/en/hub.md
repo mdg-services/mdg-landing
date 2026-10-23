@@ -10,12 +10,12 @@
     { "q": "Do I need Khata Kavach to use these guides?", "a": "No. The guides on limits, bills, reminders and the khata work on paper or in any app. Khata Kavach is one way to keep the same record shared with the customer." }
   ],
   "related": ["credit", "counter", "getting-paid", "features"],
-  "updated": "2026-10-19"
+  "updated": "2026-10-23"
 }
 ---
 ## What these pages cover
 
-You sell goods on udhar to regular customers. The goods are real and the customer is known, but the money comes later. These guides are for you if those customers collect in their own vehicles. They are about a business and its customers, not about money lent to a friend.
+You sell goods on udhar to regular customers. The goods are real and the customer is known, but the money comes later. The goods may go in the customer's own vehicle, or with a labourer, a hired tractor or a shop boy. These guides are about a business and its customers, not about money lent to a friend.
 
 Credit has four jobs. Each has its own set of pages.
 
@@ -29,13 +29,13 @@ Credit has four jobs. Each has its own set of pages.
 
 ## Who it is for
 
-Businesses whose sales are tied to a vehicle: fuel stations and transporters, cement and building material, sand and aggregate, bricks, and wholesalers whose buyers send a vehicle. See [who it is for](@trades), and [wholesale credit to retailers who send a vehicle](@trade-wholesale). If you deliver to a shop with no vehicle involved, check with us before assuming it fits.
+Businesses that give goods on credit to regular customers: fuel stations and transporters, cement and building material, sand and aggregate, bricks, gas agencies, wholesalers and distributors, and dairies. See [who it is for](@trades), and [wholesale credit to retailers](@trade-wholesale). It is for regular customers with a credit account, not for shoppers buying on the spot.
 
 ## Where Khata Kavach fits
 
 Khata Kavach is a shared credit book from MDG Services, with two apps: one for the business and one for the customer. Both open in the phone's browser, and Android apps are coming to Google Play.
 
-- The customer sends a request for each vehicle before goods go out. No request, no credit by default.
+- The customer sends a request before goods go out: one per vehicle, or one with a 4-digit pickup code for whoever collects. No request, no credit by default. The owner can also trust a regular customer, up to the limit.
 - At the counter, staff see a green, amber or red light and how much credit is left. By default, past the limit a manager's PIN is needed, unless the owner has set cash only.
 - The business and the customer both see every sale, with a photo if the counter added one. Once a sale has reached the customer's phone, nothing is edited: a correction is a new line.
 - The owner's Today screen shows credit given today, the month's money received and what is still owed, and who is near the limit.

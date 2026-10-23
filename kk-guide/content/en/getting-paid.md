@@ -11,7 +11,7 @@
     { "q": "Does Khata Kavach collect the money for me?", "a": "No. The customer pays you directly, by cash, UPI, bank or cheque, and you record it with \"Record a payment\". Khata Kavach never lends, never holds money and does not collect dues." }
   ],
   "related": ["paid-udhar-wapas", "paid-reminder-messages", "paid-ageing", "paid-stop-credit", "paid-legal-steps", "credit"],
-  "updated": "2026-10-19"
+  "updated": "2026-10-23"
 }
 ---
 ## The ladder
@@ -42,7 +42,7 @@ Agree late-payment terms, and any interest, in writing before the sale. Where in
 
 - **Rungs 1 and 2.** By default the customer sends a request before goods go out. The counter shows a green, amber or red light. A numbered bill goes from your own WhatsApp, with a UPI QR if your UPI ID is in your business details.
 - **Rungs 2 and 3.** Customers near or past the limit show on Today, each with an "Ask for payment on WhatsApp" button. It opens your WhatsApp with a message ready, and you press send. Once a bill is past the due day you set, it has a "Send a reminder" button. Each customer's page shows how old the balance is.
-- **Rung 3.** The owner can freeze an account. As soon as the counter phone is online, the customer's vehicles show red.
+- **Rung 3.** The owner can freeze an account. As soon as the counter phone is online, that customer shows red.
 - **Every rung.** "Record a payment" notes money when it arrives. That much credit opens again.
 
 Khata Kavach keeps the account. It sends no message itself, never lends, never holds money, and does not collect dues.

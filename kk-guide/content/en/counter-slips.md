@@ -11,7 +11,7 @@
     { "q": "Can I keep my slip book and use Khata Kavach too?", "a": "Yes. The sale form has \"Slip number (optional)\". Type the slip's number there, and the paper and the app line can be matched later." }
   ],
   "related": ["counter", "compare-paper", "feature-requests", "feature-photo", "trade-transporter"],
-  "updated": "2026-10-19"
+  "updated": "2026-10-23"
 }
 ---
 ## How a slip or coupon works
@@ -35,9 +35,9 @@ A slip records one sale. It does not hold the account. Some things follow from t
 | A slip is lost or torn | The paper is the whole record | One line saved at the counter |
 | The slip says 200 litres, the dispenser gave 220 | The quantity is whatever was written | One line typed from what was given, which the customer also sees, and a photo |
 | The customer often sees the total only at month end | Slips are added up later | The customer sees each line on the day |
-| Nothing shows the customer asked for the goods | A slip shows goods were taken, not that the customer asked first | The customer asks first, for each vehicle, by default |
+| Nothing shows the customer asked for the goods | A slip shows goods were taken, not that the customer asked first | The customer asks first, by default |
 
-For example, a made-up driver brings slip number 412 for 200 litres. Staff give 220 litres. The slip says 200, the seller's copy says 220, and nobody can say which is right.
+For example, a made-up driver brings slip 412 for 200 litres and staff give 220. The slip says 200, the seller's copy says 220, and nobody can say which is right.
 
 ## What to use instead
 
@@ -45,11 +45,11 @@ Keep four things, on paper or on a phone:
 
 - **The customer asks first.** The request comes from the customer.
 - **A limit check** before goods go out.
-- **One line that both sides see**: vehicle, item, quantity, rupees, who served, time.
+- **One line that both sides see**: vehicle or code, item, quantity, rupees, who served, time.
 - **A photo** of the load, where you can.
 
 ## How Khata Kavach does the same job
 
-By default, the customer sends a request from their own phone for each vehicle. That does the slip's job of showing the customer asked. With no request, the light at the counter is red, "No credit", by default, and staff can serve for cash. With a request and the account in order, the light is green, "You can serve", and shows "Credit left". Staff type the quantity and the rupees, add a photo if they want, and tap "Done". Once the phone is online, the customer sees the same line in their own app. See [customer requests](@feature-requests) and [photo with a sale](@feature-photo).
+By default, the customer sends a request from their own phone: one per vehicle, or one with a 4-digit pickup code that they pass to whoever collects. That does the slip's job of showing the customer asked. With no request, the light at the counter is red, "No credit", by default, and staff can serve for cash. With a request and the account in order, the light is green, "You can serve", and shows "Credit left". Staff type the quantity and the rupees, add a photo if they want, and tap "Done". Once the phone is online, the customer sees the same line in their own app. See [customer requests](@feature-requests) and [photo with a sale](@feature-photo).
 
 If you still use slips, type the number in "Slip number (optional)". For a side-by-side with a register or Excel, see [paper khata or a credit app](@compare-paper).

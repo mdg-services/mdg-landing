@@ -6,7 +6,7 @@
   "answer": "OkCredit is an udhar khata app for businesses. Its home page calls it free; its pricing page lists a Basic plan with ads and paid plans from Rs 30 for 30 days. It lists SMS to customers, UPI collection, loans through partners, 11 languages and offline use. Khata Kavach is a shared credit book: by default the customer asks before goods go out, counter staff see a light, and both sides see every sale. Stay with OkCredit for an everyday khata. Facts checked on 19 October 2026.",
   "faq": [
     { "q": "Is OkCredit free?", "a": "Its home page says unlimited customers and entries, free. Its pricing page names \"Unlimited Daily Ledger Transactions\" under the Rs 30 plan. We did not find a number for any limit on the Basic plan. Check its pricing page." },
-    { "q": "Which khata app fits a business whose customers send vehicles?", "a": "Khata Kavach works differently: by default the customer asks before goods go out, and both sides see every sale. For an everyday khata with SMS to customers, OkCredit may fit better." },
+    { "q": "Which khata app fits a business with regular credit customers?", "a": "Khata Kavach works differently: by default the customer asks before goods go out, and both sides see every sale. For an everyday khata with SMS to customers, OkCredit may fit better." },
     { "q": "OkCredit kaisa hai? Is it good for a business?", "a": "We do not review apps. The table above shows what OkCredit lists, and its Google Play ratings are in the first section. Check the rows that matter to your business." },
     { "q": "Does OkCredit handle money?", "a": "Its terms say payment links come from third-party providers. They also describe an Instant Settlement service: OkCredit pays the merchant in advance from its own funds, for a commission. The terms were last updated on 16 February 2023. Khata Kavach holds no money." }
   ],
@@ -41,8 +41,8 @@ Plan prices on its pricing page, 11 languages, offline use on its Play listing, 
 
 ## Where Khata Kavach works differently
 
-By default, every credit sale starts with a request from the customer's own app for that vehicle. Counter staff see the light before goods go out, and by default a manager's PIN is needed past the limit. See [the counter with no signal](@feature-no-signal) and [how to set a credit limit](@credit-limit).
+By default, every credit sale starts with a request from the customer's own app, by vehicle or by pickup code. Counter staff see the light before goods go out, and by default a manager's PIN is needed past the limit. See [the counter with no signal](@feature-no-signal) and [how to set a credit limit](@credit-limit).
 
 ## Who should stay with OkCredit
 
-Stay if you want an everyday khata with SMS to customers, a free plan, or a web or desktop app. Look at Khata Kavach if regular customers collect in their own vehicles and you want them to ask first.
+Stay if you want an everyday khata with SMS to customers, a free plan, or a web or desktop app. Look at Khata Kavach if regular customers take goods on credit and you want them to ask first.

@@ -19,7 +19,7 @@ export const kk = {
     ogTitle: "Khata Kavach · MDG Services",
     /** The one line the structured data gives for the app. */
     appDescription:
-      "A shared credit account book between a business and its regular customers. The business sets each credit limit, the customer sends a request for each vehicle, and both see every sale. Numbered bills go out as a PDF on WhatsApp.",
+      "A shared credit account book between a business and its regular customers. The business sets each credit limit, the customer sends a request (with a 4-digit pickup code for whoever collects, or by vehicle number), and both see every sale. Numbered bills go out as a PDF on WhatsApp.",
   },
   /** Spoken name of the page in the navbar and breadcrumbs. */
   name: "Khata Kavach",
@@ -68,14 +68,17 @@ export const kk = {
     railLabel: "The shared line",
     who: { transporter: "Customer", pump: "Business", both: "Both" },
     steps: [
-      { who: "transporter", text: "Sends a request for each vehicle from their phone." },
       {
-        who: "pump",
-        text: "At the counter, staff type the vehicle number. The screen shows a light and how much to give.",
+        who: "transporter",
+        text: "Sends a request from their phone, and passes its 4-digit pickup code to whoever collects. A fuel station can go by vehicle number instead.",
       },
       {
         who: "pump",
-        text: "They give the goods, type the quantity and rupees, add a photo of the plate or slip, and tap Done.",
+        text: "At the counter, staff type the code. The screen shows a light and how much to give.",
+      },
+      {
+        who: "pump",
+        text: "They give the goods, type the quantity and rupees, note who took it or add a photo of the slip, and tap Done.",
       },
       {
         who: "both",
@@ -89,10 +92,11 @@ export const kk = {
     heading: "See what each customer owes, and what they have paid.",
     rows: [
       "Set a credit limit for every customer.",
+      "Trust a regular customer and serve them by name, with no request, up to their limit.",
       "See today's credit, this month's credit, money received and bills past due.",
       "A customer near their limit shows up, with one tap to ask for payment on WhatsApp.",
       "Staff sign in with a 4-digit PIN. A manager's PIN allows one sale past the limit.",
-      "Add a photo of the number plate or the slip to any sale.",
+      "Add who collected, or a photo of the slip or the vehicle, to any sale.",
       "Make a numbered bill in a tap: a PDF on your letterhead, ready to send on WhatsApp from your own number.",
       "Money received against a bill marks it paid, and that much credit opens again.",
     ],
@@ -108,8 +112,9 @@ export const kk = {
   transporter: {
     heading: "Send the day's requests from your phone. See every sale and every bill.",
     rows: [
-      "Pick vehicles, say how much (bags, litres, rupees or as needed) and send in a few taps.",
-      "Every sale shows as soon as it is made: vehicle, quantity and rupees.",
+      "Say what and how much (bags, litres, rupees or as needed) and who it is for, and send in a few taps.",
+      "Get a 4-digit pickup code and send it on WhatsApp to whoever collects: a driver, a labourer, a hired tractor.",
+      "Every sale shows as soon as it is made: what, how much, rupees, and who took it.",
       "Your limit, what you owe and what you have paid, for each supplier.",
       "Every bill from every supplier in one place, with what is due and the PDF to open.",
       "Pay a bill by UPI. Your UPI app opens with the amount filled in, and the money goes straight to the business.",
@@ -125,19 +130,19 @@ export const kk = {
 
   /* ── at the counter: the demo ── */
   nozzle: {
-    heading: "Type the vehicle. See the light.",
+    heading: "Type the code. See the light.",
     intro: "Counter staff see one of three lights, with the reason and what to do next.",
-    label: "Try it with made-up vehicles",
-    caption: "Made-up vehicles and amounts.",
+    label: "Try it with made-up pickup codes",
+    caption: "Made-up codes, customers and amounts.",
     /** Each light says a word and the next step, so colour is never the only signal. */
     states: {
-      go: { word: "OK", line: "Give 50 bags", sub: "Cement", name: "Sharma Roadlines" },
-      wait: { word: "Call the manager", line: "Over the credit limit.", sub: "", name: "Gupta Transport" },
+      go: { word: "OK", line: "Give 50 bags", sub: "Cement", name: "Sharma Builders" },
+      wait: { word: "Call the manager", line: "Over the credit limit.", sub: "", name: "Yadav Constructions" },
       stop: {
         word: "Stop",
-        line: "No request for this vehicle today.",
+        line: "No open request with this code.",
         sub: "Sell for cash.",
-        name: "Sharma Roadlines",
+        name: "Code not found",
       },
     },
     lightLabels: { go: "Green light", wait: "Amber light", stop: "Red light" },
@@ -164,7 +169,7 @@ export const kk = {
         rest: "Counter staff never see a customer's phone number.",
       },
       {
-        lead: "MDG Services sets up your business and answers the phone,",
+        lead: "A person at MDG Services answers the phone,",
         rest: "9am to 9pm, every day.",
       },
     ],
@@ -177,7 +182,11 @@ export const kk = {
     items: [
       {
         q: "Which businesses is it for?",
-        a: "Any business that sells to regular customers on credit. Fuel stations (diesel and petrol, in litres). Building material (cement in bags, sand in tonnes, steel in kg, bricks in pieces). Gas agencies (cylinders). Distributors and wholesalers (an amount only). Dairies (milk in litres, curd and paneer in kg).",
+        a: "Any business that sells to regular customers on credit. Fuel stations (diesel and petrol, in litres). Building material (cement in bags, sand in tonnes, steel in kg, bricks in pieces). Gas agencies (cylinders). Distributors and wholesalers (an amount only). Dairies (milk in litres, curd and paneer in kg). Or name your own unit, like dozen or packet.",
+      },
+      {
+        q: "Does the customer have to come in a vehicle?",
+        a: "No. Each request comes with a 4-digit pickup code. The customer sends it to whoever collects, a driver, a labourer or a shop boy, and the counter types it. A fuel station can work by vehicle number instead. A regular customer the business trusts can be served by name, with no request, up to their limit.",
       },
       {
         q: "How do bills work?",
@@ -197,7 +206,7 @@ export const kk = {
       },
       {
         q: "Does my counter staff need training?",
-        a: "The screen tells them what to do: vehicle number, light, quantity, Done. We show your team how.",
+        a: "The screen tells them what to do: the code, the light, the quantity, Done. We show your team how.",
       },
       {
         q: "Is there an Android app?",
