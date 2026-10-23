@@ -34,7 +34,7 @@ export interface AnyPage {
   wave: number;
   /** Real searches this page answers. */
   queries: string[];
-  /** guide.mdgservices.in video slugs without the -hi / -en suffix (MDG only). */
+  /** Explainer videos (ids like `gen-dod-clock`, without the -hi / -en suffix) shown on the page; each lives at /videos/<slug> (MDG only). */
   videos?: string[];
   brief: string;
 }

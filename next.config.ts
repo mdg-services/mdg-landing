@@ -106,6 +106,8 @@ const nextConfig: NextConfig = {
       { source: "/film/hls-:file", headers: [{ key: "Cache-Control", value: "public, max-age=31536000, immutable" }] },
       { source: "/film/mark.png", headers: [{ key: "Cache-Control", value: week }] },
       { source: "/film/og-:file", headers: [{ key: "Cache-Control", value: week }] },
+      // the explainers' media: every file name carries a hash of its bytes
+      { source: "/videos/media/:path*", headers: [{ key: "Cache-Control", value: "public, max-age=31536000, immutable" }] },
       // the small brand images change about never; without this each one is
       // asked about again on every page view
       { source: "/favicon.png", headers: [{ key: "Cache-Control", value: week }] },

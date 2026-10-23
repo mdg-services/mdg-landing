@@ -26,12 +26,7 @@ export default function Training({ lang }: { lang: Lang }) {
             <p className="mt-5 max-w-prose2 text-[16px] leading-[1.65] text-navy-100 md:text-[17px]">
               {t.training.body}
             </p>
-            <a
-              href={TRAINING_HREF}
-              className="btn btn-gold mt-8"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
+            <a href={`${TRAINING_HREF}?lang=${lang}`} className="btn btn-gold mt-8">
               {t.training.cta}
               <Icon name="arrow" size={16} />
             </a>

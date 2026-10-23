@@ -55,7 +55,7 @@ export interface GuidePage {
   /** Real searches (Google / YouTube suggestions, Oct 2026) this page answers. */
   queries: string[];
   clauses: string;
-  /** guide.mdgservices.in video slugs without the -hi / -en suffix. */
+  /** Explainer video ids (like `gen-dod-clock`, no -hi / -en suffix); each is the page /videos/<slug> on this site. */
   videos?: string[];
   brief: string;
 }
@@ -83,7 +83,7 @@ export const PILLARS: Record<Pillar, PillarMeta> = {
   tools: { en: "Tools", hi: "टूल", main: "tools-density-at-15" },
 };
 
-/** The explainer videos on guide.mdgservices.in, by slug. */
+/** The explainer videos shown on guide pages, by id: the title in each language. The page is /videos/<id without gen->. */
 export const VIDEOS: Record<string, { en: string; hi: string }> = {
   "gen-daily-books": { en: "Three books by 10 am", hi: "दस बजे तक तीन किताबें" },
   "gen-density-15": { en: "The density on the invoice", hi: "इनवॉइस पर लिखी डेंसिटी" },

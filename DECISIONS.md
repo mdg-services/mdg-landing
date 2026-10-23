@@ -131,3 +131,14 @@ The detail for each lives where it is named.
   team's inbox stays the backstop" for enrolments only: for them the API is the
   record. One promise on every surface: "MDG's team will contact you shortly",
   with no time in it.
+- **D25.** The trade explainers live here, 23 Oct (onboarding v2, phase 8): 26
+  videos at `/videos/<slug>`, Hindi and English, replacing guide.mdgservices.in,
+  which now only redirects. Same shape as the film pages: plain static HTML
+  generated into `public/videos` (`npm run videos`), `proxy.ts` picks the
+  language file, and the video is not requested until play is pressed. The three
+  encodes (240p, 360p, 720p) ship from `public/videos/media` (about 109 MB, both
+  languages); set `VIDEOS_MEDIA_BASE` at build time to serve them from a CDN
+  instead. The importer reads the files on disk, not `mdg-demo/site/data/videos.json`,
+  whose hashes did not match the folder. The Training band and the guide pages'
+  video links point here.
+

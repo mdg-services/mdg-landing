@@ -25,13 +25,15 @@ stats) rather than long prose, so a dealer understands the offer by scanning.
 
 ```bash
 npm install
-npm run dev            # http://localhost:5180  (film pages are generated first)
-npm run build          # film pages + guide check, then next build --webpack
+npm run dev            # http://localhost:5180  (film and video pages are generated first)
+npm run build          # film pages, video pages, guide check, then next build --webpack
 npm run start          # serve the production build on :5180
 npm run lint
 npm run typecheck      # tsc --noEmit over everything, backend included
 npm run guide -- check # every guide page's words against the rules
 npm run guide -- schedule
+npm run videos         # the /videos pages into public/videos (scripts/videos-build.ts)
+npm run check:videos   # the video pages, their files and every link to them
 npm run email:preview  # render email templates to ./.email-preview/*.html
 npm run og             # the homepage's social card, public/og.png
 npm run og:film        # the film pages' link-preview cards, public/film/og-*.jpg
@@ -49,7 +51,7 @@ app/                     # routes (thin files; the work is in src/)
   hi/                    # Hindi twins under /hi
   api/                   # enroll, callback, grievance, indexnow route handlers
   sitemap.ts robots.ts llms.txt/ not-found.tsx
-proxy.ts                 # language redirects, guide release gate, film pages
+proxy.ts                 # language redirects, guide release gate, film pages, video pages
 src/
   data/content.ts        # data only: ids, icons, hrefs, portal names, counter figures
   i18n/
@@ -61,20 +63,21 @@ src/
   views/                 # HomePage, RegisterPage, GrievancePage, DocPage (the company pages) (server)
   components/            # sections (server) and interactive leaves (client)
   guides/                # the guide pages: content.ts (rules), model.ts, GuidePage.tsx
-  routing/               # pure logic the proxy uses (language, guides, film)
+  routing/               # pure logic the proxy uses (language, guides, film, videos)
+  videos/                # catalog.json (the 26 explainers, both languages), slugs.json
   seo/                   # metadata + JSON-LD
   fonts/                 # next/font setup, English and Hindi
   lib/                   # reveal, enter, presence, api helpers
   index.css              # Tailwind layers, hero/reveal animations, .guide-* styles
 guide/                   # inventory, schedule, copy, content/, tools/ (the guides' source)
-scripts/                 # film-build.ts (public/film), guide-cli.ts, film-pages.ts, …
+scripts/                 # film-build.ts (public/film), videos-build.ts (public/videos), guide-cli.ts, film-pages.ts, …
   lib/tollFree.ts        # the toll-free number, and the only place that knows it
   lib/assistCall.ts      # "call us" events: open the call choice, start the assistant's call
   lib/submissionId.ts    # one id per filled-in form, so a re-send is not a second form
 server/                  # transport-agnostic backend core (Node), used by app/api/*
   validation.ts          # Zod payload schemas (single source of truth)
   enroll.ts callback.ts grievance.ts intake.ts cors.ts recent.ts env.ts mailer.ts emails/
-public/                  # logos, favicon, og.png, assist-bot.png, privacy.html, film/
+public/                  # logos, favicon, og.png, assist-bot.png, privacy.html, film/, videos/ (pages generated; media/ committed)
 ```
 
 ## Email backend

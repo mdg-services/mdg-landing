@@ -19,12 +19,19 @@
  * 4. One address each. /film, /film/short and /privacy are served at one
  *    address; the same address with a trailing slash is sent to it.
  *
+ * 5. The video pages (/videos, /videos/<slug>): the explainers that used to
+ *    live on the guide site. Built into public/videos in Hindi and English;
+ *    this picks the file (the same language rules as the film pages), turns an
+ *    address that is no video into a real 404, and sends the trailing-slash form
+ *    to the one address.
+ *
  * Nothing else runs through here, and every page works the same with no cookie
  * at all.
  */
 import { NextResponse, type NextRequest } from "next/server";
 import { langCookie } from "./src/i18n/lang.ts";
 import { filmFile, filmLang, geoCookie, isFilmPath } from "./src/routing/film.ts";
+import { isVideosPath, videoSlugOf, videosFile, videosLang } from "./src/routing/videos.ts";
 import { guideNow } from "./src/guides/clock.ts";
 import { guideGate, isGuidePath } from "./src/routing/guides.ts";
 import { langRedirect, siteRoute } from "./src/routing/site.ts";
@@ -47,6 +54,9 @@ export const config = {
     "/film",
     "/film/short",
     "/privacy",
+    // the video pages: the library and one address per explainer
+    "/videos",
+    "/videos/:slug",
     "/guides",
     "/guides/:path*",
     "/hi/guides",
@@ -94,6 +104,19 @@ export function proxy(request: NextRequest): NextResponse {
     if (geo) headers.append("set-cookie", geo);
     if (asked) headers.append("set-cookie", langCookie(lang));
     return NextResponse.rewrite(new URL(filmFile(pathname, lang) + raw.search, request.url), { headers });
+  }
+
+  // ── The video pages ───────────────────────────────────────────────────
+  if (isVideosPath(pathname)) {
+    if (pathname.length > 1 && pathname.endsWith("/")) {
+      return NextResponse.redirect(new URL(pathname.replace(/\/+$/, "") + raw.search, request.url), 308);
+    }
+    const slug = videoSlugOf(pathname);
+    if (slug === null) return notFound(request);
+    const { lang, asked } = videosLang(raw, request.headers.get("cookie"));
+    const headers = new Headers();
+    if (asked) headers.append("set-cookie", langCookie(lang));
+    return NextResponse.rewrite(new URL(videosFile(slug, lang) + raw.search, request.url), { headers });
   }
 
   // ── The site's own pages: which language ──────────────────────────────

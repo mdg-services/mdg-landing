@@ -52,3 +52,11 @@ public/film/index.html
 public/film/en/
 public/film/short/
 public/film/hls-*.js
+
+# The video pages (/videos and /videos/<slug>) are generated into public/videos
+# by `npm run videos` (scripts/videos-build.ts) before every dev and build run.
+# The media under public/videos/media stays committed.
+public/videos/index.html
+public/videos/en/
+public/videos/*/index.html
+public/videos/*/en/

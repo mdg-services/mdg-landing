@@ -4,6 +4,7 @@ import { getT } from "@/i18n/server";
 import { DOC_KEY } from "@/i18n/doc";
 import { COMPANY_ROUTES, pathFor } from "@/i18n/lang";
 import { docFacts, fill } from "@/lib/docText";
+import catalog from "@/videos/catalog.json";
 
 /**
  * llms.txt: a plain list of the site's pages for AI assistants that read it,
@@ -78,6 +79,12 @@ export function GET(): Response {
     }),
   ];
 
+  // The short explainer videos: one page each, in Hindi (the bare address) and English (?lang=en).
+  const videos = catalog.videos.flatMap((v) => [
+    `- ${line(v.en.title, `${SITE}/videos/${v.slug}?lang=en`, v.en.subtitle)}`,
+    `  - हिंदी: ${line(v.hi.title, `${SITE}/videos/${v.slug}`, v.hi.subtitle)}`,
+  ]);
+
   const sections = SECTIONS.map(({ pillar, heading }) => {
     const lines = MDG.pages.filter((p) => p.pillar === pillar).flatMap((p) => entry(ctx, p.id));
     return lines.length ? `## ${heading}\n\n${lines.join("\n")}\n` : "";
@@ -93,6 +100,6 @@ export function GET(): Response {
   const kkIntro = kkSections.length
     ? "\n## About the Khata Kavach pages\n\nPlain-language pages from MDG Services, the maker of Khata Kavach, on selling goods on credit (udhar) to regular customers and keeping the account, in English and Hindi. Facts about other apps come from their own websites on the date each page shows; check them there. General information, not legal, tax or financial advice.\n\n"
     : "";
-  const text = `# MDG Services: Dealer's Kavach, Khata Kavach and plain-language guides\n\n> MDG Services (a brand of VRUOOM Private Limited, India) makes two apps: Dealer's Kavach, which keeps an Indian petrol pump dealer's filings, renewals, inspections and daily reports on time, and Khata Kavach, a shared credit book between a business and its regular customers. It also publishes plain-language guides in English and Hindi: to the Marketing Discipline Guidelines 2024 (MDG 2024) for petrol pump dealers, and to selling goods on credit. The MDG guides are not the official text: refer to the oil companies' official guidelines and circulars for accurate and current rules. MDG Services is a private company, not connected with IndianOil, BPCL, HPCL or any government body.\n\n## The company and the apps\n\n${company.join("\n")}\n\n${sections.join("\n")}${kkIntro}${kkSections.join("\n")}`;
+  const text = `# MDG Services: Dealer's Kavach, Khata Kavach and plain-language guides\n\n> MDG Services (a brand of VRUOOM Private Limited, India) makes two apps: Dealer's Kavach, which keeps an Indian petrol pump dealer's filings, renewals, inspections and daily reports on time, and Khata Kavach, a shared credit book between a business and its regular customers. It also publishes plain-language guides in English and Hindi: to the Marketing Discipline Guidelines 2024 (MDG 2024) for petrol pump dealers, and to selling goods on credit. The MDG guides are not the official text: refer to the oil companies' official guidelines and circulars for accurate and current rules. MDG Services is a private company, not connected with IndianOil, BPCL, HPCL or any government body.\n\n## The company and the apps\n\n${company.join("\n")}\n\n## Short videos on running a pump\n\nOne-minute videos in Hindi and English on the daily rules of a petrol pump, each on its own page. Library: ${SITE}/videos\n\n${videos.join("\n")}\n\n${sections.join("\n")}${kkIntro}${kkSections.join("\n")}`;
   return new Response(text, { headers: { "content-type": "text/plain; charset=utf-8" } });
 }

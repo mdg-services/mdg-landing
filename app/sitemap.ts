@@ -3,6 +3,7 @@ import { guideNow } from "@/guides/clock";
 import { COMPANY_ROUTES, pathFor } from "@/i18n/lang";
 import { SITE_PAGES } from "../guide/copy.ts";
 import { ALL, SITE, contextAt, lastModified, releasesOn } from "@/guides/model";
+import { VIDEO_SLUGS } from "@/routing/videos";
 
 /**
  * The sitemap lists the site's own pages and the guide pages of both
@@ -23,6 +24,9 @@ const HINDI_PAGES = ["/hi", "/hi/register", "/hi/grievance"];
 /** The Khata Kavach product page. Kept here, not in the guide's SITE_PAGES, which belongs to the guide machinery. */
 const KK_PAGES = ["/khata-kavach", "/hi/khata-kavach"];
 
+/** The video library and one page per explainer. One address each: the English cut is `?lang=en` on the same page. */
+const VIDEO_PAGES = ["/videos", ...VIDEO_SLUGS.map((slug) => `/videos/${slug}`)];
+
 /** The company pages (about, contact, pricing, terms, refund, shipping) and their Hindi twins. Kept here for the same reason. */
 const COMPANY_PAGES = COMPANY_ROUTES.flatMap((r) => [pathFor("en", r), pathFor("hi", r)]);
 
@@ -30,7 +34,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const now = guideNow();
   return [
     // the home page is listed as the bare origin, the same address its canonical and hreflang give
-    ...[...SITE_PAGES, ...HINDI_PAGES, ...KK_PAGES, ...COMPANY_PAGES].map((p) => ({ url: p === "/" ? SITE : `${SITE}${p}` })),
+    ...[...SITE_PAGES, ...HINDI_PAGES, ...KK_PAGES, ...COMPANY_PAGES, ...VIDEO_PAGES].map((p) => ({ url: p === "/" ? SITE : `${SITE}${p}` })),
     ...ALL.flatMap((col) => {
       const ctx = contextAt(col, now);
       return releasesOn(col, ctx.content, ctx.day).map((r) => ({ url: `${SITE}${r.path}`, lastModified: lastModified(ctx, r) }));

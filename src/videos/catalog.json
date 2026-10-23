@@ -1,0 +1,3180 @@
+{
+ "videos": [
+  {
+   "slug": "dod-clock",
+   "source": "gen-dod-clock",
+   "hi": {
+    "title": "तीन दिन की गिनती",
+    "subtitle": "उधार लिया तेल — कब तक जमा करना है",
+    "description": "उधार लिया तेल — कब तक जमा करना है. जब तक खाते में पैसा है, आप तेल खरीदते हैं और पैसा कटता है। उसके बाद लिया गया उधार तीन दिन में जमा करना होता है। तीसरा दिन बैंक की छुट्टी हो, तो तारीख़ आगे खिसक जाती है। मान लीजिए शुक्रवार को उधार लिया। तीसरा दिन रविवार बनता है। यह वीडियो पंप चलाने की बात है, ऐप की नहीं — किसी को भी भेज सकते हैं।",
+    "duration": 43.6,
+    "chapters": [
+     {
+      "t": 0,
+      "title": "तीन दिन की गिनती"
+     },
+     {
+      "t": 5.1,
+      "title": "खाते में पैसा है"
+     },
+     {
+      "t": 10.6,
+      "title": "दिन — जमा करने के लिए"
+     },
+     {
+      "t": 14.9,
+      "title": "ये दिन छुट्टी माने जाते हैं"
+     },
+     {
+      "t": 20.1,
+      "title": "उधार लिया"
+     },
+     {
+      "t": 26.2,
+      "title": "कोई याद नहीं दिलाता"
+     },
+     {
+      "t": 31.5,
+      "title": "रोज़ आपके फ़ोन पर — कितना और कब तक"
+     },
+     {
+      "t": 35.8,
+      "title": "दोहराइए"
+     }
+    ],
+    "media": {
+     "dir": "gen-dod-clock-hi",
+     "tiny": "tiny.dcdeadec.mp4",
+     "low": "low.fbf37abd.mp4",
+     "high": "high.0092d78e.mp4",
+     "poster": "poster.1069d2ca.webp",
+     "thumb": "thumb.c569db40.webp",
+     "og": "og.88cb3572.jpg",
+     "bytes": {
+      "tiny": 299648,
+      "low": 434399,
+      "high": 1034836
+     }
+    }
+   },
+   "en": {
+    "title": "The three-day clock",
+    "subtitle": "Fuel taken on credit, and the day it must be paid back",
+    "description": "Fuel taken on credit, and the day it must be paid back. While there is money in the account, you buy fuel and it is deducted. Credit taken after that has to be repaid within three days. If the third day is a bank holiday, the date moves forward. Say you took credit on a Friday. The third day lands on a Sunday. This is about running a pump, not about the app. Made to be forwarded.",
+    "duration": 36.4,
+    "chapters": [
+     {
+      "t": 0,
+      "title": "The three-day clock"
+     },
+     {
+      "t": 4,
+      "title": "Money in the account"
+     },
+     {
+      "t": 8.8,
+      "title": "days to deposit"
+     },
+     {
+      "t": 13.4,
+      "title": "These count as holidays"
+     },
+     {
+      "t": 17.2,
+      "title": "Credit taken"
+     },
+     {
+      "t": 21.9,
+      "title": "Nobody reminds you"
+     },
+     {
+      "t": 25.8,
+      "title": "On your phone daily: how much, and by when"
+     },
+     {
+      "t": 30.2,
+      "title": "Recap"
+     }
+    ],
+    "media": {
+     "dir": "gen-dod-clock-en",
+     "tiny": "tiny.97c5e1ea.mp4",
+     "low": "low.920684b1.mp4",
+     "high": "high.21e22630.mp4",
+     "poster": "poster.88c62bf1.webp",
+     "thumb": "thumb.d72f2d6f.webp",
+     "og": "og.51d4e15e.jpg",
+     "bytes": {
+      "tiny": 268055,
+      "low": 388916,
+      "high": 970487
+     }
+    }
+   }
+  },
+  {
+   "slug": "supply-conditions",
+   "source": "gen-supply-conditions",
+   "hi": {
+    "title": "सात शर्तें",
+    "subtitle": "जो अगला लोड रोक सकती हैं",
+    "description": "जो अगला लोड रोक सकती हैं. सात। हर बार यही छोटी सूची आपके पंप पर देखी जाती है। सूची यह रही। देखिए, इनमें से कोई आपके यहाँ खुली तो नहीं। ज़्यादातर एक-एक लाइन में बंद हो जाती हैं। पता होनी चाहिए। कुछ आप ख़ुद बंद कर सकते हैं, कुछ के लिए एक फ़ोन करना पड़ता है। यह वीडियो पंप चलाने की बात है, ऐप की नहीं — किसी को भी भेज सकते हैं।",
+    "duration": 47.8,
+    "chapters": [
+     {
+      "t": 0,
+      "title": "सात शर्तें"
+     },
+     {
+      "t": 4.9,
+      "title": "शर्तें — हर लोड से पहले"
+     },
+     {
+      "t": 10.7,
+      "title": "ये सात"
+     },
+     {
+      "t": 16.7,
+      "title": "ये सात"
+     },
+     {
+      "t": 21.2,
+      "title": "दोनों तरफ़ का काम आज ही शुरू हो सकता है"
+     },
+     {
+      "t": 26,
+      "title": "एक शर्त खुली"
+     },
+     {
+      "t": 31.1,
+      "title": "पता तब चलता है, जब देर हो चुकी है"
+     },
+     {
+      "t": 37.2,
+      "title": "कौन-सी शर्त खुली है — सादे शब्दों में"
+     },
+     {
+      "t": 41.9,
+      "title": "दोहराइए"
+     }
+    ],
+    "media": {
+     "dir": "gen-supply-conditions-hi",
+     "tiny": "tiny.140b11d4.mp4",
+     "low": "low.b06627a2.mp4",
+     "high": "high.364682ae.mp4",
+     "poster": "poster.6ee9aa1b.webp",
+     "thumb": "thumb.7c953972.webp",
+     "og": "og.fe7fb0f8.jpg",
+     "bytes": {
+      "tiny": 348538,
+      "low": 500665,
+      "high": 1237216
+     }
+    }
+   },
+   "en": {
+    "title": "Seven conditions",
+    "subtitle": "The short list checked before your next load",
+    "description": "The short list checked before your next load. Seven. The same short list, checked against your pump every time. Here is the list. Look and see if any of them is open at your pump. Most of them close with one small step. The hard part is knowing. Some you can close yourself. Some just need one phone call. This is about running a pump, not about the app. Made to be forwarded.",
+    "duration": 45,
+    "chapters": [
+     {
+      "t": 0,
+      "title": "Seven conditions"
+     },
+     {
+      "t": 4.8,
+      "title": "conditions, before every load"
+     },
+     {
+      "t": 10.4,
+      "title": "The seven"
+     },
+     {
+      "t": 16.3,
+      "title": "The seven"
+     },
+     {
+      "t": 21.8,
+      "title": "Either way, it starts with something you can do today"
+     },
+     {
+      "t": 26.2,
+      "title": "One condition open"
+     },
+     {
+      "t": 30.5,
+      "title": "You find out once it is late"
+     },
+     {
+      "t": 35.1,
+      "title": "Which condition is open, in plain words"
+     },
+     {
+      "t": 39.7,
+      "title": "Recap"
+     }
+    ],
+    "media": {
+     "dir": "gen-supply-conditions-en",
+     "tiny": "tiny.37e91e99.mp4",
+     "low": "low.f8c7687f.mp4",
+     "high": "high.31bdbf7e.mp4",
+     "poster": "poster.ad5ab1a1.webp",
+     "thumb": "thumb.744eff3a.webp",
+     "og": "og.b161ef2a.jpg",
+     "bytes": {
+      "tiny": 356668,
+      "low": 517197,
+      "high": 1328399
+     }
+    }
+   }
+  },
+  {
+   "slug": "decantation",
+   "source": "gen-decantation",
+   "hi": {
+    "title": "टैंकर सही तरीक़े से उतारिए",
+    "subtitle": "क्लिप, चेन, डिप, सैंपल और काग़ज़",
+    "description": "क्लिप, चेन, डिप, सैंपल और काग़ज़. काम तीन हिस्सों में है — पहले, उतरते वक़्त, और उतर जाने के बाद। पहले टैंकर का डिप और वाटर डिप, सेफ्टी चेक, फिर डेंसिटी। वाटर डिप छूट गया तो पानी आपकी अपनी टंकी में उतर सकता है। तेल उतरते वक़्त क्रोकोडाइल क्लिप और फ़ेंसिंग चेन, दोनों लगाइए। यह वीडियो पंप चलाने की बात है, ऐप की नहीं — किसी को भी भेज सकते हैं।",
+    "duration": 59.6,
+    "chapters": [
+     {
+      "t": 0,
+      "title": "तेल उतारने का सही तरीक़ा"
+     },
+     {
+      "t": 6.4,
+      "title": "डिप और चेक"
+     },
+     {
+      "t": 13.5,
+      "title": "एक बूँद गिरने से पहले"
+     },
+     {
+      "t": 19.6,
+      "title": "एक बूँद गिरने से पहले"
+     },
+     {
+      "t": 24.7,
+      "title": "काम ख़त्म होते ही दोनों समेटकर अपनी जगह रखिए"
+     },
+     {
+      "t": 30.5,
+      "title": "सैंपल बॉक्स में"
+     },
+     {
+      "t": 37,
+      "title": "सैंपल बॉक्स में"
+     },
+     {
+      "t": 41.9,
+      "title": "खाली टैंकर, आधा हिसाब"
+     },
+     {
+      "t": 46.9,
+      "title": "हर टैंकर का हिसाब, पीछे भागे बिना"
+     },
+     {
+      "t": 52.7,
+      "title": "दोहराइए"
+     }
+    ],
+    "media": {
+     "dir": "gen-decantation-hi",
+     "tiny": "tiny.42162726.mp4",
+     "low": "low.a1ab72a9.mp4",
+     "high": "high.18b161ca.mp4",
+     "poster": "poster.125f059a.webp",
+     "thumb": "thumb.5553a8be.webp",
+     "og": "og.c162f1b5.jpg",
+     "bytes": {
+      "tiny": 412245,
+      "low": 607701,
+      "high": 1446631
+     }
+    }
+   },
+   "en": {
+    "title": "Decant a tanker properly",
+    "subtitle": "The clip, the chain, the dip, the sample, the papers",
+    "description": "The clip, the chain, the dip, the sample, the papers. The job is in three parts: before, while it empties, and after. First the tanker dip with the water dip, the safety check, the density. Miss the water dip and the water can end up in your own tank. While it empties, the crocodile clip and the fencing chain both go on. This is about running a pump, not about the app. Made to be forwarded.",
+    "duration": 52.3,
+    "chapters": [
+     {
+      "t": 0,
+      "title": "Decanting, done properly"
+     },
+     {
+      "t": 4.6,
+      "title": "Dip and check"
+     },
+     {
+      "t": 10.6,
+      "title": "Before a single drop comes out"
+     },
+     {
+      "t": 16.7,
+      "title": "Before a single drop comes out"
+     },
+     {
+      "t": 20.8,
+      "title": "The moment it is done, stow both back where they belong"
+     },
+     {
+      "t": 25.5,
+      "title": "Into the sample box"
+     },
+     {
+      "t": 31.7,
+      "title": "Into the sample box"
+     },
+     {
+      "t": 36.2,
+      "title": "Empty tanker, half a record"
+     },
+     {
+      "t": 41.6,
+      "title": "Every tanker on record, without chasing anyone"
+     },
+     {
+      "t": 47.1,
+      "title": "Recap"
+     }
+    ],
+    "media": {
+     "dir": "gen-decantation-en",
+     "tiny": "tiny.2e286ee9.mp4",
+     "low": "low.2292fdf4.mp4",
+     "high": "high.04bece9a.mp4",
+     "poster": "poster.aca91a11.webp",
+     "thumb": "thumb.1b3194c2.webp",
+     "og": "og.e7a47145.jpg",
+     "bytes": {
+      "tiny": 395912,
+      "low": 583883,
+      "high": 1477176
+     }
+    }
+   }
+  },
+  {
+   "slug": "prove-the-meter",
+   "source": "gen-prove-the-meter",
+   "hi": {
+    "title": "पर्ची से जाँच",
+    "subtitle": "मीटर सही पढ़ा या नहीं — पैसा खुद बता देता है",
+    "description": "मीटर सही पढ़ा या नहीं — पैसा खुद बता देता है. हर नोज़ल दो काउंटर छापता है — लीटर का और रुपये का। आज में से कल घटाइए, रुपये को रेट से भाग दीजिए, फिर मिलाइए। मीटर कहता है 330.33 लीटर, और पैसा कहता है 329.98 लीटर। फ़र्क़ सिर्फ़ 0.35 लीटर — यानी पढ़ाई सही उतरी। यह वीडियो पंप चलाने की बात है, ऐप की नहीं — किसी को भी भेज सकते हैं।",
+    "duration": 58.8,
+    "chapters": [
+     {
+      "t": 0,
+      "title": "पर्ची से जाँच"
+     },
+     {
+      "t": 4.9,
+      "title": "पर्ची पर दो नंबर"
+     },
+     {
+      "t": 10.1,
+      "title": "आज − कल"
+     },
+     {
+      "t": 15.3,
+      "title": "दोनों एक ही बात कह रहे हैं"
+     },
+     {
+      "t": 24.1,
+      "title": "दोनों एक ही बात कह रहे हैं"
+     },
+     {
+      "t": 30.2,
+      "title": "एक अंक की गलती"
+     },
+     {
+      "t": 35.8,
+      "title": "इतना ध्यान रखिए"
+     },
+     {
+      "t": 40.4,
+      "title": "और आज का नंबर कल से कम कभी नहीं हो सकता"
+     },
+     {
+      "t": 46.9,
+      "title": "गलत अंक, कागज़ पर चढ़ने से पहले"
+     },
+     {
+      "t": 52.5,
+      "title": "दोहराइए"
+     }
+    ],
+    "media": {
+     "dir": "gen-prove-the-meter-hi",
+     "tiny": "tiny.1e1063ad.mp4",
+     "low": "low.73679252.mp4",
+     "high": "high.0ac3fcd9.mp4",
+     "poster": "poster.a5e983db.webp",
+     "thumb": "thumb.36396247.webp",
+     "og": "og.8d53a1cb.jpg",
+     "bytes": {
+      "tiny": 409816,
+      "low": 604832,
+      "high": 1466073
+     }
+    }
+   },
+   "en": {
+    "title": "Prove it with the slip",
+    "subtitle": "The rupee counter tells you whether the litre counter was read right",
+    "description": "The rupee counter tells you whether the litre counter was read right. Every nozzle prints two counters: one for litres, one for rupees. Subtract yesterday from today, divide the rupees by the rate, compare. The meter says 330.33 litres. The money says 329.98 litres. Just 0.35 litres apart, so the reading holds up. This is about running a pump, not about the app. Made to be forwarded.",
+    "duration": 50.5,
+    "chapters": [
+     {
+      "t": 0,
+      "title": "Prove it with the slip"
+     },
+     {
+      "t": 3.5,
+      "title": "Two numbers on the slip"
+     },
+     {
+      "t": 8.8,
+      "title": "Today − yesterday"
+     },
+     {
+      "t": 14.3,
+      "title": "Both are saying the same thing"
+     },
+     {
+      "t": 22.2,
+      "title": "Both are saying the same thing"
+     },
+     {
+      "t": 26.6,
+      "title": "One digit, misread"
+     },
+     {
+      "t": 32.6,
+      "title": "Keep these three in mind"
+     },
+     {
+      "t": 36.4,
+      "title": "And today can never read lower than yesterday"
+     },
+     {
+      "t": 41.7,
+      "title": "A wrong digit caught before it is written down"
+     },
+     {
+      "t": 46.1,
+      "title": "Recap"
+     }
+    ],
+    "media": {
+     "dir": "gen-prove-the-meter-en",
+     "tiny": "tiny.9e6cd454.mp4",
+     "low": "low.cd77789a.mp4",
+     "high": "high.c69cf0ca.mp4",
+     "poster": "poster.67dc30f6.webp",
+     "thumb": "thumb.b0b28d77.webp",
+     "og": "og.df95824a.jpg",
+     "bytes": {
+      "tiny": 381435,
+      "low": 561980,
+      "high": 1436018
+     }
+    }
+   }
+  },
+  {
+   "slug": "declarations",
+   "source": "gen-declarations",
+   "hi": {
+    "title": "छह घोषणाएँ",
+    "subtitle": "हर एक की अपनी तारीख़ — और याद कोई नहीं दिलाता",
+    "description": "हर एक की अपनी तारीख़ — और याद कोई नहीं दिलाता. रोज़ की, हफ़्ते की, महीने की, तिमाही की — और एक सालाना। सुरक्षा, सफ़ाई, मज़दूरी, स्टाफ़, TDS और सालाना रिपोर्ट। यह सूची और तारीख़ें हर पंप पर एक जैसी नहीं होतीं। जो काम जितना कम आता है, वही सबसे ज़्यादा छूटता है। यह वीडियो पंप चलाने की बात है, ऐप की नहीं — किसी को भी भेज सकते हैं।",
+    "duration": 51.3,
+    "chapters": [
+     {
+      "t": 0,
+      "title": "छह घोषणाएँ"
+     },
+     {
+      "t": 6.7,
+      "title": "घोषणाएँ, छह अलग रफ़्तार पर"
+     },
+     {
+      "t": 11.9,
+      "title": "छह घोषणाएँ, छह रफ़्तार"
+     },
+     {
+      "t": 17.9,
+      "title": "छह घोषणाएँ, छह रफ़्तार"
+     },
+     {
+      "t": 22.8,
+      "title": "इसलिए तिमाही और सालाना वाली पर नज़र रखिए"
+     },
+     {
+      "t": 27.6,
+      "title": "रिकॉर्ड में खाली जगह"
+     },
+     {
+      "t": 32.2,
+      "title": "पूरी सूची एक कागज़ पर"
+     },
+     {
+      "t": 39.8,
+      "title": "आपके पंप की अपनी सूची, अपनी तारीख़ों के साथ"
+     },
+     {
+      "t": 44.7,
+      "title": "दोहराइए"
+     }
+    ],
+    "media": {
+     "dir": "gen-declarations-hi",
+     "tiny": "tiny.36a6841a.mp4",
+     "low": "low.273470f2.mp4",
+     "high": "high.f34b73b4.mp4",
+     "poster": "poster.ad6bc976.webp",
+     "thumb": "thumb.d589cab2.webp",
+     "og": "og.5a6bff21.jpg",
+     "bytes": {
+      "tiny": 365003,
+      "low": 531025,
+      "high": 1283748
+     }
+    }
+   },
+   "en": {
+    "title": "Six declarations",
+    "subtitle": "Each one on its own clock, and nobody sends a reminder",
+    "description": "Each one on its own clock, and nobody sends a reminder. One daily, one weekly, two monthly, one quarterly, one yearly. Safety, cleanliness, wages, staff, TDS, and the annual report. This list and these dates are not the same at every pump. The job that comes round least often is the one that goes missing. This is about running a pump, not about the app. Made to be forwarded.",
+    "duration": 40.9,
+    "chapters": [
+     {
+      "t": 0,
+      "title": "Six declarations"
+     },
+     {
+      "t": 5,
+      "title": "filings, on six separate clocks"
+     },
+     {
+      "t": 8.4,
+      "title": "Six filings, six clocks"
+     },
+     {
+      "t": 14.6,
+      "title": "Six filings, six clocks"
+     },
+     {
+      "t": 18.7,
+      "title": "So watch the quarterly and yearly ones hardest"
+     },
+     {
+      "t": 22.8,
+      "title": "A hole in the record"
+     },
+     {
+      "t": 26.4,
+      "title": "The whole list, one sheet"
+     },
+     {
+      "t": 31,
+      "title": "Your outlet's own list, with your own dates on it"
+     },
+     {
+      "t": 35.5,
+      "title": "Recap"
+     }
+    ],
+    "media": {
+     "dir": "gen-declarations-en",
+     "tiny": "tiny.bfa549c5.mp4",
+     "low": "low.7ecce870.mp4",
+     "high": "high.92beb7c0.mp4",
+     "poster": "poster.7e8cb93c.webp",
+     "thumb": "thumb.4603370c.webp",
+     "og": "og.257ea6db.jpg",
+     "bytes": {
+      "tiny": 322155,
+      "low": 463555,
+      "high": 1193558
+     }
+    }
+   }
+  },
+  {
+   "slug": "dip-settle",
+   "source": "gen-dip-settle",
+   "hi": {
+    "title": "टैंक को ठहरने दीजिए",
+    "subtitle": "टैंकर के तुरंत बाद ली गई डिप क्यों झूठ बोलती है",
+    "description": "टैंकर के तुरंत बाद ली गई डिप क्यों झूठ बोलती है. तेल अभी ठहरा नहीं है। ठहरे टैंक की नाप ही सच बताती है। एक पंप पर उस सुबह पेट्रोल क़रीब 2,500 लीटर ज़्यादा निकला। अगली सुबह वही टैंक क़रीब 2,800 लीटर कम निकला। दोनों दिन जोड़िए तो लगभग शून्य। तेल न आया था, न गया। यह वीडियो पंप चलाने की बात है, ऐप की नहीं — किसी को भी भेज सकते हैं।",
+    "duration": 58,
+    "chapters": [
+     {
+      "t": 0,
+      "title": "टैंक को ठहरने दीजिए"
+     },
+     {
+      "t": 5.6,
+      "title": "ठहरा हुआ टैंक"
+     },
+     {
+      "t": 11.8,
+      "title": "ज़्यादा — एक ही सुबह में"
+     },
+     {
+      "t": 17.1,
+      "title": "+2,500 लीटर"
+     },
+     {
+      "t": 22,
+      "title": "+2,500 लीटर"
+     },
+     {
+      "t": 27.6,
+      "title": "एक बंद दिन का हिसाब"
+     },
+     {
+      "t": 34.9,
+      "title": "एक बंद दिन का हिसाब"
+     },
+     {
+      "t": 39.7,
+      "title": "दो झूठी लाइनें"
+     },
+     {
+      "t": 45.1,
+      "title": "हर दिन का हिसाब, आपके फ़ोन पर"
+     },
+     {
+      "t": 51.9,
+      "title": "दोहराइए"
+     }
+    ],
+    "media": {
+     "dir": "gen-dip-settle-hi",
+     "tiny": "tiny.74e40425.mp4",
+     "low": "low.0cc205ae.mp4",
+     "high": "high.cfb040a2.mp4",
+     "poster": "poster.3d75476f.webp",
+     "thumb": "thumb.4fdd3dce.webp",
+     "og": "og.9b08183a.jpg",
+     "bytes": {
+      "tiny": 393003,
+      "low": 574883,
+      "high": 1365096
+     }
+    }
+   },
+   "en": {
+    "title": "Let the tank settle",
+    "subtitle": "Why a dip taken straight after a decant lies to you",
+    "description": "Why a dip taken straight after a decant lies to you. The fuel has not settled yet. Only a settled tank tells you the truth. At one outlet the petrol read about 2,500 litres over that morning. The next morning the same tank read about 2,800 litres short. Add the two days and it is almost nothing. No fuel came, none went. This is about running a pump, not about the app. Made to be forwarded.",
+    "duration": 54.2,
+    "chapters": [
+     {
+      "t": 0,
+      "title": "Let the tank settle"
+     },
+     {
+      "t": 5.7,
+      "title": "A settled tank"
+     },
+     {
+      "t": 10.8,
+      "title": "over, in a single morning"
+     },
+     {
+      "t": 16.3,
+      "title": "+2,500 L"
+     },
+     {
+      "t": 21.4,
+      "title": "+2,500 L"
+     },
+     {
+      "t": 27.3,
+      "title": "The arithmetic of one closed day"
+     },
+     {
+      "t": 33.3,
+      "title": "The arithmetic of one closed day"
+     },
+     {
+      "t": 38,
+      "title": "Two false lines"
+     },
+     {
+      "t": 43.3,
+      "title": "Every day's arithmetic, on your phone"
+     },
+     {
+      "t": 48.8,
+      "title": "Recap"
+     }
+    ],
+    "media": {
+     "dir": "gen-dip-settle-en",
+     "tiny": "tiny.6e2e8e15.mp4",
+     "low": "low.cfce4a22.mp4",
+     "high": "high.35220ef2.mp4",
+     "poster": "poster.c14efed5.webp",
+     "thumb": "thumb.a8c275a2.webp",
+     "og": "og.a124bfb9.jpg",
+     "bytes": {
+      "tiny": 399892,
+      "low": 592047,
+      "high": 1486149
+     }
+    }
+   }
+  },
+  {
+   "slug": "wall-papers",
+   "source": "gen-wall-papers",
+   "hi": {
+    "title": "पहले दीवार, फिर किताब",
+    "subtitle": "जो काग़ज़ टँगे रहने चाहिए, और जो शीटें रोज़ भरनी हैं",
+    "description": "जो काग़ज़ टँगे रहने चाहिए, और जो शीटें रोज़ भरनी हैं. PESO लाइसेंस का नंबर दुकान के अंदर, इमरजेंसी नंबर बाहर। साथ में ट्रेड लाइसेंस, GST और नाप-तौल की कॉपियाँ भी टँगी रहें। उसी लिस्ट में सबसे भारी दो काम — यही दो काग़ज़ वैध रखना। दीवार पर कॉपी टँगी होना और लाइसेंस वैध होना, दो अलग बातें हैं। यह वीडियो पंप चलाने की बात है, ऐप की नहीं — किसी को भी भेज सकते हैं।",
+    "duration": 58.7,
+    "chapters": [
+     {
+      "t": 0,
+      "title": "पहले दीवार, फिर किताब"
+     },
+     {
+      "t": 4.8,
+      "title": "दीवार पर क्या दिखना चाहिए"
+     },
+     {
+      "t": 9.9,
+      "title": "दीवार पर क्या दिखना चाहिए"
+     },
+     {
+      "t": 15.2,
+      "title": "काग़ज़ जिन पर सबसे ज़्यादा भार"
+     },
+     {
+      "t": 21.1,
+      "title": "लिस्ट में दोनों अलग-अलग लिखे हैं"
+     },
+     {
+      "t": 28.1,
+      "title": "शीटें और सफ़ाई"
+     },
+     {
+      "t": 34.3,
+      "title": "शीटें भरना"
+     },
+     {
+      "t": 41.2,
+      "title": "कोई फ़ोन नहीं आता"
+     },
+     {
+      "t": 46.4,
+      "title": "हर लाइसेंस की तारीख़, एक जगह"
+     },
+     {
+      "t": 52.1,
+      "title": "दोहराइए"
+     }
+    ],
+    "media": {
+     "dir": "gen-wall-papers-hi",
+     "tiny": "tiny.a948beeb.mp4",
+     "low": "low.d4155a64.mp4",
+     "high": "high.c1c717bd.mp4",
+     "poster": "poster.cb5c2cf1.webp",
+     "thumb": "thumb.a530b195.webp",
+     "og": "og.f1af280d.jpg",
+     "bytes": {
+      "tiny": 416837,
+      "low": 616325,
+      "high": 1497816
+     }
+    }
+   },
+   "en": {
+    "title": "The wall before the books",
+    "subtitle": "The papers that must hang, and the sheets that must be filled",
+    "description": "The papers that must hang, and the sheets that must be filled. The PESO licence number goes inside the sales building. The emergency number outside. Alongside them: copies of the trade licence, the GST and the weights certificate. The two heaviest items on that same list are keeping two papers valid. A copy on the wall and a licence still valid are two different things. This is about running a pump, not about the app. Made to be forwarded.",
+    "duration": 53.1,
+    "chapters": [
+     {
+      "t": 0,
+      "title": "The wall before the books"
+     },
+     {
+      "t": 4.7,
+      "title": "What has to be on show"
+     },
+     {
+      "t": 10.8,
+      "title": "What has to be on show"
+     },
+     {
+      "t": 17.1,
+      "title": "papers that carry the most weight"
+     },
+     {
+      "t": 22.4,
+      "title": "The list names both, separately"
+     },
+     {
+      "t": 27.4,
+      "title": "The sheets and the housekeeping"
+     },
+     {
+      "t": 31,
+      "title": "Fill the sheets"
+     },
+     {
+      "t": 37,
+      "title": "Nobody rings you"
+     },
+     {
+      "t": 42.1,
+      "title": "Every licence date, in one place"
+     },
+     {
+      "t": 47.8,
+      "title": "Recap"
+     }
+    ],
+    "media": {
+     "dir": "gen-wall-papers-en",
+     "tiny": "tiny.7efa58ff.mp4",
+     "low": "low.a6f3c2b2.mp4",
+     "high": "high.70e3b7d3.mp4",
+     "poster": "poster.eb1956fd.webp",
+     "thumb": "thumb.4078f10a.webp",
+     "og": "og.2b5aa4c0.jpg",
+     "bytes": {
+      "tiny": 417806,
+      "low": 616116,
+      "high": 1571088
+     }
+    }
+   }
+  },
+  {
+   "slug": "stock-variation",
+   "source": "gen-stock-variation",
+   "hi": {
+    "title": "छूट एक नहीं, दो हैं",
+    "subtitle": "स्टॉक वेरिएशन की असली गिनती",
+    "description": "स्टॉक वेरिएशन की असली गिनती. बिक्री मीटर से गिनी जाती है, बचा हुआ तेल डिप से। पहली छूट — टैंक में बचे स्टॉक का चार प्रतिशत। दूसरी छूट बेचे गए तेल पर — पेट्रोल पर ज़्यादा, डीज़ल पर कम। पर यह दूसरी छूट सिर्फ़ तब, जब तेल कम निकले। यह वीडियो पंप चलाने की बात है, ऐप की नहीं — किसी को भी भेज सकते हैं।",
+    "duration": 56,
+    "chapters": [
+     {
+      "t": 0,
+      "title": "छूट एक नहीं, दो हैं"
+     },
+     {
+      "t": 5.1,
+      "title": "दोनों का फ़र्क़ = वेरिएशन"
+     },
+     {
+      "t": 9.6,
+      "title": "टैंक के स्टॉक पर छूट"
+     },
+     {
+      "t": 14.8,
+      "title": "भाप बनने और हैंडलिंग की छूट"
+     },
+     {
+      "t": 21.6,
+      "title": "दूसरी छूट कब मिलती है"
+     },
+     {
+      "t": 26,
+      "title": "दूसरी छूट कब मिलती है"
+     },
+     {
+      "t": 30.8,
+      "title": "स्टॉक का 4%"
+     },
+     {
+      "t": 40.7,
+      "title": "गिनती दोनों तरफ़ एक जैसी नहीं"
+     },
+     {
+      "t": 45.8,
+      "title": "रोज़ का वेरिएशन, छूट पहले से जुड़ी हुई"
+     },
+     {
+      "t": 50.2,
+      "title": "दोहराइए"
+     }
+    ],
+    "media": {
+     "dir": "gen-stock-variation-hi",
+     "tiny": "tiny.f5711e9b.mp4",
+     "low": "low.c2c99712.mp4",
+     "high": "high.3aa17cde.mp4",
+     "poster": "poster.359fb877.webp",
+     "thumb": "thumb.ae39e8af.webp",
+     "og": "og.d7ad315c.jpg",
+     "bytes": {
+      "tiny": 378867,
+      "low": 553140,
+      "high": 1320233
+     }
+    }
+   },
+   "en": {
+    "title": "Two allowances, not one",
+    "subtitle": "What the permissible stock variation is actually made of",
+    "description": "What the permissible stock variation is actually made of. Sales are counted off the meter. What is left is measured by the dip. The first allowance: four percent of the stock sitting in the tank. The second is on what you sold: more on petrol, less on diesel. But that second allowance only applies when the stock comes up short. This is about running a pump, not about the app. Made to be forwarded.",
+    "duration": 53.5,
+    "chapters": [
+     {
+      "t": 0,
+      "title": "Two allowances, not one"
+     },
+     {
+      "t": 6.5,
+      "title": "The gap between them is the variation"
+     },
+     {
+      "t": 12.7,
+      "title": "allowed on the stock in the tank"
+     },
+     {
+      "t": 16.9,
+      "title": "The evaporation and handling allowance"
+     },
+     {
+      "t": 22.4,
+      "title": "When the second one applies"
+     },
+     {
+      "t": 27.3,
+      "title": "When the second one applies"
+     },
+     {
+      "t": 31.9,
+      "title": "4% of stock"
+     },
+     {
+      "t": 38.7,
+      "title": "The band is not the same both ways"
+     },
+     {
+      "t": 43.2,
+      "title": "Your daily variation, with the band already worked out"
+     },
+     {
+      "t": 48.2,
+      "title": "Recap"
+     }
+    ],
+    "media": {
+     "dir": "gen-stock-variation-en",
+     "tiny": "tiny.4221af0a.mp4",
+     "low": "low.ea345c95.mp4",
+     "high": "high.376bb886.mp4",
+     "poster": "poster.259128f7.webp",
+     "thumb": "thumb.79b0f6c2.webp",
+     "og": "og.3e1c9df2.jpg",
+     "bytes": {
+      "tiny": 401103,
+      "low": 587520,
+      "high": 1490844
+     }
+    }
+   }
+  },
+  {
+   "slug": "broken-dip",
+   "source": "gen-broken-dip",
+   "hi": {
+    "title": "ज़ीरो भी एक रीडिंग है",
+    "subtitle": "एक मरा हुआ गेज पूरा महीना बिगाड़ देता है",
+    "description": "एक मरा हुआ गेज पूरा महीना बिगाड़ देता है. बिक्री गिन ली जाती है, पर तेल घटता हुआ दिखता ही नहीं। एक पंप पर ऐसे टैंक से करीब 8,800 लीटर बिक गया। कहीं कोई लाल बत्ती नहीं जली। ज़ीरो एक जायज़ नंबर है। नतीजा — तीन बार झूठा अलर्ट कि तेल कहीं से आ गया। यह वीडियो पंप चलाने की बात है, ऐप की नहीं — किसी को भी भेज सकते हैं।",
+    "duration": 46.7,
+    "chapters": [
+     {
+      "t": 0,
+      "title": "ज़ीरो भी एक रीडिंग है"
+     },
+     {
+      "t": 4.4,
+      "title": "नोज़ल ने बेचा"
+     },
+     {
+      "t": 9.8,
+      "title": "ज़ीरो बताते टैंक से बिका"
+     },
+     {
+      "t": 14.5,
+      "title": "ज़ीरो बताते टैंक से बिका"
+     },
+     {
+      "t": 19.8,
+      "title": "झूठे \"तेल बढ़ गया\" अलर्ट"
+     },
+     {
+      "t": 25.5,
+      "title": "नोज़ल सही जुड़ा"
+     },
+     {
+      "t": 31.5,
+      "title": "मरा हुआ मीटर, ज़िंदा नोज़ल"
+     },
+     {
+      "t": 36.6,
+      "title": "मरा हुआ गेज पहले ही दिन पकड़ में"
+     },
+     {
+      "t": 41.8,
+      "title": "दोहराइए"
+     }
+    ],
+    "media": {
+     "dir": "gen-broken-dip-hi",
+     "tiny": "tiny.ea46e00d.mp4",
+     "low": "low.3bdc47cd.mp4",
+     "high": "high.9aa0eab2.mp4",
+     "poster": "poster.3f192a83.webp",
+     "thumb": "thumb.f909e95e.webp",
+     "og": "og.181e531c.jpg",
+     "bytes": {
+      "tiny": 327492,
+      "low": 480952,
+      "high": 1160979
+     }
+    }
+   },
+   "en": {
+    "title": "A zero is a reading",
+    "subtitle": "One dead tank gauge can wreck a whole month",
+    "description": "One dead tank gauge can wreck a whole month. The sale gets counted, but the fuel never shows up as going down. At one pump, about 8,800 litres sold out of a tank reading zero. Nothing anywhere raised a flag. Zero is a perfectly valid number. The result: three false alerts saying fuel had appeared from nowhere. This is about running a pump, not about the app. Made to be forwarded.",
+    "duration": 44.4,
+    "chapters": [
+     {
+      "t": 0,
+      "title": "A zero is a reading"
+     },
+     {
+      "t": 4.7,
+      "title": "The nozzle sells"
+     },
+     {
+      "t": 9.9,
+      "title": "sold from a tank that reported empty"
+     },
+     {
+      "t": 15.6,
+      "title": "sold from a tank that reported empty"
+     },
+     {
+      "t": 20.9,
+      "title": "False \"extra stock\" alerts"
+     },
+     {
+      "t": 26.2,
+      "title": "Nozzle mapped right"
+     },
+     {
+      "t": 31.1,
+      "title": "Dead meter, live nozzle"
+     },
+     {
+      "t": 35.9,
+      "title": "A dead gauge shows up on day one"
+     },
+     {
+      "t": 40.8,
+      "title": "Recap"
+     }
+    ],
+    "media": {
+     "dir": "gen-broken-dip-en",
+     "tiny": "tiny.65380591.mp4",
+     "low": "low.09fca3b5.mp4",
+     "high": "high.44683902.mp4",
+     "poster": "poster.1be0787a.webp",
+     "thumb": "thumb.ef639f8d.webp",
+     "og": "og.88784eb5.jpg",
+     "bytes": {
+      "tiny": 337687,
+      "low": 487309,
+      "high": 1254100
+     }
+    }
+   }
+  },
+  {
+   "slug": "water-dip",
+   "source": "gen-water-dip",
+   "hi": {
+    "title": "पानी का डिप",
+    "subtitle": "सब लेते हैं, पढ़ता कोई नहीं",
+    "description": "सब लेते हैं, पढ़ता कोई नहीं. एक टैंक की रीडिंग तीन नंबर की होती है, एक की नहीं। रॉड पर पानी वाला पेस्ट लगाइए। पानी हुआ तो रंग बदलेगा। रंग जहाँ तक बदला, टैंक में उतना ही पानी खड़ा है। जाँच दो हिस्सों की है — टैंक का डिप, और नोज़ल का नमूना। यह वीडियो पंप चलाने की बात है, ऐप की नहीं — किसी को भी भेज सकते हैं।",
+    "duration": 50.2,
+    "chapters": [
+     {
+      "t": 0,
+      "title": "पानी का डिप"
+     },
+     {
+      "t": 5.3,
+      "title": "हर टैंक, हर दिन"
+     },
+     {
+      "t": 9.5,
+      "title": "रॉड पर पेस्ट"
+     },
+     {
+      "t": 15.2,
+      "title": "रॉड पर पेस्ट"
+     },
+     {
+      "t": 19.6,
+      "title": "टैंक का डिप"
+     },
+     {
+      "t": 26.5,
+      "title": "दिखेगा नहीं, चला जाएगा"
+     },
+     {
+      "t": 33.4,
+      "title": "रजिस्टर में क्या जाता है"
+     },
+     {
+      "t": 39,
+      "title": "हर टैंक का पानी का डिप, हर दिन"
+     },
+     {
+      "t": 44,
+      "title": "दोहराइए"
+     }
+    ],
+    "media": {
+     "dir": "gen-water-dip-hi",
+     "tiny": "tiny.e838ba5a.mp4",
+     "low": "low.1dc6d650.mp4",
+     "high": "high.d2b52b24.mp4",
+     "poster": "poster.bd2153d1.webp",
+     "thumb": "thumb.b7de6498.webp",
+     "og": "og.ceaa8133.jpg",
+     "bytes": {
+      "tiny": 338432,
+      "low": 498899,
+      "high": 1190996
+     }
+    }
+   },
+   "en": {
+    "title": "The water dip",
+    "subtitle": "The reading everyone takes and nobody reads",
+    "description": "The reading everyone takes and nobody reads. A tank reading is three numbers, not one. Put water-finding paste on the rod. If there is water, the colour changes. The height the colour changed to is how much water is standing there. The check has two halves: the dip in the tank, a sample from the nozzle. This is about running a pump, not about the app. Made to be forwarded.",
+    "duration": 47.4,
+    "chapters": [
+     {
+      "t": 0,
+      "title": "The water dip"
+     },
+     {
+      "t": 5,
+      "title": "Every tank, every day"
+     },
+     {
+      "t": 7.7,
+      "title": "Paste on the rod"
+     },
+     {
+      "t": 13.8,
+      "title": "Paste on the rod"
+     },
+     {
+      "t": 18.3,
+      "title": "The tank dip"
+     },
+     {
+      "t": 23.6,
+      "title": "You will not see it. It goes out anyway."
+     },
+     {
+      "t": 29.9,
+      "title": "What goes into the register"
+     },
+     {
+      "t": 35.5,
+      "title": "Every tank's water dip, every single day"
+     },
+     {
+      "t": 40.7,
+      "title": "Recap"
+     }
+    ],
+    "media": {
+     "dir": "gen-water-dip-en",
+     "tiny": "tiny.e264c337.mp4",
+     "low": "low.d440b73c.mp4",
+     "high": "high.c02eb7ae.mp4",
+     "poster": "poster.5dfa215c.webp",
+     "thumb": "thumb.368870f5.webp",
+     "og": "og.7da28ccd.jpg",
+     "bytes": {
+      "tiny": 349200,
+      "low": 510358,
+      "high": 1285453
+     }
+    }
+   }
+  },
+  {
+   "slug": "density-15",
+   "source": "gen-density-15",
+   "hi": {
+    "title": "इनवॉइस पर लिखी डेंसिटी",
+    "subtitle": "जो मँगाया था, वही उतरा — इसका सबूत",
+    "description": "जो मँगाया था, वही उतरा — इसका सबूत. एक इनवॉइस पर पेट्रोल 727.300, डीज़ल 820.500 — दोनों अलग। यह नंबर पंद्रह डिग्री पर सुधारकर लिखा जाता है। तेल गर्मी में फैलता है, ठंड में सिकुड़ता है — इसीलिए। टैंकर आए तो इनवॉइस पढ़िए, ख़ुद नापिए, दोनों लिख लीजिए। यह वीडियो पंप चलाने की बात है, ऐप की नहीं — किसी को भी भेज सकते हैं।",
+    "duration": 56.2,
+    "chapters": [
+     {
+      "t": 0,
+      "title": "इनवॉइस पर लिखी डेंसिटी"
+     },
+     {
+      "t": 5.5,
+      "title": "हर प्रोडक्ट का अपना नंबर, हर लोड का अपना"
+     },
+     {
+      "t": 15.3,
+      "title": "डिग्री — सबके लिए एक पैमाना"
+     },
+     {
+      "t": 19.4,
+      "title": "डिग्री — सबके लिए एक पैमाना"
+     },
+     {
+      "t": 25.2,
+      "title": "इनवॉइस का नंबर"
+     },
+     {
+      "t": 30.2,
+      "title": "एक प्रोडक्ट की लाइन पर"
+     },
+     {
+      "t": 35.2,
+      "title": "कैलिब्रेटेड औज़ार"
+     },
+     {
+      "t": 39.9,
+      "title": "बाद में भरा हुआ रजिस्टर"
+     },
+     {
+      "t": 44.7,
+      "title": "इनवॉइस का नंबर और आपकी नाप, साथ-साथ"
+     },
+     {
+      "t": 50.1,
+      "title": "दोहराइए"
+     }
+    ],
+    "media": {
+     "dir": "gen-density-15-hi",
+     "tiny": "tiny.4a34f197.mp4",
+     "low": "low.e882f452.mp4",
+     "high": "high.c2ca9c1b.mp4",
+     "poster": "poster.e26e7ec3.webp",
+     "thumb": "thumb.8aa1d02e.webp",
+     "og": "og.e26baea0.jpg",
+     "bytes": {
+      "tiny": 385134,
+      "low": 569175,
+      "high": 1357569
+     }
+    }
+   },
+   "en": {
+    "title": "The density on the invoice",
+    "subtitle": "Your proof that what you ordered is what arrived",
+    "description": "Your proof that what you ordered is what arrived. On one invoice, petrol read 727.300 and diesel 820.500 — never the same. The figure is corrected to fifteen degrees before it is printed. Fuel swells in the heat and shrinks in the cold. That is why. When the tanker lands: read the invoice, take your reading, write both. This is about running a pump, not about the app. Made to be forwarded.",
+    "duration": 51.6,
+    "chapters": [
+     {
+      "t": 0,
+      "title": "The density on the invoice"
+     },
+     {
+      "t": 5.3,
+      "title": "Every product its own figure, every load its own"
+     },
+     {
+      "t": 13.7,
+      "title": "degrees — one yardstick for all"
+     },
+     {
+      "t": 18,
+      "title": "degrees — one yardstick for all"
+     },
+     {
+      "t": 23.8,
+      "title": "The invoice figure"
+     },
+     {
+      "t": 29.6,
+      "title": "On one product line"
+     },
+     {
+      "t": 34.6,
+      "title": "Calibrated instruments"
+     },
+     {
+      "t": 38.3,
+      "title": "Written up afterwards"
+     },
+     {
+      "t": 42.6,
+      "title": "The invoice figure and your reading, side by side"
+     },
+     {
+      "t": 47.3,
+      "title": "Recap"
+     }
+    ],
+    "media": {
+     "dir": "gen-density-15-en",
+     "tiny": "tiny.44249c38.mp4",
+     "low": "low.580138e9.mp4",
+     "high": "high.03324e03.mp4",
+     "poster": "poster.a5f5de24.webp",
+     "thumb": "thumb.ad981da4.webp",
+     "og": "og.bfe98fd4.jpg",
+     "bytes": {
+      "tiny": 380735,
+      "low": 561672,
+      "high": 1421125
+     }
+    }
+   }
+  },
+  {
+   "slug": "mock-drill",
+   "source": "gen-mock-drill",
+   "hi": {
+    "title": "तिमाही मॉक ड्रिल",
+    "subtitle": "एक अभ्यास, एक घोषणा — और इंडेंट खुल जाता है",
+    "description": "एक अभ्यास, एक घोषणा — और इंडेंट खुल जाता है. साल में चार बार — हर तीन महीने में एक बार। ड्रिल कीजिए, पोर्टल पर घोषणा भरिए — तब इंडेंट खुलता है। सिर्फ़ ड्रिल कर लेना काफ़ी नहीं — दर्ज नहीं, तो कुछ नहीं। ड्रिल में आम तौर पर पूरा स्टाफ़ शामिल होता है — कागज़ पर नहीं। यह वीडियो पंप चलाने की बात है, ऐप की नहीं — किसी को भी भेज सकते हैं।",
+    "duration": 43.3,
+    "chapters": [
+     {
+      "t": 0,
+      "title": "तिमाही मॉक ड्रिल"
+     },
+     {
+      "t": 4.3,
+      "title": "बार साल में"
+     },
+     {
+      "t": 8.8,
+      "title": "ड्रिल कीजिए"
+     },
+     {
+      "t": 14.5,
+      "title": "ड्रिल हुई, दर्ज नहीं"
+     },
+     {
+      "t": 19.4,
+      "title": "आम तौर पर ड्रिल में"
+     },
+     {
+      "t": 25.4,
+      "title": "आम तौर पर ड्रिल में"
+     },
+     {
+      "t": 29.5,
+      "title": "इंडेंट नहीं खुलेगा"
+     },
+     {
+      "t": 34,
+      "title": "तारीख़ आने से पहले, आपके फ़ोन पर"
+     },
+     {
+      "t": 38.6,
+      "title": "दोहराइए"
+     }
+    ],
+    "media": {
+     "dir": "gen-mock-drill-hi",
+     "tiny": "tiny.244a8853.mp4",
+     "low": "low.2ff58375.mp4",
+     "high": "high.1bdbc20b.mp4",
+     "poster": "poster.0bc4a821.webp",
+     "thumb": "thumb.399f9fd1.webp",
+     "og": "og.f2172f4a.jpg",
+     "bytes": {
+      "tiny": 307533,
+      "low": 444341,
+      "high": 1061056
+     }
+    }
+   },
+   "en": {
+    "title": "The quarterly mock drill",
+    "subtitle": "One drill, one declaration, and the indent opens",
+    "description": "One drill, one declaration, and the indent opens. Four times a year. Once every three months. Do the drill, file the declaration on the portal, and the indent opens. Doing the drill is not enough. If it is not filed, it did not happen. A drill usually means the whole staff, doing it for real, not on paper. This is about running a pump, not about the app. Made to be forwarded.",
+    "duration": 41.7,
+    "chapters": [
+     {
+      "t": 0,
+      "title": "The quarterly mock drill"
+     },
+     {
+      "t": 4.2,
+      "title": "times a year"
+     },
+     {
+      "t": 7.4,
+      "title": "Run the drill"
+     },
+     {
+      "t": 12.7,
+      "title": "Drill done, not filed"
+     },
+     {
+      "t": 18.5,
+      "title": "A drill usually means"
+     },
+     {
+      "t": 23.8,
+      "title": "A drill usually means"
+     },
+     {
+      "t": 28.3,
+      "title": "The indent will not open"
+     },
+     {
+      "t": 31.9,
+      "title": "On your phone, before the date arrives"
+     },
+     {
+      "t": 37,
+      "title": "Recap"
+     }
+    ],
+    "media": {
+     "dir": "gen-mock-drill-en",
+     "tiny": "tiny.a1c7843b.mp4",
+     "low": "low.8fdc8c91.mp4",
+     "high": "high.21073b45.mp4",
+     "poster": "poster.74cd3a9f.webp",
+     "thumb": "thumb.6e14ba07.webp",
+     "og": "og.434e5d85.jpg",
+     "bytes": {
+      "tiny": 315034,
+      "low": 450484,
+      "high": 1142177
+     }
+    }
+   }
+  },
+  {
+   "slug": "shift-close",
+   "source": "gen-shift-close",
+   "hi": {
+    "title": "शिफ़्ट बंद करने का समय",
+    "subtitle": "यह तय करना पड़ता है — अपने आप नहीं होता",
+    "description": "यह तय करना पड़ता है — अपने आप नहीं होता. शिफ़्ट दस बजे बंद, टैंकर ग्यारह बजे — वह किस दिन का हुआ? नतीजा — आज का दिन कम दिखता है, कल का बेवजह बड़ा। गड़बड़ बिक्री में नहीं है। गड़बड़ घड़ी में है। शक कीजिए अगर लगातार कई दिन ऐसा ही चलता रहे। यह वीडियो पंप चलाने की बात है, ऐप की नहीं — किसी को भी भेज सकते हैं।",
+    "duration": 45.2,
+    "chapters": [
+     {
+      "t": 0,
+      "title": "शिफ़्ट बंद करने का समय"
+     },
+     {
+      "t": 4.8,
+      "title": "शिफ़्ट पहले बंद"
+     },
+     {
+      "t": 11.8,
+      "title": "शिफ़्ट बंद"
+     },
+     {
+      "t": 17.4,
+      "title": "शिफ़्ट बंद"
+     },
+     {
+      "t": 22,
+      "title": "ये निशानियाँ देखिए"
+     },
+     {
+      "t": 27,
+      "title": "रोज़ हाथ से सुधार"
+     },
+     {
+      "t": 31.6,
+      "title": "रोज़ का सुधार"
+     },
+     {
+      "t": 35.6,
+      "title": "रोज़ का हिसाब, और कमी की वजह"
+     },
+     {
+      "t": 40.4,
+      "title": "दोहराइए"
+     }
+    ],
+    "media": {
+     "dir": "gen-shift-close-hi",
+     "tiny": "tiny.8f884752.mp4",
+     "low": "low.30945ad0.mp4",
+     "high": "high.efd7a604.mp4",
+     "poster": "poster.7c810f54.webp",
+     "thumb": "thumb.3734b96f.webp",
+     "og": "og.fb279eb1.jpg",
+     "bytes": {
+      "tiny": 310373,
+      "low": 446413,
+      "high": 1071180
+     }
+    }
+   },
+   "en": {
+    "title": "When your day closes",
+    "subtitle": "A decision you make, not a detail that decides itself",
+    "description": "A decision you make, not a detail that decides itself. Shift closed at ten, the tanker landed at eleven. Whose day is that? So today reads low, and tomorrow reads high for no reason at all. Nothing is wrong with the sales. The clock is wrong. Suspect the clock when several days in a row look the same way. This is about running a pump, not about the app. Made to be forwarded.",
+    "duration": 42.2,
+    "chapters": [
+     {
+      "t": 0,
+      "title": "When your day closes"
+     },
+     {
+      "t": 4.5,
+      "title": "Shift closed first"
+     },
+     {
+      "t": 10.1,
+      "title": "Shift closed"
+     },
+     {
+      "t": 15.8,
+      "title": "Shift closed"
+     },
+     {
+      "t": 19.2,
+      "title": "The signs to look for"
+     },
+     {
+      "t": 23.8,
+      "title": "Correcting it day by day"
+     },
+     {
+      "t": 28,
+      "title": "Patched every day"
+     },
+     {
+      "t": 32,
+      "title": "The daily figures, and the reason one looks wrong"
+     },
+     {
+      "t": 37.9,
+      "title": "Recap"
+     }
+    ],
+    "media": {
+     "dir": "gen-shift-close-en",
+     "tiny": "tiny.e4c0be96.mp4",
+     "low": "low.93f1bae6.mp4",
+     "high": "high.ee3014b3.mp4",
+     "poster": "poster.35e4ad22.webp",
+     "thumb": "thumb.b789de2b.webp",
+     "og": "og.273ad232.jpg",
+     "bytes": {
+      "tiny": 308301,
+      "low": 455657,
+      "high": 1135829
+     }
+    }
+   }
+  },
+  {
+   "slug": "testing-litres",
+   "source": "gen-testing-litres",
+   "hi": {
+    "title": "जाँच का तेल",
+    "subtitle": "मीटर में चढ़ा, बिका नहीं — गिनती तभी, जब वापस डाला हो",
+    "description": "मीटर में चढ़ा, बिका नहीं — गिनती तभी, जब वापस डाला हो. माप में तेल निकला, मीटर ने गिना, और वापस टंकी में गया। वापस डाल दिया — तो न बिक्री हुई, न कोई नुक़सान हुआ। वापस नहीं गया, तो वो तेल गया — और घटाना ग़लत हो जाता है। मीटर दोनों हालत में चढ़ चुका है — फ़र्क़ बाद में पड़ता है। यह वीडियो पंप चलाने की बात है, ऐप की नहीं — किसी को भी भेज सकते हैं।",
+    "duration": 46.8,
+    "chapters": [
+     {
+      "t": 0,
+      "title": "जाँच का तेल"
+     },
+     {
+      "t": 3.9,
+      "title": "माप में निकाला"
+     },
+     {
+      "t": 9.3,
+      "title": "माप में निकाला"
+     },
+     {
+      "t": 14.8,
+      "title": "वापस डाला"
+     },
+     {
+      "t": 21.3,
+      "title": "वापस डाला"
+     },
+     {
+      "t": 26.5,
+      "title": "रजिस्टर में चार ख़ाने"
+     },
+     {
+      "t": 31,
+      "title": "कमी, जो जाँच का तेल थी"
+     },
+     {
+      "t": 36,
+      "title": "जाँच का तेल, अलग ख़ाने में"
+     },
+     {
+      "t": 40.7,
+      "title": "दोहराइए"
+     }
+    ],
+    "media": {
+     "dir": "gen-testing-litres-hi",
+     "tiny": "tiny.a6e0922a.mp4",
+     "low": "low.0bccdb25.mp4",
+     "high": "high.92dfa5b8.mp4",
+     "poster": "poster.4607ce37.webp",
+     "thumb": "thumb.7429c430.webp",
+     "og": "og.6545f436.jpg",
+     "bytes": {
+      "tiny": 313950,
+      "low": 454041,
+      "high": 1076096
+     }
+    }
+   },
+   "en": {
+    "title": "The testing litres",
+    "subtitle": "Through the meter but never sold — and only if it goes back",
+    "description": "Through the meter but never sold — and only if it goes back. Fuel goes into the measure, the meter counts it, it goes back in. Once it is back in the tank, it is neither a sale nor a loss. If it did not go back, that fuel is gone, and subtracting it is wrong. The meter has moved either way. The difference comes after that. This is about running a pump, not about the app. Made to be forwarded.",
+    "duration": 45.7,
+    "chapters": [
+     {
+      "t": 0,
+      "title": "The testing litres"
+     },
+     {
+      "t": 5.8,
+      "title": "Drawn into the measure"
+     },
+     {
+      "t": 10.9,
+      "title": "Drawn into the measure"
+     },
+     {
+      "t": 15.7,
+      "title": "Put back"
+     },
+     {
+      "t": 20.9,
+      "title": "Put back"
+     },
+     {
+      "t": 26.6,
+      "title": "Four columns in the register"
+     },
+     {
+      "t": 31.3,
+      "title": "A shortage that was only test fuel"
+     },
+     {
+      "t": 36.1,
+      "title": "Test fuel, kept in its own column"
+     },
+     {
+      "t": 40.9,
+      "title": "Recap"
+     }
+    ],
+    "media": {
+     "dir": "gen-testing-litres-en",
+     "tiny": "tiny.b703e8a6.mp4",
+     "low": "low.e67e26d3.mp4",
+     "high": "high.08be6591.mp4",
+     "poster": "poster.21c816b0.webp",
+     "thumb": "thumb.ad9137fb.webp",
+     "og": "og.7e2db419.jpg",
+     "bytes": {
+      "tiny": 326435,
+      "low": 480595,
+      "high": 1192625
+     }
+    }
+   }
+  },
+  {
+   "slug": "cost-of-a-litre",
+   "source": "gen-cost-of-a-litre",
+   "hi": {
+    "title": "एक लीटर की क़ीमत",
+    "subtitle": "गायब तेल को लीटर में नहीं, रुपये में देखिए",
+    "description": "गायब तेल को लीटर में नहीं, रुपये में देखिए. तरीक़ा सीधा है — बिल का कुल पैसा, बिल के लीटर से भाग दीजिए। एक असली बिल में डीज़ल पड़ा 97 रुपये 76 पैसे प्रति लीटर। यह आँकड़ा आपका नहीं है — अपना बिल उठाइए, अपना निकालिए। गायब लीटर दो बार मारता है — पैसा भी गया, बिक्री भी गई। यह वीडियो पंप चलाने की बात है, ऐप की नहीं — किसी को भी भेज सकते हैं।",
+    "duration": 49.1,
+    "chapters": [
+     {
+      "t": 0,
+      "title": "एक लीटर की क़ीमत"
+     },
+     {
+      "t": 5.7,
+      "title": "बिल का कुल पैसा"
+     },
+     {
+      "t": 12,
+      "title": "एक लीटर डीज़ल की लागत"
+     },
+     {
+      "t": 17.6,
+      "title": "एक लीटर डीज़ल की लागत"
+     },
+     {
+      "t": 23,
+      "title": "एक लीटर, दो नुक़सान"
+     },
+     {
+      "t": 27.7,
+      "title": "सिर्फ़ एक प्रतिशत, लीटर में"
+     },
+     {
+      "t": 33.3,
+      "title": "एक प्रतिशत छोटा नहीं होता"
+     },
+     {
+      "t": 38.2,
+      "title": "MDG सर्विसेज़ के साथ"
+     },
+     {
+      "t": 43.7,
+      "title": "दोहराइए"
+     }
+    ],
+    "media": {
+     "dir": "gen-cost-of-a-litre-hi",
+     "tiny": "tiny.19e4f342.mp4",
+     "low": "low.8120fef6.mp4",
+     "high": "high.6dc36b1a.mp4",
+     "poster": "poster.420db639.webp",
+     "thumb": "thumb.ead53b45.webp",
+     "og": "og.6492161c.jpg",
+     "bytes": {
+      "tiny": 341598,
+      "low": 497185,
+      "high": 1196531
+     }
+    }
+   },
+   "en": {
+    "title": "What one litre costs",
+    "subtitle": "Read missing fuel in rupees, not in litres",
+    "description": "Read missing fuel in rupees, not in litres. The method is simple: take the invoice total, divide by its litres. On one real invoice, diesel landed at 97 rupees 76 paise a litre. That number is not yours. Take your own invoice and work out yours. A missing litre hits you twice: the money is gone, and so is the sale. This is about running a pump, not about the app. Made to be forwarded.",
+    "duration": 46.3,
+    "chapters": [
+     {
+      "t": 0,
+      "title": "What one litre costs"
+     },
+     {
+      "t": 4.3,
+      "title": "The invoice total"
+     },
+     {
+      "t": 10,
+      "title": "the landed cost of one litre"
+     },
+     {
+      "t": 16.2,
+      "title": "the landed cost of one litre"
+     },
+     {
+      "t": 21.1,
+      "title": "One litre, two losses"
+     },
+     {
+      "t": 26.6,
+      "title": "just one percent, in litres"
+     },
+     {
+      "t": 31.6,
+      "title": "One percent is not small"
+     },
+     {
+      "t": 37.5,
+      "title": "With MDG Services"
+     },
+     {
+      "t": 42.2,
+      "title": "Recap"
+     }
+    ],
+    "media": {
+     "dir": "gen-cost-of-a-litre-en",
+     "tiny": "tiny.ffd515e9.mp4",
+     "low": "low.47dcc62a.mp4",
+     "high": "high.f3f99730.mp4",
+     "poster": "poster.08ed3a43.webp",
+     "thumb": "thumb.bfcc3617.webp",
+     "og": "og.2ce72df3.jpg",
+     "bytes": {
+      "tiny": 340603,
+      "low": 500882,
+      "high": 1267651
+     }
+    }
+   }
+  },
+  {
+   "slug": "invoice-vs-decant",
+   "source": "gen-invoice-vs-decant",
+   "hi": {
+    "title": "बिल के लीटर, डिप के लीटर",
+    "subtitle": "दोनों सही हैं — और दोनों कभी नहीं मिलते",
+    "description": "दोनों सही हैं — और दोनों कभी नहीं मिलते. एक असली लोड — बिल पर 8,000 लीटर, नाप में 7,858 लीटर। दोनों आँकड़े सही हैं — बस सवाल अलग-अलग हैं। फ़र्क़ रहा 142 लीटर — और फ़र्क़ हमेशा कम की तरफ़ जाता है। आम तौर पर दुकान की किताब बिल वाला लीटर ही लिखती है। यह वीडियो पंप चलाने की बात है, ऐप की नहीं — किसी को भी भेज सकते हैं।",
+    "duration": 51.3,
+    "chapters": [
+     {
+      "t": 0,
+      "title": "बिल बनाम डिप"
+     },
+     {
+      "t": 5.3,
+      "title": "बिल पर"
+     },
+     {
+      "t": 13.5,
+      "title": "बिल पर"
+     },
+     {
+      "t": 18.1,
+      "title": "उस एक लोड का फ़र्क़"
+     },
+     {
+      "t": 24.4,
+      "title": "एक ही तरीक़ा चलाइए"
+     },
+     {
+      "t": 28.7,
+      "title": "किताब में बिल का लीटर"
+     },
+     {
+      "t": 33.8,
+      "title": "कमी, जो असल में थी ही नहीं"
+     },
+     {
+      "t": 39.1,
+      "title": "हर लोड, एक ही हिसाब"
+     },
+     {
+      "t": 44.1,
+      "title": "दोहराइए"
+     }
+    ],
+    "media": {
+     "dir": "gen-invoice-vs-decant-hi",
+     "tiny": "tiny.4a4aa178.mp4",
+     "low": "low.cd152d2f.mp4",
+     "high": "high.552ef49e.mp4",
+     "poster": "poster.d32b6771.webp",
+     "thumb": "thumb.96f8b79b.webp",
+     "og": "og.b59e72ac.jpg",
+     "bytes": {
+      "tiny": 351790,
+      "low": 517667,
+      "high": 1229780
+     }
+    }
+   },
+   "en": {
+    "title": "Invoice litres, dip litres",
+    "subtitle": "Both numbers are right, and they never agree",
+    "description": "Both numbers are right, and they never agree. One real load: the invoice said 8,000 litres, the measure said 7,858. Both figures are correct. They answer two different questions. The gap was 142 litres, and the gap always runs short, never over. In most books we have seen, it is the invoice figure that is written. This is about running a pump, not about the app. Made to be forwarded.",
+    "duration": 45.5,
+    "chapters": [
+     {
+      "t": 0,
+      "title": "Invoice vs dip"
+     },
+     {
+      "t": 4.2,
+      "title": "On the invoice"
+     },
+     {
+      "t": 11.5,
+      "title": "On the invoice"
+     },
+     {
+      "t": 16.4,
+      "title": "the gap on that one load"
+     },
+     {
+      "t": 21.9,
+      "title": "Pick one basis and keep it"
+     },
+     {
+      "t": 26.6,
+      "title": "Invoice litres in the book"
+     },
+     {
+      "t": 32.1,
+      "title": "A shortage that was never there"
+     },
+     {
+      "t": 35.5,
+      "title": "Every load, one consistent basis"
+     },
+     {
+      "t": 39.8,
+      "title": "Recap"
+     }
+    ],
+    "media": {
+     "dir": "gen-invoice-vs-decant-en",
+     "tiny": "tiny.56299871.mp4",
+     "low": "low.b0c2b21c.mp4",
+     "high": "high.81156620.mp4",
+     "poster": "poster.47ee8d47.webp",
+     "thumb": "thumb.8d082943.webp",
+     "og": "og.779f1be2.jpg",
+     "bytes": {
+      "tiny": 339603,
+      "low": 495246,
+      "high": 1245132
+     }
+    }
+   }
+  },
+  {
+   "slug": "plus-vs-minus",
+   "source": "gen-plus-vs-minus",
+   "hi": {
+    "title": "ज़्यादा और कम",
+    "subtitle": "स्टॉक का फ़र्क़ — किस तरफ़ है, यह मायने रखता है",
+    "description": "स्टॉक का फ़र्क़ — किस तरफ़ है, यह मायने रखता है. हर प्रोडक्ट पर चार प्रतिशत तक का फ़र्क़ चल जाता है। सीमा पार हुई तो सैंपल दोनों में जाता है — रास्ता अलग है। ज़्यादा निकला तो सब प्रोडक्ट की बिक्री उसी वक़्त रुकती है। कम निकला तो आपसे लिखित जवाब माँगा जाता है। यह वीडियो पंप चलाने की बात है, ऐप की नहीं — किसी को भी भेज सकते हैं।",
+    "duration": 47.1,
+    "chapters": [
+     {
+      "t": 0,
+      "title": "ज़्यादा और कम"
+     },
+     {
+      "t": 5.8,
+      "title": "तक का फ़र्क़ मान्य है"
+     },
+     {
+      "t": 10,
+      "title": "स्टॉक ज़्यादा"
+     },
+     {
+      "t": 15.7,
+      "title": "स्टॉक ज़्यादा"
+     },
+     {
+      "t": 20.6,
+      "title": "कम निकलने पर"
+     },
+     {
+      "t": 24.7,
+      "title": "टंकी नापिए"
+     },
+     {
+      "t": 29.8,
+      "title": "पता तब चला, जब देर हो गई"
+     },
+     {
+      "t": 33.9,
+      "title": "रोज़ का फ़र्क़, आपके फ़ोन पर"
+     },
+     {
+      "t": 40.9,
+      "title": "दोहराइए"
+     }
+    ],
+    "media": {
+     "dir": "gen-plus-vs-minus-hi",
+     "tiny": "tiny.30502701.mp4",
+     "low": "low.df9844e1.mp4",
+     "high": "high.fbf56cba.mp4",
+     "poster": "poster.0aea365b.webp",
+     "thumb": "thumb.22a93212.webp",
+     "og": "og.b5a3e4ff.jpg",
+     "bytes": {
+      "tiny": 312895,
+      "low": 460917,
+      "high": 1089632
+     }
+    }
+   },
+   "en": {
+    "title": "Over and short",
+    "subtitle": "Which way your stock variation runs, and why it matters",
+    "description": "Which way your stock variation runs, and why it matters. A variation of up to four percent is permitted on each product. Past the limit samples are drawn either way. The paths differ. On a surplus, sales and supplies of every product stop at once. On a shortage, a written explanation is called for from you. This is about running a pump, not about the app. Made to be forwarded.",
+    "duration": 43.9,
+    "chapters": [
+     {
+      "t": 0,
+      "title": "Over and short"
+     },
+     {
+      "t": 5.5,
+      "title": "variation is permitted"
+     },
+     {
+      "t": 9.9,
+      "title": "Stock over"
+     },
+     {
+      "t": 15,
+      "title": "Stock over"
+     },
+     {
+      "t": 20.1,
+      "title": "When the stock is short"
+     },
+     {
+      "t": 24.5,
+      "title": "Measure the tank"
+     },
+     {
+      "t": 29.1,
+      "title": "Found out far too late"
+     },
+     {
+      "t": 32.8,
+      "title": "Your daily variation, on your phone"
+     },
+     {
+      "t": 38.8,
+      "title": "Recap"
+     }
+    ],
+    "media": {
+     "dir": "gen-plus-vs-minus-en",
+     "tiny": "tiny.3581b48a.mp4",
+     "low": "low.9d9e628c.mp4",
+     "high": "high.5177eb5f.mp4",
+     "poster": "poster.1d768093.webp",
+     "thumb": "thumb.86c540b7.webp",
+     "og": "og.fdb6bb0f.jpg",
+     "bytes": {
+      "tiny": 319295,
+      "low": 462305,
+      "high": 1169235
+     }
+    }
+   }
+  },
+  {
+   "slug": "cumulative-column",
+   "source": "gen-cumulative-column",
+   "hi": {
+    "title": "महीने की बिक्री वाला कॉलम",
+    "subtitle": "जो चुपचाप एक ही तेल दो बार गिन लेता है",
+    "description": "जो चुपचाप एक ही तेल दो बार गिन लेता है. यह कॉलम हर महीने की पहली तारीख़ को शून्य से शुरू होता है। पहली को शून्य, रोज़ जुड़ता जाता है, आख़िरी दिन महीने की बिक्री। एक शीट पर 51,150 लीटर लिखा था। किताब में उसी दिन 47,950 थे। और यही फ़र्क़ उसके बाद हर दिन वैसा का वैसा बना रहा। यह वीडियो पंप चलाने की बात है, ऐप की नहीं — किसी को भी भेज सकते हैं।",
+    "duration": 54.5,
+    "chapters": [
+     {
+      "t": 0,
+      "title": "महीने की बिक्री"
+     },
+     {
+      "t": 4.4,
+      "title": "तारीख़ — यहीं से गिनती नई"
+     },
+     {
+      "t": 9.7,
+      "title": "शून्य से शुरू"
+     },
+     {
+      "t": 16.7,
+      "title": "फ़र्क़ — करीब 3,200 लीटर"
+     },
+     {
+      "t": 25.1,
+      "title": "फ़र्क़ — करीब 3,200 लीटर"
+     },
+     {
+      "t": 29.6,
+      "title": "एक ही तेल, दो बार गिना"
+     },
+     {
+      "t": 36.3,
+      "title": "आज रात की जाँच"
+     },
+     {
+      "t": 41.2,
+      "title": "हर दिन का जोड़, मिलाया हुआ"
+     },
+     {
+      "t": 47.1,
+      "title": "दोहराइए"
+     }
+    ],
+    "media": {
+     "dir": "gen-cumulative-column-hi",
+     "tiny": "tiny.9f50d261.mp4",
+     "low": "low.35a811c9.mp4",
+     "high": "high.2cc2161b.mp4",
+     "poster": "poster.f43ad31b.webp",
+     "thumb": "thumb.79bd179e.webp",
+     "og": "og.96fef921.jpg",
+     "bytes": {
+      "tiny": 387306,
+      "low": 566935,
+      "high": 1365036
+     }
+    }
+   },
+   "en": {
+    "title": "Sales this month",
+    "subtitle": "The column that quietly counts the same fuel twice",
+    "description": "The column that quietly counts the same fuel twice. That column starts again from zero on the first of every month. Zero on the 1st, adding daily, and the last row is the month's sales. One sheet said 51,150 litres. His own book said 47,950 that same day. And that same gap sat on every single day that followed. This is about running a pump, not about the app. Made to be forwarded.",
+    "duration": 48.3,
+    "chapters": [
+     {
+      "t": 0,
+      "title": "Sales this month"
+     },
+     {
+      "t": 4.3,
+      "title": "the day the count starts again"
+     },
+     {
+      "t": 8.6,
+      "title": "Starts at zero"
+     },
+     {
+      "t": 15.2,
+      "title": "The gap: about 3,200 litres"
+     },
+     {
+      "t": 22.9,
+      "title": "The gap: about 3,200 litres"
+     },
+     {
+      "t": 27.9,
+      "title": "The same fuel, counted twice"
+     },
+     {
+      "t": 32.9,
+      "title": "Tonight's check"
+     },
+     {
+      "t": 36.8,
+      "title": "Every day's total, reconciled"
+     },
+     {
+      "t": 42.3,
+      "title": "Recap"
+     }
+    ],
+    "media": {
+     "dir": "gen-cumulative-column-en",
+     "tiny": "tiny.012d5879.mp4",
+     "low": "low.7266c593.mp4",
+     "high": "high.e128d857.mp4",
+     "poster": "poster.191faf80.webp",
+     "thumb": "thumb.7a5dc057.webp",
+     "og": "og.dee379e8.jpg",
+     "bytes": {
+      "tiny": 360600,
+      "low": 528256,
+      "high": 1332351
+     }
+    }
+   }
+  },
+  {
+   "slug": "daily-books",
+   "source": "gen-daily-books",
+   "hi": {
+    "title": "दस बजे तक तीन किताबें",
+    "subtitle": "सुबह का वो काम जो सबसे सस्ता है",
+    "description": "सुबह का वो काम जो सबसे सस्ता है. डीएसआर बुक, डेंसिटी बुक, और स्टॉक बोर्ड। बस यही तीन। दस बजे — यही वो समय है जब कोई भी आकर पूछ सकता है। यह समय किसी सर्कुलर का नहीं — एक चलते पंप की अपनी चेकलिस्ट का है। क्रम आसान है — पहले डिप, फिर दोनों किताबें, फिर बोर्ड। यह वीडियो पंप चलाने की बात है, ऐप की नहीं — किसी को भी भेज सकते हैं।",
+    "duration": 54.5,
+    "chapters": [
+     {
+      "t": 0,
+      "title": "दस बजे तक तीन किताबें"
+     },
+     {
+      "t": 5.7,
+      "title": "दस बजे तक"
+     },
+     {
+      "t": 10.9,
+      "title": "बजे तक तीनों तैयार"
+     },
+     {
+      "t": 16.5,
+      "title": "बजे तक तीनों तैयार"
+     },
+     {
+      "t": 23.2,
+      "title": "डिप और डेंसिटी"
+     },
+     {
+      "t": 29.9,
+      "title": "रोज़ दस मिनट"
+     },
+     {
+      "t": 36,
+      "title": "एक ही कलम, एक ही बैठक"
+     },
+     {
+      "t": 42.8,
+      "title": "दिन की सूची, आपके फ़ोन पर"
+     },
+     {
+      "t": 48,
+      "title": "दोहराइए"
+     }
+    ],
+    "media": {
+     "dir": "gen-daily-books-hi",
+     "tiny": "tiny.b9e8cfd7.mp4",
+     "low": "low.6490a684.mp4",
+     "high": "high.c3ceb77d.mp4",
+     "poster": "poster.9d6df952.webp",
+     "thumb": "thumb.d781301a.webp",
+     "og": "og.2e8c3894.jpg",
+     "bytes": {
+      "tiny": 367811,
+      "low": 538666,
+      "high": 1287838
+     }
+    }
+   },
+   "en": {
+    "title": "Three books by 10 am",
+    "subtitle": "The cheapest work on the whole board",
+    "description": "The cheapest work on the whole board. The DSR book, the density book, and the stock board. Just those. Ten o’clock — that is when anyone can walk in and ask. It is not from a circular. It is a working pump’s own house rule. The order is simple: the dip, then both books, then the board. This is about running a pump, not about the app. Made to be forwarded.",
+    "duration": 44.4,
+    "chapters": [
+     {
+      "t": 0,
+      "title": "Three books by 10 am"
+     },
+     {
+      "t": 3.8,
+      "title": "By 10 am"
+     },
+     {
+      "t": 9.2,
+      "title": "o'clock, and all three are ready"
+     },
+     {
+      "t": 13.1,
+      "title": "o'clock, and all three are ready"
+     },
+     {
+      "t": 18.2,
+      "title": "Dip and density"
+     },
+     {
+      "t": 23.7,
+      "title": "Ten minutes daily"
+     },
+     {
+      "t": 28.7,
+      "title": "One pen, one sitting"
+     },
+     {
+      "t": 34,
+      "title": "The day's list, on your phone"
+     },
+     {
+      "t": 39.5,
+      "title": "Recap"
+     }
+    ],
+    "media": {
+     "dir": "gen-daily-books-en",
+     "tiny": "tiny.0c471ee4.mp4",
+     "low": "low.dae79414.mp4",
+     "high": "high.152585f4.mp4",
+     "poster": "poster.6a288492.webp",
+     "thumb": "thumb.ec23a098.webp",
+     "og": "og.a09e7e62.jpg",
+     "bytes": {
+      "tiny": 318436,
+      "low": 466248,
+      "high": 1159038
+     }
+    }
+   }
+  },
+  {
+   "slug": "staff-rewards",
+   "source": "gen-staff-rewards",
+   "hi": {
+    "title": "हर काम की एक क़ीमत",
+    "subtitle": "स्टाफ़ का इनाम अंदाज़े से नहीं, हिसाब से",
+    "description": "स्टाफ़ का इनाम अंदाज़े से नहीं, हिसाब से. एक असली शीट से हमने पिचासी काम नाम लेकर लिख लिए। डीयू की सफ़ाई से लेकर टैंकर के साथ रिफ़ाइनरी जाने तक। ये काम सात हिस्सों में बँट जाते हैं। हर पंप पर यही सात। काम हुआ, क़ीमत तय हुई, बँटवारा तय हुआ, महीने में हिसाब। यह वीडियो पंप चलाने की बात है, ऐप की नहीं — किसी को भी भेज सकते हैं।",
+    "duration": 54.6,
+    "chapters": [
+     {
+      "t": 0,
+      "title": "हर काम की एक क़ीमत"
+     },
+     {
+      "t": 6.1,
+      "title": "काम, नाम लेकर लिखे हुए"
+     },
+     {
+      "t": 10,
+      "title": "काम, नाम लेकर लिखे हुए"
+     },
+     {
+      "t": 15.5,
+      "title": "सात हिस्से"
+     },
+     {
+      "t": 21,
+      "title": "काम हुआ"
+     },
+     {
+      "t": 26.9,
+      "title": "क़ीमत किन बातों से"
+     },
+     {
+      "t": 31.2,
+      "title": "तीसरा तरीक़ा — प्रति गाड़ी, प्रति टंकी, या प्रति हज़ार रुपये की बिक्री"
+     },
+     {
+      "t": 36.5,
+      "title": "बाक़ी काम — कौन सा काम?"
+     },
+     {
+      "t": 41.2,
+      "title": "तैयार सूची, आपके हिसाब से"
+     },
+     {
+      "t": 47.5,
+      "title": "दोहराइए"
+     }
+    ],
+    "media": {
+     "dir": "gen-staff-rewards-hi",
+     "tiny": "tiny.f8c43821.mp4",
+     "low": "low.0f03dca5.mp4",
+     "high": "high.389f7523.mp4",
+     "poster": "poster.040969d9.webp",
+     "thumb": "thumb.3785c8f4.webp",
+     "og": "og.56c3b000.jpg",
+     "bytes": {
+      "tiny": 408972,
+      "low": 601866,
+      "high": 1475814
+     }
+    }
+   },
+   "en": {
+    "title": "A value for every job",
+    "subtitle": "Staff rewards worked out, not guessed at",
+    "description": "Staff rewards worked out, not guessed at. From one real sheet we wrote down eighty-five jobs, each by name. From washing the dispenser island to riding a tanker to the refinery. The jobs fall into seven groups. Every pump has the same seven. The job is done, valued, split by a rule, and settled at month end. This is about running a pump, not about the app. Made to be forwarded.",
+    "duration": 52.2,
+    "chapters": [
+     {
+      "t": 0,
+      "title": "A value for every job"
+     },
+     {
+      "t": 4.9,
+      "title": "jobs, each written down by name"
+     },
+     {
+      "t": 10.2,
+      "title": "jobs, each written down by name"
+     },
+     {
+      "t": 14.9,
+      "title": "Seven groups"
+     },
+     {
+      "t": 19.4,
+      "title": "Job done"
+     },
+     {
+      "t": 25.9,
+      "title": "What sets the value"
+     },
+     {
+      "t": 30.2,
+      "title": "A third way: per vehicle, per tank, or per ₹1,000 of sales"
+     },
+     {
+      "t": 35.6,
+      "title": "“Other work” — which work?"
+     },
+     {
+      "t": 40.9,
+      "title": "The list, ready and yours to change"
+     },
+     {
+      "t": 46.5,
+      "title": "Recap"
+     }
+    ],
+    "media": {
+     "dir": "gen-staff-rewards-en",
+     "tiny": "tiny.d1a0415f.mp4",
+     "low": "low.c71165b1.mp4",
+     "high": "high.2b912fd5.mp4",
+     "poster": "poster.69ad39b2.webp",
+     "thumb": "thumb.9c4719fc.webp",
+     "og": "og.0a3397c8.jpg",
+     "bytes": {
+      "tiny": 419777,
+      "low": 620857,
+      "high": 1571786
+     }
+    }
+   }
+  },
+  {
+   "slug": "water-ingress",
+   "source": "gen-water-ingress",
+   "hi": {
+    "title": "दो घंटे की खिड़की",
+    "subtitle": "पानी की जाँच — जो बाद में नहीं भरी जा सकती",
+    "description": "पानी की जाँच — जो बाद में नहीं भरी जा सकती. चौबीसों घंटे चलने वाले पंप का दिन बारह खिड़कियों में बँटा है। जो पंप पूरे दिन नहीं चलता, उसकी खिड़कियाँ उतनी ही कम होती हैं। हर खिड़की में चार बातें पूछी जाती हैं। दो का जवाब हाँ या ना है। हाँ का मतलब है — उन्हीं दो घंटों में किसी ने जाकर जाँच की। यह वीडियो पंप चलाने की बात है, ऐप की नहीं — किसी को भी भेज सकते हैं।",
+    "duration": 53.4,
+    "chapters": [
+     {
+      "t": 0,
+      "title": "दो घंटे की खिड़की"
+     },
+     {
+      "t": 5.8,
+      "title": "दो-दो घंटे की खिड़कियाँ"
+     },
+     {
+      "t": 11.4,
+      "title": "दो-दो घंटे की खिड़कियाँ"
+     },
+     {
+      "t": 16.4,
+      "title": "एक खिड़की में क्या दर्ज होता है"
+     },
+     {
+      "t": 22.7,
+      "title": "पानी पकड़ने वाला पेस्ट"
+     },
+     {
+      "t": 27.8,
+      "title": "खिड़की के अंदर"
+     },
+     {
+      "t": 33.7,
+      "title": "मिटाने का बटन नहीं है"
+     },
+     {
+      "t": 38.8,
+      "title": "हर खिड़की, अपने ही समय पर"
+     },
+     {
+      "t": 45.6,
+      "title": "दोहराइए"
+     }
+    ],
+    "media": {
+     "dir": "gen-water-ingress-hi",
+     "tiny": "tiny.d72081ad.mp4",
+     "low": "low.64aab2a3.mp4",
+     "high": "high.2d4df7ce.mp4",
+     "poster": "poster.280d2441.webp",
+     "thumb": "thumb.e08af577.webp",
+     "og": "og.d7380631.jpg",
+     "bytes": {
+      "tiny": 377095,
+      "low": 548612,
+      "high": 1324255
+     }
+    }
+   },
+   "en": {
+    "title": "The two-hour window",
+    "subtitle": "The water check, and why it cannot be filled in later",
+    "description": "The water check, and why it cannot be filled in later. A round-the-clock outlet's day is split into twelve windows. An outlet that does not trade all day simply gets fewer windows. Each window asks four things. Two of them are just yes or no. Yes means somebody actually went and checked, inside those two hours. This is about running a pump, not about the app. Made to be forwarded.",
+    "duration": 47.6,
+    "chapters": [
+     {
+      "t": 0,
+      "title": "The two-hour window"
+     },
+     {
+      "t": 5.7,
+      "title": "windows of two hours each"
+     },
+     {
+      "t": 10.1,
+      "title": "windows of two hours each"
+     },
+     {
+      "t": 15.2,
+      "title": "What one window records"
+     },
+     {
+      "t": 20.4,
+      "title": "Water-finding paste"
+     },
+     {
+      "t": 25.6,
+      "title": "Inside the window"
+     },
+     {
+      "t": 31.8,
+      "title": "There is no undo"
+     },
+     {
+      "t": 36.4,
+      "title": "Every window, in its own time"
+     },
+     {
+      "t": 41.7,
+      "title": "Recap"
+     }
+    ],
+    "media": {
+     "dir": "gen-water-ingress-en",
+     "tiny": "tiny.12635abe.mp4",
+     "low": "low.39c52546.mp4",
+     "high": "high.343db154.mp4",
+     "poster": "poster.e39df7ce.webp",
+     "thumb": "thumb.af3be787.webp",
+     "og": "og.d37f7ef8.jpg",
+     "bytes": {
+      "tiny": 350446,
+      "low": 512158,
+      "high": 1273536
+     }
+    }
+   }
+  },
+  {
+   "slug": "ledger-lines",
+   "source": "gen-ledger-lines",
+   "hi": {
+    "title": "तेल के अलावा की लाइनें",
+    "subtitle": "कंपनी के खाते में जो चुपचाप पैसा हिलाता है",
+    "description": "कंपनी के खाते में जो चुपचाप पैसा हिलाता है. आप मानते हैं दो ही चीज़ें हैं — तेल लिया, पैसा जमा किया। ग्यारह पंपों के खातों में बारह तरह की लाइनें मिलीं। इनमें से सिर्फ़ दो तेल और पैसा हैं। बाक़ी दस बकाया बदलती हैं। ब्याज, लाइसेंस फ़ीस, किराया, EMI, कार्ड सेटलमेंट, कमीशन। यह वीडियो पंप चलाने की बात है, ऐप की नहीं — किसी को भी भेज सकते हैं।",
+    "duration": 52.7,
+    "chapters": [
+     {
+      "t": 0,
+      "title": "तेल के अलावा की लाइनें"
+     },
+     {
+      "t": 4.2,
+      "title": "जो आप मानते हैं"
+     },
+     {
+      "t": 9.9,
+      "title": "तरह की लाइनें, एक ही खाते पर"
+     },
+     {
+      "t": 14.4,
+      "title": "तरह की लाइनें, एक ही खाते पर"
+     },
+     {
+      "t": 19.8,
+      "title": "तेल नहीं — फिर भी खाते पर"
+     },
+     {
+      "t": 26.7,
+      "title": "नाम एक, रकम में डेढ़ सौ गुना फ़र्क़"
+     },
+     {
+      "t": 33,
+      "title": "तेल के बिल छाँटिए"
+     },
+     {
+      "t": 38.7,
+      "title": "सिर्फ़ दो चीज़ें मिलाईं"
+     },
+     {
+      "t": 43,
+      "title": "हर लाइन का नाम, आपकी अपनी भाषा में"
+     },
+     {
+      "t": 47.5,
+      "title": "दोहराइए"
+     }
+    ],
+    "media": {
+     "dir": "gen-ledger-lines-hi",
+     "tiny": "tiny.d29157fd.mp4",
+     "low": "low.fc17c0f1.mp4",
+     "high": "high.b3365440.mp4",
+     "poster": "poster.6a817b4f.webp",
+     "thumb": "thumb.18e3ca0a.webp",
+     "og": "og.4c32100b.jpg",
+     "bytes": {
+      "tiny": 382304,
+      "low": 555038,
+      "high": 1341447
+     }
+    }
+   },
+   "en": {
+    "title": "The lines that are not fuel",
+    "subtitle": "What quietly moves money on your oil-company account",
+    "description": "What quietly moves money on your oil-company account. You assume there are two things: fuel taken, money deposited. Across eleven pumps’ accounts we found twelve kinds of line. Only two are fuel and money. The other ten change your balance. Interest, licence fee, rent, EMIs, card settlements, commission. This is about running a pump, not about the app. Made to be forwarded.",
+    "duration": 52.6,
+    "chapters": [
+     {
+      "t": 0,
+      "title": "The lines that are not fuel"
+     },
+     {
+      "t": 4.2,
+      "title": "What you assume"
+     },
+     {
+      "t": 9.7,
+      "title": "kinds of line on one account"
+     },
+     {
+      "t": 13.7,
+      "title": "kinds of line on one account"
+     },
+     {
+      "t": 18.9,
+      "title": "Not fuel, still on the account"
+     },
+     {
+      "t": 25.9,
+      "title": "One name, a hundred and fifty fold difference"
+     },
+     {
+      "t": 32.7,
+      "title": "Mark the fuel bills"
+     },
+     {
+      "t": 39.5,
+      "title": "You matched only two things"
+     },
+     {
+      "t": 43.6,
+      "title": "Every line named, in your own language"
+     },
+     {
+      "t": 47.6,
+      "title": "Recap"
+     }
+    ],
+    "media": {
+     "dir": "gen-ledger-lines-en",
+     "tiny": "tiny.be0aa3a2.mp4",
+     "low": "low.f956e5d6.mp4",
+     "high": "high.393fecaa.mp4",
+     "poster": "poster.590aa46f.webp",
+     "thumb": "thumb.c371f0c6.webp",
+     "og": "og.e9db5b5e.jpg",
+     "bytes": {
+      "tiny": 400836,
+      "low": 584049,
+      "high": 1478200
+     }
+    }
+   }
+  },
+  {
+   "slug": "inspection-window",
+   "source": "gen-inspection-window",
+   "hi": {
+    "title": "गिनती फिर से शुरू",
+    "subtitle": "इंस्पेक्शन के दिन आपका पुराना हिसाब बंद हो जाता है",
+    "description": "इंस्पेक्शन के दिन आपका पुराना हिसाब बंद हो जाता है. चार परसेंट की छूट सब जानते हैं। सवाल है — किस दिन से? पुरानी तारीख़ से नापेंगे तो चार महीने एक ही जोड़ में आ जाते हैं। इंस्पेक्शन का फ़ॉर्म SL.5(R) आपको नई शुरुआत दे देता है। पिछली रीडिंग भी छपी होती है — पूरे दौर की बिक्री उसी में है। यह वीडियो पंप चलाने की बात है, ऐप की नहीं — किसी को भी भेज सकते हैं।",
+    "duration": 50.9,
+    "chapters": [
+     {
+      "t": 0,
+      "title": "गिनती फिर से शुरू"
+     },
+     {
+      "t": 4.4,
+      "title": "टैंक के स्टॉक पर मंज़ूर फ़र्क़"
+     },
+     {
+      "t": 11.6,
+      "title": "पुरानी तारीख़ से"
+     },
+     {
+      "t": 16.5,
+      "title": "फ़ॉर्म SL.5(R) में क्या लिखा होता है"
+     },
+     {
+      "t": 25.3,
+      "title": "फ़ॉर्म SL.5(R) में क्या लिखा होता है"
+     },
+     {
+      "t": 31.4,
+      "title": "रिपोर्ट का दिन"
+     },
+     {
+      "t": 36,
+      "title": "तारीख़ नहीं बदली"
+     },
+     {
+      "t": 40,
+      "title": "नई तारीख़, नई डिप, नई रीडिंग — अपने आप"
+     },
+     {
+      "t": 45.5,
+      "title": "दोहराइए"
+     }
+    ],
+    "media": {
+     "dir": "gen-inspection-window-hi",
+     "tiny": "tiny.bd6ff422.mp4",
+     "low": "low.fd6d92c1.mp4",
+     "high": "high.fab33195.mp4",
+     "poster": "poster.7d37165a.webp",
+     "thumb": "thumb.f20309bb.webp",
+     "og": "og.403531f0.jpg",
+     "bytes": {
+      "tiny": 353664,
+      "low": 518020,
+      "high": 1248210
+     }
+    }
+   },
+   "en": {
+    "title": "The count starts again",
+    "subtitle": "The day of an inspection, your old measuring period closes",
+    "description": "The day of an inspection, your old measuring period closes. Everyone knows the four percent band. The question is: from when? Measure from the old date and four months land in one total. The inspection form, SL.5(R), hands you that new starting point. The previous reading is printed too: that is a whole period of sales. This is about running a pump, not about the app. Made to be forwarded.",
+    "duration": 45.7,
+    "chapters": [
+     {
+      "t": 0,
+      "title": "The count starts again"
+     },
+     {
+      "t": 4.1,
+      "title": "permissible on tank stock"
+     },
+     {
+      "t": 9.1,
+      "title": "From the old date"
+     },
+     {
+      "t": 13.1,
+      "title": "What Form SL.5(R) carries"
+     },
+     {
+      "t": 17.7,
+      "title": "What Form SL.5(R) carries"
+     },
+     {
+      "t": 24,
+      "title": "The report’s day"
+     },
+     {
+      "t": 29.9,
+      "title": "The date was never moved"
+     },
+     {
+      "t": 34.5,
+      "title": "New date, new dip, new readings — done for you"
+     },
+     {
+      "t": 39.9,
+      "title": "Recap"
+     }
+    ],
+    "media": {
+     "dir": "gen-inspection-window-en",
+     "tiny": "tiny.bbcc1c16.mp4",
+     "low": "low.c2c5ace9.mp4",
+     "high": "high.9257f4cd.mp4",
+     "poster": "poster.282b8420.webp",
+     "thumb": "thumb.acdd606c.webp",
+     "og": "og.0dcb0e18.jpg",
+     "bytes": {
+      "tiny": 340745,
+      "low": 491246,
+      "high": 1252651
+     }
+    }
+   }
+  },
+  {
+   "slug": "tanker-day",
+   "source": "gen-tanker-day",
+   "hi": {
+    "title": "टैंकर किस दिन का है?",
+    "subtitle": "रात का टैंकर, सुबह की एंट्री — गिनती किस दिन",
+    "description": "रात का टैंकर, सुबह की एंट्री — गिनती किस दिन. एक तारीख़ तेल उतरने की है, दूसरी लिखने की। दोनों सही हैं। बीच में शिफ़्ट बंद हो जाती है — और टैंकर उसी खाई में गिरता है। इसीलिए एक ही टैंकर लगातार दो दिनों में दिख जाता है। दो बार गिन लिया, या किसी दिन गिना ही नहीं — दोनों होते हैं। यह वीडियो पंप चलाने की बात है, ऐप की नहीं — किसी को भी भेज सकते हैं।",
+    "duration": 49.1,
+    "chapters": [
+     {
+      "t": 0,
+      "title": "टैंकर किस दिन का है?"
+     },
+     {
+      "t": 4.8,
+      "title": "एक ही टैंकर, दो तारीख़ें"
+     },
+     {
+      "t": 10.6,
+      "title": "टैंकर खाली हुआ"
+     },
+     {
+      "t": 16.4,
+      "title": "दिन, और टैंकर सिर्फ़ एक"
+     },
+     {
+      "t": 20.9,
+      "title": "दिन, और टैंकर सिर्फ़ एक"
+     },
+     {
+      "t": 27.9,
+      "title": "जिस दिन तेल उतरा, उसी दिन गिनिए"
+     },
+     {
+      "t": 34.4,
+      "title": "हर बार अलग तारीख़"
+     },
+     {
+      "t": 38.6,
+      "title": "हर डिलीवरी, हर बार एक ही नियम से"
+     },
+     {
+      "t": 44,
+      "title": "दोहराइए"
+     }
+    ],
+    "media": {
+     "dir": "gen-tanker-day-hi",
+     "tiny": "tiny.19eaca64.mp4",
+     "low": "low.2f52a071.mp4",
+     "high": "high.6af6ac75.mp4",
+     "poster": "poster.258470ae.webp",
+     "thumb": "thumb.ddf7879d.webp",
+     "og": "og.94338fe5.jpg",
+     "bytes": {
+      "tiny": 339418,
+      "low": 491613,
+      "high": 1179779
+     }
+    }
+   },
+   "en": {
+    "title": "Which day does the tanker belong to?",
+    "subtitle": "A night delivery, a morning entry, and the day it counts on",
+    "description": "A night delivery, a morning entry, and the day it counts on. One date is when it was emptied, one is when it was written up. The shift closes in between, and the tanker falls into that gap. That is why one tanker shows up on two consecutive days. Counted twice, or counted on no day at all. Both happen. This is about running a pump, not about the app. Made to be forwarded.",
+    "duration": 43,
+    "chapters": [
+     {
+      "t": 0,
+      "title": "Which day is the tanker?"
+     },
+     {
+      "t": 4.4,
+      "title": "One tanker, two dates"
+     },
+     {
+      "t": 8,
+      "title": "Tanker emptied"
+     },
+     {
+      "t": 12.8,
+      "title": "days, for a single tanker"
+     },
+     {
+      "t": 17,
+      "title": "days, for a single tanker"
+     },
+     {
+      "t": 22.3,
+      "title": "Count it on the day it was emptied"
+     },
+     {
+      "t": 28.3,
+      "title": "A different date each time"
+     },
+     {
+      "t": 32.1,
+      "title": "Every delivery, the same rule every time"
+     },
+     {
+      "t": 38.5,
+      "title": "Recap"
+     }
+    ],
+    "media": {
+     "dir": "gen-tanker-day-en",
+     "tiny": "tiny.6f1be56a.mp4",
+     "low": "low.3e93ab1a.mp4",
+     "high": "high.58372d75.mp4",
+     "poster": "poster.051d0c4c.webp",
+     "thumb": "thumb.abe7ddb5.webp",
+     "og": "og.8270623d.jpg",
+     "bytes": {
+      "tiny": 320216,
+      "low": 462184,
+      "high": 1171797
+     }
+    }
+   }
+  },
+  {
+   "slug": "equipment-audit",
+   "source": "gen-equipment-audit",
+   "hi": {
+    "title": "बिजली के ऑडिट की लिस्ट",
+    "subtitle": "सस्ता काम, जो किसी न किसी की लिस्ट में लिखा है",
+    "description": "सस्ता काम, जो किसी न किसी की लिस्ट में लिखा है. अर्थिंग पिट, इंसुलेशन मैट, साइनेज, और कंप्रेसर की सर्विस। ये समय किसी सर्कुलर के नहीं — एक चालू पंप की अपनी लिस्ट के हैं। रोज़ के काम अलग हैं — पैनल, कैमरे, इन्वर्टर और बैटरी का पानी। लगत लगभग शून्य है। न करने की क़ीमत उससे कहीं बड़ी। यह वीडियो पंप चलाने की बात है, ऐप की नहीं — किसी को भी भेज सकते हैं।",
+    "duration": 48.8,
+    "chapters": [
+     {
+      "t": 0,
+      "title": "बिजली के ऑडिट की लिस्ट"
+     },
+     {
+      "t": 5,
+      "title": "एक चालू पंप की अपनी लिस्ट से"
+     },
+     {
+      "t": 10.7,
+      "title": "एक चालू पंप की अपनी लिस्ट से"
+     },
+     {
+      "t": 16.9,
+      "title": "बिजली का पैनल साफ़"
+     },
+     {
+      "t": 23.3,
+      "title": "करने में"
+     },
+     {
+      "t": 29.1,
+      "title": "शर्त, जो सप्लाई रोक सकती है"
+     },
+     {
+      "t": 33.9,
+      "title": "सबूत रखा ही नहीं"
+     },
+     {
+      "t": 39.2,
+      "title": "कब हुआ, किसने किया, सबूत कहाँ है"
+     },
+     {
+      "t": 44.3,
+      "title": "दोहराइए"
+     }
+    ],
+    "media": {
+     "dir": "gen-equipment-audit-hi",
+     "tiny": "tiny.9c852f19.mp4",
+     "low": "low.38c6893a.mp4",
+     "high": "high.573ca14f.mp4",
+     "poster": "poster.83d3ce75.webp",
+     "thumb": "thumb.ecd4509d.webp",
+     "og": "og.c0aef2a2.jpg",
+     "bytes": {
+      "tiny": 345677,
+      "low": 503298,
+      "high": 1220958
+     }
+    }
+   },
+   "en": {
+    "title": "The electrical audit list",
+    "subtitle": "Cheap work that sits on somebody else’s list",
+    "description": "Cheap work that sits on somebody else’s list. Earthing pits, insulation mat, signage, and the compressor service. These timings are one working pump’s own, not from any circular. The daily jobs are separate: panel, cameras, inverter, battery water. The cost is close to nothing. Skipping it costs far more. This is about running a pump, not about the app. Made to be forwarded.",
+    "duration": 44,
+    "chapters": [
+     {
+      "t": 0,
+      "title": "The electrical audit list"
+     },
+     {
+      "t": 4.7,
+      "title": "From one working pump’s own sheet"
+     },
+     {
+      "t": 9.9,
+      "title": "From one working pump’s own sheet"
+     },
+     {
+      "t": 15,
+      "title": "Wipe the electrical panel"
+     },
+     {
+      "t": 22.5,
+      "title": "To do it"
+     },
+     {
+      "t": 26.8,
+      "title": "condition that can stop supply"
+     },
+     {
+      "t": 31.2,
+      "title": "The proof was never kept"
+     },
+     {
+      "t": 35.4,
+      "title": "When it was done, by whom, and where the proof is"
+     },
+     {
+      "t": 40,
+      "title": "Recap"
+     }
+    ],
+    "media": {
+     "dir": "gen-equipment-audit-en",
+     "tiny": "tiny.3681a970.mp4",
+     "low": "low.d6480f13.mp4",
+     "high": "high.976a292f.mp4",
+     "poster": "poster.1a30c1d6.webp",
+     "thumb": "thumb.18e561b4.webp",
+     "og": "og.c719333b.jpg",
+     "bytes": {
+      "tiny": 330924,
+      "low": 476461,
+      "high": 1223039
+     }
+    }
+   }
+  },
+  {
+   "slug": "du-seals",
+   "source": "gen-du-seals",
+   "hi": {
+    "title": "सील और सर्टिफ़िकेट",
+    "subtitle": "नाप की हर शिकायत इन्हीं दो कागज़ों पर आकर रुकती है",
+    "description": "नाप की हर शिकायत इन्हीं दो कागज़ों पर आकर रुकती है. स्टॉक का फ़र्क़ हो या नाप की शिकायत — रास्ता एक ही है। एक पंप की अपनी लिस्ट में यह काम सबसे भारी है — दो सौ साठ नंबर। पैंतालीस कामों में से सिर्फ़ दो को इतने नंबर मिले हैं। सर्टिफ़िकेट होना और उसे लगाना — ये दो अलग-अलग काम हैं। यह वीडियो पंप चलाने की बात है, ऐप की नहीं — किसी को भी भेज सकते हैं।",
+    "duration": 47.4,
+    "chapters": [
+     {
+      "t": 0,
+      "title": "सील और सर्टिफ़िकेट"
+     },
+     {
+      "t": 5.1,
+      "title": "दोनों झगड़े यहीं आकर रुकते हैं"
+     },
+     {
+      "t": 11.4,
+      "title": "नंबर, सिर्फ़ इस एक काम के"
+     },
+     {
+      "t": 18.3,
+      "title": "नंबर, सिर्फ़ इस एक काम के"
+     },
+     {
+      "t": 22.5,
+      "title": "तीन काम, एक ही कागज़ के"
+     },
+     {
+      "t": 28.4,
+      "title": "हर DU पर सही"
+     },
+     {
+      "t": 33.3,
+      "title": "है, पर दिख नहीं रहा"
+     },
+     {
+      "t": 37.5,
+      "title": "तारीख़, सील की जाँच और कागज़ का सबूत"
+     },
+     {
+      "t": 42.5,
+      "title": "दोहराइए"
+     }
+    ],
+    "media": {
+     "dir": "gen-du-seals-hi",
+     "tiny": "tiny.31b1ea5a.mp4",
+     "low": "low.74551eed.mp4",
+     "high": "high.b6e7f87e.mp4",
+     "poster": "poster.47c575d8.webp",
+     "thumb": "thumb.7232f9a0.webp",
+     "og": "og.8bb5fac1.jpg",
+     "bytes": {
+      "tiny": 333634,
+      "low": 487010,
+      "high": 1164989
+     }
+    }
+   },
+   "en": {
+    "title": "Seals and the certificate",
+    "subtitle": "Every quantity argument ends at these two pieces of paper",
+    "description": "Every quantity argument ends at these two pieces of paper. A stock variation or a quantity complaint both end in one place. On one pump’s own sheet this job is the heaviest: 260 points. Out of forty-five jobs, only two carry that many points. Having the certificate and displaying it are two different jobs. This is about running a pump, not about the app. Made to be forwarded.",
+    "duration": 40.8,
+    "chapters": [
+     {
+      "t": 0,
+      "title": "Seals and the certificate"
+     },
+     {
+      "t": 4.8,
+      "title": "Both arguments stop right here"
+     },
+     {
+      "t": 10.4,
+      "title": "points, for this one job"
+     },
+     {
+      "t": 16.2,
+      "title": "points, for this one job"
+     },
+     {
+      "t": 20.3,
+      "title": "Three jobs, one piece of paper"
+     },
+     {
+      "t": 24.5,
+      "title": "Intact on every DU"
+     },
+     {
+      "t": 27.9,
+      "title": "You have it, but it is not shown"
+     },
+     {
+      "t": 31.9,
+      "title": "The date, the seal check, and the proof"
+     },
+     {
+      "t": 36.9,
+      "title": "Recap"
+     }
+    ],
+    "media": {
+     "dir": "gen-du-seals-en",
+     "tiny": "tiny.f4d10b65.mp4",
+     "low": "low.faeabb96.mp4",
+     "high": "high.0a6e9558.mp4",
+     "poster": "poster.2d4b6335.webp",
+     "thumb": "thumb.76cab0f6.webp",
+     "og": "og.bf93e7f2.jpg",
+     "bytes": {
+      "tiny": 310981,
+      "low": 451629,
+      "high": 1145655
+     }
+    }
+   }
+  }
+ ]
+}

@@ -153,8 +153,8 @@ export const STEPS = [
 
 export type StepId = (typeof STEPS)[number]["id"];
 
-/** The training library lives on its own site. */
-export const TRAINING_HREF = "https://guide.mdgservices.in";
+/** The training library: the video pages on this site (they used to be a separate guide site). */
+export const TRAINING_HREF = "/videos";
 
 /**
  * Site type. The value is what the enrolment API is sent and what the

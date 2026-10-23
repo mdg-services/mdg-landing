@@ -18,6 +18,7 @@ import { SITE } from "../../guide/copy.ts";
 import { loadAll, type PageContent } from "./content.ts";
 import { esc } from "./tags.ts";
 import { ALL, COLLECTIONS, KK, MDG } from "./collections.ts";
+import { slugOfSource, videoPath } from "../routing/videos.ts";
 import type { AnyPage, AnyRelease, Collection, CollectionKey, Crumb, Lang } from "./collection.ts";
 
 export type { Lang, PageContent, AnyPage, AnyRelease, Collection, CollectionKey, Crumb };
@@ -348,7 +349,8 @@ export function buildPageModel(ctx: Ctx, r: AnyRelease): PageModel {
 
   const videos = (page.videos || [])
     .filter((v) => col.videos[v])
-    .map((v) => ({ href: `https://guide.mdgservices.in/${v}-${lang}`, title: col.videos[v][lang] }));
+    // the explainers live on this site now: /videos/<slug>, in the page's own language
+    .map((v) => ({ href: videoPath(slugOfSource(v), lang), title: col.videos[v][lang] }));
 
   const pillarLinks: PageModel["pillarLinks"] = [];
   for (const k of topics(col)) {
