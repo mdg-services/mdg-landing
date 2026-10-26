@@ -7,14 +7,14 @@
  * and the pages, sitemap and llms.txt are re-rendered as the days pass. No
  * daily deploy.
  *
- * Pages already published stay on the day they went live (FIRST_CALENDAR,
+ * Pages already published stay on the day they went live (PUBLISHED,
  * KEEP_THROUGH_DAY). Everything else follows from the next day. The ordering
  * rules are in guide/calendar.ts, shared with the Khata Kavach pages.
  *
  * Pure data and arithmetic: proxy.ts imports this, so no Node APIs.
  */
 import { PAGES, PILLARS, type GuidePage } from "./inventory.js";
-import { FIRST_CALENDAR } from "./release-history.js";
+import { CALENDAR_26_OCT } from "./release-history.js";
 import { buildCalendar, dateFrom, dayFrom, type Release as CalendarRelease } from "./calendar.js";
 
 /** Pages that go live each day. Each language counts as one page. */
@@ -26,26 +26,50 @@ export const START = "2026-10-15";
 export type Release = CalendarRelease<GuidePage>;
 
 /**
- * Pages of FIRST_CALENDAR that had gone live by the end of this day keep the day
+ * Pages put out on a day of their own choosing, outside the five a day.
+ * - 26 Oct 2026 (day 12): 17 pages (six tools and eleven guides) picked from
+ *   what Search Console shows the site for and what Google suggests next to it.
+ */
+const EARLY_26_OCT_IDS = [
+  "tools-litres-to-kg", "tools-5-litre-test", "tools-dip-chart", "tools-dealer-margin", "tools-density-chart", "tools-registers",
+  "density-high-or-low", "density-temperature", "density-e20", "density-kit", "density-board",
+  "service-customer-checks", "mdg-every-oil-company", "inspection-who", "mdg-questions-answers", "stock-what-is-dip", "product-names",
+];
+const EARLY_26_OCT: ReadonlyArray<readonly [string, number]> = PAGES.filter((p) => EARLY_26_OCT_IDS.includes(p.id)).flatMap(
+  (p) => [[p.path, 12], ...(p.hi ? [[`/hi${p.path}`, 12] as const] : [])] as const,
+);
+
+/**
+ * [path, day] of pages published: the calendar frozen on 26 Oct 2026 (day 12,
+ * which already holds the first calendar and the 17 Oct early release) and the
+ * pages put out early that day.
+ */
+export const PUBLISHED: ReadonlyArray<readonly [string, number]> = [...CALENDAR_26_OCT, ...EARLY_26_OCT];
+
+/**
+ * Pages of PUBLISHED that had gone live by the end of this day keep the day
  * they went live. Raise it to the current day whenever the page list changes,
  * before deploying, so nothing already published moves or disappears.
+ * - 26 Oct 2026: raised from 2 to 12 with the new snapshot.
  */
-export const KEEP_THROUGH_DAY = 2;
+export const KEEP_THROUGH_DAY = 12;
 
 /**
  * Early releases the owner asked for. On `day`, the pages of the next `days`
  * days go out as well, and everything after moves up by that many days, so the
  * daily rhythm carries on from the new point.
- * - 17 Oct 2026 (day 3): "release the next 10 pages" (days 4 and 5).
+ * - 17 Oct 2026 (day 3): "release the next 10 pages" (days 4 and 5). Baked into
+ *   CALENDAR_26_OCT, so it is no longer applied here (applying it again would
+ *   move every pinned page after day 3 back by two days).
  */
-export const PULLED_FORWARD: ReadonlyArray<{ day: number; days: number }> = [{ day: 3, days: 2 }];
+export const PULLED_FORWARD: ReadonlyArray<{ day: number; days: number }> = [];
 
 export const RELEASES: Release[] = buildCalendar({
   pages: PAGES,
   mains: Object.fromEntries(Object.entries(PILLARS).map(([k, v]) => [k, v.main])),
   perDay: PER_DAY,
   first: ["hub", "disclaimer"],
-  pinned: FIRST_CALENDAR,
+  pinned: PUBLISHED,
   keepThroughDay: KEEP_THROUGH_DAY,
   pulledForward: PULLED_FORWARD,
 });

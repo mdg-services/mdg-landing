@@ -350,6 +350,73 @@ export const KK_PAGES: KkPage[] = [
     queries: ["part payment example", "bill payment udhar example"],
     brief: "Example: a month-end bill and a part payment. A made-up business makes Bill 7 for a customer (made-up period and sales), sends it on WhatsApp; the customer pays part by UPI; the business records Money received against Bill 7: it shows Part paid with the rest due and that much credit opens again. Then the variant where money is recorded without choosing a bill (it clears the oldest unpaid line first). Figures must add up exactly. Start with the example quote block.",
   },
+  // ── Added 26 Oct 2026 outside the daily schedule (kk-guide/schedule.ts KK_EARLY_26_OCT),
+  //    from Search Console and Google suggestions.
+  {
+    id: "tool-late-interest", pillar: "paid", path: `${P}/getting-paid/late-payment-interest-calculator/`, hi: true, type: "Tool", wave: 3,
+    queries: ["customer late payment interest calculator", "interest on late payment calculator", "udhar par byaj kaise nikale", "interest on delayed payment calculator", "interest on late payment invoice"],
+    brief: "Calculator: amount due, the date it was due (or days late), and a yearly rate the owner chooses (the tool ships NO rate as a rule); simple interest = amount x rate x days / 365, with an option for monthly compounding. Shows the working. Two lines: you can charge interest only if the customer agreed to it in advance (bill/terms), and MSME suppliers have their own rule (link msme-45-day-rule; never compute the MSME rate here). 'Not legal advice' line. Also shows what the late money costs YOU at your own borrowing rate.",
+  },
+  {
+    id: "tool-debtor-days", pillar: "paid", path: `${P}/getting-paid/debtor-days-calculator/`, hi: true, type: "Tool", wave: 3,
+    queries: ["debtors days formula", "debtor days kitna hona chahiye", "debtor days kya hota hai", "average debtors days calculation", "debtors days meaning in hindi"],
+    brief: "Calculator: total udhar outstanding today and credit sales over the last 30/90/365 days -> debtor days = outstanding / credit sales x days. Show the working and compare with the credit days the owner gives (e.g. 15): if debtor days is well above, customers pay late on average. Plain meaning first. Link how-old-is-your-udhar and when-to-stop-credit. No benchmark claims for an industry.",
+  },
+  {
+    id: "tool-reminder-maker", pillar: "paid", path: `${P}/getting-paid/payment-reminder-maker/`, hi: true, type: "Tool", wave: 3,
+    queries: ["payment reminder message in hindi", "payment reminder message on whatsapp", "payment reminder message example", "payment reminder short message", "baki paisa message"],
+    brief: "A message maker: customer name, amount, since when / bill numbers, your business name, tone (polite first reminder / firm second / final before stopping credit), language (Hindi, English, Hinglish). Out: a ready message with a Copy button and a 'Open WhatsApp' link (wa.me with the text, no phone number needed). Everything stays in the browser. Never threatening, never mentions police/court in early tones; the final tone may say credit is paused. Link the payment-reminder-messages template page.",
+  },
+  {
+    id: "tool-udhar-poster", pillar: "credit", path: `${P}/credit/udhar-band-hai-poster/`, hi: true, type: "Tool", wave: 3,
+    queries: ["udhar band hai poster", "udhari mana hai poster", "udhar mana hai poster", "aaj nagad kal udhar poster", "udhari band poster", "udhari slogan in hindi"],
+    brief: "Download page: 4-6 printable A4 posters (PDF) for the counter, in Hindi and English, our own wording (e.g. 'Aaj nakad, kal udhar', 'Udhar band hai', polite versions like 'Udhar sirf likhit seema tak' and 'Har udhar ki parchi milegi'), clean design, no clip-art copied from anywhere, no third-party brands. Files in public/kk/downloads/, made by a script in scripts/ (playwright + local Chrome like scripts/kk-khata-page.mjs). Plus 8-10 polite one-line slogans as text to copy. Footer line on the poster: none, or a tiny 'mdgservices.in' only.",
+  },
+  {
+    id: "tool-statement", pillar: "paid", path: `${P}/getting-paid/customer-statement-format/`, hi: true, type: "Tool", wave: 3,
+    queries: ["customer ledger statement format", "statement of account format", "udhar statement format", "outstanding statement format excel", "party ledger format"],
+    brief: "Download page: a monthly statement of account to send a credit customer (opening balance, each sale and payment with date/bill no./vehicle, closing balance, 'please confirm or tell us within 7 days', signature) as an A4 PDF to print and an Excel sheet that works out the running balance (Excel-2007 functions only, like scripts/kk-khata-template.py). English and Hindi headings. Made by a script in scripts/. Link the udhar khata format and disputed-sale pages.",
+  },
+  {
+    id: "paid-outstanding-letter", pillar: "paid", path: `${P}/getting-paid/outstanding-payment-letter/`, hi: true, type: "Template", wave: 3,
+    queries: ["outstanding payment letter format", "outstanding payment letter format in word", "payment reminder letter format", "baki bhugtan patra", "outstanding payment mail to customer"],
+    brief: "Three short letter formats in our own words, Hindi and English, to copy: (1) a polite statement-and-request, (2) a firm reminder with a date, (3) a final notice that credit is stopped until paid. Placeholders in [brackets]. Before the letters: what to attach (statement, bills). After: if still unpaid, link legal-steps-for-unpaid-dues and cheque-bounce. Not legal notice drafting; say a legal notice should come from an advocate. 'Not legal advice' line.",
+  },
+  {
+    id: "credit-agreement", pillar: "credit", path: `${P}/credit/udhar-agreement-format/`, hi: true, type: "Template", wave: 3,
+    queries: ["udhari agreement", "credit agreement format for customer", "customer credit form format", "udhar agreement format in hindi", "credit terms format"],
+    brief: "A one-page customer credit form in our own words, Hindi and English, for the owner and customer to sign before credit starts: customer details, who may collect (names/vehicles), credit limit in rupees, credit days, how bills and statements are shared, what happens when the limit is crossed or payment is late (credit pauses; interest only if written here and agreed), signatures. Explain each line in one sentence. 'General information, not legal advice; for a binding contract speak to an advocate.' Link credit-policy-template.",
+  },
+  {
+    id: "paid-outstanding-overdue", pillar: "paid", path: `${P}/getting-paid/outstanding-vs-overdue/`, hi: true, type: "Explainer", wave: 3,
+    queries: ["outstanding payment meaning in hindi", "overdue payment kya hota hai", "outstanding and overdue difference", "outstanding amount kya hota hai", "baki paisa ko kya kahate hain"],
+    brief: "Two words explained with one worked example: outstanding = everything the customer still owes; overdue = the part past its credit days. Example with real-looking made-up figures (Rs 80,000 outstanding, Rs 30,000 of it overdue at 15 days). Why the owner should watch overdue, not just outstanding. Link how-old-is-your-udhar and the debtor days tool. Short.",
+  },
+  {
+    id: "credit-deposit-pdc", pillar: "credit", path: `${P}/credit/security-deposit-and-cheque/`, hi: true, type: "Explainer", wave: 3,
+    queries: ["security cheque for credit customer", "post dated cheque for credit", "security deposit from customer for credit", "advance cheque udhar", "pdc meaning"],
+    brief: "Taking a security deposit or a post-dated/security cheque before giving credit: what each is, pros and cons in a table, what to write down (receipt for deposit, cheque details), and the caution that a cheque taken 'as security' may not always be treated like a cheque for a debt (say: rules on security cheques under the cheque bounce law are for an advocate to advise; link cheque-bounce). No legal promises. 'Not legal advice' line.",
+  },
+  {
+    id: "paid-bad-debt", pillar: "paid", path: `${P}/getting-paid/bad-debt-write-off/`, hi: true, type: "Explainer", wave: 3,
+    queries: ["bad debt write off", "bad debt meaning in hindi", "when to write off bad debt", "doobat karz", "udhar dub gaya kya kare"],
+    brief: "When udhar is unlikely to come back: the signs, the steps before giving up (statement, reminders, stop credit, settlement offer in writing, legal steps link), and writing it off in your books. Tax/GST treatment: one line only, 'ask your CA' (no tax rules stated). How to stop the next one (limits, credit days). Link time-limit-to-recover-dues and legal-steps pages.",
+  },
+  {
+    id: "paid-kal-dunga", pillar: "paid", path: `${P}/getting-paid/customer-keeps-saying-kal-dunga/`, hi: true, type: "Explainer", wave: 3,
+    queries: ["customer payment nahi de raha kya kare", "udhar wala paisa nahi de raha", "customer keeps delaying payment", "udhari ka paisa kaise nikale", "baki paisa kaise milega"],
+    brief: "A practical page for the customer who keeps promising 'kal dunga': fix a date in writing (message), take part payments, stop new credit after the second missed date, send the statement, then the firm letter. A small table: promise missed 1st/2nd/3rd time -> what to do. Tone: calm, no threats. Link reminder maker, outstanding letter, when-to-stop-credit. Mention once that a shared credit book (Khata Kavach) shows the customer each sale and the balance as it happens; no other sales talk.",
+  },
+  {
+    id: "credit-say-no", pillar: "credit", path: `${P}/credit/how-to-refuse-udhar/`, hi: true, type: "Explainer", wave: 3,
+    queries: ["udhar mana hai slogan", "udhar kaise mana kare", "udhar band karne ka tarika", "udhari par slogan", "how to say no to credit customer"],
+    brief: "How to refuse or limit udhar without losing the customer: lines staff can say (Hindi and English) for a new customer, for someone over the limit, for a friend/relative; when to say 'yes, up to this much'. Link the poster tool, who-to-give-credit, credit-limit pages. Polite, practical.",
+  },
+  {
+    id: "paid-interest", pillar: "paid", path: `${P}/getting-paid/interest-on-udhar/`, hi: true, type: "Explainer", wave: 3,
+    queries: ["can i charge interest on late payment", "udhar par byaj le sakte hain", "interest on late payment meaning", "interest on delayed payment msme", "how much interest can i charge on late payment"],
+    brief: "Can a shop charge interest on late udhar? Plain answer: only if the customer agreed in advance (on the bill, terms or credit form); write the rate and from which day. MSME suppliers have a separate statutory right (link msme-45-day-rule; do not restate figures not on that page). Practical view: interest is often hard to collect; credit days and limits work better. Link the interest calculator and udhar agreement format. 'General information, not legal advice.'",
+  },
 ];
 
 export const kkById = new Map(KK_PAGES.map((p) => [p.id, p]));

@@ -32,7 +32,7 @@ With the W&M seals intact, there are two outcomes:
 
 | What the inspector finds | Sales | What follows |
 |---|---|---|
-| Inside the permissible limit (±10 ml to ±25 ml per 5 litres) | Go on | Recorded. Recalibrate and re-stamp within 15 days of the observation, or sales from the unit or nozzle stop {{5.1.2(a)}} |
+| Inside the range MDG prints (±10 ml to ±25 ml per 5 litres) | Go on | Recorded. Recalibrate and re-stamp within 15 days of the observation, or sales from the unit or nozzle stop {{5.1.2(a)}} |
 | Short beyond the Legal Metrology limit | Stop at once through that unit or nozzle | Recalibrate and re-stamp before sales restart {{5.1.2(a)}} |
 
 MDG prints only the range. For the limit itself, read the current Legal Metrology Act, 2009 and Rules, or ask W&M.

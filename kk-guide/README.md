@@ -192,7 +192,10 @@ What Hindi searchers type (Google and YouTube suggestions, 19 Oct 2026):
 - **Speak to the shop or dealer, not to someone who lent money to a friend.**
   Many "udhar wapas" searches are personal loans: say in the first lines that
   the page is for a business and its regular customers.
-- Never: shayari, totke, mantra, "किस दिन उधार न दें", "उधार बंद" posters.
+- Never: shayari, totke, mantra, "किस दिन उधार न दें". "उधार बंद" posters only
+  on the poster page (`tool-udhar-poster`, added 26 Oct 2026 at the owner's
+  request), where most posters are about credit with a limit, a slip and old
+  dues cleared, not about refusing credit.
 
 ## Legal
 

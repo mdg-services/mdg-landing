@@ -446,6 +446,17 @@
     @apply mt-2 w-full max-w-xs rounded-xl border border-ink-hairline bg-white px-4 py-3 text-[16px] text-ink outline-none transition-colors duration-200 placeholder:text-ink-faint focus:border-navy-500;
   }
   .guide-prose .tool select { @apply max-w-full; }
+  /* the 26 Oct tools: number/date boxes, a message box, ticks, poster previews */
+  .guide-prose .tool input[type="number"],
+  .guide-prose .tool input[type="date"],
+  .guide-prose .tool textarea {
+    @apply mt-2 w-full max-w-xs rounded-xl border border-ink-hairline bg-white px-4 py-3 text-[16px] text-ink outline-none transition-colors duration-200 placeholder:text-ink-faint focus:border-navy-500;
+  }
+  .guide-prose .tool textarea { @apply min-h-[140px] max-w-full leading-[1.55]; }
+  .guide-prose .tool input[type="checkbox"],
+  .guide-prose .tool input[type="radio"] { @apply mr-2 h-[18px] w-[18px] align-[-3px]; accent-color: theme(colors.navy.700); }
+  .guide-prose .tool img { @apply my-2 h-auto max-w-full rounded-lg border border-ink-hairline; }
+  .guide-prose .tool .out table { @apply my-3 text-[14px]; }
   .guide-prose .tool button {
     @apply min-h-[44px] cursor-pointer rounded-full bg-navy-700 px-6 text-[15px] font-semibold leading-none text-white transition-colors duration-200 hover:bg-navy-800;
   }
@@ -490,8 +501,12 @@
     .kk-guide .guide-card:hover { @apply border-kk-steel; }
   }
   .kk-guide .guide-prose .tool input[type="text"],
+  .kk-guide .guide-prose .tool input[type="number"],
+  .kk-guide .guide-prose .tool input[type="date"],
+  .kk-guide .guide-prose .tool textarea,
   .kk-guide .guide-prose .tool select { @apply focus:border-kk-siyahi; }
   .kk-guide .guide-prose .tool button { @apply bg-kk-siyahi hover:bg-kk-deep; }
+  .kk-guide .guide-prose .tool input[type="radio"],
   .kk-guide .guide-prose .tool input[type="checkbox"] { @apply mr-2 h-[18px] w-[18px] align-[-3px]; accent-color: theme(colors.kk.siyahi); }
 }
 

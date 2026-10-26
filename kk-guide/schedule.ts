@@ -12,7 +12,7 @@
  */
 import { KK_PAGES, KK_PILLARS, type KkPage } from "./inventory.js";
 import { buildCalendar, dateFrom, dayFrom, type Release as CalendarRelease } from "../guide/calendar.js";
-import { KK_FIRST_CALENDAR } from "./release-history.js";
+import { KK_CALENDAR_26_OCT } from "./release-history.js";
 
 /** Pages that go live each day. Each language counts as one page. */
 export const KK_PER_DAY = 5;
@@ -25,26 +25,32 @@ export type KkRelease = CalendarRelease<KkPage>;
 /**
  * Pages put out ahead of the calendar, on a day of their own choosing, outside
  * the five a day. Every page here must be on or before KK_KEEP_THROUGH_DAY.
- * - 20 Oct 2026 (day 2): the udhar khata format and the credit-limit calculator.
+ * - 20 Oct 2026 (day 2): the udhar khata format and the credit-limit calculator
+ *   (now part of KK_CALENDAR_26_OCT).
+ * - 26 Oct 2026 (day 8): 13 pages (five tools and eight guides) picked from
+ *   Search Console and Google suggestions.
  */
-const KK_EARLY: ReadonlyArray<readonly [string, number]> = [
-  ["/khata-kavach/credit/udhar-khata-format/", 2],
-  ["/hi/khata-kavach/credit/udhar-khata-format/", 2],
-  ["/khata-kavach/credit/credit-limit-calculator/", 2],
-  ["/hi/khata-kavach/credit/credit-limit-calculator/", 2],
+const KK_EARLY_26_OCT_IDS = [
+  "tool-late-interest", "tool-debtor-days", "tool-reminder-maker", "tool-udhar-poster", "tool-statement",
+  "paid-outstanding-letter", "credit-agreement", "paid-outstanding-overdue", "credit-deposit-pdc",
+  "paid-bad-debt", "paid-kal-dunga", "credit-say-no", "paid-interest",
 ];
+const KK_EARLY_26_OCT: ReadonlyArray<readonly [string, number]> = KK_PAGES.filter((p) => KK_EARLY_26_OCT_IDS.includes(p.id)).flatMap(
+  (p) => [[p.path, 8], ...(p.hi ? [[`/hi${p.path}`, 8] as const] : [])] as const,
+);
 
-/** [path, day] of pages published (the calendar frozen on 20 Oct 2026, day 2, and the early pages). */
-export const KK_PUBLISHED: ReadonlyArray<readonly [string, number]> = [...KK_FIRST_CALENDAR, ...KK_EARLY];
+/** [path, day] of pages published: the calendar frozen on 26 Oct 2026 (day 8) and the pages put out early that day. */
+export const KK_PUBLISHED: ReadonlyArray<readonly [string, number]> = [...KK_CALENDAR_26_OCT, ...KK_EARLY_26_OCT];
 
 /**
  * Pages of KK_PUBLISHED that had gone live by the end of this day keep their
  * day. Raise it to the current day whenever the page list changes, before
  * deploying.
  * - 20 Oct 2026 (day 2): the udhar khata format and the credit-limit calculator added,
- *   and put out the same day (KK_EARLY).
+ *   and put out the same day.
+ * - 26 Oct 2026 (day 8): 13 pages added and put out the same day.
  */
-export const KK_KEEP_THROUGH_DAY = 2;
+export const KK_KEEP_THROUGH_DAY = 8;
 
 export const KK_RELEASES: KkRelease[] = buildCalendar({
   pages: KK_PAGES,

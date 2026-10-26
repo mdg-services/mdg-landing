@@ -463,6 +463,110 @@ export const PAGES: GuidePage[] = [
     clauses: "5.1.12, 5.1.18; circular 20.03.2025",
     brief: "An interactive YES/NO self-inspection checklist: the 20 minimum service obligations plus the records list and daily checks, with a score and the MDG clause for every NO. Built by the tools engineer.",
   },
+  // ── Added 26 Oct 2026 outside the daily schedule (guide/schedule.ts EARLY_26_OCT),
+  //    from Search Console (what the site is already shown for) and Google suggestions.
+  {
+    id: "tools-litres-to-kg", pillar: "tools", path: "/tools/litres-to-kg/", hi: true, type: "Tool", wave: 3,
+    queries: ["1 litre diesel kitne kg", "1 litre diesel weight in kg", "1 litre diesel kitne kilo hota hai", "diesel density kg to liter", "1 litre petrol weight in kg", "diesel kg to litre"],
+    clauses: "7.6 (density ranges); mass = volume x density",
+    brief: "A converter: litres to kg and kg to litres for diesel and petrol. Mass (kg) = litres x density (kg/m3) / 1000. Default density is the middle of the MDG 7.6 range for the fuel, but the reader can type the density from their invoice or density register (density at 15°C; say that at another temperature the litres differ slightly, link the density-at-15 tool). Show the worked sum. A table of kg for 1, 10, 100, 1,000 litres at three densities across the range. Answers '1 litre diesel kitne kg' directly in the answer box: about 0.81-0.85 kg depending on density.",
+  },
+  {
+    id: "tools-5-litre-test", pillar: "tools", path: "/tools/5-litre-test/", hi: true, type: "Tool", wave: 3,
+    queries: ["permissible limit of variations in nozzle delivery as per w&m dept is within", "5 litre measure test petrol pump", "petrol pump 5 litre test", "nozzle delivery variation limit", "petrol pump me kam petrol check kaise kare"],
+    clauses: "the 5-litre test clauses in MDG 2024 (see guide/content/en/quantity-5-litre-test.md and its sources); Legal Metrology limit as stated there",
+    brief: "A checker: the reader types what the 5-litre measure showed (in ml, above or below the 5-litre mark, or the total) and gets whether it is within the permissible limit, how many ml per 5 litres and per 100 litres it is off, and what the dealer must do (stop the nozzle, call the oil company / W&M) per the existing 5-litre-test page. Use exactly the limit and steps the existing quantity-5-litre-test page states and its source clause; if MDG does not state a figure, say who sets it. Works for a customer too ('am I getting less fuel').",
+  },
+  {
+    id: "tools-dip-chart", pillar: "tools", path: "/tools/dip-chart-calculator/", hi: true, type: "Tool", wave: 3,
+    queries: ["petrol pump dip calculator", "dip chart calculator", "petrol pump dip chart", "dip to litre conversion", "how to read dip chart"],
+    clauses: "tank calibration chart / dip rod use as MDG describes stock checks (5.1.11 and the stock pages)",
+    brief: "A calculator that never invents a chart: the reader types two neighbouring rows from THEIR OWN tank's calibration (dip) chart (dip in cm and litres for each) and their dip reading in between; the tool interpolates the litres in a straight line and shows the sum. Also: water dip subtracted if they enter it. Clear note that only the tank's own calibrated chart counts, every tank has its own, and interpolation between two close rows is the usual way to read between lines (label as general practice, not an MDG rule).",
+  },
+  {
+    id: "tools-dealer-margin", pillar: "tools", path: "/tools/dealer-margin-calculator/", hi: true, type: "Tool", wave: 3,
+    queries: ["petrol pump dealer margin per litre", "petrol pump dealer commission per liter 2026", "petrol pump dealer profit per litre", "petrol pump dealer ko kitna commission milta hai", "petrol pump dealer income"],
+    clauses: "none: margins are set and revised by the oil companies; no MDG figure",
+    brief: "A calculator with the reader's own numbers: monthly sales of MS and HSD (litres or KL), the dealer margin per KL for each (from their own oil company's latest margin letter; the tool must not ship any default margin figure as fact), plus optional monthly costs (salaries, power, rent, interest, other). Out: gross margin per month, costs, what is left, and margin per litre. Explain in two lines that margins are fixed and revised by the oil company and differ by company and product, so check the latest letter. No claims about current rates.",
+  },
+  {
+    id: "tools-density-chart", pillar: "tools", path: "/tools/density-temperature-chart/", hi: true, type: "Tool", wave: 3,
+    queries: ["diesel density chart with temperature", "diesel density at 30 deg c", "diesel density at 35 deg c", "petrol density at 40 c", "diesel density chart with temperature pdf"],
+    clauses: "1.2(iv), 1.4.1(c); ASTM Table 53B (via the same calculation as tools-density-at-15)",
+    brief: "The reverse of the density-at-15 tool: the reader types a density at 15°C (e.g. from the invoice) and the fuel, and gets a table of what a hydrometer would read at 10, 15, 20, 25, 30, 35, 40 and 45°C. Use exactly the same ASTM 53B calculation as guide/tools/tools-density-at-15.js (reuse its code, inverted by iteration), with the same note that the printed table or the oil company's figure is final. No pre-printed table copied from ASTM.",
+  },
+  {
+    id: "tools-registers", pillar: "tools", path: "/tools/density-and-stock-register-format/", hi: true, type: "Tool", wave: 3,
+    queries: ["density register pdf", "density register petrol pump", "density register format", "daily stock register format petrol pump", "dsr format petrol pump excel"],
+    clauses: "Annexure 1 (density record: describe only, never copy the form); 1.2, 5.1.9; stock register clauses on guide/content/en/stock-daily-register.md",
+    brief: "Download page for OUR OWN printable formats: a daily density register (A4 PDF) and a daily stock register (A4 PDF), plus an Excel version of each, English and Hindi headings. The columns are what MDG requires to be recorded (take them from the existing density-register and stock-daily-register pages), in our own layout and words; never a copy of Annexure 1 or any oil company form. Files go to public/guides/downloads/ and are made by a script in scripts/ (like scripts/kk-khata-page.mjs and scripts/kk-khata-template.py). Say the oil company's own register, if it issues one, comes first.",
+  },
+  {
+    id: "density-high-or-low", pillar: "density", path: "/guides/density/high-or-low-density/", hi: true, type: "Explainer", wave: 3,
+    queries: ["diesel density should be high or low", "petrol density which is good", "diesel density which is best", "petrol density high or low", "petrol density and mileage", "acche diesel ki density kitni honi chahiye"],
+    clauses: "7.6 (ranges); 1.2(iv) (±3 against the invoice)",
+    brief: "Answers the customer myth: is higher or lower density better? Plain answer: any density inside the range in MDG 7.6 is fine; what matters is that it matches the invoice/reference within ±3.0 kg/m3 at 15°C, not whether it is high or low; density is read at a temperature, so a lower reading on a hot afternoon is normal. Mileage differences from density inside the range are small (say so carefully, no invented percentages). One table: fuel, range, what a reading outside it means.",
+  },
+  {
+    id: "density-temperature", pillar: "density", path: "/guides/density/density-and-temperature/", hi: true, type: "Explainer", wave: 3,
+    queries: ["diesel density with temperature", "petrol density at night", "why density changes with temperature", "diesel density at 15 deg c", "density at 15 degree celsius meaning"],
+    clauses: "1.2(iv), 1.4.1(c), 5.1.9; ASTM 53B",
+    brief: "Why the same diesel reads a different density in the morning and the afternoon, and why everything is compared at 15°C. Fuel expands when warm, so observed density falls as temperature rises; the hydrometer reading plus the temperature is converted to density at 15°C with ASTM Table 53B. One illustrative example using the density-at-15 tool (say 'for example', take numbers from that tool, not invented). Link the density-at-15 and density chart tools and the 10am reference density page.",
+  },
+  {
+    id: "density-e20", pillar: "density", path: "/guides/density/e20-petrol/", hi: true, type: "Explainer", wave: 3,
+    queries: ["e20 petrol kya hai", "petrol density after e20", "petrol density with e20", "e20 petrol and normal petrol difference", "e20 petrol problems", "petrol density with ethanol"],
+    clauses: "7.6 (density ranges as MDG 2024 prints them); IS 17021 named only",
+    brief: "For dealers and customers: what E20 is (petrol with up to 20% ethanol), what changes at the pump. Density: state only what MDG 2024 says (if MDG 7.6 lists a range that covers ethanol-blended petrol, give it with the clause; otherwise say the standard for E20 is IS 17021 and to check the current version and the oil company's figure; never invent an E20 density range). Water: ethanol-blended petrol is sensitive to water, so keep tanks and tanker receipts dry (link the water-finding paste and water-in-tank pages; any handling rule must come from MDG or be labelled general practice). No opinions on the E20 policy, no mileage figures.",
+  },
+  {
+    id: "density-kit", pillar: "density", path: "/guides/density/hydrometer-and-density-kit/", hi: true, type: "Checklist", wave: 3,
+    queries: ["diesel density hydrometer range", "petrol pump density kit", "density meter petrol pump", "hydrometer for diesel density", "diesel density kit"],
+    clauses: "the clauses around line 428 of .guide-source/mdg-2024.txt (hydrometers, thermometers, ASTM tables) and the minimum equipment lists",
+    brief: "Checklist: the density equipment a pump must keep and show on demand (hydrometers of the right range for each product, thermometer, measuring jar, ASTM density conversion table), what to check (calibration/certificate if MDG asks, broken glass), and what happens if it is missing, all from MDG 2024 with clauses. A table: item, why, what MDG says. If MDG gives no hydrometer ranges, give the range a dealer needs to cover from 7.6 and say 'choose hydrometers that cover it'.",
+  },
+  {
+    id: "density-board", pillar: "density", path: "/guides/density/what-is-density-at-a-petrol-pump/", hi: true, type: "Explainer", wave: 3,
+    queries: ["petrol pump density kya hota hai", "what is density in petrol pump", "petrol pump par density ka matlab", "density meter petrol pump kitna hona chahiye", "petrol pump density kitni honi chahiye"],
+    clauses: "minimum service obligations / display clauses for density; 7.6; 1.2",
+    brief: "For the customer who sees 'density' on the dispenser or board: what the number is (mass of one cubic metre of the fuel, in kg/m3, at 15°C), why pumps display it, what range is normal (7.6), and how to ask for a density check. Short and Hindi-search friendly. Do not repeat the density-range page; link it. Any display duty must come from MDG 2024 or the 20.03.2025 circular with its tag.",
+  },
+  {
+    id: "service-customer-checks", pillar: "service", path: "/guides/customer-service/customer-density-and-quantity-check/", hi: true, type: "Explainer", wave: 3,
+    queries: ["petrol pump par density kaise check kare", "how to check petrol quantity at petrol pump", "petrol pump me kam petrol check kaise kare", "petrol pump ki testing kaise hoti hai", "customer right density check petrol pump"],
+    clauses: "the customer-facing checks MDG 2024 and the 20.03.2025 circular give (density check on demand, 5-litre measure, filter paper, complaint book); exact clauses from the source",
+    brief: "What a customer may ask the pump to show or check, in order: the density check, the 5-litre measure test, the filter paper test, the complaint book. For each: what the customer sees, what result is normal, where to complain. Only duties MDG or the circular gives, with tags. Neutral tone, no accusations against dealers. Link the 5-litre-test tool, filter-paper, complaint-book pages.",
+  },
+  {
+    id: "mdg-every-oil-company", pillar: "hub", path: "/guides/mdg-for-every-oil-company/", hi: true, type: "Explainer", wave: 3,
+    queries: ["mdg guidelines iocl", "mdg guidelines bpcl", "mdg guidelines hpcl", "is mdg same for all oil companies", "mdg guidelines for petrol pump"],
+    clauses: "the document's own statement of which companies issued it and whom it binds (title page / 1.x)",
+    brief: "One question: is MDG the same for IndianOil, BPCL and HPCL dealers? Answer from what MDG 2024 itself says about who issued it and to whom it applies (with clause). What can differ by company in practice (forms, circular formats, local officers) only where the document leaves it to the oil company, labelled so. The joint circular of 20.03.2025 is for all three. Name the companies in plain text, never as the lead word, at most once in title/description.",
+  },
+  {
+    id: "inspection-who", pillar: "inspection", path: "/guides/inspection/who-can-inspect-a-petrol-pump/", hi: true, type: "Explainer", wave: 3,
+    queries: ["petrol pump checking officer", "petrol pump inspection officer", "who can inspect petrol pump", "petrol pump inspection kaun karta hai", "mobile lab inspection petrol pump"],
+    clauses: "the inspection chapter: who inspects (oil company officers, joint inspections, other authorities MDG mentions) and what they must do (sign, give a copy)",
+    brief: "Who may inspect a petrol pump under MDG 2024 (oil company officers and the others the document names), what the dealer can ask for (identity, a copy of the inspection report), and what the inspector records. Only what the source says, with clauses. Link inspection pillar, records-to-keep, mobile lab. Never print phone numbers or names of officers.",
+  },
+  {
+    id: "mdg-questions-answers", pillar: "hub", path: "/guides/mdg-questions-and-answers/", hi: true, type: "Explainer", wave: 3,
+    queries: ["what is allowed tank variation in a retail outlet", "what is allowed operation loss % of sales for hsd (sales <600 kl per year)", "permissible limit of variations in nozzle delivery as per w&m dept is within", "what is the cycle for calculating instances of irregularities from the date of the report of inspection", "mdg penalty meaning"],
+    clauses: "stock variation limits (5.1.11 and the stock pages, incl. the 600 KL point), 5-litre test limit, the five-year count (8.5.5), penalty classes (8.2-8.4)",
+    brief: "The short-answer questions dealers, managers and DSMs get asked (in training and tests), each answered in one or two sentences with the figure and clause, grouped by topic: stock variation (allowed tank variation; the operation loss allowance for HSD with sales under 600 KL a year, exactly as MDG 2024 states it), quantity (5-litre test limit), density (±3, ranges), penalties (classes, how repeat instances are counted from the inspection report date, five years incl. previous guideline). 10-14 Q&As in the body as a table or ### questions; FAQ adds 3-5 different ones. Every figure from the source with its tag; add {{penalty-note}} after penalty figures. Link the page that explains each one.",
+  },
+  {
+    id: "stock-what-is-dip", pillar: "stock", path: "/guides/stock-variation/what-is-dip/", hi: true, type: "Explainer", wave: 3,
+    queries: ["what is dip in petrol pump", "petrol pump dip", "petrol pump dip chart", "dip rod petrol pump", "dip kya hota hai petrol pump"],
+    clauses: "the stock-taking / dip clauses (5.1.11, the daily stock register clauses, water dip)",
+    brief: "What 'dip' means at a pump: measuring the fuel height in the underground tank with a dip rod, reading the litres from the tank's calibration chart, and the water dip with water-finding paste. When MDG requires dips to be taken and recorded (with clauses), how the dip feeds the stock register and stock variation. Link the dip-chart calculator, daily stock register, water-finding paste, stock variation pages. Short.",
+  },
+  {
+    id: "product-names", pillar: "hub", path: "/guides/hsd-ms-and-product-names/", hi: true, type: "Explainer", wave: 3,
+    queries: ["hsd meaning petrol pump", "ms meaning petrol pump", "hsd full form", "hsd density range", "xp95 meaning", "dsm petrol pump full form"],
+    clauses: "the product names and abbreviations MDG 2024 uses (MS, HSD, branded fuels, SKO, LDO etc.) and 7.6 for density ranges",
+    brief: "A short reference: the product names and abbreviations a dealer and customer see (MS = petrol, HSD = diesel, branded/premium fuels, SKO, and staff terms like DSM) with one line each and, for MS and HSD, the density range from 7.6. Use only abbreviations MDG uses or that are standard; brand names of premium fuels (XP95, Speed, Power) may be named in plain text as examples without claims. Link the glossary for more.",
+  },
 ];
 
 export const byId = new Map(PAGES.map((p) => [p.id, p]));
