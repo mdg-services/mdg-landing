@@ -16,9 +16,9 @@ const CARDS = [
     out: "/Users/dissu/Documents/PP/mdg-service/mdg-landing/public/og-kk.png",
     bg: "#0B3F33", fg: "#FFFEFB", dim: "#C9DDD4", accent: "#E3EEE8", line: "#1F5A4B",
     mark: "Khata Kavach · MDG Services",
-    h: `Every credit sale written once.<br><span style="color:#E3EEE8">Seen by both.</span>`,
-    sub: `The shared credit book between a business and its regular customers. The customer asks first, the counter checks the limit, and both see every sale.`,
-    stats: [["2", "apps: one for the business, one for the customer"], ["3", "lights at the counter: serve, call the manager, no credit"], ["0", "rupees lent or held by Khata Kavach"]],
+    h: `Every litre written once.<br><span style="color:#E3EEE8">Seen by both.</span>`,
+    sub: `The shared credit book between a petrol pump and its transporters. The transporter asks first, the nozzle man checks the limit, and both see every fill.`,
+    stats: [["2", "apps: one for the pump, one for the transporter"], ["3", "lights at the nozzle: fill, call the manager, no credit"], ["0", "rupees lent or held by Khata Kavach"]],
     foot: "mdgservices.in/khata-kavach",
   },
 ];

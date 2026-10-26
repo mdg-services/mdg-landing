@@ -1,48 +1,48 @@
 ---json
 {
-  "title": "A disputed sale: 40 bags or 50? A worked example",
-  "description": "A made-up contractor says only 40 bags went out, not 50. What both phones show, how a manager corrects the line with a reason, and what stays on the record.",
-  "answer": "A made-up contractor says only 40 bags were loaded, not 50. The sale line shows who served, the time and the photo the counter added. The manager finds a typing mistake and corrects it with a reason. The wrong line stays on both phones, marked struck out, and a new line carries the right figures.",
+  "title": "A disputed fill: 150 litres or 200? An example",
+  "description": "A made-up transporter says his truck took 150 litres of diesel, not 200. What both phones show, how a manager corrects the line with a reason, and what stays on record.",
+  "answer": "A made-up transporter says his truck took 150 litres of diesel, not 200. The fill line shows who filled, the time and the photo of the slip. The manager finds a typing mistake and corrects it with a reason. The wrong line stays on both phones, marked struck out, and a new line carries the right figures.",
   "faq": [
-    { "q": "How does a customer raise a doubt about a sale?", "a": "The customer sees every line on their own phone and calls the business. The owner or a manager can then correct a wrong line, with a reason, as a new line." },
-    { "q": "Does the old line disappear after a correction?", "a": "No. Once the sale has reached the customer's phone, nothing is edited. The old line stays, marked struck out, and the new line sits below it, so both sides can see what changed." },
-    { "q": "Can a sale be corrected after a bill is made?", "a": "Not while it is on a bill. The owner cancels the bill first, then the sale is corrected, then a new bill is made. The cancelled bill's number is not used again." }
+    { "q": "How does a transporter raise a doubt about a fill?", "a": "The transporter sees every line on his own phone and calls the pump. The owner or a manager can then correct a wrong line, with a reason, as a new line." },
+    { "q": "Does the old line disappear after a correction?", "a": "No. Once the fill has reached the transporter's phone, nothing is edited. The old line stays, marked struck out, and the new line sits below it, so both sides can see what changed." },
+    { "q": "Can a fill be corrected after a bill is made?", "a": "Not while it is on a bill. The owner cancels the bill first, then the fill is corrected, then a new bill is made. The cancelled bill's number is not used again." }
   ],
-  "related": ["examples", "counter-disputes", "feature-corrections", "feature-photo", "example-contractor-limit"],
-  "updated": "2026-10-23"
+  "related": ["examples", "counter-disputes", "feature-corrections", "feature-photo", "example-pump-month"],
+  "updated": "2026-10-27"
 }
 ---
 > **Example:** a made-up business with made-up figures. It is not a real customer.
 
 ## The set-up
 
-A made-up building material dealer sells cement at Rs 400 a bag to a made-up contractor on credit, with a limit of Rs 50,000. The contractor needs cement and sends a request for 50 bags. The app gives it a 4-digit pickup code, which the contractor passes to Raju, who collects with a hired tractor. Rs 10,000 is already owed.
+Sharma Fuels, a made-up petrol pump, sells diesel at Rs 90 a litre on credit to Gupta Transport, a made-up transport business with a limit of Rs 2,00,000. Gupta Transport sends a request for truck UP00 SH 1006: 200 litres. Rs 40,000 is already owed.
 
 ## What both phones show
 
-At 10:40 am, "Staff A" (a made-up name) records the sale. The line on the dealer's phone and the contractor's phone reads:
+At 10:40 am, a nozzle man ("Nozzle man A", a made-up name) types the last 4 digits, 1006, and sees the green light, "You can fill". He types 200 litres and Rs 18,000, the figures from the request, takes a photo of the dispenser slip, and taps Done. The line on the pump's phone and on the transporter's phone reads:
 
-- **Sale:** 50 bags, Rs 20,000. Given by Staff A on the pickup code ("Code matches"). The counter added "Collected by" Raju, so the line reads "Taken by Raju".
-- **Photo:** the loaded tractor, added by the counter.
-- **Flags:** none. 50 bags matches the request, so "More than requested" does not show.
+- **Fill:** 200 litres, Rs 18,000, truck UP00 SH 1006, filled by Nozzle man A at 10:40 am.
+- **Photo:** the dispenser slip, added by the nozzle man.
+- **Marks:** none. 200 litres matches the request, so the fill is not marked as more than requested.
 
-The app did not catch the mistake. It cannot know what is on the tractor. The contractor sees the line and calls the dealer: only 40 bags went on.
+The app did not catch the mistake. It cannot read the dispenser. The transporter sees the line and calls the pump: the truck took 150 litres.
 
 ## How the line is corrected
 
-The manager opens the sale and looks at the photo: 40 bags. Staff A had typed the requested 50. The manager taps "Correct this sale", writes the reason "Typed 50, load was 40", chooses "Cancel it and enter the right sale", and enters 40 bags and Rs 16,000. No bill has been made yet.
+The manager opens the fill and looks at the photo of the slip: 150 litres. Nozzle man A had typed the requested 200. The manager corrects the fill, writes the reason "Typed 200, slip says 150", chooses to cancel it and enter the right fill, and enters 150 litres and Rs 13,500. No bill has been made yet.
 
-| Line | Bags | Rupees | Owed after |
+| Line | Litres | Rupees | Owed after |
 |---|---|---|---|
-| Owed before | | | 10,000 |
-| Sale by Staff A | 50 | 20,000 | 30,000 |
-| That sale, struck out | -50 | -20,000 | 10,000 |
-| New sale, entered by the manager | 40 | 16,000 | 26,000 |
+| Owed before | | | 40,000 |
+| Fill by Nozzle man A | 200 | 18,000 | 58,000 |
+| That fill, struck out | -200 | -18,000 | 40,000 |
+| New fill, entered by the manager | 150 | 13,500 | 53,500 |
 
-The contractor's phone shows the first sale as "Struck out", then the new line. The contractor sees the reason too, beside the struck-out line and the new line. The contractor owes Rs 26,000 (10,000 + 16,000). See [what a correction looks like](@feature-corrections).
+The transporter's phone shows the first fill as struck out, then the new line. He sees the reason too, beside the struck-out line and the new line. He owes Rs 53,500 (40,000 + 13,500). See [what a correction looks like](@feature-corrections).
 
 ## If the record was right
 
-Say the photo shows 50 bags on the tractor. The owner shows the contractor the line, the time, who served and the photo, and keeps the sale as it is. Nothing is changed.
+Say the slip in the photo shows 200 litres. The owner shows the transporter the line, the time, who filled and the photo, and keeps the fill as it is. Nothing is changed.
 
-For more on this, see [a disputed credit sale](@counter-disputes) and [the optional photo with a sale](@feature-photo).
+For more on this, see [a disputed credit fill](@counter-disputes) and [the optional photo with a fill](@feature-photo).

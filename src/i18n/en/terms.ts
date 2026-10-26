@@ -72,7 +72,7 @@ export const terms: DocPage = {
           "The service helps you keep track. You and your business remain responsible for meeting your own legal duties and the duties you owe to your oil company or any authority. What the apps show is only as complete as the information they are given.",
         ),
         p(
-          "Khata Kavach keeps a record of credit sales between a business and its customers. We do not lend money, and we do not hold or move anyone's money. What a customer owes a business is between the two of them.",
+          "Khata Kavach keeps a record of fuel a pump gives on credit to its transporters and other regular customers. We do not lend money, and we do not hold or move anyone's money. What a customer owes a pump is between the two of them.",
         ),
         p("MDG Services is independent. It is not part of IndianOil, BPCL or HPCL, and none of them endorses it."),
       ],

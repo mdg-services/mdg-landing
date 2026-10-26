@@ -9,7 +9,7 @@
   var hi = (document.documentElement.lang || "en").slice(0, 2) === "hi";
   var T = hi ? {
     needAmt: "बाकी रकम रुपये में भरें, जैसे 80,000 या 80 हज़ार।",
-    needRate: "ग्राहक से तय की हुई सालाना ब्याज दर भरें। दर 0 से ऊपर होनी चाहिए।",
+    needRate: "ट्रांसपोर्टर से तय की हुई सालाना ब्याज दर भरें। दर 0 से ऊपर होनी चाहिए।",
     badRate: "सालाना दर अंकों में भरें, % के साथ या उसके बिना।",
     rateHigh: "सालाना दर 100% से ऊपर टाइप की गलती लगती है। आपकी दर महीने की है तो उसे 12 से गुणा करें।",
     needLate: "कितने दिन की देर है यह भरें, या वह तारीख़ चुनें जब पैसे भरने थे।",
@@ -29,11 +29,11 @@
     leftover: function (n, r, b) { return "बचे " + n + " दिन उस रकम पर " + r + "% × " + n + " ÷ 365 के हिसाब से: " + b + "।"; },
     cmpd: function (x) { return "हर महीने जुड़ने वाला ब्याज: " + x; },
     vsSimple: function (x) { return "तुलना के लिए, उसी पर साधारण ब्याज " + x + " बनता।"; },
-    cost: function (a, b, d, c) { return "देर से आए पैसे की आपको क़ीमत, आपकी अपनी उधारी की दर पर: " + a + " × " + b + "% × " + d + " दिन ÷ 365 = " + c + "। ग्राहक से ब्याज लें या न लें, यह क़ीमत आपकी जेब से जाती है।"; },
-    foot: "ब्याज लगाने का सबसे साफ़ मामला वह है जब ग्राहक ने बिक्री से पहले लिखकर हामी भरी हो: बिल पर, आपकी शर्तों में या उधार फ़ॉर्म में। कुछ तय न हुआ हो तो कोर्ट तय करता है। यह सिर्फ़ जोड़-घटाव है, कानूनी सलाह नहीं। Udyam रजिस्ट्रेशन वाले सप्लायर का अलग नियम है, जो यह टूल नहीं निकालता।"
+    cost: function (a, b, d, c) { return "देर से आए पैसे की आपको क़ीमत, आपकी अपनी उधारी की दर पर: " + a + " × " + b + "% × " + d + " दिन ÷ 365 = " + c + "। ट्रांसपोर्टर से ब्याज लें या न लें, यह क़ीमत आपकी जेब से जाती है।"; },
+    foot: "ब्याज लगाने का सबसे साफ़ मामला वह है जब ट्रांसपोर्टर ने पहली उधार भराई से पहले लिखकर हामी भरी हो: बिल पर, आपकी शर्तों में या उधार फ़ॉर्म में। कुछ तय न हुआ हो तो कोर्ट तय करता है। यह सिर्फ़ जोड़-घटाव है, कानूनी सलाह नहीं। Udyam रजिस्ट्रेशन वाले सप्लायर का अलग नियम है, जो यह टूल नहीं निकालता।"
   } : {
     needAmt: "Type the amount due in rupees, for example 80,000 or 80 thousand.",
-    needRate: "Type the yearly interest rate you agreed with the customer. It must be above 0.",
+    needRate: "Type the yearly interest rate you agreed with the transporter. It must be above 0.",
     badRate: "Type the yearly rate as a number, with or without the % sign.",
     rateHigh: "A yearly rate above 100% looks like a typo. If your rate is per month, multiply it by 12.",
     needLate: "Type the days late, or pick the date the money was due.",
@@ -53,8 +53,8 @@
     leftover: function (n, r, b) { return "Then the last " + n + " days at " + r + "% × " + n + " ÷ 365 on that total: " + b + "."; },
     cmpd: function (x) { return "Interest with monthly compounding: " + x; },
     vsSimple: function (x) { return "For comparison, simple interest on the same would be " + x + "."; },
-    cost: function (a, b, d, c) { return "What the late money costs you, at your own borrowing rate: " + a + " × " + b + "% × " + d + (d === 1 ? " day" : " days") + " ÷ 365 = " + c + ". You pay this whether or not you charge the customer."; },
-    foot: "The clearest case for charging interest is when the customer agreed to it in writing before the sale: on the bill, in your terms or on your credit form. Where nothing was agreed, a court decides. This is a sum, not legal advice. A supplier with Udyam registration has a separate rule, which this tool does not work out."
+    cost: function (a, b, d, c) { return "What the late money costs you, at your own borrowing rate: " + a + " × " + b + "% × " + d + (d === 1 ? " day" : " days") + " ÷ 365 = " + c + ". You pay this whether or not you charge the transporter."; },
+    foot: "The clearest case for charging interest is when the transporter agreed to it in writing before the first credit fill: on the bill, in your terms or on your credit form. Where nothing was agreed, a court decides. This is a sum, not legal advice. A supplier with Udyam registration has a separate rule, which this tool does not work out."
   };
 
   var out = document.getElementById("li-out");

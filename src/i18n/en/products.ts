@@ -4,7 +4,7 @@
 export const products = {
   sectionAria: "Our two apps",
   heading: "Two Kavach apps for your pump.",
-  intro: "Dealer's Kavach looks after the paperwork. Khata Kavach looks after the credit you give regular customers.",
+  intro: "Dealer's Kavach looks after the paperwork. Khata Kavach looks after the credit fuel you give transporters.",
   dealer: {
     name: "Dealer's Kavach",
     tagline: "Paperwork, handled.",
@@ -17,14 +17,14 @@ export const products = {
   },
   khata: {
     name: "Khata Kavach",
-    tagline: "Credit to regular customers, no paper slips.",
+    tagline: "Credit fuel, no paper coupons.",
     points: [
-      "Every sale on one line, seen by both sides, with a photo if you add one",
-      "A credit limit for each customer",
+      "Every fill on one line, seen by both sides, with a photo if you add one",
+      "A credit limit for each transporter",
       "Numbered bills on WhatsApp, and what is paid and owed",
     ],
     link: "See Khata Kavach",
-    imageAlt: "Khata Kavach Business on a phone: credit given today, money received and the total owed.",
+    imageAlt: "Khata Kavach Pump on a phone: credit given today, what is due on bills, and this month's credit.",
   },
-  note: "For pumps that give credit to transporters and other regular customers, and for any other business that sells on credit.",
+  note: "For pumps that give diesel and petrol on credit, and the transporters who buy it.",
 };

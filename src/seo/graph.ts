@@ -22,7 +22,7 @@ export function homeJsonLd(lang: Lang) {
         url: `${SITE}/`,
         logo: `${SITE}/logo-mark.png`,
         description:
-          "Apps for India's petrol pump dealers, and for any business that sells on credit to regular customers, in Hindi and English: Dealer's Kavach and Khata Kavach.",
+          "Apps for India's petrol pump dealers and the transporters who buy from them, in Hindi and English: Dealer's Kavach and Khata Kavach.",
         brand: [
           { "@type": "Brand", name: "Dealer's Kavach", url: `${SITE}/` },
           { "@type": "Brand", name: "Khata Kavach", url: `${SITE}/khata-kavach` },

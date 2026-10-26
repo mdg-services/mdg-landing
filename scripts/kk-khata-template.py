@@ -1,21 +1,26 @@
 """
-The free udhar khata Excel template on mdgservices.in/khata-kavach/credit/udhar-khata-format/,
+The free udhar khata Excel template for petrol pumps on mdgservices.in/khata-kavach/credit/udhar-khata-format/,
 in English and Hindi: public/kk/downloads/udhar-khata-format.xlsx and udhar-khata-format-hindi.xlsx.
 
     python3 scripts/kk-khata-template.py
 
 Three sheets:
   - How to use: short steps (Protected View first) and the colour legend.
-  - Customers: one row per customer. You type the name, phone, credit limit, credit days and
+  - Transporters: one row per transporter. You type the name, phone, credit limit, credit days and
     the balance from the old book; the sheet works out total udhar, total received, the balance
     now and the credit left.
-  - Khata: one row for every credit sale and every payment, the day it happens. You pick the
-    customer from the list; the sheet works out that customer's balance after the line.
+  - Khata: one row for every credit fill and every payment, the day it happens. You pick the
+    transporter from the list; the sheet works out that transporter's balance after the line.
 
-Yellow cells are typed, grey cells are formulas. The first rows of Customers and Khata are a
-made-up example, italic only while their Note still says so. A check cell on Customers counts
-Khata lines whose customer is not on the list. Red and orange follow the limit only. Plain Excel-2007 functions only (SUMIFS, INDEX,
-MATCH, IFERROR, N), so it opens the same in Excel, Google Sheets, LibreOffice and phone apps.
+Yellow cells are typed, grey cells are formulas. The first rows of Transporters and Khata are a
+made-up example, italic only while their Note still says so. A check cell on Transporters counts
+Khata lines whose transporter is not on the list. Red and orange follow the limit only. Plain
+Excel-2007 functions only (SUMIFS, INDEX, MATCH, IFERROR, N), so it opens the same in Excel,
+Google Sheets, LibreOffice and phone apps.
+
+The Khata columns are looked up by name in KCOLS (KL["given"] is the letter of the "Udhar given"
+column), so a column can be added or dropped there and every formula, pick list, number check,
+colour rule and width follows.
 """
 from pathlib import Path
 from datetime import date
@@ -23,14 +28,22 @@ from openpyxl import Workbook
 from openpyxl.styles import Alignment, Border, Font, PatternFill, Side
 from openpyxl.formatting.rule import FormulaRule
 from openpyxl.worksheet.datavalidation import DataValidation
+from openpyxl.utils import get_column_letter
 from math import ceil
 from openpyxl.workbook.properties import CalcProperties
 
 OUT = Path(__file__).resolve().parent.parent / "public" / "kk" / "downloads"
 
-CUST_ROWS = 200   # customers, rows 4..203
-KHATA_ROWS = 3000  # lines, rows 4..3003 (customer totals read the whole column, so nothing is ever left out)
+CUST_ROWS = 200   # transporters, rows 4..203
+KHATA_ROWS = 3000  # lines, rows 4..3003 (transporter totals read the whole column, so nothing is ever left out)
 FIRST = 4
+
+# The Khata sheet, left to right. No unit column: a pump sells fuel by the litre.
+KCOLS = ["date", "cust", "truck", "fuel", "litres", "given", "recv", "paid", "utr", "slip", "who", "bal", "note"]
+KL = {name: get_column_letter(i) for i, name in enumerate(KCOLS, start=1)}   # name -> column letter
+KN = {name: i for i, name in enumerate(KCOLS, start=1)}                      # name -> column number
+KWIDTHS = [12, 28, 15, 16, 10, 15, 16, 11, 20, 14, 14, 24, 30]
+assert len(KCOLS) == len(KWIDTHS)
 
 PINE = "0F4A3D"
 INPUT = PatternFill("solid", fgColor="FFF6D5")   # yellow: you type
@@ -46,22 +59,24 @@ NEAR_FONT = Font(name="Arial", bold=True, color="7F3F00")
 EXAMPLE_FONT = Font(name="Arial", italic=True, color="5B6964")
 MONEY = "#,##0;-#,##0"  # Excel draws the grouping the computer's region uses (12,34,567 in India)
 
+# Each example Khata line: date, which example transporter (0 or 1), truck, fuel, litres, udhar given,
+# money received, how paid, UTR / cheque, slip, who filled, note. Diesel at Rs 90 a litre.
 T = {
     "en": {
         "file": "udhar-khata-format.xlsx",
-        "how": "How to use", "cust": "Customers", "khata": "Khata",
-        "title_how": "Udhar khata: a template from MDG Services",
+        "how": "How to use", "cust": "Transporters", "khata": "Khata",
+        "title_how": "Udhar khata for a petrol pump: an MDG Services template",
         "steps": [
             "If Excel shows a yellow 'Protected View' bar at the top, press Enable Editing. The grey columns fill in after that.",
-            "1. Customers sheet: one row for each customer. Type the name, phone, credit limit (Rs), credit days (for your own reference) and the balance from your old book. Keep every name different, and do not rename a customer after you have written lines for them.",
-            "2. Khata sheet: one row for every credit sale and every payment, written the day it happens. Pick the customer from the list in column B.",
-            "3. A sale: fill Udhar given (Rs). A payment: fill Money received (Rs), how it was paid and the UTR or cheque number.",
-            "4. Never type over an old row. If a line is wrong, add a new line with the same amount as a minus figure in the same column (Udhar given for a wrong sale, Money received for a wrong payment), write why in Note, then add the right line.",
-            "5. The grey columns work out by themselves: each customer's balance, credit left, and the balance after every line. Do not type in them.",
-            "6. On the Customers sheet a row turns red when the balance is over the limit, and orange when less than a fifth of the limit is left. On the Khata sheet the balance turns red on a line that took the customer over the limit. The colours follow the limit only: the sheet does not mark late payments.",
-            "7. The box at the top of the Customers sheet counts Khata lines whose customer is not on the list. If it shows more than 0, correct those names.",
-            "8. The sheet holds 200 customers and 3,000 lines. When the lines run out, start a fresh copy and type each customer's balance now as their balance from the old book.",
-            "9. Each month, filter the Khata sheet by the customer's name and send them the lines and the balance.",
+            "1. Transporters sheet: one row for each transporter. Type the name, phone, credit limit (Rs), credit days (for your own reference) and the balance from your old book. Keep every name different, and do not rename a transporter after you have written lines for them.",
+            "2. Khata sheet: one row for every credit fill and every payment, written the day it happens. Pick the transporter from the list in column B.",
+            "3. A credit fill: fill Truck no., Fuel, Litres and Udhar given (Rs), the litres and rupees as the dispenser showed them. A payment: fill Money received (Rs), how it was paid and the UTR or cheque number.",
+            "4. Never type over an old row. If a line is wrong, add a new line with the same litres and the same amount as minus figures (the amount in Udhar given for a wrong fill, in Money received for a wrong payment), write why in Note, then add the right line.",
+            "5. The grey columns work out by themselves: each transporter's balance, credit left, and the balance after every line. Do not type in them.",
+            "6. On the Transporters sheet a row turns red when the balance is over the limit, and orange when less than a fifth of the limit is left. On the Khata sheet the balance turns red on a line that took the transporter over the limit. The colours follow the limit only: the sheet does not mark late payments.",
+            "7. The box at the top of the Transporters sheet counts Khata lines whose transporter is not on the list. If it shows more than 0, correct those names.",
+            "8. The sheet holds 200 transporters and 3,000 lines. When the lines run out, start a fresh copy and type each transporter's balance now as their balance from the old book.",
+            "9. Each month, filter the Khata sheet by the transporter's name and send them the lines and the balance.",
             "10. The rows in italics are a made-up example. Delete them, or type over every cell including the Note, before you start.",
         ],
         "legend": "Yellow cells: you type. Grey cells: worked out by the sheet, do not type in them.",
@@ -69,39 +84,49 @@ T = {
         "swatch_calc": "Grey cells: worked out by the sheet. Do not type in them.",
         "note": "General information. Check your own figures. The names in the example rows are made up.",
         "by": "MDG Services, a brand of VRUOOM Private Limited · mdgservices.in/khata-kavach/credit/udhar-khata-format/",
-        "kk": "Khata Kavach, our app, keeps credit sales and payments in one shared book: by default the customer sends a request before goods go out, and both sides see each line as soon as the phone is online. mdgservices.in/khata-kavach",
-        "title_cust": "Customers: limits and balances",
-        "title_khata": "Khata: every credit sale and every payment",
-        "check": "Khata lines whose customer is not on this list:",
-        "cust_cols": ["Customer name", "Phone", "Credit limit (Rs)", "Credit days (for reference)", "Balance from old book (Rs)", "Total udhar given (Rs)", "Total received (Rs)", "Balance now (Rs)", "Credit left (Rs)", "Note"],
-        "khata_cols": ["Date", "Customer (pick from list)", "Vehicle no.", "Item", "Quantity", "Unit", "Udhar given (Rs)", "Money received (Rs)", "How paid", "UTR / cheque no.", "Slip / bill no.", "Who served", "Customer's balance after this line (Rs)", "Note"],
-        "units": ["Litre", "Kg", "Tonne", "Bag", "Piece", "Box", "Cylinder", "Trip", "Metre", "Amount only"],
+        "kk": "Khata Kavach, our app for petrol pumps, keeps every credit fill and payment in one shared book: by default the transporter sends a request before each truck fills, and both sides see each line as soon as the phone is online. mdgservices.in/khata-kavach",
+        "title_cust": "Transporters: limits and balances",
+        "title_khata": "Khata: every credit fill and every payment",
+        "check": "Khata lines whose transporter is not on this list:",
+        "cust_cols": ["Transporter name", "Phone", "Credit limit (Rs)", "Credit days (for reference)", "Balance from old book (Rs)", "Total udhar given (Rs)", "Total received (Rs)", "Balance now (Rs)", "Credit left (Rs)", "Note"],
+        "khata_cols": {
+            "date": "Date", "cust": "Transporter (pick from list)", "truck": "Truck no.", "fuel": "Fuel", "litres": "Litres",
+            "given": "Udhar given (Rs)", "recv": "Money received (Rs)", "paid": "How paid", "utr": "UTR / cheque no.",
+            "slip": "Coupon / slip no.", "who": "Who filled", "bal": "Transporter's balance after this line (Rs)", "note": "Note",
+        },
+        "fuels": ["Diesel", "Petrol", "Premium diesel", "Premium petrol"],
         "paid": ["Cash", "UPI", "Bank", "Cheque"],
-        "pick_err": "Pick the customer from the list. Add a new customer on the Customers sheet first.",
+        "pick_err": "Pick the transporter from the list. Add a new transporter on the Transporters sheet first.",
         "num_err": "Type a number only. Use a minus sign to correct a line.",
         "ex_key": "Example",
-        "ex_cust": ["Sharma Roadlines (made-up)", "98XXXXXX00", 200000, 15, 20000, None, None, None, None, "Example row: delete it or type over it"],
+        "ex_cust": [
+            ["Sharma Roadlines (made-up)", "98XXXXXX00", 200000, 15, 20000, None, None, None, None, "Example row: delete it or type over it"],
+            ["Gupta Transport (made-up)", "98XXXXXX01", 100000, 7, 70000, None, None, None, None, "Example row: delete it or type over it"],
+        ],
         "ex_lines": [
-            [date(2026, 10, 2), "UP00 SH 1005", "Diesel", 150, "Litre", 13500, None, None, None, "S-101", "Staff A", "Example row"],
-            [date(2026, 10, 4), "UP00 SH 1006", "Diesel", 200, "Litre", 18000, None, None, None, "S-102", "Staff A", "Example row"],
-            [date(2026, 10, 10), None, None, None, None, None, 30000, "UPI", "UTR 0000XXXX1234", None, "Owner", "Example row"],
+            [date(2026, 10, 2), 0, "UP00 SH 1005", "Diesel", 150, 13500, None, None, None, "S-101", "Nozzle man A", "Example row"],
+            [date(2026, 10, 3), 1, "UP00 GT 2201", "Diesel", 120, 10800, None, None, None, "S-102", "Nozzle man A", "Example row"],
+            [date(2026, 10, 4), 0, "UP00 SH 1006", "Diesel", 200, 18000, None, None, None, "S-103", "Nozzle man B", "Example row"],
+            [date(2026, 10, 7), 1, "UP00 GT 2202", "Diesel", 160, 14400, None, None, None, "S-104", "Nozzle man A", "Example row"],
+            [date(2026, 10, 10), 0, None, None, None, None, 30000, "UPI", "UTR 0000XXXX1234", None, "Owner", "Example row"],
+            [date(2026, 10, 12), 1, None, None, None, None, 10000, "Cash", None, None, "Owner", "Example row"],
         ],
     },
     "hi": {
         "file": "udhar-khata-format-hindi.xlsx",
-        "how": "कैसे भरें", "cust": "ग्राहक", "khata": "खाता",
-        "title_how": "उधार खाता: MDG Services का फ़ॉर्मेट",
+        "how": "कैसे भरें", "cust": "ट्रांसपोर्टर", "khata": "खाता",
+        "title_how": "पेट्रोल पंप का उधार खाता: MDG Services का फ़ॉर्मेट",
         "steps": [
             "अगर Excel ऊपर पीली पट्टी में 'Protected View' दिखाए, तो 'Enable Editing' दबाएँ। उसके बाद स्लेटी कॉलम भरते हैं।",
-            "1. ग्राहक शीट: हर ग्राहक की एक लाइन। नाम, फ़ोन, उधार की सीमा (₹), उधार के दिन (याद के लिए) और पुरानी बही का बकाया लिखें। हर ग्राहक का नाम अलग रखें, और लाइनें लिख देने के बाद नाम न बदलें।",
-            "2. खाता शीट: हर उधार की बिक्री और हर पेमेंट की एक लाइन, उसी दिन लिखें। कॉलम B में लिस्ट से ग्राहक चुनें।",
-            "3. बिक्री: 'उधार दिया (₹)' भरें। पेमेंट: 'पैसे मिले (₹)', कैसे मिले, और UTR या चेक नंबर भरें।",
-            "4. पुरानी लाइन पर कभी दोबारा न लिखें। लाइन गलत हो तो नई लाइन जोड़ें, उसी खाने में उतनी ही रकम माइनस में (गलत बिक्री हो तो 'उधार दिया' में, गलत पेमेंट हो तो 'पैसे मिले' में), 'नोट' में वजह लिखें, फिर सही लाइन जोड़ें।",
-            "5. स्लेटी कॉलम अपने आप भरते हैं: हर ग्राहक का बकाया, बची हुई सीमा, और हर लाइन के बाद का बकाया। इनमें कुछ न लिखें।",
-            "6. ग्राहक शीट पर बकाया सीमा से ऊपर जाए तो लाइन लाल हो जाती है, और सीमा का पाँचवाँ हिस्सा भी न बचे तो नारंगी। खाता शीट पर जिस लाइन से ग्राहक सीमा से ऊपर गया, उसका बकाया लाल दिखता है। रंग सिर्फ़ सीमा देखते हैं: देर से पेमेंट पर शीट कोई निशान नहीं लगाती।",
-            "7. ग्राहक शीट के ऊपर एक खाना गिनता है कि खाता शीट की कितनी लाइनों का ग्राहक लिस्ट में नहीं है। 0 से ज़्यादा दिखे तो उन लाइनों के नाम ठीक करें।",
-            "8. शीट में 200 ग्राहक और 3,000 लाइनें आती हैं। लाइनें भर जाएँ तो नई कॉपी शुरू करें और हर ग्राहक का अभी का बकाया उसकी 'पुरानी बही का बकाया' में लिखें।",
-            "9. हर महीने खाता शीट को ग्राहक के नाम से फ़िल्टर करें और उसे लाइनें और बकाया भेजें।",
+            "1. ट्रांसपोर्टर शीट: हर ट्रांसपोर्टर की एक लाइन। नाम, फ़ोन, उधार की सीमा (₹), उधार के दिन (याद के लिए) और पुरानी बही का बकाया लिखें। हर नाम अलग रखें, और लाइनें लिख देने के बाद नाम न बदलें।",
+            "2. खाता शीट: हर उधार की भराई और हर पेमेंट की एक लाइन, उसी दिन लिखें। कॉलम B में लिस्ट से ट्रांसपोर्टर चुनें।",
+            "3. उधार की भराई: गाड़ी नंबर, तेल, लीटर और 'उधार दिया (₹)' भरें, लीटर और रुपये वही जो डिस्पेंसर पर दिखे। पेमेंट: 'पैसे मिले (₹)', कैसे मिले, और UTR या चेक नंबर भरें।",
+            "4. पुरानी लाइन पर कभी दोबारा न लिखें। लाइन गलत हो तो नई लाइन जोड़ें, उतने ही लीटर और उतनी ही रकम माइनस में (गलत भराई हो तो रकम 'उधार दिया' में, गलत पेमेंट हो तो 'पैसे मिले' में), 'नोट' में वजह लिखें, फिर सही लाइन जोड़ें।",
+            "5. स्लेटी कॉलम अपने आप भरते हैं: हर ट्रांसपोर्टर का बकाया, बची हुई सीमा, और हर लाइन के बाद का बकाया। इनमें कुछ न लिखें।",
+            "6. ट्रांसपोर्टर शीट पर बकाया सीमा से ऊपर जाए तो लाइन लाल हो जाती है, और सीमा का पाँचवाँ हिस्सा भी न बचे तो नारंगी। खाता शीट पर जिस लाइन से ट्रांसपोर्टर सीमा से ऊपर गया, उसका बकाया लाल दिखता है। रंग सिर्फ़ सीमा देखते हैं: देर से पेमेंट पर शीट कोई निशान नहीं लगाती।",
+            "7. ट्रांसपोर्टर शीट के ऊपर एक खाना गिनता है कि खाता शीट की कितनी लाइनों का ट्रांसपोर्टर लिस्ट में नहीं है। 0 से ज़्यादा दिखे तो उन लाइनों के नाम ठीक करें।",
+            "8. शीट में 200 ट्रांसपोर्टर और 3,000 लाइनें आती हैं। लाइनें भर जाएँ तो नई कॉपी शुरू करें और हर ट्रांसपोर्टर का अभी का बकाया उसकी 'पुरानी बही का बकाया' में लिखें।",
+            "9. हर महीने खाता शीट को ट्रांसपोर्टर के नाम से फ़िल्टर करें और उसे लाइनें और बकाया भेजें।",
             "10. तिरछे अक्षरों वाली लाइनें काल्पनिक उदाहरण हैं। शुरू करने से पहले उन्हें हटा दें, या 'नोट' समेत हर खाने में अपना लिखें।",
         ],
         "legend": "पीले खाने: आप भरें। स्लेटी खाने: शीट ख़ुद भरती है, इनमें कुछ न लिखें।",
@@ -109,22 +134,32 @@ T = {
         "swatch_calc": "स्लेटी खाने: शीट ख़ुद भरती है। इनमें कुछ न लिखें।",
         "note": "यह सामान्य जानकारी है। अपने आँकड़े ख़ुद जाँचें। उदाहरण वाली लाइनों के नाम काल्पनिक हैं।",
         "by": "MDG Services, VRUOOM Private Limited का ब्रांड · mdgservices.in/hi/khata-kavach/credit/udhar-khata-format/",
-        "kk": "हमारा ऐप खाता कवच उधार की बिक्री और पेमेंट एक साझा खाते में रखता है: शुरुआती सेटिंग में माल जाने से पहले ग्राहक रिक्वेस्ट भेजता है, और फ़ोन के नेट पर आते ही हर लाइन दोनों तरफ़ दिखती है। mdgservices.in/hi/khata-kavach",
-        "title_cust": "ग्राहक: उधार की सीमा और बकाया",
-        "title_khata": "खाता: हर उधार की बिक्री और हर पेमेंट",
-        "check": "खाता शीट की लाइनें जिनका ग्राहक इस लिस्ट में नहीं:",
-        "cust_cols": ["ग्राहक का नाम", "फ़ोन", "उधार की सीमा (₹)", "उधार के दिन (याद के लिए)", "पुरानी बही का बकाया (₹)", "कुल उधार दिया (₹)", "कुल पैसे मिले (₹)", "अभी का बकाया (₹)", "बची हुई सीमा (₹)", "नोट"],
-        "khata_cols": ["तारीख़", "ग्राहक (लिस्ट से चुनें)", "गाड़ी नंबर", "माल", "मात्रा", "यूनिट", "उधार दिया (₹)", "पैसे मिले (₹)", "कैसे मिले", "UTR / चेक नंबर", "पर्ची / बिल नंबर", "स्टाफ़ का नाम", "इस लाइन के बाद ग्राहक का बकाया (₹)", "नोट"],
-        "units": ["लीटर", "किलो", "टन", "बोरी", "पीस", "बॉक्स", "सिलेंडर", "ट्रिप", "मीटर", "कोई यूनिट नहीं (सिर्फ़ रकम)"],
+        "kk": "हमारा ऐप खाता कवच पेट्रोल पंप की हर उधार की भराई और हर पेमेंट एक साझा खाते में रखता है: शुरुआती सेटिंग में हर गाड़ी भरने से पहले ट्रांसपोर्टर रिक्वेस्ट भेजता है, और फ़ोन के नेट पर आते ही हर लाइन दोनों तरफ़ दिखती है। mdgservices.in/hi/khata-kavach",
+        "title_cust": "ट्रांसपोर्टर: उधार की सीमा और बकाया",
+        "title_khata": "खाता: हर उधार की भराई और हर पेमेंट",
+        "check": "खाता शीट की लाइनें जिनका ट्रांसपोर्टर इस लिस्ट में नहीं:",
+        "cust_cols": ["ट्रांसपोर्टर का नाम", "फ़ोन", "उधार की सीमा (₹)", "उधार के दिन (याद के लिए)", "पुरानी बही का बकाया (₹)", "कुल उधार दिया (₹)", "कुल पैसे मिले (₹)", "अभी का बकाया (₹)", "बची हुई सीमा (₹)", "नोट"],
+        "khata_cols": {
+            "date": "तारीख़", "cust": "ट्रांसपोर्टर (लिस्ट से चुनें)", "truck": "गाड़ी नंबर", "fuel": "तेल", "litres": "लीटर",
+            "given": "उधार दिया (₹)", "recv": "पैसे मिले (₹)", "paid": "कैसे मिले", "utr": "UTR / चेक नंबर",
+            "slip": "कूपन / पर्ची नंबर", "who": "किसने भरा", "bal": "इस लाइन के बाद ट्रांसपोर्टर का बकाया (₹)", "note": "नोट",
+        },
+        "fuels": ["डीज़ल", "पेट्रोल", "प्रीमियम डीज़ल", "प्रीमियम पेट्रोल"],
         "paid": ["नकद", "UPI", "बैंक", "चेक"],
-        "pick_err": "ग्राहक लिस्ट से चुनें। नया ग्राहक पहले ग्राहक शीट में जोड़ें।",
+        "pick_err": "ट्रांसपोर्टर लिस्ट से चुनें। नया ट्रांसपोर्टर पहले ट्रांसपोर्टर शीट में जोड़ें।",
         "num_err": "सिर्फ़ अंक भरें। लाइन सुधारने के लिए माइनस लगाएँ।",
         "ex_key": "उदाहरण",
-        "ex_cust": ["Sharma Roadlines (काल्पनिक)", "98XXXXXX00", 200000, 15, 20000, None, None, None, None, "उदाहरण की लाइन: इसे हटाएँ या इस पर अपना लिखें"],
+        "ex_cust": [
+            ["Sharma Roadlines (काल्पनिक)", "98XXXXXX00", 200000, 15, 20000, None, None, None, None, "उदाहरण की लाइन: इसे हटाएँ या इस पर अपना लिखें"],
+            ["Gupta Transport (काल्पनिक)", "98XXXXXX01", 100000, 7, 70000, None, None, None, None, "उदाहरण की लाइन: इसे हटाएँ या इस पर अपना लिखें"],
+        ],
         "ex_lines": [
-            [date(2026, 10, 2), "UP00 SH 1005", "डीज़ल", 150, "लीटर", 13500, None, None, None, "S-101", "स्टाफ़ A", "उदाहरण की लाइन"],
-            [date(2026, 10, 4), "UP00 SH 1006", "डीज़ल", 200, "लीटर", 18000, None, None, None, "S-102", "स्टाफ़ A", "उदाहरण की लाइन"],
-            [date(2026, 10, 10), None, None, None, None, None, 30000, "UPI", "UTR 0000XXXX1234", None, "मालिक", "उदाहरण की लाइन"],
+            [date(2026, 10, 2), 0, "UP00 SH 1005", "डीज़ल", 150, 13500, None, None, None, "S-101", "नोज़ल मैन A", "उदाहरण की लाइन"],
+            [date(2026, 10, 3), 1, "UP00 GT 2201", "डीज़ल", 120, 10800, None, None, None, "S-102", "नोज़ल मैन A", "उदाहरण की लाइन"],
+            [date(2026, 10, 4), 0, "UP00 SH 1006", "डीज़ल", 200, 18000, None, None, None, "S-103", "नोज़ल मैन B", "उदाहरण की लाइन"],
+            [date(2026, 10, 7), 1, "UP00 GT 2202", "डीज़ल", 160, 14400, None, None, None, "S-104", "नोज़ल मैन A", "उदाहरण की लाइन"],
+            [date(2026, 10, 10), 0, None, None, None, None, 30000, "UPI", "UTR 0000XXXX1234", None, "मालिक", "उदाहरण की लाइन"],
+            [date(2026, 10, 12), 1, None, None, None, None, 10000, "नकद", None, None, "मालिक", "उदाहरण की लाइन"],
         ],
     },
 }
@@ -135,13 +170,13 @@ def ref(sheet: str) -> str:
     return "'" + sheet.replace("'", "''") + "'"
 
 
-def title(ws, text: str, sub: str) -> None:
+def title(ws, text: str, sub: str, head_height: int) -> None:
     ws["A1"] = text
     ws["A1"].font = Font(name=F, size=14, bold=True, color=PINE)
     ws["A2"] = sub
     ws["A2"].font = Font(name=F, size=10, color="43524D")
     ws.row_dimensions[1].height = 24
-    ws.row_dimensions[3].height = 34
+    ws.row_dimensions[3].height = head_height
 
 
 def header(ws, cols: list[str], widths: list[int]) -> None:
@@ -193,15 +228,19 @@ def build(lang: str) -> Path:
     last_c, last_k = FIRST + CUST_ROWS - 1, FIRST + KHATA_ROWS - 1
     k, c_ = ref(ks), ref(cs)
     ex = t["ex_key"]
+    cu_given, cu_recv = KL["given"], KL["recv"]   # the two money columns on Khata
+    kcust = KL["cust"]                            # the transporter column on Khata
+    kbal, knote = KL["bal"], KL["note"]
+    last_kcol = KL[KCOLS[-1]]
 
-    # ── Customers ──
+    # ── Transporters ──
     cu = wb.create_sheet(cs)
-    title(cu, t["title_cust"], t["legend"])
+    title(cu, t["title_cust"], t["legend"], 42)
     header(cu, t["cust_cols"], [30, 15, 15, 13, 18, 18, 17, 16, 16, 30])
-    # the name check: Khata lines whose customer is not on this list
+    # the name check: Khata lines whose transporter is not on this list
     cu["F2"] = t["check"]
     cu["F2"].font = Font(name=F, size=10, bold=True, color="43524D")
-    cu["J2"] = f'=SUMPRODUCT(({k}!$B${FIRST}:$B${last_k}<>"")*(COUNTIF($A${FIRST}:$A${last_c},{k}!$B${FIRST}:$B${last_k})=0))'
+    cu["J2"] = f'=SUMPRODUCT(({k}!${kcust}${FIRST}:${kcust}${last_k}<>"")*(COUNTIF($A${FIRST}:$A${last_c},{k}!${kcust}${FIRST}:${kcust}${last_k})=0))'
     cu["J2"].font = Font(name=F, size=11, bold=True)
     cu["J2"].fill = CALC
     cu["J2"].border = BOX
@@ -214,64 +253,69 @@ def build(lang: str) -> Path:
             c.font = Font(name=F, size=10)
             c.fill = CALC if 6 <= col <= 9 else INPUT
         # whole columns: a line typed below the formatted rows still counts
-        cu.cell(row=row, column=6, value=f'=IF(A{row}="","",SUMIFS({k}!$G:$G,{k}!$B:$B,A{row}))')
-        cu.cell(row=row, column=7, value=f'=IF(A{row}="","",SUMIFS({k}!$H:$H,{k}!$B:$B,A{row}))')
+        cu.cell(row=row, column=6, value=f'=IF(A{row}="","",SUMIFS({k}!${cu_given}:${cu_given},{k}!${kcust}:${kcust},A{row}))')
+        cu.cell(row=row, column=7, value=f'=IF(A{row}="","",SUMIFS({k}!${cu_recv}:${cu_recv},{k}!${kcust}:${kcust},A{row}))')
         cu.cell(row=row, column=8, value=f'=IF(A{row}="","",N(E{row})+F{row}-G{row})')
         cu.cell(row=row, column=9, value=f'=IF(OR(A{row}="",C{row}=""),"",C{row}-H{row})')
         for col in (3, 5, 6, 7, 8, 9):
             cu.cell(row=row, column=col).number_format = MONEY
-    for col, v in enumerate(t["ex_cust"], start=1):
-        if v is not None:
-            cu.cell(row=FIRST, column=col, value=v)
+    for i, vals in enumerate(t["ex_cust"]):
+        for col, v in enumerate(vals, start=1):
+            if v is not None:
+                cu.cell(row=FIRST + i, column=col, value=v)
     rng = f"A{FIRST}:J{last_c}"
     cu.conditional_formatting.add(rng, FormulaRule(formula=[f'AND($A{FIRST}<>"",N($C{FIRST})>0,N($H{FIRST})>N($C{FIRST}))'], fill=OVER, font=OVER_FONT, stopIfTrue=True))
     cu.conditional_formatting.add(rng, FormulaRule(formula=[f'AND($A{FIRST}<>"",N($C{FIRST})>0,N($I{FIRST})<N($C{FIRST})/5)'], fill=NEAR, font=NEAR_FONT, stopIfTrue=True))
-    # the example row is italic only while its Note still says it is an example
+    # an example row is italic only while its Note still says it is an example
     cu.conditional_formatting.add(rng, FormulaRule(formula=[f'LEFT($J{FIRST},{len(ex)})="{ex}"'], font=EXAMPLE_FONT))
     cu.freeze_panes = f"B{FIRST}"
     cu.auto_filter.ref = f"A3:J{last_c}"
 
     # ── Khata ──
     kh = wb.create_sheet(ks)
-    title(kh, t["title_khata"], t["legend"])
-    header(kh, t["khata_cols"], [12, 28, 15, 14, 10, 13, 15, 16, 11, 20, 13, 14, 20, 30])
+    title(kh, t["title_khata"], t["legend"], 42)
+    header(kh, [t["khata_cols"][name] for name in KCOLS], KWIDTHS)
+    money_cols = (KN["given"], KN["recv"], KN["bal"])
     for row in range(FIRST, last_k + 1):
-        for col in range(1, 15):
+        for col in range(1, len(KCOLS) + 1):
             cell = kh.cell(row=row, column=col)
             cell.border = BOX
             cell.font = Font(name=F, size=10)
-            cell.fill = CALC if col == 13 else INPUT
-        kh.cell(row=row, column=1).number_format = "dd-mm-yyyy"
-        for col in (7, 8, 13):
+            cell.fill = CALC if col == KN["bal"] else INPUT
+        kh.cell(row=row, column=KN["date"]).number_format = "dd-mm-yyyy"
+        for col in money_cols:
             kh.cell(row=row, column=col).number_format = MONEY
-        kh.cell(row=row, column=13, value=(
-            f'=IF(OR(B{row}="",AND(G{row}="",H{row}="")),"",'
-            f'IFERROR(N(INDEX({c_}!$E${FIRST}:$E${last_c},MATCH(B{row},{c_}!$A${FIRST}:$A${last_c},0))),0)'
-            f'+SUMIFS($G${FIRST}:G{row},$B${FIRST}:B{row},B{row})-SUMIFS($H${FIRST}:H{row},$B${FIRST}:B{row},B{row}))'
+        kh.cell(row=row, column=KN["bal"], value=(
+            f'=IF(OR({kcust}{row}="",AND({cu_given}{row}="",{cu_recv}{row}="")),"",'
+            f'IFERROR(N(INDEX({c_}!$E${FIRST}:$E${last_c},MATCH({kcust}{row},{c_}!$A${FIRST}:$A${last_c},0))),0)'
+            f'+SUMIFS(${cu_given}${FIRST}:{cu_given}{row},${kcust}${FIRST}:{kcust}{row},{kcust}{row})'
+            f'-SUMIFS(${cu_recv}${FIRST}:{cu_recv}{row},${kcust}${FIRST}:{kcust}{row},{kcust}{row}))'
         ))
     for i, line in enumerate(t["ex_lines"]):
         row = FIRST + i
-        vals = [line[0], t["ex_cust"][0]] + line[1:-1] + [None, line[-1]]  # M, the balance, stays a formula
+        # date, the transporter's name, then truck .. who; the balance column stays a formula; then the note
+        vals = [line[0], t["ex_cust"][line[1]][0]] + line[2:-1] + [None, line[-1]]
+        assert len(vals) == len(KCOLS)
         for col, v in enumerate(vals, start=1):
             if v is not None:
                 kh.cell(row=row, column=col, value=v)
-    # pick lists, and numbers only in the two money columns
+    # pick lists, and numbers only in the litres and the two money columns
     dv_c = DataValidation(type="list", formula1=f"{c_}!$A${FIRST}:$A${last_c}", allow_blank=True, showErrorMessage=True, error=t["pick_err"])
-    dv_u = DataValidation(type="list", formula1='"' + ",".join(t["units"]) + '"', allow_blank=True)
+    dv_f = DataValidation(type="list", formula1='"' + ",".join(t["fuels"]) + '"', allow_blank=True)
     dv_p = DataValidation(type="list", formula1='"' + ",".join(t["paid"]) + '"', allow_blank=True)
     dv_n = DataValidation(type="decimal", operator="between", formula1="-1000000000000", formula2="1000000000000", allow_blank=True, showErrorMessage=True, error=t["num_err"])
-    for dv, cols in ((dv_c, "B"), (dv_u, "F"), (dv_p, "I"), (dv_n, "GH")):
+    for dv, cols in ((dv_c, [KL["cust"]]), (dv_f, [KL["fuel"]]), (dv_p, [KL["paid"]]), (dv_n, [KL["litres"], KL["given"], KL["recv"]])):
         kh.add_data_validation(dv)
         for col in cols:
             dv.add(f"{col}{FIRST}:{col}{last_k}")
-    limit = f'N(INDEX({c_}!$C${FIRST}:$C${last_c},MATCH($B{FIRST},{c_}!$A${FIRST}:$A${last_c},0)))'
+    limit = f'N(INDEX({c_}!$C${FIRST}:$C${last_c},MATCH(${kcust}{FIRST},{c_}!$A${FIRST}:$A${last_c},0)))'
     kh.conditional_formatting.add(
-        f"M{FIRST}:M{last_k}",
-        FormulaRule(formula=[f'IFERROR(AND($M{FIRST}<>"",{limit}>0,N($M{FIRST})>{limit}),FALSE)'], fill=OVER, font=OVER_FONT),
+        f"{kbal}{FIRST}:{kbal}{last_k}",
+        FormulaRule(formula=[f'IFERROR(AND(${kbal}{FIRST}<>"",{limit}>0,N(${kbal}{FIRST})>{limit}),FALSE)'], fill=OVER, font=OVER_FONT),
     )
-    kh.conditional_formatting.add(f"A{FIRST}:N{last_k}", FormulaRule(formula=[f'LEFT($N{FIRST},{len(ex)})="{ex}"'], font=EXAMPLE_FONT))
+    kh.conditional_formatting.add(f"A{FIRST}:{last_kcol}{last_k}", FormulaRule(formula=[f'LEFT(${knote}{FIRST},{len(ex)})="{ex}"'], font=EXAMPLE_FONT))
     kh.freeze_panes = f"B{FIRST}"
-    kh.auto_filter.ref = f"A3:N{last_k}"
+    kh.auto_filter.ref = f"A3:{last_kcol}{last_k}"
 
     for ws in (cu, kh):
         ws.page_setup.orientation = "landscape"

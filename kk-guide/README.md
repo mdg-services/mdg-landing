@@ -1,11 +1,15 @@
 # The Khata Kavach pages
 
-Plain-language pages on selling goods on credit (udhar) to regular business
-customers and keeping the account, in English and Hindi, at
-mdgservices.in/khata-kavach/… and /hi/khata-kavach/…. Their job: when a
-business owner asks Google or an AI assistant a question about giving credit,
+Plain-language pages for petrol pump owners who give fuel on credit (udhar) to
+transporters, fleet owners and other regular customers, and keep the account,
+in English and Hindi, at mdgservices.in/khata-kavach/… and
+/hi/khata-kavach/…. Their job: when a pump owner (or the transporter who buys
+from one) asks Google or an AI assistant a question about giving credit,
 keeping the khata, getting paid, or which credit app fits, the clearest and
 most honest answer is ours, and it shows where Khata Kavach fits.
+
+Since 27 Oct 2026 Khata Kavach is for petrol pumps only (it was briefly offered
+to any trade, 19 to 26 Oct). Every page speaks to a pump and its customers.
 
 They run on the same machine as the MDG guides (`guide/`, `src/guides/`): one
 renderer, one set of rules, one release gate. Only the data is separate.
@@ -64,63 +68,49 @@ The owner's words: Khata Kavach is **really simple and straightforward**; it
 visibility** of every sale; and it is **clearly different** from other khata
 apps. Show this with facts, never with adjectives.
 
-The true differences, in the order they matter (truth sheet section 6):
+The true differences, in the order they matter:
 
-1. The customer asks first. Every credit sale starts with a request from the
-   customer's phone. No request, no credit by default. The request is shown at
-   the counter in one of two ways, chosen once by the owner (see "How the counter
-   knows the customer" below): by **vehicle number**, or by a **4-digit pickup
-   code** the customer sends to whoever collects. The owner can also trust a
-   regular customer, who then needs no request, up to the limit.
+1. The transporter asks first. Every credit fill starts with a request from
+   the transporter's phone, one per truck: litres, rupees, or a full tank. No
+   request, no credit by default; per transporter the owner can let a manager's
+   PIN allow a fill without one.
 2. One shared line, seen by both. Nothing is edited: a correction is a new
    line, so both sides see what changed.
-3. The limit is checked at the counter, before goods go out: a green, amber or
+3. The limit is checked at the nozzle, before fuel goes in: a green, amber or
    red light, and a manager's PIN to go past it. The owner sees every one.
 4. The owner's Today screen answers the daily questions: credit given today,
-   money received, still owed, who is near the limit, which sales look wrong.
-5. The counter stays simple: the pickup code (or the last 4 digits of the
-   vehicle number), one light, type what was given, Done. Counter staff never
-   see a customer's phone number.
-6. No signal at the counter? The sale is saved on the phone and sent later.
-7. A numbered bill in a tap, on the business's letterhead, with a UPI QR, sent
-   from its own WhatsApp. Money received against a bill marks it paid.
-8. It never lends and never holds money.
-9. Hindi first; every item has its own unit (litre, bag, tonne, kg, piece…, or
-   the owner's own word, like dozen or packet). Sign-up asks which unit.
-10. A business starts on its own in the Business app in about a minute; a person
-    at MDG answers the phone, 9am to 9pm, every day.
+   money received, still owed, who is near the limit, which fills look wrong.
+5. The nozzle stays simple: the last 4 digits of the truck number, one light,
+   type the litres and rupees from the dispenser, Done. There is no rate list:
+   nothing is priced or converted. Nozzle men never see a transporter's phone
+   number.
+6. No signal at the nozzle? The fill is saved on the phone and sent later.
+7. A photo with a fill (number plate, slip), if the nozzle man takes one.
+8. A numbered bill in a tap, on the pump's letterhead, with a UPI QR, sent
+   from the pump's own WhatsApp. Money received against a bill marks it paid.
+9. It never lends and never holds money.
+10. Hindi first. A pump starts on its own in the Pump app in about a minute;
+    a person at MDG answers the phone, 9am to 9pm, every day.
 
-**Who it is for, honestly:** businesses that give goods on credit to regular
-customers: fuel stations and transporters, cement and building material, sand
-and aggregate, bricks, gas agencies, wholesalers and distributors, dairies. The
-goods can go in the customer's vehicle, with a labourer or a hired tractor, with
-the customer's shop boy, or with the business's own delivery boy. Do not write
-that it suits every trade, or walk-in shoppers buying on the spot: it is for
-regular customers with a credit account.
+**Who it is for, honestly:** petrol pumps (of any oil company) that give
+diesel and petrol on credit to regular customers who come in their own trucks
+or vehicles: transporters, fleet owners, bus and tractor owners, contractors'
+machines. And the transporter on the other side, who uses the Transporter app
+to send requests and see every fill. It sells the four fuels
+only (diesel, petrol, premium diesel, premium petrol), by the litre. Do not
+write that it suits shops, other trades or walk-in customers.
 
-### How the counter knows the customer (since 23 Oct 2026)
+### The two apps and their words
 
-The owner picks one, in the Business app under "माल और यूनिट" → "काउंटर पर ग्राहक
-कैसे पहचानें" ("How the counter knows the customer"). A fuel station starts on
-the first, every other trade on the second; the owner can switch.
-
-| | "By vehicle number" (गाड़ी नंबर से) | "By code or name" (कोड या नाम से) |
+| | Pump app (Khata Kavach Pump, पंप ऐप) | Transporter app (Khata Kavach Transporter, ट्रांसपोर्टर ऐप) |
 |---|---|---|
-| The customer's request | One per vehicle: "Which vehicles need goods today?" | One item, how much, and "For whom / where" (किसके लिए / कहाँ), e.g. "Raju, site 2". The app gives it a 4-digit pickup code: "Your pickup code" (आपका कोड), with "Send on WhatsApp" (व्हाट्सऐप पर भेजो) to pass it to whoever collects. |
-| At the counter | Staff type the last 4 digits of the vehicle number | Staff type the code in the box "Code or customer name" (कोड या ग्राहक का नाम). The right code shows "Code matches" (कोड सही) and the light. Picked by name instead, the screen says "Ask for the code" (कोड पूछो); with no code a manager's PIN can allow it, marked "Manager allowed it". A wrong code is refused. |
-| Who took it | The vehicle number is on every line | The counter can add "Collected by" (लेने वाला), e.g. Raju; the line reads "Taken by Raju" and the bill shows it. |
+| Who | The owner, managers, nozzle men | The transporter and his staff |
+| What | Fill on credit by truck number, the light, Today, transporters, limits, requests, bills, payments, staff | Daily requests per truck, every fill, bills with a UPI button, what is owed, trucks |
+| Starts | "Set up your pump" (अपना पंप जोड़ो) on the first screen | An invite link from the pump on WhatsApp |
 
-**Per customer, with no request** (the owner sets it on the customer's page,
-"With no request" / बिना रिक्वेस्ट आए तो): "No credit" (उधार नहीं, the default),
-"Manager PIN" (मैनेजर PIN), or "Trust him" (भरोसे पर दो): any of the staff can give
-goods on his name, with no request or code, up to his limit. New customers of a
-gas agency, a wholesaler or a dairy start on "Trust him". The credit limit
-always applies.
-
-Write about the code as a habit people already know: the customer passes four
-digits to whoever collects, like a gas delivery code. Never say codes "stop
-fraud"; say "goods go out only against the customer's request, its code, a
-manager's PIN, or the owner's trust".
+At the nozzle: the nozzle man types the last 4 digits of the truck number
+("गाड़ी का नंबर"), sees the light and how much credit is left, types litres and
+rupees off the dispenser, taps Done. Both phones show the fill.
 
 ## Product claims: never write these
 
@@ -133,13 +123,14 @@ manager's PIN, or the owner's trust".
 | instant, real time | "as soon as the phone is online" |
 | the whole app works offline | "works with no signal at the counter" |
 | automatic reminders, "we message your customers" | "one tap opens your own WhatsApp with the message ready" |
-| staff cannot see balances or limits | "counter staff never see a customer's phone number" |
-| stops fraud, ends disputes, zero leakage | "a wrong sale shows up on both phones, with who served and a photo" |
+| staff cannot see balances or limits | "nozzle men never see a transporter's phone number" |
+| stops fraud, ends disputes, zero leakage | "a wrong fill shows up on both phones, with who filled and a photo" |
 | legally valid, court proof, audit-ready | say nothing about legal weight |
 | users, "trusted by", testimonials, real case studies | examples are made up and say so |
 | loan, credit score, BNPL, "we collect your dues" | "Khata Kavach keeps the account. It never lends or holds money." |
 | 24x7 | "9am to 9pm, every day" |
-| "pump" and "transporter" as the product's words | business, customer, counter staff, sale (fuel is one trade) |
+| business, customer, counter staff, sale, "any trade", items or units | pump, transporter (or customer), nozzle man, fill; the four fuels by the litre |
+| oil company names as partners, "IOCL-approved" | "For pumps of any oil company. Not connected with any oil company." |
 | how it is built: servers, database, sync timing, libraries | outcomes only |
 
 ## Other apps: comparison rules
@@ -161,19 +152,19 @@ manager's PIN, or the owner's trust".
 ## Examples ("case studies")
 
 No real business is verified as a customer, so there are no real case studies.
-Example pages walk one made-up business through a real situation with the real
-screens, and say at the top: "An example with a made-up business and made-up
-figures." Use the site's made-up names (Sharma Traders, Sharma Roadlines,
+Example pages walk one made-up pump through a real situation with the real
+screens, and say at the top: "An example with a made-up pump and made-up
+figures." Use the site's made-up names (Sharma Fuels, Sharma Roadlines,
 Gupta Transport, plate UP00 SH 1005) or new obviously made-up ones. Never say
 "saved X%", "cut disputes by…", or any result.
 
 ## Voice
 
-Plain words, short sentences, active voice, the business owner's own
+Plain words, short sentences, active voice, the pump owner's own
 questions. Lead with what it means for them. Real figures in examples. No
 filler. Hindi pages: natural Hindi a trader in UP, Bihar, Rajasthan or MP
-speaks, in Devanagari, with the words the apps use (बिज़नेस, ग्राहक, स्टाफ़,
-गाड़ी, बिक्री, रिक्वेस्ट, उधार की सीमा, बिल, पैसे मिले); PIN, WhatsApp, UPI,
+speaks, in Devanagari, with the words the apps use (पंप, ट्रांसपोर्टर, नोज़ल मैन,
+गाड़ी, भराई / फ़िल, रिक्वेस्ट, उधार की सीमा, बिल, पैसे मिले); PIN, WhatsApp, UPI,
 PDF in Latin letters; the searched Hinglish phrasing in FAQ questions.
 
 What Hindi searchers type (Google and YouTube suggestions, 19 Oct 2026):
@@ -189,9 +180,9 @@ What Hindi searchers type (Google and YouTube suggestions, 19 Oct 2026):
 - **हिसाब / हिसाब किताब** is the everyday word: use it beside खाता.
 - **App searches are typed in Roman script**: put "udhar khata app", "udhar ka
   hisab rakhne wala app" and similar in the Hindi page's FAQ or body as typed.
-- **Speak to the shop or dealer, not to someone who lent money to a friend.**
+- **Speak to the pump owner, not to someone who lent money to a friend.**
   Many "udhar wapas" searches are personal loans: say in the first lines that
-  the page is for a business and its regular customers.
+  the page is for a pump and its regular customers (transporters, fleets).
 - Never: shayari, totke, mantra, "किस दिन उधार न दें". "उधार बंद" posters only
   on the poster page (`tool-udhar-poster`, added 26 Oct 2026 at the owner's
   request), where most posters are about credit with a limit, a slip and old
@@ -221,7 +212,7 @@ readers too.
   in image alt text or anything a reader cannot see. No logos, icons,
   screenshots, taglines or look-alike colours.
 - Never name an oil company, bank or government body as if it endorses us.
-  "For businesses of any oil company. Not connected with any oil company."
+  "For pumps of any oil company. Not connected with any oil company."
 
 ### Claims (ASCI 1.1-1.6; CCPA 4, 7, 12)
 
@@ -235,9 +226,9 @@ readers too.
 ### Examples and case studies (CCPA 13-14; ASCI 1.3, 1.4, AI-content guideline)
 
 - First line of every example page, as a quote block: "> **Example:** a
-  made-up business with made-up figures. It is not a real customer." (Hindi:
-  "> **उदाहरण:** काल्पनिक कारोबार, काल्पनिक आँकड़े। यह कोई असली ग्राहक नहीं है।")
-- Role labels or obviously made-up names (Sharma Traders, Sharma Roadlines,
+  made-up pump with made-up figures. It is not a real customer." (Hindi:
+  "> **उदाहरण:** काल्पनिक पंप, काल्पनिक आँकड़े। यह कोई असली ग्राहक नहीं है।")
+- Role labels or obviously made-up names (Sharma Fuels, Sharma Roadlines,
   Gupta Transport, plate UP00 SH 1005). No town that makes it look real, no
   photo of a person, no quotes from a "customer".
 - Figures only to show the arithmetic ("if 10 vehicles each take…"), never as

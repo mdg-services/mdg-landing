@@ -3,7 +3,7 @@
   "title": "Khatabook vs OkCredit: side by side, and where Khata Kavach fits",
   "metaTitle": "Khatabook vs OkCredit compared",
   "description": "Khatabook and OkCredit compared from their own sites and Google Play pages, checked on 19 October 2026: price, loans, languages, bills. Plus where Khata Kavach fits.",
-  "answer": "Khatabook and OkCredit are both ledger apps for businesses, with loans offered through partners. Khatabook calls its apps free and also runs on iPhone and desktop. OkCredit publishes paid plans from Rs 30 for 30 days and lists 11 Indian languages. Neither is stronger on every row. Khata Kavach is a different kind of tool: the customer asks before goods go out by default, and both sides see every sale. Facts checked on 19 October 2026.",
+  "answer": "Khatabook and OkCredit are both ledger apps for businesses, with loans offered through partners. Khatabook calls its apps free and also runs on iPhone and desktop. OkCredit publishes paid plans from Rs 30 for 30 days and lists 11 Indian languages. Neither is stronger on every row. Khata Kavach is a different kind of tool, for petrol pumps only: by default the transporter asks before the truck fills, and both sides see every fill. Facts checked on 19 October 2026.",
   "faq": [
     { "q": "Khatabook or OkCredit: which one to choose?", "a": "It depends on the row that matters to you. Khatabook shows more downloads and reviews on Google Play and lists a desktop app. OkCredit publishes plan prices and says on its Play listing that it works offline. Both have iPhone apps. Read both sites before you decide." },
     { "q": "Khatabook vs OkCredit vs Vyapar: how do they differ?", "a": "Khatabook and OkCredit start from the udhar khata. Vyapar starts from GST billing and accounting. Our page on Vyapar and myBillBook sets those billing apps beside Khata Kavach." },
@@ -43,6 +43,6 @@ Facts about Khatabook and OkCredit from their own websites and app listings, che
 
 ## Where Khata Kavach fits
 
-If you give goods on credit and want customers to ask first and see each sale, that is the job Khata Kavach does. The customer has their own app and, by default, sends a request before credit is given: per vehicle, or with a pickup code. Counter staff see a green, amber or red light before goods go out. A correction is a new line that both sides see. It keeps the account: it never lends and never holds money. Price: call us.
+If you run a petrol pump and want transporters to ask first and see each fill, that is the job Khata Kavach does. The transporter has his own app and, by default, sends a request before credit is given, one per truck. The nozzle man sees a green, amber or red light before fuel goes in. A correction is a new line that both sides see. It keeps the account: it never lends and never holds money. Price: call us.
 
 See [Khatabook](@compare-khatabook) and [OkCredit](@compare-okcredit) on their own, or [how to choose an app](@compare-choose-app).

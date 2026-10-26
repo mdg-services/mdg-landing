@@ -7,7 +7,7 @@
   "faq": [
     { "q": "Who carries the credit on a fleet card?", "a": "IndianOil's pages say credit is optional, from a partner bank or finance company at its own discretion, and the member stays liable for charges. HPCL describes a prepaid card and lists finance tie-ups separately. BPCL describes an account you recharge, with credit offered through finance companies." },
     { "q": "Does Khata Kavach give my transporter credit?", "a": "No. You decide who gets credit and set the limit. Khata Kavach never lends and never holds money. The transporter pays you directly, and you record it." },
-    { "q": "Can a transporter use Khata Kavach at any pump?", "a": "Only at a business that has set it up. The business adds the customer; a customer cannot sign up on its own. IndianOil and HPCL describe their cards as working at their own pumps." }
+    { "q": "Can a transporter use Khata Kavach at any pump?", "a": "Only at a pump that has set it up. The pump adds the transporter and sends an invite link on WhatsApp; a transporter cannot sign up on his own. IndianOil and HPCL describe their cards as working at their own pumps." }
   ],
   "related": ["trade-petrol-pump", "trade-transporter", "credit-limit", "compare"],
   "updated": "2026-10-19"
@@ -21,9 +21,9 @@
 
 ## Side by side
 
-| | Who carries the credit | Where it works | Customer app | Cost published |
+| | Who carries the credit | Where it works | Transporter or customer app | Cost published |
 |---|---|---|---|---|
-| Your own credit with Khata Kavach | The pump: you set the limit; it never lends or holds money | The business that sets it up | Khata Kavach Customer, in the phone's browser | Call us |
+| Your own credit with Khata Kavach | The pump: you set the limit; it never lends or holds money | The pump that sets it up | Khata Kavach Transporter, in the phone's browser | Call us |
 | IndianOil XTRAPOWER | An account you recharge; credit, if any, from a partner bank or finance company; the member stays liable | IndianOil outlets, 35,000+ by its home page | Web and mobile access | Not published |
 | HPCL DriveTrack Plus | A prepaid card; HPCL lists finance tie-ups separately | All HPCL pumps | Yes, English app | Not published |
 | BPCL SmartFleet | An account you recharge; credit through two finance companies | Not stated on its pages | HelloBPCL for Business | Not stated on its pages |
@@ -37,7 +37,7 @@ IndianOil and HPCL cards work across that company's own pumps. IndianOil lists r
 
 ## Where your own credit differs
 
-The decision is yours, for a customer you know. The transporter pays you directly by cash, UPI, bank or cheque, and you record it. The risk of non-payment stays with you, so a limit and a record that both sides see matter. See [how to set a credit limit](@credit-limit).
+The decision is yours, for a transporter you know. The transporter pays you directly by cash, UPI, bank or cheque, and you record it. The risk of non-payment stays with you, so a limit and a record that both sides see matter. See [how to set a credit limit](@credit-limit).
 
 ## Which fits
 

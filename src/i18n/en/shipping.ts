@@ -31,7 +31,7 @@ export const shipping: DocPage = {
             ],
             [
               "Khata Kavach",
-              "Straight away: start your business in the Khata Kavach Business app in about a minute, then add your customers on WhatsApp.",
+              "Straight away: set up your pump in the Khata Kavach Pump app in about a minute, then add your transporters on WhatsApp.",
               "None",
             ],
           ],
@@ -43,7 +43,7 @@ export const shipping: DocPage = {
       heading: "What happens",
       blocks: [
         steps([
-          ["You sign up", "Register your outlet or business, in Hindi or English, on this site or in the app."],
+          ["You sign up", "Register your outlet, in Hindi or English, on this site or in the app."],
           [
             "We set you up",
             "For Dealer's Kavach we set up your outlet and check it before the next one starts. Khata Kavach needs no set-up from us.",

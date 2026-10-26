@@ -13,7 +13,7 @@
 export const footer = {
   /* ── the brand column ── */
   /** The muted line under "Dealer's कवच". */
-  promise: "Apps for petrol pump dealers and credit sales to regular customers.",
+  promise: "Apps for petrol pump dealers and the transporters who buy from them.",
   /** `{tagline}` is BRAND.tagline, which stays English in both languages,
       so the sentence is written around it rather than starting with it. */
   satisfaction: "{tagline}. Your satisfaction fuels our energy.",
@@ -54,7 +54,7 @@ export const footer = {
   dealerApp: "Dealer's Kavach",
   khataApp: "Khata Kavach",
   /** The Khata Kavach guides' front door: a plain link (guide addresses keep their trailing slash). */
-  khataGuides: "Guides on selling on credit",
+  khataGuides: "Guides on giving fuel on credit",
   /** Not a link: the Android app is not on Google Play yet. */
   khataAndroid: "Khata Kavach for Android: coming to Google Play",
 
@@ -84,5 +84,5 @@ export const footer = {
   brandLine: "MDG Services is a brand of {name} · CIN: {cin}",
   /** The privacy page itself is English only. Its link is not. It sits in the Policies row. */
   privacy: "Privacy Policy",
-  madeFor: "Made for India's fuel station dealers and credit-selling businesses",
+  madeFor: "Made for India's fuel station dealers",
 };

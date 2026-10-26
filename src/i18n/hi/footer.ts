@@ -2,7 +2,7 @@ import type { footer as EN } from "../en/footer";
 
 export const footer: typeof EN = {
   /* ── the brand column ── */
-  promise: "पेट्रोल पंप डीलरों के लिए ऐप, और पक्के ग्राहकों के उधार का हिसाब।",
+  promise: "पेट्रोल पंप डीलरों और उनके ट्रांसपोर्टरों के लिए ऐप।",
   satisfaction: "{tagline}. आपकी संतुष्टि ही हमारी ऊर्जा है।",
   /* The company name is printed in white in the middle of the sentence. Hindi
      puts the owner before the thing owned, so the first half is just the brand
@@ -31,7 +31,7 @@ export const footer: typeof EN = {
   appsHeading: "हमारे ऐप",
   dealerApp: "Dealer's कवच",
   khataApp: "खाता कवच",
-  khataGuides: "उधार पर माल बेचने की गाइड",
+  khataGuides: "पंप पर उधार तेल देने की गाइड",
   khataAndroid: "खाता कवच एंड्रॉइड पर: जल्द Google Play पर",
 
   companyHeading: "कंपनी",
@@ -54,5 +54,5 @@ export const footer: typeof EN = {
   copyright: "© {year} {name}. सभी अधिकार सुरक्षित।",
   brandLine: "MDG Services, {name} का एक ब्रांड · CIN: {cin}",
   privacy: "प्राइवेसी पॉलिसी (अंग्रेज़ी में)",
-  madeFor: "भारत के पेट्रोल पंप डीलरों और उधार पर बेचने वाले बिज़नेस के लिए बनाया गया",
+  madeFor: "भारत के पेट्रोल पंप डीलरों के लिए बनाया गया",
 };

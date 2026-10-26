@@ -6,12 +6,12 @@ import { cards, facts, note, p, type DocPage } from "../doc";
 export const about: DocPage = {
   pageTitle: "About us · MDG Services",
   metaDescription:
-    "MDG Services is a brand of VRUOOM PRIVATE LIMITED, a company in Gurugram, India. We make Dealer's Kavach for petrol pump dealers and Khata Kavach for businesses that sell on credit.",
+    "MDG Services is a brand of VRUOOM PRIVATE LIMITED, a company in Gurugram, India. We make Dealer's Kavach for petrol pump dealers and Khata Kavach for pumps that give credit fuel to transporters.",
   eyebrow: "About us",
   eyebrowDeva: "हमारे बारे में",
-  heading: "Software for people who run India's pumps and credit counters.",
+  heading: "Software for the people who run India's petrol pumps.",
   intro:
-    "MDG Services is the brand of {legalName}, a private limited company in Gurugram, Haryana. We make two apps, in Hindi and English: Dealer's Kavach for petrol pump dealers, and Khata Kavach for any business that sells on credit to regular customers.",
+    "MDG Services is the brand of {legalName}, a private limited company in Gurugram, Haryana. We make two apps, in Hindi and English: Dealer's Kavach for petrol pump dealers, and Khata Kavach for pumps that give fuel on credit to their transporters.",
   updated: "23 October 2026",
   legal: false,
   sections: [
@@ -44,9 +44,9 @@ export const about: DocPage = {
             link: { label: "See pricing", href: "route:/pricing" },
           },
           {
-            kicker: "For businesses that sell on credit",
+            kicker: "For pumps that give fuel on credit",
             title: "Khata Kavach",
-            body: "One shared credit account book for a business and its regular customers. Both sides see every sale, and the business makes numbered bills. It keeps records only: it never lends, and never holds or moves money.",
+            body: "One shared account book for a pump and its transporters. Both sides see every fill, and the pump makes numbered bills. It keeps records only: it never lends, and never holds or moves money.",
             link: { label: "About Khata Kavach", href: "route:/khata-kavach" },
           },
         ]),

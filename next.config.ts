@@ -86,6 +86,20 @@ const nextConfig: NextConfig = {
         { source: `/hi/${name}`, destination: "/hi/refund-policy", permanent: true },
         { source: `/hi/${name}/`, destination: "/hi/refund-policy", permanent: true },
       ]),
+      // Khata Kavach is for petrol pumps only since 27 Oct 2026: the guide pages for
+      // other trades are gone, and anyone holding a link lands on the nearest page.
+      ...[
+        ["for/cement-and-building-material", "for/petrol-pump"],
+        ["for/contractors", "for/petrol-pump"],
+        ["for/sand-and-aggregates", "for/petrol-pump"],
+        ["for/wholesalers", "for/petrol-pump"],
+        ["examples/a-contractor-limit-bag-by-bag", "examples/a-month-of-diesel-credit"],
+      ].flatMap(([from, to]) =>
+        ["", "/hi"].flatMap((lang) => [
+          { source: `${lang}/khata-kavach/${from}`, destination: `${lang}/khata-kavach/${to}/`, permanent: true },
+          { source: `${lang}/khata-kavach/${from}/`, destination: `${lang}/khata-kavach/${to}/`, permanent: true },
+        ]),
+      ),
     ];
   },
 

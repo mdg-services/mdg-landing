@@ -7,7 +7,7 @@ import { pathFor, type CompanyRoute, type Lang, type SiteRoute } from "../i18n/l
 export const SITE = "https://mdgservices.in";
 export const OG_IMAGE = { url: "/og.png", width: 2400, height: 1260, alt: "MDG Services · Dealer's कवच" };
 /** Khata Kavach's own card (scripts/og.mjs, ONLY=kk): the product page and its guides. */
-export const KK_OG_IMAGE = { url: "/og-kk.png", width: 2400, height: 1260, alt: "Khata Kavach · MDG Services: every credit sale written once, seen by both" };
+export const KK_OG_IMAGE = { url: "/og-kk.png", width: 2400, height: 1260, alt: "Khata Kavach · MDG Services: every litre written once, seen by both" };
 
 /** Bing Webmaster Tools ownership check; keep it, Bing re-checks. */
 export const BING_VERIFICATION = "573ECDE597341A4280A1604DF38F4ADC";

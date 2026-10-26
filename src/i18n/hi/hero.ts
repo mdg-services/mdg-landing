@@ -25,7 +25,7 @@ export const hero: typeof EN = {
   ctaPrimary: "बात कीजिए",
   filmLink: "फ़िल्म देखिए · 40 सेकंड",
   alsoLabel: "MDG Services का एक और ऐप:",
-  alsoLink: "खाता कवच, पक्के ग्राहकों को उधार, बिना कच्ची पर्ची",
+  alsoLink: "खाता कवच, बिना कच्ची पर्ची का उधार डीज़ल",
   callLabel: "या",
 
   /* Latin digits on purpose: this is exactly how a dealer sees every figure

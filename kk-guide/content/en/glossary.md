@@ -2,30 +2,30 @@
 {
   "title": "Credit and khata words in English and Hindi: a plain glossary",
   "metaTitle": "Credit and khata glossary: English and Hindi",
-  "description": "Udhar, bakaya, jama, credit limit, ageing, kachcha and pakka bill, TDS, UTR, limitation period and more: the credit words a business owner meets, in English and Hindi.",
-  "answer": "A plain glossary of the credit words a business owner meets, in English and Hindi side by side: udhar, khata, bakaya, credit limit, credit period, ageing, kachcha and pakka bill, GST tax invoice, TDS, UTR, UPI QR, cheque bounce, limitation period and more. Each word gets one or two plain sentences, and a source where a law defines it.",
+  "description": "Udhar, bakaya, jama, credit limit, ageing, kachcha and pakka bill, TDS, UTR, limitation period and more: the credit words a pump owner meets, in English and Hindi.",
+  "answer": "A plain glossary of the credit words a pump owner meets, in English and Hindi side by side: udhar, khata, bakaya, credit limit, credit period, ageing, kachcha and pakka bill, GST tax invoice, TDS, UTR, UPI QR, cheque bounce, limitation period and more. Each word gets one or two plain sentences, and a source where a law defines it.",
   "faq": [
-    { "q": "Is a Khata Kavach bill a pakka bill?", "a": "Traders use \"pakka bill\" for a full numbered bill with the seller's details; some mean one with tax shown. A Khata Kavach bill is a numbered bill on your letterhead. It does not split out tax, so it is not a GST tax invoice. If you are registered for GST and sell taxable goods, ask your chartered accountant whether you must also issue a tax invoice." },
-    { "q": "Which of these words does Khata Kavach use on screen?", "a": "The Business app says \"Credit left\" (लिमिट में बचा), \"Money received\" (पैसे मिले), \"Owed before\" (पिछला बकाया) and \"Total owed\" (कुल बाकी). The Customer app says \"Available credit\" (उधार बचा है) and \"You owe\" (आपको देना है)." },
-    { "q": "Does Khata Kavach add interest to what a customer owes?", "a": "No. Khata Kavach keeps the account. It never lends, never holds money and adds no interest. Agree any interest on late payment in writing before the sale. Where nothing is agreed, a court decides {{Interest Act 1978, s.3}}." }
+    { "q": "Is a Khata Kavach bill a pakka bill?", "a": "Traders use \"pakka bill\" for a full numbered bill with the seller's details; some mean one with tax shown. A Khata Kavach bill is a numbered bill on your letterhead. It does not split out tax, so it is not a GST tax invoice. Petrol and diesel are outside GST; for the bill your state needs, ask your chartered accountant." },
+    { "q": "Which of these words does Khata Kavach use on screen?", "a": "The Pump app says \"Credit left\" (लिमिट में बचा) and \"Money received\" (पैसे मिले), and shows what is still owed. The Transporter app shows the credit left and what the transporter owes, in plain words." },
+    { "q": "Does Khata Kavach add interest to what a transporter owes?", "a": "No. Khata Kavach keeps the account. It never lends, never holds money and adds no interest. Agree any interest on late payment in writing before the sale. Where nothing is agreed, a court decides {{Interest Act 1978, s.3}}." }
   ],
   "related": ["credit", "credit-khata", "credit-bills", "paid-ageing", "paid-time-limit"],
-  "updated": "2026-10-19"
+  "updated": "2026-10-27"
 }
 ---
 ## Words for the account
 
 | Word | Hindi | Meaning |
 |---|---|---|
-| Udhar, udhari | उधार, उधारी | Goods taken now and paid for later. Udhari is the amount owed because of it. |
-| Khata | खाता | The account kept for one customer: what you sold, what they paid, what is left. |
+| Udhar, udhari | उधार, उधारी | Fuel taken now and paid for later. Udhari is the amount owed because of it. |
+| Khata | खाता | The account kept for one customer: what you filled on credit, what he paid, what is left. |
 | Bahi khata | बही (हाथ का खाता) | The traditional hand-written account book that holds each customer's khata. |
 | Ledger | हिसाब की बही | The full list of lines in an account. In Khata Kavach both sides see the same one. |
 | Jama, kharch | जमा, ख़र्च | Jama is money received. Kharch is money spent. Jama-kharch records both. |
 | Baki, bakaya | बाकी, बकाया | What is still unpaid. Bakaya usually means a larger or older balance. |
 | Outstanding | बकाया रकम | The total a customer still owes you. |
-| Opening balance | शुरू का बकाया | What the customer already owed on the day you started the new book. Khata Kavach takes it as "Balance from the paper book". |
-| Advance | एडवांस | Money paid before goods are taken, or more than what was due. |
+| Opening balance | शुरू का बकाया | What the customer already owed on the day you started the new book. Khata Kavach has a box for it when you add a transporter. |
+| Advance | एडवांस | Money paid before fuel is filled, or more than what was due. |
 
 ## Words for limit and time
 
@@ -35,14 +35,14 @@
 | Credit period | उधार के दिन | The days you allow before payment is due, such as 30 days. |
 | Due date | भुगतान की तारीख़ | The day payment falls due: the bill date plus the credit period. |
 | Ageing | बकाया कितने दिन पुराना है (एजिंग) | How long a balance has been unpaid. Khata Kavach groups it as 0 to 15, 16 to 30, 31 to 60 and over 60 days. |
-| Part payment | पार्ट पेमेंट | Paying less than what is due. The bill shows "Part paid" and the rest stays due. |
-| Statement | स्टेटमेंट | A list of every sale and payment in a period, with the balance at the end. |
+| Part payment | पार्ट पेमेंट | Paying less than what is due. The bill shows it as part paid and the rest stays due. |
+| Statement | स्टेटमेंट | A list of every fill and payment in a period, with the balance at the end. |
 
 ## Words for bills, tax and payment
 
 | Word | Hindi | Meaning |
 |---|---|---|
-| Bill | बिल | A numbered page or PDF listing what was sold and the total. |
+| Bill | बिल | A numbered page or PDF listing what was filled and the total. |
 | Kachcha bill | कच्चा बिल | In trade talk, usually a plain slip or estimate with no tax shown. Not a legal term. |
 | Pakka bill | पक्का बिल | In trade talk, a full numbered bill with the seller's details; some traders mean one with tax shown. Not a legal term either. |
 | GST tax invoice | GST टैक्स इनवॉइस | The invoice a GST-registered seller issues for taxable goods, with the tax shown. A Khata Kavach bill is not one. Petrol and diesel are outside GST {{Finance Ministry reply, Rajya Sabha, 21 Jul 2026}}. |

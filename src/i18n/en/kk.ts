@@ -1,9 +1,9 @@
 /* Khata Kavach, MDG Services' second product: the page at /khata-kavach.
 
-   It speaks to any business that gives goods on credit to regular customers
-   (fuel, building material, gas, wholesale, dairy). The keys and anchors still
-   say "pump" and "transporter" because the code was named when it began as
-   petrol pumps and transporters; every visible word says business and customer.
+   It is for petrol pumps that give diesel and petrol on credit to their
+   transporters and other regular customers who come in their own trucks, and
+   for those transporters. The two apps are Khata Kavach Pump and Khata Kavach
+   Transporter, and the keys and anchors below (pump, transporter) match them.
 
    Outcomes only. The product is the subject of every sentence ("Khata Kavach
    shows..."), and nothing here says how MDG builds or runs it. The name is
@@ -13,136 +13,135 @@ export const kk = {
   /* ── the head of the page ── */
   meta: {
     /** At most 50 characters (the site's rule for a search title). */
-    title: "Khata Kavach: credit book for any trade",
+    title: "Khata Kavach: credit fuel, no paper coupons",
     description:
-      "Khata Kavach by MDG Services is a shared credit book for any business that sells on credit. Set limits, see every sale, add a photo, send numbered bills.",
+      "Khata Kavach by MDG Services is a shared account book for petrol pumps and their transporters. Set limits, see every fill, add a photo, send numbered bills.",
     ogTitle: "Khata Kavach · MDG Services",
     /** The one line the structured data gives for the app. */
     appDescription:
-      "A shared credit account book between a business and its regular customers. The business sets each credit limit, the customer sends a request (with a 4-digit pickup code for whoever collects, or by vehicle number), and both see every sale. Numbered bills go out as a PDF on WhatsApp.",
+      "A shared account book between a petrol pump and its transporters. The pump sets each credit limit, the transporter sends a request for each truck, and both see every fill. Numbered bills go out as a PDF on WhatsApp.",
   },
   /** Spoken name of the page in the navbar and breadcrumbs. */
   name: "Khata Kavach",
   /** The page's own navbar links (its sections, not the home page's). */
-  navItems: { how: "How it works", pump: "For businesses", transporter: "For customers", faq: "Questions" },
+  navItems: { how: "How it works", pump: "Pump owner", transporter: "Transporter", faq: "Questions" },
   lockupAlt: "Khata Kavach",
 
   /* ── the first screen ── */
   hero: {
     by: "by MDG Services",
-    headlineLine1: "Every sale written once.",
+    headlineLine1: "Every litre written once.",
     headlineLine2: "Seen by both.",
-    sub: "Khata Kavach is the shared credit book between a business and the customers it sells to on credit. No paper slips.",
-    ctaPump: "Start my business",
-    ctaTransporter: "I am a customer",
+    sub: "Khata Kavach is the shared account book between a petrol pump and its transporters. No paper coupons.",
+    ctaPump: "Set up my pump",
+    ctaTransporter: "I am a transporter",
     assurances: [
       "Hindi first, English one tap away",
-      "Works with no signal at the counter",
+      "Works with no signal at the pump",
       "Never lends or holds your money",
     ],
     phoneAlt:
-      "Khata Kavach Business, the sale screen for vehicle UP00 SH 1005 of Sharma Roadlines: 'You can serve', give 50 bags of Cement, 50 bags and Rs 20,250 typed in, and a photo of the vehicle attached. The photo goes with the sale.",
+      "Khata Kavach Pump at the demo pump, the fill screen for truck UP00 SH 1001 of Sharma Roadlines: 'You can fill', 200 L of diesel and Rs 17,524 typed in, and a photo of the truck attached. The photo goes with the fill.",
     card: {
       heading: "The same line",
-      plate: "UP00 SH 1005",
-      detail: "50 bags cement · 6:31 am",
-      pump: "Business saw it",
-      transporter: "Customer saw it",
+      plate: "UP00 SH 1001",
+      detail: "200 L diesel · 6:31 am",
+      pump: "Pump saw it",
+      transporter: "Transporter saw it",
     },
   },
 
-  /* ── the paper slip ── */
+  /* ── the paper coupon ── */
   problem: {
-    heading: "Paper slips start arguments.",
+    heading: "Paper coupons start arguments.",
     coupons: [
-      "You say 50 bags. The driver says 40.",
-      "The slip is lost, torn, or written twice.",
+      "The pump says 200 litres. The driver says 180.",
+      "The coupon is lost, torn, or written twice.",
       "At month end, nobody can say who owes what.",
     ],
-    close: "Khata Kavach replaces the slip with one line in a shared account book.",
+    close: "Khata Kavach replaces the coupon with one line in a shared account book.",
   },
 
   /* ── one day, one shared line ── */
   flow: {
     heading: "One day, one shared line.",
     railLabel: "The shared line",
-    who: { transporter: "Customer", pump: "Business", both: "Both" },
+    who: { transporter: "Transporter", pump: "Pump", both: "Both" },
     steps: [
       {
         who: "transporter",
-        text: "Sends a request from their phone, and passes its 4-digit pickup code to whoever collects. A fuel station can go by vehicle number instead.",
+        text: "Sends a request for each truck from his phone: litres, rupees or a full tank.",
       },
       {
         who: "pump",
-        text: "At the counter, staff type the code. The screen shows a light and how much to give.",
+        text: "At the nozzle, the nozzle man types the last 4 digits of the truck number. The screen shows a light and how much credit is left.",
       },
       {
         who: "pump",
-        text: "They give the goods, type the quantity and rupees, note who took it or add a photo of the slip, and tap Done.",
+        text: "He fills, types the litres and rupees from the dispenser, adds a photo if he wants, and taps Done.",
       },
       {
         who: "both",
-        text: "The same line shows at once on both phones.",
+        text: "The same line shows on both phones, as soon as the phone is online.",
       },
     ],
   },
 
-  /* ── for the business ── */
+  /* ── for the pump owner ── */
   pump: {
-    heading: "See what each customer owes, and what they have paid.",
+    heading: "See what each transporter owes, and what he has paid.",
     rows: [
-      "Set a credit limit for every customer.",
-      "Trust a regular customer and serve them by name, with no request, up to their limit.",
-      "See today's credit, this month's credit, money received and bills past due.",
-      "A customer near their limit shows up, with one tap to ask for payment on WhatsApp.",
-      "Staff sign in with a 4-digit PIN. A manager's PIN allows one sale past the limit.",
-      "Add who collected, or a photo of the slip or the vehicle, to any sale.",
+      "Set a credit limit for every transporter.",
+      "For a transporter you choose, a manager's PIN can allow a fill without a request.",
+      "See today's credit, this month's credit, money received and what is due on bills.",
+      "A transporter near his limit shows up, with one tap to ask for payment on WhatsApp.",
+      "Nozzle men sign in with a 4-digit PIN, and you can add or switch off phones whenever you want. A manager's PIN allows one fill past the limit.",
+      "Add a photo of the truck or the slip to any fill.",
       "Make a numbered bill in a tap: a PDF on your letterhead, ready to send on WhatsApp from your own number.",
       "Money received against a bill marks it paid, and that much credit opens again.",
     ],
-    cta: "Start my business in the app",
-    appLink: "Open the Business app (web)",
+    cta: "Set up my pump in the app",
+    appLink: "Open the Pump app (web)",
     alts: [
-      "Khata Kavach Business, the Today screen: credit given today, a Due on bills card, this month's credit and money received.",
-      "Khata Kavach Business, one customer's page (Sharma Roadlines): what they owe against the limit, the Record a payment button, and a Bills section listing a bill.",
+      "Khata Kavach Pump at the demo pump, the Today screen: credit given today, what is due on bills, and this month's credit.",
+      "Khata Kavach Pump at the demo pump, one transporter's page (Sharma Roadlines): what it owes against the limit, the Record a payment button, and its bills.",
     ],
   },
 
-  /* ── for the customer ── */
+  /* ── for the transporter ── */
   transporter: {
-    heading: "Send the day's requests from your phone. See every sale and every bill.",
+    heading: "Send the day's requests from your phone. See every fill and every bill.",
     rows: [
-      "Say what and how much (bags, litres, rupees or as needed) and who it is for, and send in a few taps.",
-      "Get a 4-digit pickup code and send it on WhatsApp to whoever collects: a driver, a labourer, a hired tractor.",
-      "Every sale shows as soon as it is made: what, how much, rupees, and who took it.",
-      "Your limit, what you owe and what you have paid, for each supplier.",
-      "Every bill from every supplier in one place, with what is due and the PDF to open.",
-      "Pay a bill by UPI. Your UPI app opens with the amount filled in, and the money goes straight to the business.",
-      "Sent by mistake? Take a request back before the goods are given.",
-      "Your supplier sets you up. Ask them to add you.",
+      "Pick the trucks, say how much for each (litres, rupees or a full tank, diesel or petrol) and send in a few taps.",
+      "Every fill shows as soon as it is made: truck, litres and amount, with the photo if the nozzle man took one.",
+      "Your limit, what you owe and what you have paid, for each pump.",
+      "Every bill from every pump in one place, with what is due and the PDF to open.",
+      "Pay a bill by UPI. Your UPI app opens with the amount filled in, and the money goes straight to the pump.",
+      "Sent by mistake? Take a request back before it is filled.",
+      "Your pump sets you up and sends you a link on WhatsApp. Ask your pump to add you.",
     ],
-    appLink: "Open the Customer app (web)",
+    appLink: "Open the Transporter app (web)",
     alts: [
-      "Khata Kavach Customer, the request screen: how much (bags, rupees or as needed), which item (Diesel, Petrol, Cement), and quick amounts of 10, 20, 50 and 100 bags.",
-      "Khata Kavach Customer, the Bills tab: what is due on bills, and the list with an unpaid bill.",
+      "Khata Kavach Transporter, the request screen: Litres, Rupees or Full tank, Diesel or Petrol, and quick litre amounts.",
+      "Khata Kavach Transporter, the Bills tab: what is due on bills, and the list with one unpaid bill.",
     ],
   },
 
-  /* ── at the counter: the demo ── */
+  /* ── at the nozzle: the demo ── */
   nozzle: {
-    heading: "Type the code. See the light.",
-    intro: "Counter staff see one of three lights, with the reason and what to do next.",
-    label: "Try it with made-up pickup codes",
-    caption: "Made-up codes, customers and amounts.",
+    heading: "Type the truck number. See the light.",
+    intro: "The nozzle man sees one of three lights, with the reason and what to do next.",
+    label: "Try it with made-up trucks",
+    caption: "Made-up trucks and amounts.",
     /** Each light says a word and the next step, so colour is never the only signal. */
     states: {
-      go: { word: "OK", line: "Give 50 bags", sub: "Cement", name: "Sharma Builders" },
-      wait: { word: "Call the manager", line: "Over the credit limit.", sub: "", name: "Yadav Constructions" },
+      go: { word: "You can fill", line: "Fill 200 L", sub: "Diesel", name: "Sharma Roadlines" },
+      wait: { word: "Call the manager", line: "Over the credit limit.", sub: "", name: "Gupta Transport" },
       stop: {
-        word: "Stop",
-        line: "No open request with this code.",
-        sub: "Sell for cash.",
-        name: "Code not found",
+        word: "No credit",
+        line: "No request for this truck today.",
+        sub: "You can fill for cash.",
+        name: "Sharma Roadlines",
       },
     },
     lightLabels: { go: "Green light", wait: "Amber light", stop: "Red light" },
@@ -154,19 +153,19 @@ export const kk = {
     blocks: [
       {
         lead: "Khata Kavach never lends and never holds your money.",
-        rest: "Customers pay the business directly, and the business writes down what it receives.",
+        rest: "Transporters pay the pump directly, and the pump writes down what it receives.",
       },
       {
         lead: "Nothing is edited.",
         rest: "A correction is a new line, so the history stays whole.",
       },
       {
-        lead: "No signal at the counter?",
-        rest: "The sale is saved on the phone and sent later. Its photo follows.",
+        lead: "No signal at the pump?",
+        rest: "The fill is saved on the phone and sent later. Its photo follows.",
       },
       {
-        lead: "Each side sees only its own accounts.",
-        rest: "Counter staff never see a customer's phone number.",
+        lead: "Each side sees only its own account.",
+        rest: "A transporter sees his, a pump sees its transporters. Nozzle men never see a transporter's phone number.",
       },
       {
         lead: "A person at MDG Services answers the phone,",
@@ -181,32 +180,36 @@ export const kk = {
     heading: "Questions, answered plainly.",
     items: [
       {
-        q: "Which businesses is it for?",
-        a: "Any business that sells to regular customers on credit. Fuel stations (diesel and petrol, in litres). Building material (cement in bags, sand in tonnes, steel in kg, bricks in pieces). Gas agencies (cylinders). Distributors and wholesalers (an amount only). Dairies (milk in litres, curd and paneer in kg). Or name your own unit, like dozen or packet.",
+        q: "Who is it for?",
+        a: "Petrol pumps that give diesel and petrol on credit to transporters, fleet owners and other regular customers who come in their own trucks and vehicles, and the transporters and fleet owners who buy from them. It is for pumps of any oil company. MDG Services is not connected with any oil company.",
       },
       {
-        q: "Does the customer have to come in a vehicle?",
-        a: "No. Each request comes with a 4-digit pickup code. The customer sends it to whoever collects, a driver, a labourer or a shop boy, and the counter types it. A fuel station can work by vehicle number instead. A regular customer the business trusts can be served by name, with no request, up to their limit.",
+        q: "Which fuels does it cover?",
+        a: "The four fuels a pump sells: diesel, petrol, premium diesel and premium petrol, by the litre.",
+      },
+      {
+        q: "What if a transporter has not sent a request?",
+        a: "The light is red, \"No credit\", and the nozzle man can fill for cash. For a transporter you choose, you can let a manager's PIN allow a fill without a request.",
       },
       {
         q: "How do bills work?",
-        a: "The business makes a numbered bill for a customer from the sales not yet billed. It is a PDF on the business's letterhead, with the total in figures and words, bank details and a UPI QR. The business sends it on WhatsApp. The customer can pay by UPI, and the business marks it paid. It is a Bill, not a GST tax invoice.",
+        a: "The pump makes a numbered bill for a transporter from the fills not yet billed. It is a PDF on the pump's letterhead, with the total in figures and words, bank details and a UPI QR. The pump sends it from its own WhatsApp. The transporter can pay by UPI, and the pump marks it paid. It is a numbered bill, not a GST tax invoice.",
       },
       {
         q: "Does it lend money or hold payments?",
-        a: "No. It never lends and never holds money. Payments go straight to the business, which writes them down.",
+        a: "No. It never lends and never holds money. Payments go straight to the pump, which writes them down.",
       },
       {
-        q: "What if there is no signal at the counter?",
-        a: "Staff can still record the sale, with its photo. Both sides see the line once the phone is online.",
+        q: "What if there is no signal at the pump?",
+        a: "The nozzle man can still fill and record, with the photo. Both sides see the line once the phone is online.",
       },
       {
-        q: "Can a customer sign up themselves?",
-        a: "No. The business adds its customers and sends each one a link on WhatsApp. A business starts on its own, in the Business app.",
+        q: "Can a transporter sign up himself?",
+        a: "No. The pump adds its transporters and sends each one a link on WhatsApp. A pump owner sets up his own pump in the Pump app, in about a minute.",
       },
       {
-        q: "Does my counter staff need training?",
-        a: "The screen tells them what to do: the code, the light, the quantity, Done. We show your team how.",
+        q: "Do my nozzle men need training?",
+        a: "The screen tells them what to do: the last 4 digits of the truck number, the light, the litres and rupees, Done. We show your team how.",
       },
       {
         q: "Is there an Android app?",
@@ -218,37 +221,37 @@ export const kk = {
       },
       {
         q: "Do I still need Dealer's Kavach?",
-        a: "They are separate apps. Dealer's Kavach handles a petrol pump dealer's paperwork. Khata Kavach handles credit sales to regular customers. Use either or both.",
+        a: "They are separate apps. Dealer's Kavach handles a petrol pump dealer's paperwork. Khata Kavach handles credit fuel to transporters. Use either or both.",
       },
     ],
   },
 
-  /* ── the guides: a few live pages on giving and keeping credit ── */
+  /* ── the guides: a few live pages on giving fuel on credit ── */
   guides: {
-    sectionAria: "Guides on selling on credit",
-    heading: "Selling on credit, in plain words.",
+    sectionAria: "Guides on giving fuel on credit",
+    heading: "Fuel on credit, in plain words.",
     intro: "Short pages on credit limits, getting paid, bills and how Khata Kavach compares, in Hindi and English.",
     all: "See all guides",
   },
 
   /* ── the way in ── */
   cta: {
-    heading: "Retire the paper slip.",
-    sub: "Start your business in the Business app in about a minute, then add your customers on WhatsApp. Want to talk first? Call us, or leave your number.",
-    startLabel: "Start my business in the app",
+    heading: "Retire the paper coupon.",
+    sub: "Set up your pump in the Pump app in about a minute, then add your transporters on WhatsApp. Want to talk first? Call us, or leave your number.",
+    startLabel: "Set up my pump in the app",
     callLabel: "Call us",
     formTitle: "Leave your number",
     roleLabel: "I am",
-    rolePump: "A business owner",
-    roleTransporter: "A customer",
-    roleTagPump: "Business owner",
-    roleTagTransporter: "Customer",
+    rolePump: "A pump owner",
+    roleTransporter: "A transporter",
+    roleTagPump: "Pump owner",
+    roleTagTransporter: "Transporter",
     fieldName: "Your name",
     fieldPhone: "Phone",
-    fieldOutlet: "Business or company (optional)",
+    fieldOutlet: "Pump or company (optional)",
     submit: "Request a call back",
     alreadyLabel: "Already set up?",
-    openPump: "Open the Business app",
-    openTransporter: "Open the Customer app",
+    openPump: "Open the Pump app",
+    openTransporter: "Open the Transporter app",
   },
 };

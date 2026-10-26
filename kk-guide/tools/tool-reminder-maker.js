@@ -16,7 +16,7 @@
     byPast: "'कब तक दें' की तारीख़ निकल चुकी है। आगे की तारीख़ चुनें, या उसे ख़ाली छोड़ दें।",
     tooLong: "नाम या बिल नंबर बहुत लंबा है। छोटा करके फिर देखें।",
     ready: "संदेश तैयार है। इसे पढ़ लें, जो बदलना हो बदलें, फिर कॉपी करें या WhatsApp में खोलें। भेजने का बटन WhatsApp में आप ख़ुद दबाएँगे।",
-    copied: "कॉपी हो गया। अब WhatsApp खोलकर ग्राहक की चैट में चिपकाएँ।",
+    copied: "कॉपी हो गया। अब WhatsApp खोलकर ट्रांसपोर्टर की चैट में चिपकाएँ।",
     copyFail: "कॉपी नहीं हो सका। संदेश को छूकर चुनें और ख़ुद कॉपी करें।",
     nothing: "पहले 'संदेश बनाएँ' दबाएँ।"
   } : {
@@ -27,7 +27,7 @@
     byPast: "The pay-by date has already passed. Pick a later date, or leave it empty.",
     tooLong: "The name or bill number is too long. Shorten it and try again.",
     ready: "Your message is ready. Read it, change anything you like, then copy it or open it in WhatsApp. You press send yourself, in WhatsApp.",
-    copied: "Copied. Now open WhatsApp and paste it into the customer's chat.",
+    copied: "Copied. Now open WhatsApp and paste it into the transporter's chat.",
     copyFail: "Could not copy. Tap the message to select it and copy it yourself.",
     nothing: "Press \"Make the message\" first."
   };
@@ -114,7 +114,7 @@
       var due = !v.due ? "is still open" : v.late ? "was due on " + v.due + " and is still open" : "is due on " + v.due;
       var head = "Namaste" + (v.name ? " " + v.name : "") + ". " + v.amt + " " + ref + " " + due + ".";
       var tail;
-      if (tone === "polite") tail = "Please pay by UPI or at our counter, and tell us. Thank you.";
+      if (tone === "polite") tail = "Please pay by UPI or at the pump, and tell us. Thank you.";
       else if (tone === "firm") tail = (v.late ? "We have not received it yet. " : "") + (v.by ? "Please pay by " + v.by + ", or call us today to settle a date." : "Please call us today to settle the date you will pay. We will note it.");
       else tail = (v.by ? "If we do not receive it by " + v.by + ", we will have to stop new credit on your account until it is cleared." : "Until it is cleared, we will have to stop new credit on your account.") + " We want to keep working together; please call us.";
       return head + " " + tail;
@@ -124,7 +124,7 @@
       var due = !v.due ? "abhi baaki hain" : v.late ? v.due + " ko due the, abhi baaki hain" : v.due + " ko due hain";
       var head = "Namaste" + (v.name ? " " + v.name : "") + ", " + ref + " " + v.amt + " " + due + ".";
       var tail;
-      if (tone === "polite") tail = "UPI se ya hamare counter par de dijiye aur hamein bata dijiye. Dhanyavaad.";
+      if (tone === "polite") tail = "UPI se ya hamare pump par de dijiye aur hamein bata dijiye. Dhanyavaad.";
       else if (tone === "firm") tail = (v.late ? "Abhi tak nahi mile. " : "") + (v.by ? "Kripya " + v.by + " tak de dijiye, ya aaj phone karke nayi tareekh tay kar lijiye." : "Kis tareekh tak aa jayenge, aaj bata dijiye. Hum note kar lenge.");
       else tail = (v.by ? v.by + " tak nahi aaye to naya udhar rok denge." : "Jab tak ye nahi aate, naya udhar rok denge.") + " Hum saath kaam karte rehna chahte hain, ek baar phone kijiye.";
       return head + " " + tail;
@@ -134,7 +134,7 @@
       var due = !v.due ? "अभी बाकी हैं" : v.late ? "भरने की तारीख़ " + v.due + " थी और ये अभी बाकी हैं" : "भरने की तारीख़ " + v.due + " है";
       var head = "नमस्ते" + (v.name ? " " + v.name : "") + "। " + ref + " " + v.amt + " " + due + "।";
       var tail;
-      if (tone === "polite") tail = "कृपया UPI से या हमारे काउंटर पर दे दीजिए और हमें बता दीजिए। धन्यवाद।";
+      if (tone === "polite") tail = "कृपया UPI से या हमारे पंप पर दे दीजिए और हमें बता दीजिए। धन्यवाद।";
       else if (tone === "firm") tail = (v.late ? "अभी तक मिले नहीं हैं। " : "") + (v.by ? "कृपया " + v.by + " तक दे दीजिए, या आज फ़ोन करके नई तारीख़ तय कर लीजिए।" : "आप किस तारीख़ तक दे देंगे, आज बता दीजिए। हम लिख लेंगे।");
       else tail = (v.by ? v.by + " तक नहीं मिले, तो आपके खाते पर नया उधार बंद करना पड़ेगा, जब तक यह चुक न जाए।" : "जब तक यह चुक नहीं जाता, आपके खाते पर नया उधार बंद करना पड़ेगा।") + " हम आगे भी साथ काम करना चाहते हैं; कृपया फ़ोन कीजिए।";
       return head + " " + tail;

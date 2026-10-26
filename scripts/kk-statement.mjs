@@ -1,4 +1,4 @@
-// The printable customer statement of account (A4, portrait, one page) on
+// The printable statement of account a petrol pump sends a transporter on credit (A4, portrait, one page) on
 // mdgservices.in/khata-kavach/getting-paid/customer-statement-format/, in English and Hindi:
 // public/kk/downloads/customer-statement.pdf and customer-statement-hindi.pdf.
 // The Excel twin is made by scripts/kk-statement.py.
@@ -14,30 +14,30 @@ const PAGES = [
     out: `${OUT}/customer-statement.pdf`,
     lang: "en",
     title: "Statement of account",
-    sub: "To send to a credit customer",
-    fields: [["Business", "Statement date"], ["Customer", "Period from … to …"]],
-    cols: ["Date", "Bill / slip no.", "Vehicle no. / collected by", "Details: item and quantity, or how paid and UTR / cheque no.", "Udhar given (Rs)", "Money received (Rs)", "Balance (Rs)"],
+    sub: "To send to a transporter on credit",
+    fields: [["Pump", "Statement date"], ["Transporter", "Period from … to …"]],
+    cols: ["Date", "Bill / slip no.", "Truck no.", "Details: fuel and litres, or how paid and UTR / cheque no.", "Udhar given (Rs)", "Money received (Rs)", "Balance (Rs)"],
     open: "Opening balance",
     close: "Totals and closing balance",
-    rule: "Balance = the balance on the line above (on the first line, the opening balance) + udhar given − money received. Closing balance = opening balance + total udhar given − total money received. List every sale and every payment in date order.",
+    rule: "Balance = the balance on the line above (on the first line, the opening balance) + udhar given − money received. Closing balance = opening balance + total udhar given − total money received. List every fill and every payment in date order.",
     confirm: "Please check this statement. If it is correct, sign below. If anything looks wrong, tell us within 7 days and we will look at it together.",
-    signBiz: "For the business: sign and date",
-    signCust: "Customer's confirmation: name, sign and date",
+    signBiz: "For the pump: sign and date",
+    signCust: "Transporter's confirmation: name, sign and date",
     foot: "A format from MDG Services · mdgservices.in/khata-kavach/getting-paid/customer-statement-format/",
   },
   {
     out: `${OUT}/customer-statement-hindi.pdf`,
     lang: "hi",
     title: "खाते का स्टेटमेंट",
-    sub: "उधार के ग्राहक को भेजने के लिए",
-    fields: [["आपका कारोबार", "स्टेटमेंट की तारीख़"], ["ग्राहक", "अवधि: कब से … कब तक …"]],
-    cols: ["तारीख़", "बिल / पर्ची नंबर", "गाड़ी नंबर / माल लेने वाला", "ब्योरा: माल और मात्रा, या कैसे मिले और UTR / चेक नंबर", "उधार दिया (₹)", "पैसे मिले (₹)", "बकाया (₹)"],
+    sub: "उधार वाले ट्रांसपोर्टर को भेजने के लिए",
+    fields: [["आपका पंप", "स्टेटमेंट की तारीख़"], ["ट्रांसपोर्टर", "अवधि: कब से … कब तक …"]],
+    cols: ["तारीख़", "बिल / पर्ची नंबर", "गाड़ी नंबर", "ब्योरा: तेल और लीटर, या कैसे मिले और UTR / चेक नंबर", "उधार दिया (₹)", "पैसे मिले (₹)", "बकाया (₹)"],
     open: "शुरू का बकाया",
     close: "जोड़ और आख़िरी बकाया",
-    rule: "बकाया = ऊपर की लाइन का बकाया (पहली लाइन पर शुरू का बकाया) + उधार दिया − पैसे मिले। आख़िरी बकाया = शुरू का बकाया + कुल उधार दिया − कुल पैसे मिले। हर बिक्री और हर पेमेंट तारीख़ के क्रम में लिखें।",
+    rule: "बकाया = ऊपर की लाइन का बकाया (पहली लाइन पर शुरू का बकाया) + उधार दिया − पैसे मिले। आख़िरी बकाया = शुरू का बकाया + कुल उधार दिया − कुल पैसे मिले। हर भराई और हर पेमेंट तारीख़ के क्रम में लिखें।",
     confirm: "कृपया यह स्टेटमेंट जाँच लें। ठीक हो तो नीचे दस्तख़त करें। कुछ गलत लगे तो 7 दिन के भीतर हमें बताएँ, हम साथ बैठकर देख लेंगे।",
-    signBiz: "कारोबार की ओर से: दस्तख़त और तारीख़",
-    signCust: "ग्राहक की पुष्टि: नाम, दस्तख़त और तारीख़",
+    signBiz: "पंप की ओर से: दस्तख़त और तारीख़",
+    signCust: "ट्रांसपोर्टर की पुष्टि: नाम, दस्तख़त और तारीख़",
     foot: "MDG Services का फ़ॉर्मेट · mdgservices.in/hi/khata-kavach/getting-paid/customer-statement-format/",
   },
 ];

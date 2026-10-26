@@ -7,7 +7,7 @@ export const KK_PATH = "/khata-kavach" as const;
 export const KK_APPS = {
   pump: "https://khata-pump.mdgservices.in",
   transporter: "https://khata-transporter.mdgservices.in",
-  /** Where a business owner starts his own business: the Business app's sign-up (no call needed since 22 Oct 2026). */
+  /** Where a pump owner sets up his own pump: the Pump app's sign-up (no call needed since 22 Oct 2026). */
   signup: "https://khata-pump.mdgservices.in/signup",
 } as const;
 
@@ -18,37 +18,38 @@ const screen = (name: string): KkScreen => ({ src: `/kk/screens/${name}.webp`, w
 
 /**
  * The screens each language shows. The English page shows the English app, the Hindi page the Hindi one.
- * All ten are the Business and Customer apps with one made-up business, "Sharma Traders" (Diesel by the litre,
- * Cement by the bag), and two made-up customers, Sharma Roadlines and Gupta Transport. The keys `pump` and
- * `transporter` are kept because the page components use them: `pump` is the Business app, `transporter` the Customer app.
+ * All ten are the Pump and Transporter apps (480x1040 WebP) with one made-up pump, "Sharma Fuels" (the demo app
+ * shows "Demo Pump" in its header, so the alt texts say "the demo pump"), and two made-up transporters, Sharma
+ * Roadlines and Gupta Transport. `pump` is the Pump app, `transporter` the Transporter app.
  *
- * English: hero = the sale form for UP00 SH 1005 (50 bags of Cement, Rs 20,250, a photo of the vehicle attached);
- * pump[0] = Today (credit given today, Due on bills, this month); pump[1] = Sharma Roadlines' page (owed against the
- * limit, Record a payment, its Bills); transporter[0] = the request screen (Bags / Rupees / As needed, Diesel, Petrol
- * or Cement, 10/20/50/100 bags); transporter[1] = the Bills tab (Due on bills, one unpaid bill).
+ * English: hero = the fill screen for UP00 SH 1001 of Sharma Roadlines ("You can fill", 200 L of diesel and
+ * Rs 17,524 typed in, a photo of the truck attached); pump[0] = Today (credit given today, due on bills, this
+ * month); pump[1] = Sharma Roadlines' page (owed against the limit, Record a payment, its bills);
+ * transporter[0] = the request screen (Litres / Rupees / Full tank, Diesel or Petrol, quick litre amounts);
+ * transporter[1] = the Bills tab (due on bills, one unpaid bill).
  *
- * Hindi: hero = the green screen for UP00 SH 1005 ("माल दे सकते हो", 50 बोरी सीमेंट, credit left); pump[0] = Today;
- * pump[1] = the Bills page (बिलों के बाकी, one unpaid bill and one paid); transporter[0] = the Customer home with the
- * "बिलों के बाकी" card; transporter[1] = one bill open (UPI से भरो, PDF देखो).
+ * Hindi: hero = the green screen for UP00 SH 1001 ("भर सकते हो", 200 L डीज़ल, लिमिट में बचा); pump[0] = Today;
+ * pump[1] = the Bills page (बिलों के बाकी, one unpaid bill and one paid); transporter[0] = the Transporter home
+ * with the "बिलों के बाकी" card; transporter[1] = one bill open (UPI से भरो, PDF देखो).
  */
 export const KK_SCREENS = {
   en: {
-    hero: screen("business-en-sale"),
-    pump: [screen("business-en-today"), screen("business-en-customer")],
-    transporter: [screen("customer-en-request"), screen("customer-en-bills")],
+    hero: screen("pump-en-fill"),
+    pump: [screen("pump-en-today"), screen("pump-en-transporter")],
+    transporter: [screen("transporter-en-request"), screen("transporter-en-bills")],
   },
   hi: {
-    hero: screen("business-hi-green"),
-    pump: [screen("business-hi-today"), screen("business-hi-bills")],
-    transporter: [screen("customer-hi-home"), screen("customer-hi-bill")],
+    hero: screen("pump-hi-green"),
+    pump: [screen("pump-hi-today"), screen("pump-hi-bills")],
+    transporter: [screen("transporter-hi-home"), screen("transporter-hi-bill")],
   },
 } as const;
 
-/** The three made-up pickup codes in the counter demo. Each is one light. */
+/** The three made-up trucks in the nozzle demo. Each is one light. */
 export const KK_DEMO = [
-  { light: "go", code: "4821" },
-  { light: "stop", code: "6150" },
-  { light: "wait", code: "7306" },
+  { light: "go", plate: "UP00 SH 1001" },
+  { light: "stop", plate: "UP00 SH 1004" },
+  { light: "wait", plate: "UP00 GT 2002" },
 ] as const;
 
 export type KkLight = (typeof KK_DEMO)[number]["light"];

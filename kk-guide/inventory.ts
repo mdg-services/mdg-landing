@@ -42,12 +42,16 @@ export const KK_PILLARS: Record<KkPillar, PillarMeta> = {
 
 const P = "/khata-kavach";
 
+/**
+ * Every brief speaks to a petrol pump and its transporters (since 27 Oct 2026; from 19 to 26 Oct the product was
+ * offered to any trade). Where a brief and README.md differ, README.md wins.
+ */
 export const KK_PAGES: KkPage[] = [
   // ── The front door ────────────────────────────────────────────────────
   {
     id: "hub", pillar: "hub", path: `${P}/guides/`, hi: true, type: "Hub", wave: 1,
     queries: ["उधार खाता बुक", "udhar khata book", "udhar ka hisab", "उधार का हिसाब", "credit to regular customers"],
-    brief: "The front door of the Khata Kavach pages. Hindi H1 and title lead with 'उधार खाता' and 'उधार का हिसाब' (never 'क्रेडिट'). For a business owner who sells goods on credit to regular customers whose vehicles or drivers collect the goods (fuel, cement and building material, sand, wholesale). Frame the four jobs of credit in one short paragraph each: deciding who gets credit and how much, controlling it at the counter, getting paid, and keeping a record both sides trust. Then one paragraph on where Khata Kavach fits, plainly, with its two apps. The topic cards are drawn by the template: write the framing, not a link list. No sales tone; this page is a guide's front door.",
+    brief: "The front door of the Khata Kavach pages. Hindi H1 and title lead with 'उधार खाता' and 'उधार का हिसाब' (never 'क्रेडिट'). For a petrol pump owner who gives diesel and petrol on credit to transporters and fleet owners whose trucks fill at his pump. Frame the four jobs of credit in one short paragraph each: deciding who gets credit and how much, controlling it at the nozzle, getting paid, and keeping a record both sides trust. Then one paragraph on where Khata Kavach fits, plainly, with its two apps (Pump app, Transporter app). The topic cards are drawn by the template: write the framing, not a link list. No sales tone; this page is a guide's front door.",
   },
   {
     id: "disclaimer", pillar: "hub", path: `${P}/guides/disclaimer/`, hi: true, type: "Legal", wave: 1,
@@ -59,17 +63,17 @@ export const KK_PAGES: KkPage[] = [
   {
     id: "credit", pillar: "credit", path: `${P}/credit/`, hi: true, type: "Pillar", wave: 1,
     queries: ["उधार देने के नियम", "business me udhar dena chahiye ya nahi", "credit sales to regular customers", "udhar dene ke niyam", "credit to customers"],
-    brief: "Selling on credit (udhar) to regular business customers, the plain guide. Should you give udhar at all (it is how trade runs in fuel, cement, building material and wholesale; the cost is money tied up and the risk of not being paid). The five decisions every credit seller makes: who gets credit, how much (the limit), for how long (the credit period), who may say yes at the counter, and how the sale is recorded so both sides agree later. One short table: decision / what to decide / the page that explains it (use [words](@id) links). End with a short line on where a shared credit book helps (Khata Kavach) without selling.",
+    brief: "Giving diesel on credit (udhar) to transporters, the plain guide for a pump owner. Should you give udhar at all (it is how fleet business runs; the cost is money tied up and the risk of not being paid). The five decisions every pump that gives credit makes: who gets credit, how much (the limit), for how long (the credit period), who may say yes at the nozzle, and how the fill is recorded so both sides agree later. One short table: decision / what to decide / the page that explains it (use [words](@id) links). End with a short line on where a shared credit book helps (Khata Kavach) without selling.",
   },
   {
     id: "credit-without-stress", pillar: "credit", path: `${P}/credit/udhar-se-kaise-bache/`, hi: true, type: "Explainer", wave: 1,
     queries: ["dukan me udhar se kaise bache", "business me udhar se kaise bache", "उधारी से कैसे बचे", "udhar dene ke nuksan", "business me udhar dena chahiye ya nahi", "उधार देने के नुकसान"],
-    brief: "How to keep giving credit without getting burned (dukan me udhar se kaise bache). The honest answer: most suppliers cannot stop credit, because their regular customers buy on it; the stress comes from not knowing, not from credit itself. Seven habits that take the stress off the person giving credit: a limit for every customer in rupees; the customer asks before goods go out; one person allowed to say yes over the limit; every credit sale recorded the same way with who served; the customer sees what they owe as it happens; bills on fixed days; stop new credit at a fixed number of days overdue. A short table: habit / what it prevents. One short section on how Khata Kavach builds these habits in (customer requests, the counter light, the shared line, the Today screen). The Hindi page is the main one for these searches: write it natural, with the Roman forms 'dukan me udhar se kaise bache' and 'business me udhar se kaise bache' in the FAQ. No superstition, no 'udhar band'.",
+    brief: "How to keep giving credit without getting burned (dukan me udhar se kaise bache, written for a pump). The honest answer: most pumps cannot stop credit, because their regular transporters buy on it; the stress comes from not knowing, not from credit itself. Seven habits that take the stress off the pump owner: a rupee limit for every transporter; the transporter asks before a truck fills; one person allowed to say yes over the limit; every credit fill recorded the same way with who filled; the transporter sees what he owes as it happens; bills on fixed days; stop new credit at a fixed number of days overdue. A short table: habit / what it prevents. One short section on how Khata Kavach builds these habits in (requests per truck, the light at the nozzle, the shared line, the Today screen). The Hindi page is the main one for these searches: natural Hindi, with the Roman forms 'dukan me udhar se kaise bache' and 'business me udhar se kaise bache' in the FAQ. No superstition, no 'udhar band'.",
   },
   {
     id: "credit-limit", pillar: "credit", path: `${P}/credit/credit-limit/`, hi: true, type: "Explainer", wave: 1,
     queries: ["credit limit for customers", "how much credit to give a customer", "credit days and credit limit", "उधार की सीमा कैसे तय करें", "udhar ki limit kitni rakhe"],
-    brief: "How to set a credit limit for a regular customer, with worked examples in litres, bags and rupees. One-line answer first. The common rule of thumb: about what the customer buys from you in one credit period (monthly purchase × credit days ÷ 30), started lower for a new customer and raised after on-time payment; say it is a rule of thumb, not a law. A table of three made-up customers (a transporter buying diesel, a contractor buying cement, a retailer) with monthly purchase, credit days, the worked limit. Credit period: 7, 15 or 30 days and how it ties to the limit. What to do when a good customer is slightly over (decide in advance who may allow it; see @counter-over-limit). Set the limit in rupees, not litres or bags, because prices move. Mention that Khata Kavach checks the rupee limit at the counter (one sentence).",
+    brief: "How a pump sets a credit limit for a transporter, with worked examples in litres and rupees. One-line answer first. The common rule of thumb: about what the transporter buys from you in one credit period (monthly purchase × credit days ÷ 30), started lower for a new transporter and raised after on-time payment; say it is a rule of thumb, not a law. A table of three made-up transporters (a small fleet, a bigger one, a tractor owner) with monthly diesel, credit days, the worked limit. Credit period: 7, 15 or 30 days and how it ties to the limit. What to do when a good transporter is slightly over (decide in advance who may allow it; see @counter-over-limit). Set the limit in rupees, not litres, because prices move. Mention that Khata Kavach checks the rupee limit at the nozzle (one sentence).",
   },
   {
     id: "tool-khata-format", pillar: "credit", path: `${P}/credit/udhar-khata-format/`, hi: true, type: "Tool", wave: 1,
@@ -84,7 +88,7 @@ export const KK_PAGES: KkPage[] = [
   {
     id: "counter", pillar: "counter", path: `${P}/counter/`, hi: true, type: "Pillar", wave: 1,
     queries: ["counter staff udhar", "staff giving credit without owner", "credit sale at counter", "उधार काउंटर पर", "credit sale control"],
-    brief: "Credit at the counter: who decides, who records, who sees. The owner sets the rules but is not at the counter for every sale; staff decide in seconds. The three questions staff need answered before goods go out (is this customer allowed credit today, how much is left, has the customer asked for it), and the record that must come out of every credit sale (vehicle, item, quantity, rupees, who served, time, a slip number or photo). What goes wrong with memory, a register or paper slips (no dramatisation, no statistics). The principle: decide the rule once, let the screen apply it, and let both sides see the record. Link the counter pages.",
+    brief: "Credit at the nozzle: who decides, who records, who sees. The owner sets the rules but is not at the nozzle for every fill; the nozzle man decides in seconds. The three questions he needs answered before a truck fills (is this transporter allowed credit today, how much is left, has the transporter asked for this truck), and the record that must come out of every credit fill (truck number, fuel, litres, rupees, who filled, time, a coupon number or photo). What goes wrong with memory, a register or paper coupons (no dramatisation, no statistics). The principle: decide the rule once, let the screen apply it, and let both sides see the record. Link the counter pages.",
   },
   {
     id: "counter-over-limit", pillar: "counter", path: `${P}/counter/over-the-limit/`, hi: true, type: "Checklist", wave: 1,
@@ -104,7 +108,7 @@ export const KK_PAGES: KkPage[] = [
   {
     id: "paid-udhar-wapas", pillar: "paid", path: `${P}/getting-paid/udhar-vasuli-ke-upay/`, hi: true, type: "Explainer", wave: 1,
     queries: ["उधार वसूली के उपाय", "udhar vasuli ke upay", "उधारी कैसे वसूल करें", "udhari kaise vasool kare", "dukan ka udhar kaise nikale", "udhar wapas kaise le", "उधार दिया हुआ पैसा वापस कैसे लें"],
-    brief: "Udhar vasuli ke upay (how to recover udhar): a business owner's steps that get paid and keep the customer. Written FOR a shop or dealer with regular business customers (say so in the first line: not for money lent to friends). Steps: check your own record first (what is owed, since when, what the customer has seen); send a clear statement or bill; ask politely, in person or on WhatsApp, with the exact amount and a date; agree a plan if they cannot pay at once (part payments, recorded); stop new credit until it is cleared; written demand; legal steps last (link). What not to do: public shaming, threats, a 'defaulter list', hiring muscle, posting on social media (these can create legal trouble for the seller). Hindi page is the main one for this query: write it natural.",
+    brief: "Udhar vasuli ke upay (how to recover udhar): a pump owner's steps that get paid and keep the transporter. Written FOR a pump with regular transporters (say so in the first line: not for money lent to friends). Steps: check your own record first (what is owed, since when, what the transporter has seen); send a clear statement or bill; ask politely, in person or on WhatsApp, with the exact amount and a date; agree a plan if they cannot pay at once (part payments, recorded); stop new credit until it is cleared; written demand; legal steps last (link). What not to do: public shaming, threats, a 'defaulter list', hiring muscle, posting on social media (these can create legal trouble for the pump). Hindi page is the main one for this query: write it natural.",
   },
   {
     id: "paid-reminder-messages", pillar: "paid", path: `${P}/getting-paid/payment-reminder-messages/`, hi: true, type: "Template", wave: 1,
@@ -114,7 +118,7 @@ export const KK_PAGES: KkPage[] = [
   {
     id: "trades", pillar: "trades", path: `${P}/for/`, hi: true, type: "Pillar", wave: 1,
     queries: ["credit app for business", "b2b credit management", "udhar app for wholesale", "transporter credit app"],
-    brief: "Who Khata Kavach is for, and who it is not for. For: businesses that give goods on credit to regular customers: fuel stations and transporters, cement and building material dealers and contractors, sand and aggregate suppliers, gas agencies, wholesalers and distributors, dairies. The goods can go in the customer's vehicle, with a labourer or hired tractor carrying the request's pickup code, or to a trusted customer by name; each item has its own unit. Not for (say plainly): walk-in buyers with no credit account, businesses that need GST tax invoices, stock or accounting from the same app (point to billing software), or anyone wanting someone else to carry the credit. A table: trade / what is sold, in which unit / who collects / fits?",
+    brief: "Who Khata Kavach is for, and who it is not for. For: petrol pumps of any oil company (not connected with any) that give diesel and petrol on credit to regular customers who come in their own trucks or vehicles: transporters, fleet owners, bus and tractor owners, contractors' machines; and those transporters, who use the Transporter app. Each fill is for a truck on the transporter's list, the four fuels by the litre. Not for (say plainly): shops or other trades, walk-in buyers with no credit account, pumps that need GST tax invoices or forecourt stock and accounting from the same app (point to pump software), or anyone wanting someone else to carry the credit. A table: who / what they do in Khata Kavach / fits?",
   },
   {
     id: "trade-petrol-pump", pillar: "trades", path: `${P}/for/petrol-pump/`, hi: true, type: "Trade", wave: 1,
@@ -124,12 +128,7 @@ export const KK_PAGES: KkPage[] = [
   {
     id: "trade-transporter", pillar: "trades", path: `${P}/for/transporters/`, hi: true, type: "Trade", wave: 1,
     queries: ["transport hisab app", "transport hisab kitab", "transporter diesel udhar hisab", "ट्रांसपोर्टर डीज़ल उधार हिसाब", "truck diesel expense tracking"],
-    brief: "For transporters and fleet owners who buy diesel or material on credit: see exactly what your drivers take and what you owe. The customer's view: the problem of finding out at month end; what to ask your pump or supplier to show you (each fill, vehicle, quantity, rupees, who served, a photo); sending a request per truck so nothing is given without your say; taking a request back. Then the Khata Kavach Customer app in a short section with real screen words (Send requests, Same as last time, Bills, Pay by UPI straight to the supplier). Say that the supplier adds you; you cannot sign up yourself.",
-  },
-  {
-    id: "trade-cement", pillar: "trades", path: `${P}/for/cement-and-building-material/`, hi: true, type: "Trade", wave: 1,
-    queries: ["cement dealer credit management", "building material udhar", "contractor credit cement", "सीमेंट उधार", "construction material credit"],
-    brief: "Cement and building material on credit to contractors. Open with the dated fact: a CRISIL survey published 18 May 2020 of over 100 cement dealers in 13 states found 95% give credit to retailers and key end-users such as contractors (source Moneylife article, name it and date it). Items in their own units (cement in bags, sand in tonnes, steel in kg, bricks in pieces). Who collects (the contractor's tractor or truck, a site supervisor). The limit in rupees across all items. Billing per site or per period. How Khata Kavach handles it (requests per vehicle, one limit, a bill with every item). No outcome claims.",
+    brief: "For transporters and fleet owners who buy diesel on credit: see exactly what your drivers take and what you owe. The transporter's view: the problem of finding out at month end; what to ask your pump to show you (each fill, truck, litres, rupees, who filled, a photo); sending a request per truck so nothing is filled without your say; taking a request back. Then the Khata Kavach Transporter app in a short section with real screen words (Send requests, Same as last time, Bills, Pay by UPI straight to the pump). Say that the pump adds you; you cannot sign up yourself.",
   },
   {
     id: "compare", pillar: "compare", path: `${P}/compare/`, hi: true, type: "Pillar", wave: 1,
@@ -149,17 +148,17 @@ export const KK_PAGES: KkPage[] = [
   {
     id: "features", pillar: "features", path: `${P}/features/`, hi: true, type: "Pillar", wave: 1,
     queries: ["khata kavach", "khata kavach app", "खाता कवच", "khata kavach features"],
-    brief: "What Khata Kavach does, feature by feature, in plain words: the two apps, customer requests, the counter light and limit, manager's PIN, photo with a sale, nothing edited, works with no signal at the counter, the owner's Today screen, numbered bills with a UPI QR, the customer's app, Hindi first and units. One table: feature / what it means for the owner / what the customer sees. What it does not do (no GST invoice, no stock, no lending, no automatic messages). Price: call us. Android apps: coming to Google Play; both apps open in the phone's browser today.",
+    brief: "What Khata Kavach does, feature by feature, in plain words: the two apps (Pump, Transporter), requests per truck, the light at the nozzle and the limit, manager's PIN, photo with a fill, nothing edited, works with no signal at the pump, the owner's Today screen, numbered bills with a UPI QR, the Transporter app, Hindi first, the four fuels by the litre. One table: feature / what it means for the owner / what the transporter sees. What it does not do (no GST invoice, no tank stock, no lending, no automatic messages). Price: as the README allows. Android apps: as the README allows; both apps open in the phone's browser today.",
   },
   {
     id: "feature-requests", pillar: "features", path: `${P}/features/customer-requests/`, hi: true, type: "Feature", wave: 1,
     queries: ["customer request before credit", "credit request app", "advance order credit"],
-    brief: "Customer requests: the customer asks before the goods go out. How it works with the real screen words (Send requests, Which vehicles need goods today?, how much in the item's unit or rupees or As needed / Full tank, valid till today by default, Same as last time, Cancel this request). What the counter sees (To serve today list; no request means red 'No credit' by default, sell for cash). The owner's option to let a manager allow a sale without a request for chosen customers. Why this takes stress off the owner: nothing is given on credit that the customer did not ask for, and the customer cannot later say they never asked.",
+    brief: "Transporter requests: the transporter asks before a truck fills. How it works with the real screen words (Send requests, Which trucks need fuel today?, How much to fill? in litres, rupees or Full tank, valid till today by default, Same as last time, Cancel this request). What the nozzle man sees (the trucks to fill today; no request means red 'No credit' by default, fill for cash). The owner's option to let a manager allow a fill without a request for chosen transporters. Why this takes stress off the owner: nothing is filled on credit that the transporter did not ask for, and the transporter cannot later say he never asked.",
   },
   {
     id: "examples", pillar: "examples", path: `${P}/examples/`, hi: true, type: "Pillar", wave: 1,
     queries: ["khata kavach example", "credit management example", "udhar hisab example"],
-    brief: "Worked examples with made-up businesses: what they are (one made-up business walked through a real situation with the real app screens and made-up figures) and what they are not (not customers, not results). Start with the example quote block. One paragraph per example page saying what it shows. Explain why there are no real case studies yet (the product is new; real ones will come only with the business's written permission and their own figures).",
+    brief: "Worked examples with made-up pumps: what they are (one made-up pump walked through a real situation with the real app screens and made-up figures) and what they are not (not customers, not results). Start with the example quote block. One paragraph per example page saying what it shows. Explain why there are no real case studies yet (the product is new; real ones will come only with the pump's written permission and its own figures).",
   },
   {
     id: "example-pump-month", pillar: "examples", path: `${P}/examples/a-month-of-diesel-credit/`, hi: true, type: "Example", wave: 1,
@@ -181,27 +180,27 @@ export const KK_PAGES: KkPage[] = [
   {
     id: "credit-policy", pillar: "credit", path: `${P}/credit/credit-policy-template/`, hi: true, type: "Template", wave: 2,
     queries: ["credit policy for small business", "credit policy format", "उधार देने के नियम", "credit terms format", "उधार की शर्तें"],
-    brief: "A one-page credit policy a small business can copy, in our own words: who gets credit and how (link @credit-who), how limits are set and raised, the credit period, who at the counter may allow what, what each credit sale must record, how and when bills go out, what happens when a payment is late (reminder dates, stop credit after N days), interest only if agreed in writing beforehand (link the law page), and how disputes are settled (photos, slip numbers, the shared record). Present it as a fill-in template (with [blanks]) in a code-free list. Say it is a sample to adapt, not a legal document; for a binding agreement, ask an advocate.",
+    brief: "A one-page credit policy a pump can copy, in our own words: who gets credit and how (link @credit-who), how limits are set and raised, the credit period, who at the nozzle may allow what, what each credit fill must record, how and when bills go out, what happens when a payment is late (reminder dates, stop credit after N days), interest only if agreed in writing beforehand (link the law page), and how disputes are settled (photos, coupon numbers, the shared record). Present it as a fill-in template (with [blanks]) in a code-free list. Say it is a sample to adapt, not a legal document; for a binding agreement, ask an advocate.",
   },
   {
     id: "credit-khata", pillar: "credit", path: `${P}/credit/how-to-keep-a-khata/`, hi: true, type: "Explainer", wave: 2,
     queries: ["udhar khata kaise likhe", "उधार खाता कैसे लिखें", "udhar ka hisab kaise rakhe", "udhar khata format", "udhar khata excel sheet", "udhar khata kaise banaye"],
-    brief: "How to keep an udhar khata (udhar ka hisab) properly, paper or phone, with a format to copy (a table layout readers can draw in a register or set up in Excel; describe the columns, no file download): what every credit entry must show (date and time, customer, vehicle, item, quantity in its unit, rupees, who served, slip number or photo), what every payment entry must show (amount, how paid, UTR or cheque number, date, against which bill), never overwrite (strike out and write a new line, with the reason), a running balance per customer, a monthly statement. A table of one customer's page with made-up lines (labelled example). Then how a shared book changes it: the customer sees each line as it is made.",
+    brief: "How a pump keeps an udhar khata (udhar ka hisab) properly, paper or phone, with a format to copy (a table layout readers can draw in a register or set up in Excel; describe the columns): what every credit entry must show (date and time, transporter, truck number, fuel, litres, rupees, who filled, coupon number or photo), what every payment entry must show (amount, how paid, UTR or cheque number, date, against which bill), never overwrite (strike out and write a new line, with the reason), a running balance per transporter, a monthly statement. A table of one transporter's page with made-up lines (labelled example). Then how a shared book changes it: the transporter sees each line as it is made.",
   },
   {
     id: "credit-bills", pillar: "credit", path: `${P}/credit/kachcha-bill-pakka-bill/`, hi: true, type: "Explainer", wave: 2,
     queries: ["kacha bill pakka bill", "kachcha bill kya hota hai", "udhar bill format", "bill and invoice difference", "कच्चा बिल पक्का बिल", "bill of supply"],
-    brief: "Kachcha bill, pakka bill and a GST tax invoice: what each is, and what a numbered credit bill is. A GST-registered seller of taxable goods must issue a tax invoice; an unregistered seller may not charge GST on a bill {{CGST Act 2017, s.32}}; a bill of supply for exempt or composition supplies (one line). Petrol and diesel are outside GST. What a good credit bill shows (number, period, each sale, totals in figures and words, how to pay). Khata Kavach's bill: a numbered PDF on the business's letterhead with a UPI QR, a bill, not a GST tax invoice; if you need GST invoices, use your billing software for them. Law-page ending line required. CA check note in the brief only.",
+    brief: "Kachcha bill, pakka bill and a GST tax invoice: what each is, and what a numbered credit bill is. A GST-registered seller of taxable goods must issue a tax invoice; an unregistered seller may not charge GST on a bill {{CGST Act 2017, s.32}}; a bill of supply for exempt or composition supplies (one line). Petrol and diesel are outside GST. What a good credit bill from a pump shows (number, period, each fill with its truck, totals in figures and words, how to pay). Khata Kavach's bill: a numbered PDF on the pump's letterhead with a UPI QR, a bill, not a GST tax invoice; for GST invoices on taxable items use your billing software. Law-page ending line required. CA check note in the brief only.",
   },
   {
     id: "counter-driver", pillar: "counter", path: `${P}/counter/driver-collects-on-credit/`, hi: true, type: "Explainer", wave: 2,
     queries: ["driver collects goods on credit", "driver diesel credit", "driver ne zyada diesel liya", "ड्राइवर उधार", "authorised person to collect goods"],
-    brief: "When a driver or a site supervisor collects goods on the customer's credit: the three-party problem (the customer owes, the driver collects, the seller's staff serve). What the seller needs: the customer's say-so for that vehicle that day, a quantity or rupee cap, a record the customer sees with the vehicle and a photo, and a rule for a vehicle not on the list. What the customer needs: to know what each driver took the same day. How a request per vehicle solves the authorisation (Khata Kavach in one short section). No accusations against drivers as a group; say 'mistakes and misunderstandings', not theft.",
+    brief: "When a driver fills a truck on the transporter's credit: the three-party problem (the transporter owes, the driver fills, the nozzle man serves). What the pump needs: the transporter's say-so for that truck that day, a litre or rupee cap, a record the transporter sees with the truck and a photo, and a rule for a truck not on the list. What the transporter needs: to know what each driver took the same day. How a request per truck solves the authorisation (Khata Kavach in one short section). No accusations against drivers as a group; say 'mistakes and misunderstandings', not theft.",
   },
   {
     id: "counter-disputes", pillar: "counter", path: `${P}/counter/disputed-credit-sale/`, hi: true, type: "Explainer", wave: 2,
     queries: ["customer disputes bill", "galat entry udhar", "dispute in credit sale", "हिसाब में झगड़ा", "customer says he did not take goods"],
-    brief: "A disputed credit sale ('we took 40 bags, not 50'): how to settle it calmly and how to prevent the next one. Steps: pull the record for that sale (date, time, vehicle, quantity, rupees, who served, photo or slip number, the request it was made against); show it to the customer; if the record is wrong, correct it openly (a new line, the old one struck out, with the reason); if right, explain and keep the line; never edit history. Prevention: request first, photo, slip number, the customer seeing each line on the day. Khata Kavach in one short section (struck-out line plus new line visible on both phones).",
+    brief: "A disputed credit fill ('the truck took 150 L, not 200'): how to settle it calmly and how to prevent the next one. Steps: pull the record for that fill (date, time, truck, litres, rupees, who filled, photo or coupon number, the request it was made against); show it to the transporter; if the record is wrong, correct it openly (a new line, the old one struck out, with the reason); if right, explain and keep the line; never edit history. Prevention: request first, photo, coupon number, the transporter seeing each line on the day. Khata Kavach in one short section (struck-out line plus new line visible on both phones).",
   },
   {
     id: "counter-daily-check", pillar: "counter", path: `${P}/counter/owners-daily-credit-check/`, hi: true, type: "Checklist", wave: 2,
@@ -253,21 +252,6 @@ export const KK_PAGES: KkPage[] = [
     queries: ["credit bill app", "bill with upi qr", "whatsapp bill pdf", "monthly bill for customers app"],
     brief: "Numbered bills with a UPI QR, sent from your own WhatsApp: make a bill from the unbilled sales of a period in a tap; a PDF on your letterhead (name, address, GSTIN and PAN if entered, logo), every sale, totals in figures and words, bank details and a UPI QR for exactly what is due; numbering with your prefix and a next number you can move; never reused. Send on WhatsApp, Send a reminder, Money received marks it paid and opens that much credit. The customer sees every bill and can pay by UPI straight to you. It is a bill, not a GST tax invoice.",
   },
-  {
-    id: "trade-contractor", pillar: "trades", path: `${P}/for/contractors/`, hi: true, type: "Trade", wave: 2,
-    queries: ["contractor material credit", "site material hisab", "builder material udhar", "ठेकेदार उधार माल", "construction site material tracking"],
-    brief: "For contractors and builders who take material on credit from several suppliers: one app (Khata Kavach Customer) to see every supplier's sales, limits, bills and what is owed, per vehicle and per item; send requests so a supervisor's truck is served only for what you asked; take a request back; pay a bill by UPI straight to the supplier. The supplier adds you. Present the customer's side honestly: it works with suppliers who use Khata Kavach.",
-  },
-  {
-    id: "trade-sand", pillar: "trades", path: `${P}/for/sand-and-aggregates/`, hi: true, type: "Trade", wave: 2,
-    queries: ["sand supplier credit", "gitti balu udhar hisab", "crusher udhar", "बालू गिट्टी उधार हिसाब", "tractor trolley credit"],
-    brief: "Sand, gravel and crusher material on credit to tractor and truck owners: sold by the tonne or by the trip; the vehicle collects; the buyer is often a contractor or a small transporter. The limit in rupees; the request per vehicle; quantity in tonnes or trips plus rupees typed from the weighbridge slip or rate (no rate list kept by the app); a photo of the loaded vehicle or the weighbridge slip. Do not touch mining law or royalty.",
-  },
-  {
-    id: "example-contractor-limit", pillar: "examples", path: `${P}/examples/a-contractor-limit-bag-by-bag/`, hi: true, type: "Example", wave: 2,
-    queries: ["contractor credit limit example", "cement credit example", "udhar limit example"],
-    brief: "Example: a Rs 50,000 limit for a contractor at a made-up cement and building material dealer. Cement by the bag, sand by the tonne, steel by the kg, all against one rupee limit. Walk through a week: requests, sales, the limit getting close, a part payment that opens credit again, one request taken back by the contractor. A table of the lines with made-up rates and rupees that add up exactly. Start with the example quote block.",
-  },
 
   // ── Wave 3 ────────────────────────────────────────────────────────────
   {
@@ -303,12 +287,12 @@ export const KK_PAGES: KkPage[] = [
   {
     id: "compare-ledger-vs-shared", pillar: "compare", path: `${P}/compare/ledger-app-vs-shared-credit-book/`, hi: true, type: "Comparison", wave: 3,
     queries: ["bahi khata app kya hota hai", "digital khata kya hai", "shared ledger app", "udhar app kaise kaam karta hai"],
-    brief: "A ledger app or a shared credit book: what is the difference? A ledger app is the seller's own book (the customer may get an SMS or a link); a shared credit book has two apps, the customer asks first and both see each line as it is made. A short table. Which suits whom (a kirana shop with walk-in families vs a supplier whose business customers send vehicles). Neutral, no names needed beyond one example of each kind.",
+    brief: "A ledger app or a shared credit book: what is the difference? A ledger app is the pump's own book (the transporter may get an SMS or a link); a shared credit book has two apps, the transporter asks first and both see each line as it is made. A short table. Which suits whom (a shop with walk-in families vs a pump whose transporters send trucks). Neutral, no names needed beyond one example of each kind.",
   },
   {
     id: "compare-pump-software", pillar: "compare", path: `${P}/compare/petrol-pump-software/`, hi: true, type: "Comparison", wave: 3,
     queries: ["petrol pump software", "petrol pump credit management software", "garruda", "petrosoft", "पेट्रोल पंप सॉफ्टवेयर"],
-    brief: "Petrol pump software with credit modules (GARRUDA, Petrosoft by YoungMinds, Petro Genius) or a credit book: when you need full forecourt software and when you only need credit control. What each says it does, from its own pages and store listings, dated (several have customer apps; GARRUDA uses a QR per vehicle and an OTP to the driver). Where they are stronger (nozzle, shift, tank and stock, Tally, accounting). Where Khata Kavach is different (any trade, Hindi first, works with no signal at the counter, not tied to forecourt systems). Use only CONFIRMED cells from comp-fuel.verified.md. No 'only' or 'first' claims.",
+    brief: "Petrol pump software with credit modules (GARRUDA, Petrosoft by YoungMinds, Petro Genius) or a credit book: when you need full forecourt software and when you only need credit control. What each says it does, from its own pages and store listings, dated (several have customer apps; GARRUDA uses a QR per vehicle and an OTP to the driver). Where they are stronger (nozzle, shift, tank and stock, Tally, accounting). Where Khata Kavach is different (only credit, Hindi first, works with no signal at the pump, not tied to forecourt systems). Use only CONFIRMED cells from comp-fuel.verified.md. No 'only' or 'first' claims.",
   },
   {
     id: "compare-fuel-credit", pillar: "compare", path: `${P}/compare/fuel-cards-and-credit-networks/`, hi: true, type: "Comparison", wave: 3,
@@ -333,17 +317,12 @@ export const KK_PAGES: KkPage[] = [
   {
     id: "feature-customer-app", pillar: "features", path: `${P}/features/customer-app/`, hi: true, type: "Feature", wave: 3,
     queries: ["customer app credit", "transporter app diesel", "supplier khata app"],
-    brief: "What the customer sees in Khata Kavach Customer: each supplier's credit left and what you owe, every purchase with vehicle, item, quantity, rupees, who served and the photo, the account lines (purchases, payments, corrections), bills with Pay by UPI straight to the supplier, requests (send, Same as last time, cancel), vehicles, Hindi and English and a large-text switch. The customer is added by the supplier and agrees to the terms once. It never lends and never holds money.",
-  },
-  {
-    id: "trade-wholesale", pillar: "trades", path: `${P}/for/wholesalers/`, hi: true, type: "Trade", wave: 3,
-    queries: ["wholesale credit management", "distributor udhar hisab", "credit to retailers", "थोक उधार हिसाब"],
-    brief: "Small wholesalers and distributors whose retailers send a vehicle (a tempo, a pickup) to collect on credit: amount-only items or items in boxes, bags or pieces; one rupee limit per retailer; the request per vehicle; a numbered bill per period. Say plainly: if you deliver to shops in your own vehicle, every sale is still tied to a vehicle number in Khata Kavach, so check with us whether it fits your way of working. Not a distribution-management system (no beat plans, no stock).",
+    brief: "What the transporter sees in Khata Kavach Transporter: each pump's credit left and what he owes, every fill with truck, fuel, litres, rupees, who filled and the photo, the account lines (fills, payments, corrections), bills with Pay by UPI straight to the pump, requests (send, Same as last time, cancel), trucks, Hindi and English and a large-text switch. The transporter is added by the pump and agrees to the terms once. It never lends and never holds money.",
   },
   {
     id: "example-dispute", pillar: "examples", path: `${P}/examples/a-disputed-sale/`, hi: true, type: "Example", wave: 3,
     queries: ["credit dispute example", "galat entry example"],
-    brief: "Example: a disputed sale from the counter to the customer's phone. A made-up contractor says only 40 bags were taken, not 50. The record: request for 50 bags, sale by a named made-up staff member at a time, photo of the loaded tractor, 'More than requested' not flagged. It turns out the staff typed 50 for a 40-bag load: the manager corrects it with a reason; the old line stays struck out on both phones; the bill was not yet made. Second variant in two lines: if the record was right, the owner shows it and keeps it. Start with the example quote block.",
+    brief: "Example: a disputed fill from the nozzle to the transporter's phone. A made-up transporter says his truck took only 150 L, not 200 L. The record: request for 200 L, fill by a named made-up nozzle man at a time, photo of the dispenser or slip, 'More than requested' not flagged. It turns out the nozzle man typed 200 for a 150 L fill: the manager corrects it with a reason; the old line stays struck out on both phones; the bill was not yet made. Second variant in two lines: if the record was right, the owner shows it and keeps it. Start with the example quote block.",
   },
   {
     id: "example-bill-payment", pillar: "examples", path: `${P}/examples/a-bill-and-a-part-payment/`, hi: true, type: "Example", wave: 3,
@@ -415,7 +394,7 @@ export const KK_PAGES: KkPage[] = [
   {
     id: "paid-interest", pillar: "paid", path: `${P}/getting-paid/interest-on-udhar/`, hi: true, type: "Explainer", wave: 3,
     queries: ["can i charge interest on late payment", "udhar par byaj le sakte hain", "interest on late payment meaning", "interest on delayed payment msme", "how much interest can i charge on late payment"],
-    brief: "Can a shop charge interest on late udhar? Plain answer: only if the customer agreed in advance (on the bill, terms or credit form); write the rate and from which day. MSME suppliers have a separate statutory right (link msme-45-day-rule; do not restate figures not on that page). Practical view: interest is often hard to collect; credit days and limits work better. Link the interest calculator and udhar agreement format. 'General information, not legal advice.'",
+    brief: "Can a pump charge interest on late udhar? Plain answer: only if the transporter agreed in advance (on the bill, terms or credit form); write the rate and from which day. MSME suppliers have a separate statutory right (link msme-45-day-rule; do not restate figures not on that page). Practical view: interest is often hard to collect; credit days and limits work better. Link the interest calculator and udhar agreement format. 'General information, not legal advice.'",
   },
 ];
 

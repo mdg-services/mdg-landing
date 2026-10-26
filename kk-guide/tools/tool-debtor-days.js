@@ -13,12 +13,12 @@
     work: function (o, s, p, d) { return "बाकी " + o + " ÷ " + p + " दिन की उधार बिक्री " + s + " × " + p + " दिन = " + d + " दिन"; },
     perDay: function (x, p, n) { return "इन " + p + " दिनों में रोज़ की उधार बिक्री औसतन " + x + " रही। यानी जो बाकी है, वह लगभग " + n + " दिन की उधार बिक्री के बराबर है।"; },
     zero: "आज कुछ बाकी नहीं है, इसलिए देनदार दिन 0 हैं।",
-    inside: function (c, d) { return "आप " + c + " दिन का उधार देते हैं और देनदार दिन " + d + " हैं: औसतन ग्राहक आपके उधार के दिनों के भीतर पेमेंट कर रहे हैं।"; },
-    above: function (c, d, x) { return "आप " + c + " दिन का उधार देते हैं और देनदार दिन " + d + " हैं: तय से " + x + " दिन ज़्यादा। कुछ ग्राहक देर से पेमेंट कर रहे हैं।"; },
-    well: function (c, d, x) { return "आप " + c + " दिन का उधार देते हैं और देनदार दिन " + d + " हैं: तय से " + x + " दिन ज़्यादा। औसतन ग्राहक आपके उधार के दिनों के काफ़ी बाद पेमेंट कर रहे हैं।"; },
+    inside: function (c, d) { return "आप " + c + " दिन का उधार देते हैं और देनदार दिन " + d + " हैं: औसतन ट्रांसपोर्टर आपके उधार के दिनों के भीतर पेमेंट कर रहे हैं।"; },
+    above: function (c, d, x) { return "आप " + c + " दिन का उधार देते हैं और देनदार दिन " + d + " हैं: तय से " + x + " दिन ज़्यादा। कुछ ट्रांसपोर्टर देर से पेमेंट कर रहे हैं।"; },
+    well: function (c, d, x) { return "आप " + c + " दिन का उधार देते हैं और देनदार दिन " + d + " हैं: तय से " + x + " दिन ज़्यादा। औसतन ट्रांसपोर्टर आपके उधार के दिनों के काफ़ी बाद पेमेंट कर रहे हैं।"; },
     expect: function (c, e, o, w) { return c + " दिन के उधार पर लगभग " + e + " बाकी होना चाहिए। आपका बाकी " + o + " है, यानी लगभग " + w + " तय समय से ज़्यादा रुका है।"; },
     longer: function (p) { return "देनदार दिन चुने हुए " + p + " दिनों से ज़्यादा निकले, यानी बाकी में कुछ पैसा उन बिक्रियों से भी पुराना है जो आपने गिनीं। " + (p < 365 ? "लंबी अवधि (365 दिन) चुनकर देखें, या आँकड़े जाँचें।" : "आँकड़े जाँचें।"); },
-    foot: "देनदार दिन सारे ग्राहकों का औसत है: एक बड़ा देर वाला ग्राहक कई समय पर देने वालों के पीछे छिप सकता है, इसलिए हर ग्राहक का हिसाब अलग देखें। महीने-दर-महीने बिक्री बहुत घटे-बढ़े तो यह अंदाज़ा मोटा रहता है। इसकी तुलना सिर्फ़ अपने उधार के दिनों से करें; सब कारोबारों के लिए कोई एक तय आँकड़ा नहीं है।"
+    foot: "देनदार दिन सारे ट्रांसपोर्टरों का औसत है: एक बड़ा देर वाला ट्रांसपोर्टर कई समय पर देने वालों के पीछे छिप सकता है, इसलिए हर ट्रांसपोर्टर का हिसाब अलग देखें। महीने-दर-महीने बिक्री बहुत घटे-बढ़े तो यह अंदाज़ा मोटा रहता है। इसकी तुलना सिर्फ़ अपने उधार के दिनों से करें; सब पंपों के लिए कोई एक तय आँकड़ा नहीं है।"
   } : {
     needO: "Type the total udhar outstanding today in rupees, for example 4,50,000 or 4.5 lakh. If nothing is outstanding, type 0.",
     needS: "Type your credit sales for the days you picked, in rupees, for example 9,00,000 or 9 lakh. It must be above 0.",
@@ -28,12 +28,12 @@
     work: function (o, s, p, d) { return o + " outstanding ÷ " + s + " credit sales in " + p + " days × " + p + " days = " + d + (d === 1 ? " day" : " days"); },
     perDay: function (x, p, n) { return "Over those " + p + " days you sold about " + x + " on credit a day, so what is outstanding is about " + n + (n === 1 ? " day" : " days") + " of credit sales."; },
     zero: "Nothing is outstanding today, so debtor days is 0.",
-    inside: function (c, d) { return "You give " + c + " days' credit and debtor days is " + d + ": on average, customers are paying inside your credit days."; },
-    above: function (c, d, x) { return "You give " + c + " days' credit and debtor days is " + d + ": " + x + (x === 1 ? " day" : " days") + " longer than agreed. Some customers are paying late."; },
-    well: function (c, d, x) { return "You give " + c + " days' credit and debtor days is " + d + ": " + x + " days longer than agreed. On average, customers are paying well after your credit days."; },
+    inside: function (c, d) { return "You give " + c + " days' credit and debtor days is " + d + ": on average, transporters are paying inside your credit days."; },
+    above: function (c, d, x) { return "You give " + c + " days' credit and debtor days is " + d + ": " + x + (x === 1 ? " day" : " days") + " longer than agreed. Some transporters are paying late."; },
+    well: function (c, d, x) { return "You give " + c + " days' credit and debtor days is " + d + ": " + x + " days longer than agreed. On average, transporters are paying well after your credit days."; },
     expect: function (c, e, o, w) { return "With " + c + " days' credit you would expect about " + e + " outstanding. You have " + o + ", so about " + w + " is waiting longer than agreed."; },
     longer: function (p) { return "Debtor days came out longer than the " + p + " days you picked, so some of what is outstanding is older than the sales you counted. " + (p < 365 ? "Try 365 days, or check the figures." : "Check the figures."); },
-    foot: "Debtor days is an average over all customers: one big late customer can hide behind many on-time ones, so look at each customer's ageing too. It is rough when your sales rise or fall a lot from month to month. Compare it only with your own credit days; no single figure suits every business."
+    foot: "Debtor days is an average over all transporters: one big late transporter can hide behind many on-time ones, so look at each transporter's ageing too. It is rough when your sales rise or fall a lot from month to month. Compare it only with your own credit days; no single figure suits every pump."
   };
 
   var out = document.getElementById("dd-out");

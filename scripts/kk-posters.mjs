@@ -27,22 +27,22 @@ const POSTERS = [
   },
   {
     slug: "aaj-nakad-kal-udhar",
-    hi: { note: "कृपया ध्यान दें", head: ["आज नकद,", "कल उधार"], sub: "आज का माल, आज के पैसे में।<br>धन्यवाद।" },
-    en: { note: "PLEASE NOTE", head: ["Cash today,", "credit tomorrow"], sub: "Today’s goods are for today’s payment.<br>Thank you." },
+    hi: { note: "कृपया ध्यान दें", head: ["आज नकद,", "कल उधार"], sub: "आज का तेल, आज के पैसे में।<br>धन्यवाद।" },
+    en: { note: "PLEASE NOTE", head: ["Cash today,", "credit tomorrow"], sub: "Today’s fuel is for today’s payment.<br>Thank you." },
   },
   {
     slug: "seema-tak",
-    hi: { note: "हमारा नियम", head: ["उधार सिर्फ़", "तय सीमा तक"], sub: "हर ग्राहक की सीमा मालिक तय करते हैं।<br>अपनी सीमा काउंटर पर पूछ लीजिए।" },
-    en: { note: "OUR RULE", head: ["Credit only up to", "the agreed limit"], sub: "The owner sets each customer’s limit.<br>Please ask at the counter for yours." },
+    hi: { note: "हमारा नियम", head: ["उधार सिर्फ़", "तय सीमा तक"], sub: "हर खाते की सीमा मालिक तय करते हैं।<br>अपनी सीमा पंप के ऑफ़िस में पूछ लीजिए।" },
+    en: { note: "OUR RULE", head: ["Credit only up to", "the agreed limit"], sub: "The owner sets the limit for every account.<br>Please ask at the pump office for yours." },
   },
   {
     slug: "har-udhar-ki-parchi",
-    hi: { note: "हमारा नियम", head: ["हर उधार की", "पर्ची मिलेगी"], sub: "पर्ची लीजिए और संभालकर रखिए।<br>महीने का हिसाब मिलाने में काम आएगी।" },
-    en: { note: "OUR RULE", head: ["Every credit sale", "gets a slip"], sub: "Please take your slip and keep it.<br>It helps us match the month’s account." },
+    hi: { note: "हमारा नियम", head: ["हर उधार की भराई पर", "पर्ची मिलेगी"], sub: "पर्ची लीजिए और संभालकर रखिए।<br>महीने का हिसाब मिलाने में काम आएगी।" },
+    en: { note: "OUR RULE", head: ["Every credit fill", "gets a slip"], sub: "Please take your slip and keep it.<br>It helps us match the month’s account." },
   },
   {
     slug: "purana-hisab-saaf",
-    hi: { note: "हमारा नियम", head: ["पुराना हिसाब साफ़,", "तभी नया उधार"], sub: "पहले पिछला बकाया चुकाइए,<br>फिर नया माल उधार मिलेगा।" },
+    hi: { note: "हमारा नियम", head: ["पुराना हिसाब साफ़,", "तभी नया उधार"], sub: "पहले पिछला बकाया चुकाइए,<br>फिर नया तेल उधार मिलेगा।" },
     en: { note: "OUR RULE", head: ["Old account clear,", "then new credit"], sub: "Please clear the earlier balance first.<br>New credit follows." },
   },
   {

@@ -3,19 +3,19 @@
   "title": "Security deposit or post-dated cheque before giving udhar",
   "metaTitle": "Security deposit and cheque before udhar",
   "description": "Taking a security deposit, post-dated cheque or security cheque before udhar: what each is, the good and the catch, what to write down, and where an advocate is needed.",
-  "answer": "Before giving udhar to a regular customer, some owners take a security deposit (money held as cover), a post-dated cheque or PDC (dated for the day a bill falls due) or a security cheque (kept only as cover). Each has a catch. A deposit ties up the customer's cash. A PDC must be presented within its validity. A security cheque may not be treated like a cheque for a debt that is due, so ask an advocate. Write down every detail.",
+  "answer": "Before giving udhar to a regular transporter, some pump owners take a security deposit (money held as cover), a post-dated cheque or PDC (dated for the day a bill falls due) or a security cheque (kept only as cover). Each has a catch. A deposit ties up the customer's cash. A PDC must be presented within its validity. A security cheque may not be treated like a cheque for a debt that is due, so ask an advocate. Write down every detail.",
   "faq": [
     { "q": "PDC meaning: what is a post-dated cheque?", "a": "A cheque dated for a later day. Owners take one for the day a bill falls due, and present it soon after that date, within the cheque's validity: 3 months in practice {{NI Act 1881, s.138}}." },
     { "q": "Can I take a security cheque from a credit customer?", "a": "Many owners do. But a cheque given only as cover, before any debt is due, may not be treated like a cheque given to pay a debt {{NI Act 1881, s.138}}. How the cheque bounce law applies to yours is for an advocate to advise." },
     { "q": "Should I take a security deposit from a customer for credit?", "a": "It is your choice. A deposit puts cover in your hand, but regular customers may not want to tie up cash. A limit and a short credit period also reduce risk: see [how to set a limit](@credit-limit)." }
   ],
   "related": ["paid-cheque-bounce", "credit-limit", "credit-policy", "credit-agreement", "paid-legal-steps"],
-  "updated": "2026-10-26"
+  "updated": "2026-10-27"
 }
 ---
 ## What each one is
 
-This page is for a business that gives goods on credit to regular business customers.
+This page is for a petrol pump that gives diesel on credit to regular business customers.
 
 | Option | What it is | In your favour | The catch |
 |---|---|---|---|
@@ -39,6 +39,6 @@ A cheque must be presented within its validity: 3 months in practice {{NI Act 18
 
 A deposit is not a payment against a bill. Keep its receipt apart from the customer's account. If you later set it against an unpaid bill, record that then as a payment received, with the date.
 
-The limit is still yours to set. See [the credit policy](@credit-policy) and [the udhar agreement format](@credit-agreement). Khata Kavach never lends and never holds money, so a deposit or cheque stays with you. It keeps the account both sides can see, and checks the limit at the counter before goods go out.
+The limit is still yours to set. See [the credit policy](@credit-policy) and [the udhar agreement format](@credit-agreement). Khata Kavach never lends and never holds money, so a deposit or cheque stays with you. It keeps the account both sides can see, and checks the limit at the nozzle before fuel goes in.
 
 General information, not legal advice. For your own case, speak to an advocate or a chartered accountant.

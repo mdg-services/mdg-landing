@@ -12,9 +12,9 @@ import type { Dict } from "../../i18n/lang";
 type Status = "idle" | "submitting" | "success" | "error";
 
 /**
- * The way in. First: a business owner starts on his own in the Business app
+ * The way in. First: a pump owner sets up his own pump in the Pump app
  * (self sign-up, since 22 Oct 2026). Second: call, or leave a number and say who
- * you are (a business owner or a customer). The form posts to the site's existing call-back route; the
+ * you are (a pump owner or a transporter). The form posts to the site's existing call-back route; the
  * product and the role travel in its message line ("Khata Kavach · Pump
  * owner"), so the team knows which call this is. Nothing on the server
  * changed for it. The role tag is always English, because the team reads it.

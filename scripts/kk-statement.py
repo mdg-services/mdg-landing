@@ -1,5 +1,5 @@
 """
-The customer statement-of-account Excel sheet on
+The statement-of-account Excel sheet a petrol pump sends a transporter on credit, on
 mdgservices.in/khata-kavach/getting-paid/customer-statement-format/, in English and Hindi:
 public/kk/downloads/customer-statement.xlsx and customer-statement-hindi.xlsx.
 
@@ -7,8 +7,8 @@ public/kk/downloads/customer-statement.xlsx and customer-statement-hindi.xlsx.
 
 Two sheets:
   - How to use: short steps (Protected View first) and the colour legend.
-  - Statement: the business, the customer, the period and the opening balance at the top (yellow,
-    typed); one row for every sale and every payment in the period (yellow, typed); the sheet
+  - Statement: the pump, the transporter, the period and the opening balance at the top (yellow,
+    typed); one row for every credit fill and every payment in the period (yellow, typed); the sheet
     works out the balance after every line, the totals and the closing balance (grey, formulas).
     A confirmation line and two signature lines sit under the table, so the sheet prints as the
     statement to send.
@@ -29,10 +29,10 @@ from openpyxl.workbook.properties import CalcProperties
 
 OUT = Path(__file__).resolve().parent.parent / "public" / "kk" / "downloads"
 
-LINES = 50          # sale and payment rows
+LINES = 50          # fill and payment rows
 HEAD_ROW = 9        # the column headings
 OPEN_ROW = 10       # the "Opening balance" line
-FIRST = 11          # first sale or payment row
+FIRST = 11          # first fill or payment row
 LAST = FIRST + LINES - 1   # 60
 TOT = LAST + 1      # 61: totals and closing balance
 
@@ -50,18 +50,18 @@ T = {
     "en": {
         "file": "customer-statement.xlsx",
         "how": "How to use", "sheet": "Statement",
-        "title_how": "Statement of account: a template from MDG Services",
+        "title_how": "Pump statement of account: a template from MDG Services",
         "steps": [
             "If Excel shows a yellow 'Protected View' bar at the top, press Enable Editing. The grey cells fill in after that.",
-            "1. At the top of the Statement sheet, type your business name, the customer's name, the statement date, the period it covers (from and to) and the opening balance.",
-            "2. Opening balance: what the customer owed you at the start of the period. For a second statement, it is the closing balance of the one before.",
-            "3. One row for every sale and every payment in the period, in date order. Type the date, the bill or slip number, the vehicle or who collected, and the details (item and quantity for a sale; how it was paid and the UTR or cheque number for a payment).",
-            "4. A sale goes in Udhar given (Rs). A payment goes in Money received (Rs). Never both on one row.",
+            "1. At the top of the Statement sheet, type your pump's name, the transporter's name, the statement date, the period it covers (from and to) and the opening balance.",
+            "2. Opening balance: what the transporter owed you at the start of the period. For a second statement, it is the closing balance of the one before.",
+            "3. One row for every credit fill and every payment in the period, in date order. Type the date, the bill or slip number, the truck number, and the details (fuel and litres for a fill; how it was paid and the UTR or cheque number for a payment).",
+            "4. A fill goes in Udhar given (Rs). A payment goes in Money received (Rs). Never both on one row.",
             "5. The grey cells work out by themselves: the balance after every line (opening balance + all udhar given so far - all money received so far), the totals, and the closing balance. Do not type in them.",
-            "6. The closing balance, at the top and at the foot of the table, is what the customer owes you at the end of the period.",
+            "6. The closing balance, at the top and at the foot of the table, is what the transporter owes you at the end of the period.",
             "7. Mistakes: before you send the statement, fix them on the row. After you have sent it, do not change the old row. Add a new row with the same amount as a minus figure in the same column, write why in Details, then add the right row. Both copies then tell the same story.",
             "8. The sheet holds 50 rows. If the period has more, make a second statement and start it with the closing balance of the first as its opening balance.",
-            "9. Print it on A4 or save it as a PDF, and send it from your own WhatsApp. Ask the customer to check it and to confirm it or tell you what looks wrong within 7 days.",
+            "9. Print it on A4 or save it as a PDF, and send it from your own WhatsApp. Ask the transporter to check it and to confirm it or tell you what looks wrong within 7 days.",
             "10. The rows in italics are a made-up example. Delete them, or type over every cell including the Details, before you start.",
         ],
         "legend": "Yellow cells: you type. Grey cells: worked out by the sheet, do not type in them.",
@@ -69,39 +69,39 @@ T = {
         "swatch_calc": "Grey cells: worked out by the sheet. Do not type in them.",
         "note": "General information. Check your own figures. The names in the example rows are made up.",
         "by": "MDG Services, a brand of VRUOOM Private Limited · mdgservices.in/khata-kavach/getting-paid/customer-statement-format/",
-        "kk": "Khata Kavach, our app, keeps credit sales and payments in one shared book: by default the customer sends a request before goods go out, and both sides see each line as soon as the phone is online. mdgservices.in/khata-kavach",
+        "kk": "Khata Kavach, our app for petrol pumps, keeps every credit fill and payment in one shared book: by default the transporter sends a request before each truck fills, and both sides see each line as soon as the phone is online. mdgservices.in/khata-kavach",
         "title": "Statement of account",
         "sub": "Fill the yellow cells. The grey cells work themselves out.",
-        "business": "Business", "customer": "Customer", "opening": "Opening balance (Rs)", "closing": "Closing balance (Rs)",
+        "business": "Pump", "customer": "Transporter", "opening": "Opening balance (Rs)", "closing": "Closing balance (Rs)",
         "stmt_date": "Statement date", "from": "Period from", "to": "Period to",
-        "cols": ["Date", "Bill / slip no.", "Vehicle no. / collected by", "Details (item and quantity, or how paid and UTR / cheque no.)", "Udhar given (Rs)", "Money received (Rs)", "Balance (Rs)"],
+        "cols": ["Date", "Bill / slip no.", "Truck no.", "Details (fuel and litres, or how paid and UTR / cheque no.)", "Udhar given (Rs)", "Money received (Rs)", "Balance (Rs)"],
         "open_line": "Opening balance", "totals": "Totals", "close_line": "Closing balance",
         "confirm": "Please check this statement. If it is correct, sign below. If anything looks wrong, tell us within 7 days and we will look at it together.",
-        "sign_biz": "For the business: sign and date", "sign_cust": "Customer's confirmation: name, sign and date",
+        "sign_biz": "For the pump: sign and date", "sign_cust": "Transporter's confirmation: name, sign and date",
         "num_err": "Type a number only. Use a minus sign to correct a line.",
         "ex_key": "Example",
-        "ex_biz": "Sharma Traders (made-up)", "ex_cust": "Gupta Transport (made-up)",
+        "ex_biz": "Sharma Fuels (made-up)", "ex_cust": "Gupta Transport (made-up)",
         "ex_lines": [
-            [date(2026, 10, 2), "S-101", "UP00 SH 1005", "Example: diesel, 150 litre", 13500, None],
-            [date(2026, 10, 4), "S-102", "UP00 SH 1006", "Example: diesel, 200 litre", 18000, None],
+            [date(2026, 10, 2), "S-101", "UP00 GT 2201", "Example: diesel, 150 litres", 13500, None],
+            [date(2026, 10, 4), "S-102", "UP00 GT 2202", "Example: diesel, 200 litres", 18000, None],
             [date(2026, 10, 10), None, None, "Example: UPI, UTR 0000XXXX1234", None, 30000],
         ],
     },
     "hi": {
         "file": "customer-statement-hindi.xlsx",
         "how": "कैसे भरें", "sheet": "स्टेटमेंट",
-        "title_how": "खाते का स्टेटमेंट: MDG Services का फ़ॉर्मेट",
+        "title_how": "पेट्रोल पंप के खाते का स्टेटमेंट: MDG Services का फ़ॉर्मेट",
         "steps": [
             "अगर Excel ऊपर पीली पट्टी में 'Protected View' दिखाए, तो 'Enable Editing' दबाएँ। उसके बाद स्लेटी खाने भरते हैं।",
-            "1. स्टेटमेंट शीट के ऊपर अपने कारोबार का नाम, ग्राहक का नाम, स्टेटमेंट की तारीख़, कौन-सी अवधि का है (कब से, कब तक) और शुरू का बकाया लिखें।",
-            "2. शुरू का बकाया: अवधि की शुरुआत में ग्राहक पर आपका जितना बाकी था। दूसरा स्टेटमेंट बना रहे हों तो पिछले स्टेटमेंट का आख़िरी बकाया।",
-            "3. अवधि की हर बिक्री और हर पेमेंट की एक लाइन, तारीख़ के क्रम में। तारीख़, बिल या पर्ची नंबर, गाड़ी या माल लेने वाला, और ब्योरा लिखें (बिक्री में माल और मात्रा; पेमेंट में कैसे मिला और UTR या चेक नंबर)।",
-            "4. बिक्री 'उधार दिया (₹)' में जाती है। पेमेंट 'पैसे मिले (₹)' में जाता है। एक लाइन में दोनों नहीं।",
+            "1. स्टेटमेंट शीट के ऊपर अपने पंप का नाम, ट्रांसपोर्टर का नाम, स्टेटमेंट की तारीख़, कौन-सी अवधि का है (कब से, कब तक) और शुरू का बकाया लिखें।",
+            "2. शुरू का बकाया: अवधि की शुरुआत में ट्रांसपोर्टर पर आपका जितना बाकी था। दूसरा स्टेटमेंट बना रहे हों तो पिछले स्टेटमेंट का आख़िरी बकाया।",
+            "3. अवधि की हर उधार की भराई और हर पेमेंट की एक लाइन, तारीख़ के क्रम में। तारीख़, बिल या पर्ची नंबर, गाड़ी नंबर, और ब्योरा लिखें (भराई में तेल और लीटर; पेमेंट में कैसे मिला और UTR या चेक नंबर)।",
+            "4. भराई 'उधार दिया (₹)' में जाती है। पेमेंट 'पैसे मिले (₹)' में जाता है। एक लाइन में दोनों नहीं।",
             "5. स्लेटी खाने अपने आप भरते हैं: हर लाइन के बाद का बकाया (शुरू का बकाया + अब तक का सारा उधार दिया - अब तक के सारे पैसे मिले), जोड़, और आख़िरी बकाया। इनमें कुछ न लिखें।",
-            "6. आख़िरी बकाया, ऊपर और टेबल के नीचे, वह रकम है जो अवधि के अंत में ग्राहक पर आपकी बाकी है।",
+            "6. आख़िरी बकाया, ऊपर और टेबल के नीचे, वह रकम है जो अवधि के अंत में ट्रांसपोर्टर पर आपकी बाकी है।",
             "7. गलती: स्टेटमेंट भेजने से पहले उसे उसी लाइन पर ठीक कर लें। भेजने के बाद पुरानी लाइन न बदलें। उसी खाने में उतनी ही रकम माइनस में डालकर नई लाइन जोड़ें, 'ब्योरा' में वजह लिखें, फिर सही लाइन जोड़ें। तब दोनों कॉपियों में एक ही कहानी रहती है।",
             "8. शीट में 50 लाइनें आती हैं। अवधि में ज़्यादा हों तो दूसरा स्टेटमेंट बनाएँ और उसमें पहले का आख़िरी बकाया शुरू का बकाया रखें।",
-            "9. A4 पर छापें या PDF बनाएँ, और अपने WhatsApp से भेजें। ग्राहक से कहें कि जाँच ले, और 7 दिन के भीतर बताए कि ठीक है या क्या गलत लग रहा है।",
+            "9. A4 पर छापें या PDF बनाएँ, और अपने WhatsApp से भेजें। ट्रांसपोर्टर से कहें कि जाँच ले, और 7 दिन के भीतर बताए कि ठीक है या क्या गलत लग रहा है।",
             "10. तिरछे अक्षरों वाली लाइनें काल्पनिक उदाहरण हैं। शुरू करने से पहले उन्हें हटा दें, या 'ब्योरा' समेत हर खाने में अपना लिखें।",
         ],
         "legend": "पीले खाने: आप भरें। स्लेटी खाने: शीट ख़ुद भरती है, इनमें कुछ न लिखें।",
@@ -109,21 +109,21 @@ T = {
         "swatch_calc": "स्लेटी खाने: शीट ख़ुद भरती है। इनमें कुछ न लिखें।",
         "note": "यह सामान्य जानकारी है। अपने आँकड़े ख़ुद जाँचें। उदाहरण वाली लाइनों के नाम काल्पनिक हैं।",
         "by": "MDG Services, VRUOOM Private Limited का ब्रांड · mdgservices.in/hi/khata-kavach/getting-paid/customer-statement-format/",
-        "kk": "हमारा ऐप खाता कवच उधार की बिक्री और पेमेंट एक साझा खाते में रखता है: शुरुआती सेटिंग में माल जाने से पहले ग्राहक रिक्वेस्ट भेजता है, और फ़ोन के नेट पर आते ही हर लाइन दोनों तरफ़ दिखती है। mdgservices.in/hi/khata-kavach",
+        "kk": "हमारा ऐप खाता कवच पेट्रोल पंप की हर उधार की भराई और हर पेमेंट एक साझा खाते में रखता है: शुरुआती सेटिंग में हर गाड़ी भरने से पहले ट्रांसपोर्टर रिक्वेस्ट भेजता है, और फ़ोन के नेट पर आते ही हर लाइन दोनों तरफ़ दिखती है। mdgservices.in/hi/khata-kavach",
         "title": "खाते का स्टेटमेंट",
         "sub": "पीले खाने भरें। स्लेटी खाने अपने आप भरते हैं।",
-        "business": "आपका कारोबार", "customer": "ग्राहक", "opening": "शुरू का बकाया (₹)", "closing": "आख़िरी बकाया (₹)",
+        "business": "आपका पंप", "customer": "ट्रांसपोर्टर", "opening": "शुरू का बकाया (₹)", "closing": "आख़िरी बकाया (₹)",
         "stmt_date": "स्टेटमेंट की तारीख़", "from": "अवधि: कब से", "to": "अवधि: कब तक",
-        "cols": ["तारीख़", "बिल / पर्ची नंबर", "गाड़ी नंबर / माल लेने वाला", "ब्योरा (माल और मात्रा, या कैसे मिले और UTR / चेक नंबर)", "उधार दिया (₹)", "पैसे मिले (₹)", "बकाया (₹)"],
+        "cols": ["तारीख़", "बिल / पर्ची नंबर", "गाड़ी नंबर", "ब्योरा (तेल और लीटर, या कैसे मिले और UTR / चेक नंबर)", "उधार दिया (₹)", "पैसे मिले (₹)", "बकाया (₹)"],
         "open_line": "शुरू का बकाया", "totals": "जोड़", "close_line": "आख़िरी बकाया",
         "confirm": "कृपया यह स्टेटमेंट जाँच लें। ठीक हो तो नीचे दस्तख़त करें। कुछ गलत लगे तो 7 दिन के भीतर हमें बताएँ, हम साथ बैठकर देख लेंगे।",
-        "sign_biz": "कारोबार की ओर से: दस्तख़त और तारीख़", "sign_cust": "ग्राहक की पुष्टि: नाम, दस्तख़त और तारीख़",
+        "sign_biz": "पंप की ओर से: दस्तख़त और तारीख़", "sign_cust": "ट्रांसपोर्टर की पुष्टि: नाम, दस्तख़त और तारीख़",
         "num_err": "सिर्फ़ अंक भरें। लाइन सुधारने के लिए माइनस लगाएँ।",
         "ex_key": "उदाहरण",
-        "ex_biz": "Sharma Traders (काल्पनिक)", "ex_cust": "Gupta Transport (काल्पनिक)",
+        "ex_biz": "Sharma Fuels (काल्पनिक)", "ex_cust": "Gupta Transport (काल्पनिक)",
         "ex_lines": [
-            [date(2026, 10, 2), "S-101", "UP00 SH 1005", "उदाहरण: डीज़ल, 150 लीटर", 13500, None],
-            [date(2026, 10, 4), "S-102", "UP00 SH 1006", "उदाहरण: डीज़ल, 200 लीटर", 18000, None],
+            [date(2026, 10, 2), "S-101", "UP00 GT 2201", "उदाहरण: डीज़ल, 150 लीटर", 13500, None],
+            [date(2026, 10, 4), "S-102", "UP00 GT 2202", "उदाहरण: डीज़ल, 200 लीटर", 18000, None],
             [date(2026, 10, 10), None, None, "उदाहरण: UPI, UTR 0000XXXX1234", None, 30000],
         ],
     },
@@ -194,7 +194,7 @@ def build(lang: str) -> Path:
     ws["A2"].font = Font(name=F, size=10, color="43524D")
     ws.row_dimensions[1].height = 26
 
-    # the top block: left = business, customer, opening and closing; right = dates
+    # the top block: left = pump, transporter, opening and closing; right = dates
     label(ws, "A4", t["business"]);   field(ws, "C4:D4", INPUT)
     label(ws, "A5", t["customer"]);   field(ws, "C5:D5", INPUT)
     label(ws, "A6", t["opening"]);    field(ws, "C6:D6", INPUT, MONEY)
@@ -225,7 +225,7 @@ def build(lang: str) -> Path:
     ws.cell(row=OPEN_ROW, column=4, value=t["open_line"])
     ws.cell(row=OPEN_ROW, column=7, value="=N($C$6)").number_format = MONEY
 
-    # the sale and payment rows
+    # the fill and payment rows
     for row in range(FIRST, LAST + 1):
         for col in range(1, 8):
             c = ws.cell(row=row, column=col)

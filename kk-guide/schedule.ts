@@ -49,8 +49,10 @@ export const KK_PUBLISHED: ReadonlyArray<readonly [string, number]> = [...KK_CAL
  * - 20 Oct 2026 (day 2): the udhar khata format and the credit-limit calculator added,
  *   and put out the same day.
  * - 26 Oct 2026 (day 8): 13 pages added and put out the same day.
+ * - 27 Oct 2026 (day 9): Khata Kavach is for petrol pumps only; the four other-trade
+ *   pages and the contractor example are removed (redirects in next.config.ts).
  */
-export const KK_KEEP_THROUGH_DAY = 8;
+export const KK_KEEP_THROUGH_DAY = 9;
 
 export const KK_RELEASES: KkRelease[] = buildCalendar({
   pages: KK_PAGES,
