@@ -7,7 +7,7 @@
   "faq": [
     { "q": "What is the difference between an example and a case study?", "a": "A case study reports what really happened to a real business. An example invents a pump to explain how something works. The pages here are examples, and each one says so at the top." },
     { "q": "How is credit left worked out in these examples?", "a": "It is the credit limit minus what the transporter owes. A fill lowers it, and money received raises it by the same amount. The owner sets the limit for each transporter." },
-    { "q": "Do the examples show how the nozzle man finds the truck?", "a": "Yes. In each one the nozzle man types the last 4 digits of the truck number, sees the light, and types the litres and rupees off the dispenser. Khata Kavach is for petrol pumps that give diesel and petrol on credit to regular customers in their own trucks." },
+    { "q": "Do the examples show how the nozzle man finds the truck?", "a": "Yes. In each one the nozzle man types the last 4 digits of the truck number, sees the light, and types the rupees off the dispenser; the litres fill in at the day's rate. Khata Kavach is for petrol pumps that give diesel and petrol on credit to regular customers in their own trucks." },
     { "q": "Do the examples show what Khata Kavach costs?", "a": "No. The price depends on your pump. Call us." }
   ],
   "related": ["example-pump-month", "example-dispute", "example-bill-payment", "features"],

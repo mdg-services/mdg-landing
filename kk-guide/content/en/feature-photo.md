@@ -18,7 +18,7 @@
 ## How the nozzle man adds a photo
 
 1. Type the last 4 digits of the truck number and see the green light, "You can fill".
-2. Type the litres and the rupees off the dispenser.
+2. Type the rupees off the dispenser; the litres fill in at the day's rate.
 3. Tap the photo button and take a picture of the number plate or the slip, or pick one from the phone. The photo goes with the fill.
 4. Tap Done.
 

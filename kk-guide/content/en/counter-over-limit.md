@@ -7,7 +7,7 @@
   "faq": [
     { "q": "Can the nozzle man also approve the fill?", "a": "He should not. In Khata Kavach an owner or a manager types the PIN on the nozzle man's phone. Nozzle men cannot." },
     { "q": "Does one manager's PIN cover the whole day?", "a": "No. One PIN allows one fill. The PIN is asked again for the next fill past the limit." },
-    { "q": "Does the PIN work when the pump has no signal?", "a": "Yes, once the app has been opened with internet. The nozzle man's phone checks the PIN itself." },
+    { "q": "Does the PIN work when the pump has no signal?", "a": "A manager's PIN does, once the app has been opened with internet: the nozzle man's phone checks it itself. The owner's own PIN needs the internet, so it is never kept on a staff phone." },
     { "q": "Limit cross ho gayi, kya udhar rok dena chahiye?", "a": "That is the owner's rule, not the nozzle man's. For a transporter who must never pass the limit, the owner can choose cash only. The light is then red at the limit, not amber." },
     { "q": "Does the transporter see an override?", "a": "Yes. The same line shows in the Transporter app marked as over the limit, with the name of who allowed it." }
   ],

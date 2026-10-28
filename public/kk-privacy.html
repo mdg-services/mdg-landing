@@ -63,7 +63,7 @@
 
   <span class="pill">Privacy Policy</span>
   <h1>Privacy Policy</h1>
-  <p class="updated">Last updated: 27 October 2026</p>
+  <p class="updated">Last updated: 28 October 2026</p>
   <p class="lead">This policy explains what the Khata Kavach apps collect, how we use it, and the choices
   you have. There are two apps: <strong>Khata Kavach Pump</strong>, used by the owner, managers and
   nozzle men of a petrol pump that gives fuel on credit, and <strong>Khata Kavach Transporter</strong>,
@@ -84,7 +84,10 @@
     <thead><tr><th>Data</th><th>Why we collect it</th></tr></thead>
     <tbody>
       <tr><td>Pump name and code; names and roles of the pump's people</td><td>To show who is signed in and who made each entry.</td></tr>
-      <tr><td>A 4-digit PIN for each person at the pump</td><td>To sign in on the nozzle phone. We keep only a scrambled (salted hash) form of it, on our servers and on the pump's own phones so they can sign in without internet. Nobody, including us, can read the PIN back.</td></tr>
+      <tr><td>A 6-digit PIN for each person at the pump and at the transporter (a 4-digit PIN set before 28 October 2026 is replaced at the next sign-in)</td><td>To sign in. We keep only a scrambled (salted hash) form of it. The pump's own phones also keep the scrambled PINs of its managers and nozzle men, never the owner's, so they can sign in without internet. Nobody, including us, can read a PIN back. The Transporter app asks for the PIN again after 12 hours unused.</td></tr>
+      <tr><td>The email address of a pump owner and of a transporter owner, and of a pump manager who chooses to add one</td><td>To send a 6-digit code that proves the address when the account is set up, and to let an owner sign in on a new phone or set a new PIN. We send no advertising to it. Only that person sees it, and for a transporter, also his owner.</td></tr>
+      <tr><td>Names, roles (owner or manager) and mobile numbers of a transporter's people</td><td>To show who sent each request and which phones are signed in, and so the owner can send a manager his sign-in link.</td></tr>
+      <tr><td>The day's rate of each fuel, typed at the pump, and who typed or corrected it</td><td>So the litres of a fill can be worked out from the rupees the dispenser shows.</td></tr>
       <tr><td>Mobile numbers of the pump owner and of each transporter</td><td>To identify the transporter, to send the sign-in link, and so the pump can call or message the transporter. A transporter's number is not shown on the nozzle men's screens.</td></tr>
       <tr><td>The fuels a pump sells (diesel, petrol, premium diesel, premium petrol), by the litre</td><td>So a fill can be written against the right fuel.</td></tr>
       <tr><td>Transporter name, credit limit and terms</td><td>The basis of the credit account between the pump and the transporter.</td></tr>
@@ -113,7 +116,7 @@
     <li>To show each side the same entries, photos, bills, balances and requests.</li>
     <li>To make a pump's bills: the numbered bill PDF, with the pump's details and the transporter's
     billing details.</li>
-    <li>To keep the service secure: sign-ins, limits on wrong PIN attempts, and switching off lost phones.</li>
+    <li>To keep the service secure: sign-ins, codes sent by email, limits on wrong PIN and code attempts, and switching off lost phones.</li>
     <li>To fix problems and answer support requests.</li>
   </ul>
   <p>When a transporter pays a bill by UPI, the transporter's UPI app opens with the amount filled in and the
@@ -129,12 +132,13 @@
   example on WhatsApp. Anyone who has the link can open that bill, and the link does not expire, so the pump should share it only
   with the transporter it is meant for. Please do not pass a bill link on to others.</p>
   <p>We do not sell or rent your data. We share it only with the companies that host the service for us
-  (cloud servers and file storage: Amazon Web Services; database: MongoDB Atlas; website hosting: Vercel),
+  (cloud servers and file storage: Oracle Cloud and Amazon Web Services; database: MongoDB Atlas; website
+  hosting: Vercel; the email that carries sign-in codes: Hostinger),
   under their data protection terms, or when the law requires us to.</p>
 
   <h2>5. Where it is kept and how it is protected</h2>
   <p>Data is sent over encrypted connections (HTTPS) and kept on secure cloud servers. Photos, logos and
-  bill PDFs are kept on secure cloud storage (Amazon Web Services). Sign-in links, codes and PINs are
+  bill PDFs are kept on our secure cloud servers and storage. Sign-in links, codes and PINs are
   stored only in scrambled form. The Pump app keeps a copy of today's work on the pump's own
   phones, so fills can be saved with no internet; it is sent to our servers when the phone is back online,
   and a photo follows its fill.</p>

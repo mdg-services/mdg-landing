@@ -6,7 +6,7 @@
   "answer": "Petrol pump software such as GARRUDA, Petrosoft (YoungMinds) and Petro Genius is made for the pump, and each lists credit features. Khata Kavach does one job: credit to regular transporters, with the transporter asking first by default and both sides seeing every fill. Choose pump software when you need shifts, tanks and Tally. Add a credit book when credit control is the gap. Facts checked on 19 October 2026.",
   "faq": [
     { "q": "Is GARRUDA the same as Khata Kavach?", "a": "No. GARRUDA calls itself petrol pump operations software. Khata Kavach is a shared credit book and does not run shifts, tanks or stock." },
-    { "q": "Do I need pump software to use Khata Kavach?", "a": "No. The nozzle man types the litres and the rupees off the dispenser. It reads nothing from the dispenser and does not connect to Tally or any forecourt system." },
+    { "q": "Do I need pump software to use Khata Kavach?", "a": "No. The nozzle man types the rupees off the dispenser, and the litres fill in at the rate the pump typed that morning. It reads nothing from the dispenser and does not connect to Tally or any forecourt system." },
     { "q": "Which pump software has credit limits?", "a": "GARRUDA, Petrosoft and Petro Genius each list credit limits on their websites or app listings, checked on 19 October 2026. Khata Kavach has a limit per customer too, in rupees, with a light at the nozzle." },
     { "q": "Can a pump use both?", "a": "Yes, as separate apps. Pump software keeps the forecourt and the books; Khata Kavach keeps the credit record that the transporter also sees." }
   ],

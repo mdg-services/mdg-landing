@@ -29,7 +29,7 @@ The home screen lists the trucks to fill today. He types the last 4 digits of th
 
 | Light | Words on the screen | What the nozzle man does |
 |---|---|---|
-| Green | "You can fill" | Checks what was asked, types the litres and rupees, taps Done. |
+| Green | "You can fill" | Checks what was asked, types the rupees (the litres fill in), taps Done. |
 | Amber | "Call the manager" | A manager types a PIN. See [the light at the nozzle](@feature-counter-light). |
 | Red | "No credit" | "You can fill for cash." |
 

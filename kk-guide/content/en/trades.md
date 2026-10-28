@@ -22,7 +22,7 @@ There are two apps. The Pump app is for the owner, managers and nozzle men. The 
 
 ## How the nozzle knows the truck
 
-The nozzle man types the last 4 digits of the truck number and sees the light. He types the litres and the rupees off the dispenser. There is no rate list in the app: nothing is priced or converted. A truck number can be active with one transporter at a time.
+The nozzle man types the last 4 digits of the truck number and sees the light. He types the rupees off the dispenser, and the litres fill in at the day's rate, which the pump types each morning. If the dispenser shows other litres, he corrects them. A truck number can be active with one transporter at a time.
 
 ## Who it fits
 

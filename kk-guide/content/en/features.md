@@ -34,17 +34,17 @@ The Pump app is for the owner, managers and nozzle men. The Transporter app is f
 
 ## The four fuels, by the litre
 
-Khata Kavach handles diesel, petrol, premium diesel and premium petrol, by the litre. The nozzle man types the litres and the rupees off the dispenser. There is no rate list: nothing is priced or converted.
+Khata Kavach handles diesel, petrol, premium diesel and premium petrol, by the litre. Every morning from 6 a.m., whoever opens the Pump app first types each fuel's rate for the day, or taps "same as yesterday" and checks it. At the nozzle, the nozzle man types the rupees off the dispenser and the litres fill in at that rate. An owner or a manager can correct a day's rate.
 
 ## At the nozzle
 
-The nozzle man types the last 4 digits of the truck number and sees the light and the credit left. He types the litres and the rupees and taps Done. Both phones show the fill.
+The nozzle man types the last 4 digits of the truck number and sees the light and the credit left. He types the rupees, the litres fill in, and he taps Done. Both phones show the fill.
 
 With no request the light is red, "No credit", and he can fill for cash. Per transporter, the owner can instead let a manager's PIN allow a fill without a request.
 
 ## Who does what
 
-- **Nozzle men** type the last 4 digits, see the light, type the litres and rupees, and tap Done. They never see a transporter's phone number.
+- **Nozzle men** type the last 4 digits, see the light, type the rupees (the litres fill in), and tap Done. They never see a transporter's phone number.
 - **Managers** type their PIN to allow one fill past the limit. They also record money received and make bills.
 - **The owner** sets each transporter's limit, the staff and the bill numbering.
 

@@ -33,7 +33,7 @@ Petrol and diesel are outside GST {{Finance Ministry reply, Rajya Sabha, 21 Jul 
 
 1. By default, the transporter sends a request for each truck from the Transporter app: litres, rupees or a full tank.
 2. At the nozzle, the nozzle man types the last 4 digits of the truck number and sees [a light](@feature-counter-light). Green says "You can fill" and shows how much credit is left. Amber says "Call the manager" and asks for a manager's PIN. Red says "No credit": fill for cash.
-3. The nozzle man types the litres and the rupees off the dispenser, adds a photo if he wants, and taps Done.
+3. The nozzle man types the rupees off the dispenser; the litres fill in at the day's rate. He adds a photo if he wants, and taps Done.
 4. Both sides see the line once the phone is online. The owner's Today screen shows credit given today.
 5. Make a bill in a tap and send it from your own WhatsApp, with a UPI QR if you added your UPI ID. When money is received, type it in. That much credit opens up again.
 

@@ -51,12 +51,12 @@ Each of these works while you stand at the pump for every fill. They strain when
 
 ## Decide once, let the screen apply it, let both see it
 
-Khata Kavach follows that order. The transporter sends a request from his own phone, one per truck: litres, rupees, or a full tank. At the nozzle, the nozzle man types the last 4 digits of the truck number and sees one light: green "You can fill", amber "Call the manager", or red "No credit". By default, past the limit a manager types a PIN for that one fill. The nozzle man types the litres and rupees off the dispenser and taps Done. Once the phone is online, both sides see the same line, with a photo if added. The owner's Today screen shows credit given today, money received, what is still owed, who is near the limit, and fills that look wrong.
+Khata Kavach follows that order. The transporter sends a request from his own phone, one per truck: litres, rupees, or a full tank. At the nozzle, the nozzle man types the last 4 digits of the truck number and sees one light: green "You can fill", amber "Call the manager", or red "No credit". By default, past the limit a manager types a PIN for that one fill. The nozzle man types the rupees off the dispenser, the litres fill in at the day's rate, and he taps Done. Once the phone is online, both sides see the same line, with a photo if added. The owner's Today screen shows credit given today, money received, what is still owed, who is near the limit, and fills that look wrong.
 
 | Person | Decides | In Khata Kavach |
 |---|---|---|
 | Owner | Each transporter's limit, what happens at the limit or with no request, freezing an account | These are the owner's settings. Managers and nozzle men cannot change them |
 | Manager | One fill past the limit, where the owner allows it | Types a PIN on the nozzle man's phone; one PIN allows one fill |
-| Nozzle man | Fill on green, fill for cash on red | Types the truck's last 4 digits, sees the light, types the litres and rupees |
+| Nozzle man | Fill on green, fill for cash on red | Types the truck's last 4 digits, sees the light, types the rupees (the litres fill in) |
 
 See [the light at the nozzle and the credit limit](@feature-counter-light) and [how to set a credit limit](@credit-limit).

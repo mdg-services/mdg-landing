@@ -50,6 +50,6 @@ Keep four things, on paper or on a phone:
 
 ## How Khata Kavach does the same job
 
-By default, the transporter sends a request from his own phone, one per truck. That does the slip's job of showing he asked. With no request, the light at the nozzle is red, "No credit", by default, and the nozzle man can fill for cash. With a request and the account in order, the light is green, "You can fill", and shows how much credit is left. The nozzle man types the litres and the rupees off the dispenser, adds a photo if he wants, and taps Done. Once the phone is online, the transporter sees the same line in his own app. See [transporter requests](@feature-requests) and [photo with a fill](@feature-photo).
+By default, the transporter sends a request from his own phone, one per truck. That does the slip's job of showing he asked. With no request, the light at the nozzle is red, "No credit", by default, and the nozzle man can fill for cash. With a request and the account in order, the light is green, "You can fill", and shows how much credit is left. The nozzle man types the rupees off the dispenser (the litres fill in), adds a photo if he wants, and taps Done. Once the phone is online, the transporter sees the same line in his own app. See [transporter requests](@feature-requests) and [photo with a fill](@feature-photo).
 
 If you still use slips, type the number into the slip number box. For a side-by-side with a register or Excel, see [paper khata or a credit app](@compare-paper).

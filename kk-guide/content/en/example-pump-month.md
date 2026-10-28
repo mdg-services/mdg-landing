@@ -22,7 +22,7 @@ Sharma Fuels, a made-up petrol pump, sells diesel on credit to Sharma Roadlines,
 
 ## What happens at the nozzle
 
-Each time a truck needs diesel, Sharma Roadlines sends a request from its own phone. At the nozzle, the nozzle man types the last 4 digits and sees a light. He types the litres and rupees as the dispenser shows them.
+Each time a truck needs diesel, Sharma Roadlines sends a request from its own phone. At the nozzle, the nozzle man types the last 4 digits and sees a light. He types the rupees the dispenser shows, and the litres fill in at the day's rate.
 
 - **Day 9, no request.** Truck 1006 arrives with none. By default the light is red, "No credit". The nozzle man fills for cash.
 - **Day 16, rupees look wrong.** He types 240 litres but Rs 2,160, a zero short. The phone warns that the rupees look far too low for the litres and asks him to check against the dispenser. He fixes it to Rs 21,600.

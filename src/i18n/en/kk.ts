@@ -78,7 +78,7 @@ export const kk = {
       },
       {
         who: "pump",
-        text: "He fills, types the litres and rupees from the dispenser, adds a photo if he wants, and taps Done.",
+        text: "He fills, types the rupees from the dispenser (the litres fill in at today's rate), adds a photo if he wants, and taps Done.",
       },
       {
         who: "both",
@@ -95,7 +95,8 @@ export const kk = {
       "For a transporter you choose, a manager's PIN can allow a fill without a request.",
       "See today's credit, this month's credit, money received and what is due on bills.",
       "A transporter near his limit shows up, with one tap to ask for payment on WhatsApp.",
-      "Nozzle men sign in with a 4-digit PIN, and you can add or switch off phones whenever you want. A manager's PIN allows one fill past the limit.",
+      "Every morning from 6 a.m., the day's rate of each fuel is typed once, or taken from yesterday with one tap.",
+      "Everyone at the pump signs in with a 6-digit PIN, and you can add or switch off phones whenever you want. A manager's PIN allows one fill past the limit.",
       "Add a photo of the truck or the slip to any fill.",
       "Make a numbered bill in a tap: a PDF on your letterhead, ready to send on WhatsApp from your own number.",
       "Money received against a bill marks it paid, and that much credit opens again.",
@@ -118,6 +119,7 @@ export const kk = {
       "Every bill from every pump in one place, with what is due and the PDF to open.",
       "Pay a bill by UPI. Your UPI app opens with the amount filled in, and the money goes straight to the pump.",
       "Sent by mistake? Take a request back before it is filled.",
+      "Add a manager (munshi) who sends requests from his own phone, with his own 6-digit PIN.",
       "Your pump sets you up and sends you a link on WhatsApp. Ask your pump to add you.",
     ],
     appLink: "Open the Transporter app (web)",

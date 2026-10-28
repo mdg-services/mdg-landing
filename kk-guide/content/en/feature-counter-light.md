@@ -19,7 +19,7 @@
 
 | Light | Words on the screen | What the nozzle man does |
 |---|---|---|
-| Green | "You can fill". The credit left in whole rupees, what was asked, and how long the request is valid. | Fills, types the litres and rupees, taps Done. |
+| Green | "You can fill". The credit left in whole rupees, what was asked, and how long the request is valid. | Fills, types the rupees (the litres fill in), taps Done. |
 | Amber | "Call the manager", with the reason. The manager must type his PIN to allow this fill. | Asks the manager to type his PIN, or calls the owner. |
 | Red | "No credit", the reason in big words, then "You can fill for cash." | Fills for cash, calls the owner, or refreshes. |
 

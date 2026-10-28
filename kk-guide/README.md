@@ -81,9 +81,11 @@ The true differences, in the order they matter:
 4. The owner's Today screen answers the daily questions: credit given today,
    money received, still owed, who is near the limit, which fills look wrong.
 5. The nozzle stays simple: the last 4 digits of the truck number, one light,
-   type the litres and rupees from the dispenser, Done. There is no rate list:
-   nothing is priced or converted. Nozzle men never see a transporter's phone
-   number.
+   type the rupees from the dispenser and the litres fill in at the day's rate
+   (he can correct them), Done. Each morning from 6 a.m. the first person to
+   open the Pump app types each fuel's rate, or takes yesterday's with one tap;
+   an owner or manager corrects it. The transporter sees no rate list. Nozzle
+   men never see a transporter's phone number.
 6. No signal at the nozzle? The fill is saved on the phone and sent later.
 7. A photo with a fill (number plate, slip), if the nozzle man takes one.
 8. A numbered bill in a tap, on the pump's letterhead, with a UPI QR, sent
@@ -91,6 +93,10 @@ The true differences, in the order they matter:
 9. It never lends and never holds money.
 10. Hindi first. A pump starts on its own in the Pump app in about a minute;
     a person at MDG answers the phone, 9am to 9pm, every day.
+11. Everyone signs in with a 6-digit PIN. Owners (pump and transporter) prove
+    an email with a code sent to it. A transporter has an owner and, if he
+    wants, managers (munshis) with their own phones and PINs; only the owner
+    accepts a pump's terms and adds people. The pump's invite link works once.
 
 **Who it is for, honestly:** petrol pumps (of any oil company) that give
 diesel and petrol on credit to regular customers who come in their own trucks
