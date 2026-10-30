@@ -29,6 +29,8 @@ export async function POST(req: Request): Promise<Response> {
     const result = await processEnrollment(await readBody(req), {
       submittedAt: new Date().toISOString(),
       ip: clientAddress(req),
+      // The browser's (or the app's) own signature: our API reads the kind of device from it.
+      userAgent: req.headers.get("user-agent") ?? undefined,
     });
     // `status` is present on both branches, so no narrowing is required. A saved
     // registration says where the dealer stands, so the form (the website's or the

@@ -47,11 +47,12 @@ const TOO_MANY = "Too many requests just now. Please call us instead.";
  *   rejects so the caller can surface a retry.
  *
  * `ip` is the visitor's address as the host saw it; the dev server passes none,
- * so no per-address limit applies there.
+ * so no per-address limit applies there. `userAgent` is the browser's signature,
+ * handed to the API for the kind of device the form was filled in on.
  */
 export async function processEnrollment(
   input: unknown,
-  meta: { submittedAt?: string; ip?: string } = {}
+  meta: { submittedAt?: string; ip?: string; userAgent?: string } = {}
 ): Promise<EnrollResult> {
   const parsed = enrollmentSchema.safeParse(input);
   if (!parsed.success) {
@@ -89,7 +90,7 @@ export async function processEnrollment(
   const submittedAt = meta.submittedAt ?? new Date().toISOString();
 
   // First, so the team's email can say whether it worked, and where the dealer stands.
-  const { handOff, account } = await handToApi(data, password);
+  const { handOff, account } = await handToApi(data, password, meta.userAgent);
 
   const jobs: Array<Promise<void>> = [
     sendTemplate(
@@ -147,7 +148,8 @@ const HAND_OFF_TRIES = 2;
  */
 async function handToApi(
   data: EnrollmentData,
-  password: string | undefined
+  password: string | undefined,
+  userAgent: string | undefined
 ): Promise<{ handOff: EnrollHandOff; account: EnrollAccount }> {
   const body = {
     submissionId: data.submissionId,
@@ -163,6 +165,9 @@ async function handToApi(
     consentWhatsApp: data.consentWhatsApp,
     ref: data.ref,
     lang: data.lang,
+    // For the kind of device only (Android, iPhone, computer); the API keeps the
+    // result, never the signature. An API older than that field drops it unread.
+    userAgent: userAgent?.slice(0, 500),
   };
   for (let attempt = 1; attempt <= HAND_OFF_TRIES; attempt += 1) {
     try {

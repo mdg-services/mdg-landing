@@ -230,6 +230,17 @@ describe("the registration hand-off", () => {
     assert.ok(printed.some((l) => l.includes("[NOT REGISTERED — call them]")));
   });
 
+  it("hands the API the browser's signature, for the kind of device, and leaves it out of the answer", async () => {
+    const ua = "Mozilla/5.0 (Linux; Android 13; SM-A145F; wv) AppleWebKit/537.36 Version/4.0 Chrome/130.0 Mobile Safari/537.36";
+    const result = await enroll.processEnrollment(fresh(), { userAgent: ua });
+    assert.equal(sent[0].body.userAgent, ua);
+    assert.equal(JSON.stringify(result).includes("Mozilla"), false);
+    // None given (the dev server, an old caller): nothing is sent for it.
+    sent = [];
+    await enroll.processEnrollment(fresh());
+    assert.equal(sent[0].body.userAgent, undefined);
+  });
+
   it("passes on where the dealer stands: ready, an existing account, and waiting for anything else", async () => {
     answers.push({ status: 200, account: "ready" }, { status: 201, account: "existing" }, { status: 200, account: "approved?" });
     assert.deepEqual(await enroll.processEnrollment(fresh()), { ok: true, status: 200, account: "ready" });
