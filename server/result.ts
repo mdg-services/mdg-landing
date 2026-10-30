@@ -2,3 +2,5 @@
 export type ProcessResult =
   | { ok: true; status: 200 }
   | { ok: false; status: number; error: string; issues?: Record<string, string[] | undefined> };
+
+export { enrollAccountOf, type EnrollAccount } from "../src/lib/enrollAccount.js";

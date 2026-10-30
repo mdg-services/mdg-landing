@@ -33,6 +33,9 @@ const outDir = ".email-preview";
 mkdirSync(outDir, { recursive: true });
 writeFileSync(`${outDir}/welcome.html`, welcomeEmail({ ...data, lang: "en" }).html);
 writeFileSync(`${outDir}/welcome-hi.html`, welcomeEmail({ ...data, lang: "hi" }).html);
+writeFileSync(`${outDir}/welcome-ready.html`, welcomeEmail({ ...data, lang: "en" }, "ready").html);
+writeFileSync(`${outDir}/welcome-ready-hi.html`, welcomeEmail({ ...data, lang: "hi" }, "ready").html);
+writeFileSync(`${outDir}/welcome-existing.html`, welcomeEmail({ ...data, lang: "en" }, "existing").html);
 writeFileSync(
   `${outDir}/notify.html`,
   enrollmentNotificationEmail(data, {

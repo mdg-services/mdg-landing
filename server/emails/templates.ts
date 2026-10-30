@@ -15,6 +15,7 @@ import type {
   GrievanceCategory,
   GrievanceLang,
 } from "../validation.js";
+import type { EnrollAccount } from "../result.js";
 
 const B = MAIL_BRAND;
 
@@ -69,6 +70,14 @@ const CALLBACK_HAND_OFF: Record<Exclude<CallbackHandOff, "ok">, { note: string; 
   },
 };
 
+/** Where the dealer stands, in the team's words: what, if anything, is theirs to do. */
+const ACCOUNT_FOR_TEAM: Record<EnrollAccount, string> = {
+  ready: "Opened automatically: they can sign in now. Nothing to approve.",
+  existing:
+    "This mobile number already signs in to an account. If it is another pump of theirs, add it on the Onboarding page.",
+  waiting: "Waiting for someone to approve it on the Onboarding page.",
+};
+
 /**
  * Internal notification to the MDG inbox when a dealer enrols.
  *
@@ -81,7 +90,7 @@ const CALLBACK_HAND_OFF: Record<Exclude<CallbackHandOff, "ok">, { note: string; 
  */
 export function enrollmentNotificationEmail(
   data: EnrollmentData,
-  meta: { submittedAt: string; handOff?: EnrollHandOff; hasPassword?: boolean }
+  meta: { submittedAt: string; handOff?: EnrollHandOff; hasPassword?: boolean; account?: EnrollAccount }
 ): EmailContent {
   const when = new Date(meta.submittedAt).toLocaleString("en-IN", {
     dateStyle: "medium",
@@ -91,6 +100,7 @@ export function enrollmentNotificationEmail(
   const fromApp = data.source === "app";
   const handOff = meta.handOff ?? "ok";
   const notRegistered = handOff === "ok" ? null : NOT_REGISTERED[handOff];
+  const account = notRegistered ? null : ACCOUNT_FOR_TEAM[meta.account ?? "waiting"];
 
   const rows: Array<[string, string]> = [
     ["Name", escapeHtml(data.name)],
@@ -111,6 +121,7 @@ export function enrollmentNotificationEmail(
     ["WhatsApp messages", data.consentWhatsApp ? "Agreed" : "Not asked"],
     ["Chose a password", meta.hasPassword ? "Yes" : "No"],
     ...(data.ref ? ([["Link code", escapeHtml(data.ref)]] as Array<[string, string]>) : []),
+    ...(account ? ([["Account", escapeHtml(account)]] as Array<[string, string]>) : []),
     ["Came from", fromApp ? "Dealer Kavach app" : "Website"],
     ["Submitted", escapeHtml(when) + " IST"],
   ];
@@ -141,6 +152,7 @@ export function enrollmentNotificationEmail(
       `WhatsApp:   ${data.consentWhatsApp ? "Agreed" : "Not asked"}`,
       `Password:   ${meta.hasPassword ? "Chosen" : "Not chosen"}`,
       ...(data.ref ? [`Link code:  ${data.ref}`] : []),
+      ...(account ? [`Account:    ${account}`] : []),
       `Came from:  ${fromApp ? "Dealer Kavach app" : "Website"}`,
       `Submitted:  ${when} IST`,
     ].join("\n"),
@@ -148,23 +160,42 @@ export function enrollmentNotificationEmail(
 }
 
 /**
- * The welcome copy, in the language of the page the dealer registered on. One
- * promise and no time in it: MDG's team will be in touch, and when is theirs to
- * say. Then the order things happen in: approval, a WhatsApp message, and signing
- * in with the mobile number and the password they chose (never repeated here).
+ * The welcome copy, in the language of the page the dealer registered on, and in
+ * three versions by where the dealer stands (`account`): the account is open and
+ * they sign in now; the number already has an account; or MDG's team looks first,
+ * with a promise and no time in it (when is theirs to say), then a WhatsApp message
+ * and signing in with the mobile number and the password they chose (never
+ * repeated here).
  */
 const WELCOME = {
   en: {
     subject: (name?: string) => `Welcome to MDG Services${name ? `, ${name}` : ""} — your enrolment is in`,
-    preheader: "Your enrolment is in. MDG's team will contact you shortly.",
+    preheader: {
+      ready: "Your Dealer Kavach account is ready. Sign in to the app now.",
+      existing: "This mobile number already has a Dealer Kavach account.",
+      waiting: "Your enrolment is in. MDG's team will contact you shortly.",
+    },
     heading: (name?: string) => (name ? `Welcome aboard, ${name}` : "Welcome aboard"),
     thanks: "Thank you for enrolling with {brand} — the Dealer's कवच program. Your details are with our team.",
     nextHeading: "What happens next:",
-    steps: [
-      "MDG's team will contact you shortly.",
-      "Once your registration is approved, you will get a message on WhatsApp.",
-      "Then open the Dealer Kavach app and sign in with your mobile number and the password you chose when you registered.",
-    ],
+    steps: {
+      ready: [
+        "Your Dealer Kavach account is ready. There is nothing to wait for.",
+        "Get the Dealer Kavach app and sign in with your mobile number and the password you chose when you registered.",
+        "The app's chat shows you the next steps, and MDG's team answers you there.",
+      ],
+      existing: [
+        "This mobile number already has a Dealer Kavach account. Sign in to the app with it.",
+        'Forgot it? Tap "Forgot your password?" on the app\'s sign-in screen.',
+        "If this is another pump of yours, MDG's team will contact you to add it to your account.",
+      ],
+      waiting: [
+        "MDG's team will contact you shortly.",
+        "You will get a message on WhatsApp when your account is ready.",
+        "Then open the Dealer Kavach app and sign in with your mobile number and the password you chose when you registered.",
+      ],
+    },
+    appButton: "Get the Dealer Kavach app",
     callButton: (phone: string) => `Call us — ${phone}`,
     reach: "Prefer we reach out first? No problem — just keep your phone handy. We answer in plain Hindi or English.",
     signOff: "Warm regards,",
@@ -172,15 +203,32 @@ const WELCOME = {
   },
   hi: {
     subject: (name?: string) => `MDG Services में आपका स्वागत है${name ? `, ${name}` : ""} — आपका रजिस्ट्रेशन मिल गया`,
-    preheader: "आपका रजिस्ट्रेशन मिल गया। MDG की टीम जल्द संपर्क करेगी।",
+    preheader: {
+      ready: "आपका डीलर कवच खाता तैयार है। अभी ऐप में साइन इन कीजिए।",
+      existing: "इस मोबाइल नंबर पर डीलर कवच खाता पहले से है।",
+      waiting: "आपका रजिस्ट्रेशन मिल गया। MDG की टीम जल्द संपर्क करेगी।",
+    },
     heading: (name?: string) => (name ? `स्वागत है, ${name}` : "स्वागत है"),
     thanks: "{brand} के डीलर कवच के लिए रजिस्टर करने का धन्यवाद। आपकी जानकारी हमारी टीम के पास है।",
     nextHeading: "आगे क्या होगा:",
-    steps: [
-      "MDG की टीम जल्द संपर्क करेगी।",
-      "आपका रजिस्ट्रेशन मंज़ूर होते ही आपको WhatsApp पर संदेश आएगा।",
-      "फिर डीलर कवच ऐप खोलिए और अपने मोबाइल नंबर और रजिस्टर करते समय चुने गए पासवर्ड से साइन इन कीजिए।",
-    ],
+    steps: {
+      ready: [
+        "आपका डीलर कवच खाता तैयार है। इंतज़ार की ज़रूरत नहीं।",
+        "डीलर कवच ऐप लीजिए और अपने मोबाइल नंबर और रजिस्टर करते समय चुने गए पासवर्ड से साइन इन कीजिए।",
+        "ऐप की चैट में आगे के कदम दिखेंगे, और MDG की टीम वहीं जवाब देती है।",
+      ],
+      existing: [
+        "इस मोबाइल नंबर पर डीलर कवच खाता पहले से है। इसी नंबर से ऐप में साइन इन कीजिए।",
+        "पासवर्ड भूल गए? ऐप की साइन-इन स्क्रीन पर “पासवर्ड भूल गए?” दबाइए।",
+        "अगर यह आपका दूसरा पंप है, तो MDG की टीम इसे आपके खाते में जोड़ने के लिए संपर्क करेगी।",
+      ],
+      waiting: [
+        "MDG की टीम जल्द संपर्क करेगी।",
+        "खाता तैयार होते ही आपको WhatsApp पर संदेश आएगा।",
+        "फिर डीलर कवच ऐप खोलिए और अपने मोबाइल नंबर और रजिस्टर करते समय चुने गए पासवर्ड से साइन इन कीजिए।",
+      ],
+    },
+    appButton: "डीलर कवच ऐप लीजिए",
     callButton: (phone: string) => `कॉल कीजिए — ${phone}`,
     reach: "चाहें तो हम ही पहले संपर्क करेंगे — बस अपना फ़ोन पास रखिए। हम सीधी हिंदी या अंग्रेज़ी में बात करते हैं।",
     signOff: "सादर,",
@@ -189,9 +237,12 @@ const WELCOME = {
 } as const;
 
 /** Friendly welcome to the dealer who just enrolled, once their registration is saved. */
-export function welcomeEmail(data: EnrollmentData): EmailContent {
+export function welcomeEmail(data: EnrollmentData, account: EnrollAccount = "waiting"): EmailContent {
   const lang = data.lang ?? "en";
   const c = WELCOME[lang];
+  const steps = c.steps[account];
+  // Someone who can sign in now is one tap from the app; someone waiting has nothing to open yet.
+  const app = account === "waiting" ? null : { label: c.appButton, href: B.playStore };
   // A stranger can type any address into the form, so only a plain first name
   // is ever repeated back; anything else gets the plain greeting.
   const name = greetingName(data.name);
@@ -201,8 +252,9 @@ export function welcomeEmail(data: EnrollmentData): EmailContent {
     ${paragraph(escapeHtml(c.thanks).replace("{brand}", `<strong style="color:${B.ink}">${escapeHtml(B.name)}</strong>`))}
     ${paragraph(`<strong style="color:${B.ink}">${escapeHtml(c.nextHeading)}</strong>`)}
     <ol style="margin:0 0 16px;padding-left:22px;font:400 15px/1.65 Arial,sans-serif;color:${B.soft}">
-      ${c.steps.map((step) => `<li style="margin:0 0 6px">${escapeHtml(step)}</li>`).join("")}
+      ${steps.map((step) => `<li style="margin:0 0 6px">${escapeHtml(step)}</li>`).join("")}
     </ol>
+    ${app ? `<div style="margin:22px 0 6px">${button(app.label, app.href)}</div>` : ""}
     <div style="margin:22px 0 6px">${button(c.callButton(B.phone), B.phoneHref)}</div>
     ${paragraph(escapeHtml(c.reach))}
     <p style="margin:18px 0 0;font:400 15px/1.65 Arial,sans-serif;color:${B.soft}">${escapeHtml(c.signOff)}<br/><strong style="color:${B.ink}">${escapeHtml(c.team)}</strong></p>
@@ -210,15 +262,16 @@ export function welcomeEmail(data: EnrollmentData): EmailContent {
 
   return {
     subject: c.subject(name),
-    html: wrapEmail({ preheader: c.preheader, bodyHtml: body, lang }),
+    html: wrapEmail({ preheader: c.preheader[account], bodyHtml: body, lang }),
     text: [
       c.heading(name),
       "",
       c.thanks.replace("{brand}", B.name),
       "",
       c.nextHeading,
-      ...c.steps.map((step, i) => `${i + 1}. ${step}`),
+      ...steps.map((step, i) => `${i + 1}. ${step}`),
       "",
+      ...(app ? [`${app.label}: ${app.href}`, ""] : []),
       `${B.phone}`,
       "",
       c.signOff,

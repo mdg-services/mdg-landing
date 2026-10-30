@@ -114,13 +114,33 @@ export const register = {
   hours: "9am to 9pm, every day",
 
   /* ── after a successful enrolment ── */
+  /** By where the dealer stands once registered, as /api/enroll answers it (`server/result.ts`). */
   success: {
-    badge: "Enrolment received",
-    heading: "Thank you. Your registration is with us.",
-    /** The one promise on this page. It names no time: when the team calls is theirs to say. */
-    promise: "MDG's team will contact you shortly.",
-    /** What happens after that, in the order it happens. */
-    next: "Once your registration is approved, you will get a message on WhatsApp. Then sign in to the Dealer Kavach app with your mobile number and the password you chose here.",
+    /** The account is open: sign in now. */
+    ready: {
+      badge: "Account ready",
+      heading: "Your Dealer Kavach account is ready.",
+      promise: "Get the Dealer Kavach app and sign in with your mobile number and the password you chose here.",
+      next: "The app's chat shows you the next steps, and MDG's team answers you there.",
+    },
+    /** This mobile already signs in to an account: someone registering twice, or a second pump. */
+    existing: {
+      badge: "Already registered",
+      heading: "This mobile number already has a Dealer Kavach account.",
+      promise: 'Sign in to the Dealer Kavach app with it. Forgot the password? Tap "Forgot your password?" on the sign-in screen.',
+      next: "If this is another pump of yours, MDG's team will contact you to add it to your account.",
+    },
+    /** MDG's team looks first. */
+    waiting: {
+      badge: "Enrolment received",
+      heading: "Thank you. Your registration is with us.",
+      /** The one promise on this page. It names no time: when the team calls is theirs to say. */
+      promise: "MDG's team will contact you shortly.",
+      /** What happens after that, in the order it happens. */
+      next: "You will get a message on WhatsApp when your account is ready. Then sign in to the Dealer Kavach app with your mobile number and the password you chose here.",
+    },
+    /** The Play Store button, under `ready` and `existing`. */
+    appButton: "Get the Dealer Kavach app",
     /** `{hours}` is filled in with `hours` above, so the opening times can
         sit wherever the sentence wants them rather than being glued on in
         English word order. The sentence then wraps a link, so its last two

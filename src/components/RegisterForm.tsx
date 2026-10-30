@@ -8,7 +8,8 @@ import { Reveal } from "../lib/reveal";
 import { usePresence } from "../lib/usePresence";
 import { useSubmissionId } from "../lib/submissionId";
 import { onMobileInput, toMobile } from "../lib/mobile";
-import { SITE_TYPES } from "../data/content";
+import { enrollAccountOf, type EnrollAccount } from "../lib/enrollAccount";
+import { BRAND, SITE_TYPES } from "../data/content";
 import { useLang, useT } from "../i18n/client";
 import { pathFor, type Dict, type Lang } from "../i18n/lang";
 
@@ -32,6 +33,7 @@ export default function RegisterForm({
   const { lang } = useLang();
   const { ui } = useT();
   const [status, setStatus] = useState<Status>("idle");
+  const [account, setAccount] = useState<EnrollAccount>("waiting");
   const [siteType, setSiteType] = useState("");
   const [agreed, setAgreed] = useState(false);
   const [termsOpen, setTermsOpen] = useState(false);
@@ -92,11 +94,12 @@ export default function RegisterForm({
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       });
-      const data = (await res.json().catch(() => ({}))) as { ok?: boolean; error?: string };
+      const data = (await res.json().catch(() => ({}))) as { ok?: boolean; error?: string; account?: unknown };
       if (!res.ok || !data.ok) {
         setBusy(res.status === 429);
         throw new Error(data.error || `Enrolment failed (${res.status})`);
       }
+      setAccount(enrollAccountOf(data.account));
       setStatus("success");
       window.scrollTo({ top: 0, behavior: "smooth" });
     } catch (err) {
@@ -121,7 +124,7 @@ export default function RegisterForm({
 
           <div className="enter mt-5" style={{ "--rise-y": "16px", "--dur": "0.6s", "--d": "0.05s" } as CSSProperties}>
             {status === "success" ? (
-              <SuccessCard r={r} lang={lang} />
+              <SuccessCard r={r} lang={lang} account={account} />
             ) : (
               <form
                 // POST, never the browser's default GET: on a slow phone a tap
@@ -438,26 +441,32 @@ function TermsModal({
   );
 }
 
-function SuccessCard({ r, lang }: { r: Dict["register"]; lang: Lang }) {
+function SuccessCard({ r, lang, account }: { r: Dict["register"]; lang: Lang; account: EnrollAccount }) {
+  const c = r.success[account];
   return (
     <div role="status" aria-live="polite" className="rounded-2xl border border-ok/30 bg-ok-tint p-6 sm:p-9">
       <div className="flex items-center gap-2.5 text-ok">
         <span className="grid h-8 w-8 place-items-center rounded-full bg-ok text-white">
           <Icon name="check" size={17} strokeWidth={2.4} />
         </span>
-        <span className="font-mono text-[11px] font-bold uppercase tracking-[0.22em]">{r.success.badge}</span>
+        <span className="font-mono text-[11px] font-bold uppercase tracking-[0.22em]">{c.badge}</span>
       </div>
       <p className="mt-5 font-display text-[23px] font-semibold leading-tight text-ink sm:text-[26px]">
-        {r.success.heading}
+        {c.heading}
       </p>
-      {/* The one promise, with no time in it: when the team calls is theirs to
-          say. Then what comes after, in order. */}
+      {/* What to do now (sign in, or wait for the team: a promise with no time in
+          it, since when they call is theirs to say), then what comes after. */}
       <p className="mt-3 max-w-prose2 text-[15.5px] font-semibold leading-[1.6] text-ink sm:text-[16px]">
-        {r.success.promise}
+        {c.promise}
       </p>
       <p className="mt-2 max-w-prose2 text-[15.5px] leading-[1.6] text-ink-soft sm:text-[16px]">
-        {r.success.next}
+        {c.next}
       </p>
+      {account !== "waiting" && (
+        <a href={BRAND.playStore} className="btn-primary mt-6 w-full sm:w-auto" rel="noopener">
+          {r.success.appButton}
+        </a>
+      )}
       <p className="mt-3 max-w-prose2 text-[15.5px] leading-[1.6] text-ink-soft sm:text-[16px]">
         {/* The opening hours sit inside the sentence, not on the end of it, so
             each language can place them where it reads best. */}

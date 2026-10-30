@@ -30,8 +30,10 @@ export async function POST(req: Request): Promise<Response> {
       submittedAt: new Date().toISOString(),
       ip: clientAddress(req),
     });
-    // `status` is present on both branches, so no narrowing is required.
-    return json(result.ok ? { ok: true } : result, result.status, headers);
+    // `status` is present on both branches, so no narrowing is required. A saved
+    // registration says where the dealer stands, so the form (the website's or the
+    // app's) can say "your account is ready, sign in" instead of "wait for us".
+    return json(result.ok ? { ok: true, account: result.account } : result, result.status, headers);
   } catch (err) {
     console.error("[api/enroll] failed:", err);
     return json(

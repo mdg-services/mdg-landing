@@ -36,10 +36,12 @@ const PASSWORD = "Tr1cky-passw0rd-9";
 type Enroll = typeof import("../server/enroll.ts");
 type Terms = typeof import("../server/terms.ts");
 type Register = typeof import("../src/i18n/en/register.ts");
+type Templates = typeof import("../server/emails/templates.ts");
 
 let enroll: Enroll;
 let terms: Terms;
 let register: Register;
+let templates: Templates;
 const realFetch = globalThis.fetch;
 const realConsole = { info: console.info, warn: console.warn, error: console.error, log: console.log };
 
@@ -47,7 +49,7 @@ const realConsole = { info: console.info, warn: console.warn, error: console.err
 let printed: string[] = [];
 /** What the pretend API was sent, and what it will answer next. */
 let sent: Array<{ url: string; body: Record<string, unknown> }> = [];
-let answers: Array<{ status: number; code?: string } | "network"> = [];
+let answers: Array<{ status: number; code?: string; account?: string } | "network"> = [];
 
 const form = {
   name: "Ramesh Kumar",
@@ -73,6 +75,7 @@ before(async () => {
   enroll = await import("../server/enroll.ts");
   terms = await import("../server/terms.ts");
   register = await import("../src/i18n/en/register.ts");
+  templates = await import("../server/emails/templates.ts");
 });
 
 beforeEach(() => {
@@ -95,7 +98,11 @@ beforeEach(() => {
     if (next === "network") throw new TypeError("fetch failed");
     const ok = next.status < 300;
     return new Response(
-      JSON.stringify(ok ? { ok: true, data: { id: "enr1", duplicate: false } } : { ok: false, error: { code: next.code ?? "ERR" } }),
+      JSON.stringify(
+        ok
+          ? { ok: true, data: { id: "enr1", duplicate: false, ...(next.account ? { account: next.account } : {}) } }
+          : { ok: false, error: { code: next.code ?? "ERR" } },
+      ),
       { status: next.status, headers: { "content-type": "application/json" } },
     );
   }) as typeof fetch;
@@ -156,7 +163,8 @@ describe("Terms record", () => {
 describe("the registration hand-off", () => {
   it("sends the password, the Terms record, the consent, the ref and the language to the API, and answers ok", async () => {
     const result = await enroll.processEnrollment(fresh());
-    assert.deepEqual(result, { ok: true, status: 200 });
+    // The pretend API says nothing about the account, as one from before the answer existed: waiting.
+    assert.deepEqual(result, { ok: true, status: 200, account: "waiting" });
     assert.equal(sent.length, 1);
     const [call] = sent;
     assert.ok(call.url.endsWith("/website/enrolments"));
@@ -222,6 +230,30 @@ describe("the registration hand-off", () => {
     assert.ok(printed.some((l) => l.includes("[NOT REGISTERED — call them]")));
   });
 
+  it("passes on where the dealer stands: ready, an existing account, and waiting for anything else", async () => {
+    answers.push({ status: 200, account: "ready" }, { status: 201, account: "existing" }, { status: 200, account: "approved?" });
+    assert.deepEqual(await enroll.processEnrollment(fresh()), { ok: true, status: 200, account: "ready" });
+    assert.deepEqual(await enroll.processEnrollment(fresh()), { ok: true, status: 200, account: "existing" });
+    assert.deepEqual(await enroll.processEnrollment(fresh()), { ok: true, status: 200, account: "waiting" });
+  });
+
+  it("words the emails by it: a ready account's welcome links the app, and the team is told there is nothing to approve", () => {
+    const data = { ...form, lang: "en" as const } as unknown as Parameters<Templates["welcomeEmail"]>[0];
+    const ready = templates.welcomeEmail(data, "ready").text;
+    assert.match(ready, /Your Dealer Kavach account is ready/);
+    assert.match(ready, /play\.google\.com\/store\/apps\/details\?id=in\.mdgservices\.dealerkavach/);
+    assert.doesNotMatch(ready, /when your account is ready/);
+    const waiting = templates.welcomeEmail(data).text;
+    assert.match(waiting, /You will get a message on WhatsApp when your account is ready/);
+    assert.doesNotMatch(waiting, /play\.google\.com/);
+    assert.match(templates.welcomeEmail(data, "existing").text, /already has a Dealer Kavach account/);
+    const meta = { submittedAt: new Date().toISOString(), handOff: "ok" as const, hasPassword: true };
+    assert.match(templates.enrollmentNotificationEmail(data, { ...meta, account: "ready" }).text, /Nothing to approve/);
+    assert.match(templates.enrollmentNotificationEmail(data, meta).text, /Waiting for someone to approve it/);
+    // A registration that was not saved has no account to speak of.
+    assert.doesNotMatch(templates.enrollmentNotificationEmail(data, { ...meta, handOff: "failed" }).text, /Account:/);
+  });
+
   it("sends the welcome to the dealer only when the registration was saved", async () => {
     await enroll.processEnrollment(fresh());
     const saved = printed.filter((l) => l.includes("[mailer:dev]"));
@@ -253,5 +285,32 @@ describe("the registration hand-off", () => {
     const result = await enroll.processEnrollment(fresh({ ref: "not a code!!" }));
     assert.equal(result.ok, true);
     assert.equal(sent[0].body.ref, undefined);
+  });
+});
+
+describe("the Start services link (/start)", () => {
+  const ANDROID = "Mozilla/5.0 (Linux; Android 13; SM-A145F) AppleWebKit/537.36 Chrome/130.0 Mobile Safari/537.36";
+  const IPHONE = "Mozilla/5.0 (iPhone; CPU iPhone OS 18_0 like Mac OS X) AppleWebKit/605.1.15 Mobile/15E148";
+  const tap = async (agent: string, query = "") => {
+    const { GET } = await import("../app/start/route.ts");
+    return GET(new Request(`https://mdgservices.in/start${query}`, { headers: { "user-agent": agent } }));
+  };
+
+  it("sends an Android phone to the app on Google Play, tagged as an invite tap", async () => {
+    const res = await tap(ANDROID, "?lang=hi");
+    assert.equal(res.status, 302);
+    const to = new URL(res.headers.get("location") ?? "");
+    assert.equal(to.origin + to.pathname, "https://play.google.com/store/apps/details");
+    assert.equal(to.searchParams.get("id"), "in.mdgservices.dealerkavach");
+    assert.match(to.searchParams.get("referrer") ?? "", /utm_source=whatsapp/);
+  });
+
+  it("sends an iPhone or a computer to the website's register page, with what the link carried", async () => {
+    for (const agent of [IPHONE, "Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/130.0"]) {
+      const res = await tap(agent, "?lang=hi");
+      assert.equal(res.status, 302);
+      assert.equal(res.headers.get("location"), "https://mdgservices.in/register?lang=hi");
+      assert.equal(res.headers.get("cache-control"), "private, no-store");
+    }
   });
 });

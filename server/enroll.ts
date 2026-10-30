@@ -5,9 +5,10 @@ import { IntakeRefused, postIntake } from "./intake.js";
 import { termsRecord } from "./terms.js";
 import { env } from "./env.js";
 import { RecentLog, addressKey } from "./recent.js";
-import type { ProcessResult } from "./result.js";
+import { enrollAccountOf, type EnrollAccount, type ProcessResult } from "./result.js";
 
-export type EnrollResult = ProcessResult;
+/** A saved registration also says where the dealer now stands, for the form to word. */
+export type EnrollResult = { ok: true; status: 200; account: EnrollAccount } | Extract<ProcessResult, { ok: false }>;
 
 const WINDOW_MS = 10 * 60_000;
 /** Enrolments one address may send per window. */
@@ -87,19 +88,21 @@ export async function processEnrollment(
   const undo = [sentByMobile.add(mobile, now), ...(address ? [sentByAddress.add(address, now)] : [])];
   const submittedAt = meta.submittedAt ?? new Date().toISOString();
 
-  // First, so the team's email can say whether it worked.
-  const handOff = await handToApi(data, password);
+  // First, so the team's email can say whether it worked, and where the dealer stands.
+  const { handOff, account } = await handToApi(data, password);
 
   const jobs: Array<Promise<void>> = [
-    sendTemplate(enrollmentNotificationEmail(data, { submittedAt, handOff, hasPassword: password !== undefined }), env.notifyTo, {
-      replyTo: data.email,
-    }),
+    sendTemplate(
+      enrollmentNotificationEmail(data, { submittedAt, handOff, hasPassword: password !== undefined, account }),
+      env.notifyTo,
+      { replyTo: data.email },
+    ),
   ];
 
   // The welcome says "your enrolment is in" and what comes next. Said to
   // someone who was just shown an error, it would be false.
   if (data.email && handOff === "ok") {
-    jobs.push(sendTemplate(welcomeEmail(data), data.email));
+    jobs.push(sendTemplate(welcomeEmail(data, account), data.email));
   }
 
   // Settled, not just awaited, so the function does not return (and the host
@@ -115,7 +118,7 @@ export async function processEnrollment(
   // cannot be saved cannot turn the team's inbox into a stream either.
   if (handOff === "busy") return { ok: false, status: 429, error: TOO_MANY };
   if (handOff === "failed") return { ok: false, status: 502, error: NOT_REGISTERED };
-  return { ok: true, status: 200 };
+  return { ok: true, status: 200, account };
 }
 
 /** The API hand-off waits this long for each try. */
@@ -124,7 +127,8 @@ const HAND_OFF_TIMEOUT_MS = 6_000;
 const HAND_OFF_TRIES = 2;
 
 /**
- * Hand a registration to the MDG API. Never rejects: it says how it went.
+ * Hand a registration to the MDG API. Never rejects: it says how it went, and
+ * for a saved one where the dealer now stands (`account`, `waiting` otherwise).
  *
  * - `ok`: saved. The API also answers `ok` for a repeat of the same
  *   `submissionId`, which is why trying twice is safe.
@@ -141,7 +145,10 @@ const HAND_OFF_TRIES = 2;
  * Fields are named one by one, so a field added to the form later is not sent
  * by accident. The Terms fingerprint is ours (`termsRecord`), not the browser's.
  */
-async function handToApi(data: EnrollmentData, password: string | undefined): Promise<EnrollHandOff> {
+async function handToApi(
+  data: EnrollmentData,
+  password: string | undefined
+): Promise<{ handOff: EnrollHandOff; account: EnrollAccount }> {
   const body = {
     submissionId: data.submissionId,
     name: data.name,
@@ -159,22 +166,22 @@ async function handToApi(data: EnrollmentData, password: string | undefined): Pr
   };
   for (let attempt = 1; attempt <= HAND_OFF_TRIES; attempt += 1) {
     try {
-      await postIntake("/website/enrolments", body, {
+      const saved = await postIntake<{ account?: unknown }>("/website/enrolments", body, {
         timeoutMs: HAND_OFF_TIMEOUT_MS,
-        standIn: { id: "dev", duplicate: false },
+        standIn: { account: "waiting" },
       });
-      return "ok";
+      return { handOff: "ok", account: enrollAccountOf(saved.account) };
     } catch (err) {
       if (err instanceof IntakeRefused) {
-        if (err.status === 429) return "busy";
+        if (err.status === 429) return { handOff: "busy", account: "waiting" };
         if (err.status < 500) {
           console.error(`[enroll] the API refused the registration: ${err.message}`);
-          return "failed";
+          return { handOff: "failed", account: "waiting" };
         }
       }
       const what = err instanceof Error ? err.message : "unknown error";
       console.error(`[enroll] could not hand the registration to the API (try ${attempt}): ${what}`);
     }
   }
-  return "failed";
+  return { handOff: "failed", account: "waiting" };
 }
