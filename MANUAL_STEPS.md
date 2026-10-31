@@ -32,12 +32,6 @@ The Terms refer to *Annexure I* (services and rates). `/register` names it and
 offers a call instead of showing it. Send the content if it should appear on the
 page.
 
-### Confirm the hello@mdgservices.in mailbox exists
-
-`hello@mdgservices.in` is printed in the site's footer, and replies to the
-grievance acknowledgement go there. If the mailbox does not exist, those
-replies bounce.
-
 ### Analytics, if wanted
 
 The homepage has no analytics or tag manager; only the film pages measure
@@ -59,7 +53,8 @@ set it up again:
   `SMTP_USER=noreply@mdgservices.in`, `SMTP_PASS=<the mailbox password>`,
   and (already defaulted, override only if needed) `SMTP_HOST=smtp.hostinger.com`,
   `SMTP_PORT=465`, `SMTP_SECURE=true`, `MAIL_FROM=noreply@mdgservices.in`,
-  `ENROLLMENT_NOTIFY_TO=mdgservicesterms@gmail.com`. See `.env.example`.
+  `ENROLLMENT_NOTIFY_TO=hello@mdgservices.in` (the team's copy of every form;
+  it went to a separate Gmail until 31 Oct 2026). See `.env.example`.
 - Without these, production returns an error on submit; locally the dev server
   logs the emails so the flow stays testable. Sending from the domain's own
   mailbox (vs a Gmail relay) also gives clean SPF/DKIM deliverability. To

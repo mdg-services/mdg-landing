@@ -17,8 +17,13 @@ export const env = {
   fromAddress: process.env.MAIL_FROM ?? process.env.SMTP_USER ?? "",
   /** Display name on the "From" header. */
   fromName: process.env.MAIL_FROM_NAME ?? "MDG Services",
-  /** Where internal enrolment notifications are sent. */
-  notifyTo: process.env.ENROLLMENT_NOTIFY_TO ?? "mdgservicesterms@gmail.com",
+  /**
+   * Where the team's copy of every form lands: call-backs, registrations and
+   * grievances. The company mailbox the site prints (owner, 31 Oct 2026); it
+   * was a separate Gmail before. Each form also reaches the admin panel, so
+   * this email is a second copy, not the record.
+   */
+  notifyTo: process.env.ENROLLMENT_NOTIFY_TO ?? "hello@mdgservices.in",
   /**
    * Other sites allowed to post the enrolment form here. The Dealer Kavach app
    * is the client web app inside a WebView, so its sign-up screen is a page on

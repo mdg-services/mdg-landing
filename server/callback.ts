@@ -97,39 +97,55 @@ export async function processCallback(
   return { ok: true, status: 200 };
 }
 
+/** The API hand-off waits this long for each try. */
+const HAND_OFF_TIMEOUT_MS = 4_000;
+/** Tries before a call-back is left to the team's email alone. */
+const HAND_OFF_TRIES = 2;
+/** The pause before the second try: long enough for the API to come back from a restart. */
+const RETRY_PAUSE_MS = 1_500;
+
 /**
  * Hand a call-back request to the MDG API, so the admin's Call-backs page lists
  * it and the team's phones get an alert. Never rejects: a failure is logged and
  * the request goes on, because the team's inbox gets it either way. Says whether
- * it got there, for the team's email. A repeat from the same number is folded
- * into the row the API already has, so a retry here makes no second row.
+ * it got there, for the team's email.
+ *
+ * A try that did not get an answer (timeout, network, a 5xx) is made once
+ * more, as the registration form does, so a restart of the API does not leave
+ * a call-back in the inbox only. A refusal is not: the API has answered. A
+ * repeat from the same number is folded into the row the API already has, so
+ * a retry here makes no second row.
  */
 async function handToAdminList(data: CallbackData): Promise<CallbackHandOff> {
-  try {
-    // Named field by field, so a field added to the form later is not sent by accident.
-    await postIntake(
-      "/website/callbacks",
-      {
-        name: data.name,
-        mobile: data.phone,
-        outlet: data.outlet,
-        message: data.message,
-        source: data.source,
-        film: data.film,
-        ref: data.ref,
-        lang: data.lang,
-      },
-      { timeoutMs: 4_000, standIn: { id: "dev", duplicate: false } }
-    );
-    return "ok";
-  } catch (err) {
-    console.error("[callback] could not hand the request to the admin list:", err);
-    // What the team's email says depends on why: a slow answer may still
-    // have saved it, a full hour certainly did not, and only a refusal at the
-    // door is about the secret.
-    if (err instanceof Error && err.name === "TimeoutError") return "slow";
-    if (err instanceof IntakeRefused) return err.status === 429 ? "full" : "refused";
-    if (err instanceof Error && /secret/i.test(err.message)) return "refused";
-    return "unreachable";
+  // Named field by field, so a field added to the form later is not sent by accident.
+  const body = {
+    name: data.name,
+    mobile: data.phone,
+    outlet: data.outlet,
+    message: data.message,
+    source: data.source,
+    film: data.film,
+    ref: data.ref,
+    lang: data.lang,
+  };
+  let failed: CallbackHandOff = "unreachable";
+  for (let attempt = 1; attempt <= HAND_OFF_TRIES; attempt += 1) {
+    if (attempt > 1) await new Promise((resolve) => setTimeout(resolve, RETRY_PAUSE_MS));
+    try {
+      await postIntake("/website/callbacks", body, {
+        timeoutMs: HAND_OFF_TIMEOUT_MS,
+        standIn: { id: "dev", duplicate: false },
+      });
+      return "ok";
+    } catch (err) {
+      console.error(`[callback] could not hand the request to the admin list (try ${attempt}):`, err);
+      // What the team's email says depends on why: a slow answer may still
+      // have saved it, a full hour certainly did not, and only a refusal at the
+      // door is about the secret.
+      if (err instanceof IntakeRefused && err.status < 500) return err.status === 429 ? "full" : "refused";
+      if (err instanceof Error && /secret/i.test(err.message)) return "refused";
+      failed = err instanceof Error && err.name === "TimeoutError" ? "slow" : "unreachable";
+    }
   }
+  return failed;
 }
