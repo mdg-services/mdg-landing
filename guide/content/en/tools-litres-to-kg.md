@@ -1,8 +1,8 @@
 ---json
 {
-  "title": "Litres to kg for diesel and petrol: 1 litre diesel kitne kg",
-  "metaTitle": "Litres to kg: diesel and petrol converter",
-  "description": "Change litres to kg, or kg to litres, for diesel and petrol. A litre of diesel is about 0.83 kg. Type the density from your invoice for your own load.",
+  "title": "1 litre diesel in kg: about 0.83 kg (petrol about 0.75 kg), litres to kg calculator",
+  "metaTitle": "1 litre diesel in kg (0.83): litres to kg",
+  "description": "1 litre of diesel weighs about 0.83 kg and 1 litre of petrol about 0.75 kg. Change litres to kg or kg to litres, with the density from your own invoice.",
   "answer": "1 litre of diesel weighs about 0.83 kg and 1 litre of petrol about 0.75 kg. The exact figure comes from the density: kg = litres × density (kg/m³) ÷ 1,000. The Marketing Discipline Guidelines 2024 (MDG 2024), the oil companies' rules for their dealers, list diesel at 810 to 845 kg/m³ and petrol at 720 to 775 kg/m³ at 15°C {{7.6}}. That is 0.810 to 0.845 kg a litre for diesel and 0.720 to 0.775 kg for petrol.",
   "faq": [
     { "q": "1 litre diesel kitne kg hota hai?", "a": "About 0.83 kg. MDG 2024 puts diesel at 810 to 845 kg/m³ at 15°C, so a litre weighs 0.810 to 0.845 kg {{7.6}}. The density on your invoice gives the exact figure for your load." },
@@ -12,8 +12,8 @@
     { "q": "Does temperature change how much a litre weighs?", "a": "Yes, slightly. General knowledge, not MDG text: fuel expands when it warms, so a warm litre holds a little less fuel, and weighs a little less, than a litre at 15°C." },
     { "q": "Does the converter save what I type?", "a": "No. The sum is worked out on your own phone or computer, and nothing you type is stored or sent." }
   ],
-  "related": ["tools-density-at-15", "density-range", "density-temperature", "product-names"],
-  "updated": "2026-10-26"
+  "related": ["tools-litres-kg-table", "tools-density-at-15", "density-range", "density-temperature", "product-names"],
+  "updated": "2026-10-31"
 }
 ---
 Change litres to kg, or kg to litres, for diesel (HSD) or petrol (MS).

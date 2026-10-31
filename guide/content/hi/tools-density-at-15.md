@@ -11,7 +11,7 @@
     { "q": "इनवॉइस की डेंसिटी से मेरी डेंसिटी कितनी अलग हो सकती है?", "a": "15°C पर बदलने के बाद किसी भी तरफ़ 3.0 kg/m³ से ज़्यादा नहीं {{1.2(iv)}}। टैंकर के हर कंपार्टमेंट को अलग से जाँचा जाता है {{1.2(viii)}}।" },
     { "q": "क्या कैलकुलेटर मेरा भरा हुआ सेव करता है या कहीं भेजता है?", "a": "नहीं। हिसाब आपके अपने फ़ोन या कंप्यूटर पर ही होता है। आप जो भरते हैं, वह न रखा जाता है, न भेजा जाता है।" }
   ],
-  "related": ["density-invoice-check", "density-register", "density-reference-10am", "density-range"],
+  "related": ["tools-density-check", "density-invoice-check", "density-register", "density-reference-10am", "density-range"],
   "updated": "2026-10-15"
 }
 ---

@@ -10,7 +10,7 @@
     { "q": "Density at 15 degree celsius meaning क्या है? 15°C पर डेंसिटी का मतलब?", "a": "यह वह डेंसिटी है जो यही ईंधन 15°C पर दिखाता। इसे आपकी हाइड्रोमीटर रीडिंग और सैंपल के तापमान से निकाला जाता है। MDG इसे इनवॉइस, टैंकर की जाँच, सुबह की रीडिंग और रेंज, सबके लिए इस्तेमाल करता है {{2.2.1(iv)}} {{1.2(iv)}} {{1.4.1(c)}} {{7.6}}।" },
     { "q": "Diesel density at 15°C कितनी होती है?", "a": "MDG रेंज देता है: BS VI डीज़ल (B7 तक) के लिए 810–845 kg/m³ और B8–B20 ब्लेंड के लिए 820–860 {{7.6}}। हर टैंकर की अपनी 15°C डेंसिटी उसके इनवॉइस पर होती है {{2.2.1(iv)}}।" }
   ],
-  "related": ["density", "tools-density-at-15", "tools-density-chart", "density-reference-10am"],
+  "related": ["tools-density-at-15", "tools-density-chart", "density-by-state", "density-reference-10am", "density"],
   "updated": "2026-10-26"
 }
 ---

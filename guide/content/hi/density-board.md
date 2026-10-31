@@ -11,7 +11,7 @@
     { "q": "Density meter petrol pump kitna hona chahiye? पंप पर density meter कितना होना चाहिए?", "a": "मीटर का कोई अलग आँकड़ा पूरा नहीं करना होता। संख्या ईंधन की डेंसिटी है और ऊपर की रेंज लागू हैं {{7.6}}। MDG नापने के लिए हाइड्रोमीटर और थर्मामीटर गिनाता है, डिजिटल डेंसिटी मीटर नहीं {{1.5(vi)}}।" },
     { "q": "क्या डेंसिटी देखकर पता चलता है कि पेट्रोल में मिलावट है?", "a": "अकेले नहीं। डेंसिटी का नतीजा जो भी हो, लैब बाकी जाँचें भी करती है, जैसे दिखावट, रंग और डिस्टिलेशन {{7.4}}।" }
   ],
-  "related": ["density", "density-range", "density-high-or-low", "service-customer-checks"],
+  "related": ["density-petrol", "tools-density-check", "density-range", "density-high-or-low", "density", "service-customer-checks"],
   "updated": "2026-10-26"
 }
 ---

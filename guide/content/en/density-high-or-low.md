@@ -11,7 +11,7 @@
     { "q": "Why does the hydrometer show a lower density in the afternoon?", "a": "Fuel expands when it warms, so the reading falls as the sample warms. Convert it to 15°C with the ASTM table before you compare it with anything {{1.2(iv)}} {{1.5(vi)}}." },
     { "q": "If my density is inside the range, is the fuel certainly fine?", "a": "Not on that alone. The lab runs its other tests whatever the density result {{7.4}}, and a sample from your outlet is compared with the density you recorded for the tank {{2.10}}." }
   ],
-  "related": ["density-range", "density-temperature", "density-invoice-check", "tools-density-at-15"],
+  "related": ["tools-density-check", "density-range", "density-temperature", "density-premium-petrol", "density-invoice-check", "tools-density-at-15"],
   "updated": "2026-10-26"
 }
 ---

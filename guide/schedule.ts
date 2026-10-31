@@ -14,7 +14,7 @@
  * Pure data and arithmetic: proxy.ts imports this, so no Node APIs.
  */
 import { PAGES, PILLARS, type GuidePage } from "./inventory.js";
-import { CALENDAR_26_OCT } from "./release-history.js";
+import { CALENDAR_31_OCT } from "./release-history.js";
 import { buildCalendar, dateFrom, dayFrom, type Release as CalendarRelease } from "./calendar.js";
 
 /** Pages that go live each day. Each language counts as one page. */
@@ -30,29 +30,41 @@ export type Release = CalendarRelease<GuidePage>;
  * - 26 Oct 2026 (day 12): 17 pages (six tools and eleven guides) picked from
  *   what Search Console shows the site for and what Google suggests next to it.
  */
-const EARLY_26_OCT_IDS = [
-  "tools-litres-to-kg", "tools-5-litre-test", "tools-dip-chart", "tools-dealer-margin", "tools-density-chart", "tools-registers",
-  "density-high-or-low", "density-temperature", "density-e20", "density-kit", "density-board",
-  "service-customer-checks", "mdg-every-oil-company", "inspection-who", "mdg-questions-answers", "stock-what-is-dip", "product-names",
+// Those 17 went live on day 12 and are part of CALENDAR_31_OCT now: tools-litres-to-kg,
+// tools-5-litre-test, tools-dip-chart, tools-dealer-margin, tools-density-chart, tools-registers,
+// density-high-or-low, density-temperature, density-e20, density-kit, density-board,
+// service-customer-checks, mdg-every-oil-company, inspection-who, mdg-questions-answers,
+// stock-what-is-dip, product-names.
+
+/**
+ * - 31 Oct 2026 (day 17): 10 pages doubling down on what Search Console shows
+ *   the site for (petrol and diesel density, density numbers, premium petrol,
+ *   oil companies, states and Assam, litres-to-kg table, MDG in ten points, two
+ *   more question-and-answer pages).
+ */
+const EARLY_31_OCT_IDS = [
+  "density-petrol", "density-diesel", "tools-density-check", "density-premium-petrol", "density-by-company",
+  "density-by-state", "tools-litres-kg-table", "mdg-summary", "mdg-qa-density", "mdg-qa-records",
 ];
-const EARLY_26_OCT: ReadonlyArray<readonly [string, number]> = PAGES.filter((p) => EARLY_26_OCT_IDS.includes(p.id)).flatMap(
-  (p) => [[p.path, 12], ...(p.hi ? [[`/hi${p.path}`, 12] as const] : [])] as const,
+const EARLY_31_OCT: ReadonlyArray<readonly [string, number]> = PAGES.filter((p) => EARLY_31_OCT_IDS.includes(p.id)).flatMap(
+  (p) => [[p.path, 17], ...(p.hi ? [[`/hi${p.path}`, 17] as const] : [])] as const,
 );
 
 /**
- * [path, day] of pages published: the calendar frozen on 26 Oct 2026 (day 12,
- * which already holds the first calendar and the 17 Oct early release) and the
- * pages put out early that day.
+ * [path, day] of pages published: the calendar frozen on 31 Oct 2026 (day 17,
+ * which already holds every earlier snapshot and early release, EARLY_26_OCT
+ * included) and the pages put out early that day.
  */
-export const PUBLISHED: ReadonlyArray<readonly [string, number]> = [...CALENDAR_26_OCT, ...EARLY_26_OCT];
+export const PUBLISHED: ReadonlyArray<readonly [string, number]> = [...CALENDAR_31_OCT, ...EARLY_31_OCT];
 
 /**
  * Pages of PUBLISHED that had gone live by the end of this day keep the day
  * they went live. Raise it to the current day whenever the page list changes,
  * before deploying, so nothing already published moves or disappears.
  * - 26 Oct 2026: raised from 2 to 12 with the new snapshot.
+ * - 31 Oct 2026: raised from 12 to 17 with the next snapshot.
  */
-export const KEEP_THROUGH_DAY = 12;
+export const KEEP_THROUGH_DAY = 17;
 
 /**
  * Early releases the owner asked for. On `day`, the pages of the next `days`

@@ -1,8 +1,8 @@
 ---json
 {
-  "title": "E20 petrol: density, water and what changes at the pump",
-  "metaTitle": "E20 petrol density and water: MDG 2024",
-  "description": "E20 petrol under MDG 2024: the same 720–775 kg/m³ density range at 15°C as other petrol grades, IS 17021 as its standard, and the water and ethanol checks.",
+  "title": "E20 petrol density range: 720–775 kg/m³ at 15°C, and what changes at the pump",
+  "metaTitle": "E20 petrol density range: 720–775 kg/m³",
+  "description": "E20 petrol density range is 720–775 kg/m³ at 15°C, the same as other petrol grades in MDG 2024. IS 17021 is its standard; the water and ethanol checks matter more.",
   "answer": "E20 is petrol blended with ethanol. The Marketing Discipline Guidelines 2024 (MDG 2024) list it beside MG, E5, E10, E12 and E15 and give all of them the same density range, 720–775 kg/m³ at 15°C {{7.6}}. E20 is tested to IS 17021; the other grades to IS 2796 or IS 17586 {{7.6}}. So the daily density routine does not change. What E20 adds is care with water: a suitable water finding paste on every tanker compartment, and an ethanol check after water is removed from a tank {{1.2(vii)}} {{4.3(c)}}.",
   "faq": [
     { "q": "E20 petrol kya hai?", "a": "General knowledge, not MDG text: the number after E is the share of ethanol blended into the petrol by volume, and E20 goes up to 20 per cent. MDG 2024 lists E20 as one of six BS VI petrol grades, tested to IS 17021 {{7.6}}." },
@@ -11,8 +11,8 @@
     { "q": "Does MDG cover E20 petrol problems in vehicles?", "a": "No. MDG covers the dealer's side: product quality, water and ethanol checks {{3.1(f)}} {{4.3(c)}}. For vehicle questions, ask the vehicle maker or your oil company." },
     { "q": "Does E20 need a different hydrometer or conversion table?", "a": "MDG names no separate table or tolerance for E20. The tanker check is ASTM Table 53B and ±3.0 kg/m³ for any product {{1.2(iv)}}. If your oil company works differently for E20, follow its instruction." }
   ],
-  "related": ["density-range", "tanker-water-finding-paste", "company-water-in-tank", "density-invoice-check"],
-  "updated": "2026-10-26"
+  "related": ["density-petrol", "density-premium-petrol", "density-range", "tanker-water-finding-paste", "company-water-in-tank", "density-invoice-check"],
+  "updated": "2026-10-31"
 }
 ---
 ## E20 beside the other petrol grades

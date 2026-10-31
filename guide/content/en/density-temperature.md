@@ -10,7 +10,7 @@
     { "q": "What does density at 15 degree celsius mean?", "a": "It is the density the fuel would show at 15°C, worked out from your hydrometer reading and the sample's temperature. MDG uses it for the invoice, the tanker check, the morning reading and the ranges {{2.2.1(iv)}} {{1.2(iv)}} {{1.4.1(c)}} {{7.6}}." },
     { "q": "What is the diesel density at 15°C?", "a": "MDG gives a range: 810–845 kg/m³ for BS VI diesel up to B7, and 820–860 for B8–B20 blends {{7.6}}. Each tanker's own 15°C figure is printed on its invoice {{2.2.1(iv)}}." }
   ],
-  "related": ["density", "tools-density-at-15", "tools-density-chart", "density-reference-10am"],
+  "related": ["tools-density-at-15", "tools-density-chart", "density-by-state", "density-reference-10am", "density"],
   "updated": "2026-10-26"
 }
 ---

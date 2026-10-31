@@ -9,7 +9,7 @@
     { "q": "How long does a dealer have to reply to a show cause notice?", "a": "10 days from the notice {{8.5.7}}. The notice is due within 30 days of the inspection, or of the test results where samples were drawn {{8.5.6}}. The final order should come preferably within 45 days of the reply {{8.5.8}}." },
     { "q": "How long does a dealer have to appeal a termination?", "a": "30 days from receiving the order. The appeal in MDG is for termination only {{8.9}}." }
   ],
-  "related": ["stock-variation", "quantity-5-litre-test", "density-range", "penalties", "glossary"],
+  "related": ["mdg-qa-density", "mdg-qa-records", "mdg-summary", "stock-variation", "quantity-5-litre-test", "density-range", "penalties", "glossary"],
   "updated": "2026-10-26"
 }
 ---

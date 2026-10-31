@@ -11,7 +11,7 @@
     { "q": "क्या MDG 2024 प्राइवेट तेल कंपनी के डीलर पर लागू होती है?", "a": "इसका कवर सार्वजनिक क्षेत्र की मार्केटिंग कंपनियों की डीलरशिप के लिए है {{cover page}}। किसी और कंपनी का डीलर उसी कंपनी से पूछे कि उस पर कौन-से नियम लागू हैं।" },
     { "q": "क्या 20.03.2025 का सर्कुलर IndianOil का सर्कुलर है?", "a": "नहीं। यह तीनों कंपनियों का साझा फ़ॉर्मेट है, जिसे हर कंपनी अपने लेटरहेड पर जारी करती है, और उसमें अपनी कोई पेनल्टी तय नहीं है {{circular}}।" }
   ],
-  "related": ["official-pdf-and-updates", "hub", "inspection-minimum-service-obligations", "penalties"],
+  "related": ["density-by-company", "mdg-summary", "official-pdf-and-updates", "penalties", "hub", "inspection-minimum-service-obligations"],
   "updated": "2026-10-26"
 }
 ---

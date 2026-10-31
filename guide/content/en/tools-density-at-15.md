@@ -11,7 +11,7 @@
     { "q": "How much can my density differ from the invoice density?", "a": "By no more than 3.0 kg/m³ either way, once converted to 15°C {{1.2(iv)}}. Each tanker compartment is checked on its own {{1.2(viii)}}." },
     { "q": "Does the calculator save or send what I type?", "a": "No. The sum is worked out on your own phone or computer, and nothing you type is stored or sent." }
   ],
-  "related": ["density-invoice-check", "density-register", "density-reference-10am", "density-range"],
+  "related": ["tools-density-check", "density-invoice-check", "density-register", "density-reference-10am", "density-range"],
   "updated": "2026-10-15"
 }
 ---

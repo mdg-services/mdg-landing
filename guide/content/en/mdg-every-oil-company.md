@@ -11,7 +11,7 @@
     { "q": "Does MDG 2024 apply to a dealer of a private oil company?", "a": "Its cover is addressed to dealerships of public sector marketing companies {{cover page}}. A dealer of another company should ask that company which rules apply." },
     { "q": "Is the 20.03.2025 circular an IndianOil circular?", "a": "No. It is a common format for all three companies, issued by each on its own letterhead, and it sets no penalty of its own {{circular}}." }
   ],
-  "related": ["official-pdf-and-updates", "hub", "inspection-minimum-service-obligations", "penalties"],
+  "related": ["density-by-company", "mdg-summary", "official-pdf-and-updates", "penalties", "hub", "inspection-minimum-service-obligations"],
   "updated": "2026-10-26"
 }
 ---

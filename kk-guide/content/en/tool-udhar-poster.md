@@ -1,8 +1,8 @@
 ---json
 {
-  "title": "Udhar band hai poster: 6 printable A4 posters for your petrol pump",
-  "metaTitle": "Udhar band hai poster: 6 printable A4 posters",
-  "description": "Print an udhar band hai or udhari mana hai poster for your petrol pump: six clean A4 posters in Hindi and English, polite ones included, plus slogans to copy.",
+  "title": "Udhar band hai poster PDF: 6 printable A4 posters for your petrol pump",
+  "metaTitle": "Udhar band hai poster PDF: 6 A4 posters",
+  "description": "Download an udhar band hai or udhari band poster as a PDF for your petrol pump: six clean A4 posters in Hindi and English, polite ones included, plus slogans.",
   "answer": "Download six A4 posters for your pump office, each in Hindi and English: a blunt \"Udhar band hai\", the old \"Aaj nakad, kal udhar\", and four polite ones about limits, slips and old balances. They print well in black and white. A poster states your rule, so your nozzle men have something to point to; they still need to say it kindly. Ten slogans to copy are below.",
   "faq": [
     { "q": "Udhar band hai poster kahan se download karein?", "a": "Use the links above. Each poster is a PDF to print on A4, with no sign-up, in a Hindi and an English version." },
@@ -12,7 +12,7 @@
     { "q": "Will a poster stop customers asking for udhar?", "a": "No. It gives your nozzle men and cashier a rule to point to. They still need kind words: see [how to say no to udhar](@credit-say-no)." }
   ],
   "related": ["credit-say-no", "credit-limit", "credit-who", "counter-over-limit", "credit-policy"],
-  "updated": "2026-10-27"
+  "updated": "2026-10-31"
 }
 ---
 Posters for the office or counter of a petrol pump that gives fuel on credit to regular customers. Pick the one that matches your rule, print it on A4 and put it where the driver or transporter stands.

@@ -567,6 +567,68 @@ export const PAGES: GuidePage[] = [
     clauses: "the product names and abbreviations MDG 2024 uses (MS, HSD, branded fuels, SKO, LDO etc.) and 7.6 for density ranges",
     brief: "A short reference: the product names and abbreviations a dealer and customer see (MS = petrol, HSD = diesel, branded/premium fuels, SKO, and staff terms like DSM) with one line each and, for MS and HSD, the density range from 7.6. Use only abbreviations MDG uses or that are standard; brand names of premium fuels (XP95, Speed, Power) may be named in plain text as examples without claims. Link the glossary for more.",
   },
+  // ── Added 31 Oct 2026 outside the daily schedule (guide/schedule.ts EARLY_31_OCT), doubling down on
+  //    the Search Console clusters the site already ranks for (density, litres to kg, MDG test questions).
+  {
+    id: "density-petrol", pillar: "density", path: "/guides/density/petrol-density/", hi: true, type: "Explainer", wave: 3,
+    queries: ["petrol ki density kitni honi chahiye", "petrol ki density kitni honi chahie", "petrol ki density kitni hoti hai", "पेट्रोल की डेंसिटी कितनी होनी चाहिए", "petrol density range in india", "petrol density limit", "petrol pump density range", "petrol minimum density in india", "petrol maximum density"],
+    clauses: "7.6 (MS range for every BS VI grade incl. E20 and premium), 1.2(iv) (±3.0 against the invoice), 1.4.1(c), 5.1.9",
+    brief: "PETROL ONLY (the existing density-range page covers both fuels; do not repeat it, link it). Answer box in one breath: petrol (MS) at a pump should read 720–775 kg/m³ at 15°C {{7.6}}, and today's reading should match the invoice/reference within ±3.0 {{1.2(iv)}}. Then: what an observed reading at a hot afternoon looks like (link density-temperature and the density chart tool, figures only from tools-density-at-15.js), minimum and maximum, what a reading outside means and what the dealer does, E20 and premium petrol use the same range (link density-e20, density-premium-petrol). Hindi twin is the priority: its title must be exactly in the searcher's words 'पेट्रोल की डेंसिटी कितनी होनी चाहिए' and the FAQ must use Roman-script searches ('petrol ki density kitni honi chahiye', '...hoti hai', 'petrol pump par petrol ki density').",
+  },
+  {
+    id: "density-diesel", pillar: "density", path: "/guides/density/diesel-density/", hi: true, type: "Explainer", wave: 3,
+    queries: ["diesel density range", "diesel density limit", "diesel density in india", "hsd density range", "diesel density should be", "diesel ki density kitni honi chahiye", "density of diesel in petrol pump", "good density for diesel", "diesel minimum density"],
+    clauses: "7.6 (HSD BS VI up to B7: 810–845; B8–B20 blends: 820–860), 1.2(iv), 5.1.9",
+    brief: "DIESEL ONLY (HSD). Answer box: diesel at a pump should be 810–845 kg/m³ at 15°C for BS VI diesel up to B7, 820–860 for B8–B20 blends {{7.6}}, and match the invoice within ±3.0 {{1.2(iv)}}. Cover: 'diesel density limit' minimum/maximum, why a 'high' diesel density is not 'better' (link density-high-or-low), what HSD means (link product-names), afternoon readings (link density-temperature, chart tool), what to do if outside. Do not repeat the density-range page; link it. Hindi twin title in the searcher's words: 'डीज़ल की डेंसिटी कितनी होनी चाहिए'.",
+  },
+  {
+    id: "tools-density-check", pillar: "tools", path: "/tools/is-my-density-good/", hi: true, type: "Tool", wave: 3,
+    queries: ["828 density diesel", "821 density diesel", "824 density diesel", "diesel density 825 is good or bad", "petrol density 748 is good or bad", "petrol density 750 is good or bad", "742 density petrol", "760 density petrol", "is my diesel density good"],
+    clauses: "7.6 ranges; 1.2(iv) ±3.0 vs invoice; 5.1.9; conversion via the same ASTM 53B code as tools-density-at-15.js",
+    brief: "A checker for the number people see on the board or hydrometer: pick petrol or diesel (and blend), type the density (e.g. 828), optionally the temperature it was read at (then convert to 15°C with the SAME code as guide/tools/tools-density-at-15.js) and optionally the invoice/reference density. Output in plain words: inside or outside the 7.6 range at 15°C; if an invoice figure is given, inside or outside ±3.0; and what to do. The page body: a short table 'common numbers people ask about' (diesel 815, 818, 821, 824, 828, 832, 840, 850; petrol 742, 745, 748, 750, 755, 760, 770, 780) each with 'inside / outside the range at 15°C' — only range membership, no quality verdicts beyond MDG. Explain once that a number read at 30°C is not the 15°C figure.",
+  },
+  {
+    id: "density-premium-petrol", pillar: "density", path: "/guides/density/premium-petrol-density/", hi: true, type: "Explainer", wave: 3,
+    queries: ["power petrol density", "power petrol vs normal petrol density", "hp power petrol density", "xp95 density", "speed petrol density", "power petrol ki density kitni honi chahiye", "premium petrol density range"],
+    clauses: "7.6 (whatever MDG says about MS grades incl. premium/higher-octane grades; check whether 7.6 lists separate grades)",
+    brief: "Premium petrol (the brands sold as Power, XP95, Speed and similar — name them as examples in plain text, no claims about them) vs normal petrol: what MDG 2024 says about the density range for each MS grade (verify in 7.6 whether premium grades share 720–775 at 15°C; state exactly what the source shows), that premium is about octane and additives, not density, and that a pump selling both checks each tank against its own invoice (±3.0, 1.2(iv)). No mileage or performance claims. Hindi title in searcher words 'पावर पेट्रोल की डेंसिटी कितनी होनी चाहिए'.",
+  },
+  {
+    id: "density-by-company", pillar: "density", path: "/guides/density/density-by-oil-company/", hi: true, type: "Explainer", wave: 3,
+    queries: ["hp petrol density", "indian oil density chart", "bpcl diesel density", "bharat petroleum diesel density", "indian oil petrol density range", "hpcl petrol density", "indian oil ki density kitni honi chahiye"],
+    clauses: "7.6; the document's own statement of who issued it (link mdg-every-oil-company)",
+    brief: "Is the density at an IndianOil, BPCL or HP pump different? Answer: the same 7.6 ranges apply to all three because MDG 2024 is one document for all of them (link mdg-every-oil-company); the actual figure varies by refinery/source and temperature, which is why each tank is checked against its own invoice (±3.0). Cover 'indian oil density chart': there is no company-specific range; the ASTM table converts readings; link the density chart tool. Company names in plain text, never the lead word, each at most once in title/description; no logos, no claims about any company's fuel quality.",
+  },
+  {
+    id: "density-by-state", pillar: "density", path: "/guides/density/density-by-state-and-assam/", hi: true, type: "Explainer", wave: 3,
+    queries: ["petrol density in assam", "diesel density in assam", "petrol density range in assam", "diesel density in punjab", "diesel density in rajasthan", "petrol density in punjab", "diesel density in haryana", "petrol density in bangalore"],
+    clauses: "7.6 incl. its footnote on density range relaxation for fuel processed from Assam crude (around line 1913 of .guide-source/mdg-2024.txt)",
+    brief: "One page for every 'density in <state>' search (never one page per state): the 7.6 ranges are the same in every state; what differs is temperature (a hot state reads lower before conversion — link density-temperature) and the source refinery. The one real exception MDG names: the 7.6 footnote on a density range relaxation and time frame, if any, for fuel processed from Assam crude, which follows Government notifications — explain exactly what the footnote says (short quote max 15 words with clause), that the figure is not printed in MDG, and to ask the oil company for the current notified range. A small table: state group (north-east / hot plains / hills) → what changes (temperature, source) → range that applies.",
+  },
+  {
+    id: "tools-litres-kg-table", pillar: "tools", path: "/tools/diesel-litres-to-kg-table/", hi: true, type: "Tool", wave: 3,
+    queries: ["100 liter diesel in kg", "1000 liter kitna kg hota hai", "20 liter diesel in kg", "5 liter me kitna kg hota hai", "10 litre petrol weight in kg", "50 liter diesel to kg", "1 litre diesel ka vajan kitna hota hai", "1 लीटर डीजल में कितने किलोग्राम होते हैं"],
+    clauses: "7.6 (densities used for the table: the range ends and the middle); mass = litres × density / 1000",
+    brief: "A ready table page (no script needed; the existing tools-litres-to-kg is the calculator — link it prominently): diesel and petrol, rows 1, 5, 10, 15, 20, 50, 100, 200, 500, 1,000, 5,000 litres; columns kg at the low end, middle and high end of the 7.6 range (diesel 810/827.5/845, petrol 720/747.5/775). Compute every figure exactly (round to 0.01 kg for ≤20 L, 0.1 kg above). Also the reverse for 1 kg and 1 tonne in litres. One worked example. Answer box answers '1 litre diesel kitne kg' and '1000 litre diesel kitne kg'. Hindi twin in searcher words ('1 लीटर डीज़ल में कितने किलो होते हैं').",
+  },
+  {
+    id: "mdg-summary", pillar: "hub", path: "/guides/mdg-2024-in-10-points/", hi: true, type: "Explainer", wave: 3,
+    queries: ["mdg guidelines for petrol pump", "mdg 2024", "marketing discipline guidelines 2024", "mdg guidelines 2024 summary", "mdg guidelines 2026", "mdg penalty meaning", "mdg kya hai petrol pump"],
+    clauses: "the main obligations across chapters 1, 5, 7 and 8 (one figure per point, each with its clause)",
+    brief: "MDG 2024 in ten points for a pump dealer: ten short numbered points, each one duty in our own words with its key figure and clause and a link to the page that explains it (density ±3, 10 AM reference density, stock variation limits, 5-litre test band, records, sampling, display, inspections, penalty classes with {{penalty-note}}, the five-year count). Do not walk the guideline in its own order; group by the dealer's day. Name the document in full once. Never call it a law. Hindi title: 'MDG 2024 दस बातों में: पेट्रोल पंप डीलर के लिए'.",
+  },
+  {
+    id: "mdg-qa-density", pillar: "hub", path: "/guides/mdg-questions-density-and-samples/", hi: true, type: "Explainer", wave: 3,
+    queries: ["what is the permissible density variation at petrol pump", "density variation limit mdg", "when are samples drawn from petrol pump", "retention sample kitne din rakhte hai", "filter paper test for petrol", "mdg questions density"],
+    clauses: "1.2(iv), 1.4.1(c), 5.1.9, 7.x sampling and retention clauses, 7.4, filter paper clauses",
+    brief: "Part 2 of the MDG questions and answers (link mdg-questions-answers as part 1; do not repeat its questions): 9–10 short test-style questions on density, samples and quality, each answered in one or two sentences with figure and clause: ±3.0 kg/m³ vs invoice, when the morning density is recorded, what happens without a reference density, how many samples and how long retention samples are kept, filter paper test, what a failed sample leads to, mobile lab, water dip. FAQ adds 3 more. Every figure from the source.",
+  },
+  {
+    id: "mdg-qa-records", pillar: "hub", path: "/guides/mdg-questions-records-and-penalties/", hi: true, type: "Explainer", wave: 3,
+    queries: ["what records must a petrol pump keep", "mdg penalty for first instance", "how many instances lead to termination mdg", "show cause notice reply time mdg", "what is critical irregularity in mdg", "mdg minor irregularity penalty"],
+    clauses: "records clauses (1.x, 5.1.12), inspection chapter, 8.2–8.6, 8.5.5, 8.5.6, 8.9",
+    brief: "Part 3 of the MDG questions and answers (link parts 1 and 2): 9–10 test-style questions on records, inspections and penalties, one or two sentences each with figure and clause: which registers, how long records are kept, what the inspector signs/hands over (only what MDG says), show cause timeline (8.5.6), critical/major/minor and their first-instance consequences in our own grouping (never the 8.4 list), repeat counting over five years incl. previous guideline (8.5.5), appeal only for termination (8.9). {{penalty-note}} after penalty figures. FAQ adds 3 more. 'General information, not legal advice' line where penalties appear.",
+  },
 ];
 
 export const byId = new Map(PAGES.map((p) => [p.id, p]));

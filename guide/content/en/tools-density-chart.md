@@ -1,8 +1,8 @@
 ---json
 {
-  "title": "Diesel and petrol density chart with temperature (10 to 45°C)",
-  "metaTitle": "Density chart with temperature: diesel, petrol",
-  "description": "Type the density at 15°C and see what a hydrometer reads at 10 to 45°C for diesel or petrol, worked from ASTM Table 53B. A helper only, not a printed chart.",
+  "title": "Diesel and petrol density chart by temperature: 15°C, 30°C, 35°C and 40°C",
+  "metaTitle": "Diesel density chart by temperature (15–45°C)",
+  "description": "Type the density at 15°C and see what a hydrometer reads at 10 to 45°C for diesel or petrol, worked out from ASTM Table 53B. A helper, not a printed chart.",
   "answer": "Type the density at 15°C and the tool shows what a hydrometer reads in a sample at 10 to 45°C, by running the ASTM Table 53B conversion backwards. Fuel gets lighter as it warms: for example, a diesel of 830.0 kg/m³ at 15°C reads 819.5 at 30°C. The Marketing Discipline Guidelines 2024 (MDG 2024), the oil companies' rules for their dealers, compare density at 15°C {{1.2(iv)}}, so a hot or cold reading is converted before it is compared.",
   "faq": [
     { "q": "Diesel density at 30 deg C: what will the hydrometer read?", "a": "It depends on the density at 15°C. For example, a diesel of 830.0 kg/m³ at 15°C reads about 819.5 at 30°C and 812.5 at 40°C. Type your own density in the tool." },
@@ -12,8 +12,8 @@
     { "q": "At what temperature is the density recorded in the register?", "a": "At 15°C. The morning density from the pump nozzle {{1.4.1(c)}} and the density after each tanker {{1.2(xiv)}} are both recorded at 15°C." },
     { "q": "Is this table the final answer?", "a": "No. If it differs from the printed ASTM table, the table decides {{1.2(iv)}} {{1.5(vi)}}. If your oil company gives another figure, ask which one to use." }
   ],
-  "related": ["tools-density-at-15", "density-temperature", "density-range", "density-register"],
-  "updated": "2026-10-26"
+  "related": ["tools-density-check", "tools-density-at-15", "density-temperature", "density-range", "density-register"],
+  "updated": "2026-10-31"
 }
 ---
 This is the [density at 15°C calculator](@tools-density-at-15) run the other way: from the density at 15°C to what the hydrometer shows.

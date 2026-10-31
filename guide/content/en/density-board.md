@@ -11,7 +11,7 @@
     { "q": "Density meter petrol pump kitna hona chahiye?", "a": "There is no separate meter figure to meet. The number is the fuel's density in kg/m³ and the ranges above apply {{7.6}}. MDG names hydrometers and thermometers to measure it, not digital density meters {{1.5(vi)}}." },
     { "q": "Does the density number show if petrol is adulterated?", "a": "Not alone. A lab runs its other tests, such as appearance, colour and distillation, whatever the density result {{7.4}}." }
   ],
-  "related": ["density", "density-range", "density-high-or-low", "service-customer-checks"],
+  "related": ["density-petrol", "tools-density-check", "density-range", "density-high-or-low", "density", "service-customer-checks"],
   "updated": "2026-10-26"
 }
 ---

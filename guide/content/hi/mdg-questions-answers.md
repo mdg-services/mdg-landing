@@ -9,7 +9,7 @@
     { "q": "शो कॉज़ नोटिस का जवाब देने के लिए डीलर के पास कितना समय है?", "a": "नोटिस जारी होने से 10 दिन {{8.5.7}}। नोटिस इंस्पेक्शन के 30 दिन में आना है, सैंपल लिए हों तो टेस्ट नतीजे के 30 दिन में {{8.5.6}}। अंतिम आदेश हो सके तो जवाब के 45 दिन में {{8.5.8}}।" },
     { "q": "टर्मिनेशन की अपील के लिए कितना समय मिलता है?", "a": "आदेश मिलने से 30 दिन। MDG में अपील सिर्फ़ टर्मिनेशन के लिए है {{8.9}}।" }
   ],
-  "related": ["stock-variation", "quantity-5-litre-test", "density-range", "penalties", "glossary"],
+  "related": ["mdg-qa-density", "mdg-qa-records", "mdg-summary", "stock-variation", "quantity-5-litre-test", "density-range", "penalties", "glossary"],
   "updated": "2026-10-26"
 }
 ---
