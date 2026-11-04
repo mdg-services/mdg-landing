@@ -75,7 +75,7 @@
 
   <span class="pill">Privacy Policy</span>
   <h1>Privacy Policy</h1>
-  <p class="updated">Last updated: 3 November 2026</p>
+  <p class="updated">Last updated: 4 November 2026</p>
   <p class="lead">This policy explains what information the Dealer Kavach mobile app
   ("the app", "Dealer Kavach") collects, how we use it, and the choices you have.
   Dealer Kavach is operated by <strong>VRUOOM PRIVATE LIMITED</strong>
@@ -115,19 +115,28 @@
   and email address you type, the pump name or code if you give it, and what you
   write to us. They go to our team and are used only to look into your grievance
   and reply to you. We email you a grievance number so you can give it to us when you call or write.</p>
-  <p><strong>Dealer Kavach Summon (Chrome extension, for our staff).</strong> Our
-  staff can install this extension to open a dealer's IndianOil SDMS, IRAS or Bihar
-  eMaaptaul account in a new browser tab, already signed in. For each sign-in it
-  receives that dealer's portal ID and password from our server and types them into
-  the portal's own login page; it does not keep them, and they are not shared with
-  anyone else. Where the portal shows a picture code, it sends the picture to our
-  server to be read for that sign-in only. Before signing in, it logs that browser
-  out of the same portal by clearing the portal's cookies and site data. When the
-  summoned tab is closed, it tells our server, so our automatic checks can use that
-  login again. It works only on our admin site and those portals, collects nothing
-  else, and every use is recorded in our activity log. The use of information
-  received by Dealer Kavach Summon adheres to the Chrome Web Store User Data Policy,
-  including the Limited Use requirements.</p>
+  <p><strong>Dealer Kavach (Chrome extension).</strong> Dealers and our staff can
+  install this extension and sign in to it with their Dealer Kavach account. It signs
+  in as a device of its own, so the phone app stays signed in. It keeps the sign-in
+  token and the person's name in the extension's own storage, which web pages cannot
+  read, and removes them when the person signs out. It asks our server about once a
+  minute how many messages are waiting, to show a number on the toolbar icon and a
+  Chrome alert with the first words of each new message; those words are kept in the
+  browser's memory only until it closes. The Dealer Kavach chat is shown in the side
+  panel by our own web app, and files a person drops into it are sent to our server as
+  they would be from the app. For an outlet's owner, and for our staff, it can open the
+  outlet's IndianOil SDMS, IRAS or Bihar eMaaptaul account in a new browser tab, already
+  signed in: for each sign-in it receives that outlet's portal ID and password from our
+  server and types them into the portal's own login page; it does not keep them, and
+  they are not shared with anyone else. Where the portal shows a picture code, it sends
+  the picture to our server to be read for that sign-in only. Before signing in, it logs
+  that browser out of the same portal by clearing the portal's cookies and site data.
+  When the opened tab is closed, it tells our server, so our automatic checks can use
+  that login again. Our staff can also send a picture of a portal tab they opened this
+  way into that dealer's chat, only when they press Send. It works only on our admin
+  site, our server and those portals, and every portal sign-in is recorded in our
+  activity log. The use of information received by Dealer Kavach adheres to the Chrome
+  Web Store User Data Policy, including the Limited Use requirements.</p>
 
   <h2>3. How we use your information</h2>
   <ul>
@@ -150,8 +159,9 @@
   our behalf and under our instructions. We do not sell your data to them and they do
   not use it for their own advertising.</p>
   <ul>
-    <li><strong>MongoDB Atlas</strong> — secure database hosting for your account and app data.</li>
-    <li><strong>Amazon Web Services (AWS)</strong> — secure storage for files you send (chat photos, voice notes, proof photos).</li>
+    <li><strong>Oracle Cloud</strong> — the servers that run Dealer Kavach and hold the database for your account and app data.</li>
+    <li><strong>Amazon Web Services (AWS)</strong> — secure storage for files you send (chat photos, voice notes, proof photos), and a live backup copy of the database.</li>
+    <li><strong>MongoDB Atlas</strong> — a daily backup copy of the database.</li>
     <li><strong>Expo</strong> — mobile app delivery and push-notification infrastructure.</li>
     <li><strong>Vercel</strong> — hosting for the app's web layer.</li>
     <li><strong>Razorpay</strong> — takes payments for subscriptions (see "Payments" below).</li>
