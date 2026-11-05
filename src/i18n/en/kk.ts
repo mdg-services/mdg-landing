@@ -96,7 +96,7 @@ export const kk = {
       "See today's credit, this month's credit, money received and what is due on bills.",
       "A transporter near his limit shows up, with one tap to ask for payment on WhatsApp.",
       "Every morning from 6 a.m., the day's rate of each fuel is typed once, or taken from yesterday with one tap.",
-      "Everyone at the pump signs in with a 6-digit PIN, and you can add or switch off phones whenever you want. A manager's PIN allows one fill past the limit.",
+      "Everyone at the pump signs in with their own 6-digit PIN. A new phone joins only with a code sent to the owner's WhatsApp, and you can switch any phone off. A manager's PIN allows one fill past the limit.",
       "Add a photo of the truck or the slip to any fill.",
       "Make a numbered bill in a tap: a PDF on your letterhead, ready to send on WhatsApp from your own number.",
       "Money received against a bill marks it paid, and that much credit opens again.",
