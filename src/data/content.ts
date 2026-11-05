@@ -45,6 +45,8 @@ export const BRAND = {
   whatsappNames: ["Dealer's Kavach", "MDG Services"],
   /** The Dealer Kavach app. Its sign-in screen opens the same enrolment form as /register. */
   playStore: "https://play.google.com/store/apps/details?id=in.mdgservices.dealerkavach",
+  /** The Dealer Kavach Chrome extension: the same account's chat beside any site on a computer. */
+  chromeExtension: "https://chromewebstore.google.com/detail/dealer-kavach/fdeceedgoipgpnkcodehalppchjndped",
   since: 2021,
   /** A brand line, not a sentence: it stays in English in both languages. */
   tagline: "Fueling Success",

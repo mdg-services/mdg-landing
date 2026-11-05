@@ -52,6 +52,8 @@ export const footer = {
   /** The apps column: Dealer's Kavach on this page, Khata Kavach on its own. */
   appsHeading: "Our apps",
   dealerApp: "Dealer's Kavach",
+  /** Under the app's Google Play link: the same account in Chrome on a computer. */
+  dealerChrome: "For your computer · Chrome extension",
   khataApp: "Khata Kavach",
   /** The Khata Kavach guides' front door: a plain link (guide addresses keep their trailing slash). */
   khataGuides: "Guides on giving fuel on credit",

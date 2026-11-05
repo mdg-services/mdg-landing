@@ -98,6 +98,14 @@ export default function Footer({ lang }: { lang: Lang }) {
                 >
                   {t.ui.getApp} · Google Play
                 </a>
+                <a
+                  href={BRAND.chromeExtension}
+                  target="_blank"
+                  rel="noopener"
+                  className="link-quiet tap-pad mt-1 block text-[13.5px] text-navy-300 hover:text-white"
+                >
+                  {t.footer.dealerChrome}
+                </a>
               </li>
               <li>
                 <Link href={pathFor(lang, "/khata-kavach")} className="link-quiet tap-pad text-navy-100 hover:text-white">
