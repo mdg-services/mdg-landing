@@ -47,11 +47,13 @@ const nextConfig: NextConfig = {
   // so the proxy (proxy.ts) takes over both directions.
   skipTrailingSlashRedirect: true,
 
-  // The guide pages read their words from guide/content and kk-guide/content
-  // at render time, which also happens when a page is refreshed in production,
-  // so the files ship with every function that can render one.
+  // The guide pages read their words from guide/content, kk-guide/content and
+  // pump-guide/content at render time, which also happens when a page is
+  // refreshed in production and when the sitemap is built on each request,
+  // so the files ship with every function that can render one. Without a
+  // collection's folder here its pages still build, but the sitemap answers 500.
   outputFileTracingIncludes: {
-    "/**": ["./guide/content/**/*", "./guide/tools/**/*", "./kk-guide/content/**/*", "./kk-guide/tools/**/*"],
+    "/**": ["./guide/content/**/*", "./guide/tools/**/*", "./kk-guide/content/**/*", "./kk-guide/tools/**/*", "./pump-guide/content/**/*"],
   },
 
   images: {
