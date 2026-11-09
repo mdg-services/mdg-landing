@@ -6,22 +6,24 @@
  *   npm run guide -- check en/density    one page (looked up in the MDG guides, then the Khata Kavach pages)
  *   npm run guide -- check kk:hi/hub     one page of one collection
  *   npm run guide -- preview             how to see every written page (run the dev server)
- *   npm run guide -- schedule [mdg|kk]   which page goes live on which day
+ *   npm run guide -- schedule [mdg|kk|pump]   which page goes live on which day
+ *   npm run guide -- freeze pump         pin every Petrol pump guide page that is live today to the day it went live
+ *                                        (rewrites pump-guide/release-history.ts); run it before adding pages
  *
  * `npm run build` runs `check` first, so a page that breaks a rule stops the
  * build.
  */
-import { readFileSync } from "node:fs";
+import { readFileSync, writeFileSync } from "node:fs";
 import { checkContent, contentPath, loadAll, parseContent } from "../src/guides/content.ts";
 import { ALL, COLLECTIONS } from "../src/guides/collections.ts";
 import type { Collection, CollectionKey, Lang } from "../src/guides/collection.ts";
 
 const root = process.cwd();
-const [cmd, arg] = process.argv.slice(2);
+const [cmd, arg, flag] = process.argv.slice(2);
 
 if (cmd === "check" && arg) {
-  const m = /^(?:(mdg|kk):)?(en|hi)\/([a-z0-9-]+)$/.exec(arg);
-  if (!m) throw new Error(`Say which page as lang/id or kk:lang/id, e.g. en/density (got ${arg})`);
+  const m = /^(?:(mdg|kk|pump):)?(en|hi)\/([a-z0-9-]+)$/.exec(arg);
+  if (!m) throw new Error(`Say which page as lang/id or kk:lang/id or pump:lang/id, e.g. en/density (got ${arg})`);
   const [, key, lang, id] = m as unknown as [string, CollectionKey | undefined, Lang, string];
   const col: Collection | undefined = key ? COLLECTIONS[key] : ALL.find((c) => c.byId.has(id));
   const page = col?.byId.get(id);
@@ -49,6 +51,17 @@ if (cmd === "check" && arg) {
   console.log("The guides are Next.js pages. Run `npm run dev`: every written page is served at its real address.");
   console.log("Pages whose release day has not come yet answer 404 (the proxy gates them by date). To see the guides as of a");
   console.log("later day, run the dev server with GUIDE_FAKE_NOW set, e.g. GUIDE_FAKE_NOW=2026-11-20T06:00:00Z npm run dev.");
+} else if (cmd === "freeze" && arg === "pump") {
+  // Pin every page that is live today (or, with --all-today, every page of the list) to its day, then raise the keep-through day.
+  const col = COLLECTIONS.pump;
+  const today = col.dayOf(new Date());
+  const rows = (flag === "--all-today" ? col.releases.map((r) => [r.path, today]) : col.releases.filter((r) => r.day <= today).map((r) => [r.path, r.day])) as [string, number][];
+  const head = readFileSync(`${root}/pump-guide/release-history.ts`, "utf8").split("export const PUMP_PUBLISHED")[0];
+  writeFileSync(
+    `${root}/pump-guide/release-history.ts`,
+    `${head}export const PUMP_PUBLISHED: ReadonlyArray<readonly [string, number]> = ${JSON.stringify(rows)};\n\nexport const PUMP_KEEP_THROUGH_DAY = ${today};\n`,
+  );
+  console.log(`Petrol pump guide: ${rows.length} pages pinned through day ${today} (${col.dateOfDay(today)}).`);
 } else if (cmd === "schedule") {
   for (const col of ALL.filter((c) => !arg || c.key === arg)) {
     console.log(`${col.label}: day 1 = ${col.dateOfDay(1)} (India). ${col.releases.length} pages over ${col.lastDay} days.`);
@@ -58,6 +71,6 @@ if (cmd === "check" && arg) {
     }
   }
 } else {
-  console.log("Usage: npm run guide -- check [lang/id | kk:lang/id] | preview | schedule [mdg|kk]");
+  console.log("Usage: npm run guide -- check [lang/id | kk:lang/id | pump:lang/id] | preview | schedule [mdg|kk|pump] | freeze pump");
   process.exit(1);
 }

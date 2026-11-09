@@ -80,6 +80,12 @@ export default function Footer({ lang }: { lang: Lang }) {
                   {t.footer.mdgGuide}
                 </a>
               </li>
+              <li>
+                {/* the Petrol pump guide keeps a trailing slash on its addresses, so this is a plain link */}
+                <a href={lang === "hi" ? "/hi/petrol-pump/" : "/petrol-pump/"} className="link-quiet tap-pad text-navy-100 hover:text-white">
+                  {t.footer.pumpGuide}
+                </a>
+              </li>
             </ul>
           </div>
 

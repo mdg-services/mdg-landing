@@ -48,6 +48,7 @@ export const footer = {
   grievance: "Grievances",
   /** The dealer guides to the Marketing Discipline Guidelines: plain static pages, so a plain link, not a route. */
   mdgGuide: "Guides for dealers",
+  pumpGuide: "Petrol pump guide: open and run a pump",
 
   /** The apps column: Dealer's Kavach on this page, Khata Kavach on its own. */
   appsHeading: "Our apps",

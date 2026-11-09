@@ -1,5 +1,5 @@
 import { guideNow } from "@/guides/clock";
-import { KK, MDG, SITE, contextAt, isLive, pathOf, type Ctx, type Lang } from "@/guides/model";
+import { KK, MDG, PUMP, SITE, contextAt, isLive, pathOf, type Ctx, type Lang } from "@/guides/model";
 import { getT } from "@/i18n/server";
 import { DOC_KEY } from "@/i18n/doc";
 import { COMPANY_ROUTES, pathFor } from "@/i18n/lang";
@@ -55,6 +55,7 @@ export function GET(): Response {
   const now = guideNow();
   const ctx = contextAt(MDG, now);
   const kk = contextAt(KK, now);
+  const pump = contextAt(PUMP, now);
   const en = getT("en");
   const hi = getT("hi");
 
@@ -97,9 +98,18 @@ export function GET(): Response {
     return lines.length ? `## ${heading}\n\n${lines.join("\n")}\n` : "";
   }).filter(Boolean);
 
+  // The Petrol pump guide: the front door first, then one section per topic.
+  const pumpSections = Object.entries(PUMP.pillars).map(([pillar, meta]) => {
+    const lines = PUMP.pages.filter((p) => p.pillar === pillar).flatMap((p) => entry(pump, p.id));
+    const heading = pillar === "hub" ? "Petrol pump guide: start here" : `Petrol pump guide: ${meta.en}`;
+    return lines.length ? `## ${heading}\n\n${lines.join("\n")}\n` : "";
+  }).filter(Boolean);
+  const pumpIntro = pumpSections.length
+    ? "\n## About the Petrol pump guide\n\nPlain-language pages from MDG Services on getting, licensing and running a petrol pump in India (dealership, cost, licences, land, fire safety, equipment, staff, fuels, complaints), in English and Hindi. Every fact names its source (a law, a rule, a government notice or an oil company's published guideline) and the date it was checked. MDG Services does not sell or arrange dealerships or licences.\n\n"
+    : "";
   const kkIntro = kkSections.length
     ? "\n## About the Khata Kavach pages\n\nPlain-language pages from MDG Services, the maker of Khata Kavach, on giving fuel on credit (udhar) to transporters and other regular customers and keeping the account, in English and Hindi. Facts about other apps come from their own websites on the date each page shows; check them there. General information, not legal, tax or financial advice.\n\n"
     : "";
-  const text = `# MDG Services: Dealer's Kavach, Khata Kavach and plain-language guides\n\n> MDG Services (a brand of VRUOOM Private Limited, India) makes two apps: Dealer's Kavach, which keeps an Indian petrol pump dealer's filings, renewals, inspections and daily reports on time, and Khata Kavach, a shared account book between a petrol pump and its transporters. It also publishes plain-language guides in English and Hindi: to the Marketing Discipline Guidelines 2024 (MDG 2024) for petrol pump dealers, and to giving fuel on credit. The MDG guides are not the official text: refer to the oil companies' official guidelines and circulars for accurate and current rules. MDG Services is a private company, not connected with IndianOil, BPCL, HPCL or any government body.\n\n## The company and the apps\n\n${company.join("\n")}\n\n## Short videos on running a pump\n\nOne-minute videos in Hindi and English on the daily rules of a petrol pump, each on its own page. Library: ${SITE}/videos\n\n${videos.join("\n")}\n\n${sections.join("\n")}${kkIntro}${kkSections.join("\n")}`;
+  const text = `# MDG Services: Dealer's Kavach, Khata Kavach and plain-language guides\n\n> MDG Services (a brand of VRUOOM Private Limited, India) makes two apps: Dealer's Kavach, which keeps an Indian petrol pump dealer's filings, renewals, inspections and daily reports on time, and Khata Kavach, a shared account book between a petrol pump and its transporters. It also publishes plain-language guides in English and Hindi: to the Marketing Discipline Guidelines 2024 (MDG 2024) for petrol pump dealers, and to giving fuel on credit. The MDG guides are not the official text: refer to the oil companies' official guidelines and circulars for accurate and current rules. MDG Services is a private company, not connected with IndianOil, BPCL, HPCL or any government body.\n\n## The company and the apps\n\n${company.join("\n")}\n\n## Short videos on running a pump\n\nOne-minute videos in Hindi and English on the daily rules of a petrol pump, each on its own page. Library: ${SITE}/videos\n\n${videos.join("\n")}\n\n${sections.join("\n")}${kkIntro}${kkSections.join("\n")}${pumpIntro}${pumpSections.join("\n")}`;
   return new Response(text, { headers: { "content-type": "text/plain; charset=utf-8" } });
 }

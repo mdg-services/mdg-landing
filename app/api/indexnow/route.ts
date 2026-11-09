@@ -1,6 +1,7 @@
 import { revalidatePath } from "next/cache";
 import { RELEASES, dayOf } from "../../../guide/schedule.ts";
 import { KK_RELEASES, kkDayOf } from "../../../kk-guide/schedule.ts";
+import { PUMP_RELEASES, pumpDayOf } from "../../../pump-guide/schedule.ts";
 import { guideNow } from "@/guides/clock";
 import { json } from "@/lib/api";
 
@@ -37,7 +38,7 @@ const HOST = "mdgservices.in";
 function refreshGuideLists(): void {
   // The sitemap is built fresh on every request, so it has no saved copy to throw away.
   for (const path of ["/llms.txt", "/", "/hi", "/khata-kavach", "/hi/khata-kavach"]) revalidatePath(path);
-  for (const r of [...RELEASES, ...KK_RELEASES]) revalidatePath(r.path.replace(/\/$/, ""));
+  for (const r of [...RELEASES, ...KK_RELEASES, ...PUMP_RELEASES]) revalidatePath(r.path.replace(/\/$/, ""));
 }
 
 async function handler(req: Request): Promise<Response> {
@@ -49,16 +50,21 @@ async function handler(req: Request): Promise<Response> {
   const now = guideNow();
   const day = dayOf(now);
   const kkDay = kkDayOf(now);
-  const urlList = [...RELEASES.filter((r) => r.day === day), ...KK_RELEASES.filter((r) => r.day === kkDay)].map((r) => `https://${HOST}${r.path}`);
+  const pumpDay = pumpDayOf(now);
+  const urlList = [
+    ...RELEASES.filter((r) => r.day === day),
+    ...KK_RELEASES.filter((r) => r.day === kkDay),
+    ...PUMP_RELEASES.filter((r) => r.day === pumpDay),
+  ].map((r) => `https://${HOST}${r.path}`);
   if (day === 1) urlList.push(`https://${HOST}/`);
   if (kkDay === 1) urlList.push(`https://${HOST}/khata-kavach`, `https://${HOST}/hi/khata-kavach`);
-  if (!urlList.length) return json({ ok: true, day, kkDay, sent: 0 });
+  if (!urlList.length) return json({ ok: true, day, kkDay, pumpDay, sent: 0 });
   const r = await fetch("https://api.indexnow.org/indexnow", {
     method: "POST",
     headers: { "content-type": "application/json; charset=utf-8" },
     body: JSON.stringify({ host: HOST, key: KEY, keyLocation: `https://${HOST}/${KEY}.txt`, urlList }),
   });
-  return json({ ok: r.ok, status: r.status, day, kkDay, sent: urlList.length });
+  return json({ ok: r.ok, status: r.status, day, kkDay, pumpDay, sent: urlList.length });
 }
 
 // The old function answered every method the same way; so does this.

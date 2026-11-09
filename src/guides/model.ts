@@ -17,12 +17,12 @@ import { pathIn } from "../../guide/calendar.ts";
 import { SITE } from "../../guide/copy.ts";
 import { loadAll, type PageContent } from "./content.ts";
 import { esc } from "./tags.ts";
-import { ALL, COLLECTIONS, KK, MDG } from "./collections.ts";
+import { ALL, COLLECTIONS, KK, MDG, PUMP } from "./collections.ts";
 import { slugOfSource, videoPath } from "../routing/videos.ts";
 import type { AnyPage, AnyRelease, Collection, CollectionKey, Crumb, Lang } from "./collection.ts";
 
 export type { Lang, PageContent, AnyPage, AnyRelease, Collection, CollectionKey, Crumb };
-export { SITE, ALL, COLLECTIONS, MDG, KK };
+export { SITE, ALL, COLLECTIONS, MDG, KK, PUMP };
 
 /** The public path of a page in a language. */
 export const pathOf = pathIn;

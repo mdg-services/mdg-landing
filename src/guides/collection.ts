@@ -1,11 +1,13 @@
 /**
  * A collection is one set of guide pages with its own list, calendar, words
- * and look. The site has two:
+ * and look. The site has three:
  *
  *  - "mdg": the guides to the Marketing Discipline Guidelines 2024, at /guides/
  *    and /tools/ (guide/).
  *  - "kk": the Khata Kavach pages on giving and keeping credit, at
  *    /khata-kavach/… (kk-guide/).
+ *  - "pump": the Petrol pump guide, on getting, licensing and running a petrol
+ *    pump, at /petrol-pump/… (pump-guide/).
  *
  * The page builder (model.ts), the renderer (GuidePage.tsx), the rules
  * (content.ts), the sitemap, llms.txt and the daily IndexNow call all take a
@@ -20,7 +22,7 @@ import type { Lang, Release } from "../../guide/calendar.ts";
 
 export type { Lang, PageType, PillarMeta };
 
-export type CollectionKey = "mdg" | "kk";
+export type CollectionKey = "mdg" | "kk" | "pump";
 
 /** What every guide page, of either collection, carries. */
 export interface AnyPage {

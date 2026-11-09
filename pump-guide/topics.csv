@@ -1,0 +1,47 @@
+priority,id,pillar,path_slug,title_hint,target_queries,status,sources_to_open
+1,dealership-documents,dealership,dealership/documents-required,Documents needed to apply for a petrol pump dealership,documents required for petrol pump,covered,oil company selection guidelines; HPCL/BPCL dealership pages
+1,dealership-reservation,dealership,dealership/reserved-categories,Reserved categories in petrol pump dealer selection (SC/ST/OBC/ex-servicemen and others),,covered,selection guidelines; Parliament answers on reservation
+1,dealership-fraud,dealership,dealership/fraud-warning,Petrol pump dealership fraud: how to spot a fake offer,,covered,"oil company public fraud warnings (HPCL, BPCL, Nayara, Jio-bp); PIB; cybercrime.gov.in"
+1,dealership-timeline,dealership,dealership/how-long-it-takes,How long it takes from application to opening a petrol pump,,covered,"selection guidelines (timelines stated), Parliament answers"
+2,dealership-hpcl,dealership,dealership/hindustan-petroleum,"Hindustan Petroleum dealership: how to apply, in the company's own words",hpcl dealership contact number,todo,hindustanpetroleum.com dealership pages
+2,dealership-bpcl,dealership,dealership/bharat-petroleum,Bharat Petroleum dealership: how to apply,bpcl dealer,todo,bharatpetroleum.in dealership pages
+2,dealership-nayara,dealership,dealership/nayara-energy,Nayara Energy dealership: how to apply,nayara dealer,todo,nayaraenergy.com dealership page
+2,dealership-jio-bp,dealership,dealership/jio-bp,Jio-bp dealership: how to apply,jio bp pulse dealership cost,todo,jiobp.in dealership page
+2,dealership-company-owned-vs-dealer-owned,dealership,dealership/company-owned-or-dealer-owned,"Company-owned versus dealer-owned outlets (CODO, DODO and COCO) explained",,todo,guidelines; Parliament answers
+3,money-loan,money,money/loan-for-a-petrol-pump,How to get a loan for a petrol pump: what banks ask,how to get loan for petrol pump in india,needs-data,RBI/PSU bank scheme pages; oil company tie-up statements
+3,money-running-costs,money,money/running-costs,What a petrol pump spends every month: the cost heads,,todo,oil company guidelines; Parliament answers
+3,money-security-deposit,money,money/security-deposit,Security deposit and other payments to the oil company,,covered,guidelines; dealership agreements published by the company
+3,money-working-capital,money,money/working-capital,"Working capital for a petrol pump: stock, credit days and cash",,todo,guidelines; oil company credit terms if public
+4,licences-fire-noc,licences,licences/fire-noc,Fire NOC for a petrol pump: who gives it and what it checks,petrol pump fire noc,needs-data,state fire services sites; National Building Code; PESO conditions
+4,licences-district-authority-noc,licences,licences/district-authority-noc,The District Authority's NOC for a petrol pump,petrol pump noc rules,covered,PESO SOP; Petroleum Rules 2002
+4,licences-legal-metrology,licences,licences/legal-metrology-registration,Legal Metrology registration and dispenser verification: the licence side,,covered,consumeraffairs.nic.in; Legal Metrology rules
+4,licences-renewal,licences,licences/validity-and-renewal,Validity and renewal of a PESO licence,,todo,Petroleum Rules 2002; peso.gov.in
+4,licences-cost,licences,licences/fees,What the licences cost: official fees only,petrol pump licence cost,needs-data,PESO fee schedule; state fee notifications
+5,site-lease,site,site/land-lease,Land lease for a petrol pump: what the agreement must cover,petrol pump land lease,todo,guidelines; oil company lease terms where published
+5,site-layout,site,site/layout,"Petrol pump layout: where tanks, dispensers and the canopy go",,todo,PESO layout approval; OISD layout standard
+5,site-highway-access,site,site/highway-access,Access from a highway: permissions for a petrol pump on a national or state highway,,todo,MoRTH/NHAI guidelines on access permission
+5,site-distance-rules,site,site/distance-rules,"Distance rules for a petrol pump: from junctions, schools and homes",,needs-data,PESO; CPCB siting; Goyal 2024 PESO template announcement; state rules
+6,safety-fire-extinguishers,safety,safety/fire-extinguishers,"Fire extinguishers at a petrol pump: types, number and checks",,todo,PESO licence conditions; OISD; BIS standards
+6,safety-earthing,safety,safety/earthing-and-bonding,Earthing and bonding at a petrol pump and when a tanker unloads,,todo,OISD; PESO conditions
+6,safety-signage,safety,safety/safety-signs,Safety signs a petrol pump must show,petrol pump safety signs,todo,PESO conditions; OISD
+6,safety-spill,safety,safety/spill-and-leak,What to do in a fuel spill or a leak at the pump,,todo,OISD; PESO; oil company safety circulars
+6,safety-drills,safety,safety/mock-drills-and-training,Mock drills and safety training for pump staff,,needs-data,OISD; PESO
+7,equipment-nozzles,equipment,equipment/nozzles,Nozzles: how the automatic cut-off works and why petrol and diesel nozzles differ,petrol pump nozzle sizes,todo,standards (BIS/OIML); PESO
+7,equipment-dispenser,equipment,equipment/dispenser-parts,"Inside a fuel dispenser: pump, meter, pulser and display",petrol pump dispenser,todo,Legal Metrology; standards
+7,equipment-automation,equipment,equipment/automation,Outlet automation: what it is and what it records,,todo,oil company public pages (not iocl.com); MDG-linked page /guides/automation/
+7,equipment-oil-water-separator,equipment,equipment/oil-water-separator,The oil-water separator at a petrol pump,,needs-data,CPCB; SPCB consent conditions
+7,equipment-tank-gauge,equipment,equipment/tank-gauge,Tank level gauges and how stock is read,,todo,oil company technical pages; standards
+8,running-attendant-duties,running,running/nozzle-attendant-duties,What a nozzle attendant does: duties in a shift,petrol attendant duties,todo,practice; oil company training material if public
+8,running-manager-duties,running,running/manager-duties,What a pump manager does in a day,petrol pump manager work,todo,practice
+8,running-minimum-wages,running,running/staff-wages,Staff wages: where the minimum wage for pump staff is fixed,,needs-data,labour department notifications by state
+8,running-income-tax,running,running/income-tax,Income tax for a petrol pump business: the basics,,needs-data,incometax.gov.in; CBDT
+8,running-insurance,running,running/insurance,Insurance a petrol pump needs,,needs-data,oil company requirements; IRDAI
+8,running-daily-routine,running,running/daily-routine,"A petrol pump's day, hour by hour",,todo,practice; link MDG records pages
+9,fuels-premium-petrol,fuels,fuels/premium-petrol,Premium petrol: what is different and what the rules say,premium petrol cost,todo,BIS; oil company public pages
+9,fuels-diesel-grades,fuels,fuels/diesel-grades,Diesel at the pump: BS VI and blends,,todo,BIS; PIB
+9,fuels-ethanol-100,fuels,fuels/flex-fuel-and-e100,Flex-fuel vehicles and E100 at the pump,,todo,PIB; MoPNG
+9,fuels-lpg-autogas,fuels,fuels/autogas,Auto LPG at a petrol pump,,needs-data,PESO; MoPNG
+10,customers-short-delivery,customers,customers/short-delivery,Short delivery of fuel: how to check and where to complain,,todo,Legal Metrology; consumer helpline
+10,customers-quality-complaint,customers,customers/fuel-quality-complaint,A fuel quality complaint: what a customer can do,petrol quality complaint,todo,oil company grievance pages; BIS; MDG sampling pages
+10,customers-free-services,customers,customers/free-services,"Free air, drinking water and toilets at a petrol pump: what is required",,todo,oil company guidelines; link MDG toilet rules page
+10,customers-refund,customers,customers/refund-and-consumer-court,Refund and consumer court for a fuel complaint,,todo,Consumer Protection Act 2019; consumerhelpline.gov.in

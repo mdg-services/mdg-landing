@@ -8,9 +8,13 @@
 import { PAGES, PILLARS, VIDEOS } from "../../guide/inventory.ts";
 import { RELEASES, LAST_DAY, dayOf, dateOfDay } from "../../guide/schedule.ts";
 import { DISCLAIMER, NOTICE_SHORT, SITE, TOLL_FREE, TOPIC_BLURB, UI } from "../../guide/copy.ts";
+const UI_MDG = UI;
 import { KK_PAGES, KK_PILLARS } from "../../kk-guide/inventory.ts";
 import { KK_RELEASES, KK_LAST_DAY, kkDayOf, kkDateOfDay } from "../../kk-guide/schedule.ts";
 import { KK_CTA, KK_DISCLAIMER, KK_NOTICE, KK_TOPIC_BLURB, KK_UI } from "../../kk-guide/copy.ts";
+import { PUMP_PAGES, PUMP_PILLARS } from "../../pump-guide/inventory.ts";
+import { PUMP_RELEASES, PUMP_LAST_DAY, pumpDayOf, pumpDateOfDay } from "../../pump-guide/schedule.ts";
+import { PUMP_DISCLAIMER, PUMP_NOTICE, PUMP_TOPIC_BLURB, PUMP_UI } from "../../pump-guide/copy.ts";
 import { KK_APPS } from "../data/kk.ts";
 import type { AnyPage, AnyRelease, Collection, CollectionKey, Lang } from "./collection";
 import { mdgClauseTags, mdgPenaltyNotes, mdgTagOk, sourceTagOk, sourceTags } from "./tags";
@@ -142,7 +146,55 @@ export const KK: Collection = {
   }),
 };
 
-export const COLLECTIONS: Record<CollectionKey, Collection> = { mdg: MDG, kk: KK };
+/** The Petrol pump guide: getting, licensing and running a petrol pump. Looks like the MDG guides; cites sources, not MDG clauses. */
+export const PUMP: Collection = {
+  key: "pump",
+  label: "Petrol pump guide",
+  pages: PUMP_PAGES,
+  byId: new Map<string, AnyPage>(PUMP_PAGES.map((p) => [p.id, p])),
+  pillars: PUMP_PILLARS,
+  notTopics: ["hub"],
+  videos: {},
+  releases: PUMP_RELEASES as AnyRelease[],
+  lastDay: PUMP_LAST_DAY,
+  dayOf: pumpDayOf,
+  dateOfDay: pumpDateOfDay,
+  contentDir: "pump-guide/content",
+  toolsDir: "pump-guide/tools",
+  ui: PUMP_UI,
+  notice: PUMP_NOTICE,
+  disclaimer: PUMP_DISCLAIMER,
+  topicBlurb: PUMP_TOPIC_BLURB,
+  updatesId: null,
+  crumbsBefore: () => [],
+  hubInCrumbs: true,
+  prepare: (md) => md,
+  tags: (html) => sourceTags(html),
+  tagOk: sourceTagOk,
+  forbidden: [
+    // IndianOil's site (its linking policy asks for permission first), and how our service works
+    /\]\(https?:\/\/(www\.)?iocl\.com/i,
+    /\bSDMS\b/i, /\bIRAS\b/i, /\bOCR\b/, /captcha/i, /scrap(e|ing|er)/i,
+    // promises nobody can keep: a dealership, a licence, an income
+    /\b(guaranteed?|assured|sure(-| )shot) (dealership|licen[cs]e|approval|profit|income|returns?)\b/i,
+    /\b(we|MDG Services) (can )?(get|arrange|book|allot|sell) (you )?(a |your )?(petrol pump|dealership|licen[cs]e)/i,
+    // superlatives we cannot prove
+    /\b(best|cheapest|easiest|fastest|safest) (way|petrol pump|dealership)\b/i,
+  ],
+  about: () => ({ "@type": "Thing", name: "Opening and running a petrol pump in India" }),
+  nav: "guides",
+  look: MDG.look,
+  themeClass: "",
+  officialBox: false,
+  cta: (lang) => ({
+    title: UI_MDG[lang].ctaTitle,
+    text: UI_MDG[lang].cta,
+    primary: { href: lang === "hi" ? "/hi/register" : "/register", label: UI_MDG[lang].register },
+    secondary: { href: TOLL_FREE.href, label: UI_MDG[lang].call },
+  }),
+};
 
-/** Both collections, MDG first. */
-export const ALL: Collection[] = [MDG, KK];
+export const COLLECTIONS: Record<CollectionKey, Collection> = { mdg: MDG, kk: KK, pump: PUMP };
+
+/** Every collection, MDG first. */
+export const ALL: Collection[] = [MDG, KK, PUMP];

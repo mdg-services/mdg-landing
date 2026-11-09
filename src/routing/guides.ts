@@ -4,7 +4,9 @@
  *  - the MDG guides: /guides/…, /tools/… and their /hi twins (guide/schedule.ts);
  *  - the Khata Kavach pages: /khata-kavach/<anything>/… and the /hi twins
  *    (kk-guide/schedule.ts). The product page itself (/khata-kavach) and its
- *    privacy page (/khata-kavach/privacy) are not guide pages.
+ *    privacy page (/khata-kavach/privacy) are not guide pages;
+ *  - the Petrol pump guide: /petrol-pump/… and the /hi twins
+ *    (pump-guide/schedule.ts), ten pages a day.
  *
  * Every guide page is built once. Each schedule says on which day (India time)
  * each page goes live, five a day on its own calendar, so a page whose day has
@@ -15,10 +17,12 @@
  */
 import { dayOf, releaseDayOf } from "../../guide/schedule.ts";
 import { kkDayOf, kkReleaseDayOf } from "../../kk-guide/schedule.ts";
+import { pumpDayOf, pumpReleaseDayOf } from "../../pump-guide/schedule.ts";
 
 const GATES = [
   { test: /^\/(?:hi\/)?(?:guides|tools)(?:\/|$)/, releaseDayOf, dayOf },
   { test: /^\/(?:hi\/)?khata-kavach\/(?!privacy\/?$)[^/]/, releaseDayOf: kkReleaseDayOf, dayOf: kkDayOf },
+  { test: /^\/(?:hi\/)?petrol-pump(?:\/|$)/, releaseDayOf: pumpReleaseDayOf, dayOf: pumpDayOf },
 ];
 
 export type GuideGate = { kind: "next" } | { kind: "redirect"; to: string } | { kind: "notFound" };

@@ -27,6 +27,7 @@ export const footer: typeof EN = {
   register: "रजिस्टर कीजिए",
   grievance: "शिकायत",
   mdgGuide: "डीलरों के लिए गाइड",
+  pumpGuide: "पेट्रोल पंप गाइड: पंप खोलना और चलाना",
 
   appsHeading: "हमारे ऐप",
   dealerApp: "Dealer's कवच",
