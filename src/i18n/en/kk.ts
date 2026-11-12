@@ -120,7 +120,7 @@ export const kk = {
       "Pay a bill by UPI. Your UPI app opens with the amount filled in, and the money goes straight to the pump.",
       "Sent by mistake? Take a request back before it is filled.",
       "Add a manager (munshi) who sends requests from his own phone, with his own 6-digit PIN.",
-      "Your pump sets you up and sends you a link on WhatsApp. Ask your pump to add you.",
+      "Sign up yourself with your own mobile number: a code arrives on WhatsApp and you make a 6-digit PIN. When your pump adds your number, it shows up in the app and you agree to its terms. Your pump can also send you a link on WhatsApp.",
     ],
     appLink: "Open the Transporter app (web)",
     alts: [
@@ -207,7 +207,7 @@ export const kk = {
       },
       {
         q: "Can a transporter sign up himself?",
-        a: "No. The pump adds its transporters and sends each one a link on WhatsApp. A pump owner sets up his own pump in the Pump app, in about a minute.",
+        a: "Yes. He opens the Transporter app, types his own mobile number, types the code that arrives on WhatsApp, gives his name and makes a 6-digit PIN. Credit starts only once a pump has added his number and he has agreed to its terms. A pump can also send him a link on WhatsApp. A pump owner sets up his own pump in the Pump app, in about a minute.",
       },
       {
         q: "Do my nozzle men need training?",

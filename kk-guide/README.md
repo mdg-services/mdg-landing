@@ -94,9 +94,12 @@ The true differences, in the order they matter:
 10. Hindi first. A pump starts on its own in the Pump app in about a minute;
     a person at MDG answers the phone, 9am to 9pm, every day.
 11. Everyone signs in with a 6-digit PIN. Owners (pump and transporter) prove
-    an email with a code sent to it. A transporter has an owner and, if he
-    wants, managers (munshis) with their own phones and PINs; only the owner
-    accepts a pump's terms and adds people. The pump's invite link works once.
+    their mobile number with a code sent on WhatsApp, never by email. A
+    transporter can sign up himself with his mobile number; credit starts only
+    once a pump adds his number and he agrees to its terms. A transporter has
+    an owner and, if he wants, managers (munshis) with their own phones and
+    PINs; only the owner accepts a pump's terms and adds people. The pump's
+    invite link works once and gives the same result.
 
 **Who it is for, honestly:** petrol pumps (of any oil company) that give
 diesel and petrol on credit to regular customers who come in their own trucks
@@ -112,7 +115,7 @@ write that it suits shops, other trades or walk-in customers.
 |---|---|---|
 | Who | The owner, managers, nozzle men | The transporter and his staff |
 | What | Fill on credit by truck number, the light, Today, transporters, limits, requests, bills, payments, staff | Daily requests per truck, every fill, bills with a UPI button, what is owed, trucks |
-| Starts | "Set up your pump" (अपना पंप जोड़ो) on the first screen | An invite link from the pump on WhatsApp |
+| Starts | "Set up your pump" (अपना पंप जोड़ो) on the first screen | His own mobile number (a code on WhatsApp), or an invite link from the pump |
 
 At the nozzle: the nozzle man types the last 4 digits of the truck number
 ("गाड़ी का नंबर"), sees the light and how much credit is left, types litres and

@@ -7,7 +7,7 @@
   "faq": [
     { "q": "What is a ledger app?", "a": "A phone version of the bahi khata. The seller records credit given and money received for each customer, and the app keeps the balance. Some apps also send the customer a balance by SMS or share a ledger." },
     { "q": "What does shared mean in a shared credit book?", "a": "Two apps show the same line. By default the transporter asks for the fuel first, the nozzle man records the fill, and the transporter's app shows it with the litres, rupees, the truck number, who filled, and the photo if one was added." },
-    { "q": "Does my customer need an app?", "a": "For OkCredit, its homepage says no: the customer gets the balance by SMS. For Khata Kavach, yes: the transporter uses the Khata Kavach Transporter app, which opens in the phone's browser. You send him an invite link on WhatsApp, and he agrees to the terms once." },
+    { "q": "Does my customer need an app?", "a": "For OkCredit, its homepage says no: the customer gets the balance by SMS. For Khata Kavach, yes: the transporter uses the Khata Kavach Transporter app, which opens in the phone's browser. He signs up with his own mobile number, or you send him an invite link on WhatsApp, and he agrees to your terms once." },
     { "q": "Which should a small pump choose?", "a": "A pump that sees every credit fill itself may find a ledger app enough. Khata Kavach is made for petrol pumps that give diesel on credit to regular transporters." }
   ],
   "related": ["compare-khatabook", "compare-okcredit", "feature-requests", "feature-customer-app"],

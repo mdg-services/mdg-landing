@@ -5,14 +5,14 @@
   "description": "The Khata Kavach Transporter app shows the transporter his credit left, every fill and his bills, plus a UPI button if the pump added its UPI ID. Hindi or English.",
   "answer": "The Transporter app shows the transporter his own account with your pump: credit left and what he owes, every fill with the fuel, litres, rupees, who filled and the photo when one was added, and his bills. He sends his requests from the same app. A bill can be paid by UPI straight to the pump when the pump's UPI ID is added. It is in Hindi first, with English one tap away and a large-text setting. It never lends and never holds money.",
   "faq": [
-    { "q": "Does my transporter need to download an app?", "a": "The transporter opens the invite link you send on WhatsApp in the phone's browser. Both Khata Kavach apps open in the browser today. Android apps are coming to Google Play." },
-    { "q": "I am a transporter. How do I get the app?", "a": "You cannot sign up alone. A pump that uses Khata Kavach sends you an invite link on WhatsApp. Open it, give your name and email, type the emailed code, make a 6-digit PIN and agree to the terms once." },
+    { "q": "Does my transporter need to download an app?", "a": "The transporter opens the Transporter app in the phone's browser. Both Khata Kavach apps open in the browser today. Android apps are coming to Google Play." },
+    { "q": "I am a transporter. How do I get the app?", "a": "You can sign up yourself. Open the Transporter app, type your mobile number, type the code that arrives on WhatsApp, give your name and make a 6-digit PIN. When a pump that uses Khata Kavach adds your number, you agree to its terms once. A pump can also send you an invite link on WhatsApp." },
     { "q": "Can my transporter see other transporters' figures?", "a": "No. A transporter sees only his own account, trucks, requests, fills and bills at each pump. One transporter can have several pumps on one login, and each pump sees only its own figures." },
     { "q": "Can my transporter pay a bill by UPI from the app?", "a": "The pay-by-UPI button opens the transporter's own UPI app with the amount filled in, and the money goes from his bank straight to you. Khata Kavach never holds money. The button shows only if you have put a UPI ID in your pump's details." },
     { "q": "What if my transporter has no internet?", "a": "He cannot send requests until the phone is online. The account lines show again when the internet returns." }
   ],
   "related": ["feature-requests", "feature-bills", "feature-photo", "feature-corrections", "feature-no-signal"],
-  "updated": "2026-10-27"
+  "updated": "2026-11-12"
 }
 ---
 ## What the transporter can do
@@ -33,6 +33,6 @@ Marked fills show their mark on the transporter's side too, such as more than re
 
 ## How the transporter joins, and what stays out
 
-You add the transporter. He cannot sign up alone. You send his invite link from your own WhatsApp. The link works once, for 3 days. He proves his email with a code and makes a 6-digit PIN. He reads the terms and agrees once: credit up to the limit, by default credit only when a request was sent, every fill and payment shows in the app, and the app keeps the record without taking or sending money. Until then he cannot send requests.
+You add the transporter by his mobile number. If he has already signed up on his own, your account shows up in his app and he gets a notification. You can also send his invite link from your own WhatsApp: it works once, for 3 days. He reads the terms and agrees once: credit up to the limit, by default credit only when a request was sent, every fill and payment shows in the app, and the app keeps the record without taking or sending money. Until then he cannot send requests.
 
 After paying a bill, the transporter tells you. Once you record the money, the bill shows paid, or part paid, and that much credit opens again. See [bills](@feature-bills).

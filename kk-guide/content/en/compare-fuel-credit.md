@@ -7,7 +7,7 @@
   "faq": [
     { "q": "Who carries the credit on a fleet card?", "a": "IndianOil's pages say credit is optional, from a partner bank or finance company at its own discretion, and the member stays liable for charges. HPCL describes a prepaid card and lists finance tie-ups separately. BPCL describes an account you recharge, with credit offered through finance companies." },
     { "q": "Does Khata Kavach give my transporter credit?", "a": "No. You decide who gets credit and set the limit. Khata Kavach never lends and never holds money. The transporter pays you directly, and you record it." },
-    { "q": "Can a transporter use Khata Kavach at any pump?", "a": "Only at a pump that has set it up. The pump adds the transporter and sends an invite link on WhatsApp; a transporter cannot sign up on his own. IndianOil and HPCL describe their cards as working at their own pumps." }
+    { "q": "Can a transporter use Khata Kavach at any pump?", "a": "Only at a pump that has set it up. A transporter can sign up in the Transporter app with his own mobile number; when a pump adds that number, the pump shows up in his app and he agrees to its terms. The pump can also send him an invite link on WhatsApp. IndianOil and HPCL describe their cards as working at their own pumps." }
   ],
   "related": ["trade-petrol-pump", "trade-transporter", "credit-limit", "compare"],
   "updated": "2026-10-19"

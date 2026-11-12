@@ -3,7 +3,7 @@
   "title": "Transport hisab kitab: see what your drivers take on credit from pumps that use Khata Kavach",
   "metaTitle": "Transport hisab: what your drivers take",
   "description": "For transporters who buy diesel on credit: see each fill by truck from pumps on Khata Kavach, send a request for each truck, and see what you owe.",
-  "answer": "If your drivers fill diesel on credit at pumps that use Khata Kavach, the Transporter app shows you every line: truck, litres, rupees, who filled and a photo if the nozzle man added one. By default, credit for a truck goes ahead when you have sent a request for it, and you can take a request back. Your pump adds you; you cannot sign up yourself.",
+  "answer": "If your drivers fill diesel on credit at pumps that use Khata Kavach, the Transporter app shows you every line: truck, litres, rupees, who filled and a photo if the nozzle man added one. By default, credit for a truck goes ahead when you have sent a request for it, and you can take a request back. You can sign up yourself with your mobile number; a pump's credit shows up once that pump adds your number.",
   "faq": [
     { "q": "How do I track diesel expense for each truck?", "a": "Every line carries a truck number, so your account shows what each truck filled on credit. It records credit bought from pumps that use Khata Kavach. It is not a trip book or a full fleet-expense tool." },
     { "q": "My drivers fill at two pumps. Do I need two logins?", "a": "No. One login works for all, because you are identified by your mobile number. Each pump sets its own limit, and the pumps never see each other's figures." },
@@ -12,7 +12,7 @@
     { "q": "Do I need internet to send requests?", "a": "Yes. A request goes out as soon as your phone is online." }
   ],
   "related": ["trades", "feature-customer-app", "feature-requests", "counter-driver", "trade-petrol-pump"],
-  "updated": "2026-10-27"
+  "updated": "2026-11-12"
 }
 ---
 ## The problem: the total reaches you at month end
@@ -47,4 +47,4 @@ The home screen shows how much credit you have left and what you owe. Open your 
 
 ## How you start
 
-The pump adds you with your name, mobile number and limit, and sends an invite link on WhatsApp. You give your name and email, type the emailed code, make a 6-digit PIN and agree to the terms. In Settings, People, you can add a manager with his own phone and PIN. The limit is the pump's decision. The app keeps the record and never lends or holds money. See [the Transporter app](@feature-customer-app) and [how requests work](@feature-requests). A registered micro or small transporter that supplies services to a larger firm may also have a payment-time rule on its side: see [the MSME 45-day rule](@paid-msme).
+You sign up with your mobile number: a code arrives on WhatsApp, you give your name and make a 6-digit PIN. The pump adds you with your name, mobile number and limit (and can send an invite link on WhatsApp); its account shows up in your app and you agree to its terms. In Settings, People, you can add a manager with his own phone and PIN. The limit is the pump's decision. The app keeps the record and never lends or holds money. See [the Transporter app](@feature-customer-app) and [how requests work](@feature-requests). A registered micro or small transporter that supplies services to a larger firm may also have a payment-time rule on its side: see [the MSME 45-day rule](@paid-msme).

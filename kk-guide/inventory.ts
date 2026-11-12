@@ -128,7 +128,7 @@ export const KK_PAGES: KkPage[] = [
   {
     id: "trade-transporter", pillar: "trades", path: `${P}/for/transporters/`, hi: true, type: "Trade", wave: 1,
     queries: ["transport hisab app", "transport hisab kitab", "transporter diesel udhar hisab", "ट्रांसपोर्टर डीज़ल उधार हिसाब", "truck diesel expense tracking"],
-    brief: "For transporters and fleet owners who buy diesel on credit: see exactly what your drivers take and what you owe. The transporter's view: the problem of finding out at month end; what to ask your pump to show you (each fill, truck, litres, rupees, who filled, a photo); sending a request per truck so nothing is filled without your say; taking a request back. Then the Khata Kavach Transporter app in a short section with real screen words (Send requests, Same as last time, Bills, Pay by UPI straight to the pump). Say that the pump adds you; you cannot sign up yourself.",
+    brief: "For transporters and fleet owners who buy diesel on credit: see exactly what your drivers take and what you owe. The transporter's view: the problem of finding out at month end; what to ask your pump to show you (each fill, truck, litres, rupees, who filled, a photo); sending a request per truck so nothing is filled without your say; taking a request back. Then the Khata Kavach Transporter app in a short section with real screen words (Send requests, Same as last time, Bills, Pay by UPI straight to the pump). Say that you can sign up with your own mobile number, and that credit starts once a pump adds your number and you agree to its terms.",
   },
   {
     id: "compare", pillar: "compare", path: `${P}/compare/`, hi: true, type: "Pillar", wave: 1,

@@ -6,9 +6,9 @@ import type { Lang } from "../../i18n/lang";
 /**
  * For the transporter: what he sends and what he sees. It mirrors the pump
  * section (text on the left, screens on the right, a cream ground), so two
- * neighbours never share a composition. He cannot sign up himself yet, so the
- * last line says so and there is no sign-up button here; the page's own way
- * in is the call at the end.
+ * neighbours never share a composition. He can sign up himself with his mobile
+ * number, so the last line says how; the link under the list opens the
+ * Transporter app, and the page's own way in is the call at the end.
  */
 export default function KkTransporter({ lang }: { lang: Lang }) {
   const t = getT(lang).kk;

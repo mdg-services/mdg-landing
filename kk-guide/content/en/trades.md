@@ -6,12 +6,12 @@
   "answer": "Khata Kavach fits a petrol pump, of any oil company, that gives diesel and petrol on credit to regular customers who fill their own trucks and vehicles: transporters, fleet owners, bus and tractor owners, and contractors' machines. It also fits the transporter on the other side, who sends a request for each truck and sees every fill. At the nozzle, the nozzle man types the last 4 digits of the truck number and sees a green, amber or red light. It does not fit walk-in customers who fill for cash, or a pump that needs GST tax invoices or stock records from the same app.",
   "faq": [
     { "q": "Can a petrol pump of any oil company use Khata Kavach?", "a": "Yes. It is for pumps of any oil company and is not connected with any oil company. It covers diesel, petrol, premium diesel and premium petrol, by the litre." },
-    { "q": "Can a transporter sign up for the Transporter app on their own?", "a": "No. The pump adds the transporter and sends an invite link on WhatsApp. The transporter reads the terms and agrees on his phone once, and can then send requests." },
+    { "q": "Can a transporter sign up for the Transporter app on their own?", "a": "Yes. He signs up with his own mobile number; when a pump adds that number, he reads the terms and agrees on his phone once, and can then send requests. The pump can also send him an invite link on WhatsApp." },
     { "q": "Can a pump that also sells for cash use it?", "a": "Yes. Credit fills and money received go in the account. Cash fills do not become lines. When the light is red, the nozzle man can fill that customer for cash." },
     { "q": "What does Khata Kavach cost?", "a": "The price depends on your business. Call us on the number shown on this page. A person answers, 9am to 9pm, every day." }
   ],
   "related": ["trade-petrol-pump", "trade-transporter", "feature-counter-light", "example-pump-month", "compare-billing-apps"],
-  "updated": "2026-10-27"
+  "updated": "2026-11-12"
 }
 ---
 ## The one test: do regular customers fill on credit?
@@ -29,7 +29,7 @@ The nozzle man types the last 4 digits of the truck number and sees the light. H
 | Who | What they do | Fits? |
 |---|---|---|
 | Petrol pumps, of any oil company | Give diesel and petrol on credit to regular customers, by the litre | Yes: [diesel on credit](@trade-petrol-pump) |
-| Transporters (the customer's side) | Buy diesel on credit for their trucks, and send a request for each truck | Yes: the pump adds them. See [the transporter's view](@trade-transporter) |
+| Transporters (the customer's side) | Buy diesel on credit for their trucks, and send a request for each truck | Yes: they sign up with their mobile number, and the pump adds them. See [the transporter's view](@trade-transporter) |
 | Fleet owners, bus and tractor owners | Fill their vehicles on credit at the pump | Yes, the same way as a transporter |
 | Contractors with machines | Their machines fill at the pump on the contractor's credit | Yes, by the vehicle number, the same way |
 

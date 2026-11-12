@@ -12,12 +12,12 @@
     { "q": "Does a request mean the transporter is approved for credit?", "a": "No. A request is just an ask. The pump's limit for that transporter and the light decide whether fuel goes in on credit." }
   ],
   "related": ["features", "feature-counter-light", "counter-driver", "feature-customer-app"],
-  "updated": "2026-10-27"
+  "updated": "2026-11-12"
 }
 ---
 ## What the transporter does
 
-The transporter opens the invite link the pump sent on WhatsApp and agrees to the terms once. After that, each day, he taps "Send requests" and answers "Which trucks need fuel today?"
+When the pump has added him, the transporter opens the Transporter app (or the invite link the pump sent on WhatsApp) and agrees to the terms once. After that, each day, he taps "Send requests" and answers "Which trucks need fuel today?"
 
 **One request for each truck.** For every truck he picks the fuel (diesel, petrol, premium diesel or premium petrol) and answers "How much to fill?": litres, rupees or a full tank. The request is valid for today unless he picks another day.
 

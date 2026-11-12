@@ -11,7 +11,7 @@
     { "q": "Does Khata Kavach decide who gets credit?", "a": "No. You decide who gets credit and set every limit. Khata Kavach never lends; it keeps the account and checks your limit at the nozzle with a green, amber or red light." }
   ],
   "related": ["credit", "credit-limit", "credit-policy", "counter-driver"],
-  "updated": "2026-10-27"
+  "updated": "2026-11-12"
 }
 ---
 ## Six checks before you say yes
@@ -40,6 +40,6 @@ The [credit policy template](@credit-policy) turns this into one page. The [seve
 
 ## What Khata Kavach adds
 
-You add the transporter in the Pump app: name, mobile number, limit and his truck numbers. One tap opens your own WhatsApp with his link ready to send. The transporter reads the terms and agrees on his phone before he can send a request. Until then he cannot send requests, so by default the light stays red.
+You add the transporter in the Pump app: name, mobile number, limit and his truck numbers. One tap opens your own WhatsApp with his link ready to send. If he has already signed up on his own with that number, your account shows up in his app and he gets a notification. The transporter reads the terms and agrees on his phone before he can send a request. Until then he cannot send requests, so by default the light stays red.
 
 A truck number can be active with one transporter at a time. You decide who gets credit; Khata Kavach never lends and never holds money.

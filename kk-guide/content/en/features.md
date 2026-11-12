@@ -12,7 +12,7 @@
     { "q": "How much does Khata Kavach cost?", "a": "The price depends on your pump, so call us. A person answers the phone from 9am to 9pm, every day." }
   ],
   "related": ["feature-requests", "feature-counter-light", "feature-bills", "trades"],
-  "updated": "2026-10-27"
+  "updated": "2026-11-12"
 }
 ---
 ## Two apps, one shared line
@@ -54,4 +54,4 @@ With no request the light is red, "No credit", and he can fill for cash. Per tra
 - It does not lend, hold or collect money.
 - It does not send messages by itself. One tap opens your own WhatsApp with the message ready.
 - It does not track stock or record cash fills.
-- It does not let a transporter sign up alone: the pump invites him with a link on WhatsApp. A pump starts on its own in the Pump app.
+- It does not start credit when a transporter signs up on his own: a pump must add his number and he must agree to its terms. A pump starts on its own in the Pump app.
