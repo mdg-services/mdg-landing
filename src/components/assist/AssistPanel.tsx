@@ -177,13 +177,9 @@ export default function AssistPanel({
     onLeadAsk: (ask) => setCaption(ask.text),
     onRefused: (refusal) => {
       // A refused microphone gets the microphone card, which says more than
-      // the call strip could. Busy lines and a block both get the form: the
-      // visitor came here to reach somebody, and they still will.
+      // the call strip could. Busy lines and a block get the toll-free number
+      // (the refusal card below carries it); the site takes no call-back requests.
       if (refusal.kind === "mic" && refusal.micFailure) setMicNotice(refusal.micFailure);
-      if (refusal.kind === "capacity" || refusal.kind === "blocked") {
-        setLeadDone(null);
-        setLead({ escalate: true });
-      }
       if (refusal.kind === "capacity") setStuck(true);
     },
   });
@@ -294,13 +290,9 @@ export default function AssistPanel({
           return;
         case "TURN_LIMIT":
           setError(d.errors.turnLimit);
-          setLeadDone(null);
-          setLead({ escalate: true });
           return;
         case "CALL_CAPACITY":
           setError(d.errors.callCapacity);
-          setLeadDone(null);
-          setLead({ escalate: true });
           setStuck(true);
           return;
         case "PAYLOAD_TOO_LARGE":
@@ -530,12 +522,6 @@ export default function AssistPanel({
     },
     [apiDown, lead, lang, push, mailCallback, remember],
   );
-
-  const openCallbackForm = useCallback(() => {
-    setLeadDone(null);
-    setGrievance(null);
-    setLead({ escalate: true });
-  }, []);
 
   /* ── A complaint about us ─────────────────────────────────────────────── */
 
@@ -868,16 +854,6 @@ export default function AssistPanel({
                     >
                       {d.mic.typeInstead}
                     </button>
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setMicNotice(null);
-                        openCallbackForm();
-                      }}
-                      className="rounded-full border border-ink/15 bg-white px-4 py-2 text-[13px] font-semibold text-ink"
-                    >
-                      {d.lead.open}
-                    </button>
                   </div>
                 </div>
               )}
@@ -912,16 +888,6 @@ export default function AssistPanel({
                   {call.grievanceRefs.length > 0 && (
                     <GrievanceNumber d={d} refs={call.grievanceRefs} tone="inline" />
                   )}
-                  <button
-                    type="button"
-                    onClick={() => {
-                      call.reset();
-                      openCallbackForm();
-                    }}
-                    className="mt-2.5 text-[13px] font-semibold text-navy-700 underline decoration-navy-300 underline-offset-4"
-                  >
-                    {d.lead.open}
-                  </button>
                 </div>
               )}
 
@@ -937,21 +903,8 @@ export default function AssistPanel({
               {error && (
                 <div role="alert" className="mt-3 rounded-2xl border border-gold-300 bg-gold-50 p-3.5">
                   <p className="text-[13.5px] leading-[1.6] text-ink-soft">{error}</p>
-                  {stuck && (
-                    <>
-                      {/* The way out comes first. The form is already open for a
-                          busy line, so the button appears only when it is not. */}
-                      {!lead && (
-                        <button
-                          type="button"
-                          onClick={openCallbackForm}
-                          className="mt-2.5 rounded-full bg-navy-700 px-4 py-2 text-[13px] font-semibold text-white"
-                        >
-                          {d.lead.open}
-                        </button>
-                      )}
-                    </>
-                  )}
+                  {/* the way out is the toll-free number: the site takes no call-back requests */}
+                  {stuck && <CallNow d={d} />}
                 </div>
               )}
 
@@ -960,16 +913,8 @@ export default function AssistPanel({
                 <div className="mt-3 rounded-2xl border border-ink-hairline bg-paper-warm p-3.5">
                   <p className="font-display text-[15px] font-semibold text-ink">{d.fallback.title}</p>
                   <p className="mt-1 text-[13.5px] leading-[1.6] text-ink-soft">{d.fallback.body}</p>
-                  <button
-                    type="button"
-                    onClick={openCallbackForm}
-                    className="mt-2.5 rounded-full bg-navy-700 px-4 py-2 text-[13px] font-semibold text-white"
-                  >
-                    {d.lead.open}
-                  </button>
                   {/* The assistant is up and simply did not know this one, so
-                      a call reaches somebody who does. It comes after the
-                      callback offer, never before it. */}
+                      a call reaches somebody who does. */}
                   <CallNow d={d} />
                 </div>
               )}
@@ -1147,15 +1092,6 @@ export default function AssistPanel({
                 {linesBusy && (
                   <span className="text-[12px] text-ink-muted">{d.call.refusedCapacity}</span>
                 )}
-
-                <button
-                  type="button"
-                  onClick={openCallbackForm}
-                  aria-label={d.lead.openAria}
-                  className="text-[12.5px] font-semibold text-navy-700"
-                >
-                  {d.lead.open}
-                </button>
 
                 {charsLeft < CHARS_WARN_AT && (
                   <span className="num ml-auto text-[12px] text-ink-muted">

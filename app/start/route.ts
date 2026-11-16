@@ -3,23 +3,25 @@ import { BRAND } from "@/data/content";
 export const dynamic = "force-dynamic";
 
 /**
- * GET /start — "Start services", the sign-up button on our WhatsApp film invites.
+ * GET /start — "Start services", the sign-up button on our WhatsApp film invites
+ * and on the film pages.
  *
- * A dealer who taps it on an Android phone goes straight to the Dealer Kavach app
- * on Google Play: they register inside the app and are signed in at once, with no
- * website form and no second sign-in. Everyone else — an iPhone, while the app is
- * not on the App Store, and a computer — goes to the website's Register your pump
- * page, which opens the same account.
- *
- * The invites sent before this link existed point at /register itself, which
- * keeps working exactly as before. Whatever the link carried (`?lang=hi` from the
- * Hindi invite, say) goes on to /register, whose own language rules then pick the
- * page (proxy.ts). Nothing about the visitor is stored here.
+ * It never opens a form of ours. A dealer on an iPhone goes to the Dealer Kavach
+ * app on the App Store, one on an Android phone to Google Play, and they register
+ * inside the app and are signed in at once. Anyone else (a computer, or an iPad
+ * that hides itself as one) goes to /register, which is now a page that shows
+ * both store buttons and nothing to fill in. Whatever the link carried (`?lang=hi`
+ * from the Hindi invite, say) goes on to /register, whose own language rules then
+ * pick the page (proxy.ts). Nothing about the visitor is stored here.
  */
 export function GET(req: Request): Response {
   const url = new URL(req.url);
   const agent = req.headers.get("user-agent") ?? "";
-  const target = /android/i.test(agent) ? playStoreLink() : new URL(`/register${url.search}`, url).toString();
+  const target = /android/i.test(agent)
+    ? playStoreLink()
+    : /iphone|ipad|ipod/i.test(agent)
+      ? BRAND.appStore
+      : new URL(`/register${url.search}`, url).toString();
   return new Response(null, {
     status: 302,
     // A phone and a computer get different answers from the same address, so no

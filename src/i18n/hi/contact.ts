@@ -15,19 +15,11 @@ export const contact: typeof EN = {
   hoursLower: "सुबह 9 से रात 9, हर दिन",
   tapToCall: "कॉल करने के लिए टैप कीजिए",
 
-  callbackEyebrow: "कॉलबैक चाहिए?",
-  callbackHeading: "अपना नंबर छोड़ दीजिए, हम कॉल कर लेंगे।",
-  callbackNote: "एक घंटे के भीतर हमारी टीम कॉल कर लेती है, {hours}।",
-  leaveNumber: "मेरा नंबर ले लीजिए",
+  appEyebrow: "शुरू करने के लिए तैयार?",
+  appHeading: "ऐप लीजिए, उसी में रजिस्टर कीजिए।",
+  appNote: "डीलर कवच ऐप App Store और Google Play पर मुफ़्त है। अपने मोबाइल नंबर से ऐप में ही रजिस्टर कीजिए; यहाँ कुछ भरना नहीं है।",
 
-  formAria: "कॉलबैक का अनुरोध",
-  fields: {
-    name: { label: "आपका नाम", placeholder: "रमेश कुमार" },
-    outlet: { label: "पंप / आउटलेट", placeholder: "साईं पेट्रोलियम्स, अलीगढ़" },
-    phone: { label: "फ़ोन", placeholder: "+91 9XXXXXXXXX" },
-  },
   privacy: "आपका नंबर हम किसी के साथ साझा नहीं करेंगे।",
-  submit: "कॉलबैक का अनुरोध भेजिए",
   submitting: "भेजा जा रहा है…",
 
   errorGeneric: "कुछ गड़बड़ हो गई। कृपया दोबारा कोशिश कीजिए।",

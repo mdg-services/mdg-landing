@@ -24,7 +24,7 @@ export const footer: typeof EN = {
     process: "प्रोसेस",
     contact: "संपर्क कीजिए",
   },
-  register: "रजिस्टर कीजिए",
+  register: "ऐप लीजिए",
   grievance: "शिकायत",
   mdgGuide: "डीलरों के लिए गाइड",
   pumpGuide: "पेट्रोल पंप गाइड: पंप खोलना और चलाना",
@@ -34,6 +34,7 @@ export const footer: typeof EN = {
   dealerChrome: "कंप्यूटर के लिए · Chrome एक्सटेंशन",
   khataApp: "खाता कवच",
   khataGuides: "पंप पर उधार तेल देने की गाइड",
+  khataTransporterIos: "ट्रांसपोर्टर ऐप · App Store",
   khataAndroid: "खाता कवच एंड्रॉइड पर: जल्द Google Play पर",
 
   companyHeading: "कंपनी",

@@ -43,7 +43,7 @@ export const footer = {
     contact: "Get in touch",
   },
   /** Last in the same list, but a route rather than an anchor. */
-  register: "Register",
+  register: "Get the app",
   /** And the grievance page, last in the list. */
   grievance: "Grievances",
   /** The dealer guides to the Marketing Discipline Guidelines: plain static pages, so a plain link, not a route. */
@@ -59,6 +59,7 @@ export const footer = {
   /** The Khata Kavach guides' front door: a plain link (guide addresses keep their trailing slash). */
   khataGuides: "Guides on giving fuel on credit",
   /** Not a link: the Android app is not on Google Play yet. */
+  khataTransporterIos: "Transporter app · App Store",
   khataAndroid: "Khata Kavach for Android: coming to Google Play",
 
   /** The row under the columns: the company, and the rules a customer is under. */

@@ -19,7 +19,7 @@ export const TERMS_VERSION = "2026-10-06";
 
 export const register = {
   /** The browser tab's title on this page. */
-  pageTitle: "Register your pump · MDG Services",
+  pageTitle: "Get the Dealer Kavach app · MDG Services",
 
   /* ── the slim header ── */
   /** Used twice: after the "←" in the header, and on the success card. */
@@ -31,15 +31,27 @@ export const register = {
      same thing twice, so Hindi puts its own word in `eyebrow` and leaves
      `eyebrowDeva` as `undefined`, and the component drops the dot with it.
      Write `undefined` there, not an empty string. */
-  eyebrow: "Dealer enrolment",
-  eyebrowDeva: "नामांकन" as string | undefined,
-  heading: "Register your dealership.",
+  eyebrow: "Get the app",
+  eyebrowDeva: undefined as string | undefined,
+  heading: "Register in the Dealer Kavach app.",
   intro:
-    "A few details and you're in. Pick the site that fits your pump. We confirm the services and lock your pricing in writing before we begin.",
+    "Download the app from the App Store or Google Play and register inside it with your mobile number. You are signed in the moment you finish, and you pick your services there.",
 
   /** Under the intro: the app's sign-in screen opens this same form. */
-  appLead: "Prefer the app? Download Dealer Kavach from Google Play and register from inside the app.",
-  appLink: "Get it on Google Play",
+  /** Under the intro: the same call line the film pages carry. */
+  appLead: "Any question before you start? Call us toll-free, 9am to 9pm, every day.",
+  appLink: "Call us",
+  /** What the two store buttons say to a screen reader. */
+  appStoreAria: "Download the Dealer Kavach app on the App Store",
+  playAria: "Get the Dealer Kavach app on Google Play",
+  /** The three steps under the buttons. */
+  stepsHeading: "Three steps",
+  steps: [
+    { title: "Download the app", body: "Tap the App Store button on an iPhone, or Google Play on an Android phone. The app is free." },
+    { title: "Register inside it", body: "Give your name, mobile number and pump details. There is nothing to fill in on this website." },
+    { title: "Pick your services", body: "Choose what you need. Your pricing is confirmed in writing before we begin." },
+  ],
+  computerNote: "On a computer? Open this page on your phone, or search for Dealer Kavach in your phone's store.",
 
   /* ── the form ── */
   sectionAria: "Enrolment form",

@@ -1,16 +1,16 @@
 /* Inlined into /film and /film/short. Device fonts only: Devanagari comes from the phone.
    The scene: a dealer opens a WhatsApp link on his phone, at the pump or at home at night.
    The picture is the brightest thing on the screen; everything around it is deep navy.
-   Two colours carry meaning: green is only "reply to us on WhatsApp", gold is the next step.
+   Gold is the next step: Start services, and the ways to reach us.
    Surfaces are told apart by a step in tone, not by outlines. */
 :root{--bg:#101133;--panel:#1b1d4d;--panel2:#24275e;--line:#2f3280;--card:#15173f;--edge:rgba(247,247,255,.12);--rule:rgba(247,247,255,.07);
   --wa-deep:#103d27;--wa-mid:#1b6a41;--fg:#f7f7ff;--dim:#c5c7ed;--acc:#f5a524;--ink:#101133;
   --night:#07081c;--wa:#25d366;--field:#7a7ec8;--bad:#ff9a8a;--veil:rgba(7,8,28,.82);
   --sys:system-ui,-apple-system,"Segoe UI",Roboto,"Noto Sans Devanagari","Nirmala UI",sans-serif;
   --out:cubic-bezier(.25,1,.5,1);
-  /* --hd is the header's height: one line on a phone. --bar is the reply bar under the
-     picture: the picture gives up that much height so the reply is on the first screen. */
-  --hd:52px;--bar:84px;--stage:min(100vw,calc((100vh - var(--hd) - var(--bar))*9/16));--fold:calc(100vh - var(--hd) - var(--bar))}
+  /* --hd is the header's height: one line on a phone. --bar is the Start services bar under the
+     picture: the picture gives up that much height so it is on the first screen. */
+  --hd:52px;--bar:136px;--stage:min(100vw,calc((100vh - var(--hd) - var(--bar))*9/16));--fold:calc(100vh - var(--hd) - var(--bar))}
 @supports (height:100svh){:root{--stage:min(100vw,calc((100svh - var(--hd) - var(--bar))*9/16));--fold:calc(100svh - var(--hd) - var(--bar))}}
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%;color-scheme:dark}
@@ -80,9 +80,9 @@ video::cue{font:600 clamp(19px,5.4vw,28px)/1.4 var(--sys);color:var(--fg);backgr
 .low{padding:0 12px 6px}
 .now{margin:0 4px;font-size:16px;font-weight:600;color:var(--dim);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
   text-shadow:0 1px 6px rgba(0,0,0,.7)}
-/* from the fees chapter on, the controls carry the reply too: low, by the thumb */
+/* from the fees chapter on, the controls carry Start services too: low, by the thumb */
 .wpill{display:none;align-items:center;gap:8px;width:max-content;max-width:100%;margin:0 4px 8px;padding:9px 16px;border-radius:999px;
-  background:var(--wa);color:var(--ink);font-size:16px;font-weight:800;text-decoration:none;white-space:nowrap;overflow:hidden}
+  background:var(--acc);color:var(--ink);font-size:16px;font-weight:800;text-decoration:none;white-space:nowrap;overflow:hidden}
 .wpill svg{width:20px;height:20px;flex:none}
 .stage.late .wpill{display:flex}
 .now:empty{display:none}
@@ -171,31 +171,31 @@ video::cue{font:600 clamp(19px,5.4vw,28px)/1.4 var(--sys);color:var(--fg);backgr
 .btn.pri{background:var(--acc);color:var(--ink);font-size:18px}
 .btn.alt{background:transparent;box-shadow:inset 0 0 0 2px var(--acc);color:var(--acc)}
 .btn svg{width:20px;height:20px;flex:0 0 auto}
-/* a mark in a tinted circle: the reply, the ways in, the form */
+/* a mark in a tinted circle: the main action, the ways in */
 .dot{display:grid;place-items:center;flex:none;width:48px;height:48px;border-radius:50%;background:rgba(247,247,255,.1)}
 .dot svg{width:24px;height:24px}
 .dot.gold{background:rgba(245,165,36,.16);color:var(--acc)}
 .dot.lilac{background:rgba(150,158,255,.18);color:#c3c7ff}
 .dot.dark{background:rgba(247,247,255,.07);box-shadow:inset 0 0 0 1px var(--edge)}
-/* the reply: the one green thing, a deep green bar with its own edge; its second line says the message is typed */
-.btn.reply{justify-content:flex-start;gap:14px;min-height:72px;padding:12px 18px 12px 12px;border-radius:18px;
-  background:linear-gradient(100deg,#13703a,#1a8c4b 55%,#23a95c);box-shadow:inset 0 0 0 1px rgba(110,231,160,.55);
-  color:#fff;text-align:left}
-.btn.reply .dot{background:rgba(255,255,255,.12);box-shadow:inset 0 0 0 1px rgba(255,255,255,.2)}
-.btn.reply .dot svg{width:28px;height:28px}
-.reply span{display:flex;flex:1;flex-direction:column;min-width:0}
-.reply b{font-size:19px;line-height:1.25}
-.reply small{font-size:15px;font-weight:500;line-height:1.3;opacity:.85}
+/* Start services: the one main action, a gold bar; its second line says what happens (the app, then register in it) */
+.btn.start{justify-content:flex-start;gap:14px;min-height:72px;padding:12px 18px 12px 12px;border-radius:18px;
+  background:linear-gradient(100deg,#f5a524,#ffbf4d);box-shadow:inset 0 0 0 1px rgba(255,255,255,.35);
+  color:var(--ink);text-align:left}
+.btn.start .dot{background:rgba(16,17,51,.12);box-shadow:inset 0 0 0 1px rgba(16,17,51,.2)}
+.btn.start .dot svg{width:28px;height:28px}
+.start span{display:flex;flex:1;flex-direction:column;min-width:0}
+.start b{font-size:19px;line-height:1.25}
+.start small{font-size:15px;font-weight:600;line-height:1.3;opacity:.8}
 /* the chevron on everything that leads somewhere */
-.btn.reply::after,.way::after{content:"";flex:none;width:10px;height:10px;margin:0 6px 0 4px;border-right:2.5px solid currentColor;
+.btn.start::after,.way::after{content:"";flex:none;width:10px;height:10px;margin:0 6px 0 4px;border-right:2.5px solid currentColor;
   border-bottom:2.5px solid currentColor;transform:rotate(-45deg);opacity:.75}
 /* replay and share on the end card: words, not more buttons */
 .lnk{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 4px;border:0;background:none;
   font-size:17px;font-weight:700;text-decoration:underline;text-underline-offset:4px}
 .lnk svg{width:20px;height:20px}
 
-/* ── under the picture: the reply, always on the first screen ── */
-.act{display:flex;flex-direction:column;gap:12px;padding:12px 16px}
+/* ── under the picture: Start services, and the toll-free number, always on the first screen ── */
+.act{display:flex;flex-direction:column;gap:8px;padding:12px 16px 6px}
 .act .btn{max-width:none}
 .act .alt{justify-content:flex-start;gap:14px;min-height:60px;padding:0 18px;border-radius:18px;background:rgba(245,165,36,.06)}
 .act .alt svg{width:24px;height:24px}
@@ -211,32 +211,21 @@ video::cue{font:600 clamp(19px,5.4vw,28px)/1.4 var(--sys);color:var(--fg);backgr
 .way strong{display:block;margin-top:4px;font-size:21px;font-weight:800;letter-spacing:.01em;font-variant-numeric:tabular-nums}
 .way span{display:block;margin-top:4px;color:var(--dim);font-size:16px;line-height:1.4}
 .way .dot.dark svg{width:26px;height:26px}
-/* the form: its own card, a head like the rows above, marks inside the boxes */
-.cb{display:flex;flex-direction:column;gap:8px}
 .head{display:flex;align-items:center;gap:16px}
 .head b{display:block;font-size:18px;line-height:1.35}
-.head span,.cb .head p{display:block;margin:2px 0 0;color:var(--dim);font-size:16px;line-height:1.45}
-.cb .head{margin-bottom:8px}
-.cb label{margin-top:8px;font-size:16px;font-weight:700}
-.cb label i{font-style:normal;font-weight:500;color:var(--dim)}
-.cb input{width:100%;min-height:54px;padding:12px 16px;border:1px solid var(--field);border-radius:14px;background:rgba(7,8,28,.45);
-  color:var(--fg);font:inherit;font-size:17px}
-.cb input::placeholder{color:#a3a5d4}
-.cb input:focus{outline:0;border-color:var(--acc);box-shadow:0 0 0 1px var(--acc)}
-.cb input[aria-invalid=true]{border-color:var(--bad);box-shadow:0 0 0 1px var(--bad)}
-.tel{display:flex;gap:10px}
-.tel span{display:grid;place-items:center;flex:none;min-width:68px;border:1px solid var(--field);border-radius:14px;font-weight:700}
-.cb .btn{max-width:none;margin-top:12px;border-radius:16px}
-.cb .btn:disabled{opacity:.6}
-.cb .msg{margin:8px 0 0;font-size:16px;font-weight:700;color:var(--bad);overflow-wrap:anywhere}
-.cb .msg:empty{display:none}
-.cb .msg.ok{color:#8ee6b0}
-.safe{display:flex;align-items:flex-start;gap:14px;padding:16px 18px}
-.safe b{display:block;font-size:16px}
-.safe span{display:block;margin-top:4px;color:var(--dim);font-size:15px;line-height:1.45}
-.okc{display:grid;place-items:center;flex:none;width:28px;height:28px;border-radius:50%;background:#1fa855;color:#fff}
-.okc svg{width:18px;height:18px}
+.head span{display:block;margin:2px 0 0;color:var(--dim);font-size:16px;line-height:1.45}
 /* ── chapters: one card, a still from the film on each row ── */
+/* the toll-free number, always in sight under the main bar: a line, not a button */
+.callrow{display:flex;align-items:center;justify-content:center;gap:8px 10px;min-height:40px;padding:0 8px;color:var(--dim);font-size:16px;
+  text-decoration:none;text-align:center;flex-wrap:wrap}
+.callrow svg{width:20px;height:20px;color:var(--acc);flex:none}
+.callrow b{color:var(--fg);font-size:20px;font-weight:800;letter-spacing:.01em;font-variant-numeric:tabular-nums;text-decoration:underline;text-underline-offset:4px}
+/* the two store buttons in the app screen */
+.btn.store{justify-content:flex-start;gap:14px;min-height:64px;padding:10px 20px;border-radius:16px;background:#000;box-shadow:inset 0 0 0 1px rgba(255,255,255,.28);color:#fff;text-align:left}
+.btn.store svg{width:30px;height:30px}
+.btn.store span{display:flex;flex-direction:column;line-height:1.1}
+.btn.store small{font-size:12px;font-weight:500;letter-spacing:.02em}
+.btn.store b{font-size:22px;font-weight:600}
 .info{display:flex;flex-direction:column;gap:14px;padding:28px 16px 4px}
 .info [role=tabpanel]{display:flex;flex-direction:column;gap:10px}
 .info [hidden]{display:none}
@@ -275,21 +264,7 @@ html.lock{overflow:hidden}
 .sheet{align-items:flex-end;background:rgba(7,8,28,.66)}
 .sheet .pane{flex:none;border-radius:24px 24px 0 0;background:var(--card);box-shadow:inset 0 1px 0 var(--edge);
   padding-bottom:max(24px,env(safe-area-inset-bottom))}
-.hero{display:flex;flex-direction:column;align-items:center;gap:6px;padding:12px 0 4px;text-align:center}
-.hero p{margin:10px 0 0;font-size:17px}
-.hero>span{color:var(--dim);font-size:16px}
-.dot.xl{width:96px;height:96px}
-.dot.xl svg{width:44px;height:44px}
-.num{color:var(--acc);font-size:32px;font-weight:800;letter-spacing:.01em;text-decoration:none;font-variant-numeric:tabular-nums}
 .view .btn{max-width:none}
-.thanks{margin:auto 0;gap:12px}
-.thanks b{font-size:28px}
-.thanks p{margin:0 0 16px;color:var(--dim);font-size:17px;line-height:1.5}
-.tick{position:relative;display:grid;place-items:center;width:96px;height:96px;margin-bottom:12px;border-radius:50%;background:#1fa855;color:#fff}
-.tick svg{width:52px;height:52px}
-/* a few dots of colour round the tick */
-.fx{position:absolute;left:50%;top:50%;width:6px;height:6px;border-radius:50%;
-  box-shadow:-70px -40px 0 var(--acc),68px -46px 0 #5be095,-82px 18px 0 #9aa0ff,84px 22px 0 var(--acc),-40px -74px 0 #5be095,44px 70px 0 #9aa0ff,-54px 64px 0 var(--acc)}
 .pts{list-style:none;margin:0;padding:6px 18px}
 .pts li{display:flex;align-items:center;gap:16px;padding:14px 0}
 .pts li+li{border-top:1px solid var(--rule)}
@@ -323,7 +298,7 @@ footer a{display:inline-flex;align-items:center;min-height:44px;color:var(--dim)
 /* press feedback on everything a thumb can hit */
 .btn,.way,.lnk,.rate,.wpill,.ch button,.seg button{transition:transform .12s var(--out),background-color .15s var(--out)}
 .btn:active,.way:active,.lnk:active,.rate:active,.wpill:active{transform:scale(.97)}
-@media (hover:hover){.seg button:hover,.ch button:hover{background:var(--panel2)}.way:hover{box-shadow:inset 0 0 0 1px rgba(247,247,255,.28)}.btn.reply:hover{box-shadow:inset 0 0 0 1px #6ee7a0}.tabs button:hover{color:var(--fg)}.ic:hover,.rate:hover{background:rgba(247,247,255,.24)}}
+@media (hover:hover){.seg button:hover,.ch button:hover{background:var(--panel2)}.way:hover{box-shadow:inset 0 0 0 1px rgba(247,247,255,.28)}.btn.start:hover{box-shadow:inset 0 0 0 1px #fff}.tabs button:hover{color:var(--fg)}.ic:hover,.rate:hover{background:rgba(247,247,255,.24)}}
 @media (prefers-reduced-motion:reduce){.snd{animation:none}.load i::after{animation:none;width:100%;opacity:.6}
   .wait i{animation-duration:2.4s}.ui,.stage.on .ui{transition:none}.btn,.way,.lnk,.rate,.wpill{transition:none}
   .btn:active,.way:active,.lnk:active,.rate:active,.wpill:active{transform:none}}

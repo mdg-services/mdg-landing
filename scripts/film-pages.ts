@@ -13,8 +13,10 @@
  * poster and the first seconds of the film before the SPA would even have
  * downloaded. Budget: HTML + inline CSS/JS <= 21 kB gzipped per page. It was
  * 15 kB until the WhatsApp reply, the speed button and the form's errors, then
- * the owner's card design, and then a screen for each thing to do (call us,
- * the form, thank you, the app) with settings and sharing as sheets (22 Oct 2026);
+ * the owner's card design, and then a screen for each thing to do with settings
+ * and sharing as sheets (22 Oct 2026). On 12 Nov 2026 the WhatsApp reply and the
+ * call-back form came out: the one action is Start services (the app), and the
+ * toll-free number stays in sight;
  * 1 kB is about 33 ms at 250 kbps, against the poster and the ~120 kB hls.js
  * that decide the first frame. The stills themselves load lazily, below the fold.
  *
@@ -30,6 +32,7 @@ import { createRequire } from "node:module";
 import path from "node:path";
 import { gzipSync } from "node:zlib";
 import { minify, transformWithOxc } from "vite";
+import { APP_STORE, APPLE_MARK_PATH, PLAY_MARK_PATHS, PLAY_STORE } from "../src/lib/appStores";
 
 type FilmId = "kavach" | "kavach-short";
 type Lang = "hi" | "en";
@@ -57,19 +60,11 @@ export interface FilmPageFile {
 const SITE = "https://mdgservices.in";
 const MEDIA_ORIGIN = "https://mdg-films.s3.ap-south-1.amazonaws.com";
 const DEFAULT_BEACON = "https://api.mdgservices.in/api/v1/films/beacon";
-/** The Dealer Kavach app; its sign-in screen opens the same enrolment form as /register. */
-const PLAY_URL = "https://play.google.com/store/apps/details?id=in.mdgservices.dealerkavach";
+/** The Dealer Kavach app on Google Play, tagged so Play's install figures show the film page. */
+const PLAY_URL = `${PLAY_STORE}&referrer=${encodeURIComponent("utm_source=film&utm_medium=page&utm_campaign=app_screen")}`;
 /** Same number as src/lib/tollFree.ts; this script is not part of the app, so it is not imported. */
 const TOLL_FREE_TEL = "tel:18008913496";
 const TOLL_FREE_SHOWN = "1800-891-3496";
-/**
- * Our WhatsApp business number that sends the film ("MDG Services", +91 94702
- * 93412; the backend's WHATSAPP_PHONE_NUMBER_ID). "Reply on WhatsApp" opens
- * the chat with this number, which for a dealer who got the film there is the
- * very chat the film came in. The reply lands in the admin's WhatsApp inbox.
- * Change it here if the film is ever sent from another number.
- */
-const WA_REPLY = "919470293412";
 /** The day both films went up on these pages, for search engines' video results. */
 const PUBLISHED = "2026-10-04T00:00:00+05:30";
 /** A running time as schema.org wants it: 1589.7 s -> "PT26M30S". */
@@ -103,13 +98,11 @@ const T = {
     langAria: "भाषा",
     full: (m: number) => `पूरी फ़िल्म देखें · ${m} मिनट`,
     fullSoon: (m: number) => `पूरी फ़िल्म देखें (${m} मिनट) →`,
-    join: "डीलर कवच से जुड़ें",
-    reply: "WhatsApp पर जवाब दें",
-    replySub: "संदेश तैयार है, बस भेज दीजिए",
-    /** what the reply opens with, ready to send; the fixed start lets the team spot it in the inbox */
-    replyText: "डीलर कवच फ़िल्म: मुझे रुचि है। कृपया मुझे कॉल करें।",
-    replyPill: "रुचि है? WhatsApp पर बताइए",
-    endAsk: "पसंद आया? WhatsApp पर बताइए",
+    start: "सेवाएँ शुरू करें",
+    startSub: "ऐप लीजिए, उसी में रजिस्टर कीजिए",
+    startPill: "सेवाएँ शुरू करें",
+    endAsk: "पसंद आया? ऐप में शुरू कीजिए",
+    questions: "कोई सवाल? टोल-फ़्री कॉल कीजिए",
     friend: "दोस्त को फ़िल्म भेजें",
     friendShort: "दोस्त को भेजें",
     settings: "सेटिंग",
@@ -140,30 +133,11 @@ const T = {
     chapterCount: (n: number) => `${n} अध्याय`,
     inFull: "पूरी फ़िल्म में",
     next: "बात करने के और तरीके",
-    cbTitle: "हम आपको कॉल करेंगे",
-    cbLead: "नाम और नंबर भेजिए, हमारी टीम आपको कॉल करेगी।",
-    cbName: "आपका नाम",
-    cbPhone: "मोबाइल नंबर",
-    cbPhoneEg: "जैसे 98765 43210",
-    cbOutlet: "पंप का नाम",
-    cbOptional: "ज़रूरी नहीं",
-    cbSend: "मेरा नंबर भेजें",
-    cbNameHint: "अपना पूरा नाम लिखिए",
-    cbOutletHint: "पंप का नाम लिखिए",
-    safeTitle: "आपकी जानकारी हमारे पास सुरक्षित है।",
-    safeSub: "हम आपसे सिर्फ़ डीलर कवच के बारे में ही संपर्क करेंगे।",
-    thanksTitle: "धन्यवाद!",
-    thanksSub: "आपका नंबर हमें मिल गया है। हमारी टीम जल्द ही आपको कॉल करेगी।",
-    backToVideo: "वापस फ़िल्म पर",
     goBack: "पीछे जाएँ",
     close: "बंद करें",
     callUs: "हमें कॉल करें",
-    callNow: "अभी कॉल करें",
-    preferCb: "कॉल बैक चाहिए?",
-    preferCbSub: "नाम और नंबर भेजिए, हम आपको कॉल करेंगे।",
     appGet: "डीलर कवच ऐप लीजिए",
-    appOn: "Google Play पर उपलब्ध",
-    appOpen: "Google Play में खोलें",
+    appOn: "App Store और Google Play पर उपलब्ध",
     appPts: [
       ["मिनटों में रजिस्टर करें", "अपना खाता बनाइए और शुरू कीजिए।"],
       ["सब कुछ एक जगह", "रिकॉर्ड रखिए, नज़र रखिए, नियमों का पालन कीजिए।"],
@@ -181,7 +155,7 @@ const T = {
     tollTitle: "टोल-फ़्री नंबर पर कॉल करें",
     tollHours: "सुबह 9 से रात 9, हर दिन",
     appTitle: "ऐप डाउनलोड करें",
-    appSub: "Google Play से डीलर कवच ऐप लें, उसी में रजिस्टर करें",
+    appSub: "App Store या Google Play से लें, उसी में रजिस्टर करें",
     /** what the player says at run time */
     run: {
       play: "चलाएँ",
@@ -189,18 +163,10 @@ const T = {
       wait: "रुकिए…",
       offline: "इंटरनेट बंद है, जुड़ते ही चलेगी",
       slow: "इंटरनेट धीमा है, बस थोड़ी देर और…",
-      cbNoName: "अपना नाम लिखिए।",
-      cbBad: "10 अंक का मोबाइल नंबर लिखिए।",
-      cbSending: "भेज रहे हैं…",
-      cbFail: "भेज नहीं पाए। इंटरनेट देखकर फिर कोशिश करें।",
-      cbBusy: "अभी बहुत सारे अनुरोध आ गए हैं। कृपया 1800-891-3496 पर कॉल करें।",
-      cbFilm: "फ़िल्म",
       speed: "रफ़्तार",
       tapChange: "बदलने के लिए दबाएँ",
       restart: "शुरू से, आवाज़ के साथ",
       copied: "लिंक कॉपी हो गया",
-      /** the reply bar's words for a visitor who did not get the film on WhatsApp: there is no chat to reply in */
-      talk: "WhatsApp पर बात करें",
     },
   },
   en: {
@@ -219,12 +185,11 @@ const T = {
     langAria: "Language",
     full: (m: number) => `Full film · ${m} min`,
     fullSoon: (m: number) => `Watch the full film (${m} min) →`,
-    join: "Join Dealer's कवच",
-    reply: "Reply on WhatsApp",
-    replySub: "Message ready, just tap send",
-    replyText: "Dealer's Kavach film: I'm interested. Please call me.",
-    replyPill: "Interested? Tell us on WhatsApp",
-    endAsk: "Liked it? Tell us on WhatsApp",
+    start: "Start services",
+    startSub: "Get the app, register in it",
+    startPill: "Start services",
+    endAsk: "Liked it? Start in the app",
+    questions: "Any question? Call toll-free",
     friend: "Send the film to a friend",
     friendShort: "Send to a friend",
     settings: "Settings",
@@ -255,30 +220,11 @@ const T = {
     chapterCount: (n: number) => `${n} chapters`,
     inFull: "In the full film",
     next: "Other ways to reach us",
-    cbTitle: "We'll call you back",
-    cbLead: "Send your name and number and our team will call you.",
-    cbName: "Your name",
-    cbPhone: "Mobile number",
-    cbPhoneEg: "e.g. 98765 43210",
-    cbOutlet: "Pump name",
-    cbOptional: "optional",
-    cbSend: "Send my number",
-    cbNameHint: "Enter your full name",
-    cbOutletHint: "Enter pump name",
-    safeTitle: "Your information is safe with us.",
-    safeSub: "We will only contact you about Dealer's कवच.",
-    thanksTitle: "Thank you!",
-    thanksSub: "We've received your number. Our team will call you shortly.",
-    backToVideo: "Back to video",
     goBack: "Back",
     close: "Close",
     callUs: "Call us",
-    callNow: "Call now",
-    preferCb: "Prefer a callback?",
-    preferCbSub: "Send your name and number and we'll call you.",
     appGet: "Get the Dealer Kavach app",
-    appOn: "Available on Google Play",
-    appOpen: "Open in Google Play",
+    appOn: "Available on the App Store and Google Play",
     appPts: [
       ["Register in minutes", "Create your account and get started."],
       ["Everything in one place", "Track, record and stay compliant."],
@@ -296,24 +242,17 @@ const T = {
     tollTitle: "Call our toll-free number",
     tollHours: "9am to 9pm, every day",
     appTitle: "Download the app",
-    appSub: "Get the Dealer Kavach app on Google Play and register in it",
+    appSub: "Get it on the App Store or Google Play and register in it",
     run: {
       play: "Play",
       pause: "Pause",
       wait: "Loading…",
       offline: "No internet. It will play when you're back online.",
       slow: "Slow internet, nearly there…",
-      cbNoName: "Please write your name.",
-      cbBad: "Please write a 10-digit mobile number.",
-      cbSending: "Sending…",
-      cbFail: "Couldn't send. Check your internet and try again.",
-      cbBusy: "Too many requests just now. Please call 1800-891-3496.",
-      cbFilm: "Film",
       speed: "Speed",
       tapChange: "tap to change",
       restart: "From the start, with sound",
       copied: "Link copied",
-      talk: "Chat with us on WhatsApp",
     },
   },
 };
@@ -351,10 +290,12 @@ const ICON = {
   mail: '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 4-8 5-8-5V6l8 5 8-5z"/></svg>',
   user: '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zm0 2c-2.7 0-8 1.3-8 4v2h16v-2c0-2.7-5.3-4-8-4z"/></svg>',
   home: '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>',
-  send: '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M2.5 21 23 12 2.5 3v7l14.5 2-14.5 2z"/></svg>',
+  /** Apple's logo, for the App Store button */
+  apple: `<svg viewBox="0 0 73 73" fill="currentColor" aria-hidden="true"><path d="${APPLE_MARK_PATH}"/></svg>`,
+  /** a phone: the app */
+  app: '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17 1H7a2 2 0 0 0-2 2v18a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2zm-5 21a1.2 1.2 0 1 1 0-2.4 1.2 1.2 0 0 1 0 2.4zM17 18H7V5h10z"/></svg>',
   /** Google Play's own four-colour mark, for the "get the app" row */
-  play4:
-    '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#00a0ff" d="M3.6 2.3c-.3.3-.4.7-.4 1.2v17c0 .5.1.9.4 1.2l9.5-9.7z"/><path fill="#ffbc00" d="m16.3 15.3-3.2-3.3 3.2-3.3 3.9 2.2c1.1.6 1.1 1.6 0 2.2z"/><path fill="#ff3a44" d="m16.3 15.3-3.2-3.3-9.5 9.7c.4.4 1 .4 1.6.1z"/><path fill="#00d26a" d="M16.3 8.7 5.2 2.2c-.6-.4-1.2-.3-1.6.1l9.5 9.7z"/></svg>',
+  play4: `<svg viewBox="0 0 24 24" aria-hidden="true">${PLAY_MARK_PATHS.map(([fill, d]) => `<path fill="${fill}" d="${d}"/>`).join("")}</svg>`,
   arrow: '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20 11H7.8l5.6-5.6L12 4l-8 8 8 8 1.4-1.4L7.8 13H20z"/></svg>',
   x: '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 6.4 17.6 5 12 10.6 6.4 5 5 6.4 10.6 12 5 17.6 6.4 19 12 13.4 17.6 19 19 17.6 13.4 12z"/></svg>',
   check: '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg>',
@@ -542,24 +483,23 @@ ${foot}</main>
   const cfg = {
     film: f.film, title, duration: f.duration, base: f.base, hls: f.hls, playlists: f.playlists, mp4: f.mp4,
     captions: f.captions, chapters: chapterList, beacon: a.beacon, hlsJs: a.hlsSrc, url, kind: p.kind, lang, s: w.run,
-    lateAt: p.kind === "full" && fees ? fees.t : 0, replyText: w.replyText,
+    lateAt: p.kind === "full" && fees ? fees.t : 0,
   };
-  // Green is for one thing only: telling us, in our WhatsApp chat, that he is
-  // interested. wa.me opens the chat with the words typed and not yet sent; the
-  // player adds the words (kept once, in cfg), so without it the link still
-  // opens the right chat, just empty.
-  const replyHref = `https://wa.me/${WA_REPLY}`;
-  const reply = (cls: string, sub = true) =>
-    `<a class="${cls}" data-reply href="${replyHref}" target="_blank" rel="noopener"><i class="dot">${ICON.wa}</i><span><b>${w.reply}</b>${sub ? `<small>${w.replySub}</small>` : ""}</span></a>`;
+  // Start services is the one main action, and it never opens a form of ours:
+  // /start sends an iPhone to the App Store and an Android phone to Google Play,
+  // and a computer to /register, which shows both buttons. The player adds the
+  // share code to the address (the data-reg mark), so the tap is counted.
+  const startHref = `/start?lang=${lang}`;
+  const start = (cls: string) =>
+    `<a class="${cls}" data-reg href="${startHref}"><i class="dot">${ICON.app}</i><span><b>${w.start}</b><small>${w.startSub}</small></span></a>`;
+  // The toll-free number, in sight on the first screen: a plain line that dials.
+  const callRow = `<a class="callrow" href="${TOLL_FREE_TEL}">${ICON.phone}<span>${w.questions}</span><b>${TOLL_FREE_SHOWN}</b></a>`;
   // Sharing the film opens its own sheet: WhatsApp, a copied link, and the
   // other apps. A quiet link with a share arrow, never green.
   const share = (cls: string, text: string) =>
     `<a class="${cls}" data-open="v-share" href="https://wa.me/">${ICON.share}${text}</a>`;
   const fullBtn = (cls: string) =>
     `<a class="${cls}" data-full href="/film?from=short">${ICON.play}${w.full(a.fullMin)}</a>`;
-  // "join" goes to the enrolment page in the language this page is in. Staying
-  // on a page with the switch in view counts as choosing it, so the site keeps it.
-  const regBtn = (cls: string) => `<a class="${cls}" data-reg href="/register?lang=${lang}">${ICON.join}${w.join}</a>`;
   /** A card that leads somewhere: a tinted circle with its mark, the words, a chevron. */
   const way = (attrs: string, tone: string, icon: string, title: string, lines: string) =>
     `<a class="way" ${attrs}><i class="dot ${tone}">${icon}</i><div><b>${title}</b>${lines}</div></a>`;
@@ -575,37 +515,14 @@ ${foot}</main>
         ? `<b id="${id}-t">${title}</b><button type="button" class="ic x" data-close aria-label="${w.close}">${ICON.x}</button>`
         : `<button type="button" class="ic" data-close aria-label="${w.goBack}">${ICON.arrow}</button><b id="${id}-t">${title}</b>`
     }</div>${body}</div></div>`;
-  const callView = view(
-    "v-call",
-    w.callUs,
-    `<div class="hero"><i class="dot gold xl">${ICON.phone}</i><p>${w.tollTitle}</p><a class="num" data-reg href="${TOLL_FREE_TEL}">${TOLL_FREE_SHOWN}</a><span>${w.tollHours}</span></div>
-<a class="btn pri" data-reg href="${TOLL_FREE_TEL}">${ICON.phone}${w.callNow}</a>
-${way('data-open="v-cb" href="#"', "lilac", ICON.mail, w.preferCb, `<span>${w.preferCbSub}</span>`)}`,
-  );
-  // The call-back form. Its words go to the admin's Call-backs page and the
-  // team's inbox with the share code, so a dealer who came from a personal
-  // WhatsApp link is known by it.
-  const formView = view(
-    "v-cb",
-    w.cbTitle,
-    `<form class="cb" id="cb" novalidate><div class="head"><i class="dot lilac">${ICON.mail}</i><p>${w.cbLead}</p></div>
-<label for="cb-name">${w.cbName}</label><input id="cb-name" name="name" placeholder="${w.cbNameHint}" autocomplete="name" maxlength="120" required>
-<label for="cb-phone">${w.cbPhone}</label><div class="tel"><span>+91</span><input id="cb-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel-national" maxlength="16" placeholder="${w.cbPhoneEg}" required></div>
-<label for="cb-outlet">${w.cbOutlet} <i>(${w.cbOptional})</i></label><input id="cb-outlet" name="outlet" placeholder="${w.cbOutletHint}" maxlength="160">
-<input name="website" tabindex="-1" autocomplete="off" hidden>
-<p class="msg" id="cbmsg" role="status" aria-live="polite"></p><button type="submit" class="btn pri">${w.cbSend}${ICON.send}</button></form>
-<div class="safe"><i class="okc">${ICON.check}</i><div><b>${w.safeTitle}</b><span>${w.safeSub}</span></div></div>`,
-  );
-  const thanksView = view(
-    "v-ok",
-    "",
-    `<div class="hero thanks"><i class="tick">${ICON.check}<i class="fx"></i></i><b>${w.thanksTitle}</b><p>${w.thanksSub}</p><button type="button" class="btn pri" data-home>${w.backToVideo}</button></div>`,
-  );
+  const store = (href: string, icon: string, small: string, name: string) =>
+    `<a class="btn store" data-reg href="${href}" target="_blank" rel="noopener">${icon}<span><small>${small}</small><b>${name}</b></span></a>`;
   const appView = view(
     "v-app",
     w.appTitle,
-    `<div class="box"><div class="head"><i class="dot dark">${ICON.play4}</i><div><b>${w.appGet}</b><span>${w.appOn}</span></div></div><a class="btn pri" data-reg href="${PLAY_URL}" target="_blank" rel="noopener">${w.appOpen}</a></div>
-<ul class="box pts">${w.appPts.map(([t, d], i) => `<li><i class="dot lilac">${[ICON.join, ICON.clip, ICON.shield][i]}</i><div><b>${t}</b><span>${d}</span></div></li>`).join("")}</ul>`,
+    `<div class="box"><div class="head"><i class="dot dark">${ICON.app}</i><div><b>${w.appGet}</b><span>${w.appOn}</span></div></div>${store(APP_STORE, ICON.apple, "Download on the", "App Store")}${store(PLAY_URL, ICON.play4, "GET IT ON", "Google Play")}</div>
+<ul class="box pts">${w.appPts.map(([t, d], i) => `<li><i class="dot lilac">${[ICON.join, ICON.clip, ICON.shield][i]}</i><div><b>${t}</b><span>${d}</span></div></li>`).join("")}</ul>
+${callRow}`,
   );
   const setView = view(
     "v-set",
@@ -623,13 +540,13 @@ ${way('data-open="v-cb" href="#"', "lilac", ICON.mail, w.preferCb, `<span>${w.pr
     true,
   );
   const next = `<section class="next" id="next"><h2>${w.next}</h2>
-${way(`data-open="v-call" href="${TOLL_FREE_TEL}"`, "gold", ICON.phone, w.callUs, `<strong>${TOLL_FREE_SHOWN}</strong><span>${w.tollHours}</span>`)}
-${way(`data-open="v-app" href="${PLAY_URL}" target="_blank" rel="noopener"`, "dark", ICON.play4, w.appTitle, `<span>${w.appSub}</span>`)}</section>`;
-  // the end of either film: the reply first, then the next film or the form, then again / share
+${way(`href="${TOLL_FREE_TEL}"`, "gold", ICON.phone, w.callUs, `<strong>${TOLL_FREE_SHOWN}</strong><span>${w.tollHours}</span>`)}
+${way(`data-open="v-app" href="${startHref}"`, "dark", ICON.app, w.appTitle, `<span>${w.appSub}</span>`)}</section>`;
+  // the end of either film: Start services first, then the next film or the toll-free line, then again / share
   const endBody =
     p.kind === "short"
-      ? `<b class="ask">${w.inFull}</b><ul class="peek">${a.peek.map((t) => `<li>${esc(t)}</li>`).join("")}</ul>${reply("btn reply")}${fullBtn("btn alt")}`
-      : `<b class="ask">${w.endAsk}</b>${reply("btn reply")}${regBtn("btn alt")}`;
+      ? `<b class="ask">${w.inFull}</b><ul class="peek">${a.peek.map((t) => `<li>${esc(t)}</li>`).join("")}</ul>${start("btn start")}${fullBtn("btn alt")}`
+      : `<b class="ask">${w.endAsk}</b>${start("btn start")}${callRow}`;
   // A still from the film at each chapter, cut by scripts/film-chapter-stills.sh
   // into public/film/ch/<film>-<n>.webp. Below the fold, so they load lazily
   // and never compete with the poster; a chapter without one simply has none.
@@ -658,7 +575,7 @@ ${way(`data-open="v-app" href="${PLAY_URL}" target="_blank" rel="noopener"`, "da
 <div class="ui" id="ui">
 <span class="hd" id="hd" hidden>HD</span>
 <div class="mid">${skip("back", -1, w.back)}<button type="button" class="pp" id="pp" aria-label="${w.pause}">${ICON.pause}${ICON.play}</button>${skip("fwd", 1, w.fwd)}</div>
-<div class="low">${p.kind === "full" ? `<a class="wpill" data-reply href="${replyHref}" target="_blank" rel="noopener">${ICON.wa}${w.replyPill}</a>` : ""}<p class="now" id="chap"></p><div class="row"><span class="time" id="time">0:00 / ${mmss(f.duration || 0)}</span><button type="button" class="rate" id="rate" data-open="v-set">1.2x</button><button type="button" class="ic" id="mute" aria-label="${w.sound}">${ICON.sound}${ICON.muted}</button><button type="button" class="ic" id="fs" aria-label="${w.fs}">${ICON.fs}${ICON.unfs}</button></div>
+<div class="low">${p.kind === "full" ? `<a class="wpill" data-reg href="${startHref}">${ICON.app}${w.startPill}</a>` : ""}<p class="now" id="chap"></p><div class="row"><span class="time" id="time">0:00 / ${mmss(f.duration || 0)}</span><button type="button" class="rate" id="rate" data-open="v-set">1.2x</button><button type="button" class="ic" id="mute" aria-label="${w.sound}">${ICON.sound}${ICON.muted}</button><button type="button" class="ic" id="fs" aria-label="${w.fs}">${ICON.fs}${ICON.unfs}</button></div>
 <div class="seek"><div class="ticks" id="ticks"></div><input type="range" id="seek" min="0" max="${f.duration}" step="0.1" value="0" aria-label="${w.seek}"></div></div>
 </div>
 <div class="mini"></div>
@@ -670,11 +587,11 @@ ${way(`data-open="v-app" href="${PLAY_URL}" target="_blank" rel="noopener"`, "da
 <div class="err" id="err" hidden><b>${w.err}</b><p>${w.errHow}</p><button type="button" class="btn pri" id="retry">${ICON.replay}${w.retry}</button></div>
 <div class="end" id="end" role="group" aria-label="${esc(title)}" aria-live="polite" hidden>${endBody}<div class="two"><button type="button" class="lnk" id="replay">${ICON.replay}${w.replay}</button>${share("lnk", w.friendShort)}</div></div>
 </div>
-<div class="act">${reply("btn reply")}${p.kind === "short" ? fullBtn("btn alt") : regBtn("btn alt")}</div>
+<div class="act">${start("btn start")}${p.kind === "short" ? fullBtn("btn alt") : ""}${callRow}</div>
 ${next}
 ${info}
 ${foot}</main>
-${callView}${formView}${thanksView}${appView}${setView}${shareView}
+${appView}${setView}${shareView}
 <script type="application/json" id="cfg">${JSON.stringify(cfg).replace(/</g, "\\u003c")}</script>
 <script>${js}</script>
 </body></html>

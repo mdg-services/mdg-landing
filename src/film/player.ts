@@ -15,7 +15,7 @@
 import type HlsType from "hls.js";
 
 type FilmId = "kavach" | "kavach-short";
-type Cta = "full" | "register" | "share" | "replay" | "chapter" | "speed" | "reply";
+type Cta = "full" | "register" | "share" | "replay" | "chapter" | "speed";
 type Range = [number, number];
 
 interface PageConfig {
@@ -33,19 +33,16 @@ interface PageConfig {
   hlsJs: string;
   /** public URL of this page, without query */
   url: string;
-  /** "short" pages link to the full film at the end; "full" pages to /register */
+  /** "short" pages link to the full film at the end; "full" pages to Start services */
   kind: "full" | "short";
   /** the page's language, and what the player says at run time in it */
   lang: "hi" | "en";
   s: {
-    play: string; pause: string; wait: string; offline: string; slow: string; cbNoName: string; cbBad: string;
-    cbSending: string; cbFail: string; cbBusy: string; cbFilm: string; speed: string; tapChange: string;
-    restart: string; copied: string; talk: string;
+    play: string; pause: string; wait: string; offline: string; slow: string; speed: string; tapChange: string;
+    restart: string; copied: string;
   };
-  /** where the full film's controls start carrying the WhatsApp reply (the fees chapter); 0 = never */
+  /** where the full film's controls start carrying Start services (the fees chapter); 0 = never */
   lateAt: number;
-  /** what "reply on WhatsApp" opens with, ready to send */
-  replyText: string;
 }
 
 interface NetInfo {
@@ -72,15 +69,15 @@ interface NetInfo {
   const load = $("load");
   const errBox = $("err");
   const cls = (c: string, on: boolean) => stage.classList.toggle(c, on);
-  /* The picture gives up the reply bar's height so the reply is on the first
-     phone screen. page.css guesses 84 px; a bigger system font or a wrapped
+  /* The picture gives up the height of the Start services bar and the toll-free
+     line under it, so both are on the first phone screen. page.css guesses 136 px; a bigger system font or a wrapped
      line makes the button taller, so measure the real one. */
-  const replyBar = document.querySelector<HTMLElement>(".act .reply");
+  const startBar = document.querySelector<HTMLElement>(".act");
   const noBar = matchMedia("(min-width:980px), (orientation:landscape) and (max-height:500px)");
   const fitBar = () => {
     const root = document.documentElement.style;
-    if (!replyBar || noBar.matches) root.removeProperty("--bar");
-    else if (replyBar.offsetHeight) root.setProperty("--bar", `${replyBar.offsetHeight + 20}px`);
+    if (!startBar || noBar.matches) root.removeProperty("--bar");
+    else if (startBar.offsetHeight) root.setProperty("--bar", `${startBar.offsetHeight + 8}px`);
   };
   fitBar();
   addEventListener("resize", fitBar);
@@ -146,10 +143,10 @@ interface NetInfo {
   }
   const fullLinks = document.querySelectorAll<HTMLAnchorElement>("a[data-full]");
   fullLinks.forEach((a) => (a.href = withTag("/film", "from=short")));
-  // "Register" carries the share code to the form, which sends it with the
-  // registration so the team can see which message brought the dealer
+  // "Start services" carries the share code on our own /start address; the two
+  // store links are the stores' and are left as they are
   document.querySelectorAll<HTMLAnchorElement>("a[data-reg]").forEach((a) => {
-    if (tag) a.href += `&r=${tag}`;
+    if (tag && (a.getAttribute("href") || "").startsWith("/")) a.href += `&r=${tag}`;
   });
 
   /* ── ids ─────────────────────────────────────────────────────────────── */
@@ -893,110 +890,12 @@ interface NetInfo {
       beat();
     }),
   );
-  // "reply on WhatsApp": the reply itself lands in the admin's WhatsApp inbox; this counts the tap.
-  // Without a share code the visitor found the film on their own: there is no
-  // chat to reply in, so the bar offers to start one (same number, same message).
-  document.querySelectorAll<HTMLAnchorElement>("a[data-reply]").forEach((a) => {
-    const words = a.querySelector("b");
-    if (!tag && words) words.textContent = C.s.talk;
-    a.href += `?text=${encodeURIComponent(C.replyText)}`;
-    a.addEventListener("click", () => {
-      cta("reply");
-      beat();
-    });
-  });
   // the new words can wrap differently: the picture makes room for the bar as it is now
-  if (!tag) fitBar();
-
-  /* ── "we call you": to the admin's Call-backs page and the team's inbox, with the share code ── */
-  const cb = $<HTMLFormElement>("cb");
-  const cbMsg = $("cbmsg");
-  if (cb) {
-    const say = (t: string, ok: boolean) => {
-      if (!cbMsg) return;
-      cbMsg.textContent = t;
-      cbMsg.className = ok ? "msg ok" : "msg";
-    };
-    const box = (n: string) => cb.querySelector<HTMLInputElement>(`[name=${n}]`);
-    const nameBox = box("name");
-    const phoneBox = box("phone");
-    /** A 10-digit Indian mobile from however it was typed: Devanagari digits, spaces, dashes, +91, a leading 0. */
-    const mobile = (raw: string) => {
-      const d = raw
-        .replace(/[०-९]/g, (x) => String(x.charCodeAt(0) - 0x966))
-        .replace(/[^\d+]/g, "")
-        .replace(/^(\+?91|0)(?=\d{10}$)/, "");
-      return /^[6-9]\d{9}$/.test(d) ? d : "";
-    };
-    const mark = (el: HTMLInputElement | null, bad: boolean) => {
-      if (el) el.setAttribute("aria-invalid", String(bad));
-    };
-    phoneBox?.addEventListener("blur", () => {
-      if (phoneBox.value.trim()) mark(phoneBox, !mobile(phoneBox.value));
-    });
-    cb.addEventListener("input", (e) => mark(e.target as HTMLInputElement, false));
-    cb.addEventListener("submit", (e) => {
-      e.preventDefault();
-      const f = new FormData(cb);
-      const val = (k: string) => String(f.get(k) || "").trim();
-      const name = val("name");
-      const phone = mobile(val("phone"));
-      mark(nameBox, !name);
-      mark(phoneBox, !phone);
-      if (!name || !phone) {
-        say(name ? C.s.cbBad : C.s.cbNoName, false);
-        (name ? phoneBox : nameBox)?.focus();
-        return;
-      }
-      const btn = cb.querySelector("button");
-      if (btn) btn.disabled = true;
-      say(C.s.cbSending, true);
-      // a 2G link that never answers must not leave him on "sending" for ever
-      const stop = window.AbortController ? new AbortController() : null;
-      const t = window.setTimeout(() => stop && stop.abort(), 15000);
-      fetch("/api/callback", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        // the hidden box and the time since the page opened: the server
-        // quietly drops what a script filled in
-        body: JSON.stringify({
-          name,
-          phone,
-          outlet: val("outlet"),
-          message: `${C.s.cbFilm}: ${C.title}`,
-          source: "film",
-          film: C.film,
-          lang: C.lang,
-          ref: tag,
-          website: val("website"),
-          elapsed: Math.round(now()),
-        }),
-        signal: stop ? stop.signal : undefined,
-      })
-        .then((r) => {
-          if (!r.ok) throw new Error(String(r.status));
-          if (btn) btn.disabled = false;
-          say("", true);
-          cb.reset();
-          // the thank-you takes the form's place, so Back goes to the screen before it
-          openView("v-ok", true);
-          // counted with the other ways of joining
-          cta("register");
-          beat();
-        })
-        .catch((err: Error) => {
-          if (btn) btn.disabled = false;
-          // too many from his network (many phones share one address): the
-          // toll-free number works when the form cannot
-          say(err && err.message === "429" ? C.s.cbBusy : C.s.cbFail, false);
-        })
-        .then(() => window.clearTimeout(t));
-    });
-  }
+  fitBar();
 
   /* ── screens and sheets ───────────────────────────────────────────────────
-     Each thing a dealer can do has its own simple screen over the page (call
-     us, the form, the thank-you, the app), and settings and sharing are
+     Each thing a dealer can do has its own simple screen over the page (the
+     app), and settings and sharing are
      sheets over the film. Every one is a history entry, so the phone's Back
      button closes it, as the arrow and the cross do. A screen pauses the film
      and it carries on when he comes back; a sheet leaves it playing. */

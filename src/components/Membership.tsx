@@ -1,6 +1,6 @@
 import Link from "next/link";
-import Icon from "./Icon";
 import CallUs from "./CallUs";
+import StoreButtons from "./StoreButtons";
 import { Reveal, item } from "../lib/reveal";
 import { getT } from "../i18n/server";
 import { pathFor, type Lang } from "../i18n/lang";
@@ -41,10 +41,8 @@ export default function Membership({ lang }: { lang: Lang }) {
             <p className="max-w-prose2 text-[17px] leading-[1.6] text-navy-100 md:text-[19px]">
               {t.membership.intro}
             </p>
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
-              <Link href={pathFor(lang, "/register")} className="btn-gold">
-                {t.membership.ctaPrimary} <Icon name="arrow" size={16} />
-              </Link>
+            <div className="mt-8 flex flex-col items-start gap-4">
+              <StoreButtons from="membership" appStoreAria={t.ui.getAppStoreAria} playAria={t.ui.getAppAria} />
               <CallUs
                 variant="button"
                 label={t.membership.ctaSecondary}

@@ -1,4 +1,5 @@
 import type { IconName } from "../components/Icon";
+import { APP_STORE, PLAY_STORE } from "../lib/appStores";
 
 /* ─────────────────────────────────────────────────────────────
    The things about mdgservices.in that do not change when the
@@ -43,8 +44,9 @@ export const BRAND = {
       if it appears on this site, so the footer prints both, in both languages.
       Spelled exactly as submitted, straight apostrophe included. */
   whatsappNames: ["Dealer's Kavach", "MDG Services"],
-  /** The Dealer Kavach app. Its sign-in screen opens the same enrolment form as /register. */
-  playStore: "https://play.google.com/store/apps/details?id=in.mdgservices.dealerkavach",
+  /** The Dealer Kavach app on Google Play and on the App Store: the only two places a dealer registers. */
+  playStore: PLAY_STORE,
+  appStore: APP_STORE,
   /** The Dealer Kavach Chrome extension: the same account's chat beside any site on a computer. */
   chromeExtension: "https://chromewebstore.google.com/detail/dealer-kavach/fdeceedgoipgpnkcodehalppchjndped",
   since: 2021,

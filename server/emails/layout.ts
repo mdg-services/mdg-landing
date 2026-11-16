@@ -14,8 +14,9 @@ export const MAIL_BRAND = {
   site: "mdgservices.in",
   /** The published address, the same as `BRAND.email` on the site. Replies to a mail meant for the public go here. */
   email: "hello@mdgservices.in",
-  /** The Dealer Kavach app on Google Play, the same as `BRAND.playStore` on the site. */
+  /** The Dealer Kavach app on Google Play and on the App Store, the same as `BRAND.playStore` and `BRAND.appStore` on the site. */
   playStore: "https://play.google.com/store/apps/details?id=in.mdgservices.dealerkavach",
+  appStore: "https://apps.apple.com/in/app/dealer-kavach/id6828100923",
   navy: "#2C2E80",
   navyDeep: "#1A1B4B",
   gold: "#F5A524",

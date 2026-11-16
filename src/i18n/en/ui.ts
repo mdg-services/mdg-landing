@@ -24,6 +24,7 @@ export const ui = {
   callNow: "Talk to us now",
   getApp: "Get the app",
   getAppAria: "Download the Dealer Kavach app on Google Play",
+  getAppStoreAria: "Download the Dealer Kavach app on the App Store",
   languageAria: "Language",
   switchToEnglish: "Read this page in English",
   switchToHindi: "इस पेज को हिंदी में पढ़ें",

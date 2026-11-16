@@ -19,6 +19,7 @@ export const ui: typeof EN = {
   callNow: "अभी बात करें",
   getApp: "ऐप डाउनलोड करें",
   getAppAria: "Google Play से डीलर कवच ऐप डाउनलोड करें",
+  getAppStoreAria: "App Store से डीलर कवच ऐप डाउनलोड करें",
   languageAria: "भाषा",
   switchToEnglish: "Read this page in English",
   switchToHindi: "इस पेज को हिंदी में पढ़ें",

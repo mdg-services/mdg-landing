@@ -98,8 +98,8 @@ export default function Navbar({
       })),
       { key: "guides", href: guidesHref, label: t.nav.guides, here: current === "guides" },
     ];
-  const talkHref = cta?.href ?? section("contact");
-  const talkLabel = cta?.label ?? t.ui.talkToUs;
+  const talkHref = cta?.href ?? pathFor(lang, "/register");
+  const talkLabel = cta?.label ?? t.ui.getApp;
 
   /** The two apps, as the Products menu and the phone menu both list them. */
   const products = [

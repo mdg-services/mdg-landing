@@ -11,21 +11,30 @@ import type { register as EN } from "../en/register";
    where a legal term has no everyday Hindi word, the English term is kept in
    brackets after the Hindi rather than replaced by a heavier Hindi one. */
 export const register: typeof EN = {
-  pageTitle: "अपना पंप रजिस्टर कीजिए · MDG Services",
+  pageTitle: "डीलर कवच ऐप लीजिए · MDG Services",
 
   backToHome: "होम पर वापस",
 
   /* The English page prints its phrase, a dot, then the Devanagari word. Here
      the pair would say the same thing twice, so the Devanagari word is the
      eyebrow itself and the gloss is dropped along with its dot. */
-  eyebrow: "डीलर नामांकन",
+  eyebrow: "ऐप लीजिए",
   eyebrowDeva: undefined,
-  heading: "अपनी डीलरशिप रजिस्टर कीजिए।",
+  heading: "डीलर कवच ऐप में रजिस्टर कीजिए।",
   intro:
-    "बस थोड़ी सी जानकारी, और आप शामिल। अपने पंप के हिसाब से साइट चुनिए। काम शुरू करने से पहले हम सेवाएँ तय कर देते हैं और क़ीमत लिखित में पक्की कर देते हैं।",
+    "App Store या Google Play से ऐप डाउनलोड कीजिए और अपने मोबाइल नंबर से ऐप में ही रजिस्टर कीजिए। पूरा होते ही आप साइन-इन हो जाते हैं, और सेवाएँ वहीं चुनते हैं।",
 
-  appLead: "ऐप से करना आसान लगे? Google Play से डीलर कवच ऐप डाउनलोड करें और ऐप में ही रजिस्टर करें।",
-  appLink: "Google Play पर देखें",
+  appLead: "शुरू करने से पहले कोई सवाल? टोल-फ़्री पर कॉल कीजिए, सुबह 9 से रात 9, हर दिन।",
+  appLink: "कॉल कीजिए",
+  appStoreAria: "App Store से डीलर कवच ऐप डाउनलोड करें",
+  playAria: "Google Play से डीलर कवच ऐप डाउनलोड करें",
+  stepsHeading: "तीन क़दम",
+  steps: [
+    { title: "ऐप डाउनलोड कीजिए", body: "iPhone पर App Store का बटन दबाइए, Android फ़ोन पर Google Play का। ऐप मुफ़्त है।" },
+    { title: "ऐप में रजिस्टर कीजिए", body: "अपना नाम, मोबाइल नंबर और पंप की जानकारी दीजिए। इस वेबसाइट पर कुछ भरना नहीं है।" },
+    { title: "अपनी सेवाएँ चुनिए", body: "जो चाहिए वह चुनिए। काम शुरू करने से पहले क़ीमत लिखित में पक्की होती है।" },
+  ],
+  computerNote: "कंप्यूटर पर हैं? इस पेज को अपने फ़ोन में खोलिए, या फ़ोन के स्टोर में Dealer Kavach खोजिए।",
 
   sectionAria: "नामांकन फ़ॉर्म",
   formAria: "डीलर नामांकन",

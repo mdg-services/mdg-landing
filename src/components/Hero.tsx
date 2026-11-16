@@ -1,7 +1,7 @@
 import { Fragment } from "react";
 import { LogoMark } from "./Brand";
-import Icon from "./Icon";
 import CallUs from "./CallUs";
+import StoreButtons from "./StoreButtons";
 import { ORBIT } from "../data/content";
 import { getT } from "../i18n/server";
 import { filmHref, pathFor, type Lang } from "../i18n/lang";
@@ -100,9 +100,7 @@ export default function Hero({ lang }: { lang: Lang }) {
             className="enter-solid mt-7 flex flex-col items-start gap-4 sm:flex-row sm:flex-wrap sm:items-center"
             style={v({ "--rise-y": "14px", "--dur": "0.7s", "--d": "0.68s" })}
           >
-            <a href="#contact" className="btn-gold w-full sm:w-auto">
-              {t.hero.ctaPrimary} <Icon name="arrow" size={16} />
-            </a>
+            <StoreButtons from="home" appStoreAria={t.ui.getAppStoreAria} playAria={t.ui.getAppAria} />
             <a href={filmHref(lang, "short")} className="btn-on-dark-ghost w-full sm:w-auto">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden className="text-gold-400">
                 <path d="M7 4.5v15l12.5-7.5z" />

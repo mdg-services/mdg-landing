@@ -22,23 +22,12 @@ export const contact = {
   tapToCall: "Tap to call",
 
   /* ── "Prefer a callback?" ── */
-  callbackEyebrow: "Prefer a callback?",
-  callbackHeading: "Drop your number, we'll call you back.",
-  /** `{hours}` is filled in with `hoursLower` when this renders, so the
-      opening hours can sit wherever the sentence wants them rather than
-      being glued on in English word order. */
-  callbackNote: "A team member calls back within the hour, {hours}.",
-  leaveNumber: "Leave my number",
+  appEyebrow: "Ready to start?",
+  appHeading: "Get the app, register inside it.",
+  appNote: "The Dealer Kavach app is free on the App Store and Google Play. You register in the app with your mobile number; nothing to fill in here.",
 
   /* ── the form ── */
-  formAria: "Request a callback",
-  fields: {
-    name: { label: "Your name", placeholder: "Ramesh Kumar" },
-    outlet: { label: "Pump / outlet", placeholder: "Sai Petroleums, Aligarh" },
-    phone: { label: "Phone", placeholder: "+91 9XXXXXXXXX" },
-  },
   privacy: "We will never share your number.",
-  submit: "Request callback",
   submitting: "Sending…",
 
   /** The API answers in English and both of its messages are generic, so a

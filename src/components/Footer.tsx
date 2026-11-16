@@ -97,6 +97,14 @@ export default function Footer({ lang }: { lang: Lang }) {
                   {t.footer.dealerApp}
                 </a>
                 <a
+                  href={BRAND.appStore}
+                  target="_blank"
+                  rel="noopener"
+                  className="link-quiet tap-pad mt-1 block text-[13.5px] text-navy-300 hover:text-white"
+                >
+                  {t.ui.getApp} · App Store
+                </a>
+                <a
                   href={BRAND.playStore}
                   target="_blank"
                   rel="noopener"
@@ -123,6 +131,14 @@ export default function Footer({ lang }: { lang: Lang }) {
                   className="link-quiet tap-pad mt-1 block text-[13.5px] text-navy-300 hover:text-white"
                 >
                   {t.footer.khataGuides}
+                </a>
+                <a
+                  href="https://apps.apple.com/in/app/khata-kavach-transporter/id6832904958"
+                  target="_blank"
+                  rel="noopener"
+                  className="link-quiet tap-pad mt-1 block text-[13.5px] text-navy-300 hover:text-white"
+                >
+                  {t.footer.khataTransporterIos}
                 </a>
                 {/* not a link: the Android app is not on Google Play yet */}
                 <p className="mt-1 text-[13.5px] leading-snug text-navy-300">{t.footer.khataAndroid}</p>

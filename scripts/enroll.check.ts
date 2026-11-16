@@ -316,12 +316,17 @@ describe("the Start services link (/start)", () => {
     assert.match(to.searchParams.get("referrer") ?? "", /utm_source=whatsapp/);
   });
 
-  it("sends an iPhone or a computer to the website's register page, with what the link carried", async () => {
-    for (const agent of [IPHONE, "Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/130.0"]) {
-      const res = await tap(agent, "?lang=hi");
-      assert.equal(res.status, 302);
-      assert.equal(res.headers.get("location"), "https://mdgservices.in/register?lang=hi");
-      assert.equal(res.headers.get("cache-control"), "private, no-store");
-    }
+  it("sends an iPhone to the app on the App Store", async () => {
+    const res = await tap(IPHONE, "?lang=hi");
+    assert.equal(res.status, 302);
+    assert.equal(res.headers.get("location"), "https://apps.apple.com/in/app/dealer-kavach/id6828100923");
+    assert.equal(res.headers.get("cache-control"), "private, no-store");
+  });
+
+  it("sends a computer to the register page, which shows both store buttons and no form", async () => {
+    const res = await tap("Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/130.0", "?lang=hi");
+    assert.equal(res.status, 302);
+    assert.equal(res.headers.get("location"), "https://mdgservices.in/register?lang=hi");
+    assert.equal(res.headers.get("cache-control"), "private, no-store");
   });
 });

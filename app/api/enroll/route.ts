@@ -15,9 +15,11 @@ export const maxDuration = 30;
  * POST /api/enroll — dealer enrolment.
  * Thin HTTP adapter; all logic lives in `server/enroll.ts`.
  *
- * The website posts here from its own origin. The Dealer Kavach app's sign-up
- * screen posts the same form from the client web app's origin, so the
- * allow-listed origins get CORS headers and a preflight answer.
+ * The mdgservices.in website has no sign-up form since 12 Nov 2026: a dealer
+ * registers inside the Dealer Kavach app (App Store, Google Play). The app's
+ * sign-up screen posts here from the client web app's origin, so the
+ * allow-listed origins get CORS headers and a preflight answer. This is the
+ * app's door, not a page of ours.
  */
 function corsFor(req: Request): Record<string, string> {
   return { vary: "Origin", ...(enrollCorsHeaders(req.headers.get("origin") ?? undefined) ?? {}) };

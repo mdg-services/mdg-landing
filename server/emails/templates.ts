@@ -242,7 +242,13 @@ export function welcomeEmail(data: EnrollmentData, account: EnrollAccount = "wai
   const c = WELCOME[lang];
   const steps = c.steps[account];
   // Someone who can sign in now is one tap from the app; someone waiting has nothing to open yet.
-  const app = account === "waiting" ? null : { label: c.appButton, href: B.playStore };
+  const app =
+    account === "waiting"
+      ? null
+      : [
+          { label: `${c.appButton} · App Store`, href: B.appStore },
+          { label: `${c.appButton} · Google Play`, href: B.playStore },
+        ];
   // A stranger can type any address into the form, so only a plain first name
   // is ever repeated back; anything else gets the plain greeting.
   const name = greetingName(data.name);
@@ -254,7 +260,7 @@ export function welcomeEmail(data: EnrollmentData, account: EnrollAccount = "wai
     <ol style="margin:0 0 16px;padding-left:22px;font:400 15px/1.65 Arial,sans-serif;color:${B.soft}">
       ${steps.map((step) => `<li style="margin:0 0 6px">${escapeHtml(step)}</li>`).join("")}
     </ol>
-    ${app ? `<div style="margin:22px 0 6px">${button(app.label, app.href)}</div>` : ""}
+    ${app ? app.map((a) => `<div style="margin:22px 0 6px">${button(a.label, a.href)}</div>`).join("") : ""}
     <div style="margin:22px 0 6px">${button(c.callButton(B.phone), B.phoneHref)}</div>
     ${paragraph(escapeHtml(c.reach))}
     <p style="margin:18px 0 0;font:400 15px/1.65 Arial,sans-serif;color:${B.soft}">${escapeHtml(c.signOff)}<br/><strong style="color:${B.ink}">${escapeHtml(c.team)}</strong></p>
@@ -271,7 +277,7 @@ export function welcomeEmail(data: EnrollmentData, account: EnrollAccount = "wai
       c.nextHeading,
       ...steps.map((step, i) => `${i + 1}. ${step}`),
       "",
-      ...(app ? [`${app.label}: ${app.href}`, ""] : []),
+      ...(app ? [...app.map((a) => `${a.label}: ${a.href}`), ""] : []),
       `${B.phone}`,
       "",
       c.signOff,
@@ -282,8 +288,8 @@ export function welcomeEmail(data: EnrollmentData, account: EnrollAccount = "wai
 
 /**
  * Internal notification when someone asks for a call: the homepage "Leave my
- * number", the film pages' "we'll call you", the Khata Kavach page or the
- * assistant's fallback. `handOff` is how handing it to the admin panel's
+ * number" (no longer on the site), the Khata Kavach page or the assistant's
+ * fallback; the film pages' call-back form came out on 12 Nov 2026. `handOff` is how handing it to the admin panel's
  * Call-backs page went; when it did not simply work, this mail says why at the
  * top and tags the subject.
  */
