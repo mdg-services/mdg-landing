@@ -21,6 +21,32 @@ import { mdgClauseTags, mdgPenaltyNotes, mdgTagOk, sourceTagOk, sourceTags } fro
 
 const hiPrefix = (lang: Lang, path: string) => (lang === "hi" ? `/hi${path}` : path);
 
+/**
+ * The Petrol pump guide's front door and three main pages, offered from the
+ * MDG guides that readers and crawlers visit most (the hub, each topic's main
+ * page, the tools and the density pages). The titles are the pump pages' own.
+ */
+const PUMP_CROSS: Record<Lang, { heading: string; cards: { path: string; title: string; description: string }[] }> = {
+  en: {
+    heading: "More from MDG Services: the petrol pump guide",
+    cards: [
+      { path: "/petrol-pump/", title: "Petrol pump guide for India", description: "Open, license and run a pump: nine topics, every fact with its official source and date." },
+      { path: "/petrol-pump/dealership/", title: "How to open a petrol pump in India", description: "The route through the oil companies: who can apply and how a dealer is chosen." },
+      { path: "/petrol-pump/licences/", title: "Licences and NOCs a petrol pump needs", description: "PESO, pollution consent, fire and more, and who gives each one." },
+      { path: "/petrol-pump/equipment/", title: "How a petrol pump works: tanks and dispensers", description: "Tanks, dispensers, nozzles and vapour recovery, and how each is checked." },
+    ],
+  },
+  hi: {
+    heading: "MDG Services से और: पेट्रोल पंप गाइड",
+    cards: [
+      { path: "/petrol-pump/", title: "पेट्रोल पंप गाइड", description: "पंप खोलना, लाइसेंस और संचालन: नौ विषय, हर तथ्य के साथ सरकारी स्रोत और तारीख़।" },
+      { path: "/petrol-pump/dealership/", title: "पेट्रोल पंप कैसे खोलें", description: "तेल कंपनियों के ज़रिए रास्ता: कौन आवेदन कर सकता है और डीलर कैसे चुना जाता है।" },
+      { path: "/petrol-pump/licences/", title: "पेट्रोल पंप के लिए ज़रूरी लाइसेंस और NOC", description: "PESO, प्रदूषण की मंज़ूरी, फायर और बाकी, और हर एक कौन देता है।" },
+      { path: "/petrol-pump/equipment/", title: "पेट्रोल पंप कैसे काम करता है: टैंक और डिस्पेंसर", description: "टैंक, डिस्पेंसर, नोज़ल और वेपर रिकवरी, और हर एक की जाँच कैसे होती है।" },
+    ],
+  },
+};
+
 export const MDG: Collection = {
   key: "mdg",
   label: "MDG guide",
@@ -71,6 +97,11 @@ export const MDG: Collection = {
     primary: { href: lang === "hi" ? "/hi/register" : "/register", label: UI[lang].register },
     secondary: { href: TOLL_FREE.href, label: UI[lang].call },
   }),
+  crossLinks: (page, lang) => {
+    if (!(page.type === "Hub" || page.type === "Pillar" || page.type === "Tool" || page.pillar === "density")) return null;
+    const x = PUMP_CROSS[lang];
+    return { heading: x.heading, cards: x.cards.map((c) => ({ href: hiPrefix(lang, c.path), title: c.title, description: c.description })) };
+  },
 };
 
 /** Pages that are about Khata Kavach itself (its features, how it compares, where it fits). */
@@ -144,6 +175,7 @@ export const KK: Collection = {
     primary: { href: KK_APPS.signup, label: KK_CTA[lang].primary },
     secondary: { href: TOLL_FREE.href, label: KK_UI[lang].call },
   }),
+  crossLinks: () => null,
 };
 
 /** The Petrol pump guide: getting, licensing and running a petrol pump. Looks like the MDG guides; cites sources, not MDG clauses. */
@@ -192,6 +224,7 @@ export const PUMP: Collection = {
     primary: { href: lang === "hi" ? "/hi/register" : "/register", label: UI_MDG[lang].register },
     secondary: { href: TOLL_FREE.href, label: UI_MDG[lang].call },
   }),
+  crossLinks: () => null,
 };
 
 export const COLLECTIONS: Record<CollectionKey, Collection> = { mdg: MDG, kk: KK, pump: PUMP };

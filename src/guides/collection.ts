@@ -82,6 +82,12 @@ export interface Cta {
   secondary: { href: string; label: string };
 }
 
+/** A short block of links to another collection, drawn after the page's own related cards. */
+export interface CrossLinks {
+  heading: string;
+  cards: { href: string; title: string; description: string }[];
+}
+
 export interface Collection {
   key: CollectionKey;
   /** how errors name this collection: "MDG guide", "Khata Kavach pages" */
@@ -133,4 +139,6 @@ export interface Collection {
   officialBox: boolean;
   /** the closing box, which says it is an advertisement */
   cta: (lang: Lang) => Cta;
+  /** links to another collection for the pages that should pass readers (and crawlers) on, or null */
+  crossLinks: (page: AnyPage, lang: Lang) => CrossLinks | null;
 }

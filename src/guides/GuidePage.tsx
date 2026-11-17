@@ -59,6 +59,7 @@ export default function GuidePage({ ctx, release }: { ctx: Ctx; release: AnyRele
   // A card is shown once: the hub lists the topics and tools, so the related list skips them
   const shown = new Set(m.children.flatMap((g) => g.cards.map((card) => card.href)));
   const related = m.related.filter((card) => !shown.has(card.href));
+  const cross = col.crossLinks(page, lang);
   const groups = m.children.map((group) => (
     <section key={group.heading} className="guide-section">
       <h2 className="guide-h2">{group.heading}</h2>
@@ -222,6 +223,14 @@ export default function GuidePage({ ctx, release }: { ctx: Ctx; release: AnyRele
             <section className="guide-section">
               <h2 className="guide-h2">{t.related}</h2>
               <CardGrid cards={related} t={t} hover={look.cardHover} />
+            </section>
+          )}
+
+          {/* a few links into another guide, on the pages readers and crawlers visit most */}
+          {cross && (
+            <section className="guide-section">
+              <h2 className="guide-h2">{cross.heading}</h2>
+              <CardGrid cards={cross.cards} t={t} hover={look.cardHover} />
             </section>
           )}
 
