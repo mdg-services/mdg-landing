@@ -233,4 +233,44 @@ export const PUMP_PAGES: PumpPage[] = [
     queries: ["petrol pump nozzle", "petrol pump nozzle mechanism", "petrol pump nozzle parts", "petrol pump nozzle auto cut off", "petrol and diesel nozzle size difference", "petrol pump nozzle pipe", "why petrol pump nozzle stops"],
     brief: "Fuel dispenser nozzles in plain words: the parts of a nozzle (spout, lever, hose, breakaway coupling), how the automatic cut-off senses a full tank and stops the flow, why a diesel spout is usually wider than a petrol spout so a petrol car cannot easily take a diesel nozzle, the vapour-recovery nozzle where the rules require one (link @equipment-vrs), and who checks nozzles. Figures and sizes only from a standard or rule opened that day with its date; otherwise mark as practice. No prices. Sources: bis.gov.in standards for dispensing nozzles, Legal Metrology rules for dispensers, cpcb.nic.in on vapour recovery.",
   },
+  {
+    id: "equipment-dispenser", pillar: "equipment", path: `${P}/equipment/dispenser-parts/`, hi: true, type: "Explainer", wave: 2,
+    queries: ["petrol pump dispenser", "fuel dispenser parts", "petrol dispenser machine parts", "how does petrol pump meter work", "pulser in fuel dispenser"],
+    brief: "Inside a fuel dispenser: the pump, the flow meter, the pulser and the display, how a litre is measured and shown, and what Legal Metrology verifies. Facts only from a standard or rule opened that day, with its date. Sources: Legal Metrology; standards (bis.gov.in, consumeraffairs.nic.in).",
+  },
+  {
+    id: "equipment-automation", pillar: "equipment", path: `${P}/equipment/automation/`, hi: true, type: "Explainer", wave: 2,
+    queries: ["petrol pump automation", "outlet automation", "petrol pump automation system", "retail outlet automation oil company"],
+    brief: "Outlet automation: what it is and what it records (sales, tank stock, dispenser readings sent to the oil company). Sources: oil company public pages (not iocl.com); the live MDG guide page /guides/automation/ if it exists.",
+  },
+  {
+    id: "equipment-tank-gauge", pillar: "equipment", path: `${P}/equipment/tank-gauge/`, hi: true, type: "Explainer", wave: 2,
+    queries: ["petrol pump tank level gauge", "dip stick petrol pump", "automatic tank gauge", "how stock is measured in petrol pump tank"],
+    brief: "Tank level gauges and how stock is read: the dip rod and the automatic tank gauge, in plain words. Sources: oil company technical pages; standards (bis.gov.in, oisd.gov.in, peso.gov.in).",
+  },
+  {
+    id: "running-attendant-duties", pillar: "running", path: `${P}/running/nozzle-attendant-duties/`, hi: true, type: "Explainer", wave: 2,
+    queries: ["petrol attendant duties", "petrol pump attendant work", "nozzle man duty petrol pump", "petrol pump worker job"],
+    brief: "What a nozzle attendant does in a shift: the rules that bind the job (engine off, no smoking, zero on the display, a bill on request) with their sources, and the rest marked as practice. Sources: practice; PESO; Legal Metrology; oil company training material if public.",
+  },
+  {
+    id: "running-manager-duties", pillar: "running", path: `${P}/running/manager-duties/`, hi: true, type: "Explainer", wave: 2,
+    queries: ["petrol pump manager work", "petrol pump manager duties", "petrol pump manager job"],
+    brief: "What a pump manager does in a day: records, stock, shift hand-over, staff, and the rules each task follows with its source; practice marked as practice. Sources: practice; PESO; Legal Metrology; oil company guidelines.",
+  },
+  {
+    id: "fuels-premium-petrol", pillar: "fuels", path: `${P}/fuels/premium-petrol/`, hi: true, type: "Explainer", wave: 2,
+    queries: ["premium petrol cost", "premium petrol vs normal petrol", "what is premium petrol", "speed petrol difference"],
+    brief: "Premium petrol: what is different and what the rules say; no prices and no performance claims beyond the source's own words. Sources: bis.gov.in petrol specification; oil company public product pages (not iocl.com); PIB/MoPNG.",
+  },
+  {
+    id: "fuels-diesel-grades", pillar: "fuels", path: `${P}/fuels/diesel-grades/`, hi: true, type: "Explainer", wave: 2,
+    queries: ["bs6 diesel", "diesel grades in india", "biodiesel blend petrol pump", "bs vi diesel specification"],
+    brief: "Diesel at the pump: BS VI and blends; only figures the source states, with date. Sources: bis.gov.in diesel specification; PIB; MoPNG.",
+  },
+  {
+    id: "customers-short-delivery", pillar: "customers", path: `${P}/customers/short-delivery/`, hi: true, type: "Explainer", wave: 2,
+    queries: ["petrol pump less petrol", "how to check petrol quantity", "5 litre measure petrol pump", "petrol pump cheating complaint"],
+    brief: "Short delivery of fuel: how a customer can check the quantity and where to complain; no legal advice, no promise of outcome. Sources: Legal Metrology Act 2009 and rules; consumerhelpline.gov.in; the oil company grievance route.",
+  },
 ];

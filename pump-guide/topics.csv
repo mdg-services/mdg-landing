@@ -27,21 +27,21 @@ priority,id,pillar,path_slug,title_hint,target_queries,status,sources_to_open
 6,safety-spill,safety,safety/spill-and-leak,What to do in a fuel spill or a leak at the pump,,written,OISD; PESO; oil company safety circulars
 6,safety-drills,safety,safety/mock-drills-and-training,Mock drills and safety training for pump staff,,needs-data,OISD; PESO
 7,equipment-nozzles,equipment,equipment/nozzles,Nozzles: how the automatic cut-off works and why petrol and diesel nozzles differ,petrol pump nozzle sizes,written,standards (BIS/OIML); PESO
-7,equipment-dispenser,equipment,equipment/dispenser-parts,"Inside a fuel dispenser: pump, meter, pulser and display",petrol pump dispenser,todo,Legal Metrology; standards
-7,equipment-automation,equipment,equipment/automation,Outlet automation: what it is and what it records,,todo,oil company public pages (not iocl.com); MDG-linked page /guides/automation/
+7,equipment-dispenser,equipment,equipment/dispenser-parts,"Inside a fuel dispenser: pump, meter, pulser and display",petrol pump dispenser,written,Legal Metrology; standards
+7,equipment-automation,equipment,equipment/automation,Outlet automation: what it is and what it records,,written,oil company public pages (not iocl.com); MDG-linked page /guides/automation/
 7,equipment-oil-water-separator,equipment,equipment/oil-water-separator,The oil-water separator at a petrol pump,,needs-data,CPCB; SPCB consent conditions
-7,equipment-tank-gauge,equipment,equipment/tank-gauge,Tank level gauges and how stock is read,,todo,oil company technical pages; standards
-8,running-attendant-duties,running,running/nozzle-attendant-duties,What a nozzle attendant does: duties in a shift,petrol attendant duties,todo,practice; oil company training material if public
-8,running-manager-duties,running,running/manager-duties,What a pump manager does in a day,petrol pump manager work,todo,practice
+7,equipment-tank-gauge,equipment,equipment/tank-gauge,Tank level gauges and how stock is read,,written,oil company technical pages; standards
+8,running-attendant-duties,running,running/nozzle-attendant-duties,What a nozzle attendant does: duties in a shift,petrol attendant duties,written,practice; oil company training material if public
+8,running-manager-duties,running,running/manager-duties,What a pump manager does in a day,petrol pump manager work,written,practice
 8,running-minimum-wages,running,running/staff-wages,Staff wages: where the minimum wage for pump staff is fixed,,needs-data,labour department notifications by state
 8,running-income-tax,running,running/income-tax,Income tax for a petrol pump business: the basics,,needs-data,incometax.gov.in; CBDT
 8,running-insurance,running,running/insurance,Insurance a petrol pump needs,,needs-data,oil company requirements; IRDAI
 8,running-daily-routine,running,running/daily-routine,"A petrol pump's day, hour by hour",,todo,practice; link MDG records pages
-9,fuels-premium-petrol,fuels,fuels/premium-petrol,Premium petrol: what is different and what the rules say,premium petrol cost,todo,BIS; oil company public pages
-9,fuels-diesel-grades,fuels,fuels/diesel-grades,Diesel at the pump: BS VI and blends,,todo,BIS; PIB
+9,fuels-premium-petrol,fuels,fuels/premium-petrol,Premium petrol: what is different and what the rules say,premium petrol cost,written,BIS; oil company public pages
+9,fuels-diesel-grades,fuels,fuels/diesel-grades,Diesel at the pump: BS VI and blends,,written,BIS; PIB
 9,fuels-ethanol-100,fuels,fuels/flex-fuel-and-e100,Flex-fuel vehicles and E100 at the pump,,todo,PIB; MoPNG
 9,fuels-lpg-autogas,fuels,fuels/autogas,Auto LPG at a petrol pump,,needs-data,PESO; MoPNG
-10,customers-short-delivery,customers,customers/short-delivery,Short delivery of fuel: how to check and where to complain,,todo,Legal Metrology; consumer helpline
+10,customers-short-delivery,customers,customers/short-delivery,Short delivery of fuel: how to check and where to complain,,written,Legal Metrology; consumer helpline
 10,customers-quality-complaint,customers,customers/fuel-quality-complaint,A fuel quality complaint: what a customer can do,petrol quality complaint,todo,oil company grievance pages; BIS; MDG sampling pages
 10,customers-free-services,customers,customers/free-services,"Free air, drinking water and toilets at a petrol pump: what is required",,todo,oil company guidelines; link MDG toilet rules page
 10,customers-refund,customers,customers/refund-and-consumer-court,Refund and consumer court for a fuel complaint,,todo,Consumer Protection Act 2019; consumerhelpline.gov.in
