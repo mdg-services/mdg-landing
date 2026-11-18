@@ -273,4 +273,39 @@ export const PUMP_PAGES: PumpPage[] = [
     queries: ["petrol pump less petrol", "how to check petrol quantity", "5 litre measure petrol pump", "petrol pump cheating complaint"],
     brief: "Short delivery of fuel: how a customer can check the quantity and where to complain; no legal advice, no promise of outcome. Sources: Legal Metrology Act 2009 and rules; consumerhelpline.gov.in; the oil company grievance route.",
   },
+  {
+    id: "money-price-build-up", pillar: "money", path: `${P}/money/petrol-price-build-up/`, hi: true, type: "Explainer", wave: 2,
+    queries: ["petrol price breakup", "petrol price structure india", "how petrol price is decided", "dealer commission in petrol price"],
+    brief: "How the retail price of a litre of petrol is built up: the dealer commission, central excise duty, VAT and the crude and refinery parts, with the figures the source states and its date; no price forecast. Sources: PPAC price build-up; PIB; petroleum.nic.in.",
+  },
+  {
+    id: "fuels-ethanol-100", pillar: "fuels", path: `${P}/fuels/flex-fuel-and-e100/`, hi: true, type: "Explainer", wave: 2,
+    queries: ["e100 petrol pump", "flex fuel vehicles india", "e20 petrol", "ethanol blended petrol"],
+    brief: "Flex-fuel vehicles and E100 at the pump: what E20 and E100 are and what the government has stated about them, only figures the source states, with date. Sources: PIB; MoPNG.",
+  },
+  {
+    id: "customers-quality-complaint", pillar: "customers", path: `${P}/customers/fuel-quality-complaint/`, hi: true, type: "Explainer", wave: 2,
+    queries: ["petrol quality complaint", "bad petrol complaint", "adulterated petrol complaint", "petrol pump complaint number"],
+    brief: "A fuel quality complaint: what a customer can do, where the sample test is and where to write; no legal advice, no promise of outcome. Sources: oil company grievance pages; BIS; MDG sampling pages.",
+  },
+  {
+    id: "customers-free-services", pillar: "customers", path: `${P}/customers/free-services/`, hi: true, type: "Explainer", wave: 2,
+    queries: ["free air at petrol pump", "petrol pump toilet rule", "drinking water petrol pump", "free services petrol pump"],
+    brief: "Free air, drinking water and toilets at a petrol pump: what the guidelines require and what is practice. Sources: oil company guidelines; link MDG toilet rules page.",
+  },
+  {
+    id: "customers-refund", pillar: "customers", path: `${P}/customers/refund-and-consumer-court/`, hi: true, type: "Explainer", wave: 2,
+    queries: ["petrol pump refund", "consumer court petrol pump", "fuel complaint consumer forum", "petrol pump overcharging complaint"],
+    brief: "Refund and consumer court for a fuel complaint: what the Consumer Protection Act 2019 and the National Consumer Helpline say; no legal advice. Sources: Consumer Protection Act 2019; consumerhelpline.gov.in.",
+  },
+  {
+    id: "safety-mobile-phone", pillar: "safety", path: `${P}/safety/mobile-phone-at-pump/`, hi: true, type: "Explainer", wave: 2,
+    queries: ["mobile phone petrol pump", "can we use phone at petrol pump", "phone at petrol pump danger", "mobile phone ban at petrol pump"],
+    brief: "Using a mobile phone at a petrol pump: what the rules and official safety guidance actually say, without myths. Sources: PESO; OISD; Parliament answers; oil company guidelines.",
+  },
+  {
+    id: "running-marketing-discipline", pillar: "running", path: `${P}/running/marketing-discipline-guidelines/`, hi: true, type: "Explainer", wave: 2,
+    queries: ["ms hsd control order", "petrol pump adulteration rules", "marketing discipline guidelines", "petrol pump penalty adulteration"],
+    brief: "The marketing discipline guidelines and the control order that bind a dealer on adulteration, sealing and sales, as the source states them. Sources: petroleum.nic.in; indiacode.nic.in; MoPNG; PIB.",
+  },
 ];
