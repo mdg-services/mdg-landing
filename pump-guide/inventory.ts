@@ -308,4 +308,44 @@ export const PUMP_PAGES: PumpPage[] = [
     queries: ["ms hsd control order", "petrol pump adulteration rules", "marketing discipline guidelines", "petrol pump penalty adulteration"],
     brief: "The marketing discipline guidelines and the control order that bind a dealer on adulteration, sealing and sales, as the source states them. Sources: petroleum.nic.in; indiacode.nic.in; MoPNG; PIB.",
   },
+  {
+    id: "site-land-size", pillar: "site", path: `${P}/site/land-size-required/`, hi: true, type: "Explainer", wave: 2,
+    queries: ["petrol pump land size in feet", "land required for petrol pump", "plot size required for petrol pump", "petrol pump ke liye jameen kitni chahiye"],
+    brief: "Scope: Land size for a petrol pump: frontage and depth the oil companies ask. Sources: HPCL, BPCL, Nayara and Jio-bp dealership pages and advertisement notices; MDG 2024 guideline on petroleum.nic.in; Petroleum Rules 2002 on indiacode.nic.in; PESO.",
+  },
+  {
+    id: "licences-petroleum-classes", pillar: "licences", path: `${P}/licences/petroleum-classes/`, hi: true, type: "Explainer", wave: 2,
+    queries: ["petroleum class a and class b", "petroleum class a b c", "class a class b petroleum products"],
+    brief: "Scope: Class A, B and C petroleum: what the classes mean and which one a pump sells. Sources: Petroleum Act 1934 and Petroleum Rules 2002 on indiacode.nic.in; peso.gov.in.",
+  },
+  {
+    id: "customers-digital-payments", pillar: "customers", path: `${P}/customers/pay-by-upi-or-card/`, hi: true, type: "Explainer", wave: 2,
+    queries: ["petrol pump upi payment", "how to pay at petrol pump", "are upi payments free", "petrol pump card payment charge"],
+    brief: "Scope: Paying for petrol by UPI or card: extra charges, refunds and failed payments. Sources: RBI notifications (MDR, zero charge on UPI); PIB; MoPNG; NPCI public pages; Parliament answers.",
+  },
+  {
+    id: "customers-bill-gst", pillar: "customers", path: `${P}/customers/petrol-bill-and-gst/`, hi: true, type: "Explainer", wave: 2,
+    queries: ["petrol pump bill receipt", "does petrol have gst", "is gst applicable on petrol pump", "petrol pump gst bill"],
+    brief: "Scope: Petrol bill and GST: is there GST on petrol and what the bill shows. Sources: CBIC / cbic-gst.gov.in; GST Council PIB releases; Legal Metrology rules; Parliament answers.",
+  },
+  {
+    id: "safety-tanker-unloading", pillar: "safety", path: `${P}/safety/tanker-unloading/`, hi: true, type: "Explainer", wave: 2,
+    queries: ["petrol pump tanker unloading", "fuel tanker unloading procedures"],
+    brief: "Scope: Tanker unloading at a petrol pump: the safety steps the rules and OISD ask for. Sources: OISD standards and guidelines (oisd.gov.in, read with curl); Petroleum Rules 2002 on indiacode.nic.in; PESO.",
+  },
+  {
+    id: "equipment-cctv", pillar: "equipment", path: `${P}/equipment/cctv-cameras/`, hi: true, type: "Explainer", wave: 2,
+    queries: ["petrol pump cctv", "petrol pump cctv camera", "petrol pump cctv footage"],
+    brief: "Scope: CCTV cameras at a petrol pump: whether any rule or guideline requires them. Sources: MDG 2024 guideline and oil company RO standards; OISD; PESO; state home department orders only if on an official site. If no primary source states a requirement, say so on the page and keep it short.",
+  },
+  {
+    id: "running-density-check", pillar: "running", path: `${P}/running/density-check/`, hi: true, type: "Explainer", wave: 2,
+    queries: ["petrol pump par density kaise check kare", "what is density in petrol pump", "petrol pump par density kitni honi chahie"],
+    brief: "Scope: Density at a petrol pump: what it is, how it is checked and what the number means. Sources: BIS IS 2796 and IS 1460 on bis.gov.in; Marketing discipline guidelines; PPAC; PIB; MoPNG.",
+  },
+  {
+    id: "fuels-biofuel-outlets", pillar: "fuels", path: `${P}/fuels/biodiesel-and-biofuel/`, hi: true, type: "Explainer", wave: 2,
+    queries: ["biodiesel petrol pump", "biofuel petrol pump", "biodiesel petrol pump in india"],
+    brief: "Scope: Biodiesel and biofuel at a petrol pump: what the policy says and what is sold. Sources: National Policy on Biofuels (petroleum.nic.in, mnre.gov.in); PIB; MoPNG; Parliament answers; oil company pages.",
+  },
 ];
