@@ -348,4 +348,44 @@ export const PUMP_PAGES: PumpPage[] = [
     queries: ["biodiesel petrol pump", "biofuel petrol pump", "biodiesel petrol pump in india"],
     brief: "Scope: Biodiesel and biofuel at a petrol pump: what the policy says and what is sold. Sources: National Policy on Biofuels (petroleum.nic.in, mnre.gov.in); PIB; MoPNG; Parliament answers; oil company pages.",
   },
+  {
+    id: "dealership-chayan-portal", pillar: "dealership", path: `${P}/dealership/dealer-chayan-portal/`, hi: true, type: "Explainer", wave: 2,
+    queries: ["petrol pump dealer chayan", "petrol pump dealer chayan 2026 registration", "petrol pump dealership advertisement 2026", "petrol pump dealer chayan 2026 opening date"],
+    brief: "Scope: Petrol Pump Dealer Chayan: the official portal, its advertisements and how to register. Sources: petrolpumpdealerchayan.in (read with curl if fetch fails); OMC dealer selection brochures (HPCL, BPCL pages); PIB; Parliament answers. Never state a future opening date that the portal or an OMC does not publish.",
+  },
+  {
+    id: "dealership-fuel-companies", pillar: "dealership", path: `${P}/dealership/fuel-companies-in-india/`, hi: true, type: "Explainer", wave: 2,
+    queries: ["petrol pump company list in india", "petrol pump company name list", "fuel companies in india", "petrol station companies in india"],
+    brief: "Scope: Which companies run petrol pumps in India and how many pumps each has. Sources: PPAC retail outlet / marketing infrastructure data (ppac.gov.in); MoPNG resolution on authorisation to market transportation fuels (2019) on petroleum.nic.in / egazette; PIB; Parliament answers.",
+  },
+  {
+    id: "dealership-transfer", pillar: "dealership", path: `${P}/dealership/transfer-of-dealership/`, hi: true, type: "Explainer", wave: 2,
+    queries: ["can petrol pump dealership be transferred", "petrol pump dealership transfer", "how to transfer ownership of petrol pump", "indian oil petrol pump dealership transfer"],
+    brief: "Scope: Can a petrol pump dealership be transferred or sold? Reconstitution and legal heirs. Sources: OMC dealer selection brochures (clauses on reconstitution, death of dealer, legal heirs); MDG 2024; Parliament answers; Petroleum Rules 2002 on transfer of licence (indiacode). If no primary source states the transfer rule, set the topic back to needs-data.",
+  },
+  {
+    id: "licences-peso-status-check", pillar: "licences", path: `${P}/licences/check-peso-licence-status/`, hi: true, type: "Explainer", wave: 2,
+    queries: ["peso license status check online", "peso license check", "petrol pump license verification", "peso license download"],
+    brief: "Scope: How to check a PESO licence and its status online. Sources: peso.gov.in online licensing pages (read with curl and pdftotext); Petroleum Rules 2002 on indiacode.nic.in; PIB on PESO online services.",
+  },
+  {
+    id: "licences-petroleum-rules-2002", pillar: "licences", path: `${P}/licences/petroleum-rules-2002/`, hi: true, type: "Explainer", wave: 2,
+    queries: ["petroleum rules 2002", "petrol pump rules 2002", "petroleum rules 2002 rule 144", "petroleum rules 2002 latest amendment", "petrol pump rules and regulations"],
+    brief: "Scope: Petroleum Rules 2002: the parts that apply to a petrol pump. Sources: Petroleum Rules 2002 on indiacode.nic.in and peso.gov.in; amendment notifications on egazette / peso.gov.in; Petroleum Act 1934.",
+  },
+  {
+    id: "running-inspections", pillar: "running", path: `${P}/running/who-can-inspect-a-petrol-pump/`, hi: true, type: "Explainer", wave: 2,
+    queries: ["petrol pump inspection officer", "petrol pump checking officer", "petrol pump inspection report", "petrol pump inspector"],
+    brief: "Scope: Who can inspect a petrol pump and what they check. Sources: MS and HSD Order 2005 (inspection, search, sampling clauses) on ppac.gov.in / petroleum.nic.in / egazette; Legal Metrology Act 2009 s.15 on indiacode; Petroleum Rules 2002 inspection rule; MDG 2024.",
+  },
+  {
+    id: "site-agricultural-land", pillar: "site", path: `${P}/site/agricultural-land/`, hi: true, type: "Explainer", wave: 2,
+    queries: ["can we open petrol pump on agriculture land", "petrol pump on agricultural land", "petrol pump land conversion", "petrol pump land rules"],
+    brief: "Scope: Can a petrol pump be built on agricultural land? Land conversion explained. Sources: OMC dealer selection brochures (land clauses: conversion to non-agricultural / commercial use and when it must be done); MDG brochure on hpcl/bpcl sites; state revenue department pages only if official; say conversion law is by state.",
+  },
+  {
+    id: "fuels-adblue", pillar: "fuels", path: `${P}/fuels/adblue-def/`, hi: true, type: "Explainer", wave: 2,
+    queries: ["adblue petrol pump", "adblue petrol pump price", "adblue fuel pump", "def at petrol pump"],
+    brief: "Scope: AdBlue (diesel exhaust fluid) at petrol pumps: what it is and why BS-VI diesels need it. Sources: BIS standard for DEF (IS 17042) on bis.gov.in; MoRTH BS-VI notification on morth.nic.in / egazette; PIB; oil company product pages (HPCL, BPCL). No price unless an official page states it, dated.",
+  },
 ];
