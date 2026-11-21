@@ -2,61 +2,65 @@
   "kavach": {
     "film": "kavach",
     "title": "डीलर कवच — पूरी फ़िल्म",
-    "version": "v-e0cddd2b72",
-    "duration": 1589.708,
-    "base": "https://mdg-films.s3.ap-south-1.amazonaws.com/kavach/v-e0cddd2b72",
-    "hls": "master.m3u8",
+    "version": "v-40c59f2108",
+    "duration": 1947,
+    "base": "https://mdg-films.s3.ap-south-1.amazonaws.com/kavach/v-40c59f2108",
+    "hls": "hi-9c5d6d07.m3u8",
     "playlists": {
-      "hd": "hd.m3u8",
-      "sd": "sd.m3u8",
-      "lite": "lite.m3u8"
+      "hd": "hi-9c5d6d07.hd.m3u8",
+      "sd": "hi-9c5d6d07.sd.m3u8",
+      "lite": "hi-9c5d6d07.lite.m3u8"
     },
-    "mp4": "film-540.mp4",
-    "poster": "poster-720.jpg",
-    "captions": "captions.hi.vtt",
+    "mp4": "film-540.hi-9c5d6d07.mp4",
+    "poster": "poster.jpg",
+    "captions": "captions.hi-9c5d6d07.vtt",
     "chapters": [
       {
         "t": 0,
         "title": "शुरुआत"
       },
       {
-        "t": 18.34,
+        "t": 29.59,
         "title": "डीलर की असली चुनौतियाँ"
       },
       {
-        "t": 380.37,
+        "t": 395.32,
         "title": "आपकी परछाई"
       },
       {
-        "t": 441.04,
+        "t": 448.94,
         "title": "रोज़ की निगरानी"
       },
       {
-        "t": 627.57,
+        "t": 638.47,
         "title": "रिकॉर्ड का मिलान"
       },
       {
-        "t": 741.95,
+        "t": 754.85,
         "title": "पंप असेसमेंट पॉइंट सिस्टम"
       },
       {
-        "t": 958.3,
+        "t": 974.5,
         "title": "चौबीसों घंटे साथ"
       },
       {
-        "t": 1153.66,
+        "t": 1172.76,
+        "title": "कंपनी के काम, हमारे ज़िम्मे"
+      },
+      {
+        "t": 1504.03,
         "title": "फ़ीस"
       },
       {
-        "t": 1189.94,
+        "t": 1541.61,
         "title": "प्रीमियम सेवाएँ"
       },
       {
-        "t": 1457.35,
+        "t": 1812.62,
         "title": "आपका डेटा, आपका"
       },
       {
-        "t": 1510.25,
+        "t": 1867.02,
         "title": "जुड़िए"
       }
     ],
@@ -66,6 +70,32 @@
       960,
       640,
       426
+    ],
+    "audio": [
+      {
+        "lang": "hi",
+        "name": "हिन्दी",
+        "hls": "hi-9c5d6d07.m3u8",
+        "playlists": {
+          "hd": "hi-9c5d6d07.hd.m3u8",
+          "sd": "hi-9c5d6d07.sd.m3u8",
+          "lite": "hi-9c5d6d07.lite.m3u8"
+        },
+        "mp4": "film-540.hi-9c5d6d07.mp4",
+        "captions": "captions.hi-9c5d6d07.vtt"
+      },
+      {
+        "lang": "or",
+        "name": "ଓଡ଼ିଆ",
+        "hls": "or-f038ef65.m3u8",
+        "playlists": {
+          "hd": "or-f038ef65.hd.m3u8",
+          "sd": "or-f038ef65.sd.m3u8",
+          "lite": "or-f038ef65.lite.m3u8"
+        },
+        "mp4": "film-540.or-f038ef65.mp4",
+        "captions": "captions.or-f038ef65.vtt"
+      }
     ]
   },
   "kavach-short": {

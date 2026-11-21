@@ -51,6 +51,17 @@ interface FilmJson {
   captions?: string;
   chapters?: Array<{ t: number; title: string }>;
   ladder?: number[];
+  /** the film in more than one language: one picture, a sound track + captions each (Hindi first) */
+  audio?: FilmAudio[];
+}
+interface FilmAudio {
+  lang: string;
+  /** the language's name in its own script, as the picker shows it */
+  name: string;
+  hls: string;
+  playlists: { hd: string; sd: string; lite: string };
+  mp4: string;
+  captions: string;
 }
 export interface FilmPageFile {
   fileName: string;
@@ -115,6 +126,9 @@ const T = {
     seek: "फ़िल्म में आगे या पीछे जाएँ",
     wait: "रुकिए…",
     soundOn: "आवाज़ चालू करें",
+    pickTitle: "फ़िल्म किस भाषा में देखेंगे?",
+    pickSub: "भाषा चुनते ही फ़िल्म आवाज़ के साथ चलेगी",
+    filmLang: "फ़िल्म की भाषा",
     resume: "पिछली बार <b></b> तक देखी थी, वहीं से चलाएँ",
     play: "फ़िल्म चलाएँ",
     err: "फ़िल्म नहीं चल पाई",
@@ -202,6 +216,9 @@ const T = {
     seek: "Move through the film",
     wait: "Loading…",
     soundOn: "Turn sound on",
+    pickTitle: "Which language would you like the film in?",
+    pickSub: "The film plays with sound as soon as you choose",
+    filmLang: "Film language",
     resume: "You stopped at <b></b>. Continue from there",
     play: "Play the film",
     err: "The film couldn't play",
@@ -269,6 +286,7 @@ const CHAPTER_EN: Record<string, string> = {
   "चौबीसों घंटे साथ": "With you round the clock",
   "फ़ीस": "Fees",
   "प्रीमियम सेवाएँ": "Premium services",
+  "कंपनी के काम, हमारे ज़िम्मे": "Company tasks, on us",
   "आपका डेटा, आपका": "Your data stays yours",
   "जुड़िए": "Join us",
 };
@@ -356,7 +374,8 @@ function hlsJs(root: string): { fileName: string; source: string } {
 export async function buildFilmPages(opts: { root: string; beaconUrl?: string }): Promise<FilmPageFile[]> {
   const { root } = opts;
   const beacon = opts.beaconUrl || process.env.FILM_BEACON_URL || DEFAULT_BEACON;
-  const films = JSON.parse(readFileSync(path.join(root, "src/film/films.json"), "utf8")) as Record<FilmId, FilmJson>;
+  // FILMS_JSON: build the pages from another film list (a local trial package), never for a deploy
+  const films = JSON.parse(readFileSync(process.env.FILMS_JSON || path.join(root, "src/film/films.json"), "utf8")) as Record<FilmId, FilmJson>;
   const css = minifyCss(readFileSync(path.join(root, "src/film/page.css"), "utf8"));
   const js = await playerJs(root);
   const hls = hlsJs(root);
@@ -476,13 +495,23 @@ ${foot}</main>
 `;
   }
 
+  /* More than one language: the film starts muted behind a card of the languages, each in its own script; the tap
+     that picks one also turns the sound on. One language: the gold "sound on" pill, as before. */
+  const langs: FilmAudio[] = f.audio && f.audio.length ? f.audio : [{ lang: "hi", name: "हिन्दी", hls: f.hls || "", playlists: f.playlists || { hd: "", sd: "", lite: "" }, mp4: f.mp4 || "", captions: f.captions || "" }];
+  const multi = langs.length > 1;
+  const tracks = langs.map((l, i) => `<track kind="captions" srclang="${l.lang}" label="${esc(l.name)}"${i ? "" : " default"} src="${f.base}/${l.captions}">`).join("");
+  const picker = multi
+    ? `<div class="pick" id="snd" data-pick hidden role="dialog" aria-labelledby="pick-t"><div class="card"><b id="pick-t">${w.pickTitle}</b><div class="opts">${langs
+        .map((l) => `<button type="button" data-al="${l.lang}" lang="${l.lang}">${esc(l.name)}</button>`)
+        .join("")}</div><p>${ICON.sound}${w.pickSub}</p></div></div>`
+    : `<button type="button" class="snd" id="snd" hidden>${ICON.sound}${w.soundOn}</button>`;
   const chapterList = (f.chapters || []).map((c) => ({ t: c.t, title: chapterName(lang, c.title) }));
   // From the chapter on fees on, the full film has said what it does and what
   // it costs: from there the controls carry a small "tell us on WhatsApp" too.
   const fees = (f.chapters || []).find((c) => c.title.normalize("NFC") === "फ़ीस".normalize("NFC"));
   const cfg = {
     film: f.film, title, duration: f.duration, base: f.base, hls: f.hls, playlists: f.playlists, mp4: f.mp4,
-    captions: f.captions, chapters: chapterList, beacon: a.beacon, hlsJs: a.hlsSrc, url, kind: p.kind, lang, s: w.run,
+    captions: f.captions, audio: multi ? langs : undefined, chapters: chapterList, beacon: a.beacon, hlsJs: a.hlsSrc, url, kind: p.kind, lang, s: w.run,
     lateAt: p.kind === "full" && fees ? fees.t : 0,
   };
   // Start services is the one main action, and it never opens a form of ours:
@@ -527,7 +556,7 @@ ${callRow}`,
   const setView = view(
     "v-set",
     w.settings,
-    `<div class="sets">${seg(w.speed, "speed", [["data-rate", "1", "1x"], ["data-rate", "1.2", "1.2x"], ["data-rate", "1.5", "1.5x"]])}${seg(w.subs, "subs", [["data-cc", "1", w.on], ["data-cc", "0", w.off]])}${seg(w.pic, "qual", [["data-q", "auto", w.auto], ["data-q", "hd", "HD"], ["data-q", "lite", w.lite]], true)}</div>${share("btn line", w.friend)}`,
+    `<div class="sets">${seg(w.speed, "speed", [["data-rate", "1", "1x"], ["data-rate", "1.2", "1.2x"], ["data-rate", "1.5", "1.5x"]])}${multi ? seg(w.filmLang, "al", langs.map((l) => ["data-al", l.lang, esc(l.name)] as [string, string, string])) : ""}${seg(w.subs, "subs", [["data-cc", "1", w.on], ["data-cc", "0", w.off]])}${seg(w.pic, "qual", [["data-q", "auto", w.auto], ["data-q", "hd", "HD"], ["data-q", "lite", w.lite]], true)}</div>${share("btn line", w.friend)}`,
     true,
   );
   const app = (attrs: string, tone: string, icon: string, label: string, tag = "a") =>
@@ -570,7 +599,7 @@ ${way(`data-open="v-app" href="${startHref}"`, "dark", ICON.app, w.appTitle, `<s
     : `<section class="info">${about}</section>`;
   return `${head}
 <div class="stage" id="stage">
-<video id="v" playsinline preload="auto" controls crossorigin="anonymous" poster="${poster}" aria-label="${esc(title)}"><track kind="captions" srclang="hi" label="हिन्दी" default src="${f.base}/${f.captions}"></video>
+<video id="v" playsinline preload="auto" controls crossorigin="anonymous" poster="${poster}" aria-label="${esc(title)}">${tracks}</video>
 <div class="load" id="load" hidden><b id="loadmsg">${w.loading}</b><i></i></div>
 <div class="ui" id="ui">
 <span class="hd" id="hd" hidden>HD</span>
@@ -581,7 +610,7 @@ ${way(`data-open="v-app" href="${startHref}"`, "dark", ICON.app, w.appTitle, `<s
 <div class="mini"></div>
 <div class="nudge" id="nl">${w.back}</div><div class="nudge r" id="nr">${w.fwd}</div><div class="nudge c" id="nc">${w.run.restart}</div>
 <div class="wait" id="wait" hidden><i></i><b id="waitmsg">${w.wait}</b></div>
-<button type="button" class="snd" id="snd" hidden>${ICON.sound}${w.soundOn}</button>
+${picker}
 <button type="button" class="resume" id="resume" hidden>${ICON.play}<span>${w.resume}</span></button>
 <button type="button" class="big" id="big" hidden><span>${ICON.play}</span>${w.play}</button>
 <div class="err" id="err" hidden><b>${w.err}</b><p>${w.errHow}</p><button type="button" class="btn pri" id="retry">${ICON.replay}${w.retry}</button></div>

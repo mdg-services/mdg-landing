@@ -43,6 +43,8 @@ interface PageConfig {
   };
   /** where the full film's controls start carrying Start services (the fees chapter); 0 = never */
   lateAt: number;
+  /** the film in several languages (one picture, a sound track + captions each); absent = Hindi only */
+  audio?: Array<{ lang: string; name: string; hls: string; playlists?: { hd: string; sd: string; lite: string }; mp4: string; captions: string }>;
 }
 
 interface NetInfo {
@@ -96,6 +98,28 @@ interface NetInfo {
   const now = () => (window.performance ? performance.now() : 0);
   const net: NetInfo = (navigator as unknown as { connection?: NetInfo }).connection || {};
   const media = (f: string) => `${C.base}/${f}`;
+  /* ── the film's language (not the page's): ?al=or, else the last one chosen here, else Hindi ── */
+  const AL = C.audio && C.audio.length > 1 ? C.audio : null;
+  const AL_KEY = "mdg_film_al";
+  let al = AL ? AL[0].lang : "hi";
+  /** a language was asked for in the link or chosen here before: no need to ask before the sound */
+  let known = false;
+  if (AL) {
+    let want = pick("al", /^[a-z]{2}$/) || "";
+    try {
+      want = want || localStorage.getItem(AL_KEY) || "";
+    } catch {
+      /* storage blocked */
+    }
+    if (AL.some((x) => x.lang === want)) {
+      al = want;
+      known = true;
+    }
+  }
+  /** what plays for the chosen language: its master playlists, plain mp4 and captions */
+  const src = () => (AL && AL.find((x) => x.lang === al)) || C;
+  /** the language's card (it stands where the "sound on" pill stood) is still up */
+  const picking = () => !!(AL && snd && !snd.hidden);
 
   /* ── links that carry the share code ─────────────────────────────────── */
   const withTag = (u: string, extra?: string) => {
@@ -562,7 +586,7 @@ interface NetInfo {
   let tapT = 0;
   stage.addEventListener("click", (e) => {
     const t = e.target as HTMLElement;
-    if (stage.classList.contains("over") || (t && t.closest && t.closest("button,a,input,summary"))) return;
+    if (stage.classList.contains("over") || picking() || (t && t.closest && t.closest("button,a,input,summary"))) return;
     if (v.muted && unmutedAt === undefined && !probing) {
       soundOn(true);
       if (firstFrame) showUi();
@@ -638,7 +662,7 @@ interface NetInfo {
     }
   });
   const offerResume = () => {
-    if (!resume || saved < 30 || saved > dur() - 30 || deep) return;
+    if (!resume || saved < 30 || saved > dur() - 30 || deep || picking()) return;
     const b = resume.querySelector("b");
     if (b) b.textContent = clock(saved);
     resume.hidden = false;
@@ -737,15 +761,23 @@ interface NetInfo {
   });
 
   /* ── captions ────────────────────────────────────────────────────────── */
-  const track = v.textTracks[0];
+  const trackFor = () => {
+    for (let i = 0; i < v.textTracks.length; i++) if (v.textTracks[i].language === al) return v.textTracks[i];
+    return v.textTracks[0];
+  };
+  let track = trackFor();
   const ccBtns = document.querySelectorAll<HTMLButtonElement>("[data-cc]");
+  let ccOn = false;
   const captions = (on: boolean) => {
+    ccOn = on;
+    track = trackFor();
+    for (let i = 0; i < v.textTracks.length; i++) if (v.textTracks[i] !== track) v.textTracks[i].mode = "disabled";
     if (track) track.mode = on ? "showing" : "hidden";
+    lift();
     ccBtns.forEach((b) => b.setAttribute("aria-pressed", String((b.dataset.cc === "1") === on)));
   };
   // keep every cue clear of the film's own words low in the frame, and a line
   // higher while the controls are up
-  const trackEl = v.querySelector("track");
   let cueLine = -4;
   const lift = (n?: number) => {
     if (n !== undefined) cueLine = n;
@@ -756,9 +788,9 @@ interface NetInfo {
       if ("line" in c) c.line = cueLine;
     }
   };
-  trackEl?.addEventListener("load", () => lift());
-  lift();
-  captions(true);
+  v.querySelectorAll("track").forEach((el) => el.addEventListener("load", () => lift()));
+  // one language: captions carry the muted start; several: the language card is in front of them until the choice
+  captions(!AL);
   ccBtns.forEach((b) => b.addEventListener("click", () => captions(b.dataset.cc === "1")));
 
   /* ── sound ───────────────────────────────────────────────────────────── */
@@ -779,7 +811,39 @@ interface NetInfo {
     if (snd) snd.hidden = true;
     v.play().catch(() => {});
   };
-  snd?.addEventListener("click", () => soundOn(true));
+  if (!AL) snd?.addEventListener("click", () => soundOn(true));
+  /* Several languages: the tap that picks one is the tap that turns the sound on. A different language than the
+     one playing muted reloads the film's sound at the same picture (the start, if it was only a few seconds in). */
+  let reload: (at: number) => void = () => {};
+  const alBtns = document.querySelectorAll<HTMLButtonElement>("[data-al]");
+  const markAl = () => alBtns.forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.al === al)));
+  const choose = (l: string) => {
+    const was = al;
+    const first = unmutedAt === undefined;
+    al = l;
+    try {
+      localStorage.setItem(AL_KEY, l);
+    } catch {
+      /* storage blocked */
+    }
+    markAl();
+    captions(!first && ccOn);
+    if (l === was) {
+      soundOn(first);
+    } else {
+      const t = v.currentTime || 0;
+      const at = first && t < 15 ? 0 : t;
+      reload(at);
+      soundOn(false);
+      if (first && t > 2) flash(nudges[2]);
+    }
+    if (first) offerResume();
+    showUi();
+  };
+  if (AL) {
+    alBtns.forEach((b) => b.addEventListener("click", () => b.dataset.al && choose(b.dataset.al)));
+    markAl();
+  }
   /* the start-up probe for sound flips `muted` itself; that is not the viewer */
   let probing = false;
   v.addEventListener("volumechange", () => {
@@ -1017,8 +1081,10 @@ interface NetInfo {
       (e: { name?: string }) => {
         if (e && e.name === "NotAllowedError") {
           outcome("blocked");
-          if (snd) snd.hidden = true;
-          if (big) big.hidden = false;
+          if (!AL) {
+            if (snd) snd.hidden = true;
+            if (big) big.hidden = false;
+          }
           if (load) load.hidden = true;
           over();
         } else outcome("muted");
@@ -1026,6 +1092,8 @@ interface NetInfo {
     );
   };
   const tryPlay = () => {
+    // a first visit to a film in several languages always starts muted under the language card: the choice comes first
+    if (AL && !known) return mutedStart();
     probing = true;
     v.muted = false;
     let p: Promise<void> | undefined;
@@ -1107,10 +1175,17 @@ interface NetInfo {
   const mse = !!(window.MediaSource || (window as unknown as { ManagedMediaSource?: unknown }).ManagedMediaSource);
   const phone = matchMedia("(pointer: coarse)").matches;
   const apple = /Apple/.test(navigator.vendor || "");
-  const P = C.playlists;
   /** Safari starts on the first rung listed: give it the list for this network. */
-  const nativeSrc = () =>
-    media(nativeHls ? (P ? (tier === 640 ? P.lite : tier === 960 ? P.sd : P.hd) : C.hls) : C.mp4);
+  const nativeSrc = () => {
+    const S = src();
+    const P = S.playlists;
+    return media(nativeHls ? (P ? (tier === 640 ? P.lite : tier === 960 ? P.sd : P.hd) : S.hls) : S.mp4);
+  };
+  /* a new language on the browser's own player: its playlist, at the same picture */
+  reload = (at) => {
+    v.addEventListener("loadedmetadata", () => (v.currentTime = at), { once: true });
+    v.src = nativeSrc();
+  };
   // Chrome (desktop and Android) says it plays HLS itself, but its own player
   // opens on the smallest rung whatever the list says (240p measured) and on
   // Android climbs to 1080p, about twice the data of 720p. So every browser
@@ -1162,7 +1237,7 @@ interface NetInfo {
         };
         const qRow = $("qual");
         if (qRow) qRow.hidden = false;
-        hls.startLoad(deep && deep < C.duration ? deep : -1);
+        hls.startLoad(startAt);
       });
       hls.on(Hls.Events.ERROR, (_e, d) => {
         if (!d.fatal) return;
@@ -1174,7 +1249,12 @@ interface NetInfo {
           v.play().catch(() => {});
         }
       });
-      hls.loadSource(media(C.hls));
+      let startAt = deep && deep < C.duration ? deep : -1;
+      reload = (at) => {
+        startAt = at;
+        hls.loadSource(media(src().hls));
+      };
+      hls.loadSource(media(src().hls));
       hls.attachMedia(v);
       tryPlay();
     };
