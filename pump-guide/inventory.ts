@@ -388,4 +388,44 @@ export const PUMP_PAGES: PumpPage[] = [
     queries: ["adblue petrol pump", "adblue petrol pump price", "adblue fuel pump", "def at petrol pump"],
     brief: "Scope: AdBlue (diesel exhaust fluid) at petrol pumps: what it is and why BS-VI diesels need it. Sources: BIS standard for DEF (IS 17042) on bis.gov.in; MoRTH BS-VI notification on morth.nic.in / egazette; PIB; oil company product pages (HPCL, BPCL). No price unless an official page states it, dated.",
   },
+  {
+    id: "dealership-ex-servicemen", pillar: "dealership", path: `${P}/dealership/ex-servicemen/`, hi: true, type: "Explainer", wave: 2,
+    queries: ["petrol pump for ex servicemen", "petrol pump dealership for ex servicemen", "ex servicemen petrol pump scheme", "petrol pump allotment procedure for ex servicemen", "ex servicemen petrol pump kaise khole"],
+    brief: "Scope: Petrol pump dealership for ex-servicemen: the defence category explained. Sources: Dealer selection brochure June 2023 (petrolpumpdealerchayan.in, HPCL, BPCL pages): defence category, who qualifies, groups, certificate; Directorate General Resettlement (dgrindia.gov.in) pages on oil product agencies; Parliament answers. Go deeper than the eligibility page's one line on the 8% share.",
+  },
+  {
+    id: "dealership-rural-outlet", pillar: "dealership", path: `${P}/dealership/rural-retail-outlet/`, hi: true, type: "Explainer", wave: 2,
+    queries: ["rural petrol pump dealership", "kisan seva kendra petrol pump dealership", "rural petrol pump land requirement", "rural petrol pump dealership cost", "kisan seva kendra petrol pump kaise khole"],
+    brief: "Scope: Rural petrol pump dealership: how it differs from a regular one. Sources: Dealer selection brochure June 2023 and BPCL DSG 2023 (Regular vs Rural retail outlet: definitions, land, fees, security deposit, selection); Parliament answers on rural outlets and Kisan Seva Kendra (name Indian Oil in words, never link iocl.com); PIB.",
+  },
+  {
+    id: "customers-petrol-in-bottle", pillar: "customers", path: `${P}/customers/petrol-in-bottle/`, hi: true, type: "Explainer", wave: 2,
+    queries: ["petrol in bottle rules", "petrol in bottle allowed or not", "petrol in bottle ban", "petrol pump bottle rule", "can i buy petrol in a can"],
+    brief: "Scope: Can you buy petrol in a bottle? What the rules say. Sources: Petroleum Rules 2002 on indiacode.nic.in and peso.gov.in (Form XIV condition 16, rules on containers for petroleum class A); PESO circulars or advisories on peso.gov.in (read with curl); district or state orders only on official sites, dated.",
+  },
+  {
+    id: "customers-no-helmet-no-petrol", pillar: "customers", path: `${P}/customers/no-helmet-no-petrol/`, hi: true, type: "Explainer", wave: 2,
+    queries: ["no helmet no petrol rule", "no helmet no petrol which state", "no helmet no petrol policy", "no helmet no petrol rule comes into force in"],
+    brief: "Scope: No helmet, no petrol: where the rule comes from and which places have it. Sources: Motor Vehicles Act 1988 s.129 on indiacode.nic.in; state government, transport department, police or district orders on official .gov.in / .nic.in sites only (dated); PIB; MoRTH. If no official order can be opened, set to needs-data.",
+  },
+  {
+    id: "running-opening-hours", pillar: "running", path: `${P}/running/opening-hours/`, hi: true, type: "Explainer", wave: 2,
+    queries: ["petrol pump timing in india", "petrol pump 24 hours open", "petrol pump timing", "petrol pump working hours"],
+    brief: "Scope: Petrol pump timings: what the rules say about opening hours. Sources: MDG 2024 (bharatpetroleum.in PDF): working hours, display of working hours, related irregularities; HPCL retail outlets brochure (mandatory facilities incl. display of working hours); BPCL DSG 2023; Parliament answers. Opening hours set per outlet by the oil company: say so if that is what the sources show.",
+  },
+  {
+    id: "running-staff-uniform", pillar: "running", path: `${P}/running/staff-uniform/`, hi: true, type: "Explainer", wave: 2,
+    queries: ["petrol pump staff uniform", "petrol pump staff designation", "petrol pump uniform rules"],
+    brief: "Scope: Petrol pump staff uniform: what the oil companies' guidelines ask. Sources: MDG 2024 (uniform and staff clauses, irregularity lists); HPCL / BPCL dealer pages; Petroleum Rules 2002 (rule 118 supervision; any clothing clause). If no primary source states a uniform requirement, set to needs-data.",
+  },
+  {
+    id: "fuels-cbg-satat", pillar: "fuels", path: `${P}/fuels/compressed-biogas/`, hi: true, type: "Explainer", wave: 2,
+    queries: ["cbg petrol pump", "satat scheme cbg", "satat scheme details", "compressed biogas pump", "satat scheme full form"],
+    brief: "Scope: Compressed biogas (CBG) at petrol pumps and the SATAT scheme. Sources: SATAT pages on mopng.gov.in / petroleum.nic.in; PIB releases on SATAT and CBG sale at retail outlets (dated counts); Parliament answers; CBG blending obligation notifications. No plant economics or subsidy promises.",
+  },
+  {
+    id: "fuels-lng-trucks", pillar: "fuels", path: `${P}/fuels/lng-for-trucks/`, hi: true, type: "Explainer", wave: 2,
+    queries: ["lng station in india", "lng fuel station", "lng for trucks india", "lng station near me"],
+    brief: "Scope: LNG for trucks at fuel stations in India. Sources: PIB releases on LNG stations (dated counts); MoPNG; PESO (Static and Mobile Pressure Vessels (Unfired) Rules 2016 on peso.gov.in / indiacode); Parliament answers; oil company pages (HPCL, BPCL). No prices unless an official dated page states them.",
+  },
 ];
