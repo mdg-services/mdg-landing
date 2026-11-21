@@ -13,12 +13,19 @@ const SECURITY_HEADERS = [
   { key: "X-Frame-Options", value: "SAMEORIGIN" },
 ];
 
+/**
+ * The address prefix of every language that lives under one (src/i18n/languages.ts).
+ * Spelled out here because this file runs before the project's own modules can be
+ * imported; `npm run lang:check` fails if the two lists differ.
+ */
+const LANG_PREFIXES = ["/hi", "/or"];
+
 const nextConfig: NextConfig = {
   // A second build can sit beside the normal one (NEXT_DIST_DIR=.next-fake,
   // used with GUIDE_FAKE_NOW to look at the guide on a later day).
   distDir: process.env.NEXT_DIST_DIR || ".next",
   reactStrictMode: true,
-  // Two root layouts (English, Hindi) and no single one to hang a 404 on:
+  // Two root layouts (English, and every other language under [lang]) and no single one to hang a 404 on:
   // app/global-not-found.tsx draws the site's 404 itself.
   experimental: { globalNotFound: true },
   poweredByHeader: false,
@@ -66,27 +73,27 @@ const nextConfig: NextConfig = {
     return [
       { source: "/film/en", destination: "/film?lang=en", permanent: false },
       { source: "/film/short/en", destination: "/film/short?lang=en", permanent: false },
-      // The Hindi pages are not in the proxy's matcher (it would put a function in
-      // front of every Hindi page view), so their trailing-slash forms are turned
-      // away here, as the proxy does for the English ones.
-      { source: "/hi/", destination: "/hi", permanent: true },
-      { source: "/hi/register/", destination: "/hi/register", permanent: true },
-      { source: "/hi/grievance/", destination: "/hi/grievance", permanent: true },
-      { source: "/hi/grievances/", destination: "/hi/grievances", permanent: true },
-      { source: "/hi/khata-kavach/", destination: "/hi/khata-kavach", permanent: true },
-      ...["about", "contact", "pricing", "terms", "refund-policy", "shipping"].map((page) => ({
-        source: `/hi/${page}/`,
-        destination: `/hi/${page}`,
-        permanent: true,
-      })),
+      // The pages of the other languages are not all in the proxy's matcher (it would
+      // put a function in front of every page view), so their trailing-slash forms are
+      // turned away here, as the proxy does for the English ones.
+      ...LANG_PREFIXES.flatMap((p) => [
+        { source: `${p}/`, destination: p, permanent: true },
+        ...["register", "grievance", "grievances", "khata-kavach", "about", "contact", "pricing", "terms", "refund-policy", "shipping"].map((page) => ({
+          source: `${p}/${page}/`,
+          destination: `${p}/${page}`,
+          permanent: true,
+        })),
+      ]),
       // The refund page has three names people (and payment reviewers) type. They
-      // all go to the one address, in both languages; the English slash forms
+      // all go to the one address, in every language; the English slash forms
       // are turned away here too, since this runs before the proxy.
       ...["refund", "cancellation"].flatMap((name) => [
         { source: `/${name}`, destination: "/refund-policy", permanent: true },
         { source: `/${name}/`, destination: "/refund-policy", permanent: true },
-        { source: `/hi/${name}`, destination: "/hi/refund-policy", permanent: true },
-        { source: `/hi/${name}/`, destination: "/hi/refund-policy", permanent: true },
+        ...LANG_PREFIXES.flatMap((p) => [
+          { source: `${p}/${name}`, destination: `${p}/refund-policy`, permanent: true },
+          { source: `${p}/${name}/`, destination: `${p}/refund-policy`, permanent: true },
+        ]),
       ]),
       // Khata Kavach is for petrol pumps only since 27 Oct 2026: the guide pages for
       // other trades are gone, and anyone holding a link lands on the nearest page.
@@ -97,7 +104,7 @@ const nextConfig: NextConfig = {
         ["for/wholesalers", "for/petrol-pump"],
         ["examples/a-contractor-limit-bag-by-bag", "examples/a-month-of-diesel-credit"],
       ].flatMap(([from, to]) =>
-        ["", "/hi"].flatMap((lang) => [
+        ["", ...LANG_PREFIXES].flatMap((lang) => [
           { source: `${lang}/khata-kavach/${from}`, destination: `${lang}/khata-kavach/${to}/`, permanent: true },
           { source: `${lang}/khata-kavach/${from}/`, destination: `${lang}/khata-kavach/${to}/`, permanent: true },
         ]),

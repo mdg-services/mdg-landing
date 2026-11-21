@@ -32,6 +32,13 @@ const screen = (name: string): KkScreen => ({ src: `/kk/screens/${name}.webp`, w
  * pump[1] = the Bills page (बिलों के बाकी, one unpaid bill and one paid); transporter[0] = the Transporter home
  * with the "बिलों के बाकी" card; transporter[1] = one bill open (UPI से भरो, PDF देखो).
  */
+/**
+ * The app screens are drawn in Hindi and in English. A page in any other language
+ * (Odia, …) shows the Hindi ones: the screens belong to the app, whose languages
+ * are Hindi and English.
+ */
+export const kkScreens = (lang: string) => KK_SCREENS[lang === "en" ? "en" : "hi"];
+
 export const KK_SCREENS = {
   en: {
     hero: screen("pump-en-fill"),

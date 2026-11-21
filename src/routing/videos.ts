@@ -43,9 +43,9 @@ export function videosFile(slug: string, lang: Lang): string {
   return `${base}/${lang === "hi" ? "" : `${lang}/`}index.html`;
 }
 
-/** A video's public address; Hindi is the bare one, English carries `?lang=en`. */
+/** A video's public address; Hindi is the bare one, English carries `?lang=en`. The explainers are in Hindi and English: any other language gets the Hindi one. */
 export function videoPath(slug: string, lang: Lang): string {
-  return `/videos/${slug}?lang=${lang}`;
+  return `/videos/${slug}?lang=${lang === "en" ? "en" : "hi"}`;
 }
 
 /** The slug for a guide-site id: "gen-dod-clock" -> "dod-clock". */

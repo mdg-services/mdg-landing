@@ -41,6 +41,9 @@ export function geoCookie(headers: Headers): string | null {
 export function filmLang(url: URL, cookieHeader: string | null): { lang: Lang; asked: boolean } {
   const q = url.searchParams.get("lang");
   if (q === "hi" || q === "en") return { lang: q, asked: true };
+  // The film pages' own words exist in Hindi and English only. A site visitor
+  // whose language is Odia (or any later one) reads them in Hindi; the voice
+  // and captions are the film player's own choice (`al`, see src/film/player.ts).
   const kept = new RegExp(`(?:^|;\\s*)${LANG_COOKIE}=(hi|en)(?:;|$)`).exec(cookieHeader || "");
   return { lang: kept ? (kept[1] as Lang) : "hi", asked: false };
 }

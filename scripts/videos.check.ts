@@ -204,14 +204,14 @@ describe("the guide pages, the Training section and the home page", () => {
     for (const page of MDG.pages) for (const id of page.videos ?? []) assert.ok(VIDEOS[id], `${page.id} names ${id}`);
   });
 
-  it("each guide page's video links point at /videos/<slug>?lang=<its own language>", () => {
+  it("each guide page's video links point at /videos/<slug>?lang=<its own language> (the explainers are Hindi and English: any other language gets the Hindi one)", () => {
     const ctx = contextAt(MDG, new Date("2099-01-01"));
     let seen = 0;
     for (const r of ctx.col.releases.filter((x) => x.page.videos?.length)) {
       const m = buildPageModel(ctx, r);
       for (const v of m.videos) {
         seen += 1;
-        assert.match(v.href, new RegExp(`^/videos/[a-z0-9-]+\\?lang=${r.lang}$`), `${r.path}: ${v.href}`);
+        assert.match(v.href, new RegExp(`^/videos/[a-z0-9-]+\\?lang=${r.lang === "en" ? "en" : "hi"}$`), `${r.path}: ${v.href}`);
         assert.ok(VIDEO_SLUGS.includes(v.href.slice("/videos/".length, v.href.indexOf("?"))));
       }
     }

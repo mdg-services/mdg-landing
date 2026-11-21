@@ -11,10 +11,10 @@
  *
  * Public-copy rule: say what a pump gets, never how the product is built.
  */
-import type { Lang } from "../guide/calendar.js";
+import type { PerLang } from "../src/i18n/languages.ts";
 import { CIN, COMPANY, EMAIL, TOLL_FREE } from "../guide/copy.js";
 
-export const KK_UI: Record<Lang, Record<string, string>> = {
+export const KK_UI: PerLang<Record<string, string>> = {
   en: {
     locale: "en_IN",
     brand: "MDG Services",
@@ -74,7 +74,7 @@ export const KK_UI: Record<Lang, Record<string, string>> = {
 };
 
 /** The closing box: the one sales line on a page, and it says it is an advertisement. */
-export const KK_CTA: Record<Lang, { text: string; primary: string }> = {
+export const KK_CTA: PerLang<{ text: string; primary: string }> = {
   en: {
     text: "Khata Kavach is a shared credit book for petrol pumps, from MDG Services. The transporter asks before each truck fills, your nozzle man sees the limit before he fills, and both of you see every fill, payment and bill. It never lends or holds money.",
     primary: "Set up my pump in the app",
@@ -86,13 +86,13 @@ export const KK_CTA: Record<Lang, { text: string; primary: string }> = {
 };
 
 /** The notice under the title of every page. Normal size, never folded away. */
-export const KK_NOTICE: Record<Lang, string> = {
+export const KK_NOTICE: PerLang<string> = {
   en: "MDG Services makes Khata Kavach, so this page comes from the maker of one of the apps it may mention. It is general information, not legal, tax or financial advice. Facts about other apps are taken from their own websites and app listings on the date shown and can change, so check them there before you decide.",
   hi: "खाता कवच MDG Services बनाती है, यानी यह पेज उसी कंपनी का लिखा है जिसका ऐप इसमें आ सकता है। यह सामान्य जानकारी है, कानूनी, टैक्स या वित्तीय सलाह नहीं। दूसरे ऐप्स की जानकारी उनकी अपनी वेबसाइट और ऐप लिस्टिंग से, दी गई तारीख़ पर ली गई है और बदल सकती है, इसलिए फ़ैसला करने से पहले वहीं जाँच लें।",
 };
 
 /** The full disclaimer: at the foot of every page, and the whole of the disclaimer page. [heading, text] pairs. */
-export const KK_DISCLAIMER: Record<Lang, [string, string][]> = {
+export const KK_DISCLAIMER: PerLang<[string, string][]> = {
   en: [
     ["About this page", `This page is general information published by MDG Services, a brand of ${COMPANY} (CIN ${CIN}), the company that makes Khata Kavach. It is free to read and needs no sign-up.`],
     ["We make one of the apps", "Where a page compares Khata Kavach with another app or another way of keeping credit, remember that we make Khata Kavach. We compare like with like, use only facts the other company publishes, and say plainly where another app does more."],
@@ -125,7 +125,7 @@ export const KK_DISCLAIMER: Record<Lang, [string, string][]> = {
  * One short line for each topic's card on the hub (two lines on a phone).
  * Keyed by the topic (pillar) in kk-guide/inventory.ts.
  */
-export const KK_TOPIC_BLURB: Record<string, Record<Lang, string>> = {
+export const KK_TOPIC_BLURB: Record<string, PerLang<string>> = {
   credit: {
     en: "Who gets credit, how big a limit, for how long, and how to write it down.",
     hi: "उधार किसे दें, कितनी सीमा, कितने दिन, और हिसाब कैसे लिखें।",

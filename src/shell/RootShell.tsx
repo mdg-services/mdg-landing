@@ -5,13 +5,13 @@ import LateFonts from "../components/LateFonts";
 import RevealObserver from "../components/RevealObserver";
 import { LangProvider } from "../i18n/client";
 import { commonDict } from "../i18n/server";
-import type { Lang } from "../i18n/lang";
+import { LANGUAGES, type Lang } from "../i18n/lang";
 
 /**
  * The <html> and <body> of every page, in one language. The language is a
- * property of the URL, so `lang` and `data-lang` (which the Devanagari rules in
- * index.css hang off) are in the HTML the server sends, not set later by a
- * script. The floating "Call us" handset and the lazy assistant live here so
+ * property of the URL, so `lang`, `data-lang` and `data-indic` (which the
+ * taller-line, untracked-letter rules for Devanagari and Odia in index.css hang
+ * off) are in the HTML the server sends, not set later by a script. The floating "Call us" handset and the lazy assistant live here so
  * they are on every page.
  */
 export default function RootShell({
@@ -27,7 +27,7 @@ export default function RootShell({
   children: ReactNode;
 }) {
   return (
-    <html lang={lang} data-lang={lang} className={fontClassNames}>
+    <html lang={lang} data-lang={lang} data-indic={LANGUAGES[lang].indic ? "" : undefined} className={fontClassNames}>
       <body>
         <LangProvider lang={lang} t={commonDict(lang)}>
           {children}

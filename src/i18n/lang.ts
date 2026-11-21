@@ -3,14 +3,18 @@
  * browser, so the server, the proxy and the client can all import it.
  *
  * The rule is simple. The URL decides the language of the page: `/` is
- * English and `/hi` is Hindi, and every other page has a twin under `/hi`.
- * The EN / हिंदी switch goes to the twin and remembers the choice in the
- * `mdg_lang` cookie (the proxy reads it, and so do the film pages).
+ * English, `/hi` is Hindi, `/or` is Odia, and every other page has a twin under
+ * each prefix. The language switch goes to the twin and remembers the choice in
+ * the `mdg_lang` cookie (the proxy reads it, and so do the film pages).
+ *
+ * Which languages exist, and everything that differs between them besides
+ * their sentences, is `languages.ts`. This file is the arithmetic on top of it.
  */
 import type { en } from "./en";
+import { DEFAULT_LANG, LANGS, LANGUAGES, isLang, localPath, prefixOf, type Lang } from "./languages";
 
-export const LANGS = ["en", "hi"] as const;
-export type Lang = (typeof LANGS)[number];
+export { DEFAULT_LANG, LANGS, LANGUAGES, isLang, localPath, prefixOf };
+export type { Lang };
 
 /** The English dictionary is the shape every other language must satisfy. */
 export type Dict = typeof en;
@@ -19,11 +23,7 @@ export type Dict = typeof en;
 export type CommonDict = Pick<Dict, "ui" | "nav">;
 
 /** Written in the language itself: a reader must recognise their own. */
-export const LANG_LABEL: Record<Lang, string> = { en: "English", hi: "हिंदी" };
-
-export function isLang(v: unknown): v is Lang {
-  return typeof v === "string" && (LANGS as readonly string[]).includes(v);
-}
+export const LANG_LABEL = Object.fromEntries(LANGS.map((l) => [l, LANGUAGES[l].native])) as Record<Lang, string>;
 
 /** The site-wide language cookie, written by the switch and the proxy, read by the proxy. */
 export const LANG_COOKIE = "mdg_lang";
@@ -49,26 +49,33 @@ export type SiteRoute = "" | "/register" | "/grievance" | "/grievances" | "/khat
 
 /** The public path of a site page in a language: ("", "hi") -> "/hi". */
 export function pathFor(lang: Lang, route: SiteRoute = ""): string {
-  if (lang === "en") return route === "" ? "/" : route;
-  return `/hi${route}`;
+  if (lang === DEFAULT_LANG) return route === "" ? "/" : route;
+  return `${prefixOf(lang)}${route}`;
 }
 
 /** The home page link for a language, with an optional #section. */
 export function homeHref(lang: Lang, hash = ""): string {
-  if (lang === "hi") return hash ? `/hi#${hash}` : "/hi";
-  return hash ? `/#${hash}` : "/";
+  const home = lang === DEFAULT_LANG ? "/" : prefixOf(lang);
+  return hash ? `${home}#${hash}` : home;
 }
 
 /**
  * A film page in a language: ("en", "short") -> "/film/short?lang=en". The
  * film pages answer Hindi unless told otherwise, and a visitor on /hi may still
- * carry an English choice from an earlier visit, so both languages say it.
+ * carry an English choice from an earlier visit, so Hindi and English both say it.
+ * The film's words on screen exist in Hindi and English only; an Odia reader
+ * gets the Hindi page with the Odia voice and captions already chosen
+ * (`al=or`, read by the film player).
  */
 export function filmHref(lang: Lang, film: "full" | "short"): string {
-  return `${film === "full" ? "/film" : "/film/short"}?lang=${lang}`;
+  const base = film === "full" ? "/film" : "/film/short";
+  if (lang === "en" || lang === "hi") return `${base}?lang=${lang}`;
+  return film === "full" ? `${base}?al=${lang}` : base;
 }
 
-/** The same page in the other language, for the switch. */
-export function twinOf(route: SiteRoute, lang: Lang): string {
-  return pathFor(lang === "en" ? "hi" : "en", route);
+/** The addresses of one site page in every language, for the switch: { en: "/about", hi: "/hi/about", or: "/or/about" }. */
+export type Versions = Partial<Record<Lang, string>>;
+
+export function versionsOf(route: SiteRoute): Versions {
+  return Object.fromEntries(LANGS.map((l) => [l, pathFor(l, route)])) as Versions;
 }

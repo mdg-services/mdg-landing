@@ -14,6 +14,7 @@
  * Pure data and arithmetic: proxy.ts imports this, so no Node APIs.
  */
 import { PAGES, PILLARS, type GuidePage } from "./inventory.js";
+import { MDG_TRANSLATIONS } from "./translations.js";
 import { CALENDAR_31_OCT } from "./release-history.js";
 import { buildCalendar, dateFrom, dayFrom, type Release as CalendarRelease } from "./calendar.js";
 
@@ -84,6 +85,8 @@ export const RELEASES: Release[] = buildCalendar({
   pinned: PUBLISHED,
   keepThroughDay: KEEP_THROUGH_DAY,
   pulledForward: PULLED_FORWARD,
+  translations: MDG_TRANSLATIONS,
+  start: START,
 });
 
 /** The last day on which anything goes live. */

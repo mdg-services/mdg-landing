@@ -1,11 +1,13 @@
 import { usePathname } from "next/navigation";
+import { stripPrefix } from "../i18n/languages";
 
 /** The MDG guides and tools, and the Khata Kavach pages below the product page (not its privacy page). */
-const GUIDES = /^\/(?:hi\/)?(?:(?:guides|tools)(?:\/|$)|khata-kavach\/(?!privacy\/?$)[^/])/;
+const GUIDES = /^\/(?:(?:guides|tools)(?:\/|$)|khata-kavach\/(?!privacy\/?$)[^/])/;
 
 /** True for a path under the guides or tools, of either collection (also usable outside React, e.g. in an effect that runs once). */
 export function isGuidesPath(pathname: string): boolean {
-  return GUIDES.test(pathname);
+  // the address without its language prefix (/hi/guides/… and /or/guides/… read as /guides/…)
+  return GUIDES.test(stripPrefix(pathname));
 }
 
 /**

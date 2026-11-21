@@ -4,9 +4,11 @@
  *
  * 1. Language. `/`, `/register`, `/grievance`, `/grievances`, `/khata-kavach` and the
  *    company pages (`/about`, `/contact`, `/pricing`, `/terms`, `/refund-policy`,
- *    `/shipping`) are English and `/hi…` is Hindi; a `?lang=` choice, the `mdg_lang` cookie or a Hindi
- *    browser can send a visitor of an English address to its /hi twin
- *    (src/routing/site.ts).
+ *    `/shipping`) are English, `/hi…` is Hindi and `/or…` is Odia; a `?lang=` choice,
+ *    the `mdg_lang` cookie or the browser's language can send a visitor of an English
+ *    address to its twin (src/routing/site.ts). The matcher below must name every
+ *    prefix, because Next reads it as literal text: `npm run lang:check` fails when a
+ *    language is missing from it.
  * 2. The guide pages: the MDG guides (/guides/, /tools/), the Khata Kavach
  *    pages (/khata-kavach/…) and the Petrol pump guide (/petrol-pump/…). Each
  *    set goes live a few pages a day on its own calendar (guide/schedule.ts,
@@ -60,21 +62,21 @@ export const config = {
     "/videos/:slug",
     "/guides",
     "/guides/:path*",
-    "/hi/guides",
-    "/hi/guides/:path*",
+    "/:lang(hi|or)/guides",
+    "/:lang(hi|or)/guides/:path*",
     "/tools/:path*",
-    "/hi/tools/:path*",
+    "/:lang(hi|or)/tools/:path*",
     // the Khata Kavach pages below the product page (one or more parts after it)
     "/khata-kavach/:path+",
-    "/hi/khata-kavach/:path+",
+    "/:lang(hi|or)/khata-kavach/:path+",
     // the Petrol pump guide: its front door and every page below it
     "/petrol-pump",
     "/petrol-pump/:path*",
-    "/hi/petrol-pump",
-    "/hi/petrol-pump/:path*",
-    // a ?lang= on a Hindi address is a choice too
-    { source: "/hi/:path*", has: [{ type: "query", key: "lang" }] },
-    { source: "/hi", has: [{ type: "query", key: "lang" }] },
+    "/:lang(hi|or)/petrol-pump",
+    "/:lang(hi|or)/petrol-pump/:path*",
+    // a ?lang= on an address of another language is a choice too
+    { source: "/:lang(hi|or)/:path*", has: [{ type: "query", key: "lang" }] },
+    { source: "/:lang(hi|or)", has: [{ type: "query", key: "lang" }] },
   ],
 };
 

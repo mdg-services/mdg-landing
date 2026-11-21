@@ -6,9 +6,10 @@
  */
 import { en } from "./en";
 import { hi } from "./hi";
+import { or } from "./or";
 import type { CommonDict, Dict, Lang } from "./lang";
 
-const DICTS: Record<Lang, Dict> = { en, hi };
+const DICTS: Record<Lang, Dict> = { en, hi, or };
 
 export function getT(lang: Lang): Dict {
   return DICTS[lang];

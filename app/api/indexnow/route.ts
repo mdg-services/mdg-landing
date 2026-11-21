@@ -1,3 +1,4 @@
+import { LANGS, pathFor } from "@/i18n/lang";
 import { revalidatePath } from "next/cache";
 import { RELEASES, dayOf } from "../../../guide/schedule.ts";
 import { KK_RELEASES, kkDayOf } from "../../../kk-guide/schedule.ts";
@@ -37,7 +38,7 @@ const HOST = "mdgservices.in";
  */
 function refreshGuideLists(): void {
   // The sitemap is built fresh on every request, so it has no saved copy to throw away.
-  for (const path of ["/llms.txt", "/", "/hi", "/khata-kavach", "/hi/khata-kavach"]) revalidatePath(path);
+  for (const path of ["/llms.txt", ...LANGS.flatMap((l) => [pathFor(l), pathFor(l, "/khata-kavach")])]) revalidatePath(path);
   for (const r of [...RELEASES, ...KK_RELEASES, ...PUMP_RELEASES]) revalidatePath(r.path.replace(/\/$/, ""));
 }
 
@@ -57,7 +58,7 @@ async function handler(req: Request): Promise<Response> {
     ...PUMP_RELEASES.filter((r) => r.day === pumpDay),
   ].map((r) => `https://${HOST}${r.path}`);
   if (day === 1) urlList.push(`https://${HOST}/`);
-  if (kkDay === 1) urlList.push(`https://${HOST}/khata-kavach`, `https://${HOST}/hi/khata-kavach`);
+  if (kkDay === 1) urlList.push(...LANGS.map((l) => `https://${HOST}${pathFor(l, "/khata-kavach")}`));
   if (!urlList.length) return json({ ok: true, day, kkDay, pumpDay, sent: 0 });
   const r = await fetch("https://api.indexnow.org/indexnow", {
     method: "POST",

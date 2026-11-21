@@ -14,6 +14,8 @@
  * results, Oct 2026) the page should answer in the words people type.
  */
 import type { PageType, PillarMeta } from "../guide/inventory.js";
+import type { Lang } from "../src/i18n/languages.ts";
+import { KK_TRANSLATIONS, applyTranslations } from "../guide/translations.ts";
 
 export type KkPillar = "hub" | "credit" | "counter" | "paid" | "compare" | "features" | "trades" | "examples";
 
@@ -23,6 +25,8 @@ export interface KkPage {
   /** English path, with trailing slash. The Hindi twin lives at "/hi" + path. */
   path: string;
   hi: boolean;
+  /** Further languages the page is also written in (set from guide/translations.ts, off the drip). */
+  more?: Lang[];
   type: PageType;
   wave: 1 | 2 | 3;
   queries: string[];
@@ -399,3 +403,5 @@ export const KK_PAGES: KkPage[] = [
 ];
 
 export const kkById = new Map(KK_PAGES.map((p) => [p.id, p]));
+
+applyTranslations(KK_PAGES, KK_TRANSLATIONS);

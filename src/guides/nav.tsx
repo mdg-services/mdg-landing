@@ -1,6 +1,7 @@
 import type { NavItem } from "../components/Navbar";
 import { KK_ANCHORS } from "../data/kk";
 import { getT } from "../i18n/server";
+import { localPath, pathFor } from "../i18n/lang";
 import type { Collection, Lang } from "./collection";
 
 /**
@@ -13,14 +14,14 @@ import type { Collection, Lang } from "./collection";
 export function guideNav(col: Collection, lang: Lang): { items?: NavItem[]; cta?: { href: string } } {
   if (col.key !== "kk") return {};
   const t = getT(lang);
-  const page = lang === "hi" ? "/hi/khata-kavach" : "/khata-kavach";
+  const page = pathFor(lang, "/khata-kavach");
   const n = t.kk.navItems;
   return {
     items: [
       { key: "how", href: `${page}#${KK_ANCHORS.how}`, label: n.how },
       { key: "pump", href: `${page}#${KK_ANCHORS.pump}`, label: n.pump },
       { key: "transporter", href: `${page}#${KK_ANCHORS.transporter}`, label: n.transporter },
-      { key: "guides", href: `${lang === "hi" ? "/hi" : ""}/khata-kavach/guides/`, label: t.nav.guides, here: true },
+      { key: "guides", href: localPath(lang, "/khata-kavach/guides/"), label: t.nav.guides, here: true },
     ],
     cta: { href: `${page}#${KK_ANCHORS.start}` },
   };

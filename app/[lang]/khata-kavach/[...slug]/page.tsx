@@ -1,0 +1,27 @@
+import type { Metadata } from "next";
+import { GuideRoute, guideMetadata, releaseFor, guideParams } from "@/guides/route";
+import { KK } from "@/guides/collections";
+import { routeLang, type LangProps } from "@/i18n/route";
+import { isLang } from "@/i18n/lang";
+
+/** The Khata Kavach pages under /khata-kavach/: the guides' front door, the topics and every page under them. Refreshed hourly: the pages it links to are the ones live today. */
+export const revalidate = 3600;
+// dynamicParams for the slug stays at its default (true) on purpose, as on the English
+// routes: the proxy already answers 404 for any address that is not a live page, and the
+// daily cron (api/indexnow) purges the saved copies: with `false` a purged page is a 404
+// until the next build; with the default it is simply rendered again. (The [lang] layer
+// above is `false`: an address that names no language is never a page.)
+
+type Props = LangProps & { params: Promise<{ lang: string; slug: string[] }> };
+
+export async function generateStaticParams({ params }: { params: { lang: string } }) {
+  return isLang(params.lang) ? guideParams(KK, params.lang, "khata-kavach") : [];
+}
+
+export async function generateMetadata(props: Props): Promise<Metadata> {
+  return guideMetadata(KK, releaseFor(KK, await routeLang(props), "khata-kavach", (await props.params).slug));
+}
+
+export default async function Page(props: Props) {
+  return <GuideRoute col={KK} release={releaseFor(KK, await routeLang(props), "khata-kavach", (await props.params).slug)} />;
+}

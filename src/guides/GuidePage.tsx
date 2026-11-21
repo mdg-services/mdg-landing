@@ -19,11 +19,11 @@ import {
   type PageModel,
 } from "./model";
 import { EMAIL, OFFICIAL } from "../../guide/copy.ts";
-import { homeHref } from "../i18n/lang";
+import { LANGS, LANGUAGES, homeHref, type Versions } from "../i18n/lang";
 import { guideNav } from "./nav";
 
 /** The jump-link list on a page with several sections. */
-const ON_THIS_PAGE: Record<Lang, string> = { en: "On this page", hi: "इस पेज पर" };
+const ON_THIS_PAGE: Record<Lang, string> = { en: "On this page", hi: "इस पेज पर", or: "ଏହି ପୃଷ୍ଠାରେ" };
 
 /** Four or more sections: worth a row of jump links. */
 const TOC_FROM = 4;
@@ -45,10 +45,18 @@ export default function GuidePage({ ctx, release }: { ctx: Ctx; release: AnyRele
   const look = col.look;
   const cta = col.cta(lang);
   /** A full stop in the page's own script */
-  const stop = lang === "hi" ? "।" : ".";
-  const otherLang: Lang = lang === "en" ? "hi" : "en";
-  // The switch goes to this page's twin; with no twin live, to the other language's guides.
-  const twin = m.twin?.href ?? target(ctx, "hub", otherLang)?.href ?? homeHref(otherLang);
+  const stop = LANGUAGES[lang].stop;
+  // The switch offers every language this page is live in; for a language it has no version in, nothing:
+  // a tap never lands on a page that is not there. (Where the page has no other version at all, the
+  // switch falls back to each language's guides front door, so a reader can still change language.)
+  const versions: Versions = { [lang]: release.path, ...Object.fromEntries(m.versions.map((v) => [v.lang, v.href])) };
+  if (!m.versions.length) {
+    for (const l of LANGS) {
+      if (l === lang) continue;
+      const hub = target(ctx, "hub", l);
+      versions[l] = hub && hub.lang === l ? hub.href : homeHref(l);
+    }
+  }
   const body = renderBody(ctx, lang, c.body);
   const answer = c.answer ? renderInline(ctx, lang, c.answer) : "";
   const script = toolScript(col, page);
@@ -72,7 +80,7 @@ export default function GuidePage({ ctx, release }: { ctx: Ctx; release: AnyRele
   return (
     <div className={col.themeClass ? `${look.root} ${col.themeClass}` : look.root}>
       <JsonLd data={structuredData(ctx, m)} />
-      <Navbar twin={twin} current={col.nav} {...guideNav(col, lang)} />
+      <Navbar versions={versions} current={col.nav} {...guideNav(col, lang)} />
 
       <main>
         {/* hero band: breadcrumb, title, short answer */}
@@ -85,7 +93,7 @@ export default function GuidePage({ ctx, release }: { ctx: Ctx; release: AnyRele
           />
           <div className="wrap-narrow relative py-12 sm:py-14 md:py-16">
             <Enter>
-              <nav aria-label={lang === "hi" ? "नेविगेशन पथ" : "Breadcrumb"} className="eyebrow-light guide-label">
+              <nav aria-label={LANGUAGES[lang].breadcrumb} className="eyebrow-light guide-label">
                 <ol className="flex flex-wrap items-center gap-x-2.5 gap-y-1">
                   {m.crumbs.slice(0, -1).map((b, i) => (
                     <li key={b.href} className="flex items-center gap-2.5">

@@ -5,7 +5,7 @@ import { KkMark, LogoFull } from "./Brand";
 import CallUs from "./CallUs";
 import LanguageToggle from "./LanguageToggle";
 import { NAV } from "../data/content";
-import { homeHref, pathFor } from "../i18n/lang";
+import { homeHref, localPath, pathFor, type Versions } from "../i18n/lang";
 import { useLang } from "../i18n/client";
 
 /** One link in the bar. */
@@ -16,9 +16,9 @@ export type NavItem = { key: string; href: string; label: string; here?: boolean
  * anything else that wears the full navbar.
  *
  * `onHome` is true on the home page itself, where the section links scroll
- * in place; anywhere else they go to the home page's section. `twin` is where
- * the other language's version of THIS page lives (the home page's twin for
- * the home page, the page's own twin on a guide).
+ * in place; anywhere else they go to the home page's section. `versions` is
+ * where each language's version of THIS page lives (the home page's for the
+ * home page, the page's own on a guide).
  *
  * "Products" opens a small menu with both apps, so Khata Kavach has a first
  * level place without a sixth link crowding the bar. `current="khata"` is the
@@ -26,13 +26,13 @@ export type NavItem = { key: string; href: string; label: string; here?: boolean
  * call to action (`cta`), and names itself beside the logo.
  */
 export default function Navbar({
-  twin,
+  versions,
   onHome = false,
   current,
   items: itemsOverride,
   cta,
 }: {
-  twin: string;
+  versions: Versions;
   onHome?: boolean;
   current?: "guides" | "khata";
   /** Replaces the home page's section links (the Khata Kavach page's own sections). */
@@ -83,7 +83,7 @@ export default function Navbar({
   }, [menu]);
 
   const section = (id: string) => (onHome ? `#${id}` : homeHref(lang, id));
-  const guidesHref = lang === "hi" ? "/hi/guides/" : "/guides/";
+  const guidesHref = localPath(lang, "/guides/");
   const khataHref = pathFor(lang, "/khata-kavach");
   const items: NavItem[] =
     itemsOverride ?? [
@@ -203,7 +203,7 @@ export default function Navbar({
         <div className="flex items-center gap-3">
           {/* Outside the burger on purpose: a Hindi reader has to be able to
               find the switch without first opening an English menu. */}
-          <LanguageToggle twin={twin} />
+          <LanguageToggle versions={versions} />
           {/* 1024-1279px: the handset alone; from 1280px, with its words */}
           <CallUs variant="icon" className="hidden text-ink hover:text-navy-700 lg:inline-flex xl:hidden [&_svg]:text-navy-700" />
           <CallUs
@@ -280,7 +280,7 @@ export default function Navbar({
             <a href={talkHref} onClick={() => setOpen(false)} className="btn-primary mt-4 self-stretch">
               {talkLabel}
             </a>
-            <LanguageToggle twin={twin} className="mt-5 self-start" />
+            <LanguageToggle versions={versions} className="mt-5 self-start" />
           </div>
         </div>
       </div>

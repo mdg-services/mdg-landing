@@ -1,5 +1,5 @@
 import PhoneFrame from "../PhoneFrame";
-import { KK_ANCHORS, KK_APPS, KK_SCREENS } from "../../data/kk";
+import { KK_ANCHORS, KK_APPS, kkScreens } from "../../data/kk";
 import { getT } from "../../i18n/server";
 import type { Lang } from "../../i18n/lang";
 
@@ -13,7 +13,7 @@ import type { Lang } from "../../i18n/lang";
 export default function KkTransporter({ lang }: { lang: Lang }) {
   const t = getT(lang).kk;
   const p = t.transporter;
-  const [a, b] = KK_SCREENS[lang].transporter;
+  const [a, b] = kkScreens(lang).transporter;
   return (
     <section id={KK_ANCHORS.transporter} aria-labelledby="kk-transporter" className="scroll-mt-20 overflow-hidden bg-kk-cream text-kk-ink">
       <div className="wrap-full grid gap-x-12 gap-y-10 py-24 md:grid-cols-12 md:gap-y-12 md:py-32">

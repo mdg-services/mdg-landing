@@ -18,18 +18,19 @@ import FAQ from "../components/FAQ";
 import HomeGuides from "../components/HomeGuides";
 import Footer from "../components/Footer";
 import { getT } from "../i18n/server";
-import { twinOf, type Lang } from "../i18n/lang";
+import { versionsOf, type Lang } from "../i18n/lang";
 
 /**
  * The home page, server-rendered in one language: `/` is English, `/hi` is
- * Hindi, and everything on it comes from that language's dictionary.
+ * Hindi, `/or` is Odia, and everything on it comes from that language's
+ * dictionary.
  */
 export default function HomePage({ lang }: { lang: Lang }) {
   const t = getT(lang);
   return (
     <div className="min-h-screen bg-paper text-ink">
       <ScrollProgress />
-      <Navbar onHome twin={twinOf("", lang)} />
+      <Navbar onHome versions={versionsOf("")} />
       <main>
         <Hero lang={lang} />
         <Products lang={lang} />

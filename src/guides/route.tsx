@@ -4,11 +4,12 @@ import GuidePage from "./GuidePage";
 import { SITE, buildPageModel, contextAt, loadContent, pathOf, releaseAt, type AnyRelease, type Collection, type Lang } from "./model";
 import { guideNow } from "./clock";
 import { KK_OG_IMAGE, OG_IMAGE } from "../seo/site";
+import { DEFAULT_LANG, prefixOf } from "../i18n/languages";
 
 /**
  * Glue between the app's guide routes and the renderer. The route trees
- * (/guides/…, /tools/…, /khata-kavach/… and their /hi twins) are thin files
- * that call these, so the English and Hindi sides cannot drift apart.
+ * (/guides/…, /tools/…, /khata-kavach/… and their twins under each language's
+ * prefix) are thin files that call these, so the languages cannot drift apart.
  *
  * A route names its collection and its root: the first part of the address
  * after the language ("guides", "tools", "khata-kavach").
@@ -16,13 +17,13 @@ import { KK_OG_IMAGE, OG_IMAGE } from "../seo/site";
 
 /** The public path for a route's params: ("hi", "guides", ["density"]) -> "/hi/guides/density/". */
 export function guidePath(lang: Lang, root: string, slug: string[] = []): string {
-  return `${lang === "hi" ? "/hi" : ""}/${root}/${slug.length ? `${slug.join("/")}/` : ""}`;
+  return `${prefixOf(lang)}/${root}/${slug.length ? `${slug.join("/")}/` : ""}`;
 }
 
 /** The path segments of every page of one root and language that has words. */
 function slugs(col: Collection, lang: Lang, root: string): string[][] {
   const content = loadContent(col);
-  const prefix = `${lang === "hi" ? "/hi" : ""}/${root}/`;
+  const prefix = `${prefixOf(lang)}/${root}/`;
   return col.releases
     .filter((r) => r.lang === lang && r.path.startsWith(prefix) && r.path !== prefix && content.has(`${r.lang}:${r.page.id}`))
     .map((r) => r.path.slice(prefix.length, -1).split("/"));
@@ -49,20 +50,19 @@ export function guideMetadata(col: Collection, r: AnyRelease): Metadata {
   const ctx = contextAt(col, guideNow(), r.day);
   const m = buildPageModel(ctx, r);
   const { c, lang, page } = m;
-  const twinLang: Lang = lang === "en" ? "hi" : "en";
   const image = col.key === "kk" ? KK_OG_IMAGE : OG_IMAGE;
   return {
     title: { absolute: `${c.metaTitle || c.title} | MDG Services` },
     description: c.description,
     alternates: {
       canonical: r.path,
-      // hreflang only when both languages are live
-      ...(m.twin
+      // hreflang only when another language is live: the page and every live version, and x-default
+      ...(m.versions.length
         ? {
             languages: {
               [lang]: r.path,
-              [twinLang]: pathOf(page, twinLang),
-              "x-default": pathOf(page, "en"),
+              ...Object.fromEntries(m.versions.map((v) => [v.lang, v.href])),
+              "x-default": pathOf(page, DEFAULT_LANG),
             },
           }
         : {}),

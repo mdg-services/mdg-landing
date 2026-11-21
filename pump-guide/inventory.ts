@@ -17,6 +17,8 @@
  * the words people type.
  */
 import type { PageType, PillarMeta } from "../guide/inventory.js";
+import type { Lang } from "../src/i18n/languages.ts";
+import { PUMP_TRANSLATIONS, applyTranslations } from "../guide/translations.ts";
 
 export type PumpPillar = "hub" | "dealership" | "money" | "licences" | "site" | "safety" | "equipment" | "running" | "fuels" | "customers";
 
@@ -26,6 +28,8 @@ export interface PumpPage {
   /** English path, with trailing slash. The Hindi twin lives at "/hi" + path. */
   path: string;
   hi: boolean;
+  /** Further languages the page is also written in (set from guide/translations.ts, off the drip). */
+  more?: Lang[];
   type: PageType;
   wave: 1 | 2 | 3;
   queries: string[];
@@ -429,3 +433,5 @@ export const PUMP_PAGES: PumpPage[] = [
     brief: "Scope: LNG for trucks at fuel stations in India. Sources: PIB releases on LNG stations (dated counts); MoPNG; PESO (Static and Mobile Pressure Vessels (Unfired) Rules 2016 on peso.gov.in / indiacode); Parliament answers; oil company pages (HPCL, BPCL). No prices unless an official dated page states them.",
   },
 ];
+
+applyTranslations(PUMP_PAGES, PUMP_TRANSLATIONS);

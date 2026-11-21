@@ -1,3 +1,4 @@
+import { hubHref } from "../guides/hubs";
 import SectionHeader from "./SectionHeader";
 import { getT } from "../i18n/server";
 import type { Lang } from "../i18n/lang";
@@ -21,7 +22,7 @@ export default function HomeGuides({ lang }: { lang: Lang }) {
   const candidates = MDG.pages.filter((p) => !MDG.notTopics.includes(p.pillar) && isLive(ctx, p.id, lang));
   const picked = [...candidates.filter((p) => mains.has(p.id)), ...candidates.filter((p) => !mains.has(p.id))].slice(0, SHOWN);
   if (!picked.length) return null;
-  const hubHref = lang === "hi" ? "/hi/guides/" : "/guides/";
+  const hubLink = hubHref("mdg", lang);
 
   return (
     <section aria-label={t.sectionAria} className="bg-paper">
@@ -45,7 +46,7 @@ export default function HomeGuides({ lang }: { lang: Lang }) {
           })}
         </div>
         <p className="mt-8">
-          <a href={hubHref} className="link-quiet text-[16px] font-semibold text-navy-700">
+          <a href={hubLink} className="link-quiet text-[16px] font-semibold text-navy-700">
             {t.all} →
           </a>
         </p>

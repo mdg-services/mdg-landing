@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { getT } from "../i18n/server";
 import { DOC_KEY } from "../i18n/doc";
 import { docFacts, fill } from "../lib/docText";
-import { pathFor, type CompanyRoute, type Lang, type SiteRoute } from "../i18n/lang";
+import { LANGS, LANGUAGES, pathFor, type CompanyRoute, type Lang, type SiteRoute } from "../i18n/lang";
 
 export const SITE = "https://mdgservices.in";
 export const OG_IMAGE = { url: "/og.png", width: 2400, height: 1260, alt: "MDG Services · Dealer's कवच" };
@@ -18,10 +18,11 @@ function canonicalRoute(route: SiteRoute): SiteRoute {
 }
 
 /**
- * The head of a page that exists in both languages: title, description,
- * canonical, hreflang (en, hi, x-default), Open Graph and Twitter. The URL
- * decides the language, so the same builder serves `/` and `/hi`, `/register`
- * and `/hi/register`, and so on.
+ * The head of a page that exists in every language: title, description,
+ * canonical, hreflang (one per language in src/i18n/languages.ts, and
+ * x-default), Open Graph and Twitter. The URL decides the language, so the
+ * same builder serves `/`, `/hi` and `/or`, `/register` and `/hi/register`, and
+ * so on.
  */
 export function siteMetadata(lang: Lang, route: SiteRoute): Metadata {
   const t = getT(lang);
@@ -59,8 +60,7 @@ export function siteMetadata(lang: Lang, route: SiteRoute): Metadata {
     alternates: {
       canonical,
       languages: {
-        en: pathFor("en", page),
-        hi: pathFor("hi", page),
+        ...Object.fromEntries(LANGS.map((l) => [l, pathFor(l, page)])),
         "x-default": pathFor("en", page),
       },
     },
@@ -70,7 +70,8 @@ export function siteMetadata(lang: Lang, route: SiteRoute): Metadata {
       title: ogTitle,
       description: ogDescription,
       url: canonical,
-      locale: lang === "hi" ? "hi_IN" : "en_IN",
+      locale: LANGUAGES[lang].ogLocale,
+      alternateLocale: LANGS.filter((l) => l !== lang).map((l) => LANGUAGES[l].ogLocale),
       images: [image],
     },
     twitter: {

@@ -245,8 +245,8 @@
    by utility classes: the reading column on the paper background, Inter
    body, the site's ink colours, headings in the display face, tables and
    cards with the site's borders and radii, clause tags in Space Mono. The
-   Hindi rules at the foot of this file still apply: they sit on
-   html[data-lang="hi"] and outrank these. */
+   Indic rules at the foot of this file still apply: they sit on
+   html[data-indic] and outrank these. */
 @layer components {
   .guide-prose {
     @apply leading-[1.75] text-ink;
@@ -811,57 +811,61 @@ html.reveal-on [data-reveal="rail"]:not(.in) { opacity: 1; transform: scaleY(0);
    there. All of it is scoped to the Hindi page, so the English
    page renders exactly as it did before.
 
+   `data-indic` is set on <html> for every language whose script needs this
+   (src/i18n/languages.ts `indic`): Hindi and Odia today. A new Indic language
+   gets these rules by being marked `indic: true`, with no CSS to copy.
+
    `!important` throughout, because the tightening it undoes
    arrives as a utility class or an inline style, and both
    outrank a plain rule.
    ───────────────────────────────────────────────────── */
-html[data-lang="hi"] body {
+html[data-indic] body {
   line-height: 1.7;
 }
 
-html[data-lang="hi"] h1,
-html[data-lang="hi"] h2,
-html[data-lang="hi"] h3,
-html[data-lang="hi"] h4 {
+html[data-indic] h1,
+html[data-indic] h2,
+html[data-indic] h3,
+html[data-indic] h4 {
   letter-spacing: normal !important;
   line-height: 1.28;
 }
 
-html[data-lang="hi"] .text-mega {
+html[data-indic] .text-mega {
   line-height: 1.18;
   letter-spacing: normal !important;
 }
 
-html[data-lang="hi"] .text-display {
+html[data-indic] .text-display {
   line-height: 1.24;
   letter-spacing: normal !important;
 }
 
 /* Headline measures are set in `ch`, which is a Latin width. */
-html[data-lang="hi"] h1,
-html[data-lang="hi"] h2 {
+html[data-indic] h1,
+html[data-indic] h2 {
   max-width: none !important;
 }
 
 /* Tracked uppercase labels are a Latin device; in Devanagari the
    tracking pulls apart the bar that joins a word together. */
-html[data-lang="hi"] .eyebrow,
-html[data-lang="hi"] .eyebrow-light,
-html[data-lang="hi"] .mono,
-html[data-lang="hi"] .font-mono {
+html[data-indic] .eyebrow,
+html[data-indic] .eyebrow-light,
+html[data-indic] .mono,
+html[data-indic] .font-mono {
   letter-spacing: 0.03em !important;
 }
 
-html[data-lang="hi"] .btn,
-html[data-lang="hi"] .kk-btn {
+html[data-indic] .btn,
+html[data-indic] .kk-btn {
   line-height: 1.4;
 }
 
 /* The guides' table headings are tracked mono labels. In Devanagari the mono
    face has no letters of its own, only its wide spaces, so Hindi headings are
    set in the body face instead. */
-html[data-lang="hi"] .guide-prose th,
-html[data-lang="hi"] .guide-prose .tool label {
+html[data-indic] .guide-prose th,
+html[data-indic] .guide-prose .tool label {
   font-family: theme(fontFamily.sans);
   font-size: 13.5px;
   letter-spacing: normal;
@@ -870,9 +874,9 @@ html[data-lang="hi"] .guide-prose .tool label {
 /* Devanagari at 11-12.5px is harder to read than Latin at the same size, so
    the guides' small text (the breadcrumb and answer label, the notice strip,
    the checked line, the full disclaimer) is a size up in Hindi. */
-html[data-lang="hi"] .guide-notice,
-html[data-lang="hi"] .guide-small { font-size: 14px; }
-html[data-lang="hi"] .guide-small ul { font-size: 14px; }
+html[data-indic] .guide-notice,
+html[data-indic] .guide-small { font-size: 14px; }
+html[data-indic] .guide-small ul { font-size: 14px; }
 
 /* The guides' small labels (the breadcrumb, "संक्षेप में", "इस पेज पर", the
    checked line, the page counts, a stacked table's cell names) are tracked
@@ -880,8 +884,8 @@ html[data-lang="hi"] .guide-small ul { font-size: 14px; }
    browser drew each line half in one face and half in another, at 11-13px.
    Hindi sets them in the body face, 13.5px, with no tracking. The clause tags
    and the numbers keep their mono. */
-html[data-lang="hi"] .guide-label,
-html[data-lang="hi"] .guide-prose .tw-stack td::before {
+html[data-indic] .guide-label,
+html[data-indic] .guide-prose .tw-stack td::before {
   font-family: theme(fontFamily.sans);
   font-size: 13.5px !important;
   letter-spacing: normal !important;
@@ -890,14 +894,14 @@ html[data-lang="hi"] .guide-prose .tw-stack td::before {
 
 /* The कवच marks and the figures are names and numbers, not
    sentences: they keep their own face and their own spacing. */
-html[data-lang="hi"] .deva,
-html[data-lang="hi"] .num,
-html[data-lang="hi"] .num-deva {
+html[data-indic] .deva,
+html[data-indic] .num,
+html[data-indic] .num-deva {
   letter-spacing: normal !important;
 }
 
 /* ── The assistant panel's own language ──────────────────────
-   The rules above are scoped to html[data-lang="hi"], which is
+   The rules above are scoped to html[data-indic], which is
    the language of the PAGE. The panel has its own toggle: a
    dealer skims the English page and then asks in Hindi. So the
    same three corrections are repeated here, scoped to the panel

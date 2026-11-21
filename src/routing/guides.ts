@@ -1,11 +1,12 @@
 /**
  * The release gate for the guide pages of both collections:
  *
- *  - the MDG guides: /guides/…, /tools/… and their /hi twins (guide/schedule.ts);
- *  - the Khata Kavach pages: /khata-kavach/<anything>/… and the /hi twins
+ *  - the MDG guides: /guides/…, /tools/… and their twins under every
+ *    language's prefix (guide/schedule.ts);
+ *  - the Khata Kavach pages: /khata-kavach/<anything>/… and the twins
  *    (kk-guide/schedule.ts). The product page itself (/khata-kavach) and its
  *    privacy page (/khata-kavach/privacy) are not guide pages;
- *  - the Petrol pump guide: /petrol-pump/… and the /hi twins
+ *  - the Petrol pump guide: /petrol-pump/… and the twins
  *    (pump-guide/schedule.ts), ten pages a day.
  *
  * Every guide page is built once. Each schedule says on which day (India time)
@@ -15,14 +16,18 @@
  *
  * Pure function of a path and a date; proxy.ts does the responding.
  */
+import { OTHER_LANGS, prefixOf } from "../i18n/languages.ts";
 import { dayOf, releaseDayOf } from "../../guide/schedule.ts";
 import { kkDayOf, kkReleaseDayOf } from "../../kk-guide/schedule.ts";
 import { pumpDayOf, pumpReleaseDayOf } from "../../pump-guide/schedule.ts";
 
+/** "(?:hi|or)": the prefixes of the languages that live under one. */
+const LP = OTHER_LANGS.map((l) => prefixOf(l).slice(1)).join("|");
+
 const GATES = [
-  { test: /^\/(?:hi\/)?(?:guides|tools)(?:\/|$)/, releaseDayOf, dayOf },
-  { test: /^\/(?:hi\/)?khata-kavach\/(?!privacy\/?$)[^/]/, releaseDayOf: kkReleaseDayOf, dayOf: kkDayOf },
-  { test: /^\/(?:hi\/)?petrol-pump(?:\/|$)/, releaseDayOf: pumpReleaseDayOf, dayOf: pumpDayOf },
+  { test: new RegExp(`^\\/(?:(?:${LP})\\/)?(?:guides|tools)(?:\\/|$)`), releaseDayOf, dayOf },
+  { test: new RegExp(`^\\/(?:(?:${LP})\\/)?khata-kavach\\/(?!privacy\\/?$)[^/]`), releaseDayOf: kkReleaseDayOf, dayOf: kkDayOf },
+  { test: new RegExp(`^\\/(?:(?:${LP})\\/)?petrol-pump(?:\\/|$)`), releaseDayOf: pumpReleaseDayOf, dayOf: pumpDayOf },
 ];
 
 export type GuideGate = { kind: "next" } | { kind: "redirect"; to: string } | { kind: "notFound" };

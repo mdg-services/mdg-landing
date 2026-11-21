@@ -2,7 +2,9 @@ import { guideNow } from "@/guides/clock";
 import { KK, MDG, PUMP, SITE, contextAt, isLive, pathOf, type Ctx, type Lang } from "@/guides/model";
 import { getT } from "@/i18n/server";
 import { DOC_KEY } from "@/i18n/doc";
-import { COMPANY_ROUTES, pathFor } from "@/i18n/lang";
+import { COMPANY_ROUTES, LANGUAGES, pathFor } from "@/i18n/lang";
+import { OTHER_LANGS } from "@/i18n/languages";
+import { pageLangs } from "../../guide/calendar";
 import { docFacts, fill } from "@/lib/docText";
 import catalog from "@/videos/catalog.json";
 
@@ -10,9 +12,10 @@ import catalog from "@/videos/catalog.json";
  * llms.txt: a plain list of the site's pages for AI assistants that read it,
  * grouped the way the guides are: the company and the apps, the MDG guides (a
  * "start here" section, then one section per topic and one for the tools), then
- * the Khata Kavach pages (the same, per topic), each page followed by its Hindi
- * twin. Only the guide pages that are live today are listed. Refreshed hourly,
- * like the sitemap.
+ * the Khata Kavach pages (the same, per topic), each page followed by its twin
+ * in every other language it is live in (Hindi, Odia, …: src/i18n/languages.ts).
+ * Only the guide pages that are live today are listed. Refreshed hourly, like
+ * the sitemap.
  */
 export const revalidate = 3600;
 
@@ -35,19 +38,21 @@ const SECTIONS: { pillar: string; heading: string }[] = [
 
 const line = (title: string, url: string, description: string) => `[${title}](${url}): ${description}`;
 
-/** One page's lines: the English entry, then its Hindi twin under it (or the Hindi entry alone when only that one is live). */
+/** The label in front of a non-English entry, in that language's own script: "हिंदी: ", "ଓଡ଼ିଆ: ". */
+const tag = (lang: Lang) => `${LANGUAGES[lang].native}: `;
+
+/** One page's lines: the English entry, then its twins under it (or the first live language's entry alone when English is not live). */
 function entry(ctx: Ctx, id: string): string[] {
   const page = ctx.col.byId.get(id)!;
   const out: string[] = [];
-  const one = (lang: Lang, nested: boolean) => {
+  let nested = false;
+  for (const lang of pageLangs(page)) {
+    if (!isLive(ctx, id, lang)) continue;
     const c = ctx.content.get(`${lang}:${id}`)!;
     const text = line(c.title, `${SITE}${pathOf(page, lang)}`, c.description);
-    out.push(nested ? `  - हिंदी: ${text}` : `- ${lang === "hi" ? "हिंदी: " : ""}${text}`);
-  };
-  const en = isLive(ctx, id, "en");
-  const hi = page.hi && isLive(ctx, id, "hi");
-  if (en) one("en", false);
-  if (hi) one("hi", en);
+    out.push(nested ? `  - ${tag(lang)}${text}` : `- ${lang === "en" ? "" : tag(lang)}${text}`);
+    nested = true;
+  }
   return out;
 }
 
@@ -56,28 +61,24 @@ export function GET(): Response {
   const ctx = contextAt(MDG, now);
   const kk = contextAt(KK, now);
   const pump = contextAt(PUMP, now);
-  const en = getT("en");
-  const hi = getT("hi");
 
+  /** An entry for a site page: the English line, then one nested line per other language. */
+  const sitePage = (route: Parameters<typeof pathFor>[1], about: (lang: Lang) => { title: string; text: string }) => [
+    `- ${line(about("en").title, `${SITE}${pathFor("en", route)}`, about("en").text)}`,
+    ...OTHER_LANGS.map((l) => `  - ${tag(l)}${line(about(l).title, `${SITE}${pathFor(l, route)}`, about(l).text)}`),
+  ];
   const company = [
-    `- ${line("MDG Services: Dealer's Kavach", `${SITE}/`, en.meta.description)}`,
-    `  - हिंदी: ${line("MDG Services: Dealer's कवच", `${SITE}/hi`, hi.meta.description)}`,
-    `- ${line("Khata Kavach", `${SITE}/khata-kavach`, en.kk.meta.description)}`,
-    `  - हिंदी: ${line("खाता कवच", `${SITE}/hi/khata-kavach`, hi.kk.meta.description)}`,
-    `- ${line(en.register.pageTitle, `${SITE}/register`, en.register.intro)}`,
-    `  - हिंदी: ${line(hi.register.pageTitle, `${SITE}/hi/register`, hi.register.intro)}`,
-    `- ${line(en.grievance.pageTitle, `${SITE}/grievance`, en.grievance.metaDescription)}`,
-    `  - हिंदी: ${line(hi.grievance.pageTitle, `${SITE}/hi/grievance`, hi.grievance.metaDescription)}`,
+    ...sitePage("", (l) => ({ title: l === "en" ? "MDG Services: Dealer's Kavach" : "MDG Services: Dealer's कवच", text: getT(l).meta.description })),
+    ...sitePage("/khata-kavach", (l) => ({ title: l === "en" ? "Khata Kavach" : getT(l).kk.name, text: getT(l).kk.meta.description })),
+    ...sitePage("/register", (l) => ({ title: getT(l).register.pageTitle, text: getT(l).register.intro })),
+    ...sitePage("/grievance", (l) => ({ title: getT(l).grievance.pageTitle, text: getT(l).grievance.metaDescription })),
     // About, contact, pricing, terms, refund and shipping: the pages that say who is behind the site
-    ...COMPANY_ROUTES.flatMap((route) => {
-      const facts = docFacts("en");
-      const d = en[DOC_KEY[route]];
-      const h = hi[DOC_KEY[route]];
-      return [
-        `- ${line(d.pageTitle, `${SITE}${pathFor("en", route)}`, fill(d.metaDescription, facts))}`,
-        `  - हिंदी: ${line(h.pageTitle, `${SITE}${pathFor("hi", route)}`, fill(h.metaDescription, docFacts("hi")))}`,
-      ];
-    }),
+    ...COMPANY_ROUTES.flatMap((route) =>
+      sitePage(route, (l) => {
+        const d = getT(l)[DOC_KEY[route]];
+        return { title: d.pageTitle, text: fill(d.metaDescription, docFacts(l)) };
+      }),
+    ),
   ];
 
   // The short explainer videos: one page each, in Hindi (the bare address) and English (?lang=en).
@@ -110,6 +111,8 @@ export function GET(): Response {
   const kkIntro = kkSections.length
     ? "\n## About the Khata Kavach pages\n\nPlain-language pages from MDG Services, the maker of Khata Kavach, on giving fuel on credit (udhar) to transporters and other regular customers and keeping the account, in English and Hindi. Facts about other apps come from their own websites on the date each page shows; check them there. General information, not legal, tax or financial advice.\n\n"
     : "";
-  const text = `# MDG Services: Dealer's Kavach, Khata Kavach and plain-language guides\n\n> MDG Services (a brand of VRUOOM Private Limited, India) makes two apps: Dealer's Kavach, which keeps an Indian petrol pump dealer's filings, renewals, inspections and daily reports on time, and Khata Kavach, a shared account book between a petrol pump and its transporters. It also publishes plain-language guides in English and Hindi: to the Marketing Discipline Guidelines 2024 (MDG 2024) for petrol pump dealers, and to giving fuel on credit. The MDG guides are not the official text: refer to the oil companies' official guidelines and circulars for accurate and current rules. MDG Services is a private company, not connected with IndianOil, BPCL, HPCL or any government body.\n\n## The company and the apps\n\n${company.join("\n")}\n\n## Short videos on running a pump\n\nOne-minute videos in Hindi and English on the daily rules of a petrol pump, each on its own page. Library: ${SITE}/videos\n\n${videos.join("\n")}\n\n${sections.join("\n")}${kkIntro}${kkSections.join("\n")}${pumpIntro}${pumpSections.join("\n")}`;
+  // Said once, in plain words, so an assistant asked for Odia knows where the Odia pages are and what they are.
+  const odiaNote = `## Odia (ଓଡ଼ିଆ)\n\nThe whole website (home, Khata Kavach, enrolment, grievance, pricing, terms, refund and shipping pages) and a selected set of the guides are also written in Odia, under ${SITE}/or . The Odia guides cover the MDG guide's front door, petrol and diesel density, penalties, inspections, stock variation and receiving a tanker, and the Petrol pump guide's pages on opening a pump (eligibility, process, rural outlets), licences and money. The Odia pages are translations for Odia-speaking readers: where the English and Odia differ, the English page and the oil companies' official documents are the reference. The Dealer's Kavach and Khata Kavach apps themselves work in Hindi and English.\n\n`;
+  const text = `# MDG Services: Dealer's Kavach, Khata Kavach and plain-language guides\n\n> MDG Services (a brand of VRUOOM Private Limited, India) makes two apps: Dealer's Kavach, which keeps an Indian petrol pump dealer's filings, renewals, inspections and daily reports on time, and Khata Kavach, a shared account book between a petrol pump and its transporters. It also publishes plain-language guides in English and Hindi, and a selected set in Odia: to the Marketing Discipline Guidelines 2024 (MDG 2024) for petrol pump dealers, and to giving fuel on credit. The MDG guides are not the official text: refer to the oil companies' official guidelines and circulars for accurate and current rules. MDG Services is a private company, not connected with IndianOil, BPCL, HPCL or any government body.\n\n## The company and the apps\n\n${company.join("\n")}\n\n${odiaNote}## Short videos on running a pump\n\nOne-minute videos in Hindi and English on the daily rules of a petrol pump, each on its own page. Library: ${SITE}/videos\n\n${videos.join("\n")}\n\n${sections.join("\n")}${kkIntro}${kkSections.join("\n")}${pumpIntro}${pumpSections.join("\n")}`;
   return new Response(text, { headers: { "content-type": "text/plain; charset=utf-8" } });
 }

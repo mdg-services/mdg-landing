@@ -13,6 +13,7 @@
 import { KK_PAGES, KK_PILLARS, type KkPage } from "./inventory.js";
 import { buildCalendar, dateFrom, dayFrom, type Release as CalendarRelease } from "../guide/calendar.js";
 import { KK_CALENDAR_26_OCT } from "./release-history.js";
+import { KK_TRANSLATIONS } from "../guide/translations.js";
 
 /** Pages that go live each day. Each language counts as one page. */
 export const KK_PER_DAY = 5;
@@ -62,6 +63,8 @@ export const KK_RELEASES: KkRelease[] = buildCalendar({
   pinned: KK_PUBLISHED,
   keepThroughDay: KK_KEEP_THROUGH_DAY,
   pulledForward: [],
+  translations: KK_TRANSLATIONS,
+  start: KK_START,
 });
 
 export const KK_LAST_DAY = Math.max(...KK_RELEASES.map((r) => r.day));

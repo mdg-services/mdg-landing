@@ -6,7 +6,7 @@ import Footer from "./Footer";
 import LanguageToggle from "./LanguageToggle";
 import { Enter } from "../lib/enter";
 import { getT } from "../i18n/server";
-import { pathFor, twinOf, type Lang, type SiteRoute } from "../i18n/lang";
+import { pathFor, versionsOf, type Lang, type SiteRoute } from "../i18n/lang";
 
 /**
  * The frame the enrolment and grievance pages share: a slim header, a navy
@@ -58,7 +58,7 @@ export default function FormShell({
             <Link href={pathFor(lang)} className="link-quiet hidden text-[14px] font-medium text-ink-soft hover:text-ink sm:inline">
               ← {backLabel}
             </Link>
-            <LanguageToggle twin={twinOf(route, lang)} />
+            <LanguageToggle versions={versionsOf(route)} />
             <CallUs className="text-[13.5px] font-semibold text-ink sm:text-[14px] [&_svg]:text-navy-700" />
           </div>
         </div>

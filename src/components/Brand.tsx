@@ -1,3 +1,4 @@
+import type { Lang } from "../i18n/lang";
 import Image from "next/image";
 
 /* Brand assets — the real MDG Services logo.
@@ -67,18 +68,20 @@ export function KkLockup({
   alt,
   eager = false,
 }: {
-  lang: "en" | "hi";
+  lang: Lang;
   white?: boolean;
   className?: string;
   alt: string;
   /** True only for the one on the first screen; every other one waits until it is near. */
   eager?: boolean;
 }) {
-  const { w, h } = KK_LOCKUP[lang];
+  // only English and Hindi have a lockup; every other language reads the Latin one
+  const face = lang === "hi" ? "hi" : "en";
+  const { w, h } = KK_LOCKUP[face];
   return (
     // eslint-disable-next-line @next/next/no-img-element
     <img
-      src={`/kk/lockup-${lang}${white ? "-white" : ""}.svg`}
+      src={`/kk/lockup-${face}${white ? "-white" : ""}.svg`}
       alt={alt}
       width={w}
       height={h}

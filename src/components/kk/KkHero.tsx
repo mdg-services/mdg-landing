@@ -1,7 +1,7 @@
 import PhoneFrame from "../PhoneFrame";
 import Icon from "../Icon";
 import { KkLockup } from "../Brand";
-import { KK_ANCHORS, KK_APPS, KK_SCREENS } from "../../data/kk";
+import { KK_ANCHORS, KK_APPS, kkScreens } from "../../data/kk";
 import { getT } from "../../i18n/server";
 import type { Lang } from "../../i18n/lang";
 
@@ -14,7 +14,7 @@ import type { Lang } from "../../i18n/lang";
 export default function KkHero({ lang }: { lang: Lang }) {
   const t = getT(lang).kk;
   const h = t.hero;
-  const screens = KK_SCREENS[lang];
+  const screens = kkScreens(lang);
 
   return (
     <section id="top" className="overflow-hidden bg-kk-cream text-kk-ink">

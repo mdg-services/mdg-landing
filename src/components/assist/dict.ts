@@ -1,5 +1,6 @@
 import { assist as enAssist } from "../../i18n/en/assist";
 import { assist as hiAssist } from "../../i18n/hi/assist";
+import { assist as orAssist } from "../../i18n/or/assist";
 import { grievance as enGrievance } from "../../i18n/en/grievance";
 import { grievance as hiGrievance } from "../../i18n/hi/grievance";
 import type { GrievanceCategory } from "../../data/content";
@@ -18,8 +19,10 @@ import type { CallPhase } from "./useAssistCall";
  */
 export type AssistDict = typeof enAssist;
 
-export function assistDict(lang: AssistLang): AssistDict {
-  return lang === "hi" ? hiAssist : enAssist;
+export function assistDict(lang: AssistLang | "or"): AssistDict {
+  // "or" is the page's language, never the panel's: the assistant itself answers in Hindi or English,
+  // but its launcher and the words around it follow the page.
+  return lang === "hi" ? hiAssist : lang === "or" ? orAssist : enAssist;
 }
 
 /**

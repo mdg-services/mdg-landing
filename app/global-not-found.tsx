@@ -26,7 +26,7 @@ export default function NotFound() {
   return (
     <RootShell lang="en" fontClassNames={fontClassNames} lateFontClassNames={lateFontClassNames}>
       <div className="min-h-screen bg-paper text-ink">
-        <Navbar twin="/hi" />
+        <Navbar versions={{ hi: "/hi", or: "/or" }} />
         <main>
           <section className="relative overflow-hidden bg-navy-950 text-white">
             <div aria-hidden className="absolute inset-0 bg-grid-dark opacity-40" />

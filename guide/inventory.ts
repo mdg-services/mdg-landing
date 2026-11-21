@@ -12,6 +12,11 @@
  * draws on. It never reaches the site.
  */
 
+import { prefixOf, type Lang } from "../src/i18n/languages.ts";
+import { MDG_TRANSLATIONS, applyTranslations } from "./translations.ts";
+
+export type { Lang };
+
 export type Pillar =
   | "hub"
   | "penalties"
@@ -50,6 +55,8 @@ export interface GuidePage {
   /** English path, with trailing slash. The Hindi twin lives at "/hi" + path. */
   path: string;
   hi: boolean;
+  /** Further languages the page is also written in (set from guide/translations.ts, off the drip). */
+  more?: Lang[];
   type: PageType;
   wave: 1 | 2 | 3;
   /** Real searches (Google / YouTube suggestions, Oct 2026) this page answers. */
@@ -63,6 +70,8 @@ export interface GuidePage {
 export interface PillarMeta {
   en: string;
   hi: string;
+  /** The name in further languages (guide/copy.or.ts and friends fill it in). */
+  names?: Partial<Record<Lang, string>>;
   /** id of the pillar's main page */
   main: string;
 }
@@ -633,9 +642,9 @@ export const PAGES: GuidePage[] = [
 
 export const byId = new Map(PAGES.map((p) => [p.id, p]));
 
-export type Lang = "en" | "hi";
-
 /** The public path of a page in a language. */
 export function pathOf(page: GuidePage, lang: Lang): string {
-  return lang === "hi" ? `/hi${page.path}` : page.path;
+  return `${prefixOf(lang)}${page.path}`;
 }
+
+applyTranslations(PAGES, MDG_TRANSLATIONS);

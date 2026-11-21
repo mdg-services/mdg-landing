@@ -9,7 +9,7 @@
  *
  * Public-copy rule: say what a dealer gets, never how the work is done.
  */
-import type { Lang } from "./inventory.js";
+import type { PerLang } from "../src/i18n/languages.ts";
 
 export const SITE = "https://mdgservices.in";
 export const COMPANY = "VRUOOM PRIVATE LIMITED";
@@ -29,7 +29,7 @@ export const OFFICIAL = {
 
 export const DOC = "Marketing Discipline Guidelines 2024 (Ver. 1, effective 24.10.2024)";
 
-export const UI: Record<Lang, Record<string, string>> = {
+export const UI: PerLang<Record<string, string>> = {
   en: {
     locale: "en_IN",
     brand: "MDG Services",
@@ -99,13 +99,13 @@ export const UI: Record<Lang, Record<string, string>> = {
 };
 
 /** The notice at the top of every page: what MDG 2024 is, and that this page is not the official text. Normal size, never folded away. */
-export const NOTICE_SHORT: Record<Lang, string> = {
+export const NOTICE_SHORT: PerLang<string> = {
   en: "The Marketing Discipline Guidelines 2024 (MDG 2024) are the oil companies' rules for their dealers, and bind dealers through the dealership agreement. This page is a plain-language explanation by MDG Services (a brand of VRUOOM Private Limited). It is not the official text and is not connected with or approved by IndianOil, BPCL, HPCL or any government body, so please check the current guidelines and circulars on the oil companies' own websites and with your oil company officer before you act.",
   hi: "Marketing Discipline Guidelines 2024 (MDG 2024) तेल कंपनियों के अपने डीलरों के लिए नियम हैं, जो डीलरशिप एग्रीमेंट के ज़रिए डीलरों पर लागू होते हैं। यह पेज MDG Services (VRUOOM Private Limited का ब्रांड) की ओर से आसान भाषा में दी गई जानकारी है। यह आधिकारिक पाठ नहीं है, और इंडियनऑयल, बीपीसीएल, एचपीसीएल या किसी सरकारी संस्था से इसका कोई संबंध या अनुमोदन नहीं है; इसलिए कोई भी कदम उठाने से पहले तेल कंपनियों की अपनी वेबसाइट पर ताज़ा गाइडलाइन और सर्कुलर देखें और अपनी तेल कंपनी के अधिकारी से पूछ लें।",
 };
 
 /** The full disclaimer: at the foot of every page, and the whole of the disclaimer page. [heading, text] pairs. */
-export const DISCLAIMER: Record<Lang, [string, string][]> = {
+export const DISCLAIMER: PerLang<[string, string][]> = {
   en: [
     ["About this page", `This page is a plain-language explanation published by MDG Services, a brand of ${COMPANY} (CIN ${CIN}). It is general information, offered free of charge. It is not the official text of any rule.`],
     ["Not connected with the oil companies or the government", `MDG Services is a private company. It is not connected with, approved by, endorsed by, or acting for Indian Oil Corporation Limited (IndianOil), Bharat Petroleum Corporation Limited (BPCL), Hindustan Petroleum Corporation Limited (HPCL) or any government body. Our name shares letters with the short form "MDG" that the oil companies use for their Marketing Discipline Guidelines. That does not mean any link with them.`],
@@ -141,7 +141,7 @@ export const DISCLAIMER: Record<Lang, [string, string][]> = {
  * The topic's own page has the full description; this is only the card's blurb.
  * Keyed by the topic (pillar) in guide/inventory.ts.
  */
-export const TOPIC_BLURB: Record<string, Record<Lang, string>> = {
+export const TOPIC_BLURB: Record<string, PerLang<string>> = {
   penalties: {
     en: "Critical, major and minor irregularities, and the main ways sales are stopped.",
     hi: "क्रिटिकल, मेजर और माइनर अनियमितता पर कार्रवाई, और बिक्री रुकने के मुख्य तरीके।",

@@ -1,7 +1,7 @@
 import PhoneFrame from "./PhoneFrame";
 import Icon from "./Icon";
 import { KkLockup } from "./Brand";
-import { KK_SCREENS } from "../data/kk";
+import { kkScreens } from "../data/kk";
 import { getT } from "../i18n/server";
 import { homeHref, pathFor, type Lang } from "../i18n/lang";
 import { Reveal } from "../lib/reveal";
@@ -16,7 +16,7 @@ import { Reveal } from "../lib/reveal";
  */
 export default function Products({ lang }: { lang: Lang }) {
   const t = getT(lang).products;
-  const screen = KK_SCREENS[lang].pump[0];
+  const screen = kkScreens(lang).pump[0];
 
   return (
     <section id="products" aria-label={t.sectionAria} className="scroll-mt-20 bg-paper">

@@ -13,7 +13,7 @@ import KkGuides from "../components/kk/KkGuides";
 import KkCta from "../components/kk/KkCta";
 import { KK_ANCHORS } from "../data/kk";
 import { getT } from "../i18n/server";
-import { twinOf, type Lang } from "../i18n/lang";
+import { versionsOf, type Lang } from "../i18n/lang";
 
 /**
  * /khata-kavach and /hi/khata-kavach: the page for MDG Services' second
@@ -32,7 +32,7 @@ export default function KhataKavachPage({ lang }: { lang: Lang }) {
     <div className="min-h-screen bg-kk-cream text-kk-ink">
       <ScrollProgress />
       <Navbar
-        twin={twinOf("/khata-kavach", lang)}
+        versions={versionsOf("/khata-kavach")}
         current="khata"
         items={[
           { key: "how", href: `#${KK_ANCHORS.how}`, label: n.how },

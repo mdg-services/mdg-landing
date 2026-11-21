@@ -3,7 +3,10 @@ import { BRAND, OFFICE } from "../data/content";
 import { TOLL_FREE } from "../lib/tollFree";
 import { getT } from "../i18n/server";
 import { DOC_KEY } from "../i18n/doc";
-import { pathFor, type CompanyRoute, type Lang } from "../i18n/lang";
+import { LANGS, LANGUAGES, homeHref, pathFor, type CompanyRoute, type Lang } from "../i18n/lang";
+
+/** The languages the website is written in, for structured data: ["en-IN", "hi-IN", "or-IN"]. */
+const IN_LANGUAGE = LANGS.map((l) => LANGUAGES[l].bcp47);
 
 /**
  * The home page's structured data: the company, the site, and the questions
@@ -33,13 +36,13 @@ export function homeJsonLd(lang: Lang) {
         "@id": `${SITE}/#site`,
         name: "MDG Services",
         url: `${SITE}/`,
-        inLanguage: ["en-IN", "hi-IN"],
+        inLanguage: IN_LANGUAGE,
         publisher: { "@id": `${SITE}/#org` },
       },
       {
         "@type": "FAQPage",
-        "@id": `${SITE}${lang === "hi" ? "/hi" : "/"}#faq`,
-        inLanguage: lang === "hi" ? "hi-IN" : "en-IN",
+        "@id": `${SITE}${pathFor(lang)}#faq`,
+        inLanguage: LANGUAGES[lang].bcp47,
         mainEntity: getT(lang).faq.items.map((f) => ({
           "@type": "Question",
           name: f.q,
@@ -59,7 +62,7 @@ export function homeJsonLd(lang: Lang) {
 export function kkJsonLd(lang: Lang) {
   const t = getT(lang).kk;
   const url = `${SITE}${pathFor(lang, "/khata-kavach")}`;
-  const inLanguage = lang === "hi" ? "hi-IN" : "en-IN";
+  const inLanguage = LANGUAGES[lang].bcp47;
   return {
     "@context": "https://schema.org",
     "@graph": [
@@ -79,6 +82,7 @@ export function kkJsonLd(lang: Lang) {
         description: t.meta.appDescription,
         applicationCategory: "BusinessApplication",
         operatingSystem: "Web",
+        // the app's own languages, not the website's
         inLanguage: ["en-IN", "hi-IN"],
         publisher: { "@id": `${SITE}/#org` },
         author: { "@id": `${SITE}/#org` },
@@ -87,7 +91,7 @@ export function kkJsonLd(lang: Lang) {
         "@type": "BreadcrumbList",
         "@id": `${url}#crumbs`,
         itemListElement: [
-          { "@type": "ListItem", position: 1, name: "MDG Services", item: `${SITE}${lang === "hi" ? "/hi" : "/"}` },
+          { "@type": "ListItem", position: 1, name: "MDG Services", item: `${SITE}${homeHref(lang)}` },
           { "@type": "ListItem", position: 2, name: t.name, item: url },
         ],
       },
@@ -114,7 +118,7 @@ export function kkJsonLd(lang: Lang) {
 export function companyJsonLd(lang: Lang, route: CompanyRoute) {
   const doc = getT(lang)[DOC_KEY[route]];
   const url = `${SITE}${pathFor(lang, route)}`;
-  const inLanguage = lang === "hi" ? "hi-IN" : "en-IN";
+  const inLanguage = LANGUAGES[lang].bcp47;
   const full = route === "/about" || route === "/contact";
   const pageType = route === "/about" ? "AboutPage" : route === "/contact" ? "ContactPage" : "WebPage";
   return {
@@ -143,6 +147,7 @@ export function companyJsonLd(lang: Lang, route: CompanyRoute) {
                 contactType: "customer support",
                 email: BRAND.companyEmail,
                 telephone: TOLL_FREE.href.replace("tel:", ""),
+                // the languages the support desk answers in (not the website's: the pages are in Odia, the desk is not yet)
                 availableLanguage: ["English", "Hindi"],
                 hoursAvailable: {
                   "@type": "OpeningHoursSpecification",
@@ -167,7 +172,7 @@ export function companyJsonLd(lang: Lang, route: CompanyRoute) {
         "@type": "BreadcrumbList",
         "@id": `${url}#crumbs`,
         itemListElement: [
-          { "@type": "ListItem", position: 1, name: "MDG Services", item: `${SITE}${lang === "hi" ? "/hi" : "/"}` },
+          { "@type": "ListItem", position: 1, name: "MDG Services", item: `${SITE}${homeHref(lang)}` },
           { "@type": "ListItem", position: 2, name: doc.eyebrow, item: url },
         ],
       },

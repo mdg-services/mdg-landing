@@ -1,41 +1,45 @@
 /**
  * Which language a visitor to the site's own pages (/, /register, /grievance,
- * /grievances, /khata-kavach, the company pages (/about, /contact, /pricing,
- * /terms, /refund-policy, /shipping) and their /hi twins) should be sent to.
+ *  /grievances, /khata-kavach, the company pages (/about, /contact, /pricing,
+ * /terms, /refund-policy, /shipping) and their twins under each language's
+ * prefix, /hi and /or) should be sent to.
  *
  * The URL decides the language of the HTML. This only decides when to send a
- * visitor to the other URL:
+ * visitor to another URL:
  *
- *  - `?lang=hi` or `?lang=en` is a choice: go to that language's address, keep
- *    the choice in the `mdg_lang` cookie, and drop the query.
+ *  - `?lang=<code>` is a choice: go to that language's address, keep the
+ *    choice in the `mdg_lang` cookie, and drop the query.
  *  - On an English address with no query: the cookie, if there is one, wins
- *    (`hi` goes to the /hi twin, `en` stays). With no cookie, a browser whose
- *    first language the site can serve (English or Hindi) is Hindi goes to the
- *    /hi twin; everyone else stays. A crawler sends neither, so it gets English
- *    at / and Hindi at /hi.
- *  - A Hindi address with no query always stays: someone who typed or followed
- *    /hi asked for Hindi.
+ *    (a language's code goes to that language's twin, `en` stays). With no
+ *    cookie, a browser whose first language the site can serve (see
+ *    src/i18n/languages.ts) is not English goes to that language's twin;
+ *    everyone else stays. A crawler sends neither, so it gets English at / and
+ *    each other language at its own prefix.
+ *  - An address under a language's prefix with no query always stays: someone
+ *    who typed or followed /hi or /or asked for it.
  *
  * Pure functions on strings; proxy.ts does the responding.
  */
-import { COMPANY_ROUTES, LANG_COOKIE, isLang, pathFor, type Lang, type SiteRoute } from "../i18n/lang";
+import { COMPANY_ROUTES, LANG_COOKIE, pathFor, type SiteRoute } from "../i18n/lang";
+import { DEFAULT_LANG, LANGS, LANGUAGES, isLang, langOfPath, prefixOf, type Lang } from "../i18n/languages";
 
 const ROUTES = ["", "/register", "/grievance", "/grievances", "/khata-kavach", ...COMPANY_ROUTES] as const;
 
 /** Which of the site's own pages a path is, and in which language; null for anything else. */
 export function siteRoute(pathname: string): { lang: Lang; route: SiteRoute } | null {
   const p = pathname.length > 1 ? pathname.replace(/\/+$/, "") : pathname;
-  const hindi = p === "/hi" || p.startsWith("/hi/");
-  const rest = hindi ? p.slice(3) : p === "/" ? "" : p;
+  const lang = langOfPath(p);
+  const rest = lang !== DEFAULT_LANG ? p.slice(prefixOf(lang).length) : p === "/" ? "" : p;
   const route = (ROUTES as readonly string[]).includes(rest) ? (rest as SiteRoute) : null;
-  return route === null ? null : { lang: hindi ? "hi" : "en", route };
+  return route === null ? null : { lang, route };
 }
 
 /**
- * The first language the site can serve ("en" or "hi") in Accept-Language, best
- * q first: "hi-IN,hi;q=0.9,en;q=0.8" -> hi, "mr-IN,hi;q=0.8" -> hi (a Marathi
- * phone that lists Hindi next gets Hindi, as the old device check gave it),
- * "hi;q=0.3,en;q=0.9" -> en. Anything else, or nothing, is null.
+ * The first language the site can serve (one of src/i18n/languages.ts) in
+ * Accept-Language, best q first: "hi-IN,hi;q=0.9,en;q=0.8" -> hi,
+ * "or-IN,en;q=0.8" -> or, "mr-IN,hi;q=0.8" -> hi (a Marathi phone that lists
+ * Hindi next gets Hindi, as the old device check gave it), "hi;q=0.3,en;q=0.9"
+ * -> en. Anything else, or nothing, is null.
  */
 export function firstAcceptedLanguage(header: string | null): Lang | null {
   if (!header) return null;
@@ -49,12 +53,15 @@ export function firstAcceptedLanguage(header: string | null): Lang | null {
     entries.push({ lang: tag.toLowerCase().split("-")[0], q, order });
   });
   entries.sort((a, b) => b.q - a.q || a.order - b.order);
-  const hit = entries.find((e) => e.lang === "en" || e.lang === "hi");
-  return hit ? (hit.lang as Lang) : null;
+  for (const e of entries) {
+    const hit = LANGS.find((l) => (LANGUAGES[l].accept as readonly string[]).includes(e.lang));
+    if (hit) return hit;
+  }
+  return null;
 }
 
 function cookieLang(cookieHeader: string | null): Lang | null {
-  const m = new RegExp(`(?:^|;\\s*)${LANG_COOKIE}=(hi|en)(?:;|$)`).exec(cookieHeader || "");
+  const m = new RegExp(`(?:^|;\\s*)${LANG_COOKIE}=([a-z]+)(?:;|$)`).exec(cookieHeader || "");
   return m && isLang(m[1]) ? m[1] : null;
 }
 
@@ -74,15 +81,14 @@ export function langRedirect(
   if (!here) return null;
 
   const asked = url.searchParams.get("lang");
-  if (asked === "hi" || asked === "en") {
+  if (isLang(asked)) {
     const rest = new URLSearchParams(url.search);
     rest.delete("lang");
     const query = rest.toString();
     return { location: pathFor(asked, here.route) + (query ? `?${query}` : ""), cookie: asked };
   }
 
-  if (here.lang === "hi") return null;
-  const kept = cookieLang(cookieHeader);
-  const wantsHindi = kept ? kept === "hi" : firstAcceptedLanguage(acceptLanguage) === "hi";
-  return wantsHindi ? { location: pathFor("hi", here.route) + url.search } : null;
+  if (here.lang !== DEFAULT_LANG) return null;
+  const wants = cookieLang(cookieHeader) ?? firstAcceptedLanguage(acceptLanguage);
+  return wants && wants !== DEFAULT_LANG ? { location: pathFor(wants, here.route) + url.search } : null;
 }

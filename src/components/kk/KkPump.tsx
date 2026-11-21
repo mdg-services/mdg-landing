@@ -1,5 +1,5 @@
 import PhoneFrame from "../PhoneFrame";
-import { KK_ANCHORS, KK_APPS, KK_SCREENS } from "../../data/kk";
+import { KK_ANCHORS, KK_APPS, kkScreens } from "../../data/kk";
 import { getT } from "../../i18n/server";
 import type { Lang } from "../../i18n/lang";
 
@@ -11,7 +11,7 @@ import type { Lang } from "../../i18n/lang";
 export default function KkPump({ lang }: { lang: Lang }) {
   const t = getT(lang).kk;
   const p = t.pump;
-  const [a, b] = KK_SCREENS[lang].pump;
+  const [a, b] = kkScreens(lang).pump;
   return (
     <section id={KK_ANCHORS.pump} aria-labelledby="kk-pump" className="scroll-mt-20 overflow-hidden bg-kk-siyahi text-white">
       <div className="wrap-full grid gap-x-12 gap-y-10 py-24 md:grid-cols-12 md:gap-y-12 md:py-32">

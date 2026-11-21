@@ -13,13 +13,15 @@
 import { readFileSync, existsSync } from "node:fs";
 import path from "node:path";
 import { Marked, type Renderer, type Tokens } from "marked";
-import { pathIn } from "../../guide/calendar.ts";
+import { pageLangs, pathIn } from "../../guide/calendar.ts";
+import { DEFAULT_LANG, LANGUAGES } from "../i18n/languages.ts";
+import { homeHref } from "../i18n/lang.ts";
 import { SITE } from "../../guide/copy.ts";
 import { loadAll, type PageContent } from "./content.ts";
 import { esc } from "./tags.ts";
 import { ALL, COLLECTIONS, KK, MDG, PUMP } from "./collections.ts";
 import { slugOfSource, videoPath } from "../routing/videos.ts";
-import type { AnyPage, AnyRelease, Collection, CollectionKey, Crumb, Lang } from "./collection.ts";
+import type { AnyPage, AnyRelease, Collection, CollectionKey, Crumb, Lang, PillarMeta } from "./collection.ts";
 
 export type { Lang, PageContent, AnyPage, AnyRelease, Collection, CollectionKey, Crumb };
 export { SITE, ALL, COLLECTIONS, MDG, KK, PUMP };
@@ -95,7 +97,7 @@ export function target(ctx: Ctx, id: string, lang: Lang): { href: string; lang: 
   const p = ctx.col.byId.get(id);
   if (!p) return null;
   if (isLive(ctx, id, lang)) return { href: pathOf(p, lang), lang };
-  if (lang === "hi" && isLive(ctx, id, "en")) return { href: pathOf(p, "en"), lang: "en" };
+  if (lang !== DEFAULT_LANG && isLive(ctx, id, DEFAULT_LANG)) return { href: pathOf(p, DEFAULT_LANG), lang: DEFAULT_LANG };
   return null;
 }
 
@@ -115,18 +117,11 @@ export function releaseAt(col: Collection, pathname: string): AnyRelease | undef
 
 // ── Markdown to HTML ─────────────────────────────────────────────────────
 
-const MONTHS: Record<Lang, string[]> = {
-  en: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
-  hi: ["जनवरी", "फ़रवरी", "मार्च", "अप्रैल", "मई", "जून", "जुलाई", "अगस्त", "सितंबर", "अक्टूबर", "नवंबर", "दिसंबर"],
-};
-
-/** "2026-10-15" -> "15 October 2026" / "15 अक्टूबर 2026" */
+/** "2026-10-15" -> "15 October 2026" / "15 अक्टूबर 2026" / "15 ଅକ୍ଟୋବର 2026" */
 export function longDate(iso: string, lang: Lang): string {
   const [y, m, d] = iso.split("-").map(Number);
-  return `${d} ${MONTHS[lang][m - 1]} ${y}`;
+  return `${d} ${LANGUAGES[lang].months[m - 1]} ${y}`;
 }
-
-const TABLE_WORD: Record<Lang, string> = { en: "Table", hi: "तालिका" };
 
 function makeMarked(ctx: Ctx, lang: Lang): Marked {
   const md = new Marked({ gfm: true });
@@ -157,7 +152,7 @@ function makeMarked(ctx: Ctx, lang: Lang): Marked {
                 .join("")}</tr>`,
           )
           .join("\n");
-        const label = `${TABLE_WORD[lang]}: ${names.filter(Boolean).join(", ")}`.slice(0, 120);
+        const label = `${LANGUAGES[lang].tableWord}: ${names.filter(Boolean).join(", ")}`.slice(0, 120);
         const stack = token.header.length >= 3 ? " tw-stack" : "";
         return `<div class="tw${stack}" role="group" tabindex="0" aria-label="${esc(label)}"><table role="table"><thead role="rowgroup"><tr role="row">${head}</tr></thead><tbody role="rowgroup">\n${rows}\n</tbody></table></div>\n`;
       },
@@ -253,8 +248,8 @@ export interface PageModel {
   published: string;
   modified: string;
   crumbs: Crumb[];
-  /** the other language's address, when that page is live */
-  twin: { lang: Lang; href: string } | null;
+  /** the page's address in every other language it is live in */
+  versions: { lang: Lang; href: string }[];
   /** the collection's front door in this page's language (or English), when live */
   hub: { href: string } | null;
   /** cards under a heading: topics on the hub, the pages of a topic on its main page */
@@ -264,6 +259,11 @@ export interface PageModel {
   pillarLinks: { href: string; label: string }[];
   disclaimerHref: string | null;
   updatesHref: string | null;
+}
+
+/** A topic's name in a language: its own entry, else Hindi for Hindi, else English. */
+export function pillarName(p: PillarMeta, lang: Lang): string {
+  return p.names?.[lang] ?? (lang === "hi" ? p.hi : p.en);
 }
 
 /** A topic is a pillar with pages of its own, not the front door or the tools. */
@@ -277,8 +277,6 @@ export function buildPageModel(ctx: Ctx, r: AnyRelease): PageModel {
   const c = ctx.content.get(`${lang}:${page.id}`)!;
   const t = col.ui[lang];
   const url = `${SITE}${r.path}`;
-  const twinLang: Lang = lang === "en" ? "hi" : "en";
-  const twinLive = page.hi && isLive(ctx, page.id, twinLang);
   const pillar = col.pillars[page.pillar];
   const mainId = pillar.main;
   const isMain = mainId === page.id;
@@ -288,13 +286,13 @@ export function buildPageModel(ctx: Ctx, r: AnyRelease): PageModel {
   const isTopicPage = !col.notTopics.includes(page.pillar);
 
   // Breadcrumb: home > (the product) > the collection's front door > topic main page > this page
-  const crumbs: Crumb[] = [{ name: t.home, href: lang === "hi" ? "/hi" : "/" }, ...col.crumbsBefore(lang)];
+  const crumbs: Crumb[] = [{ name: t.home, href: homeHref(lang) }, ...col.crumbsBefore(lang)];
   if (page.id !== "hub") {
     const hub = col.hubInCrumbs ? target(ctx, "hub", lang) : null;
     if (hub) crumbs.push({ name: t.guide, href: hub.href });
     if (!isMain && isTopicPage) {
       const m = target(ctx, mainId, lang);
-      if (m) crumbs.push({ name: lang === "hi" ? pillar.hi : pillar.en, href: m.href });
+      if (m) crumbs.push({ name: pillarName(pillar, lang), href: m.href });
     }
   }
   // the hub is called "Guides" here as it is on every page below it, not by its long headline
@@ -309,7 +307,7 @@ export function buildPageModel(ctx: Ctx, r: AnyRelease): PageModel {
       if (!tgt) continue;
       cards.push({
         href: tgt.href,
-        title: lang === "hi" ? col.pillars[k].hi : col.pillars[k].en,
+        title: pillarName(col.pillars[k], lang),
         description: col.topicBlurb[k]?.[lang] ?? descriptionOf(ctx, col.pillars[k].main, tgt.lang),
         count: col.pages.filter((p) => p.pillar === k && target(ctx, p.id, lang)).length,
       });
@@ -350,12 +348,13 @@ export function buildPageModel(ctx: Ctx, r: AnyRelease): PageModel {
   const videos = (page.videos || [])
     .filter((v) => col.videos[v])
     // the explainers live on this site now: /videos/<slug>, in the page's own language
-    .map((v) => ({ href: videoPath(slugOfSource(v), lang), title: col.videos[v][lang] }));
+    // (the explainers are in Hindi and English: any other language reads the Hindi one)
+    .map((v) => ({ href: videoPath(slugOfSource(v), lang), title: col.videos[v][lang === "en" ? "en" : "hi"] }));
 
   const pillarLinks: PageModel["pillarLinks"] = [];
   for (const k of topics(col)) {
     const tgt = target(ctx, col.pillars[k].main, lang);
-    if (tgt) pillarLinks.push({ href: tgt.href, label: lang === "hi" ? col.pillars[k].hi : col.pillars[k].en });
+    if (tgt) pillarLinks.push({ href: tgt.href, label: pillarName(col.pillars[k], lang) });
   }
 
   return {
@@ -367,7 +366,9 @@ export function buildPageModel(ctx: Ctx, r: AnyRelease): PageModel {
     published,
     modified,
     crumbs,
-    twin: twinLive ? { lang: twinLang, href: pathOf(page, twinLang) } : null,
+    versions: pageLangs(page)
+      .filter((l) => l !== lang && isLive(ctx, page.id, l))
+      .map((l) => ({ lang: l, href: pathOf(page, l) })),
     hub: target(ctx, "hub", lang),
     children,
     related,
@@ -427,7 +428,7 @@ export function structuredData(ctx: Ctx, m: PageModel): unknown[] {
       "@type": page.type === "Hub" || page.type === "Legal" || page.type === "Tool" ? "WebPage" : "Article",
       headline: c.title,
       description: c.description,
-      inLanguage: lang === "hi" ? "hi-IN" : "en-IN",
+      inLanguage: LANGUAGES[lang].bcp47,
       datePublished: m.published,
       dateModified: m.modified,
       mainEntityOfPage: url,

@@ -7,6 +7,7 @@ import { assistDict } from "./dict";
 import { ASSIST_BOT_SRC } from "./assets";
 import { onAssistCallRequested } from "../../lib/assistCall";
 import { isGuidesPath, useOnGuides } from "../../lib/onGuides";
+import { stripPrefix } from "../../i18n/languages";
 
 /**
  * The launcher, and nothing else.
@@ -57,7 +58,7 @@ const AUTO_OPEN_MS = 1_000;
 /** Tailwind's `sm`. Below this the panel is a full sheet, not a card. */
 const CARD_WIDTH_PX = 640;
 /** The Khata Kavach page opens on a real app screen at the right of the first screen; the card would sit on it. */
-const isKkPath = (pathname: string) => /^\/(hi\/)?khata-kavach\/?$/.test(pathname);
+const isKkPath = (pathname: string) => /^\/khata-kavach\/?$/.test(stripPrefix(pathname));
 
 export default function AssistWidget({ startWithCall = false }: { startWithCall?: boolean }) {
   const d = assistDict(useLang().lang);

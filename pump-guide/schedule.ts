@@ -14,6 +14,7 @@
 import { PUMP_PAGES, PUMP_PILLARS, type PumpPage } from "./inventory.js";
 import { buildCalendar, dateFrom, dayFrom, type Release as CalendarRelease } from "../guide/calendar.js";
 import { PUMP_KEEP_THROUGH_DAY, PUMP_PUBLISHED } from "./release-history.js";
+import { PUMP_TRANSLATIONS } from "../guide/translations.js";
 
 /** Pages that go live each day. Each language counts as one page. */
 export const PUMP_PER_DAY = 10;
@@ -31,6 +32,8 @@ export const PUMP_RELEASES: PumpRelease[] = buildCalendar({
   pinned: PUMP_PUBLISHED,
   keepThroughDay: PUMP_KEEP_THROUGH_DAY,
   pulledForward: [],
+  translations: PUMP_TRANSLATIONS,
+  start: PUMP_START,
 });
 
 export const PUMP_LAST_DAY = Math.max(...PUMP_RELEASES.map((r) => r.day));

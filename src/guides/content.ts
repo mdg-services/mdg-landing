@@ -15,6 +15,8 @@
  */
 import { existsSync, readFileSync } from "node:fs";
 import path from "node:path";
+import { LANGUAGES } from "../i18n/languages.ts";
+import { pageLangs } from "../../guide/calendar.ts";
 import type { AnyPage, Collection, Lang } from "./collection";
 
 export interface FaqItem {
@@ -33,8 +35,6 @@ export interface PageContent {
   updated: string;
   body: string;
 }
-
-export const LANGS: Lang[] = ["en", "hi"];
 
 /** Words that describe how the service works, or overclaim. Never on a public page of either collection. */
 const FORBIDDEN = [/complete guide/i, /\bwe guarantee\b|\bguaranteed? (compliance|accuracy|results?)\b/i, /100\s?%\s?accurate/i, /admin (panel|portal)/i, /\bour AI\b/i, /artificial intelligence/i, /ChatGPT/i, /\bClaude\b/i, /\bLLM\b/];
@@ -81,15 +81,17 @@ export function checkContent(col: Collection, page: AnyPage, lang: Lang, c: Page
   for (const tag of c.body.matchAll(/\{\{([^}]*)\}\}/g)) need(col.tagOk(tag[1]), `odd tag {{${tag[1]}}}`);
   const text = [c.title, c.description, c.answer || "", c.body, ...(c.faq || []).flatMap((f) => [f.q, f.a])].join("\n");
   for (const bad of [...FORBIDDEN, ...col.forbidden]) need(!bad.test(text), `contains a forbidden word (${bad}); say what the reader gets, never how the work is done, and claim nothing we cannot prove`);
-  if (lang === "hi") need(/[ऀ-ॿ]/.test(c.body), "Hindi page has no Devanagari in its body");
+  const script = LANGUAGES[lang].script;
+  if (script) need(script.test(c.body), `${LANGUAGES[lang].english} page has no ${LANGUAGES[lang].english} letters in its body`);
   // Crisp pages: the body (without markup) plus the questions, counted in words.
-  const words = (x: string) => (x.replace(/<[^>]+>/g, " ").replace(/\{\{[^}]*\}\}/g, " ").match(/[\p{L}\p{N}]+/gu) || []).length;
+  // Marks (\p{M}) are part of a word: Devanagari and Odia vowel signs are marks, and without them a word splits at every sign.
+  const words = (x: string) => (x.replace(/<[^>]+>/g, " ").replace(/\{\{[^}]*\}\}/g, " ").match(/[\p{L}\p{M}\p{N}]+/gu) || []).length;
   // A tool's own form (one HTML block, no blank lines inside) is not reading text.
   const prose = c.body.replace(/<div class="tool"[\s\S]*?(\n\s*\n|$)/g, " ");
   const total = words(prose) + (c.faq || []).reduce((n, f) => n + words(f.q) + words(f.a), 0);
-  // Hindi spends about 1.6 words for every English one (के, में, की stand alone).
+  // A language spends more or fewer words than English for the same meaning (Hindi: के, में, की stand alone): its `wordFactor` in src/i18n/languages.ts.
   const base = page.type === "Glossary" ? 1100 : page.type === "Tool" ? 750 : page.type === "Hub" || page.type === "Pillar" ? 800 : 650;
-  const limit = Math.round(base * (lang === "hi" ? 1.6 : 1));
+  const limit = Math.round(base * LANGUAGES[lang].wordFactor);
   need(total <= limit, `too long: ${total} words (limit ${limit}); cut, or split into a new page`);
   return errs;
 }
@@ -98,8 +100,7 @@ export function loadAll(root: string, col: Collection): { content: Map<string, P
   const content = new Map<string, PageContent>();
   const errors: string[] = [];
   for (const page of col.pages) {
-    for (const lang of LANGS) {
-      if (lang === "hi" && !page.hi) continue;
+    for (const lang of pageLangs(page)) {
       const where = `${col.key === "mdg" ? "" : `${col.key}:`}${lang}/${page.id}.md`;
       const file = contentPath(root, col, lang, page.id);
       if (!existsSync(file)) {

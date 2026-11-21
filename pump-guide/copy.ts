@@ -12,10 +12,10 @@
  *
  * Public-copy rule: say what the reader gets, never how the work is done.
  */
-import type { Lang } from "../guide/calendar.js";
+import type { PerLang } from "../src/i18n/languages.ts";
 import { CIN, COMPANY, EMAIL, UI } from "../guide/copy.js";
 
-export const PUMP_UI: Record<Lang, Record<string, string>> = {
+export const PUMP_UI: PerLang<Record<string, string>> = {
   en: {
     ...UI.en,
     faq: "Questions people ask",
@@ -31,13 +31,13 @@ export const PUMP_UI: Record<Lang, Record<string, string>> = {
 };
 
 /** The notice under the title of every page. Normal size, never folded away. */
-export const PUMP_NOTICE: Record<Lang, string> = {
+export const PUMP_NOTICE: PerLang<string> = {
   en: "MDG Services makes Dealer Kavach, an app for petrol pump dealers, so this page comes from the maker of a product it may mention. It is general information, not legal, tax or financial advice. Rules, fees and guidelines change and differ by oil company and state: every fact here names its source and the date we checked it, so confirm it with the oil company or the authority before you act. We do not sell, allot or arrange dealerships or licences.",
   hi: "MDG Services पेट्रोल पंप डीलरों के लिए ऐप डीलर कवच बनाती है, यानी यह पेज उसी कंपनी का लिखा है जिसका प्रोडक्ट इसमें आ सकता है। यह सामान्य जानकारी है, कानूनी, टैक्स या वित्तीय सलाह नहीं। नियम, फ़ीस और गाइडलाइन बदलती रहती हैं और तेल कंपनी और राज्य के हिसाब से अलग होती हैं: यहाँ हर तथ्य के साथ उसका स्रोत और हमारी जाँच की तारीख़ लिखी है, इसलिए कोई कदम उठाने से पहले तेल कंपनी या संबंधित विभाग से पुष्टि कर लें। हम डीलरशिप या लाइसेंस न बेचते हैं, न दिलाते हैं।",
 };
 
 /** The full disclaimer: at the foot of every page, and the whole of the disclaimer page. [heading, text] pairs. */
-export const PUMP_DISCLAIMER: Record<Lang, [string, string][]> = {
+export const PUMP_DISCLAIMER: PerLang<[string, string][]> = {
   en: [
     ["About this page", `This page is general information published by MDG Services, a brand of ${COMPANY} (CIN ${CIN}), the company that makes Dealer Kavach. It is free to read and needs no sign-up.`],
     ["We make an app for dealers", "We make Dealer Kavach, an app for petrol pump dealers. Where a page mentions tools or services for a dealer, remember that. We state facts from the source, not our own opinion of what is best."],
@@ -70,7 +70,7 @@ export const PUMP_DISCLAIMER: Record<Lang, [string, string][]> = {
  * One short line for each topic's card on the hub (two lines on a phone).
  * Keyed by the topic (pillar) in pump-guide/inventory.ts.
  */
-export const PUMP_TOPIC_BLURB: Record<string, Record<Lang, string>> = {
+export const PUMP_TOPIC_BLURB: Record<string, PerLang<string>> = {
   dealership: {
     en: "Who can apply, how an oil company picks a dealer, and the real route to a petrol pump.",
     hi: "कौन आवेदन कर सकता है, तेल कंपनी डीलर कैसे चुनती है, और पेट्रोल पंप पाने का असली रास्ता।",

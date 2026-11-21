@@ -14,12 +14,15 @@ import type { Lang } from "./collection";
 
 export const esc = (s: string) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 
+/** The word "circular" in each language, for {{circular}}. */
+const CIRCULAR: Record<Lang, string> = { en: "Circular", hi: "सर्कुलर", or: "ସର୍କୁଲର" };
+
 /** {{5.1.9}} -> a clause tag. */
 export function mdgClauseTags(html: string, lang: Lang): string {
   return html.replace(/\{\{([^}]+)\}\}/g, (_, raw: string) => {
     const t = raw.trim();
     let label: string;
-    if (/^circular$/i.test(t)) label = lang === "hi" ? "सर्कुलर 20.03.2025" : "Circular 20.03.2025";
+    if (/^circular$/i.test(t)) label = `${CIRCULAR[lang]} 20.03.2025`;
     else if (t.startsWith("2012:")) label = `MDG 2012 ${t.slice(5)}`;
     else if (/^annexure/i.test(t)) label = `MDG Annexure ${t.replace(/^annexure\s*/i, "")}`;
     else if (/^[0-9]/.test(t)) label = `MDG ${t}`;
@@ -43,6 +46,7 @@ export function mdgTagOk(tag: string): boolean {
 export const PENALTY_NOTE: Record<Lang, string> = {
   en: "These amounts are the minimum: the oil company may take higher action, up to termination {{8.5.1}}. An irregularity must be established first {{8.5.2}}. Instances are counted over five years, including the previous guideline {{8.5.5}}.",
   hi: "ये रकम कम से कम की कार्रवाई हैं: तेल कंपनी इससे ज़्यादा कार्रवाई कर सकती है, टर्मिनेशन तक {{8.5.1}}। कार्रवाई से पहले अनियमितता साबित होनी चाहिए {{8.5.2}}। गिनती पाँच साल की होती है, पिछली गाइडलाइन समेत {{8.5.5}}।",
+  or: "ଏହି ପରିମାଣ ସର୍ବନିମ୍ନ: ତେଲ କମ୍ପାନୀ ଏହାଠାରୁ ଅଧିକ କାର୍ଯ୍ୟାନୁଷ୍ଠାନ ନେଇପାରେ, ଟର୍ମିନେସନ ପର୍ଯ୍ୟନ୍ତ {{8.5.1}}। କାର୍ଯ୍ୟାନୁଷ୍ଠାନ ପୂର୍ବରୁ ଅନିୟମିତତା ପ୍ରମାଣିତ ହେବା ଆବଶ୍ୟକ {{8.5.2}}। ଗଣତି ପାଞ୍ଚ ବର୍ଷର ହୁଏ, ପୂର୍ବ ଗାଇଡଲାଇନ ସହିତ {{8.5.5}}।",
 };
 
 export function mdgPenaltyNotes(md: string, lang: Lang): string {

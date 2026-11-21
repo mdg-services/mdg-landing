@@ -1,5 +1,7 @@
 /**
- * Development-only structural check between the two dictionaries.
+ * Structural check between two dictionaries (English and any other language;
+ * the messages say "Hindi" for the second one, `npm run lang:check` names the
+ * real language).
  *
  * TypeScript already proves that every key in English exists in Hindi with
  * the same type. What it cannot prove is that a list has the same number of
@@ -35,7 +37,7 @@ export function checkParity(en: unknown, hi: unknown, path = "dict"): string[] {
     return problems;
   }
 
-  if (typeof en === "string" && typeof hi === "string" && hi.trim() === "") {
+  if (typeof en === "string" && typeof hi === "string" && hi.trim() === "" && en.trim() !== "") {
     problems.push(`${path}: empty Hindi string`);
   }
   return problems;

@@ -1,0 +1,27 @@
+import type { ui as EN } from "../en/ui";
+
+export const ui: typeof EN = {
+  homeAria: "MDG Services ହୋମ",
+  primaryNavAria: "ମୁଖ୍ୟ",
+  openMenu: "ମେନୁ ଖୋଲନ୍ତୁ",
+  closeMenu: "ମେନୁ ବନ୍ଦ କରନ୍ତୁ",
+  talkToUs: "କଥା ହୁଅନ୍ତୁ",
+  callUs: "କଲ କରନ୍ତୁ",
+  callUsAria: "MDG Services କୁ କଲ କରନ୍ତୁ, ଟୋଲ-ଫ୍ରି କିମ୍ବା ଏହି ପେଜରୁ",
+  callUsNote: "ମାଗଣା, ଟୋଲ-ଫ୍ରି କିମ୍ବା ଏହି ପେଜରୁ",
+  callSheetTitle: "କଲ କରନ୍ତୁ",
+  callSheetLead: "ଦୁଇ ଉପାୟ, ଦୁଇଟି ମାଗଣା।",
+  tollFree: "ଟୋଲ-ଫ୍ରି ନମ୍ବରରେ କଲ କରନ୍ତୁ",
+  tollFreeNote: "ଆମ ଟିମ ସହ କଥା · ସକାଳ 9ରୁ ରାତି 9, ପ୍ରତିଦିନ",
+  talkHere: "ଏହି ପେଜରୁ କଥା ହୁଅନ୍ତୁ",
+  talkHereNote: "ବ୍ରାଉଜରରେ ଆମ ସହାୟକ ସହ କହି କଥା ହୁଅନ୍ତୁ, ଫୋନ ଦରକାର ନାହିଁ",
+  closeSheet: "ବନ୍ଦ କରନ୍ତୁ",
+  callNow: "ଏବେ କଥା ହୁଅନ୍ତୁ",
+  getApp: "ଆପ ଡାଉନଲୋଡ କରନ୍ତୁ",
+  getAppAria: "Google Play ରୁ ଡିଲର କବଚ ଆପ ଡାଉନଲୋଡ କରନ୍ତୁ",
+  getAppStoreAria: "App Store ରୁ ଡିଲର କବଚ ଆପ ଡାଉନଲୋଡ କରନ୍ତୁ",
+  languageAria: "ଭାଷା",
+  switchToEnglish: "Read this page in English",
+  switchToHindi: "इस पेज को हिंदी में पढ़ें",
+  mobileInvalid: "10 ଅଙ୍କର ମୋବାଇଲ ନମ୍ବର ଲେଖନ୍ତୁ, ଯାହା 6, 7, 8 କିମ୍ବା 9 ରୁ ଆରମ୍ଭ ହୋଇଥିବ।",
+};

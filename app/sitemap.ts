@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
 import { guideNow } from "@/guides/clock";
-import { COMPANY_ROUTES, pathFor } from "@/i18n/lang";
+import { COMPANY_ROUTES, LANGS, pathFor, type SiteRoute } from "@/i18n/lang";
 import { SITE_PAGES } from "../guide/copy.ts";
 import { ALL, SITE, contextAt, lastModified, releasesOn } from "@/guides/model";
 import { VIDEO_SLUGS } from "@/routing/videos";
@@ -18,26 +18,46 @@ import { VIDEO_SLUGS } from "@/routing/videos";
  */
 export const dynamic = "force-dynamic";
 
-/** The Hindi twins of the site's own pages. */
-const HINDI_PAGES = ["/hi", "/hi/register", "/hi/grievance"];
-
-/** The Khata Kavach product page. Kept here, not in the guide's SITE_PAGES, which belongs to the guide machinery. */
-const KK_PAGES = ["/khata-kavach", "/hi/khata-kavach"];
+/**
+ * The site's own pages (home, register, grievance, the Khata Kavach product page and the company
+ * pages), in every language. Each is one entry with its hreflang alternates, so a search engine
+ * reads the languages as one page. Kept here, not in the guide's SITE_PAGES, which belongs to the guide machinery.
+ */
+const SITE_ROUTES: SiteRoute[] = ["", "/register", "/grievance", "/khata-kavach", ...COMPANY_ROUTES];
 
 /** The video library and one page per explainer. One address each: the English cut is `?lang=en` on the same page. */
 const VIDEO_PAGES = ["/videos", ...VIDEO_SLUGS.map((slug) => `/videos/${slug}`)];
 
-/** The company pages (about, contact, pricing, terms, refund, shipping) and their Hindi twins. Kept here for the same reason. */
-const COMPANY_PAGES = COMPANY_ROUTES.flatMap((r) => [pathFor("en", r), pathFor("hi", r)]);
+const abs = (p: string) => (p === "/" ? SITE : `${SITE}${p}`);
+
+/** The pages that are not in the site's own routes: the guide's static list (film, privacy, …) and the videos. */
+const OTHER_PAGES = [...SITE_PAGES.filter((p) => !SITE_ROUTES.some((r) => pathFor("en", r) === p)), ...VIDEO_PAGES];
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = guideNow();
   return [
     // the home page is listed as the bare origin, the same address its canonical and hreflang give
-    ...[...SITE_PAGES, ...HINDI_PAGES, ...KK_PAGES, ...COMPANY_PAGES, ...VIDEO_PAGES].map((p) => ({ url: p === "/" ? SITE : `${SITE}${p}` })),
+    ...SITE_ROUTES.flatMap((route) =>
+      LANGS.map((lang) => ({
+        url: abs(pathFor(lang, route)),
+        alternates: { languages: { ...Object.fromEntries(LANGS.map((l) => [l, abs(pathFor(l, route))])), "x-default": abs(pathFor("en", route)) } },
+      })),
+    ),
+    ...OTHER_PAGES.map((p) => ({ url: abs(p) })),
     ...ALL.flatMap((col) => {
       const ctx = contextAt(col, now);
-      return releasesOn(col, ctx.content, ctx.day).map((r) => ({ url: `${SITE}${r.path}`, lastModified: lastModified(ctx, r) }));
+      const live = releasesOn(col, ctx.content, ctx.day);
+      return live.map((r) => {
+        // the page in every language it is live in, so a search engine reads them as one page
+        const same = live.filter((x) => x.page.id === r.page.id);
+        return {
+          url: `${SITE}${r.path}`,
+          lastModified: lastModified(ctx, r),
+          ...(same.length > 1
+            ? { alternates: { languages: { ...Object.fromEntries(same.map((x) => [x.lang, `${SITE}${x.path}`])), "x-default": `${SITE}${same.find((x) => x.lang === "en")?.path ?? r.path}` } } }
+            : {}),
+        };
+      });
     }),
   ];
 }

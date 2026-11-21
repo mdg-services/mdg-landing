@@ -83,11 +83,13 @@ export default {
         // The two Devanagari variables (--font-noto-deva, --font-tiro) are not
         // set on the English page until it has finished loading (see
         // components/LateFonts.tsx), so each use carries a fallback.
-        sans: ["var(--font-inter)", "var(--font-noto-deva, system-ui)", "system-ui", "ui-sans-serif", "sans-serif"],
-        display: ["var(--font-grotesk)", "var(--font-inter)", "var(--font-noto-deva, system-ui)", "system-ui", "sans-serif"],
+        // Each further script's variable falls back to Inter when its page does not load it, so the
+        // stack never ends at system-ui before a face that is there (the fallback would swallow the rest).
+        sans: ["var(--font-inter)", "var(--font-noto-deva, system-ui)", "var(--font-noto-odia, var(--font-inter))", "system-ui", "ui-sans-serif", "sans-serif"],
+        display: ["var(--font-grotesk)", "var(--font-inter)", "var(--font-noto-deva, system-ui)", "var(--font-noto-odia, var(--font-inter))", "system-ui", "sans-serif"],
         // The brand's own Devanagari face, for the कवच marks only.
         deva: ["var(--font-tiro, serif)", "var(--font-noto-deva, system-ui)", "var(--font-grotesk)", "serif"],
-        mono: ["var(--font-space-mono)", "var(--font-noto-deva, system-ui)", "ui-monospace", "SFMono-Regular", "monospace"],
+        mono: ["var(--font-space-mono)", "var(--font-noto-deva, system-ui)", "var(--font-noto-odia, var(--font-inter))", "ui-monospace", "SFMono-Regular", "monospace"],
       },
       letterSpacing: {
         tightest: "-0.04em",

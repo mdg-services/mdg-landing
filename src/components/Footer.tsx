@@ -4,6 +4,7 @@ import CallUs from "./CallUs";
 import { BRAND } from "../data/content";
 import { getT } from "../i18n/server";
 import { homeHref, pathFor, type Lang } from "../i18n/lang";
+import { hubHref } from "../guides/hubs";
 
 /* The targets never change with the language; the labels are looked up by id. */
 const explore = ["services", "film", "why", "process", "contact"] as const;
@@ -34,7 +35,7 @@ export default function Footer({ lang }: { lang: Lang }) {
             <LogoFullWhite className="h-10 w-auto" />
             <p className="mt-7 font-display text-[24px] font-medium leading-[1.2] text-white md:text-[30px]">
               Dealer's <span className="deva text-gold-400">कवच</span> <span className="text-navy-300">&amp;</span>{" "}
-              {lang === "hi" ? <span className="deva text-gold-400">खाता कवच</span> : <span className="text-gold-400">Khata Kavach</span>}.
+              {lang === "en" ? <span className="text-gold-400">Khata Kavach</span> : <span className="deva text-gold-400">खाता कवच</span>}.
             </p>
             <p className="mt-3 max-w-[22rem] text-[19px] leading-[1.4] text-navy-100">{t.footer.promise}</p>
             <p className="mt-6 max-w-prose2 text-[14px] leading-[1.6] text-navy-200">
@@ -76,13 +77,13 @@ export default function Footer({ lang }: { lang: Lang }) {
               </li>
               <li>
                 {/* The guides keep a trailing slash on their addresses, so this is a plain link */}
-                <a href={lang === "hi" ? "/hi/guides/" : "/guides/"} className="link-quiet tap-pad text-navy-100 hover:text-white">
+                <a href={hubHref("mdg", lang)} className="link-quiet tap-pad text-navy-100 hover:text-white">
                   {t.footer.mdgGuide}
                 </a>
               </li>
               <li>
                 {/* the Petrol pump guide keeps a trailing slash on its addresses, so this is a plain link */}
-                <a href={lang === "hi" ? "/hi/petrol-pump/" : "/petrol-pump/"} className="link-quiet tap-pad text-navy-100 hover:text-white">
+                <a href={hubHref("pump", lang)} className="link-quiet tap-pad text-navy-100 hover:text-white">
                   {t.footer.pumpGuide}
                 </a>
               </li>
@@ -127,7 +128,7 @@ export default function Footer({ lang }: { lang: Lang }) {
                 </Link>
                 {/* the Khata Kavach guides keep a trailing slash on their addresses, so this is a plain link */}
                 <a
-                  href={lang === "hi" ? "/hi/khata-kavach/guides/" : "/khata-kavach/guides/"}
+                  href={hubHref("kk", lang)}
                   className="link-quiet tap-pad mt-1 block text-[13.5px] text-navy-300 hover:text-white"
                 >
                   {t.footer.khataGuides}
@@ -193,7 +194,8 @@ export default function Footer({ lang }: { lang: Lang }) {
                 </li>
               ))}
               <li>
-                {/* the privacy page is one static page, in English only: a plain link */}
+                {/* the privacy page is one static page, in English only: a plain link (the rule below sees "/privacy" as a possible [lang] page) */}
+                {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
                 <a href="/privacy" className="link-quiet tap-pad text-navy-100 hover:text-white">
                   {t.footer.privacy}
                 </a>
