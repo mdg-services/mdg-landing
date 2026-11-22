@@ -432,6 +432,46 @@ export const PUMP_PAGES: PumpPage[] = [
     queries: ["lng station in india", "lng fuel station", "lng for trucks india", "lng station near me"],
     brief: "Scope: LNG for trucks at fuel stations in India. Sources: PIB releases on LNG stations (dated counts); MoPNG; PESO (Static and Mobile Pressure Vessels (Unfired) Rules 2016 on peso.gov.in / indiacode); Parliament answers; oil company pages (HPCL, BPCL). No prices unless an official dated page states them.",
   },
+  {
+    id: "customers-diesel-in-drum", pillar: "customers", path: `${P}/customers/diesel-in-drum-or-can/`, hi: true, type: "Explainer", wave: 2,
+    queries: ["can petrol pump give diesel in bottle", "diesel in jerry can rules", "diesel in drum from petrol pump", "can petrol pump give petrol in jerry cans", "diesel pump for drum"],
+    brief: "Scope: Can a petrol pump fill diesel in a drum, jerry can or bottle? What the rules say. Sources: Petroleum Rules 2002 (indiacode.nic.in / peso.gov.in): Form XIV conditions on filling containers, rules on containers for petroleum Class B (diesel), quantities a person may keep without a licence; Parliament answers or PIB on sale in loose containers. Do not repeat the petrol-in-bottle page; link to it.",
+  },
+  {
+    id: "customers-check-fuel-price", pillar: "customers", path: `${P}/customers/check-todays-fuel-price/`, hi: true, type: "Explainer", wave: 2,
+    queries: ["petrol price today", "how to check petrol price", "petrol price sms", "diesel price today", "petrol price change time"],
+    brief: "Scope: How to check today's petrol and diesel price at your pump, and when it changes. Sources: PPAC (ppac.gov.in) price pages; PIB on daily price revision (June 2017) and current pricing; oil companies' own price pages and SMS codes (HPCL, BPCL; Indian Oil named in words only, never link iocl.com); MDG 2024 on price display. No price figures that are not dated on an official page.",
+  },
+  {
+    id: "customers-pump-locator", pillar: "customers", path: `${P}/customers/find-a-petrol-pump/`, hi: true, type: "Explainer", wave: 2,
+    queries: ["petrol pump near me", "petrol pump locator hpcl", "nearest petrol pump on highway", "petrol pump near me open now", "bharat petroleum pump locator"],
+    brief: "Scope: Finding a petrol pump near you: the oil companies' own locators. Sources: Oil companies' own locator pages and apps (HPCL, BPCL, Jio-bp, Nayara, Shell; Indian Oil named in words only, never link iocl.com); PIB or Parliament answers for dated outlet counts; MDG 2024 or company pages on 24-hour outlets if stated. No third-party apps.",
+  },
+  {
+    id: "running-dry-out", pillar: "running", path: `${P}/running/dry-out-and-closure/`, hi: true, type: "Explainer", wave: 2,
+    queries: ["petrol pump dry out", "petrol pump closed today", "petrol pump strike", "petrol pump running dry", "petrol pump closed news"],
+    brief: "Scope: When a petrol pump runs dry or shuts: what the dealer guidelines say. Sources: MDG 2024 (bharatpetroleum.in PDF): clauses on dry outs, stock, non-operation, closure and penalties; Parliament answers and PIB releases on dry outs and supply (dated); Essential Commodities Act orders if a primary source applies. No news reporting of particular strikes; if no primary source covers a point, leave it out.",
+  },
+  {
+    id: "running-display-boards", pillar: "running", path: `${P}/running/display-boards/`, hi: true, type: "Explainer", wave: 2,
+    queries: ["petrol pump display board", "petrol pump rules and regulations for customers", "petrol pump ke niyam", "petrol pump rules in hindi", "petrol pump price display"],
+    brief: "Scope: What a petrol pump must display: prices, density, timings and other boards. Sources: MDG 2024 (bharatpetroleum.in PDF): clause 1.6 and the display list (prices, density, working hours, contact numbers, complaint book, facilities); Legal Metrology rules if any apply; Petroleum Rules 2002 display conditions. Do not repeat the safety-signs page (safety signs live there); link to it.",
+  },
+  {
+    id: "equipment-solar", pillar: "equipment", path: `${P}/equipment/solar-panels/`, hi: true, type: "Explainer", wave: 2,
+    queries: ["solar petrol pump", "solar panel at petrol pump", "solarised retail outlets", "petrol pump solar power"],
+    brief: "Scope: Solar panels at petrol pumps: how many outlets run on solar. Sources: PIB releases and Parliament answers on solarised retail outlets (dated counts by company); MoPNG annual report; oil companies' own sustainability pages (HPCL, BPCL). No savings or cost promises.",
+  },
+  {
+    id: "fuels-hydrogen", pillar: "fuels", path: `${P}/fuels/hydrogen-stations/`, hi: true, type: "Explainer", wave: 2,
+    queries: ["hydrogen fuel station india", "hydrogen petrol pump", "hydrogen car fuel station in india", "hydrogen refuelling station"],
+    brief: "Scope: Hydrogen at fuel stations in India: where it is sold and what the rules say. Sources: PIB releases on hydrogen dispensing stations and hydrogen buses (dated); MNRE National Green Hydrogen Mission pages (mnre.gov.in); PESO notes or rules on hydrogen (Gas Cylinders Rules 2016, SMPV(U) Rules 2016) on peso.gov.in; Parliament answers. No prices unless dated on an official page.",
+  },
+  {
+    id: "money-fleet-cards", pillar: "money", path: `${P}/money/fleet-cards/`, hi: true, type: "Explainer", wave: 2,
+    queries: ["fleet card", "hp drivetrack card", "bpcl smartfleet card", "fleet card for petrol pump", "fuel card for transporters"],
+    brief: "Scope: Fleet cards at petrol pumps: how transport companies pay for fuel. Sources: Oil companies' own fleet card pages (HPCL DriveTrack Plus, BPCL SmartFleet; Indian Oil XTRAPOWER named in words only, never link iocl.com); MDG 2024 on card acceptance at outlets; PIB if any. Describe what the companies publish; no fee figures unless dated on the company page; no advice.",
+  },
 ];
 
 applyTranslations(PUMP_PAGES, PUMP_TRANSLATIONS);
