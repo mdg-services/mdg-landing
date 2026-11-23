@@ -472,6 +472,41 @@ export const PUMP_PAGES: PumpPage[] = [
     queries: ["fleet card", "hp drivetrack card", "bpcl smartfleet card", "fleet card for petrol pump", "fuel card for transporters"],
     brief: "Scope: Fleet cards at petrol pumps: how transport companies pay for fuel. Sources: Oil companies' own fleet card pages (HPCL DriveTrack Plus, BPCL SmartFleet; Indian Oil XTRAPOWER named in words only, never link iocl.com); MDG 2024 on card acceptance at outlets; PIB if any. Describe what the companies publish; no fee figures unless dated on the company page; no advice.",
   },
+  {
+    id: "dealership-shell", pillar: "dealership", path: `${P}/dealership/shell-india/`, hi: true, type: "Explainer", wave: 2,
+    queries: ["shell petrol pump dealership", "shell petrol pump dealership apply online", "shell petrol pump dealership cost", "shell petrol pump franchise", "शेल पेट्रोल पंप डीलरशिप"],
+    brief: "Scope: Shell petrol pump dealership in India: what the company publishes. Sources: Shell India's own retail / dealership page (shell.in); Shell company dealer-selection notices; PIB or Parliament answers naming Shell as a private retailer (dated). Never invent a cost; say what Shell publishes and that payment to anyone for a dealership is a fraud sign.",
+  },
+  {
+    id: "dealership-agreement-termination", pillar: "dealership", path: `${P}/dealership/dealer-agreement-and-termination/`, hi: true, type: "Explainer", wave: 2,
+    queries: ["petrol pump dealership agreement", "petrol pump dealership terms and conditions", "petrol pump dealership cancelled", "petrol pump dealer termination", "पेट्रोल पंप डीलरशिप एग्रीमेंट"],
+    brief: "Scope: Petrol pump dealership agreement: terms, and when a dealership can be terminated. Sources: MDG 2024 (bharatpetroleum.in PDF, read with curl and pdftotext): the dealership agreement, term, termination, suspension and penalty clauses; Parliament answers on dealer termination (dated). Only clauses the guideline states; no advice.",
+  },
+  {
+    id: "running-dealer-grievance", pillar: "running", path: `${P}/running/dealer-grievance-redressal/`, hi: true, type: "Explainer", wave: 2,
+    queries: ["petrol pump dealer complaint", "petrol pump dealer grievance", "dealer complaint oil company", "oil company dealer dispute arbitration", "पेट्रोल पंप डीलर शिकायत"],
+    brief: "Scope: Petrol pump dealer complaints against the oil company: where a dealer can go. Sources: MDG 2024 (bharatpetroleum.in PDF): grievance, dispute and arbitration clauses; Parliament answers and PIB on dealer grievance redressal (dated); the oil companies' own dealer grievance pages (HPCL, BPCL). Only what sources state.",
+  },
+  {
+    id: "running-dealer-records", pillar: "running", path: `${P}/running/dealer-records-and-registers/`, hi: true, type: "Explainer", wave: 2,
+    queries: ["petrol pump registers", "petrol pump records", "petrol pump stock register", "petrol pump dip register", "पेट्रोल पंप रजिस्टर"],
+    brief: "Scope: Records and registers a petrol pump dealer must keep. Sources: MDG 2024 (bharatpetroleum.in PDF): records and registers clauses (stock, dip, sales, density, complaint book); Legal Metrology rules on registers if any; Petroleum Rules 2002 records conditions. If a register is not named in a primary source, leave it out.",
+  },
+  {
+    id: "safety-oisd-standards", pillar: "safety", path: `${P}/safety/oisd-standards-for-retail-outlets/`, hi: true, type: "Explainer", wave: 2,
+    queries: ["oisd standards petrol pump", "oisd 118 layouts", "oisd standard for retail outlets", "oisd guidelines petrol pump", "OISD क्या है"],
+    brief: "Scope: OISD standards for petrol pumps: what they are and which ones apply. Sources: oisd.gov.in (read with curl/pdftotext): what OISD is, the list of standards and guidelines that cover retail outlets (for example the layout and fire protection standards), with their numbers and years only as shown on the site; MoPNG page on OISD; Parliament answers. Do not repeat the fire-extinguisher, earthing or tanker-unloading pages: link to them.",
+  },
+  {
+    id: "equipment-flameproof-fittings", pillar: "equipment", path: `${P}/equipment/flameproof-electrical-fittings/`, hi: true, type: "Explainer", wave: 2,
+    queries: ["flameproof equipment petrol pump", "hazardous area petrol pump", "petrol pump electrical safety", "hazardous area classification", "पेट्रोल पंप बिजली सुरक्षा"],
+    brief: "Scope: Electrical fittings at a petrol pump: hazardous areas and flameproof equipment. Sources: Petroleum Rules 2002 (indiacode.nic.in) conditions on electrical installations; PESO (peso.gov.in, curl) circulars on electrical equipment; BIS (bis.gov.in) standard titles for flameproof equipment and area classification only as listed there; OISD (oisd.gov.in). Plain words: what a hazardous area is and why fittings differ. No design figures unless a source states them.",
+  },
+  {
+    id: "licences-cng-station", pillar: "licences", path: `${P}/licences/cng-station-licence/`, hi: true, type: "Explainer", wave: 2,
+    queries: ["cng pump licence", "cng station licence", "cng pump licence process", "cng filling station licence", "सीएनजी पंप लाइसेंस"],
+    brief: "Scope: CNG station licence in India: who gives it and what it covers. Sources: PESO (peso.gov.in, curl): licensing of CNG stations under the Gas Cylinders Rules 2016 / SMPV(U) Rules 2016; PNGRB (pngrb.gov.in) authorisation of CGD networks and CNG stations; PIB and Parliament answers (dated). No fees unless on the official page with date. Link to the cng-and-ev page rather than repeat it.",
+  },
 ];
 
 applyTranslations(PUMP_PAGES, PUMP_TRANSLATIONS);
