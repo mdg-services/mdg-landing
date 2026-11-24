@@ -507,6 +507,46 @@ export const PUMP_PAGES: PumpPage[] = [
     queries: ["cng pump licence", "cng station licence", "cng pump licence process", "cng filling station licence", "सीएनजी पंप लाइसेंस"],
     brief: "Scope: CNG station licence in India: who gives it and what it covers. Sources: PESO (peso.gov.in, curl): licensing of CNG stations under the Gas Cylinders Rules 2016 / SMPV(U) Rules 2016; PNGRB (pngrb.gov.in) authorisation of CGD networks and CNG stations; PIB and Parliament answers (dated). No fees unless on the official page with date. Link to the cng-and-ev page rather than repeat it.",
   },
+  {
+    id: "customers-wrong-fuel", pillar: "customers", path: `${P}/customers/wrong-fuel-in-vehicle/`, hi: true, type: "Explainer", wave: 2,
+    queries: ["wrong fuel filled in car petrol pump", "diesel in petrol car what to do", "petrol in diesel car", "galat fuel dalwa diya"],
+    brief: "Scope: Wrong fuel in your vehicle at a petrol pump: what to do and who is responsible. Sources: Consumer Protection Act 2019 (indiacode.nic.in); consumerhelpline/NCH pages (consumerhelpline.gov.in, consumeraffairs.nic.in); oil company customer grievance pages (HPCL, BPCL); only what sources state.",
+  },
+  {
+    id: "money-price-differs-by-state", pillar: "money", path: `${P}/money/why-petrol-price-differs-by-state/`, hi: true, type: "Explainer", wave: 2,
+    queries: ["why petrol price different in different states", "petrol price in all states", "state wise petrol vat", "petrol sasta kis rajya me"],
+    brief: "Scope: Why petrol and diesel prices differ from state to state: VAT and other levies. Sources: PPAC (ppac.gov.in) price build-up and state-wise VAT tables; PIB; Parliament answers on state VAT.",
+  },
+  {
+    id: "safety-smoking", pillar: "safety", path: `${P}/safety/smoking-at-petrol-pump/`, hi: true, type: "Explainer", wave: 2,
+    queries: ["is smoking at petrol pump illegal", "smoking at petrol pump fine", "petrol pump me smoking"],
+    brief: "Scope: Smoking at a petrol pump: what the rules say. Sources: Petroleum Rules 2002 (smoking and naked lights rule, indiacode.nic.in or peso.gov.in); COTPA 2003; OISD.",
+  },
+  {
+    id: "running-non-fuel-retail", pillar: "running", path: `${P}/running/non-fuel-retail/`, hi: true, type: "Explainer", wave: 2,
+    queries: ["convenience store at petrol pump india", "atm at petrol pump", "non fuel retail petrol pump", "petrol pump me shop"],
+    brief: "Scope: Shops, ATMs and other non-fuel business at a petrol pump: what the oil companies allow. Sources: MoPNG/PIB on non-fuel revenue at retail outlets; HPCL/BPCL/Nayara/Jio-bp published pages on convenience stores; dealer guidelines.",
+  },
+  {
+    id: "running-water-in-fuel", pillar: "running", path: `${P}/running/water-in-fuel/`, hi: true, type: "Explainer", wave: 2,
+    queries: ["water in petrol pump tank", "water in petrol at pump what to do", "water finding paste", "petrol me pani"],
+    brief: "Scope: Water in petrol or diesel: how a pump checks for it and what it does. Sources: Marketing Discipline Guidelines / MDG 2024 (oil company published); OISD; PESO; HPCL/BPCL quality control pages.",
+  },
+  {
+    id: "customers-dispenser-tampering", pillar: "customers", path: `${P}/customers/dispenser-tampering/`, hi: true, type: "Explainer", wave: 2,
+    queries: ["petrol pump chip fraud", "petrol pump pulsar cheating", "dispenser tampering penalty", "petrol pump me chori"],
+    brief: "Scope: Tampered petrol pump dispensers (chip and pulsar fraud): what the law says and what happens. Sources: Legal Metrology Act 2009; MoPNG/PIB answers on tampering and action taken; MDG 2024 penalty table.",
+  },
+  {
+    id: "dealership-pumps-by-state", pillar: "dealership", path: `${P}/dealership/petrol-pumps-by-state/`, hi: true, type: "Explainer", wave: 2,
+    queries: ["how many petrol pumps in india", "state wise petrol pumps list", "petrol pumps in up", "bharat me kitne petrol pump hain"],
+    brief: "Scope: How many petrol pumps are there in India, state by state. Sources: PPAC (ppac.gov.in) retail outlet counts; Parliament answers on retail outlets by state; PIB.",
+  },
+  {
+    id: "fuels-ethanol-free-petrol", pillar: "fuels", path: `${P}/fuels/ethanol-free-petrol/`, hi: true, type: "Explainer", wave: 2,
+    queries: ["ethanol free petrol india", "e0 petrol available", "ethanol free petrol pump near me", "E20 se bachne ke liye e0 petrol"],
+    brief: "Scope: Is ethanol-free petrol sold in India? What the government has said. Sources: PIB and Parliament answers 2025-26 on E20 and ethanol-free petrol; MoPNG; BIS specification; only what is stated, with dates.",
+  },
 ];
 
 applyTranslations(PUMP_PAGES, PUMP_TRANSLATIONS);
