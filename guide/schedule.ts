@@ -15,7 +15,7 @@
  */
 import { PAGES, PILLARS, type GuidePage } from "./inventory.js";
 import { MDG_TRANSLATIONS } from "./translations.js";
-import { CALENDAR_31_OCT } from "./release-history.js";
+import { CALENDAR_24_NOV } from "./release-history.js";
 import { buildCalendar, dateFrom, dayFrom, type Release as CalendarRelease } from "./calendar.js";
 
 /** Pages that go live each day. Each language counts as one page. */
@@ -41,22 +41,73 @@ export type Release = CalendarRelease<GuidePage>;
  * - 31 Oct 2026 (day 17): 10 pages doubling down on what Search Console shows
  *   the site for (petrol and diesel density, density numbers, premium petrol,
  *   oil companies, states and Assam, litres-to-kg table, MDG in ten points, two
- *   more question-and-answer pages).
+ *   more question-and-answer pages). Part of CALENDAR_24_NOV now.
+ * - 24 Nov 2026 (day 41): 50 dealer-situation topics, 100 pages ("what to do when a
+ *   QRC team arrives", "what to watch while a tanker is unloaded" and the like),
+ *   put out together on the day they were written, outside the five a day.
  */
-const EARLY_31_OCT_IDS = [
-  "density-petrol", "density-diesel", "tools-density-check", "density-premium-petrol", "density-by-company",
-  "density-by-state", "tools-litres-kg-table", "mdg-summary", "mdg-qa-density", "mdg-qa-records",
+const EARLY_24_NOV_IDS = [
+  "inspection-qrc-team-visit",
+  "inspection-night-before-checklist",
+  "inspection-morning-of-checks",
+  "inspection-samples-though-tests-pass",
+  "inspection-government-officer-visit",
+  "inspection-dealer-absent-who-signs",
+  "inspection-report-has-remarks",
+  "inspection-show-cause-notice-first-checks",
+  "inspection-refusing-or-obstructing",
+  "inspection-after-customer-complaint",
+  "tanker-while-unloading-checks",
+  "tanker-documents-do-not-match",
+  "tanker-seal-or-lock-mismatch",
+  "tanker-dip-rod-and-certificate",
+  "tanker-master-valve-before-dip",
+  "tanker-two-products-two-compartments",
+  "tanker-unauthorised-product-found",
+  "tanker-selling-during-decant",
+  "sampling-label-and-custody",
+  "sampling-result-waiting-time",
+  "sampling-retention-seal-or-leak",
+  "sampling-more-than-one-tank",
+  "density-out-of-range-what-happens",
+  "density-2t-premix-nozzle",
+  "density-missing-on-invoice",
+  "stock-book-and-dip-do-not-match",
+  "stock-four-percent-of-what",
+  "stock-600-kl-slab",
+  "quantity-broken-seal-first-steps",
+  "quantity-short-nozzle-or-whole-unit",
+  "quantity-dispenser-repair-record",
+  "quantity-dispenser-inspection-checklist",
+  "quantity-lube-measures-stamp",
+  "service-customer-complaint-steps",
+  "service-air-and-telephone",
+  "service-hours-and-holiday-notice",
+  "service-digital-payment-enabled",
+  "service-forecourt-housekeeping",
+  "service-safety-equipment-and-signs",
+  "service-product-not-available",
+  "penalties-minor-ladder",
+  "penalties-beyond-the-table",
+  "penalties-unauthorised-purchase-sale",
+  "penalties-sales-stopped-on-the-spot",
+  "automation-power-cut-backup",
+  "automation-atg-not-working",
+  "company-sample-containers-and-seals",
+  "company-maintenance-job-report",
+  "company-depot-reference-sample",
+  "sko-inspection-checklist",
 ];
-const EARLY_31_OCT: ReadonlyArray<readonly [string, number]> = PAGES.filter((p) => EARLY_31_OCT_IDS.includes(p.id)).flatMap(
-  (p) => [[p.path, 17], ...(p.hi ? [[`/hi${p.path}`, 17] as const] : [])] as const,
+const EARLY_24_NOV: ReadonlyArray<readonly [string, number]> = PAGES.filter((p) => EARLY_24_NOV_IDS.includes(p.id)).flatMap(
+  (p) => [[p.path, 41], ...(p.hi ? [[`/hi${p.path}`, 41] as const] : [])] as const,
 );
 
 /**
- * [path, day] of pages published: the calendar frozen on 31 Oct 2026 (day 17,
- * which already holds every earlier snapshot and early release, EARLY_26_OCT
- * included) and the pages put out early that day.
+ * [path, day] of pages published: the calendar frozen on 24 Nov 2026 (day 41,
+ * which already holds every earlier snapshot and early release) and the pages
+ * put out early that day.
  */
-export const PUBLISHED: ReadonlyArray<readonly [string, number]> = [...CALENDAR_31_OCT, ...EARLY_31_OCT];
+export const PUBLISHED: ReadonlyArray<readonly [string, number]> = [...CALENDAR_24_NOV, ...EARLY_24_NOV];
 
 /**
  * Pages of PUBLISHED that had gone live by the end of this day keep the day
@@ -64,8 +115,9 @@ export const PUBLISHED: ReadonlyArray<readonly [string, number]> = [...CALENDAR_
  * before deploying, so nothing already published moves or disappears.
  * - 26 Oct 2026: raised from 2 to 12 with the new snapshot.
  * - 31 Oct 2026: raised from 12 to 17 with the next snapshot.
+ * - 24 Nov 2026: raised from 17 to 41 with the next snapshot.
  */
-export const KEEP_THROUGH_DAY = 17;
+export const KEEP_THROUGH_DAY = 41;
 
 /**
  * Early releases the owner asked for. On `day`, the pages of the next `days`
