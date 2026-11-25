@@ -547,6 +547,41 @@ export const PUMP_PAGES: PumpPage[] = [
     queries: ["ethanol free petrol india", "e0 petrol available", "ethanol free petrol pump near me", "E20 se bachne ke liye e0 petrol"],
     brief: "Scope: Is ethanol-free petrol sold in India? What the government has said. Sources: PIB and Parliament answers 2025-26 on E20 and ethanol-free petrol; MoPNG; BIS specification; only what is stated, with dates.",
   },
+  {
+    id: "customers-no-puc-no-fuel", pillar: "customers", path: `${P}/customers/no-puc-no-fuel/`, hi: true, type: "Explainer", wave: 2,
+    queries: ["no puc no fuel", "no puc no petrol delhi", "puc certificate petrol pump", "bina puc petrol nahi"],
+    brief: "Scope: No PUC, no fuel: where the rule applies and what a pump must do. Sources: Motor Vehicles Act 1988 and Central Motor Vehicles Rules 1989 (rule 115) on indiacode.nic.in / morth.nic.in; CAQM directions and Delhi government orders on official .gov.in/.nic.in sites (dated); PIB.",
+  },
+  {
+    id: "customers-doorstep-diesel", pillar: "customers", path: `${P}/customers/doorstep-diesel-delivery/`, hi: true, type: "Explainer", wave: 2,
+    queries: ["doorstep diesel delivery", "diesel home delivery legal india", "mobile fuel dispenser", "bowser diesel delivery rules"],
+    brief: "Scope: Doorstep diesel delivery: is it legal and who can do it. Sources: MoPNG notification on doorstep delivery / mobile dispensing; PESO circulars and Petroleum Rules 2002 on peso.gov.in; PIB; Parliament answers.",
+  },
+  {
+    id: "customers-cash-withdrawal", pillar: "customers", path: `${P}/customers/cash-withdrawal-at-petrol-pump/`, hi: true, type: "Explainer", wave: 2,
+    queries: ["cash withdrawal at petrol pump", "petrol pump atm cash", "cash from pos at petrol pump", "petrol pump se cash"],
+    brief: "Scope: Cash withdrawal at a petrol pump: can you take cash on a card. Sources: RBI circulars on cash withdrawal at point of sale (rbi.org.in); NPCI; oil company published pages; PIB. Only what is stated, with dates.",
+  },
+  {
+    id: "fuels-ev-charging-guidelines", pillar: "fuels", path: `${P}/fuels/ev-charging-station-guidelines/`, hi: true, type: "Explainer", wave: 2,
+    queries: ["ev charging station guidelines india", "ev charging at petrol pump", "open ev charging station rules", "ev charging licence not required"],
+    brief: "Scope: EV charging station guidelines in India: who can set one up, including at a petrol pump. Sources: Ministry of Power guidelines and standards for EV public charging infrastructure 2024 on powermin.gov.in / beeindia.gov.in; PIB; MoPNG on EV charging at retail outlets.",
+  },
+  {
+    id: "dealership-apply-as-firm", pillar: "dealership", path: `${P}/dealership/apply-as-partnership-or-company/`, hi: true, type: "Explainer", wave: 2,
+    queries: ["petrol pump dealership company apply", "partnership firm petrol pump", "can llp get petrol pump", "petrol pump trust society"],
+    brief: "Scope: Can a company, partnership or trust apply for a petrol pump dealership. Sources: OMC dealer selection guidelines / advertisement terms on HPCL, BPCL, Nayara, Jio-bp, Shell official sites; MoPNG guidelines on dealer selection; only what they state.",
+  },
+  {
+    id: "licences-licence-amendment", pillar: "licences", path: `${P}/licences/changes-to-a-licensed-pump/`, hi: true, type: "Explainer", wave: 2,
+    queries: ["petrol pump licence amendment peso", "add dispenser petrol pump approval", "peso approval for change in layout", "petrol pump modification"],
+    brief: "Scope: Adding a tank or dispenser to a licensed petrol pump: when PESO approval is needed. Sources: Petroleum Rules 2002 on indiacode.nic.in / peso.gov.in; PESO circulars and forms on peso.gov.in; only what is stated, with dates.",
+  },
+  {
+    id: "safety-emergency-response-plan", pillar: "safety", path: `${P}/safety/emergency-response-plan/`, hi: true, type: "Explainer", wave: 2,
+    queries: ["petrol pump emergency plan", "petrol pump fire what to do", "emergency procedure petrol pump", "petrol pump aag lag jaye"],
+    brief: "Scope: Emergency plan at a petrol pump: what to do in a fire or leak, and what to display. Sources: OISD standards (oisd.gov.in, read with curl); Petroleum Rules 2002; OMC dealer guidelines (MDG 2024) on emergency procedures and numbers; NDMA; only what is stated.",
+  },
 ];
 
 applyTranslations(PUMP_PAGES, PUMP_TRANSLATIONS);
