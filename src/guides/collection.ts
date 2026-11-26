@@ -78,7 +78,8 @@ export interface Look {
 export interface Cta {
   title: string;
   text: string;
-  primary: { href: string; label: string };
+  /** `rel` is "nofollow" when the link is the Kavach Shuruaat funnel link (a redirect to an app store). */
+  primary: { href: string; label: string; rel?: string };
   secondary: { href: string; label: string };
 }
 
@@ -137,8 +138,8 @@ export interface Collection {
   themeClass: string;
   /** the MDG "read the official text" box */
   officialBox: boolean;
-  /** the closing box, which says it is an advertisement */
-  cta: (lang: Lang) => Cta;
+  /** the closing box, which says it is an advertisement; `page` names the page in a funnel link's source */
+  cta: (lang: Lang, page?: AnyPage) => Cta;
   /** links to another collection for the pages that should pass readers (and crawlers) on, or null */
   crossLinks: (page: AnyPage, lang: Lang) => CrossLinks | null;
 }

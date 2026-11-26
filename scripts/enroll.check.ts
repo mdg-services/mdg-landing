@@ -382,6 +382,21 @@ describe("Kavach Shuruaat's sign-up (kind: planner)", () => {
     for (const field of ["sapCode", "siteType", "pumpName", "agree"]) assert.equal(field in call.body, false, field);
   });
 
+  it("passes on the page that sent them, tidied, and leaves the Terms record alone", async () => {
+    await enroll.processEnrollment(planner({ from: " Pump:Dealership-Documents " }));
+    assert.equal(sent[0].body.from, "pump:dealership-documents");
+    assert.equal(sent[0].body.termsTextHash, terms.termsTextHash("en", "planner"));
+  });
+
+  it("drops a tag that is not the safe shape, and still signs them up", async () => {
+    for (const from of ["pump/../x", "<b>", "x".repeat(81), 7]) {
+      sent.length = 0;
+      const result = await enroll.processEnrollment(planner({ from }));
+      assert.equal(result.ok, true, JSON.stringify(from));
+      assert.equal(sent[0].body.from, undefined, JSON.stringify(from));
+    }
+  });
+
   it("records a Hindi app's tick against the Hindi clauses", async () => {
     await enroll.processEnrollment(planner({ lang: "hi" }));
     assert.equal(sent[0].body.termsTextHash, terms.termsTextHash("hi", "planner"));

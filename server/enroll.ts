@@ -262,6 +262,9 @@ async function handPlannerToApi(
     ref: data.ref,
     lang: data.lang,
     userAgent: userAgent?.slice(0, 500),
+    // Which page sent them, for the funnel report. Beside the Terms record, never in it:
+    // the fingerprint is of the clauses shown, and a tag does not change those.
+    from: data.from,
   });
 }
 

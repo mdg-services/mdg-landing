@@ -26,7 +26,7 @@ A petrol pump is run by a dealer, the person or firm that holds the dealership f
 
 Every fact names its source and the date we checked it. Where oil companies or states differ, we say so and show a small table. If we cannot find an official source for a point, we leave it out and tell you where to look.
 
-This guide is separate from the [MDG 2024 guide](/guides/), which explains one document for dealers. We do not sell, allot or arrange dealerships or licences. Read [who writes these pages and how we check them](@disclaimer).
+This guide is separate from the [MDG 2024 guide](/guides/), which explains one document for dealers. Short answers to the questions people ask before opening a pump, each linked to its full page here, are on [one page of questions](/new-pump/questions). We do not sell, allot or arrange dealerships or licences. Read [who writes these pages and how we check them](@disclaimer).
 
 ## Where this comes from
 

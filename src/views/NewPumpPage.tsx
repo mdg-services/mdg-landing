@@ -5,8 +5,9 @@ import ScrollProgress from "../components/ScrollProgress";
 import StoreButtons from "../components/StoreButtons";
 import Icon from "../components/Icon";
 import { getT } from "../i18n/server";
-import { versionsOf, type Lang } from "../i18n/lang";
+import { pathFor, versionsOf, type Lang } from "../i18n/lang";
 import { docFacts, fill, pieces, target } from "../lib/docText";
+import { funnelHref } from "../lib/funnel";
 
 /** The page's own sections, for its navbar and for anyone who links into it. */
 export const NEW_PUMP_ANCHORS = { examples: "questions", price: "price", start: "start", faq: "faq" } as const;
@@ -17,9 +18,13 @@ export const NEW_PUMP_ANCHORS = { examples: "questions", price: "price", start: 
  *
  * Server HTML in one language, with no script of its own: the FAQ opens on the
  * browser's own <details>. There is nothing to fill in here. The page sends a
- * reader to the app stores, because the account, the payment link and the chat
- * all live in the app; `/start?for=new-pump` is the same road for a phone that
- * should go straight to its own store.
+ * reader to the app, because the account, the payment link and the chat all
+ * live there. Every "ask" button is the funnel link (ADR 0059 §2, lib/funnel.ts):
+ * on a phone it opens the app or its store and counts the tap as this page's;
+ * on a computer it comes back here, which is why the hero also says what to do
+ * on a computer. The store badges go through the same link with `store=play|app`,
+ * so their taps are counted and Android installs carry this page's tag; a computer
+ * that presses a badge still lands on the store it pressed, not back here.
  *
  * The price is never typed into the copy: `{newPumpTotal}` and friends are
  * filled from NEW_PUMP (data/content.ts), the same figure the pricing page uses.
@@ -31,6 +36,8 @@ export default function NewPumpPage({ lang }: { lang: Lang }) {
   const say = (text: string) => <Inline text={text} lang={lang} facts={facts} />;
   const sectionHeading = "text-balance font-display font-semibold text-ink";
   const headingSize = { fontSize: "clamp(28px, 3.4vw, 42px)", lineHeight: 1.15 } as const;
+  /* the one funnel link of this page: the admin report counts its taps as "new-pump" */
+  const ask = funnelHref("new-pump", lang);
 
   return (
     <div className="min-h-screen bg-paper text-ink">
@@ -73,19 +80,11 @@ export default function NewPumpPage({ lang }: { lang: Lang }) {
                 <p className="mt-1.5 text-[15px] leading-snug text-navy-100">{say(n.hero.priceNote)}</p>
               </div>
 
+              <AskButton href={ask} label={n.hero.askLink} className="mt-8" />
+              <p className="mt-3 max-w-[36rem] text-[14.5px] leading-[1.55] text-navy-100">{n.hero.phoneLine}</p>
+
               <p className="mt-8 max-w-[36rem] text-[16px] leading-[1.55] text-white">{n.hero.storeLead}</p>
-              <StoreButtons from="new_pump" appStoreAria={n.hero.appStoreAria} playAria={n.hero.playAria} className="mt-4" />
-              <p className="mt-4 text-[15px]">
-                {/* a phone that wants its own store in one tap; a computer lands back here.
-                    A plain link: /start is a redirect to a store, not a page to prefetch. */}
-                {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
-                <a
-                  href="/start?for=new-pump"
-                  className="-my-2 inline-flex min-h-[48px] items-center gap-2 font-semibold text-white underline decoration-white/40 underline-offset-4 hover:decoration-white"
-                >
-                  {n.hero.androidLink} <Icon name="arrow" size={16} />
-                </a>
-              </p>
+              <StoreButtons from="new_pump" funnel={ask} appStoreAria={n.hero.appStoreAria} playAria={n.hero.playAria} className="mt-4" />
             </div>
 
             {/* what people ask about, as plain tags: meaning in words, not colour */}
@@ -138,6 +137,14 @@ export default function NewPumpPage({ lang }: { lang: Lang }) {
               ))}
             </ul>
             <p className="mt-8 max-w-[48rem] text-[15.5px] leading-[1.6] text-ink-soft">{n.examples.note}</p>
+            <p className="mt-6">
+              <Link
+                href={pathFor(lang, "/new-pump/questions")}
+                className="-my-2 inline-flex min-h-[48px] items-center gap-2 text-[17px] font-semibold text-navy-700 underline decoration-navy-700/40 underline-offset-4 hover:decoration-navy-700"
+              >
+                {n.examples.more} <Icon name="arrow" size={16} />
+              </Link>
+            </p>
           </div>
         </section>
 
@@ -204,12 +211,12 @@ export default function NewPumpPage({ lang }: { lang: Lang }) {
           </div>
         </section>
 
-        {/* ── Three steps, and the store buttons again where the steps end ── */}
+        {/* ── How it works: four steps, then the ask button and the store buttons again ── */}
         <section id={NEW_PUMP_ANCHORS.start} aria-labelledby="np-start" className="scroll-mt-20 wrap-full py-16 md:py-24">
           <h2 id="np-start" className={sectionHeading} style={headingSize}>
             {n.steps.heading}
           </h2>
-          <ol className="mt-10 grid list-none gap-5 p-0 lg:grid-cols-3">
+          <ol className="mt-10 grid list-none gap-5 p-0 sm:grid-cols-2 lg:grid-cols-4">
             {n.steps.items.map((step, i) => (
               <li key={step.title} className="rounded-2xl border border-ink-hairline bg-white p-6 shadow-card">
                 <span className="num text-[26px] font-semibold text-gold-500" aria-hidden>
@@ -221,8 +228,10 @@ export default function NewPumpPage({ lang }: { lang: Lang }) {
             ))}
           </ol>
           <div className="mt-10 rounded-3xl bg-navy-950 p-6 sm:p-8">
-            <p className="max-w-[36rem] text-[16.5px] leading-[1.55] text-white">{n.hero.storeLead}</p>
-            <StoreButtons from="new_pump" appStoreAria={n.hero.appStoreAria} playAria={n.hero.playAria} className="mt-5" />
+            <AskButton href={ask} label={n.hero.askLink} />
+            <p className="mt-3 max-w-[36rem] text-[14.5px] leading-[1.55] text-navy-100">{n.hero.phoneLine}</p>
+            <p className="mt-7 max-w-[36rem] text-[16.5px] leading-[1.55] text-white">{n.hero.storeLead}</p>
+            <StoreButtons from="new_pump" funnel={ask} appStoreAria={n.hero.appStoreAria} playAria={n.hero.playAria} className="mt-5" />
           </div>
         </section>
 
@@ -270,6 +279,26 @@ export default function NewPumpPage({ lang }: { lang: Lang }) {
       </main>
       <Footer lang={lang} />
     </div>
+  );
+}
+
+/**
+ * The funnel button. A plain <a>, not a Next link: /app/new-pump is a redirect
+ * to a store or into the app, not a page to prefetch, and `nofollow` keeps
+ * search engines from crawling it (ADR 0059 §2).
+ */
+export function AskButton({ href, label, className = "" }: { href: string; label: string; className?: string }) {
+  return (
+    <a
+      href={href}
+      rel="nofollow"
+      className={
+        "inline-flex min-h-[56px] w-full items-center justify-center gap-2.5 rounded-xl bg-gold-400 px-6 py-3 text-center text-[17px] font-semibold text-navy-950 shadow-card transition-colors hover:bg-gold-300 sm:w-auto " +
+        className
+      }
+    >
+      {label} <Icon name="arrow" size={18} />
+    </a>
   );
 }
 

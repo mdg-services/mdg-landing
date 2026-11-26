@@ -3,6 +3,8 @@ import Footer from "../components/Footer";
 import { Enter } from "../lib/enter";
 import JsonLd from "../seo/JsonLd";
 import ToolScript from "./ToolScript";
+import ShuruaatBlock from "../components/ShuruaatBlock";
+import { guideSource } from "../routing/funnel";
 import {
   buildPageModel,
   longDate,
@@ -29,6 +31,17 @@ const ON_THIS_PAGE: Record<Lang, string> = { en: "On this page", hi: "इस प
 const TOC_FROM = 4;
 
 /**
+ * The body split before its second ## heading, so a block can sit after the
+ * first section. A body with fewer than two headings is not split: the block
+ * then follows the whole body.
+ */
+function splitAfterFirstSection(html: string): [string, string] {
+  const starts = [...html.matchAll(/<h2[\s>]/g)].map((m) => m.index);
+  if (starts.length < 2) return [html, ""];
+  return [html.slice(0, starts[1]), html.slice(starts[1])];
+}
+
+/**
  * One page of the guides, drawn in the site's own design: its navbar and
  * footer, a dark band with the breadcrumb, the title and the short answer, a
  * calm reading column on the paper background, and the notice and disclaimer
@@ -43,7 +56,7 @@ export default function GuidePage({ ctx, release }: { ctx: Ctx; release: AnyRele
   const { col } = ctx;
   const t = col.ui[lang];
   const look = col.look;
-  const cta = col.cta(lang);
+  const cta = col.cta(lang, page);
   /** A full stop in the page's own script */
   const stop = LANGUAGES[lang].stop;
   // The switch offers every language this page is live in; for a language it has no version in, nothing:
@@ -76,6 +89,12 @@ export default function GuidePage({ ctx, release }: { ctx: Ctx; release: AnyRele
   ));
   // the hub is a front page: its topic cards come first, the explanation after
   const hubFirst = page.id === "hub";
+  // Kavach Shuruaat (ADR 0059 §6): a card on each front door; on every other page a strip after the
+  // first section (Petrol pump guide), a box near the end (MDG guides, tools, density) or one line
+  // (Khata Kavach). Never on the disclaimer. Each names its page, and inside a guide it is an advertisement.
+  const from = guideSource(col.key, page.id, page.type);
+  const shuruaat = page.type === "Legal" ? null : hubFirst ? "card" : col.key === "pump" ? "strip" : col.key === "mdg" ? "box" : "line";
+  const [bodyHead, bodyRest] = shuruaat === "strip" ? splitAfterFirstSection(body) : [body, ""];
 
   return (
     <div className={col.themeClass ? `${look.root} ${col.themeClass}` : look.root}>
@@ -159,8 +178,11 @@ export default function GuidePage({ ctx, release }: { ctx: Ctx; release: AnyRele
 
           {/* the groups bring their own top margin (mt-14); pull back 1.5rem of it so the gap under the checked line matches the other pages */}
           {hubFirst && <div className="-mt-6">{groups}</div>}
+          {shuruaat === "card" && <ShuruaatBlock lang={lang} from={from} variant="card" ad className="mt-14" />}
 
-          <div className={hubFirst ? "guide-prose mt-14" : "guide-prose"} dangerouslySetInnerHTML={{ __html: body }} />
+          <div className={hubFirst ? "guide-prose mt-14" : "guide-prose"} dangerouslySetInnerHTML={{ __html: bodyHead }} />
+          {shuruaat === "strip" && <ShuruaatBlock lang={lang} from={from} variant="strip" ad className="mb-14 mt-10" />}
+          {bodyRest && <div className="guide-prose" dangerouslySetInnerHTML={{ __html: bodyRest }} />}
           {script && <ToolScript code={script} />}
 
           {page.id === "disclaimer" && (
@@ -227,6 +249,9 @@ export default function GuidePage({ ctx, release }: { ctx: Ctx; release: AnyRele
             </p>
           )}
 
+          {shuruaat === "box" && <ShuruaatBlock lang={lang} from={from} variant="box" ad className="mt-12" />}
+          {shuruaat === "line" && <ShuruaatBlock lang={lang} from={from} variant="line" ad className="mt-12" />}
+
           {related.length > 0 && (
             <section className="guide-section">
               <h2 className="guide-h2">{t.related}</h2>
@@ -259,7 +284,7 @@ export default function GuidePage({ ctx, release }: { ctx: Ctx; release: AnyRele
               </h2>
               <p className={look.ctaText}>{cta.text}</p>
               <div className="mt-7 flex flex-col gap-3 sm:flex-row sm:items-center">
-                <a href={cta.primary.href} className={look.ctaPrimary}>
+                <a href={cta.primary.href} rel={cta.primary.rel} className={look.ctaPrimary}>
                   {cta.primary.label}
                 </a>
                 <a href={cta.secondary.href} className={look.ctaSecondary}>

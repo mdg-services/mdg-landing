@@ -19,6 +19,7 @@ import { playPop } from "./pop";
 import { micSupported, type MicFailure } from "./mic";
 import { ASSIST_BOT_SRC } from "./assets";
 import StoreButtons from "../StoreButtons";
+import { funnelHref } from "../../lib/funnel";
 import { requestAssistCall } from "../../lib/assistCall";
 import {
   AssistError,
@@ -819,7 +820,7 @@ export default function AssistPanel({
                       {/* The answer is in the app (New Pump Guide, or Dealer Kavach
                           itself): the two store buttons, under this reply only,
                           stacked because the panel is narrow at every width. */}
-                      {m.appPromo && <AppPromoCard d={d} promo={m.appPromo} />}
+                      {m.appPromo && <AppPromoCard d={d} promo={m.appPromo} lang={lang} />}
 
                       {/* The number, set large, and it stays in the conversation. */}
                       {m.filed && <GrievanceNumber d={d} refs={[m.filed]} />}
@@ -1125,14 +1126,17 @@ export default function AssistPanel({
 /**
  * Under a reply that sends the visitor to the Dealer Kavach app: one line on
  * what to choose there, and the two store buttons, tagged so the stores' install
- * figures show the assistant's installs (`new_pump` or `dealer`).
+ * figures show the assistant's installs (`new_pump` or `dealer`). For Kavach
+ * Shuruaat both buttons go through the funnel link with source `chat` (ADR 0059
+ * §2), so the app opens straight on its sign-up and the admin report counts the chat.
  */
-function AppPromoCard({ d, promo }: { d: AssistDict; promo: AssistAppPromo }) {
+function AppPromoCard({ d, promo, lang }: { d: AssistDict; promo: AssistAppPromo; lang: AssistLang }) {
   return (
     <div className="max-w-[90%] self-start rounded-2xl border border-ink-hairline bg-paper-warm p-3.5">
       <p className="text-[13.5px] leading-[1.6] text-ink">{promo === "new_pump" ? d.appPromo.newPump : d.appPromo.dealer}</p>
       <StoreButtons
         from={promo}
+        funnel={promo === "new_pump" ? funnelHref("chat", lang) : undefined}
         appStoreAria={d.appPromo.appStoreAria}
         playAria={d.appPromo.playAria}
         stack

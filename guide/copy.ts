@@ -117,7 +117,7 @@ export const DISCLAIMER: PerLang<[string, string][]> = {
     ["Last checked", `The "checked" date shows the day we last compared this page with the official documents. It does not promise that nothing has changed since.`],
     ["Report an error or send a legal notice", `If you see a mistake, or need to send us a notice, write to ${EMAIL}. We read every message, check it, and correct or remove the page.`],
     ["Limits on our responsibility", `We take reasonable care to keep this page accurate. To the extent the law allows, MDG Services and ${COMPANY} are not responsible for loss caused by relying on this page alone instead of the official documents. This does not limit anything the law does not allow us to limit, including responsibility for fraud or for an error we knew about and did not correct. Your legal rights are not affected.`],
-    ["Advertisement", `The box headed "About Dealer Kavach" is an advertisement for a paid service from MDG Services. This explanation is free and needs no sign-up or purchase to read.`],
+    ["Advertisement", `The box headed "About Dealer Kavach" and the part marked "Advertisement" about Kavach Shuruaat are advertisements for paid services from MDG Services. This explanation is free and needs no sign-up or purchase to read.`],
     ["Hindi pages", "Hindi pages are written for easy reading. If a Hindi page and the official English document differ, the official English document is the one to follow."],
   ],
   hi: [
@@ -131,7 +131,7 @@ export const DISCLAIMER: PerLang<[string, string][]> = {
     ["जाँच की तारीख़", `पेज पर लिखी "जाँच की तारीख़" वह दिन है जब हमने इसे मूल दस्तावेज़ों से मिलाया था। इसका मतलब यह नहीं कि उसके बाद कुछ नहीं बदला।`],
     ["गलती बताएँ या कानूनी सूचना भेजें", `कोई गलती दिखे, या हमें कोई सूचना भेजनी हो, तो ${EMAIL} पर लिखें। हम हर संदेश पढ़ते हैं, जाँचते हैं, और पेज को सुधारते या हटा देते हैं।`],
     ["हमारी ज़िम्मेदारी की सीमा", `हम पेज को सही रखने की पूरी वाजिब कोशिश करते हैं। कानून जितनी छूट देता है, उस हद तक MDG Services और ${COMPANY} उस नुकसान के ज़िम्मेदार नहीं हैं जो मूल दस्तावेज़ देखे बिना सिर्फ़ इस पेज पर भरोसा करने से हो। यह उन बातों को सीमित नहीं करता जिन्हें कानून सीमित करने की इजाज़त नहीं देता, जैसे धोखाधड़ी, या ऐसी गलती जिसकी हमें जानकारी थी और हमने ठीक नहीं की। आपके कानूनी अधिकार जैसे के तैसे रहते हैं।`],
-    ["विज्ञापन", `"डीलर कवच के बारे में" वाला हिस्सा MDG Services की एक सशुल्क सेवा का विज्ञापन है। यह जानकारी मुफ़्त है, इसे पढ़ने के लिए साइन-अप या खरीद की ज़रूरत नहीं।`],
+    ["विज्ञापन", `"डीलर कवच के बारे में" वाला हिस्सा और कवच शुरुआत के बारे में "विज्ञापन" लिखा हिस्सा MDG Services की सशुल्क सेवाओं के विज्ञापन हैं। यह जानकारी मुफ़्त है, इसे पढ़ने के लिए साइन-अप या खरीद की ज़रूरत नहीं।`],
     ["हिंदी पेज", "हिंदी पेज आसानी से पढ़ने के लिए लिखे गए हैं। हिंदी पेज और मूल अंग्रेज़ी दस्तावेज़ में फ़र्क हो, तो मूल अंग्रेज़ी दस्तावेज़ की बात ही सही मानें।"],
   ],
 };

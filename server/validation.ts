@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { cleanSource } from "../src/lib/funnel.js";
 import { toMobile } from "../src/lib/mobile.js";
 
 /** Optional free-text field that treats "" the same as "not provided". */
@@ -145,6 +146,15 @@ export const plannerEnrollmentSchema = z.object({
     .catch(undefined),
   /** The app's language: it becomes the person's language for the chat and the bill. */
   lang: z.enum(PLANNER_LANGS, { message: "Pick a language" }),
+  /**
+   * The website page whose "Ask in Kavach Shuruaat" link brought them (ADR 0059 §3),
+   * e.g. `pump:dealership-documents`, as the app carried it to the form. A tag that is
+   * not the safe shape is dropped, never refused: the sign-up matters more than the tag.
+   */
+  from: z
+    .unknown()
+    .transform((v) => (typeof v === "string" ? (cleanSource(v) ?? undefined) : undefined))
+    .optional(),
 });
 
 /** A New Pump Guide sign-up, password included. Only `processEnrollment` handles this. */

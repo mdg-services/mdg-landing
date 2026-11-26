@@ -1,5 +1,6 @@
 import { SITE } from "./site";
 import { BRAND, OFFICE } from "../data/content";
+import { NEW_PUMP_QUESTION_GROUPS } from "../data/newPumpQuestions";
 import { TOLL_FREE } from "../lib/tollFree";
 import { getT } from "../i18n/server";
 import { DOC_KEY } from "../i18n/doc";
@@ -119,7 +120,7 @@ export function kkJsonLd(lang: Lang) {
 export function newPumpJsonLd(lang: Lang) {
   const t = getT(lang).newPump;
   const url = `${SITE}${pathFor(lang, "/new-pump")}`;
-  const total = newPumpPrice().total;
+  const { total } = newPumpPrice();
   return {
     "@context": "https://schema.org",
     "@graph": [
@@ -146,6 +147,15 @@ export function newPumpJsonLd(lang: Lang) {
           price: (total / 100).toFixed(2),
           priceCurrency: "INR",
           url,
+          // the same figure again, said to be per month and to include GST: search engines read
+          // priceSpecification as this offer's price, so a different figure here would contradict it
+          priceSpecification: {
+            "@type": "UnitPriceSpecification",
+            price: (total / 100).toFixed(2),
+            priceCurrency: "INR",
+            valueAddedTaxIncluded: true,
+            referenceQuantity: { "@type": "QuantitativeValue", value: 1, unitCode: "MON" },
+          },
         },
       },
       {
@@ -160,11 +170,53 @@ export function newPumpJsonLd(lang: Lang) {
         "@type": "FAQPage",
         "@id": `${url}#faq`,
         inLanguage: LANGUAGES[lang].bcp47,
-        mainEntity: t.faq.items.map((f) => ({
+        // the sample questions and the FAQ: both are questions with their answers on the page
+        mainEntity: [...t.examples.items, ...t.faq.items].map((f) => ({
           "@type": "Question",
           name: f.q,
           acceptedAnswer: { "@type": "Answer", text: f.a },
         })),
+      },
+    ],
+  };
+}
+
+/**
+ * The questions hub's structured data (ADR 0059 §6): every question with its
+ * short answer, in the page's own language and order, and where the page sits
+ * (MDG Services, Kavach Shuruaat, Questions). The answers are the text on
+ * screen; the "read the full answer" links are not part of them.
+ */
+export function newPumpQuestionsJsonLd(lang: Lang) {
+  const t = getT(lang);
+  const q = t.newPumpQuestions;
+  const url = `${SITE}${pathFor(lang, "/new-pump/questions")}`;
+  return {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "BreadcrumbList",
+        "@id": `${url}#crumbs`,
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: "MDG Services", item: `${SITE}${homeHref(lang)}` },
+          { "@type": "ListItem", position: 2, name: t.newPump.name, item: `${SITE}${pathFor(lang, "/new-pump")}` },
+          { "@type": "ListItem", position: 3, name: q.crumb, item: url },
+        ],
+      },
+      {
+        "@type": "FAQPage",
+        "@id": `${url}#faq`,
+        name: q.hero.heading,
+        url,
+        inLanguage: LANGUAGES[lang].bcp47,
+        publisher: { "@type": "Organization", "@id": `${SITE}/#org`, name: "MDG Services", url: `${SITE}/` },
+        mainEntity: NEW_PUMP_QUESTION_GROUPS.flatMap((g) =>
+          g.questions.map((x) => ({
+            "@type": "Question",
+            name: q.questions[x.id].q,
+            acceptedAnswer: { "@type": "Answer", text: q.questions[x.id].a },
+          })),
+        ),
       },
     ],
   };

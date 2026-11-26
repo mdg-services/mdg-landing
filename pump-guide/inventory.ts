@@ -617,6 +617,94 @@ export const PUMP_PAGES: PumpPage[] = [
     queries: ["petrol pump reward points", "hp pay loyalty", "bpcl smartdrive points", "fuel loyalty program india"],
     brief: "Scope: Fuel loyalty and reward programmes: how the oil companies' schemes work. Sources: Hindustan Petroleum and Bharat Petroleum own published programme pages and terms; Indian Oil named in words only, never link iocl.com; PIB if any. Only what the programme page states, dated; no 'best' claims. Link to digital-payments and fleet-cards pages.",
   },
+  // 26 Nov 2026: 17 topics for people planning a new pump (the steps of a dealership
+  // application, land, money, other kinds of outlet), written for the questions
+  // asked before opening a pump and put out together that day (pump-guide/schedule.ts).
+  {
+    id: "dealership-reading-advertisement", pillar: "dealership", path: `${P}/dealership/reading-the-advertisement/`, hi: true, type: "Explainer", wave: 2,
+    queries: ["petrol pump advertisement 2026 pdf download", "petrol pump tender 2026", "petrol pump tender in bihar", "petrol pump dealership 2026 location", "petrol pump dealer chayan 2026 location", "petrol pump advertisement 2026 maharashtra"],
+    brief: "Scope: Petrol pump dealership advertisement (tender): how to read the location list, site type, category and fees. Sources: BPCL dealer selection brochure June 2023 (bharatpetroleum.in PDF); petrolpumpdealerchayan.in; HPCL dealership page; advertisement PDFs listed on the portal.",
+  },
+  {
+    id: "dealership-application-form", pillar: "dealership", path: `${P}/dealership/application-form/`, hi: true, type: "Explainer", wave: 2,
+    queries: ["petrol pump application form", "petrol pump application form pdf download", "पेट्रोल पंप एप्लीकेशन फॉर्म", "petrol pump affidavit", "appendix iii petrol pump affidavit", "petrol pump apply kaise kare"],
+    brief: "Scope: Petrol pump dealership application form: filling it online, the affidavit and the fee. Sources: BPCL dealer selection brochure June 2023 (bharatpetroleum.in PDF); petrolpumpdealerchayan.in; HPCL dealership page (Appendix affidavits XA/XB, application clauses).",
+  },
+  {
+    id: "dealership-land-groups", pillar: "dealership", path: `${P}/dealership/land-group-1-and-group-2/`, hi: true, type: "Explainer", wave: 2,
+    queries: ["petrol pump ke liye jameen apni honi chahiye", "petrol pump land group 1 group 2", "petrol pump land family member", "petrol pump firm offer land"],
+    brief: "Scope: Group 1 and Group 2 land in a petrol pump application: own land, family land and a firm offer. Sources: BPCL dealer selection brochure June 2023 (bharatpetroleum.in PDF); petrolpumpdealerchayan.in; HPCL dealership page (land clauses, cl.14(H) group priority, cl.16 time to hand over land).",
+  },
+  {
+    id: "dealership-without-land", pillar: "dealership", path: `${P}/dealership/without-own-land/`, hi: true, type: "Explainer", wave: 2,
+    queries: ["petrol pump without land", "petrol pump dealership without land", "petrol pump investment without land", "petrol pump cost without land", "petrol pump cc site"],
+    brief: "Scope: Petrol pump dealership without your own land: company-owned (CC) sites and how they are allotted. Sources: BPCL dealer selection brochure June 2023 (bharatpetroleum.in PDF); petrolpumpdealerchayan.in; HPCL dealership page (site types A/CC, bidding, minimum bid).",
+  },
+  {
+    id: "dealership-corpus-fund-scheme", pillar: "dealership", path: `${P}/dealership/corpus-fund-scheme/`, hi: true, type: "Explainer", wave: 2,
+    queries: ["corpus fund scheme petrol pump", "corpus fund scheme petrol pump apply online", "cfs site in petrol pump", "cfs petrol pump meaning"],
+    brief: "Scope: Corpus Fund scheme (CFS) petrol pumps for SC/ST applicants: what it is and how to apply. Sources: BPCL dealer selection brochure June 2023 (bharatpetroleum.in PDF); petrolpumpdealerchayan.in; HPCL dealership page (Corpus Fund clauses and loan repayment); MoPNG circular 6 Sep 2006 if on petroleum.nic.in; Parliament answers.",
+  },
+  {
+    id: "money-loan-schemes", pillar: "money", path: `${P}/money/government-loan-schemes/`, hi: true, type: "Explainer", wave: 2,
+    queries: ["petrol pump loan subsidy", "petrol pump loan scheme", "petrol pump loan scheme in hindi", "पेट्रोल पंप लोन", "mudra loan for petrol pump", "petrol pump ke liye bank se loan kaise le"],
+    brief: "Scope: Petrol pump loan subsidy and government schemes: what Mudra, Stand-Up India and the Corpus Fund say. Sources: mudra.org.in; standupmitra.in; BPCL dealer selection brochure June 2023 (bharatpetroleum.in PDF); petrolpumpdealerchayan.in; HPCL dealership page (Corpus Fund loan terms).",
+  },
+  {
+    id: "dealership-interview", pillar: "dealership", path: `${P}/dealership/is-there-an-interview/`, hi: true, type: "Explainer", wave: 2,
+    queries: ["petrol pump dealership interview questions", "petrol pump dealership interview questions pdf", "petrol pump interview questions", "petrol pump dealership exam"],
+    brief: "Scope: Is there an interview for a petrol pump dealership? How selection works now. Sources: BPCL dealer selection brochure June 2023 (bharatpetroleum.in PDF); petrolpumpdealerchayan.in; HPCL dealership page (cl.14 selection procedure); Parliament answers on the move to draw of lots (eparlib.sansad.in).",
+  },
+  {
+    id: "dealership-draw-result", pillar: "dealership", path: `${P}/dealership/draw-of-lots-and-result/`, hi: true, type: "Explainer", wave: 2,
+    queries: ["petrol pump dealer chayan result", "petrol pump dealer chayan draw result", "petrol pump result", "petrol pump draw of lots"],
+    brief: "Scope: Petrol pump draw of lots and result: where the draw is held and where the result appears. Sources: BPCL dealer selection brochure June 2023 (bharatpetroleum.in PDF); petrolpumpdealerchayan.in; HPCL dealership page (cl.14(H), cl.17 redraw).",
+  },
+  {
+    id: "dealership-bidding-process", pillar: "dealership", path: `${P}/dealership/bidding-process/`, hi: true, type: "Explainer", wave: 2,
+    queries: ["petrol pump bidding process", "bidding process for petrol pump dealership", "petrol pump bidding"],
+    brief: "Scope: Bidding for a petrol pump dealership: how a bid works, the minimum bid and ties. Sources: BPCL dealer selection brochure June 2023 (bharatpetroleum.in PDF); petrolpumpdealerchayan.in; HPCL dealership page (cl.13, cl.14 bidding, cl.17 next highest bidder).",
+  },
+  {
+    id: "dealership-field-verification", pillar: "dealership", path: `${P}/dealership/field-verification/`, hi: true, type: "Explainer", wave: 2,
+    queries: ["fvc petrol pump", "petrol pump field verification", "land evaluation committee petrol pump"],
+    brief: "Scope: Land check and field verification (FVC) after selection: what the oil company checks. Sources: BPCL dealer selection brochure June 2023 (bharatpetroleum.in PDF); petrolpumpdealerchayan.in; HPCL dealership page (cl.14(I) land evaluation, cl.15 FVC).",
+  },
+  {
+    id: "dealership-letter-of-intent", pillar: "dealership", path: `${P}/dealership/letter-of-intent/`, hi: true, type: "Explainer", wave: 2,
+    queries: ["petrol pump loi", "petrol pump loi full form", "letter of intent petrol pump", "petrol pump approval letter", "petrol pump loi for sale"],
+    brief: "Scope: Letter of intent (LOI) for a petrol pump: what it is, its deadlines, and when it is withdrawn. Sources: BPCL dealer selection brochure June 2023 (bharatpetroleum.in PDF); petrolpumpdealerchayan.in; HPCL dealership page (cl.16 LOI and withdrawal, cl.17).",
+  },
+  {
+    id: "dealership-appointment-and-commissioning", pillar: "dealership", path: `${P}/dealership/appointment-and-commissioning/`, hi: true, type: "Explainer", wave: 2,
+    queries: ["petrol pump construction process", "petrol pump kaise banta hai", "petrol pump lagane ka process", "petrol pump opening process", "petrol pump construction"],
+    brief: "Scope: From LOI to opening day: building a petrol pump, the letter of appointment and commissioning. Sources: BPCL dealer selection brochure June 2023 (bharatpetroleum.in PDF); petrolpumpdealerchayan.in; HPCL dealership page (cl.19 commissioning, cl.20 security deposit); peso.gov.in Petroleum Rules 2002 licence steps.",
+  },
+  {
+    id: "dealership-cng-pump", pillar: "dealership", path: `${P}/dealership/cng-station-dealership/`, hi: true, type: "Explainer", wave: 2,
+    queries: ["cng pump dealership", "cng pump dealership kaise le", "cng pump kaise khole", "adani cng pump dealership", "igl cng pump dealership", "cng pump ke liye kitni jameen chahiye", "cng pump dealership cost"],
+    brief: "Scope: CNG pump dealership: how city gas companies pick dealers, land and what they ask. Sources: city gas companies' own DODO EOI notices (e.g. Indian Oil-Adani Gas ioagpl.com, Bengal Gas bgcl.co.in, Vadodara Gas vgl.co.in, MNGL mngl.in); PNGRB authorised areas list (pngrb.gov.in); peso.gov.in Gas Cylinders Rules.",
+  },
+  {
+    id: "dealership-mini-petrol-pump", pillar: "dealership", path: `${P}/dealership/mini-petrol-pump/`, hi: true, type: "Explainer", wave: 2,
+    queries: ["mini petrol pump", "mini petrol pump kaise khole", "मिनी पेट्रोल पंप", "mini petrol pump government scheme", "mini petrol pump licence", "portable petrol pump dealership", "mobile petrol pump dealership"],
+    brief: "Scope: Mini petrol pump: what the rules allow and the 'government scheme' offers to check. Sources: MS and HSD Control Order 2005 (petroleum.nic.in / indiacode.nic.in); Petroleum Rules 2002 licensing (peso.gov.in); MoPNG fuel retail authorisation (PIB); oil companies' fraud notices.",
+  },
+  {
+    id: "dealership-private-petrol-pump", pillar: "dealership", path: `${P}/dealership/private-petrol-pump/`, hi: true, type: "Explainer", wave: 2,
+    queries: ["private petrol pump kaise khole", "how to open private petrol pump", "how to open own petrol pump", "private petrol pump dealership", "own petrol pump price"],
+    brief: "Scope: Can you open a private petrol pump of your own brand? The fuel retail authorisation rules. Sources: PIB releases on the Oct 2019 cabinet decision and Aug 2020 authorisation (pib.gov.in); MoPNG resolution on marketing transportation fuels (petroleum.nic.in / egazette.gov.in); private companies' own dealership pages.",
+  },
+  {
+    id: "site-offer-land-to-oil-company", pillar: "site", path: `${P}/site/offer-land-to-an-oil-company/`, hi: true, type: "Explainer", wave: 2,
+    queries: ["bpcl land advertisement", "bpcl coco land advertisement", "land lease for petrol pump", "petrol pump ke liye jameen kiraye par dena"],
+    brief: "Scope: Offering your land to an oil company for a petrol pump: land notices, sale or lease. Sources: HPCL land-for-retail-outlet notices (hindustanpetroleum.com); BPCL land procurement terms (bharatpetroleum.in); Nayara/Jio-bp land pages if published.",
+  },
+  {
+    id: "site-nhai-wayside-amenities", pillar: "site", path: `${P}/site/nhai-wayside-amenities/`, hi: true, type: "Explainer", wave: 2,
+    queries: ["wayside amenities nhai", "wayside amenities nhai tender 2026", "wayside amenities guidelines", "wayside amenities meaning"],
+    brief: "Scope: NHAI wayside amenities: fuel stations on highway land, the lease and the tenders. Sources: MoRTH policy guidelines for wayside amenities 11 Feb 2021 (morth.gov.in circular 701.15); NHAI WSA tender documents (nhai.gov.in).",
+  },
 ];
 
 applyTranslations(PUMP_PAGES, PUMP_TRANSLATIONS);

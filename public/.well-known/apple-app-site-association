@@ -1,0 +1,13 @@
+{
+  "applinks": {
+    "apps": [],
+    "details": [
+      {
+        "appID": "598VRDYD26.in.mdgservices.dealerkavach",
+        "paths": ["/app/*"],
+        "appIDs": ["598VRDYD26.in.mdgservices.dealerkavach"],
+        "components": [{ "/": "/app/*", "comment": "The Kavach Shuruaat funnel link opens the Dealer Kavach app" }]
+      }
+    ]
+  }
+}

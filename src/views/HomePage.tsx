@@ -17,6 +17,7 @@ import Contact from "../components/Contact";
 import FAQ from "../components/FAQ";
 import HomeGuides from "../components/HomeGuides";
 import Footer from "../components/Footer";
+import ShuruaatBlock from "../components/ShuruaatBlock";
 import { getT } from "../i18n/server";
 import { versionsOf, type Lang } from "../i18n/lang";
 
@@ -47,6 +48,12 @@ export default function HomePage({ lang }: { lang: Lang }) {
         <Membership lang={lang} />
         <Contact c={t.contact} />
         <HomeGuides lang={lang} />
+        {/* Kavach Shuruaat, beside the guides: the visitor reading about pumps may be planning one (ADR 0059 §6) */}
+        <div className="bg-paper">
+          <div className="wrap-full pb-20 md:pb-24">
+            <ShuruaatBlock lang={lang} from="home" variant="card" />
+          </div>
+        </div>
         <FAQ faq={t.faq} />
       </main>
       <Footer lang={lang} />

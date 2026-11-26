@@ -15,6 +15,7 @@
     "typecheck": "tsc --noEmit",
     "check:lang": "npx tsx --test scripts/lang.check.ts",
     "check:enroll": "npx tsx --test scripts/enroll.check.ts",
+    "check:funnel": "npx tsx --test scripts/funnel.check.ts",
     "email:preview": "esbuild scripts/render-emails.ts --bundle --platform=node --format=esm --outfile=node_modules/.cache/render-emails.mjs && node node_modules/.cache/render-emails.mjs",
     "logos:gen": "node scripts/gen-logos.mjs",
     "lint": "eslint .",

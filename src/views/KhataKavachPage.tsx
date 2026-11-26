@@ -11,6 +11,7 @@ import KkTrust from "../components/kk/KkTrust";
 import KkFaq from "../components/kk/KkFaq";
 import KkGuides from "../components/kk/KkGuides";
 import KkCta from "../components/kk/KkCta";
+import ShuruaatBlock from "../components/ShuruaatBlock";
 import { KK_ANCHORS } from "../data/kk";
 import { getT } from "../i18n/server";
 import { versionsOf, type Lang } from "../i18n/lang";
@@ -51,6 +52,10 @@ export default function KhataKavachPage({ lang }: { lang: Lang }) {
         <KkNozzle lang={lang} />
         <KkTrust lang={lang} />
         <KkGuides lang={lang} />
+        {/* Kavach Shuruaat, for the reader planning a pump of their own (ADR 0059 §6) */}
+        <div className="wrap-full pb-16 md:pb-20">
+          <ShuruaatBlock lang={lang} from="khata-kavach" variant="card" />
+        </div>
         <KkFaq lang={lang} />
         <KkCta
           t={t.kk.cta}

@@ -1,6 +1,6 @@
 /**
  * Which language a visitor to the site's own pages (/, /register, /grievance,
- *  /grievances, /khata-kavach, /new-pump, the company pages (/about, /contact, /pricing,
+ *  /grievances, /khata-kavach, /new-pump, /new-pump/questions, the company pages (/about, /contact, /pricing,
  * /terms, /refund-policy, /shipping) and their twins under each language's
  * prefix, /hi and /or) should be sent to.
  *
@@ -23,7 +23,7 @@
 import { COMPANY_ROUTES, LANG_COOKIE, pathFor, type SiteRoute } from "../i18n/lang";
 import { DEFAULT_LANG, LANGS, LANGUAGES, isLang, langOfPath, prefixOf, type Lang } from "../i18n/languages";
 
-const ROUTES = ["", "/register", "/grievance", "/grievances", "/khata-kavach", "/new-pump", ...COMPANY_ROUTES] as const;
+const ROUTES = ["", "/register", "/grievance", "/grievances", "/khata-kavach", "/new-pump", "/new-pump/questions", ...COMPANY_ROUTES] as const;
 
 /** Which of the site's own pages a path is, and in which language; null for anything else. */
 export function siteRoute(pathname: string): { lang: Lang; route: SiteRoute } | null {

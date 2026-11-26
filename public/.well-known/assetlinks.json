@@ -1,0 +1,12 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "in.mdgservices.dealerkavach",
+      "sha256_cert_fingerprints": [
+        "3D:AD:BB:91:EF:3E:59:AD:81:CF:BB:23:13:99:B0:69:8A:D6:44:B0:A6:2E:07:3B:7D:74:F8:92:8E:4F:A7:D0"
+      ]
+    }
+  }
+]

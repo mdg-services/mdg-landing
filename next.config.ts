@@ -71,6 +71,17 @@ const nextConfig: NextConfig = {
 
   async redirects() {
     return [
+      // go.mdgservices.in is only the Kavach Shuruaat funnel link's own address (ADR 0059 §4,
+      // src/lib/funnel.ts): a different site from the pages, so a tap on it opens an installed
+      // app. It answers /app/ (the link) and /.well-known/ (the files that let the phones open
+      // the app); every other address there goes to the main site, so search engines never
+      // find a second copy of it. Listed first: Next stops at the first redirect that matches.
+      {
+        source: "/:path((?!app/|app$|\\.well-known/).*)",
+        has: [{ type: "host", value: "go.mdgservices.in" }],
+        destination: "https://mdgservices.in/:path",
+        permanent: true,
+      },
       { source: "/film/en", destination: "/film?lang=en", permanent: false },
       { source: "/film/short/en", destination: "/film/short?lang=en", permanent: false },
       // The pages of the other languages are not all in the proxy's matcher (it would
@@ -78,7 +89,7 @@ const nextConfig: NextConfig = {
       // turned away here, as the proxy does for the English ones.
       ...LANG_PREFIXES.flatMap((p) => [
         { source: `${p}/`, destination: p, permanent: true },
-        ...["register", "grievance", "grievances", "khata-kavach", "about", "contact", "pricing", "terms", "refund-policy", "shipping"].map((page) => ({
+        ...["register", "grievance", "grievances", "khata-kavach", "new-pump", "new-pump/questions", "about", "contact", "pricing", "terms", "refund-policy", "shipping"].map((page) => ({
           source: `${p}/${page}/`,
           destination: `${p}/${page}`,
           permanent: true,
@@ -136,6 +147,11 @@ const nextConfig: NextConfig = {
       { source: "/favicon.png", headers: [{ key: "Cache-Control", value: week }] },
       { source: "/assist-bot.png", headers: [{ key: "Cache-Control", value: week }] },
       { source: "/apple-touch-icon.png", headers: [{ key: "Cache-Control", value: week }] },
+      // The files that let the funnel link /app/new-pump open the Dealer Kavach app when it is
+      // installed (ADR 0059 §4). Apple's file has no extension, and Apple and Android both read
+      // them only as JSON; an hour's cache so a fix to either reaches the phones the same day.
+      { source: "/.well-known/apple-app-site-association", headers: [{ key: "Content-Type", value: "application/json" }, { key: "Cache-Control", value: "public, max-age=3600" }] },
+      { source: "/.well-known/assetlinks.json", headers: [{ key: "Content-Type", value: "application/json" }, { key: "Cache-Control", value: "public, max-age=3600" }] },
       { source: "/:path*", headers: SECURITY_HEADERS },
     ];
   },

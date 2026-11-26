@@ -52,6 +52,8 @@ import { NEW_PUMP } from "../data/content.ts";
 import { pageLangs } from "../../guide/calendar.ts";
 import { fillLangs, localPath, type PerLang } from "../i18n/languages.ts";
 import { pathFor } from "../i18n/lang.ts";
+import { funnelHref } from "../lib/funnel.ts";
+import { guideSource } from "../routing/funnel.ts";
 import type { AnyPage, AnyRelease, Collection, CollectionKey, PillarMeta } from "./collection";
 import { mdgClauseTags, mdgPenaltyNotes, mdgTagOk, sourceTagOk, sourceTags } from "./tags";
 
@@ -260,13 +262,18 @@ export const PUMP: Collection = {
   themeClass: "",
   officialBox: false,
   // Readers of these pages are mostly people planning a pump, so the box offers
-  // New Pump Guide (ADR 0058 §8); with it switched off, the Dealer Kavach box as before.
-  cta: (lang) =>
+  // Kavach Shuruaat (ADR 0058 §8) through the funnel link, which names the page
+  // (ADR 0059 §2); with it switched off, the Dealer Kavach box as before.
+  cta: (lang, page) =>
     NEW_PUMP.enabled
       ? {
           title: PUMP_CTA_ALL[lang].title,
           text: PUMP_CTA_ALL[lang].text.replace("{price}", newPumpPriceText),
-          primary: { href: pathFor(lang, "/new-pump"), label: PUMP_CTA_ALL[lang].primary },
+          // the disclaimer carries no funnel link (ADR 0059 §6): there the box points at the page itself
+          primary:
+            page?.type === "Legal"
+              ? { href: pathFor(lang, "/new-pump"), label: PUMP_CTA_ALL[lang].primary }
+              : { href: funnelHref(page ? guideSource("pump", page.id, page.type) : "pump", lang), label: PUMP_CTA_ALL[lang].primary, rel: "nofollow" },
           secondary: { href: TOLL_FREE.href, label: UI_MDG[lang].call },
         }
       : {

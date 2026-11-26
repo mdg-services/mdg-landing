@@ -69,7 +69,7 @@ export const PUMP_DISCLAIMER: PerLang<[string, string][]> = {
     ["Other companies' names", "Oil companies and every other company, product or body named here belong to their owners. We name them only to say whose rule or service a fact is about. They have not seen or approved these pages."],
     ["Report an error or send a legal notice", `If you see a mistake, or need to send us a notice, write to ${EMAIL}. We read every message, check it, and correct or remove the page.`],
     ["Limits on our responsibility", `We take reasonable care to keep these pages accurate. To the extent the law allows, MDG Services and ${COMPANY} are not responsible for loss caused by relying on this page alone. This does not limit anything the law does not allow us to limit, including responsibility for fraud or for an error we made after being told of it.`],
-    ["Advertisement", "The box headed \"About Dealer Kavach\" is an advertisement for Dealer Kavach, a service from MDG Services. Everything else on this page is free information."],
+    ["Advertisement", "The box headed \"About Kavach Shuruaat\" at the end of a page, and the parts marked \"Advertisement\", are advertisements for Kavach Shuruaat, a service from MDG Services. Everything else on this page is free information."],
     ["Hindi pages", "Hindi pages are written for easy reading and say the same as their English pages. Where a page mentions a law or a guideline, the official text is the one to follow."],
   ],
   hi: [
@@ -82,7 +82,7 @@ export const PUMP_DISCLAIMER: PerLang<[string, string][]> = {
     ["दूसरी कंपनियों के नाम", "तेल कंपनियों और यहाँ लिखे हर दूसरे कंपनी, प्रोडक्ट या संस्था के नाम उनके मालिकों के हैं। हम उनका नाम सिर्फ़ यह बताने के लिए लिखते हैं कि कोई तथ्य किसके नियम या सेवा का है। उन्होंने ये पेज देखे या मंज़ूर नहीं किए हैं।"],
     ["गलती बताएँ या कानूनी सूचना भेजें", `कोई गलती दिखे, या हमें कोई सूचना भेजनी हो, तो ${EMAIL} पर लिखें। हम हर संदेश पढ़ते हैं, जाँचते हैं, और पेज सुधारते या हटाते हैं।`],
     ["हमारी ज़िम्मेदारी की सीमा", `हम इन पेजों को सही रखने की पूरी वाजिब कोशिश करते हैं। कानून जितनी छूट देता है, उस हद तक MDG Services और ${COMPANY} सिर्फ़ इस पेज के भरोसे हुए नुकसान के ज़िम्मेदार नहीं हैं। इससे वह कुछ सीमित नहीं होता जिसे सीमित करने की कानून इजाज़त नहीं देता, जिसमें धोखाधड़ी या बताए जाने के बाद हमारी की गई गलती की ज़िम्मेदारी शामिल है।`],
-    ["विज्ञापन", "\"डीलर कवच के बारे में\" वाला हिस्सा डीलर कवच का विज्ञापन है, जो MDG Services की सेवा है। पेज की बाकी हर बात मुफ़्त जानकारी है।"],
+    ["विज्ञापन", "पेज के आख़िर में \"कवच शुरुआत के बारे में\" वाला हिस्सा और \"विज्ञापन\" लिखे हिस्से कवच शुरुआत के विज्ञापन हैं, जो MDG Services की सेवा है। पेज की बाकी हर बात मुफ़्त जानकारी है।"],
     ["हिंदी पेज", "हिंदी पेज आसानी से पढ़ने के लिए लिखे गए हैं और वही बात कहते हैं जो उनके अंग्रेज़ी पेज। जहाँ किसी कानून या गाइडलाइन का ज़िक्र हो, वहाँ आधिकारिक पाठ ही मानें।"],
   ],
 };

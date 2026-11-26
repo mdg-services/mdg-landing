@@ -19,11 +19,11 @@ import { VIDEO_SLUGS } from "@/routing/videos";
 export const dynamic = "force-dynamic";
 
 /**
- * The site's own pages (home, register, grievance, the Khata Kavach product page, New Pump Guide and the company
+ * The site's own pages (home, register, grievance, the Khata Kavach product page, New Pump Guide and its questions hub, and the company
  * pages), in every language. Each is one entry with its hreflang alternates, so a search engine
  * reads the languages as one page. Kept here, not in the guide's SITE_PAGES, which belongs to the guide machinery.
  */
-const SITE_ROUTES: SiteRoute[] = ["", "/register", "/grievance", "/khata-kavach", "/new-pump", ...COMPANY_ROUTES];
+const SITE_ROUTES: SiteRoute[] = ["", "/register", "/grievance", "/khata-kavach", "/new-pump", "/new-pump/questions", ...COMPANY_ROUTES];
 
 /** The video library and one page per explainer. One address each: the English cut is `?lang=en` on the same page. */
 const VIDEO_PAGES = ["/videos", ...VIDEO_SLUGS.map((slug) => `/videos/${slug}`)];

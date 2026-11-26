@@ -7,9 +7,11 @@
    - Never promise, or let a sentence imply, that anyone will get a dealership,
      a licence or an approval. The oil company, PESO and the highway authority
      decide; we say so more than once.
-   - The example answers describe the KIND of answer, with no figures: a
-     distance or a plot size printed here would be one more number to go stale
-     and to be quoted back at us. The app gives the figures, from the books.
+   - The sample answers (ADR 0059 §6) are short and correct, from public
+     documents only, and each names its source and date: the highway
+     ministry's (MoRTH) norms of 26 June 2020, the oil companies' June 2023
+     dealer selection brochure, the Petroleum Rules 2002. Never a figure from
+     a document that is not public.
    - Prices come in as {facts} (lib/docText.ts docFacts), never typed here.
    - No pay button and no "pay in the app": payment is a link on WhatsApp or
      SMS (Play's payments policy, ADR 0022 §1).
@@ -36,7 +38,10 @@ export const newPump = {
     storeLead: "Get the free Dealer Kavach app, then choose “I want to open a petrol pump”.",
     appStoreAria: "Get the Dealer Kavach app on the App Store, for Kavach Shuruaat",
     playAria: "Get the Dealer Kavach app on Google Play, for Kavach Shuruaat",
-    androidLink: "On an Android phone? Start here",
+    /** The funnel link (ADR 0059 §2): on a phone it opens the app, or its store. */
+    askLink: "Ask your question in Kavach Shuruaat",
+    /** For a computer, where the funnel link comes back to this page. */
+    phoneLine: "On a computer? Open mdgservices.in/new-pump on your phone, or search “Dealer Kavach” in your phone's app store.",
     /** A tag on the hero's list of what it covers. */
     topicsAria: "What you can ask about",
     topics: ["Land and location", "Distances on highways", "Licences and approvals", "Dealer selection", "Building the pump", "Opening day"],
@@ -55,38 +60,36 @@ export const newPump = {
 
   examples: {
     heading: "Questions you can ask",
-    intro: "A few examples, and the kind of answer you get. The real answers come with the figures the rule books give.",
+    intro: "Six questions people ask, with short answers from public documents. In the app you can ask about your own plot and case, and follow up.",
     items: [
       {
-        q: "How far must my pump be from a junction on a National Highway?",
-        a: "The distances the highway ministry's rules set, case by case, and who decides when your stretch of road is not a plain case.",
+        q: "How far must a pump be from a junction on a National Highway?",
+        a: "On a rural stretch, at least 300 m from an intersection or a median gap; on an urban or hilly stretch, 100 m. Source: the highway ministry's (MoRTH) norms of 26 June 2020.",
       },
       {
-        q: "How much land do I need?",
-        a: "The plot sizes the selection rules ask for, by kind of road and place, and what to check in the land papers before you apply.",
+        q: "How much land does a pump on a National Highway need?",
+        a: "At least 35 m by 35 m on a rural stretch in plain terrain, 30 m by 30 m on an urban stretch and 20 m by 20 m in hilly terrain (MoRTH norms, 26 June 2020). Elsewhere, the oil company's advertisement states the size for each location.",
       },
       {
-        q: "Which licences and approvals does a new pump need?",
-        a: "The approvals the documents list, which office gives each one, and which ones come before building starts.",
+        q: "Who can apply for a dealership?",
+        a: "An Indian citizen and resident with a valid PAN, aged 21 to 60, who has passed 10th class, under the oil companies' June 2023 selection brochure. Each advertisement adds the land conditions for its location.",
       },
       {
         q: "How does the oil company choose a dealer?",
-        a: "The steps as the guidelines describe them: the advertisement, who may apply, the documents, the selection and the checks after it.",
+        a: "By a computerised draw of lots or by bidding among eligible applicants, depending on the kind of site. The land and the documents are checked after that (June 2023 selection brochure).",
       },
       {
-        q: "What does it cost to build a pump?",
-        a: "The costs the documents mention and who bears which, and which costs they leave to your own quotes.",
+        q: "Which licences does a new pump need?",
+        a: "A licence in Form XIV from PESO to store petrol and diesel, with a No Objection Certificate from the District Authority (Petroleum Rules 2002, rule 144). Other approvals differ by state.",
       },
       {
-        q: "What does PESO approve, and when?",
-        a: "What the explosives licence covers, the drawings it asks for, and the inspection before fuel may be stored.",
-      },
-      {
-        q: "What must be on display on opening day?",
-        a: "The boards a customer must be able to see, and the first-aid and fire-safety items the rules ask for.",
+        q: "What does it cost to apply?",
+        a: "An application fee of ₹2,500 to ₹10,000 with GST, by category and kind of outlet, and later a refundable security deposit of ₹2 lakh to ₹5 lakh (June 2023 selection brochure). The building funds are stated in each location's advertisement.",
       },
     ],
     note: "Every answer is general guidance read from official documents. It is not legal advice and it is not an approval: the oil company, PESO and the highway authority decide.",
+    /** The link to the questions hub, /new-pump/questions. */
+    more: "More questions people ask, answered",
   },
 
   sources: {
@@ -94,9 +97,7 @@ export const newPump = {
     intro: "Kavach Shuruaat answers only from documents we hold, not from guesses:",
     items: [
       "The Marketing Discipline Guidelines 2024: the oil companies' rules for running an outlet.",
-      "IndianOil's Dealer Handbook.",
       "The highway ministry's 2020 rules for fuel stations on National Highways: access, distances and layout.",
-      "IndianOil's 2025 policy circular on modernising outlets (334-07/2025).",
       "Guidance on display boards and first aid at an outlet.",
       "Our own plain-language guides on opening and running a petrol pump.",
     ],
@@ -122,17 +123,22 @@ export const newPump = {
     ],
   },
 
+  /* How it works (ADR 0059 §6): the same four steps the app takes a reader through. */
   steps: {
-    heading: "Start in three steps",
+    heading: "How it works",
     items: [
-      { title: "Install Dealer Kavach", body: "It is free on the App Store and Google Play." },
       {
         title: "Choose “I want to open a petrol pump”",
-        body: "Give your name, mobile number, a password and your state. It takes a minute.",
+        body: "In the Dealer Kavach app, which is free on Google Play and the App Store.",
+      },
+      { title: "Sign up in a minute", body: "Give your name, mobile number, a password and your state." },
+      {
+        title: "Get the payment details on WhatsApp and SMS",
+        body: "The autopay link for {newPumpTotal} a month comes on WhatsApp and SMS. There is no payment inside the app.",
       },
       {
-        title: "Pay the link on WhatsApp",
-        body: "The autopay link for {newPumpTotal} a month comes on WhatsApp and SMS. Once it is paid, ask your first question.",
+        title: "Ask anything",
+        body: "Once the first payment is done, ask in the chat, in Hindi, Hinglish or English, at any hour.",
       },
     ],
   },

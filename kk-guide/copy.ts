@@ -73,7 +73,10 @@ export const KK_UI: PerLang<Record<string, string>> = {
   },
 };
 
-/** The closing box: the one sales line on a page, and it says it is an advertisement. */
+/**
+ * The closing box: Khata Kavach's sales line on a page, and it says it is an advertisement.
+ * (A page also carries one Kavach Shuruaat line, labelled the same way: ADR 0059 §6.)
+ */
 export const KK_CTA: PerLang<{ text: string; primary: string }> = {
   en: {
     text: "Khata Kavach is a shared credit book for petrol pumps, from MDG Services. The transporter asks before each truck fills, your nozzle man sees the limit before he fills, and both of you see every fill, payment and bill. It never lends or holds money.",
@@ -103,7 +106,7 @@ export const KK_DISCLAIMER: PerLang<[string, string][]> = {
     ["What Khata Kavach is", "Khata Kavach records credit fills, bills and payments between a petrol pump and its customers. It never lends money and never holds anyone's money: it is not a bank, a lender or a payment service. A Khata Kavach bill is not a GST tax invoice."],
     ["Report an error or send a legal notice", `If you see a mistake, or need to send us a notice, write to ${EMAIL}. We read every message, check it, and correct or remove the page.`],
     ["Limits on our responsibility", `We take reasonable care to keep these pages accurate. To the extent the law allows, MDG Services and ${COMPANY} are not responsible for loss caused by relying on this page alone. This does not limit anything the law does not allow us to limit, including responsibility for fraud or for an error we knew about and did not correct. Your legal rights are not affected.`],
-    ["Advertisement", "The box headed \"About Khata Kavach\" is an advertisement for Khata Kavach, a service from MDG Services. Everything else on this page is free information."],
+    ["Advertisement", "The box headed \"About Khata Kavach\" is an advertisement for Khata Kavach, and the part marked \"Advertisement\" is an advertisement for Kavach Shuruaat; both are services from MDG Services. Everything else on this page is free information."],
     ["Hindi pages", "Hindi pages are written for easy reading and say the same as their English pages. Where a page mentions a law, the official text of that law is the one to follow."],
   ],
   hi: [
@@ -116,7 +119,7 @@ export const KK_DISCLAIMER: PerLang<[string, string][]> = {
     ["खाता कवच क्या है", "खाता कवच एक पेट्रोल पंप और उसके ग्राहकों के बीच उधार की भराई, बिल और पेमेंट का हिसाब रखता है। यह न पैसा उधार देता है, न किसी का पैसा अपने पास रखता है: यह बैंक, लोन देने वाली कंपनी या पेमेंट सर्विस नहीं है। खाता कवच का बिल GST टैक्स इनवॉइस नहीं है।"],
     ["गलती बताएँ या कानूनी सूचना भेजें", `कोई गलती दिखे, या हमें कोई सूचना भेजनी हो, तो ${EMAIL} पर लिखें। हम हर संदेश पढ़ते हैं, जाँचते हैं, और पेज को सुधारते या हटा देते हैं।`],
     ["हमारी ज़िम्मेदारी की सीमा", `हम इन पेजों को सही रखने की पूरी वाजिब कोशिश करते हैं। कानून जितनी छूट देता है, उस हद तक MDG Services और ${COMPANY} उस नुकसान के ज़िम्मेदार नहीं हैं जो सिर्फ़ इस पेज पर भरोसा करने से हो। यह उन बातों को सीमित नहीं करता जिन्हें कानून सीमित करने की इजाज़त नहीं देता, जैसे धोखाधड़ी, या ऐसी गलती जिसकी हमें जानकारी थी और हमने ठीक नहीं की। आपके कानूनी अधिकार जैसे के तैसे रहते हैं।`],
-    ["विज्ञापन", "\"खाता कवच के बारे में\" वाला हिस्सा खाता कवच का विज्ञापन है, जो MDG Services की सेवा है। पेज की बाकी हर बात मुफ़्त जानकारी है।"],
+    ["विज्ञापन", "\"खाता कवच के बारे में\" वाला हिस्सा खाता कवच का विज्ञापन है, और \"विज्ञापन\" लिखा हिस्सा कवच शुरुआत का विज्ञापन है; दोनों MDG Services की सेवाएँ हैं। पेज की बाकी हर बात मुफ़्त जानकारी है।"],
     ["हिंदी पेज", "हिंदी पेज आसानी से पढ़ने के लिए लिखे गए हैं और वही बात कहते हैं जो उनके अंग्रेज़ी पेज। जहाँ किसी कानून का ज़िक्र है, वहाँ उस कानून का आधिकारिक पाठ ही मानें।"],
   ],
 };

@@ -48,6 +48,13 @@ export function siteMetadata(lang: Lang, route: SiteRoute): Metadata {
       ogTitle: t.newPump.meta.ogTitle,
       ogDescription: fill(t.newPump.meta.description, docFacts(lang)),
     },
+    /* the questions hub (ADR 0059 §6): a short title, like a guide page's */
+    "/new-pump/questions": {
+      title: t.newPumpQuestions.meta.title,
+      description: t.newPumpQuestions.meta.description,
+      ogTitle: t.newPumpQuestions.meta.title,
+      ogDescription: t.newPumpQuestions.meta.description,
+    },
     "/about": company("/about"),
     "/contact": company("/contact"),
     "/pricing": company("/pricing"),

@@ -11,6 +11,10 @@ import { LANGS, localPath, pathFor, versionsOf } from "../src/i18n/lang.ts";
 import { fillLangs, langOfPath, stripPrefix } from "../src/i18n/languages.ts";
 import { PUMP, PUMP_CTA_ALL } from "../src/guides/collections.ts";
 import { FORBIDDEN } from "../src/guides/content.ts";
+import { funnelHref } from "../src/lib/funnel.ts";
+import { en } from "../src/i18n/en/index.ts";
+import { hi } from "../src/i18n/hi/index.ts";
+import { or } from "../src/i18n/or/index.ts";
 
 const go = (path: string, cookie: string | null = null, accept: string | null = null) => langRedirect(new URL(`https://x.test${path}`), cookie, accept);
 
@@ -101,12 +105,41 @@ describe("the Petrol pump guide's closing box (Kavach Shuruaat)", () => {
       for (const bad of [...FORBIDDEN, ...PUMP.forbidden]) assert.ok(!bad.test(text), `${l}: ${bad}`);
     }
   });
-  it("sends the reader to /new-pump in their language, with the price filled in", () => {
+  it("sends the reader through the funnel link, naming the page, in their language, with the price filled in", () => {
+    const page = PUMP.byId.get("hub")!;
     for (const l of LANGS) {
-      const cta = PUMP.cta(l);
-      assert.equal(cta.primary.href, pathFor(l, "/new-pump"));
+      const cta = PUMP.cta(l, page);
+      assert.equal(cta.primary.href, funnelHref("pump:hub", l));
+      assert.equal(cta.primary.rel, "nofollow");
       assert.ok(!cta.text.includes("{price}"));
       assert.ok(cta.text.includes("₹199"));
     }
+  });
+});
+
+describe("the Kavach Shuruaat blocks on other pages (ADR 0059 §6)", () => {
+  const DICTS = { en, hi, or };
+  /** Every word a block can show, with its price placeholder still in. */
+  const words = (l: keyof typeof DICTS) => {
+    const w = DICTS[l].shuruaat;
+    return [w.ad, w.strip.text, w.strip.link, w.box.title, w.box.text, w.box.link, w.line.text, w.line.link, w.card.kicker, w.card.title, w.card.text, w.card.link, w.card.more].join("\n");
+  };
+  it("pass the Petrol pump guide's forbidden words in every language, since they sit on its pages", () => {
+    for (const l of LANGS) for (const bad of [...FORBIDDEN, ...PUMP.forbidden]) assert.ok(!bad.test(words(l)), `${l}: ${bad}`);
+  });
+  it("never offer a free month and never name the reader's gender", () => {
+    for (const l of LANGS) assert.doesNotMatch(words(l), /\bfree\b|मुफ़्त|मुफ्त|फ्री|ମାଗଣା/i, l);
+    assert.doesNotMatch(words("hi"), /चाहता|चाहती|\bSir\b|(^|\s)सर(\s|,|।|$)/);
+  });
+  it("take the price from NEW_PUMP, never a typed figure", () => {
+    for (const l of LANGS) {
+      assert.doesNotMatch(words(l), /₹|\bRs\b/, l);
+      assert.ok(DICTS[l].shuruaat.box.text.includes("{newPumpPrice}"), l);
+      assert.ok(DICTS[l].shuruaat.card.text.includes("{newPumpPrice}"), l);
+    }
+  });
+  it("carry their label in the page's own script", () => {
+    assert.equal(hi.shuruaat.ad, "विज्ञापन");
+    assert.equal(or.shuruaat.ad, "ବିଜ୍ଞାପନ");
   });
 });

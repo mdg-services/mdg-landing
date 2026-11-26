@@ -3,7 +3,7 @@ import { KK, MDG, PUMP, SITE, contextAt, isLive, pathOf, type Ctx, type Lang } f
 import { getT } from "@/i18n/server";
 import { DOC_KEY } from "@/i18n/doc";
 import { COMPANY_ROUTES, LANGUAGES, pathFor } from "@/i18n/lang";
-import { OTHER_LANGS } from "@/i18n/languages";
+import { OTHER_LANGS, localPath } from "@/i18n/languages";
 import { pageLangs } from "../../guide/calendar";
 import { docFacts, fill } from "@/lib/docText";
 import catalog from "@/videos/catalog.json";
@@ -72,6 +72,9 @@ export function GET(): Response {
     ...sitePage("/khata-kavach", (l) => ({ title: l === "en" ? "Khata Kavach" : getT(l).kk.name, text: getT(l).kk.meta.description })),
     // Kavach Shuruaat: the Dealer Kavach app's rule-book chat for people planning a pump (ADR 0058)
     ...sitePage("/new-pump", (l) => ({ title: getT(l).newPump.name, text: fill(getT(l).newPump.meta.description, docFacts(l)) })),
+    // and its questions page: the short answers people look for before opening a pump (ADR 0059 §6)
+    `- ${line(getT("en").shuruaat.llms.questionsTitle, `${SITE}/new-pump/questions`, getT("en").shuruaat.llms.questionsText)}`,
+    ...OTHER_LANGS.map((l) => `  - ${tag(l)}${line(getT(l).shuruaat.llms.questionsTitle, `${SITE}${localPath(l, "/new-pump/questions")}`, getT(l).shuruaat.llms.questionsText)}`),
     ...sitePage("/register", (l) => ({ title: getT(l).register.pageTitle, text: getT(l).register.intro })),
     ...sitePage("/grievance", (l) => ({ title: getT(l).grievance.pageTitle, text: getT(l).grievance.metaDescription })),
     // About, contact, pricing, terms, refund and shipping: the pages that say who is behind the site

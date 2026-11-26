@@ -36,6 +36,8 @@
 import { readFileSync } from "node:fs";
 import path from "node:path";
 import { gzipSync } from "node:zlib";
+import { funnelHref } from "../src/lib/funnel.ts";
+import { NEW_PUMP } from "../src/data/content.ts";
 
 type Lang = "hi" | "en";
 const LANGS: Lang[] = ["hi", "en"];
@@ -100,6 +102,10 @@ const T = {
     slow: "धीमा इंटरनेट मिला, कम डेटा वाली क्वालिटी चालू कर दी है।",
     err: "वीडियो नहीं चल पाया। इंटरनेट देखकर फिर कोशिश करें।",
     retry: "फिर कोशिश करें",
+    // Kavach Shuruaat (ADR 0059 §6). No price: these pages carry none (scripts/videos.check.ts).
+    shuruaatTitle: "नया पेट्रोल पंप खोलने की योजना है?",
+    shuruaatText: "पंप खोलने के सवाल डीलर कवच ऐप में कवच शुरुआत से पूछिए: जवाब आधिकारिक नियम-पुस्तकों से, हिंदी या अंग्रेज़ी में।",
+    shuruaatLink: "कवच शुरुआत में पूछिए",
     min: (s: number) => (s < 90 ? `${Math.round(s)} सेकंड` : `${Math.round(s / 60)} मिनट`),
   },
   en: {
@@ -123,6 +129,9 @@ const T = {
     slow: "Slow internet found, so the low-data quality is on.",
     err: "The video couldn't play. Check your internet and try again.",
     retry: "Try again",
+    shuruaatTitle: "Planning a new petrol pump?",
+    shuruaatText: "Ask your questions about opening a pump in Kavach Shuruaat, in the Dealer Kavach app: answers from the official rule books, in Hindi or English.",
+    shuruaatLink: "Ask in Kavach Shuruaat",
     min: (s: number) => (s < 90 ? `${Math.round(s)} sec` : `${Math.round(s / 60)} min`),
   },
 };
@@ -253,6 +262,7 @@ p{margin:0 0 14px}
 @media (min-width:900px){.grid{grid-template-columns:repeat(6,1fr)}}
 .join{margin:28px 0 8px;padding:18px;border-radius:14px;background:var(--panel)}
 .join p{margin:0 0 12px;font-weight:600}
+.join .lead{font-weight:400;color:var(--dim)}
 footer{max-width:1000px;margin:0 auto;padding:12px 16px 36px;font-size:15px;color:var(--dim)}
 @media (max-width:399px){h1{font-size:23px}header{padding:0 12px}.lang a{min-width:40px;padding:0 9px}}
 `;
@@ -385,7 +395,7 @@ function watchPage(all: CatalogVideo[], v: CatalogVideo, lang: Lang): string {
 <ul class="more">${more}</ul>
 <p><a class="btn" href="${linkTo("", lang)}">${w.all}</a></p>
 <div class="join"><p>${esc(w.brand)}</p><div class="acts" style="margin:0"><a class="btn pri" href="${joinHref(lang)}">${w.join}</a><a class="btn" href="${TOLL_FREE_TEL}">${ICON.phone}${w.call}: ${TOLL_FREE_SHOWN}</a></div></div>
-<script type="application/json" id="cfg">${JSON.stringify(cfg).replace(/</g, "\\u003c")}</script>
+${shuruaatCard(lang)}<script type="application/json" id="cfg">${JSON.stringify(cfg).replace(/</g, "\\u003c")}</script>
 <script>${PLAYER_JS}</script>
 ${foot(lang)}`;
 }
@@ -417,7 +427,20 @@ function libraryPage(all: CatalogVideo[], lang: Lang): string {
 <p class="hint">${esc(w.listHint)}</p>
 <ul class="grid">${items}</ul>
 <div class="join"><p>${esc(w.brand)}</p><div class="acts" style="margin:0"><a class="btn pri" href="${joinHref(lang)}">${w.join}</a><a class="btn" href="${TOLL_FREE_TEL}">${ICON.phone}${w.call}: ${TOLL_FREE_SHOWN}</a></div></div>
-${foot(lang)}`;
+${shuruaatCard(lang)}${foot(lang)}`;
+}
+
+/**
+ * Kavach Shuruaat, under the "join" box: these videos are about running a pump,
+ * and some who watch are planning one. The link is the funnel link with source
+ * `videos` (ADR 0059 §2), nofollow because it is a redirect to an app store.
+ * Nothing at all while Kavach Shuruaat is switched off.
+ */
+function shuruaatCard(lang: Lang): string {
+  if (!NEW_PUMP.enabled) return "";
+  const w = T[lang];
+  return `<div class="join"><p>${esc(w.shuruaatTitle)}</p><p class="lead">${esc(w.shuruaatText)}</p><div class="acts" style="margin:0"><a class="btn pri" href="${esc(funnelHref("videos", lang))}" rel="nofollow">${esc(w.shuruaatLink)}</a></div></div>
+`;
 }
 
 /** Every page: the library and each explainer, in both languages, at the file names proxy.ts rewrites to. */

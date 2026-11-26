@@ -8,9 +8,13 @@ import { docFacts, fill, pieces, target } from "../lib/docText";
 import { getT } from "../i18n/server";
 import { pathFor, type CompanyRoute, type Lang } from "../i18n/lang";
 import { NEW_PUMP } from "../data/content";
+import ShuruaatBlock from "../components/ShuruaatBlock";
 
 /** Five or more sections: worth a row of jump links. */
 const TOC_FROM = 5;
+
+/** The company pages that carry the Kavach Shuruaat card, each with its funnel source (ADR 0059 §6). */
+const SHURUAAT_FROM: Partial<Record<CompanyRoute, string>> = { "/about": "about", "/contact": "contact", "/pricing": "pricing" };
 
 type Facts = Record<string, string>;
 
@@ -293,6 +297,9 @@ export default function DocPage({ lang, route }: { lang: Lang; route: CompanyRou
             ))}
           </section>
         ))}
+
+        {/* Kavach Shuruaat on the pages a newcomer reads (ADR 0059 §6); never on the terms, refund or shipping pages */}
+        {SHURUAAT_FROM[route] && <ShuruaatBlock lang={lang} from={SHURUAAT_FROM[route]} variant="card" className="mt-14 max-w-4xl" />}
 
         <p className="mt-14 max-w-3xl border-t border-ink-hairline pt-6 text-[15.5px] leading-[1.7] text-ink-soft">
           {say(t.docs.questions)}
