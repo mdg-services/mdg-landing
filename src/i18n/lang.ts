@@ -45,7 +45,8 @@ export const COMPANY_ROUTES = ["/about", "/contact", "/pricing", "/terms", "/ref
 export type CompanyRoute = (typeof COMPANY_ROUTES)[number];
 
 /** Pages that exist in both languages, as English paths ("" is the home page). */
-export type SiteRoute = "" | "/register" | "/grievance" | "/grievances" | "/khata-kavach" | CompanyRoute;
+/* "/new-pump" is New Pump Guide (ADR 0058): a page about a feature of the Dealer Kavach app, in every language. */
+export type SiteRoute = "" | "/register" | "/grievance" | "/grievances" | "/khata-kavach" | "/new-pump" | CompanyRoute;
 
 /** The public path of a site page in a language: ("", "hi") -> "/hi". */
 export function pathFor(lang: Lang, route: SiteRoute = ""): string {

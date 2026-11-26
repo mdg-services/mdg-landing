@@ -6,7 +6,9 @@ import { note, p, steps, table, ul, type DocPage } from "../doc";
    terms the brief set: cancel any time before the next billing month and the
    following month is not charged; a payment made in error or charged twice is
    refunded within 7 working days to the original payment method; the first
-   month is free so it needs no refund. Three things in it are my reading of
+   month of Dealer's Kavach is paid, and comes back in full if the dealer is
+   not happy with it (owner, 23 Oct 2026). Kavach Shuruaat has no such month
+   (ADR 0058 §13.2). Three things in it are my reading of
    "a fair SaaS policy", not facts from the repo, so change them if they are
    not what you want: (1) a month already begun is not refunded in part,
    (2) the contact route is the company email and the grievance page, (3) the
@@ -20,8 +22,8 @@ export const refund: DocPage = {
   eyebrowDeva: "रिफ़ंड और कैंसिलेशन",
   heading: "Cancel any time. Pay back what was charged by mistake.",
   intro:
-    "This policy covers cancelling a subscription to Dealer's Kavach or Khata Kavach, and when we refund a payment. It is part of our [Terms and conditions](route:/terms).",
-  updated: "23 October 2026",
+    "This policy covers cancelling a subscription to Dealer's Kavach, Kavach Shuruaat or Khata Kavach, and when we refund a payment. It is part of our [Terms and conditions](route:/terms).",
+  updated: "26 November 2026",
   legal: true,
   sections: [
     {
@@ -36,8 +38,12 @@ export const refund: DocPage = {
               "You pay nothing for the following month. The service carries on to the end of the month you have paid for.",
             ],
             [
-              "You are not happy with your first month",
+              "You are not happy with your first month of Dealer's Kavach",
               "Tell us by the end of it and we refund that month in full, GST included. Once per dealer.",
+            ],
+            [
+              "You use Kavach Shuruaat",
+              "Cancel any time and keep it to the end of the month you paid for. There is no first-month money-back, and a month that has started is not refunded.",
             ],
             [
               "You are charged twice, or a payment was made by mistake",
@@ -63,7 +69,7 @@ export const refund: DocPage = {
           ],
         ]),
         p(
-          "Your service keeps working until the end of the month you have already paid for. We do not refund part of a month that has begun, unless it was charged in error or it is your first month (see below).",
+          "Your service keeps working until the end of the month you have already paid for. We do not refund part of a month that has begun, unless it was charged in error or it is your first month of Dealer's Kavach (see below).",
         ),
       ],
     },
@@ -74,6 +80,28 @@ export const refund: DocPage = {
         p(
           "If you are not happy with Dealer's Kavach in your first paid month, for any reason, tell us by the end of that month. We refund the whole first-month payment, GST included, to the way you paid, within 7 working days, and your subscription ends. You do not have to give a reason. This applies once per dealer, to the first month only; later months follow the cancellation rules above.",
         ),
+      ],
+    },
+    {
+      // Kavach Shuruaat (ADR 0058 §13.2, §13.3): no money-back month, no part
+      // refunds. Cancelling is by email, phone or stopping the autopay, not by
+      // the app's chat: that chat answers from the rule books and passes on
+      // only a refund question, so a "please cancel" written there would reach
+      // nobody.
+      id: "new-pump",
+      heading: "Kavach Shuruaat",
+      blocks: [
+        p(
+          "Kavach Shuruaat, the Dealer Kavach app's guide for people planning a petrol pump, costs {newPumpPrice} a month plus {newPumpGstPercent} GST ({newPumpTotal} in all), paid by autopay.",
+        ),
+        ul([
+          "Cancel any time: email or call us, or stop the autopay from your UPI app or bank.",
+          "You keep access to the end of the month you have paid for, and nothing more is charged.",
+          "A month that has started is not refunded. There is no first-month money-back: the one above is for Dealer's Kavach only.",
+          "A bill that is not paid within 7 days of being sent is closed, and the plan waits. To carry on, ask for the payment details again, in the app's chat or from us, and they come on WhatsApp and SMS.",
+          "A charge made twice or in error is refunded in full, as set out below.",
+          "When your pump opens and you switch to Dealer's Kavach, Kavach Shuruaat's autopay stops by itself.",
+        ]),
       ],
     },
     {
@@ -103,6 +131,9 @@ export const refund: DocPage = {
           "Give the payment reference from your receipt, the amount and the date.",
           "We check it, tell you what we found, and send the refund if it is due.",
         ]),
+        p(
+          "A person in our team handles every refund request. If you ask about a refund in the app's chat, it is passed to the team, and they talk to you about it.",
+        ),
         p(
           "If you are not happy with the answer, raise it on the [grievance page](route:/grievance). You are given a grievance number straight away.",
         ),

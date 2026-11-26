@@ -30,6 +30,27 @@ export const PUMP_UI: PerLang<Record<string, string>> = {
   },
 };
 
+/**
+ * The closing box (an advertisement) on every page: New Pump Guide (ADR 0058),
+ * the Dealer Kavach app's rule-book chat for someone planning a pump, in place
+ * of "Get the Dealer Kavach app". `{price}` is filled from NEW_PUMP
+ * (src/data/content.ts). These words must pass the collection's forbidden
+ * patterns like a page does (scripts/lang.check.ts checks them): no promise of
+ * a dealership, a licence or an income, and no "best" or "easiest".
+ */
+export const PUMP_CTA: PerLang<{ title: string; text: string; primary: string }> = {
+  en: {
+    title: "About Kavach Shuruaat (advertisement)",
+    text: "Planning a petrol pump? Kavach Shuruaat in the Dealer Kavach app answers your questions about opening one, from the official rule books, in Hindi or English, for {price} + GST a month. It explains the rules; the oil company decides who becomes a dealer.",
+    primary: "Ask anything about opening a pump",
+  },
+  hi: {
+    title: "कवच शुरुआत के बारे में (विज्ञापन)",
+    text: "पेट्रोल पंप खोलने की सोच रहे हैं? डीलर कवच ऐप में कवच शुरुआत पंप खोलने के आपके सवालों के जवाब आधिकारिक नियम-पुस्तकों से देती है, हिंदी या अंग्रेज़ी में, {price} + GST महीना। यह नियम समझाती है; डीलर कौन बनेगा, यह तेल कंपनी तय करती है।",
+    primary: "पंप खोलने के बारे में कुछ भी पूछिए",
+  },
+};
+
 /** The notice under the title of every page. Normal size, never folded away. */
 export const PUMP_NOTICE: PerLang<string> = {
   en: "MDG Services makes Dealer Kavach, an app for petrol pump dealers, so this page comes from the maker of a product it may mention. It is general information, not legal, tax or financial advice. Rules, fees and guidelines change and differ by oil company and state: every fact here names its source and the date we checked it, so confirm it with the oil company or the authority before you act. We do not sell, allot or arrange dealerships or licences.",

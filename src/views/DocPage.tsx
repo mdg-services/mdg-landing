@@ -7,6 +7,7 @@ import { DOC_KEY, type DocBlock, type DocCard } from "../i18n/doc";
 import { docFacts, fill, pieces, target } from "../lib/docText";
 import { getT } from "../i18n/server";
 import { pathFor, type CompanyRoute, type Lang } from "../i18n/lang";
+import { NEW_PUMP } from "../data/content";
 
 /** Five or more sections: worth a row of jump links. */
 const TOC_FROM = 5;
@@ -234,7 +235,10 @@ export default function DocPage({ lang, route }: { lang: Lang; route: CompanyRou
   const doc = t[DOC_KEY[route]];
   const facts = docFacts(lang);
   const say = (text: string, strong?: string) => <Inline text={text} lang={lang} facts={facts} strong={strong} />;
-  const sections = doc.sections;
+  // The pricing page offers New Pump Guide only while it is on sale (ADR 0058 §11).
+  // Its terms and refund rules stay on those pages either way: someone who paid
+  // for it must still be able to read them.
+  const sections = doc.sections.filter((s) => NEW_PUMP.enabled || route !== "/pricing" || s.id !== "new-pump");
 
   return (
     <FormShell

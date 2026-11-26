@@ -29,6 +29,7 @@ import { pricing } from "./pricing";
 import { terms } from "./terms";
 import { refund } from "./refund";
 import { shipping } from "./shipping";
+import { newPump } from "./newPump";
 
 /** Every visible string on mdgservices.in, in English. */
 export const en = {
@@ -63,4 +64,5 @@ export const en = {
   terms,
   refund,
   shipping,
+  newPump,
 };

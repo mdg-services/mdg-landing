@@ -260,6 +260,16 @@ export const assist = {
     callAria: "Call MDG Services from this page, free",
   },
 
+  /* ── Under a reply that sends the visitor to the app (ADR 0058 §8) ── */
+  appPromo: {
+    /** Someone planning a pump: what to choose once the app is open. */
+    newPump: "Get the Dealer Kavach app and choose “I want to open a petrol pump”. Kavach Shuruaat answers this in full.",
+    /** Someone who already runs a pump. */
+    dealer: "Get the Dealer Kavach app: it answers this for your pump, in full.",
+    appStoreAria: "Get the Dealer Kavach app on the App Store",
+    playAria: "Get the Dealer Kavach app on Google Play",
+  },
+
   errors: {
     rateLimited: "One moment. That was a little quick for us. Please try again in a few seconds.",
     turnLimit: "We have covered a lot here. Shall we have someone call you?",

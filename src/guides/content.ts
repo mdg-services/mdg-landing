@@ -37,7 +37,8 @@ export interface PageContent {
 }
 
 /** Words that describe how the service works, or overclaim. Never on a public page of either collection. */
-const FORBIDDEN = [/complete guide/i, /\bwe guarantee\b|\bguaranteed? (compliance|accuracy|results?)\b/i, /100\s?%\s?accurate/i, /admin (panel|portal)/i, /\bour AI\b/i, /artificial intelligence/i, /ChatGPT/i, /\bClaude\b/i, /\bLLM\b/];
+/** Exported so copy outside the pages (a collection's closing box) can be held to the same words. */
+export const FORBIDDEN = [/complete guide/i, /\bwe guarantee\b|\bguaranteed? (compliance|accuracy|results?)\b/i, /100\s?%\s?accurate/i, /admin (panel|portal)/i, /\bour AI\b/i, /artificial intelligence/i, /ChatGPT/i, /\bClaude\b/i, /\bLLM\b/];
 
 export function contentPath(root: string, col: Collection, lang: Lang, id: string): string {
   return path.join(root, col.contentDir, lang, `${id}.md`);

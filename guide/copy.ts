@@ -189,4 +189,4 @@ export const TOPIC_BLURB: Record<string, PerLang<string>> = {
 };
 
 /** Static pages of the main site that belong in the sitemap. */
-export const SITE_PAGES = ["/", "/register", "/film", "/film?lang=en", "/film/short", "/film/short?lang=en", "/grievance", "/privacy"];
+export const SITE_PAGES = ["/", "/register", "/new-pump", "/film", "/film?lang=en", "/film/short", "/film/short?lang=en", "/grievance", "/privacy"];

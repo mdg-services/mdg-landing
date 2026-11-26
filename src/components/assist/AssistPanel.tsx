@@ -18,6 +18,7 @@ import { useLiveTranscript } from "./useLiveTranscript";
 import { playPop } from "./pop";
 import { micSupported, type MicFailure } from "./mic";
 import { ASSIST_BOT_SRC } from "./assets";
+import StoreButtons from "../StoreButtons";
 import { requestAssistCall } from "../../lib/assistCall";
 import {
   AssistError,
@@ -32,6 +33,7 @@ import { LANG_LABEL } from "../../i18n/lang";
 import { useLang } from "../../i18n/client";
 import type { GrievanceCategory } from "../../data/content";
 import type {
+  AssistAppPromo,
   AssistGrievanceResult,
   AssistLang,
   AssistLeadField,
@@ -72,6 +74,8 @@ type Msg = {
   offer?: { category: GrievanceCategory; said: string };
   /** Set on the confirmation of a registered grievance: the number the card shows. */
   filed?: string;
+  /** Set on a reply that sends the visitor to the Dealer Kavach app: the store buttons go under it. */
+  appPromo?: AssistAppPromo;
 };
 
 const CHAR_LIMIT = 600;
@@ -343,6 +347,7 @@ export default function AssistPanel({
         offer: res.grievance
           ? { category: res.grievance.category, said: res.heard ?? typed ?? "" }
           : undefined,
+        appPromo: res.appPromo,
       });
       if (res.grievance) setOfferId(id);
       if (res.asksFor) {
@@ -354,7 +359,9 @@ export default function AssistPanel({
       // under them mid-sentence. Not on a reply that already offers a
       // grievance: that is the better way to a person for this visitor, and
       // two cards on one reply is a visitor who stops reading.
-      if (res.deflected && !res.grievance) setOfferCallback(true);
+      // Nor on a reply that sends them to the app: its store buttons are the
+      // answer, and a "let a person ring you" card beside them says the opposite.
+      if (res.deflected && !res.grievance && !res.appPromo) setOfferCallback(true);
     },
     [push],
   );
@@ -809,6 +816,11 @@ export default function AssistPanel({
                         <GrievanceOfferCard d={d} offer={m.offer} onOpen={openGrievance} />
                       )}
 
+                      {/* The answer is in the app (New Pump Guide, or Dealer Kavach
+                          itself): the two store buttons, under this reply only,
+                          stacked because the panel is narrow at every width. */}
+                      {m.appPromo && <AppPromoCard d={d} promo={m.appPromo} />}
+
                       {/* The number, set large, and it stays in the conversation. */}
                       {m.filed && <GrievanceNumber d={d} refs={[m.filed]} />}
                     </Fragment>
@@ -1107,6 +1119,26 @@ export default function AssistPanel({
         )}
       </div>
     </>
+  );
+}
+
+/**
+ * Under a reply that sends the visitor to the Dealer Kavach app: one line on
+ * what to choose there, and the two store buttons, tagged so the stores' install
+ * figures show the assistant's installs (`new_pump` or `dealer`).
+ */
+function AppPromoCard({ d, promo }: { d: AssistDict; promo: AssistAppPromo }) {
+  return (
+    <div className="max-w-[90%] self-start rounded-2xl border border-ink-hairline bg-paper-warm p-3.5">
+      <p className="text-[13.5px] leading-[1.6] text-ink">{promo === "new_pump" ? d.appPromo.newPump : d.appPromo.dealer}</p>
+      <StoreButtons
+        from={promo}
+        appStoreAria={d.appPromo.appStoreAria}
+        playAria={d.appPromo.playAria}
+        stack
+        className="mt-3"
+      />
+    </div>
   );
 }
 

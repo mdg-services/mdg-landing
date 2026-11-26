@@ -100,9 +100,20 @@ export interface AssistTurnResult {
    * question. The widget offers to register it as a grievance.
    */
   grievance?: AssistGrievanceOffer;
+  /**
+   * Set when the answer sends the visitor to the Dealer Kavach app (ADR 0058 §8):
+   * `new_pump` for someone planning a pump (New Pump Guide answers it in full,
+   * from the rule books), `dealer` for someone who already runs one. The widget
+   * shows the two store buttons under that reply, and no call-back card for it:
+   * the app is the answer, not a person.
+   */
+  appPromo?: AssistAppPromo;
   /** Turns left before the session's cap. */
   turnsRemaining: number;
 }
+
+/** Which road into the app an answer points to. Mirrors `AssistTurnResult.appPromo` in the shared file. */
+export type AssistAppPromo = "new_pump" | "dealer";
 
 /** What the assistant judged the complaint to be about. The visitor can change it before sending. */
 export interface AssistGrievanceOffer {

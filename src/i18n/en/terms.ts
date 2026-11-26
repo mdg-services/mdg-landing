@@ -28,7 +28,7 @@ export const terms: DocPage = {
   heading: "The terms of your subscription.",
   intro:
     "These terms are the agreement between you and {legalName} for our apps and this website. Please read them before you subscribe.",
-  updated: "23 October 2026",
+  updated: "26 November 2026",
   legal: true,
   sections: [
     {
@@ -116,8 +116,29 @@ export const terms: DocPage = {
       ],
     },
     {
+      // Kavach Shuruaat (ADR 0058 §6, §13.2, §13.3). The price is filled from NEW_PUMP (data/content.ts).
+      id: "new-pump",
+      heading: "7. Kavach Shuruaat",
+      blocks: [
+        p(
+          "Kavach Shuruaat is a part of the Dealer Kavach app for people planning a petrol pump. It answers questions from official documents we hold. These points apply to it, on top of the rest of these terms.",
+        ),
+        ul([
+          "It costs {newPumpPrice} a month plus {newPumpGstPercent} GST ({newPumpTotal} in all), paid by autopay through Razorpay from a link we send on WhatsApp or SMS. There is no payment inside the app.",
+          "It starts when your first payment is done, and renews every month until you cancel or the autopay stops.",
+          "You can cancel at any time. Your access continues to the end of the month you have paid for. A month that has started is not refunded, and there is no first-month money-back: the first-month money-back of Dealer's Kavach does not apply to Kavach Shuruaat.",
+          "Refund requests are handled by our team, as the [Refund and cancellation policy](route:/refund-policy) sets out.",
+          "If a monthly charge fails or the autopay is stopped, your access ends at the end of the month already paid for. You can start again from the app.",
+          "A bill that is not paid within 7 days of being sent is closed, and the plan stays paused. The payment details can be asked for again at any time, in the app's chat or from us, and they come on WhatsApp and SMS.",
+          "The answers are general guidance read from official documents. They are not legal advice and they are not an approval. The oil company, PESO, the highway authority and the other offices concerned decide; check with them before you act.",
+          "We do not promise, sell, allot or arrange a dealership, a licence or an approval.",
+          "When your pump opens and you switch to Dealer's Kavach, Kavach Shuruaat and its autopay stop, and the price and terms of Dealer's Kavach apply from then on.",
+        ]),
+      ],
+    },
+    {
       id: "use",
-      heading: "7. Acceptable use",
+      heading: "8. Acceptable use",
       blocks: [
         ul([
           "Use the service only for your own business, and only for lawful purposes.",
@@ -130,7 +151,7 @@ export const terms: DocPage = {
     },
     {
       id: "data",
-      heading: "8. Your information",
+      heading: "9. Your information",
       blocks: [
         ul([
           "What you put into the service stays yours. You allow us to use it only to run the service for you, to support you, and to meet the law.",
@@ -142,7 +163,7 @@ export const terms: DocPage = {
     },
     {
       id: "rights",
-      heading: "9. Our rights",
+      heading: "10. Our rights",
       blocks: [
         p(
           "The software, the names Dealer's Kavach, Khata Kavach and MDG Services, and the logos belong to {legalName}. While your subscription is active you may use the service for your business. It is not a sale of the software to you.",
@@ -151,7 +172,7 @@ export const terms: DocPage = {
     },
     {
       id: "liability",
-      heading: "10. Our liability",
+      heading: "11. Our liability",
       blocks: [
         ul([
           "We are not responsible for a loss that comes from information given to the service being wrong or late, from a reminder you did not act on, or from a fine, penalty or action taken by an oil company or an authority.",
@@ -164,7 +185,7 @@ export const terms: DocPage = {
     },
     {
       id: "law",
-      heading: "11. Law and courts",
+      heading: "12. Law and courts",
       blocks: [
         p(
           "Indian law governs these terms. Before going to court, please tell us what went wrong so that we can try to put it right (see Grievances below). The courts at Gurugram, Haryana have exclusive jurisdiction over any dispute.",
@@ -173,7 +194,7 @@ export const terms: DocPage = {
     },
     {
       id: "grievances",
-      heading: "12. Grievances",
+      heading: "13. Grievances",
       blocks: [
         p(
           "If you are unhappy with the service, our billing or how we handle your data, report it on the [grievance page](route:/grievance), write to [{email}](mailto:{email}), or call [{tollFree}]({tollFreeHref}). You are given a grievance number straight away, and a person from our team looks into it and replies.",
@@ -182,7 +203,7 @@ export const terms: DocPage = {
     },
     {
       id: "changes",
-      heading: "13. Changes",
+      heading: "14. Changes",
       blocks: [
         p(
           "We may change these terms. The date at the top of this page shows when they were last updated. We will tell subscribers in writing before a change that affects what they pay or can do. If you carry on using the service after a change takes effect, you accept it.",
@@ -191,7 +212,7 @@ export const terms: DocPage = {
     },
     {
       id: "other",
-      heading: "14. Other agreements",
+      heading: "15. Other agreements",
       blocks: [
         p(
           "If you have signed a separate written agreement with us for an outlet, it applies together with these terms. If the two disagree on a point, the written agreement governs for that outlet.",
@@ -200,7 +221,7 @@ export const terms: DocPage = {
     },
     {
       id: "contact",
-      heading: "15. Contact us",
+      heading: "16. Contact us",
       blocks: [
         facts([
           ["Company", "{legalName}"],

@@ -7,7 +7,7 @@
  * exist is an error, not a blank: a typo in a price or a phone number must
  * stop the build, never reach a visitor.
  */
-import { BRAND, PRICING } from "../data/content";
+import { BRAND, NEW_PUMP, PRICING } from "../data/content";
 import { TOLL_FREE } from "./tollFree";
 import { getT } from "../i18n/server";
 import { homeHref, pathFor, type Lang, type SiteRoute } from "../i18n/lang";
@@ -17,9 +17,26 @@ export function rupees(n: number): string {
   return `₹${new Intl.NumberFormat("en-IN").format(n)}`;
 }
 
+/**
+ * 23482 -> "₹234.82", 19900 -> "₹199". Paise, for a price that is not a whole
+ * rupee (New Pump Guide's GST is 35.82); a whole amount drops the ".00".
+ */
+export function rupeesPaise(paise: number): string {
+  const whole = paise % 100 === 0;
+  return `₹${new Intl.NumberFormat("en-IN", { minimumFractionDigits: whole ? 0 : 2, maximumFractionDigits: 2 }).format(paise / 100)}`;
+}
+
+/** New Pump Guide's month: the price before GST, the GST and the total, in paise. */
+export function newPumpPrice(): { before: number; gst: number; total: number } {
+  const before = NEW_PUMP.pricePaise;
+  const gst = Math.round((before * NEW_PUMP.gstPercent) / 100);
+  return { before, gst, total: before + gst };
+}
+
 /** The facts a company page may name in `{braces}`, in the language being read. */
 export function docFacts(lang: Lang): Record<string, string> {
   const gst = Math.round((PRICING.standard * PRICING.gstPercent) / 100);
+  const np = newPumpPrice();
   return {
     legalName: BRAND.legalName,
     cin: BRAND.cin,
@@ -35,6 +52,11 @@ export function docFacts(lang: Lang): Record<string, string> {
     standardTotal: rupees(PRICING.standard + gst),
     everythingAround: rupees(PRICING.everythingAround),
     gstPercent: `${PRICING.gstPercent}%`,
+    /* New Pump Guide: ₹199, ₹35.82 GST, ₹234.82 a month */
+    newPumpPrice: rupeesPaise(np.before),
+    newPumpGst: rupeesPaise(np.gst),
+    newPumpTotal: rupeesPaise(np.total),
+    newPumpGstPercent: `${NEW_PUMP.gstPercent}%`,
   };
 }
 

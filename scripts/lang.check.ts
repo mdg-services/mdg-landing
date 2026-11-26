@@ -9,6 +9,8 @@ import { firstAcceptedLanguage, langRedirect, siteRoute } from "../src/routing/s
 import { guideGate, isGuidePath } from "../src/routing/guides.ts";
 import { LANGS, localPath, pathFor, versionsOf } from "../src/i18n/lang.ts";
 import { fillLangs, langOfPath, stripPrefix } from "../src/i18n/languages.ts";
+import { PUMP, PUMP_CTA_ALL } from "../src/guides/collections.ts";
+import { FORBIDDEN } from "../src/guides/content.ts";
 
 const go = (path: string, cookie: string | null = null, accept: string | null = null) => langRedirect(new URL(`https://x.test${path}`), cookie, accept);
 
@@ -30,6 +32,11 @@ describe("addresses", () => {
     assert.equal(localPath("en", "/guides/"), "/guides/");
     assert.equal(versionsOf("/about").or, "/or/about");
     assert.equal(siteRoute("/or/nothing"), null);
+  });
+  it("know Kavach Shuruaat's page in every language", () => {
+    for (const l of LANGS) assert.deepEqual(siteRoute(pathFor(l, "/new-pump")), { lang: l, route: "/new-pump" });
+    assert.deepEqual(versionsOf("/new-pump"), { en: "/new-pump", hi: "/hi/new-pump", or: "/or/new-pump" });
+    assert.equal(go("/new-pump", null, "hi-IN")?.location, "/hi/new-pump");
   });
 });
 
@@ -83,5 +90,23 @@ describe("words by language", () => {
     const t = fillLangs({ en: "a", hi: "b" });
     assert.equal(t.or, "a");
     assert.equal(t.hi, "b");
+  });
+});
+
+describe("the Petrol pump guide's closing box (Kavach Shuruaat)", () => {
+  it("passes the same forbidden words as the pages, in every language", () => {
+    for (const l of LANGS) {
+      const box = PUMP_CTA_ALL[l];
+      const text = [box.title, box.text, box.primary].join("\n");
+      for (const bad of [...FORBIDDEN, ...PUMP.forbidden]) assert.ok(!bad.test(text), `${l}: ${bad}`);
+    }
+  });
+  it("sends the reader to /new-pump in their language, with the price filled in", () => {
+    for (const l of LANGS) {
+      const cta = PUMP.cta(l);
+      assert.equal(cta.primary.href, pathFor(l, "/new-pump"));
+      assert.ok(!cta.text.includes("{price}"));
+      assert.ok(cta.text.includes("₹199"));
+    }
   });
 });

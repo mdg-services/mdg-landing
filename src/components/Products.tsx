@@ -2,6 +2,8 @@ import PhoneFrame from "./PhoneFrame";
 import Icon from "./Icon";
 import { KkLockup } from "./Brand";
 import { kkScreens } from "../data/kk";
+import { NEW_PUMP } from "../data/content";
+import { docFacts, fill } from "../lib/docText";
 import { getT } from "../i18n/server";
 import { homeHref, pathFor, type Lang } from "../i18n/lang";
 import { Reveal } from "../lib/reveal";
@@ -13,10 +15,16 @@ import { Reveal } from "../lib/reveal";
  * The apps are told apart by ground and by form: Dealer's Kavach is type on
  * navy, Khata Kavach is its own seal on cream, at a different size, so they are
  * never read as a matched pair. Server HTML, no script.
+ *
+ * Under the two, a band for New Pump Guide (ADR 0058): not a third app but a
+ * part of Dealer's Kavach for someone who is still planning a pump, so it sits
+ * below the pair on the plain paper instead of taking a panel of its own. It
+ * goes when the owner switches New Pump Guide off (NEW_PUMP.enabled).
  */
 export default function Products({ lang }: { lang: Lang }) {
   const t = getT(lang).products;
   const screen = kkScreens(lang).pump[0];
+  const np = getT(lang).newPump.card;
 
   return (
     <section id="products" aria-label={t.sectionAria} className="scroll-mt-20 bg-paper">
@@ -77,6 +85,32 @@ export default function Products({ lang }: { lang: Lang }) {
           </div>
         </div>
       </div>
+
+      {NEW_PUMP.enabled && (
+        <div className="wrap-full py-12 md:py-16">
+          <a
+            href={pathFor(lang, "/new-pump")}
+            className="group flex flex-col gap-6 rounded-3xl border border-ink-hairline bg-white p-6 shadow-card transition-shadow hover:shadow-lift sm:p-8 md:flex-row md:items-center md:justify-between"
+          >
+            <span className="flex items-start gap-4">
+              <span aria-hidden className="grid h-12 w-12 shrink-0 place-items-center rounded-xl bg-navy-700 text-gold-300">
+                <Icon name="pump" size={26} />
+              </span>
+              <span className="min-w-0">
+                <span className="block font-mono text-[11px] uppercase tracking-[0.16em] text-ink-muted">{np.kicker}</span>
+                <span className="mt-1.5 block font-display text-[24px] font-semibold leading-tight text-ink md:text-[28px]">{np.title}</span>
+                <span className="mt-2 block max-w-[40rem] text-[17px] leading-[1.55] text-ink-soft">{np.body}</span>
+              </span>
+            </span>
+            <span className="flex shrink-0 flex-col gap-2 md:items-end md:text-right">
+              <span className="num text-[20px] font-semibold text-navy-700">{fill(np.price, docFacts(lang))}</span>
+              <span className="inline-flex min-h-[48px] items-center gap-2 text-[17px] font-semibold text-navy-700 underline decoration-navy-300 underline-offset-[6px] group-hover:decoration-navy-700">
+                {np.link} <Icon name="arrow" size={18} />
+              </span>
+            </span>
+          </a>
+        </div>
+      )}
     </section>
   );
 }

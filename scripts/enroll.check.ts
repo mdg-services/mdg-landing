@@ -23,13 +23,32 @@ import { after, before, beforeEach, describe, it } from "node:test";
  * the proof of what the dealer agreed to, so an old entry must keep describing
  * the text that edition really was.
  */
-const TERMS_HISTORY = [
+const TERMS_HISTORY: ReadonlyArray<{
+  version: string;
+  en: string;
+  hi: string;
+  /** Kavach Shuruaat's own clauses (ADR 0058), from 2026-11-26. */
+  planner?: { en: string; hi: string };
+}> = [
   {
     version: "2026-10-06",
     en: "3966eee24caa725648a3784c765a606d2e9ee0aaa6ffe673e080076ba00cc578",
     hi: "8d0d791f372d07c7888675508ec0b28b3df33e9601de35e0ccfe6bdf7c831127",
   },
-] as const;
+  {
+    // The outlet clauses unchanged; Kavach Shuruaat's clauses added (ADR 0058
+    // §6, with the refund and unpaid-bill rules of §13.2 and §13.3). Its
+    // clauses were reworded before this edition was ever published, so no
+    // registration carries an earlier fingerprint for it.
+    version: "2026-11-26",
+    en: "3966eee24caa725648a3784c765a606d2e9ee0aaa6ffe673e080076ba00cc578",
+    hi: "8d0d791f372d07c7888675508ec0b28b3df33e9601de35e0ccfe6bdf7c831127",
+    planner: {
+      en: "86e597871733953a5eee9efe0c41de2dd4a28bc07a4aaab42d01971fe97b9265",
+      hi: "46eb8a04357493e13f465aaa089d0654694713aaa7230253a137ba7a2652cf6d",
+    },
+  },
+];
 
 const PASSWORD = "Tr1cky-passw0rd-9";
 
@@ -139,6 +158,26 @@ describe("Terms record", () => {
       latest.hi,
       "the Hindi Terms text changed: bump TERMS_VERSION and append a new TERMS_HISTORY entry",
     );
+    assert.equal(
+      terms.termsTextHash("en", "planner"),
+      latest.planner?.en,
+      "Kavach Shuruaat's English Terms changed: bump TERMS_VERSION and append a new TERMS_HISTORY entry",
+    );
+    assert.equal(
+      terms.termsTextHash("hi", "planner"),
+      latest.planner?.hi,
+      "Kavach Shuruaat's Hindi Terms changed: bump TERMS_VERSION and append a new TERMS_HISTORY entry",
+    );
+  });
+
+  it("states Kavach Shuruaat's price in its Terms as the site prints it", async () => {
+    const { newPumpPrice, rupeesPaise } = await import("../src/lib/docText.ts");
+    const { before, total } = newPumpPrice();
+    for (const clauses of [register.register.plannerTerms]) {
+      assert.ok(clauses[0].includes(rupeesPaise(before)), "the price before GST");
+      assert.ok(clauses[0].includes(rupeesPaise(total)), "the price with GST");
+    }
+    assert.equal(rupeesPaise(total), "₹234.82");
   });
 
   it("never reuses a version for different text", () => {
@@ -147,7 +186,13 @@ describe("Terms record", () => {
     for (let i = 1; i < TERMS_HISTORY.length; i += 1) {
       const [before, now] = [TERMS_HISTORY[i - 1], TERMS_HISTORY[i]];
       assert.ok(now.version > before.version, "versions are dates and only go forward");
-      assert.ok(now.en !== before.en || now.hi !== before.hi, "a new edition changes some text");
+      assert.ok(
+        now.en !== before.en ||
+          now.hi !== before.hi ||
+          now.planner?.en !== before.planner?.en ||
+          now.planner?.hi !== before.planner?.hi,
+        "a new edition changes some text",
+      );
     }
   });
 
@@ -299,6 +344,84 @@ describe("the registration hand-off", () => {
   });
 });
 
+describe("Kavach Shuruaat's sign-up (kind: planner)", () => {
+  const planner = (over: Record<string, unknown> = {}) => ({
+    kind: "planner",
+    name: "Suresh Yadav",
+    mobile: `97654${String(10000 + (counter += 1)).slice(-5)}`,
+    email: "suresh@example.com",
+    password: PASSWORD,
+    stateCode: "06",
+    district: "Rewari",
+    oilCompany: "undecided",
+    stage: "exploring",
+    agree: true,
+    source: "app",
+    submissionId: "plan-0001-abcdef",
+    consentWhatsApp: true,
+    lang: "hl",
+    ...over,
+  });
+
+  it("hands the API the planner's fields, its own Terms record and the app's language, with no SAP code", async () => {
+    answers.push({ status: 200, account: "ready" });
+    const result = await enroll.processEnrollment(planner());
+    assert.deepEqual(result, { ok: true, status: 200, account: "ready" });
+    const [call] = sent;
+    assert.ok(call.url.endsWith("/website/enrolments"));
+    assert.equal(call.body.kind, "planner");
+    assert.equal(call.body.stateCode, "06");
+    assert.equal(call.body.district, "Rewari");
+    assert.equal(call.body.oilCompany, "undecided");
+    assert.equal(call.body.stage, "exploring");
+    assert.equal(call.body.lang, "hl");
+    assert.equal(call.body.password, PASSWORD);
+    assert.equal(call.body.termsVersion, register.TERMS_VERSION);
+    // Hinglish reads Latin letters: the English clauses, as the API's baseLangOf says
+    assert.equal(call.body.termsTextHash, terms.termsTextHash("en", "planner"));
+    for (const field of ["sapCode", "siteType", "pumpName", "agree"]) assert.equal(field in call.body, false, field);
+  });
+
+  it("records a Hindi app's tick against the Hindi clauses", async () => {
+    await enroll.processEnrollment(planner({ lang: "hi" }));
+    assert.equal(sent[0].body.termsTextHash, terms.termsTextHash("hi", "planner"));
+  });
+
+  it("refuses a planner form without a state, a password or the tick, and sends nothing", async () => {
+    for (const bad of [{ stateCode: "" }, { stateCode: "Haryana" }, { password: undefined }, { agree: false }, { oilCompany: "shell" }, { lang: undefined }]) {
+      const result = await enroll.processEnrollment(planner(bad));
+      assert.equal(result.ok, false, JSON.stringify(bad));
+      assert.equal(result.status, 400);
+    }
+    assert.equal(sent.length, 0);
+  });
+
+  it("mails the team a Kavach Shuruaat sign-up, and the person a welcome, never the password", async () => {
+    answers.push({ status: 200, account: "ready" });
+    await enroll.processEnrollment(planner({ lang: "en" }));
+    const mails = printed.filter((l) => l.includes("[mailer:dev]"));
+    assert.equal(mails.length, 2);
+    assert.ok(mails.some((l) => l.includes("Kavach Shuruaat sign-up")));
+    assert.ok(mails.some((l) => l.includes("to:      suresh@example.com")));
+    assert.equal(printed.join("\n").includes(PASSWORD), false);
+  });
+
+  it("tells the person when the API is down, and marks the team's mail", async () => {
+    answers.push("network", "network");
+    const result = await enroll.processEnrollment(planner());
+    assert.equal(result.ok, false);
+    assert.equal(result.status, 502);
+    assert.ok(printed.some((l) => l.includes("[NOT SIGNED UP — call them]")));
+  });
+
+  it("still reads a form with no kind as an outlet's", async () => {
+    const result = await enroll.processEnrollment(fresh());
+    assert.equal(result.ok, true);
+    assert.equal(sent[0].body.sapCode, "41001234");
+    assert.equal(sent[0].body.kind, undefined);
+  });
+});
+
 describe("the Start services link (/start)", () => {
   const ANDROID = "Mozilla/5.0 (Linux; Android 13; SM-A145F) AppleWebKit/537.36 Chrome/130.0 Mobile Safari/537.36";
   const IPHONE = "Mozilla/5.0 (iPhone; CPU iPhone OS 18_0 like Mac OS X) AppleWebKit/605.1.15 Mobile/15E148";
@@ -321,6 +444,20 @@ describe("the Start services link (/start)", () => {
     assert.equal(res.status, 302);
     assert.equal(res.headers.get("location"), "https://apps.apple.com/in/app/dealer-kavach/id6828100923");
     assert.equal(res.headers.get("cache-control"), "private, no-store");
+  });
+
+  it("tags Kavach Shuruaat's Android link with its own campaign", async () => {
+    const res = await tap(ANDROID, "?for=new-pump&lang=hi");
+    const to = new URL(res.headers.get("location") ?? "");
+    assert.equal(to.searchParams.get("id"), "in.mdgservices.dealerkavach");
+    assert.match(to.searchParams.get("referrer") ?? "", /utm_campaign=new_pump/);
+  });
+
+  it("sends a computer that came for Kavach Shuruaat back to its page, the language kept", async () => {
+    const res = await tap("Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/130.0", "?for=new-pump&lang=hi");
+    assert.equal(res.headers.get("location"), "https://mdgservices.in/new-pump?lang=hi");
+    const bare = await tap("Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/130.0", "?for=new-pump");
+    assert.equal(bare.headers.get("location"), "https://mdgservices.in/new-pump");
   });
 
   it("sends a computer to the register page, which shows both store buttons and no form", async () => {

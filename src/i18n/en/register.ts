@@ -11,11 +11,12 @@ import type { SiteType } from "../../data/content";
  * Which edition of the Terms & Conditions below a dealer ticks. The server
  * sends it with every registration, together with a fingerprint of the clause
  * text in the page's language, so a registration can prove what it agreed to.
- * CHANGE THE VERSION WHENEVER A CLAUSE CHANGES, in either language: the
+ * CHANGE THE VERSION WHENEVER A CLAUSE CHANGES, in either language and in
+ * either list (`terms` for an outlet, `plannerTerms` for Kavach Shuruaat): the
  * fingerprints are pinned in `scripts/enroll.check.ts`, and that check fails
  * on a changed clause with an unchanged version.
  */
-export const TERMS_VERSION = "2026-10-06";
+export const TERMS_VERSION = "2026-11-26";
 
 export const register = {
   /** The browser tab's title on this page. */
@@ -208,5 +209,26 @@ export const register = {
     "Dealer agrees to defend and indemnify the Service Provider against all suits, actions, penalties and liabilities that may arise from failure on the part of the Dealer to comply regulatory provisions/statutory guidelines as notified by OMC/PESO/Government Authorities from time to time.",
     "This agreement shall remain valid for a period of 1 year from the Signing Date, and may further be renewed for successive terms of 1 (One) year each unless terminated by Parties with prior 30 days written notice to the other Party. However, Service Provider shall be entitled to terminate this Agreement immediately in the event of non-receipt of the payment within the period/timeline stipulated in the invoice.",
     "Parties agree that all the disputes related to the services provided by the Service Provider under this agreement shall be the exclusive jurisdiction of Courts at Delhi.",
+  ],
+
+  /**
+   * Kavach Shuruaat's own terms (ADR 0058 §6, §13.2, §13.3): what someone planning
+   * a pump ticks in the app's Kavach Shuruaat sign-up (`kind: "planner"`), in place of the
+   * outlet agreement above, which does not fit a person with no pump yet. Its
+   * fingerprint is kept apart from the outlet clauses' (server/terms.ts), and the
+   * same TERMS_VERSION rule holds: change a word here, bump the version.
+   * The figures must match NEW_PUMP in src/data/content.ts
+   * (scripts/enroll.check.ts checks it). The app shows a word-for-word copy
+   * (mdg-client src/features/register/terms.ts), pinned to the same fingerprints.
+   */
+  plannerTerms: [
+    "Kavach Shuruaat costs ₹199 a month plus 18% GST (₹234.82 in all), paid by autopay through Razorpay from a link sent on WhatsApp or SMS. There is no payment inside the app.",
+    "The plan starts when the first payment is done, and renews every month until it is cancelled or the autopay stops.",
+    "It can be cancelled at any time. Access continues to the end of the month already paid for. A month that has started is not refunded, and there is no first-month money-back: the first-month money-back of Dealer's Kavach does not apply to Kavach Shuruaat.",
+    "A bill that is not paid within 7 days of being sent is closed, and the plan stays paused. The payment details can be asked for again at any time, in the app's chat or from us, and they come on WhatsApp and SMS.",
+    "The answers are general guidance read from official documents. They are not legal advice and they are not an approval: the oil company, PESO, the highway authority and the other offices concerned decide.",
+    "MDG Services does not promise, sell, allot or arrange a dealership, a licence or an approval.",
+    "When the pump opens and the account switches to Dealer's Kavach, Kavach Shuruaat and its autopay stop, and the price and terms of Dealer's Kavach apply from then on.",
+    "The Terms and conditions and the Refund and cancellation policy published on mdgservices.in also apply.",
   ],
 };

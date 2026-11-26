@@ -3,6 +3,7 @@ import { BRAND, OFFICE } from "../data/content";
 import { TOLL_FREE } from "../lib/tollFree";
 import { getT } from "../i18n/server";
 import { DOC_KEY } from "../i18n/doc";
+import { docFacts, fill, newPumpPrice } from "../lib/docText";
 import { LANGS, LANGUAGES, homeHref, pathFor, type CompanyRoute, type Lang } from "../i18n/lang";
 
 /** The languages the website is written in, for structured data: ["en-IN", "hi-IN", "or-IN"]. */
@@ -99,6 +100,66 @@ export function kkJsonLd(lang: Lang) {
         "@type": "FAQPage",
         "@id": `${url}#faq`,
         inLanguage,
+        mainEntity: t.faq.items.map((f) => ({
+          "@type": "Question",
+          name: f.q,
+          acceptedAnswer: { "@type": "Answer", text: f.a },
+        })),
+      },
+    ],
+  };
+}
+
+/**
+ * New Pump Guide's structured data (ADR 0058): the service (a feature of the
+ * Dealer Kavach app, made by MDG Services), its monthly price as the page
+ * states it, where the page sits in the site, and the questions it answers, in
+ * the page's own language.
+ */
+export function newPumpJsonLd(lang: Lang) {
+  const t = getT(lang).newPump;
+  const url = `${SITE}${pathFor(lang, "/new-pump")}`;
+  const total = newPumpPrice().total;
+  return {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": `${SITE}/#org`,
+        name: "MDG Services",
+        legalName: "VRUOOM PRIVATE LIMITED",
+        url: `${SITE}/`,
+      },
+      {
+        "@type": "Service",
+        "@id": `${SITE}/new-pump#service`,
+        name: "Kavach Shuruaat",
+        alternateName: "कवच शुरुआत",
+        url,
+        description: fill(t.meta.description, docFacts(lang)),
+        serviceType: "Guidance on opening a petrol pump, from official documents",
+        areaServed: { "@type": "Country", name: "India" },
+        provider: { "@id": `${SITE}/#org` },
+        offers: {
+          "@type": "Offer",
+          // the monthly total with GST, as the page prints it
+          price: (total / 100).toFixed(2),
+          priceCurrency: "INR",
+          url,
+        },
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": `${url}#crumbs`,
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: "MDG Services", item: `${SITE}${homeHref(lang)}` },
+          { "@type": "ListItem", position: 2, name: t.name, item: url },
+        ],
+      },
+      {
+        "@type": "FAQPage",
+        "@id": `${url}#faq`,
+        inLanguage: LANGUAGES[lang].bcp47,
         mainEntity: t.faq.items.map((f) => ({
           "@type": "Question",
           name: f.q,

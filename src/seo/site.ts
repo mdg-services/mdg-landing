@@ -41,6 +41,13 @@ export function siteMetadata(lang: Lang, route: SiteRoute): Metadata {
     "/grievance": { title: t.grievance.pageTitle, description: t.grievance.metaDescription, ogTitle: t.grievance.pageTitle, ogDescription: t.grievance.metaDescription },
     "/grievances": { title: t.grievance.pageTitle, description: t.grievance.metaDescription, ogTitle: t.grievance.pageTitle, ogDescription: t.grievance.metaDescription },
     "/khata-kavach": { title: t.kk.meta.title, description: t.kk.meta.description, ogTitle: t.kk.meta.ogTitle, ogDescription: t.kk.meta.description },
+    /* the price in its description is a fact, filled in like a company page's */
+    "/new-pump": {
+      title: t.newPump.meta.title,
+      description: fill(t.newPump.meta.description, docFacts(lang)),
+      ogTitle: t.newPump.meta.ogTitle,
+      ogDescription: fill(t.newPump.meta.description, docFacts(lang)),
+    },
     "/about": company("/about"),
     "/contact": company("/contact"),
     "/pricing": company("/pricing"),

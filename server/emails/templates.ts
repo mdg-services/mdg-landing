@@ -192,7 +192,7 @@ const WELCOME = {
       waiting: [
         "MDG's team will contact you shortly.",
         "You will get a message on WhatsApp when your account is ready.",
-        "Then open the Dealer Kavach app and sign in with your mobile number and the password you chose when you registered.",
+        "Then get the Dealer Kavach app from the App Store or Google Play and sign in with your mobile number and the password you chose when you registered.",
       ],
     },
     appButton: "Get the Dealer Kavach app",
@@ -225,7 +225,7 @@ const WELCOME = {
       waiting: [
         "MDG की टीम जल्द संपर्क करेगी।",
         "खाता तैयार होते ही आपको WhatsApp पर संदेश आएगा।",
-        "फिर डीलर कवच ऐप खोलिए और अपने मोबाइल नंबर और रजिस्टर करते समय चुने गए पासवर्ड से साइन इन कीजिए।",
+        "फिर App Store या Google Play से डीलर कवच ऐप लीजिए और अपने मोबाइल नंबर और रजिस्टर करते समय चुने गए पासवर्ड से साइन इन कीजिए।",
       ],
     },
     appButton: "डीलर कवच ऐप लीजिए",

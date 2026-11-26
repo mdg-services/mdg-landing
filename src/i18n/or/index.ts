@@ -30,6 +30,7 @@ import { pricing } from "./pricing";
 import { terms } from "./terms";
 import { refund } from "./refund";
 import { shipping } from "./shipping";
+import { newPump } from "./newPump";
 
 /** Every visible string on mdgservices.in, in Odia.
  *
@@ -70,4 +71,5 @@ export const or: Dict = {
   terms,
   refund,
   shipping,
+  newPump,
 };

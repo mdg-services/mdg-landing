@@ -34,7 +34,7 @@ export const pricing: DocPage = {
   heading: "Simple monthly pricing, in rupees.",
   intro:
     "Dealer's Kavach is a monthly subscription, and if your first month does not suit you, you get that month's payment back. Prices are in Indian rupees, GST is added, and what we agree is written down before you start.",
-  updated: "23 October 2026",
+  updated: "26 November 2026",
   legal: true,
   sections: [
     {
@@ -71,6 +71,31 @@ export const pricing: DocPage = {
             priceNote: "a month, while Khata Kavach is new",
             body: "Sign up from the app and use it at no charge. If that ever changes, we will tell you well before anything is charged.",
             link: { label: "About Khata Kavach", href: "route:/khata-kavach" },
+          },
+        ]),
+      ],
+    },
+    {
+      // Kavach Shuruaat (ADR 0058). Its own section so the page can drop it when
+      // the owner switches the product off (views/DocPage.tsx); the price comes
+      // from NEW_PUMP in data/content.ts, never typed here.
+      id: "new-pump",
+      heading: "Kavach Shuruaat, for people planning a pump",
+      blocks: [
+        cards([
+          {
+            kicker: "In the Dealer Kavach app",
+            title: "Kavach Shuruaat",
+            price: "{newPumpPrice}",
+            priceNote: "a month, plus {newPumpGstPercent} GST ({newPumpTotal} in all)",
+            body: "Answers to your questions about opening and running a petrol pump, from the official rule books. Paid by autopay from a link on WhatsApp or SMS; it starts when the first payment is done.",
+            items: [
+              "Cancel any time; access runs to the end of the month you paid for",
+              "A month that has started is not refunded (the first-month money-back is for Dealer's Kavach only)",
+              "It stops by itself when your pump opens and you switch to Dealer's Kavach",
+              "General guidance, not legal advice; it does not get you a dealership",
+            ],
+            link: { label: "About Kavach Shuruaat", href: "route:/new-pump" },
           },
         ]),
       ],
@@ -119,9 +144,9 @@ export const pricing: DocPage = {
       blocks: [
         ul([
           "All prices are in Indian rupees (INR). GST at {gstPercent} is added on top.",
-          "Not happy with your first month, for any reason? Tell us by the end of it and we refund that month in full, GST included. Once per dealer, first month only.",
+          "Not happy with your first month of Dealer's Kavach, for any reason? Tell us by the end of it and we refund that month in full, GST included. Once per dealer, first month only.",
           "The price is written down before you begin and does not rise in the middle of what we agreed. No surprise fees.",
-          "You can cancel any time. See the [Refund and cancellation policy](route:/refund-policy).",
+          "You can cancel any time. Kavach Shuruaat has no first-month money-back, and a month that has started is not refunded. Our team handles every refund request; see the [Refund and cancellation policy](route:/refund-policy).",
           "A subscription is for software delivered online. There is nothing to ship; see [Shipping and delivery](route:/shipping).",
           "Our [Terms and conditions](route:/terms) apply to every subscription.",
         ]),

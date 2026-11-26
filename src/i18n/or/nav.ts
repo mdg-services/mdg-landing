@@ -13,4 +13,5 @@ export const nav: typeof EN = {
   productsAria: "ଆମର ଆପ",
   dealerKavach: { name: "Dealer's କବଚ", note: "କାଗଜପତ୍ର କାମ ଓ ଫାଇଲିଂ" },
   khata: { name: "ଖାତା କବଚ", note: "ଟ୍ରାନ୍ସପୋର୍ଟରଙ୍କୁ ଧାରରେ ଡିଜେଲ" },
+  newPump: { name: "କବଚ ଶୁରୁଆତ", note: "ପେଟ୍ରୋଲ ପମ୍ପ ଖୋଲୁଥିବା ଲୋକଙ୍କ ପାଇଁ" },
 };

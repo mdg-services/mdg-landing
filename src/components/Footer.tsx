@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { LogoFullWhite } from "./Brand";
 import CallUs from "./CallUs";
-import { BRAND } from "../data/content";
+import { BRAND, NEW_PUMP } from "../data/content";
 import { getT } from "../i18n/server";
 import { homeHref, pathFor, type Lang } from "../i18n/lang";
 import { hubHref } from "../guides/hubs";
@@ -121,6 +121,15 @@ export default function Footer({ lang }: { lang: Lang }) {
                 >
                   {t.footer.dealerChrome}
                 </a>
+                {/* New Pump Guide (ADR 0058): the same app, for someone planning a pump */}
+                {NEW_PUMP.enabled && (
+                  <Link
+                    href={pathFor(lang, "/new-pump")}
+                    className="link-quiet tap-pad mt-1 block text-[13.5px] text-navy-300 hover:text-white"
+                  >
+                    {t.nav.newPump.name}
+                  </Link>
+                )}
               </li>
               <li>
                 <Link href={pathFor(lang, "/khata-kavach")} className="link-quiet tap-pad text-navy-100 hover:text-white">

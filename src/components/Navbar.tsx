@@ -4,7 +4,8 @@ import { useEffect, useRef, useState } from "react";
 import { KkMark, LogoFull } from "./Brand";
 import CallUs from "./CallUs";
 import LanguageToggle from "./LanguageToggle";
-import { NAV } from "../data/content";
+import Icon from "./Icon";
+import { NAV, NEW_PUMP } from "../data/content";
 import { homeHref, localPath, pathFor, type Versions } from "../i18n/lang";
 import { useLang } from "../i18n/client";
 
@@ -24,6 +25,11 @@ export type NavItem = { key: string; href: string; label: string; here?: boolean
  * level place without a sixth link crowding the bar. `current="khata"` is the
  * Khata Kavach page: it brings its own `items` (its own sections), its own
  * call to action (`cta`), and names itself beside the logo.
+ *
+ * New Pump Guide (ADR 0058) is a third row of that menu: a feature of the
+ * Dealer Kavach app, for someone planning a pump, so it wears Dealer's Kavach's
+ * navy mark with a pump in it. `current="newPump"` is its page. The row goes
+ * when the owner switches New Pump Guide off (NEW_PUMP.enabled).
  */
 export default function Navbar({
   versions,
@@ -34,7 +40,7 @@ export default function Navbar({
 }: {
   versions: Versions;
   onHome?: boolean;
-  current?: "guides" | "khata";
+  current?: "guides" | "khata" | "newPump";
   /** Replaces the home page's section links (the Khata Kavach page's own sections). */
   items?: NavItem[];
   /** Where "Talk to us" goes; the home page's contact section when left out. */
@@ -105,6 +111,9 @@ export default function Navbar({
   const products = [
     { key: "dealer", href: section("services"), name: t.nav.dealerKavach.name, note: t.nav.dealerKavach.note, here: false },
     { key: "khata", href: khataHref, name: t.nav.khata.name, note: t.nav.khata.note, here: current === "khata" },
+    ...(NEW_PUMP.enabled || current === "newPump"
+      ? [{ key: "newPump", href: pathFor(lang, "/new-pump"), name: t.nav.newPump.name, note: t.nav.newPump.note, here: current === "newPump" }]
+      : []),
   ];
 
   return (
@@ -149,7 +158,7 @@ export default function Navbar({
               onClick={() => setMenu((m) => !m)}
               className={
                 "inline-flex min-h-[44px] items-center gap-1.5 whitespace-nowrap text-[14px] font-medium hover:text-ink " +
-                (current === "khata" || menu ? "text-navy-700" : "text-ink-soft")
+                (current === "khata" || current === "newPump" || menu ? "text-navy-700" : "text-ink-soft")
               }
             >
               {t.nav.products}
@@ -174,6 +183,10 @@ export default function Navbar({
                   >
                     {p.key === "khata" ? (
                       <KkMark small className="h-9 w-auto shrink-0" />
+                    ) : p.key === "newPump" ? (
+                      <span className="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-navy-700 text-gold-300">
+                        <Icon name="pump" size={20} />
+                      </span>
                     ) : (
                       <span className="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-navy-700 deva text-[15px] text-white">कवच</span>
                     )}
@@ -253,6 +266,10 @@ export default function Navbar({
                 >
                   {p.key === "khata" ? (
                     <KkMark small className="h-10 w-auto shrink-0" />
+                  ) : p.key === "newPump" ? (
+                    <span className="grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-navy-700 text-gold-300">
+                      <Icon name="pump" size={22} />
+                    </span>
                   ) : (
                     <span className="grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-navy-700 deva text-[16px] text-white">कवच</span>
                   )}

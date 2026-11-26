@@ -27,6 +27,11 @@ const KK_BLURB_ALL = Object.fromEntries(Object.entries(KK_TOPIC_BLURB).map(([k, 
 const PUMP_UI_ALL = fillLangs({ ...PUMP_UI, or: PUMP_UI_OR });
 const PUMP_NOTICE_ALL = fillLangs({ ...PUMP_NOTICE, or: PUMP_NOTICE_OR });
 const PUMP_DISCLAIMER_ALL = fillLangs({ ...PUMP_DISCLAIMER, or: PUMP_DISCLAIMER_OR });
+/* The Petrol pump guide's closing box: New Pump Guide, its price filled in from
+   NEW_PUMP (a whole number of rupees before GST, "₹199"). Exported so the
+   language check can hold its words to the collection's forbidden patterns. */
+export const PUMP_CTA_ALL = fillLangs({ ...PUMP_CTA, or: PUMP_CTA_OR });
+const newPumpPriceText = `₹${new Intl.NumberFormat("en-IN").format(NEW_PUMP.pricePaise / 100)}`;
 const PUMP_BLURB_ALL = Object.fromEntries(Object.entries(PUMP_TOPIC_BLURB).map(([k, v]) => [k, fillLangs({ ...v, ...(PUMP_TOPIC_BLURB_OR[k] ? { or: PUMP_TOPIC_BLURB_OR[k] } : {}) })]));
 
 /** Give each topic its name in a further language (a copy file's list), so the crumbs and cards can read it. */
@@ -39,10 +44,11 @@ import { KK_RELEASES, KK_LAST_DAY, kkDayOf, kkDateOfDay } from "../../kk-guide/s
 import { KK_CTA, KK_DISCLAIMER, KK_NOTICE, KK_TOPIC_BLURB, KK_UI } from "../../kk-guide/copy.ts";
 import { PUMP_PAGES, PUMP_PILLARS } from "../../pump-guide/inventory.ts";
 import { PUMP_RELEASES, PUMP_LAST_DAY, pumpDayOf, pumpDateOfDay } from "../../pump-guide/schedule.ts";
-import { PUMP_DISCLAIMER, PUMP_NOTICE, PUMP_TOPIC_BLURB, PUMP_UI } from "../../pump-guide/copy.ts";
+import { PUMP_CTA, PUMP_DISCLAIMER, PUMP_NOTICE, PUMP_TOPIC_BLURB, PUMP_UI } from "../../pump-guide/copy.ts";
 import { KK_APPS } from "../data/kk.ts";
 import { PILLAR_NAMES_OR, NOTICE_OR, DISCLAIMER_OR, TOPIC_BLURB_OR, UI_OR, PUMP_CROSS_OR } from "../../guide/copy.or.ts";
-import { PUMP_DISCLAIMER_OR, PUMP_NOTICE_OR, PUMP_PILLAR_NAMES_OR, PUMP_TOPIC_BLURB_OR, PUMP_UI_OR } from "../../pump-guide/copy.or.ts";
+import { PUMP_CTA_OR, PUMP_DISCLAIMER_OR, PUMP_NOTICE_OR, PUMP_PILLAR_NAMES_OR, PUMP_TOPIC_BLURB_OR, PUMP_UI_OR } from "../../pump-guide/copy.or.ts";
+import { NEW_PUMP } from "../data/content.ts";
 import { pageLangs } from "../../guide/calendar.ts";
 import { fillLangs, localPath, type PerLang } from "../i18n/languages.ts";
 import { pathFor } from "../i18n/lang.ts";
@@ -253,12 +259,22 @@ export const PUMP: Collection = {
   look: MDG.look,
   themeClass: "",
   officialBox: false,
-  cta: (lang) => ({
-    title: UI_MDG[lang].ctaTitle,
-    text: UI_MDG[lang].cta,
-    primary: { href: pathFor(lang, "/register"), label: UI_MDG[lang].register },
-    secondary: { href: TOLL_FREE.href, label: UI_MDG[lang].call },
-  }),
+  // Readers of these pages are mostly people planning a pump, so the box offers
+  // New Pump Guide (ADR 0058 §8); with it switched off, the Dealer Kavach box as before.
+  cta: (lang) =>
+    NEW_PUMP.enabled
+      ? {
+          title: PUMP_CTA_ALL[lang].title,
+          text: PUMP_CTA_ALL[lang].text.replace("{price}", newPumpPriceText),
+          primary: { href: pathFor(lang, "/new-pump"), label: PUMP_CTA_ALL[lang].primary },
+          secondary: { href: TOLL_FREE.href, label: UI_MDG[lang].call },
+        }
+      : {
+          title: UI_MDG[lang].ctaTitle,
+          text: UI_MDG[lang].cta,
+          primary: { href: pathFor(lang, "/register"), label: UI_MDG[lang].register },
+          secondary: { href: TOLL_FREE.href, label: UI_MDG[lang].call },
+        },
   crossLinks: () => null,
 };
 

@@ -35,7 +35,9 @@ const mobile = z
   });
 
 /**
- * The dealer-enrolment payload. This is the single source of truth for the
+ * The dealer-enrolment payload (an outlet's: a form with `kind: "planner"` is
+ * New Pump Guide's and is read by `plannerEnrollmentSchema` below; any other
+ * form, with no `kind` as before, is this). This is the single source of truth for the
  * shape of the form — the API, the dev server, and the email templates all
  * consume `EnrollmentData`.
  */
@@ -98,6 +100,57 @@ export type EnrollmentSubmission = z.infer<typeof enrollmentSchema>;
  * compile, and `processEnrollment` takes it out before anything else sees it.
  */
 export type EnrollmentData = Omit<EnrollmentSubmission, "password">;
+
+/* ── New Pump Guide (ADR 0058) ──────────────────────────────────────────
+   Copied by hand from the shared types (`types/planner.ts`), like the
+   assistant's shapes in src/types/assist.ts: this site does not import
+   @dk/shared. If these ever disagree, the shared file wins. */
+export const PLANNER_OIL_COMPANIES = ["iocl", "bpcl", "hpcl", "other", "undecided"] as const;
+export const PLANNER_STAGES = ["exploring", "applied", "selected", "building"] as const;
+/** The app's languages: Hindi, Hinglish (Hindi in Latin letters) and English. */
+export const PLANNER_LANGS = ["hi", "hl", "en"] as const;
+
+/**
+ * New Pump Guide's sign-up, from the app's "I want to open a petrol pump" form
+ * (§3.2): a person planning a pump, so no SAP code and no site type. It goes to
+ * the same API road as an outlet's, marked `kind: "planner"`, and the API opens
+ * the account at once and sends the first bill (§3.3).
+ *
+ * The rules are the API's own (`schemas.plannerRegisterSchema`), so what passes
+ * here passes there; the API checks the state code against its list of states.
+ * The password is required, unlike the outlet form's: the account opens with it.
+ */
+export const plannerEnrollmentSchema = z.object({
+  kind: z.literal("planner"),
+  name: z.string().trim().min(1, "Name is required").max(120),
+  mobile,
+  email: z
+    .union([z.string().trim().email("Enter a valid email").max(200), z.literal("")])
+    .optional()
+    .transform((v) => (v ? v : undefined)),
+  password: z.string().min(8, "Use at least 8 characters").max(200, "Use at most 200 characters"),
+  /** The GST state code, two digits ("06"): the place of supply on their bill. */
+  stateCode: z.string().trim().regex(/^\d{2}$/, "Pick a state"),
+  district: optionalText(120),
+  oilCompany: z.enum(PLANNER_OIL_COMPANIES, { message: "Pick an oil company, or \"Not decided yet\"" }),
+  stage: z.enum(PLANNER_STAGES, { message: "Pick where you are" }),
+  agree: z.literal(true, { message: "You must accept the Terms & Conditions" }),
+  source: z.enum(["website", "app"]).default("app"),
+  submissionId: submissionId.optional().catch(undefined),
+  consentWhatsApp: z.boolean().optional().catch(undefined),
+  ref: z
+    .string()
+    .regex(/^[A-Za-z0-9_-]{1,32}$/)
+    .optional()
+    .catch(undefined),
+  /** The app's language: it becomes the person's language for the chat and the bill. */
+  lang: z.enum(PLANNER_LANGS, { message: "Pick a language" }),
+});
+
+/** A New Pump Guide sign-up, password included. Only `processEnrollment` handles this. */
+export type PlannerSubmission = z.infer<typeof plannerEnrollmentSchema>;
+/** The same without the password: the only shape the New Pump Guide emails take. */
+export type PlannerData = Omit<PlannerSubmission, "password">;
 
 /** The homepage "Leave my number" callback request. */
 export const callbackSchema = z.object({

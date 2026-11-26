@@ -13,11 +13,14 @@ function isLocalHost(host: string): boolean {
  */
 export class IntakeRefused extends Error {
   readonly status: number;
+  /** The API's error code, e.g. "PLANNER_OFF". */
+  readonly code: string;
 
   constructor(path: string, status: number, code: string) {
     super(`MDG API refused ${path}: ${status} ${code}`.trim());
     this.name = "IntakeRefused";
     this.status = status;
+    this.code = code;
   }
 }
 

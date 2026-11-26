@@ -13,4 +13,5 @@ export const nav: typeof EN = {
   productsAria: "हमारे ऐप",
   dealerKavach: { name: "Dealer's कवच", note: "काग़ज़ी काम और फ़ाइलिंग" },
   khata: { name: "खाता कवच", note: "ट्रांसपोर्टर को उधार डीज़ल" },
+  newPump: { name: "कवच शुरुआत", note: "पेट्रोल पंप खोलने वालों के लिए" },
 };

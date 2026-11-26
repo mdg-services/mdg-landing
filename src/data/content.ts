@@ -67,6 +67,22 @@ export const PRICING = {
   gstPercent: 18,
 } as const;
 
+/* New Pump Guide (ADR 0058): the rule-book chat in the Dealer Kavach app for
+   someone planning a petrol pump. 199 rupees a month plus 18% GST, paid by
+   autopay from a link on WhatsApp. Kept in paise because the GST on 199 is not
+   a whole rupee (35.82). The server's own figure is PLANNER_MONTHLY_PRICE_PAISE
+   (23482, the total); this is the same price, for display only.
+
+   `enabled` follows the server's PLANNER_ENABLED switch: when the owner turns New
+   Pump Guide off, the site build sets NEXT_PUBLIC_PLANNER_ENABLED=false and the
+   cards and menu rows that offer it disappear (the /new-pump page itself stays,
+   so an old link does not break). Read at build time, so it needs a redeploy. */
+export const NEW_PUMP = {
+  pricePaise: 19900,
+  gstPercent: 18,
+  enabled: process.env.NEXT_PUBLIC_PLANNER_ENABLED !== "false",
+} as const;
+
 /** Section anchors. The labels are per-language; the targets are not. */
 export const NAV = [
   { id: "services", href: "#services" },
