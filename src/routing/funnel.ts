@@ -57,6 +57,22 @@ export function deviceOf(agent: string): FunnelDevice {
 }
 
 /**
+ * A browser loading the link ahead of a tap (Next.js link prefetch, Chrome's speculative
+ * prefetch or prerender) is not a person pressing the button. Seen on the first night: eight
+ * "taps" across five pages within seconds, from pages whose links were still same-site.
+ */
+export function isPrefetch(headers: Headers): boolean {
+  const purpose = `${headers.get("sec-purpose") ?? ""} ${headers.get("purpose") ?? ""}`.toLowerCase();
+  return (
+    purpose.includes("prefetch") ||
+    purpose.includes("prerender") ||
+    headers.get("next-router-prefetch") !== null ||
+    headers.get("rsc") !== null ||
+    headers.get("x-middleware-prefetch") !== null
+  );
+}
+
+/**
  * True for a visitor that is a program, not a person: search engines, link
  * previews (WhatsApp, Facebook, Slack and the like fetch a link to draw its
  * card), and a request with no user agent at all, which no browser sends.
@@ -139,7 +155,7 @@ export function funnelAnswer(req: Request, opts: { fallbackMedium: string }): Fu
     location = new URL(`/new-pump${asked ? `?lang=${asked}` : ""}`, home).toString();
   }
 
-  const counted = req.method !== "HEAD" && !isBot(agent);
+  const counted = req.method !== "HEAD" && !isBot(agent) && !isPrefetch(req.headers);
   return { location, tap: counted ? { source, device, lang } : null };
 }
 

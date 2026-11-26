@@ -16,7 +16,7 @@ import { after, before, describe, it } from "node:test";
 process.env.WEBSITE_INTAKE_SECRET = "test-secret";
 process.env.MDG_API_URL = "https://api.example.test/api/v1";
 
-const { deviceOf, funnelAnswer, guideSource, isBot, mediumOf, newPumpPlayLink } = await import("../src/routing/funnel.ts");
+const { deviceOf, funnelAnswer, guideSource, isBot, isPrefetch, mediumOf, newPumpPlayLink } = await import("../src/routing/funnel.ts");
 const { cleanSource, funnelHref } = await import("../src/lib/funnel.ts");
 const { recordTap, TAP_TIMEOUT_MS } = await import("../server/funnelTap.ts");
 const { APP_STORE } = await import("../src/lib/appStores.ts");
@@ -246,4 +246,16 @@ describe("handing a tap to the API", () => {
       console.warn = warn;
     }
   });
+});
+
+it("does not count a browser loading the link ahead of a tap", () => {
+  const ahead: Array<Record<string, string>> = [
+    { "sec-purpose": "prefetch" },
+    { purpose: "prefetch" },
+    { "sec-purpose": "prefetch;prerender" },
+    { "next-router-prefetch": "1" },
+    { rsc: "1" },
+  ];
+  for (const h of ahead) assert.equal(isPrefetch(new Headers(h)), true, JSON.stringify(h));
+  assert.equal(isPrefetch(new Headers({ "user-agent": "Mozilla/5.0 (Linux; Android 14)" })), false);
 });
