@@ -582,6 +582,41 @@ export const PUMP_PAGES: PumpPage[] = [
     queries: ["petrol pump emergency plan", "petrol pump fire what to do", "emergency procedure petrol pump", "petrol pump aag lag jaye"],
     brief: "Scope: Emergency plan at a petrol pump: what to do in a fire or leak, and what to display. Sources: OISD standards (oisd.gov.in, read with curl); Petroleum Rules 2002; OMC dealer guidelines (MDG 2024) on emergency procedures and numbers; NDMA; only what is stated.",
   },
+  {
+    id: "dealership-reservation", pillar: "dealership", path: `${P}/dealership/reservation-categories/`, hi: true, type: "Explainer", wave: 2,
+    queries: ["petrol pump dealership reservation", "sc st obc petrol pump dealership", "women petrol pump dealership", "petrol pump dealership category"],
+    brief: "Scope: Reservation in petrol pump dealerships: SC, ST, OBC, women and other categories. Sources: MDG 2024 guideline (bharatpetroleum.in / hindustanpetroleum.com PDF): categories and reserved shares, eligibility by category, certificates; MoPNG / PIB / Parliament answers on reservation in retail outlet dealerships (dated). Only what is stated; link to the eligibility, ex-servicemen and rural-outlet pages, do not repeat them.",
+  },
+  {
+    id: "money-petrol-outside-gst", pillar: "money", path: `${P}/money/why-petrol-is-outside-gst/`, hi: true, type: "Explainer", wave: 2,
+    queries: ["why petrol not under gst", "petrol diesel gst kab aayega", "petrol under gst council", "gst on petrol diesel"],
+    brief: "Scope: Why petrol and diesel are outside GST. Sources: Constitution art 279A(5) and the 101st Amendment (indiacode.nic.in); GST Council meeting statements on PIB; Parliament answers on petrol in GST; CBIC (cbic-gst.gov.in). Only as stated with date. Link to the running-gst and price-build-up pages, do not repeat them.",
+  },
+  {
+    id: "licences-apply-online", pillar: "licences", path: `${P}/licences/apply-for-peso-licence-online/`, hi: true, type: "Explainer", wave: 2,
+    queries: ["peso licence apply online", "peso licence application process", "petrol pump licence online application", "form xiv application"],
+    brief: "Scope: How to apply for a PESO licence for a petrol pump online. Sources: peso.gov.in (online licence application pages, forms, documents list, guidelines); Petroleum Rules 2002 (indiacode.nic.in): rules on application for a licence and the forms. Only what is stated; link to peso-licence, status-check and renewal pages, do not repeat them.",
+  },
+  {
+    id: "safety-hot-work-permit", pillar: "safety", path: `${P}/safety/hot-work-permit/`, hi: true, type: "Explainer", wave: 2,
+    queries: ["hot work permit petrol pump", "welding at petrol pump rules", "repair work at petrol pump safety", "work permit petrol pump"],
+    brief: "Scope: Hot work and repairs at a petrol pump: why a work permit is needed. Sources: OISD standards for retail outlets and permit-to-work guidance (oisd.gov.in); Petroleum Rules 2002 rule on repairs and naked lights; PESO circulars. Only what is stated. Link to the safety hub, spill and OISD pages, do not repeat them.",
+  },
+  {
+    id: "running-stock-loss", pillar: "running", path: `${P}/running/stock-loss-and-evaporation/`, hi: true, type: "Explainer", wave: 2,
+    queries: ["petrol pump evaporation loss", "petrol pump stock loss allowed", "transit loss petrol pump", "petrol pump gain loss"],
+    brief: "Scope: Stock loss and evaporation at a petrol pump: what is allowed. Sources: MDG 2024 guideline (oil company PDF): permissible losses, shortage claims, stock reconciliation; Legal Metrology rules on temperature correction if stated; PIB/Parliament answers. Only what is stated; link to density-check and short-delivery pages.",
+  },
+  {
+    id: "fuels-bharat-stage-vi", pillar: "fuels", path: `${P}/fuels/bharat-stage-vi-fuel/`, hi: true, type: "Explainer", wave: 2,
+    queries: ["bs6 petrol diesel difference", "bs6 fuel india", "bharat stage vi fuel sulphur", "bs4 to bs6 fuel switch"],
+    brief: "Scope: BS-VI petrol and diesel: what changed and what the standard says. Sources: PIB and MoPNG releases on the April 2020 BS-VI fuel switch; BIS fuel standards IS 2796 and IS 1460 as listed on bis.gov.in; Parliament answers. Only figures as stated, with date; link to premium-petrol, diesel-grades and ethanol pages.",
+  },
+  {
+    id: "customers-loyalty-programmes", pillar: "customers", path: `${P}/customers/fuel-loyalty-and-reward-programmes/`, hi: true, type: "Explainer", wave: 2,
+    queries: ["petrol pump reward points", "hp pay loyalty", "bpcl smartdrive points", "fuel loyalty program india"],
+    brief: "Scope: Fuel loyalty and reward programmes: how the oil companies' schemes work. Sources: Hindustan Petroleum and Bharat Petroleum own published programme pages and terms; Indian Oil named in words only, never link iocl.com; PIB if any. Only what the programme page states, dated; no 'best' claims. Link to digital-payments and fleet-cards pages.",
+  },
 ];
 
 applyTranslations(PUMP_PAGES, PUMP_TRANSLATIONS);
