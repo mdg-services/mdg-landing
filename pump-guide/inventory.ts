@@ -705,6 +705,41 @@ export const PUMP_PAGES: PumpPage[] = [
     queries: ["wayside amenities nhai", "wayside amenities nhai tender 2026", "wayside amenities guidelines", "wayside amenities meaning"],
     brief: "Scope: NHAI wayside amenities: fuel stations on highway land, the lease and the tenders. Sources: MoRTH policy guidelines for wayside amenities 11 Feb 2021 (morth.gov.in circular 701.15); NHAI WSA tender documents (nhai.gov.in).",
   },
+  {
+    id: "licences-tanker-licence", pillar: "licences", path: `${P}/licences/petroleum-tanker-licence/`, hi: true, type: "Explainer", wave: 2,
+    queries: ["petroleum tanker licence", "petrol tanker licence", "fuel tanker licence", "peso tanker licence", "tanker licence kaise banaye"],
+    brief: "Scope: Petroleum tanker licence: the PESO licence to carry petrol and diesel by road. Sources: Petroleum Rules 2002 chapter on transport by road and the tank-vehicle licence form (peso.gov.in); PESO Petroleum Rules SOP / licence fee schedule (peso.gov.in).",
+  },
+  {
+    id: "licences-diesel-storage", pillar: "licences", path: `${P}/licences/diesel-storage-licence/`, hi: true, type: "Explainer", wave: 2,
+    queries: ["diesel storage licence", "how much diesel can be stored without license in india", "license required for storage of diesel", "diesel storage license limit in india", "diesel tank for factory"],
+    brief: "Scope: Diesel storage licence: how much diesel can be stored without a PESO licence. Sources: Petroleum Rules 2002 exemption rules and licence forms (peso.gov.in / indiacode.nic.in); PESO Petroleum Rules SOP (peso.gov.in).",
+  },
+  {
+    id: "fuels-lubricants", pillar: "fuels", path: `${P}/fuels/engine-oil-and-lubricants/`, hi: true, type: "Explainer", wave: 2,
+    queries: ["engine oil petrol pump", "lubes in petrol pump", "engine oil change petrol pump", "petrol pump oil price", "mobil oil petrol pump"],
+    brief: "Scope: Engine oil and lubricants at a petrol pump: brands, standards, MRP and GST. Sources: BIS standard for engine oils IS 13656 (bis.gov.in); Legal Metrology (Packaged Commodities) Rules 2011 on MRP (consumeraffairs.nic.in); GST rate on lubricating oils (cbic-gst.gov.in); HPCL and BPCL lubricant pages.",
+  },
+  {
+    id: "fuels-kerosene", pillar: "fuels", path: `${P}/fuels/kerosene/`, hi: true, type: "Explainer", wave: 2,
+    queries: ["kerosene petrol pump", "kerosene petrol pump near me", "kerosene kahan milta hai", "kerosene oil dealership", "kerosene price today"],
+    brief: "Scope: Kerosene and petrol pumps: who sells kerosene in India now. Sources: PIB and MoPNG statements on PDS kerosene allocation and kerosene-free states; Parliament answers (sansad.in); PPAC kerosene price data (ppac.gov.in).",
+  },
+  {
+    id: "dealership-consumer-pump", pillar: "dealership", path: `${P}/dealership/consumer-pump/`, hi: true, type: "Explainer", wave: 2,
+    queries: ["consumer pump", "consumer pump meaning", "consumer pump guidelines", "consumer pump diesel price", "bulk diesel price"],
+    brief: "Scope: Consumer pump: buying diesel in bulk for a factory, fleet or site. Sources: HPCL and BPCL direct / institutional sales pages; PESO licence for a consumer installation (peso.gov.in); PIB and Parliament answers on bulk versus retail diesel prices.",
+  },
+  {
+    id: "customers-refusal-to-sell", pillar: "customers", path: `${P}/customers/can-a-petrol-pump-refuse-fuel/`, hi: true, type: "Explainer", wave: 2,
+    queries: ["can petrol pump refuse to give petrol", "can a petrol station refuse cash", "petrol pump refuse to give petrol", "petrol pump coins not accepted", "petrol pump no stock board"],
+    brief: "Scope: Can a petrol pump refuse to sell petrol or diesel? What the rules say. Sources: MS and HSD Control Order 2005 (petroleum.nic.in / egazette); MDG 2024 (bharatpetroleum.in PDF); RBI on legal tender coins (rbi.org.in); Consumer Protection Act 2019.",
+  },
+  {
+    id: "money-cng-dealer-margin", pillar: "money", path: `${P}/money/cng-dealer-margin/`, hi: true, type: "Explainer", wave: 2,
+    queries: ["dealer margin on cng", "dealer margin in cng pump", "cng pump commission per kg", "cng pump profit", "cng dealer commission"],
+    brief: "Scope: Dealer margin on CNG: how a CNG station dealer is paid. Sources: City gas companies' DODO CNG station EOI documents (igl.co.in / mahanagargas.com / mngl.in / adanigas.com / gailgas.com); PNGRB (pngrb.gov.in); Parliament answers on CNG dealer commission.",
+  },
 ];
 
 applyTranslations(PUMP_PAGES, PUMP_TRANSLATIONS);
